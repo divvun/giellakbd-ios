@@ -234,7 +234,8 @@ class KeyboardKeyBackground: UIView, Connectable {
                 prevPoint = segmentPoint.1
             }
             
-            let shouldDrawArcInOppositeMode = (self.attached != nil ? (self.attached!.rawValue == i) || (self.attached!.rawValue == ((i + 1) % 4)) : false)
+            let shouldDrawArcInOppositeMode = self.attached != nil ? ((self.attached!.rawValue) == i) ||
+                (self.attached!.rawValue == ((i + 1) % 4)) : false
             
             if (self.attached != nil && (self.hideDirectionIsOpposite ? !shouldDrawArcInOppositeMode : self.attached!.rawValue == ((i + 1) % 4))) {
                 // do nothing

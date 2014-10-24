@@ -39,6 +39,7 @@
 		4EF16F9819D255030076AFCB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF16F9519D255030076AFCB /* ViewController.swift */; };
 		4EF16F9B19D2550D0076AFCB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF16F9A19D2550D0076AFCB /* AppDelegate.swift */; };
 		4EF16F9F19D2552E0076AFCB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4EF16F9D19D2552E0076AFCB /* Main.storyboard */; };
+		C6A568E219FA286500C8E119 /* GiellaKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A568E119FA286500C8E119 /* GiellaKeyboard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -134,6 +135,7 @@
 		4EF16F9519D255030076AFCB /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		4EF16F9A19D2550D0076AFCB /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4EF16F9E19D2552E0076AFCB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Main.storyboard; sourceTree = "<group>"; };
+		C6A568E119FA286500C8E119 /* GiellaKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiellaKeyboard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +198,7 @@
 				4EC2A46A19DF811E00F789E1 /* KeyboardLayout.swift */,
 				4EC2A46B19DF811E00F789E1 /* KeyboardViewControllerExtendableMethods.swift */,
 				4EC2A46C19DF811E00F789E1 /* ForwardingView.swift */,
+				C6A568E119FA286500C8E119 /* GiellaKeyboard.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -488,6 +491,7 @@
 				4ECBD90219F16DC7004FA2A3 /* DefaultKeyboard.swift in Sources */,
 				4E3B5A941A0654A8003366F6 /* KeyboardInputTraits.swift in Sources */,
 				4E52A6D81A06C16C006A08CE /* DefaultSettings.swift in Sources */,
+				C6A568E219FA286500C8E119 /* GiellaKeyboard.swift in Sources */,
 				4E72C96819E04A7A00DFDDB0 /* Catboard.swift in Sources */,
 				4E60A13E1979FB2E00854CC8 /* DirectionEnum.swift in Sources */,
 				4EC2A46D19DF811E00F789E1 /* KeyboardViewController.swift in Sources */,

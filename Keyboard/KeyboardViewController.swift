@@ -104,20 +104,23 @@ class KeyboardViewController: UIInputViewController {
         self.init(nibName: nil, bundle: nil)
     }
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    override convenience init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+        self.init(nibName: nibNameOrNil, bundle: nibBundleOrNil, keyboard: defaultKeyboard())
+    }
+    
+    init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?, keyboard: Keyboard) {
         NSUserDefaults.standardUserDefaults().registerDefaults([
             kAutoCapitalization: true,
             kPeriodShortcut: true,
             kKeyboardClicks: true
         ])
         
-        self.keyboard = defaultKeyboard()
+        self.keyboard = keyboard
         
         self.shiftState = .Disabled
         self.currentMode = 0
         
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        
         self.forwardingView = ForwardingView(frame: CGRectZero)
         self.view.addSubview(self.forwardingView)
     }
