@@ -104,7 +104,7 @@ class KeyboardViewController: UIInputViewController {
         self.init(nibName: nil, bundle: nil)
     }
     
-    override convenience init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    convenience override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         self.init(nibName: nibNameOrNil, bundle: nibBundleOrNil, keyboard: defaultKeyboard())
     }
     
