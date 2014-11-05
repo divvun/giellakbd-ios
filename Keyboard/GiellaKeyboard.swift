@@ -17,15 +17,16 @@ class GiellaKeyboard: KeyboardViewController {
     
     init() {
         // XXX: generatedKeyboard() must be generated! :)
-        super.init(nibName: nil, bundle: nil, keyboard: defaultControls(generatedKeyboard()))
+        super.init(nibName: nil, bundle: nil,
+            keyboard: defaultControls(generatedKeyboard(), generatedConfig()))
     }
-
+    
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
-func defaultControls(defaultKeyboard: Keyboard) -> Keyboard {
+func defaultControls(defaultKeyboard: Keyboard, keyNames: [String: String]) -> Keyboard {
     var backspace = Key(.Backspace)
     defaultKeyboard.addKey(backspace, row: 2, page: 0)
     
@@ -41,13 +42,13 @@ func defaultControls(defaultKeyboard: Keyboard) -> Keyboard {
     defaultKeyboard.addKey(settings, row: 3, page: 0)
     
     var space = Key(.Space)
-    space.uppercaseKeyCap = "space"
+    space.uppercaseKeyCap = keyNames["space"]
     space.uppercaseOutput = " "
     space.lowercaseOutput = " "
     defaultKeyboard.addKey(space, row: 3, page: 0)
     
     var returnKey = Key(.Return)
-    returnKey.uppercaseKeyCap = "return"
+    returnKey.uppercaseKeyCap = keyNames["return"]
     returnKey.uppercaseOutput = "\n"
     returnKey.lowercaseOutput = "\n"
     defaultKeyboard.addKey(returnKey, row: 3, page: 0)
