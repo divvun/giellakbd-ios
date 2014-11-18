@@ -18,11 +18,12 @@ func metric(name: String) -> CGFloat { return CGFloat(metrics[name]!) }
 let kAutoCapitalization = "kAutoCapitalization"
 let kPeriodShortcut = "kPeriodShortcut"
 let kKeyboardClicks = "kKeyboardClicks"
+let kSmallLowercase = "kSmallLowercase"
 
 class KeyboardViewController: UIInputViewController {
     
     let backspaceDelay: NSTimeInterval = 0.5
-    let backspaceRepeat: NSTimeInterval = 0.05
+    let backspaceRepeat: NSTimeInterval = 0.07
     
     var keyboard: Keyboard!
     var forwardingView: ForwardingView!
@@ -112,7 +113,8 @@ class KeyboardViewController: UIInputViewController {
         NSUserDefaults.standardUserDefaults().registerDefaults([
             kAutoCapitalization: true,
             kPeriodShortcut: true,
-            kKeyboardClicks: true
+            kKeyboardClicks: false,
+            kSmallLowercase: false
         ])
         
         self.keyboard = keyboard
@@ -123,6 +125,8 @@ class KeyboardViewController: UIInputViewController {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         self.forwardingView = ForwardingView(frame: CGRectZero)
         self.view.addSubview(self.forwardingView)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("defaultsChanged:"), name: NSUserDefaultsDidChangeNotification, object: nil)
     }
     
     required init(coder: NSCoder) {
@@ -132,6 +136,13 @@ class KeyboardViewController: UIInputViewController {
     deinit {
         backspaceDelayTimer?.invalidate()
         backspaceRepeatTimer?.invalidate()
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    func defaultsChanged(notification: NSNotification) {
+        let defaults = notification.object as NSUserDefaults
+        self.updateKeyCaps(!self.shiftState.uppercase())
     }
     
     // without this here kludge, the height constraint for the keyboard does not work for some reason
@@ -208,8 +219,7 @@ class KeyboardViewController: UIInputViewController {
     }
     
     func solidColorMode() -> Bool {
-        return true //TODO: temporary, until vibrancy performance is fixed
-        //return UIAccessibilityIsReduceTransparencyEnabled()
+        return UIAccessibilityIsReduceTransparencyEnabled()
     }
     
     var lastLayoutBounds: CGRect?
@@ -270,7 +280,6 @@ class KeyboardViewController: UIInputViewController {
         self.keyboardHeight = self.heightForOrientation(self.interfaceOrientation, withTopBanner: true)
     }
     
-    // TODO: the new size "snaps" into place on rotation, which I believe is related to performance
     override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
         self.keyboardHeight = self.heightForOrientation(toInterfaceOrientation, withTopBanner: true)
     }
@@ -326,10 +335,6 @@ class KeyboardViewController: UIInputViewController {
                         break
                     }
                     
-                    if key.hasOutput {
-                        keyView.addTarget(self, action: "keyPressedHelper:", forControlEvents: .TouchUpInside)
-                    }
-                    
                     if key.isCharacter {
                         if UIDevice.currentDevice().userInterfaceIdiom != UIUserInterfaceIdiom.Pad {
                             keyView.addTarget(self, action: Selector("showPopup:"), forControlEvents: .TouchDown | .TouchDragInside | .TouchDragEnter)
@@ -338,10 +343,16 @@ class KeyboardViewController: UIInputViewController {
                         }
                     }
                     
+                    if key.hasOutput {
+                        keyView.addTarget(self, action: "keyPressedHelper:", forControlEvents: .TouchUpInside)
+                    }
+                    
                     if key.type != Key.KeyType.Shift {
                         keyView.addTarget(self, action: Selector("highlightKey:"), forControlEvents: .TouchDown | .TouchDragInside | .TouchDragEnter)
                         keyView.addTarget(self, action: Selector("unHighlightKey:"), forControlEvents: .TouchUpInside | .TouchUpOutside | .TouchDragOutside | .TouchDragExit)
                     }
+                    
+                    keyView.addTarget(self, action: Selector("playKeySound"), forControlEvents: .TouchDown)
                 }
             }
         }
@@ -436,8 +447,6 @@ class KeyboardViewController: UIInputViewController {
     }
     
     func keyPressedHelper(sender: KeyboardKey) {
-        self.playKeySound()
-        
         if let model = self.layout?.keyForView(sender) {
             self.keyPressed(model)
             
@@ -534,8 +543,6 @@ class KeyboardViewController: UIInputViewController {
     func backspaceDown(sender: KeyboardKey) {
         self.cancelBackspaceTimers()
         
-        self.playKeySound()
-        
         if let textDocumentProxy = self.textDocumentProxy as? UIKeyInput {
             textDocumentProxy.deleteBackward()
         }
@@ -554,14 +561,14 @@ class KeyboardViewController: UIInputViewController {
     }
     
     func backspaceRepeatCallback() {
+        self.playKeySound()
+        
         if let textDocumentProxy = self.textDocumentProxy as? UIKeyInput {
             textDocumentProxy.deleteBackward()
         }
     }
     
     func shiftDown(sender: KeyboardKey) {
-        self.playKeySound()
-        
         if self.shiftWasMultitapped {
             self.shiftWasMultitapped = false
             return
@@ -592,10 +599,13 @@ class KeyboardViewController: UIInputViewController {
         }
     }
     
+    // TODO: this should be uppercase, not lowercase
     func updateKeyCaps(lowercase: Bool) {
         if self.layout != nil {
+            let characterUppercase = (NSUserDefaults.standardUserDefaults().boolForKey(kSmallLowercase) ? !lowercase : true)
+            
             for (model, key) in self.layout!.modelToView {
-                key.text = model.keyCapForCase(!lowercase)
+                self.setKeyCapForKey(lowercase, characterLowercase: !characterUppercase, model: model, view: key)
                 
                 if model.type == Key.KeyType.Shift {
                     switch self.shiftState {
@@ -613,9 +623,16 @@ class KeyboardViewController: UIInputViewController {
         }
     }
     
+    func setKeyCapForKey(lowercase: Bool, characterLowercase: Bool, model: Key, view: KeyboardKey) {
+        if model.type == .Character {
+            view.text = model.keyCapForCase(!characterLowercase)
+        }
+        else {
+            view.text = model.keyCapForCase(!lowercase)
+        }
+    }
+    
     func modeChangeTapped(sender: KeyboardKey) {
-        self.playKeySound()
-        
         if let toMode = self.layout?.viewToModel[sender]?.toMode {
             self.currentMode = toMode
         }
@@ -635,8 +652,6 @@ class KeyboardViewController: UIInputViewController {
     }
     
     @IBAction func toggleSettings() {
-        self.playKeySound()
-        
         if let settings = self.settingsView {
             let hidden = settings.hidden
             settings.hidden = !hidden
@@ -766,6 +781,10 @@ class KeyboardViewController: UIInputViewController {
     // MOST COMMONLY EXTENDABLE METHODS //
     //////////////////////////////////////
     
+    class var layoutClass: KeyboardLayout.Type { get { return KeyboardLayout.self }}
+    class var layoutConstants: LayoutConstants.Type { get { return LayoutConstants.self }}
+    class var globalColors: GlobalColors.Type { get { return GlobalColors.self }}
+    
     func keyPressed(key: Key) {
         if let proxy = (self.textDocumentProxy as? UIKeyInput) {
             proxy.insertText(key.outputForCase(self.shiftState.uppercase()))
@@ -781,29 +800,9 @@ class KeyboardViewController: UIInputViewController {
     
     // a settings view that replaces the keyboard when the settings button is pressed
     func createSettings() -> ExtraView? {
-        let assets = NSBundle(forClass: self.dynamicType).loadNibNamed("DefaultSettings", owner: self, options: nil)
-        
-        if assets.count > 0 && assets.first is ExtraView {
-            if let settingsView = assets.first as? ExtraView {
-                settingsView.globalColors = self.dynamicType.globalColors
-                settingsView.darkMode = false
-                settingsView.solidColorMode = self.solidColorMode()
-                
-                return settingsView
-            }
-            else {
-                return nil
-            }
-        }
-        else {
-            return nil
-        }
+        // note that dark mode is not yet valid here, so we just put false for clarity
+        var settingsView = DefaultSettings(globalColors: self.dynamicType.globalColors, darkMode: false, solidColorMode: self.solidColorMode())
+        settingsView.backButton?.addTarget(self, action: Selector("toggleSettings"), forControlEvents: UIControlEvents.TouchUpInside)
+        return settingsView
     }
 }
-
-//// does not work; drops CPU to 0% when run on device
-//extension UIInputView: UIInputViewAudioFeedback {
-//    public var enableInputClicksWhenVisible: Bool {
-//        return true
-//    }
-//}
