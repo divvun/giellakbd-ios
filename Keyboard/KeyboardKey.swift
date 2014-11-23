@@ -8,9 +8,7 @@
 
 import UIKit
 
-// TODO: animation on color set
 // TODO: correct corner radius
-// TODO: correct colors
 // TODO: refactor
 
 // popup constraints have to be setup with the topmost view in mind; hence these callbacks
@@ -94,33 +92,20 @@ class KeyboardKey: UIControl {
     var popup: KeyboardKeyBackground?
     var connector: KeyboardConnector?
     
-    var displayView: UIView
-    var displayLayer: CAShapeLayer
-    var borderView: UIView
-    var borderLayer: CAShapeLayer
-    var underLayer: CAShapeLayer
-    var underView: UIView
+    var displayView: ShapeView
+    var borderView: ShapeView
+    var underView: ShapeView
+    
     var shadowView: UIView
-    var shadowLayer: CAShapeLayer
-    
-    class DumbLayer: CALayer {
-        override func addAnimation(anim: CAAnimation!, forKey key: String!) {
-        }
-    }
-    
-    override class func layerClass() -> AnyClass {
-        return DumbLayer.self
-    }
+    var shadowLayer: CALayer
     
     init(vibrancy optionalVibrancy: VibrancyType?) {
         self.vibrancy = optionalVibrancy
         
-        self.displayView = UIView()
-        self.displayLayer = CAShapeLayer()
-        self.borderLayer = CAShapeLayer()
-        self.borderView = UIView()
-        self.underLayer = CAShapeLayer()
-        self.underView = UIView()
+        self.displayView = ShapeView(shapeLayer: false)
+        self.underView = ShapeView(shapeLayer: false)
+        self.borderView = ShapeView(shapeLayer: true)
+        
         self.shadowLayer = CAShapeLayer()
         self.shadowView = UIView()
         
@@ -146,19 +131,25 @@ class KeyboardKey: UIControl {
         self.addSubview(self.shadowView)
         self.shadowView.layer.addSublayer(self.shadowLayer)
         
-        self.displayView.layer.addSublayer(self.displayLayer)
         self.addSubview(self.displayView)
-        
-        self.underView.layer.addSublayer(self.underLayer)
         self.addSubview(self.underView)
-        
-        self.borderView.layer.addSublayer(self.borderLayer)
         self.addSubview(self.borderView)
         
         self.addSubview(self.background)
         self.background.addSubview(self.label)
         
         let setupViews: Void = {
+            self.displayView.opaque = false
+            self.underView.opaque = false
+            self.borderView.opaque = false
+            
+            self.shadowLayer.shadowOpacity = Float(0.2)
+            self.shadowLayer.shadowRadius = 4
+            self.shadowLayer.shadowOffset = CGSizeMake(0, 3)
+            
+            self.borderView.lineWidth = CGFloat(0.5)
+            self.borderView.fillColor = UIColor.clearColor()
+            
             self.label.textAlignment = NSTextAlignment.Center
             self.label.baselineAdjustment = UIBaselineAdjustment.AlignCenters
             self.label.font = self.label.font.fontWithSize(22)
@@ -166,13 +157,6 @@ class KeyboardKey: UIControl {
             self.label.minimumScaleFactor = CGFloat(0.1)
             self.label.userInteractionEnabled = false
             self.label.numberOfLines = 1
-            
-            self.shadowLayer.shadowOpacity = Float(0.2)
-            self.shadowLayer.shadowRadius = 4
-            self.shadowLayer.shadowOffset = CGSizeMake(0, 3)
-            
-            self.borderLayer.lineWidth = CGFloat(0.5)
-            self.borderLayer.fillColor = UIColor.clearColor().CGColor
         }()
     }
     
@@ -273,9 +257,13 @@ class KeyboardKey: UIControl {
             self.shadowLayer.shadowPath = shadowPath.CGPath
         }
         
-        self.underLayer.path = underPath?.CGPath
-        self.displayLayer.path = testPath.CGPath
-        self.borderLayer.path = edgePath.CGPath
+        self.underView.curve = underPath
+        self.displayView.curve = testPath
+        self.borderView.curve = edgePath
+        
+        if let borderLayer = self.borderView.layer as? CAShapeLayer {
+            borderLayer.strokeColor = UIColor.greenColor().CGColor
+        }
         
         CATransaction.commit()
     }
@@ -331,24 +319,24 @@ class KeyboardKey: UIControl {
         
         if switchColors {
             if let downColor = self.downColor {
-                self.displayLayer.fillColor = downColor.CGColor
+                self.displayView.fillColor = downColor
             }
             else {
-                self.displayLayer.fillColor = self.color.CGColor
+                self.displayView.fillColor = self.color
             }
             
             if let downUnderColor = self.downUnderColor {
-                self.underLayer.fillColor = downUnderColor.CGColor
+                self.underView.fillColor = downUnderColor
             }
             else {
-                self.underLayer.fillColor = self.underColor.CGColor
+                self.underView.fillColor = self.underColor
             }
             
             if let downBorderColor = self.downBorderColor {
-                self.borderLayer.strokeColor = downBorderColor.CGColor
+                self.borderView.strokeColor = downBorderColor
             }
             else {
-                self.borderLayer.strokeColor = self.borderColor.CGColor
+                self.borderView.strokeColor = self.borderColor
             }
             
             if let downTextColor = self.downTextColor {
@@ -363,11 +351,11 @@ class KeyboardKey: UIControl {
             }
         }
         else {
-            self.displayLayer.fillColor = self.color.CGColor
+            self.displayView.fillColor = self.color
             
-            self.underLayer.fillColor = self.underColor.CGColor
+            self.underView.fillColor = self.underColor
             
-            self.borderLayer.strokeColor = self.borderColor.CGColor
+            self.borderView.strokeColor = self.borderColor
             
             self.label.textColor = self.textColor
             self.popupLabel?.textColor = self.textColor
@@ -375,7 +363,7 @@ class KeyboardKey: UIControl {
         }
         
         if self.popup != nil {
-            self.displayLayer.fillColor = self.popupColor.CGColor
+            self.displayView.fillColor = self.popupColor
         }
         
         CATransaction.commit()
@@ -463,6 +451,96 @@ class KeyboardKey: UIControl {
             self.layer.zPosition = 0
             
             self.popupDirection = nil
+        }
+    }
+}
+
+class ShapeView: UIView {
+    
+    let shapeLayer: CAShapeLayer?
+
+    var curve: UIBezierPath? {
+        didSet {
+            if let layer = self.shapeLayer {
+                layer.path = curve?.CGPath
+            }
+            else {
+                self.setNeedsDisplay()
+            }
+        }
+    }
+    
+    var fillColor: UIColor? {
+        didSet {
+            if let layer = self.shapeLayer {
+                layer.fillColor = fillColor?.CGColor
+            }
+            else {
+                self.setNeedsDisplay()
+            }
+        }
+    }
+
+    var strokeColor: UIColor? {
+        didSet {
+            if let layer = self.shapeLayer {
+                layer.strokeColor = strokeColor?.CGColor
+            }
+            else {
+                self.setNeedsDisplay()
+            }
+        }
+    }
+    
+    var lineWidth: CGFloat? {
+        didSet {
+            if let layer = self.shapeLayer {
+                if let lineWidth = self.lineWidth {
+                    layer.lineWidth = lineWidth
+                }
+            }
+            else {
+                self.setNeedsDisplay()
+            }
+        }
+    }
+    
+    convenience init(shapeLayer: Bool) {
+        self.init(frame: CGRectZero, shapeLayer: shapeLayer)
+    }
+    
+    init(frame: CGRect, shapeLayer: Bool) {
+        super.init(frame: frame)
+        
+        if shapeLayer {
+            var shapeLayer = CAShapeLayer()
+            self.layer.addSublayer(shapeLayer)
+            self.shapeLayer = shapeLayer
+            self.layer.shouldRasterize = true
+        }
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func drawRect(rect: CGRect) {
+        if self.shapeLayer == nil {
+            if let curve = self.curve {
+                if let lineWidth = self.lineWidth {
+                    curve.lineWidth = lineWidth
+                }
+                
+                if let fillColor = self.fillColor {
+                    fillColor.setFill()
+                    curve.fill()
+                }
+                
+                if let strokeColor = self.strokeColor {
+                    strokeColor.setStroke()
+                    curve.stroke()
+                }
+            }
         }
     }
 }
