@@ -20,7 +20,6 @@
 		4E60A13E1979FB2E00854CC8 /* DirectionEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E60A13D1979FB2E00854CC8 /* DirectionEnum.swift */; };
 		4E72C96819E04A7A00DFDDB0 /* Catboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6AEE4B19D246D700931E8F /* Catboard.swift */; };
 		4E807DC119461DC700D875D1 /* Keyboard.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 4E807DB919461DC700D875D1 /* Keyboard.appex */; };
-		4E8EF38619F95D75009CBF5D /* KeyboardFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E8EF38519F95D75009CBF5D /* KeyboardFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4E8EF39819F95D75009CBF5D /* KeyboardFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E8EF38119F95D74009CBF5D /* KeyboardFramework.framework */; };
 		4E8EF39919F95D75009CBF5D /* KeyboardFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4E8EF38119F95D74009CBF5D /* KeyboardFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4E8EF3A019F95D93009CBF5D /* KeyboardFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E8EF38119F95D74009CBF5D /* KeyboardFramework.framework */; };
@@ -115,8 +114,6 @@
 		4E807DBC19461DC700D875D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4E807DC81946209600D875D1 /* KeyboardKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardKey.swift; sourceTree = "<group>"; };
 		4E8EF38119F95D74009CBF5D /* KeyboardFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KeyboardFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4E8EF38419F95D75009CBF5D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4E8EF38519F95D75009CBF5D /* KeyboardFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyboardFramework.h; sourceTree = "<group>"; };
 		4EC2A46919DF811E00F789E1 /* KeyboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardViewController.swift; sourceTree = "<group>"; };
 		4EC2A46A19DF811E00F789E1 /* KeyboardLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardLayout.swift; sourceTree = "<group>"; };
 		4EC2A46C19DF811E00F789E1 /* ForwardingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForwardingView.swift; sourceTree = "<group>"; };
@@ -230,7 +227,6 @@
 			children = (
 				4E807D9519461D9000D875D1 /* HostingApp */,
 				4E807DBA19461DC700D875D1 /* Keyboard */,
-				4E8EF38219F95D75009CBF5D /* KeyboardFramework */,
 				4E7CDF901A079E3E0015BB90 /* KeyboardSound */,
 				4E807D9419461D9000D875D1 /* Products */,
 			);
@@ -289,23 +285,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		4E8EF38219F95D75009CBF5D /* KeyboardFramework */ = {
-			isa = PBXGroup;
-			children = (
-				4E8EF38519F95D75009CBF5D /* KeyboardFramework.h */,
-				4E8EF38319F95D75009CBF5D /* Supporting Files */,
-			);
-			path = KeyboardFramework;
-			sourceTree = "<group>";
-		};
-		4E8EF38319F95D75009CBF5D /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				4E8EF38419F95D75009CBF5D /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		4EE7599519F759F300B4E6ED /* Utility */ = {
 			isa = PBXGroup;
 			children = (
@@ -321,7 +300,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4E8EF38619F95D75009CBF5D /* KeyboardFramework.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

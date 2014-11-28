@@ -15,10 +15,14 @@ class GiellaKeyboard: KeyboardViewController {
         }
     }
     
-    init() {
-        // XXX: generatedKeyboard() must be generated! :)
+    init(keyboard: Keyboard, keyNames: [String: String]) {
         super.init(nibName: nil, bundle: nil,
-            keyboard: defaultControls(generatedKeyboard(), generatedConfig()))
+            keyboard: defaultControls(keyboard, keyNames))
+    }
+    
+    convenience init() {
+        // XXX: generatedKeyboard() must be generated! :)
+        self.init(keyboard: generatedKeyboard(), keyNames: generatedConfig())
     }
     
     override func createBanner() -> ExtraView? {
