@@ -320,7 +320,7 @@ class KeyboardViewController: UIInputViewController {
                     if key.isCharacter {
                         if UIDevice.currentDevice().userInterfaceIdiom != UIUserInterfaceIdiom.Pad {
                             keyView.addTarget(self, action: Selector("showPopup:"), forControlEvents: .TouchDown | .TouchDragInside | .TouchDragEnter)
-                            keyView.addTarget(keyView, action: Selector("hidePopup"), forControlEvents: .TouchDragExit)
+                            keyView.addTarget(self, action: Selector("hidePopup:"), forControlEvents: .TouchDragExit)
                             keyView.addTarget(self, action: Selector("hidePopupDelay:"), forControlEvents: .TouchUpInside | .TouchUpOutside | .TouchDragOutside)
                         }
                     }
@@ -345,17 +345,26 @@ class KeyboardViewController: UIInputViewController {
     /////////////////
     
     var keyWithDelayedPopup: KeyboardKey?
+    var lastKey: KeyboardKey?
     var popupDelayTimer: NSTimer?
+    var longPressTimer: NSTimer?
     
     func showPopup(sender: KeyboardKey) {
         if sender == self.keyWithDelayedPopup {
             self.popupDelayTimer?.invalidate()
         }
+        self.longPressTimer?.invalidate()
+        
         sender.showPopup()
+        
+        self.lastKey = sender
+        self.longPressTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector:
+            Selector("showLongPress"), userInfo: nil, repeats: false)
     }
     
     func hidePopupDelay(sender: KeyboardKey) {
         self.popupDelayTimer?.invalidate()
+        self.longPressTimer?.invalidate()
         
         if sender != self.keyWithDelayedPopup {
             self.keyWithDelayedPopup?.hidePopup()
@@ -365,6 +374,28 @@ class KeyboardViewController: UIInputViewController {
         if sender.popup != nil {
             self.popupDelayTimer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: Selector("hidePopupCallback"), userInfo: nil, repeats: false)
         }
+    }
+    
+    var longPressTriggered = false;
+
+    func showLongPress() {
+        if let key = layout?.keyForView(self.lastKey!) {
+            if (shiftState.uppercase() && key.hasUppercaseLongPress) ||
+                (!shiftState.uppercase() && key.hasUppercaseLongPress) {
+                    self.longPressTriggered = true;
+            }
+        }
+    }
+    
+    func hideLongPress() {
+        self.longPressTimer = nil
+        self.lastKey = nil
+        self.longPressTriggered = false;
+    }
+    
+    func hidePopup(sender: KeyboardKey) {
+        sender.hidePopup()
+        hideLongPress()
     }
     
     func hidePopupCallback() {
@@ -430,7 +461,11 @@ class KeyboardViewController: UIInputViewController {
     
     func keyPressedHelper(sender: KeyboardKey) {
         if let model = self.layout?.keyForView(sender) {
-            self.keyPressed(model)
+            if (!self.longPressTriggered) {
+                self.keyPressed(model)
+            } else {
+                self.longPressTriggered = false
+            }
             
             // auto exit from special char subkeyboard
             if model.type == Key.KeyType.Space || model.type == Key.KeyType.Return {

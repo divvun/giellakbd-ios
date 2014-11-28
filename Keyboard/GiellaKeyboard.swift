@@ -21,10 +21,122 @@ class GiellaKeyboard: KeyboardViewController {
             keyboard: defaultControls(generatedKeyboard(), generatedConfig()))
     }
     
+    override func createBanner() -> ExtraView? {
+        return GiellaBanner(keyboard: self)
+    }
+    
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func showLongPress() {
+        super.showLongPress()
+        
+        if let banner = self.bannerView as? GiellaBanner {
+            //self.lastKey?.label.text = "!"
+            //banner.label.text = self.lastKey?.label.text
+            if let keyView = self.lastKey? {
+                let key = self.layout!.keyForView(keyView)
+                banner.updateAlternateKeyList(key!.longPressForCase(shiftState.uppercase()))
+            }
+        }
+    }
+    
+    override func hideLongPress() {
+        super.hideLongPress()
+        
+        if let banner = self.bannerView as? GiellaBanner {
+            //self.lastKey?.label.text = "!"
+            //banner.label.text = ""
+            banner.updateAlternateKeyList([])
+
+        }
+    }
 }
+
+class GiellaBanner: ExtraView {
+    
+    //var label: UILabel = UILabel()
+    var keyboard: KeyboardViewController?;
+    
+    convenience init(keyboard: KeyboardViewController) {
+        self.init(globalColors: nil, darkMode: false, solidColorMode: false)
+        self.keyboard = keyboard
+    }
+    
+    required init(globalColors: GlobalColors.Type?, darkMode: Bool, solidColorMode: Bool) {
+        super.init(globalColors: globalColors, darkMode: darkMode, solidColorMode: solidColorMode)
+        self.keyboard = nil
+        /*
+        self.addSubview(self.label)
+        
+        //self.label.font = UIFont(name: "ChalkboardSE-Regular", size: 22)
+        self.label.text = "Loaded."
+        self.label.sizeToFit()
+        */
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func setNeedsLayout() {
+        super.setNeedsLayout()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        //self.label.center.y = self.center.y
+    }
+    
+    func handleBtnPress(sender: UIButton) {
+        if let textDocumentProxy = keyboard?.textDocumentProxy as? UIKeyInput {
+            textDocumentProxy.insertText(sender.titleLabel!.text!)
+        }
+    }
+    
+    func updateAlternateKeyList(keys: [String]) {
+        var sv = self.subviews
+        for v in sv {
+            v.removeFromSuperview()
+        }
+        
+        var lastView: UIView = self
+        var first = true;
+        
+        for char in keys {
+            var btn: UIButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
+            btn.setTitle(char, forState: UIControlState.Normal)
+            
+            btn.addTarget(self, action: "handleBtnPress:", forControlEvents: .TouchUpInside)
+
+            self.addSubview(btn)
+            
+            btn.setTranslatesAutoresizingMaskIntoConstraints(false)
+            
+            var leftConstraint: NSLayoutConstraint;
+            
+            if first {
+                first = false
+                leftConstraint = NSLayoutConstraint(item: btn, attribute: .Left, relatedBy: .Equal, toItem: lastView, attribute: .Left, multiplier: 1.0, constant: 1)
+            } else {
+                leftConstraint = NSLayoutConstraint(item: btn, attribute: .Left, relatedBy: .Equal, toItem: lastView, attribute: .Right, multiplier: 1.0, constant: 1)
+                let widthConstraint = NSLayoutConstraint(item: btn, attribute: .Width, relatedBy: .Equal, toItem: lastView, attribute: NSLayoutAttribute.Width, multiplier: 1, constant: 0)
+                
+                self.addConstraint(widthConstraint)
+            }
+            
+            let heightConstraint = NSLayoutConstraint(item: btn, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Height, multiplier: 1, constant: 0)
+            self.addConstraint(leftConstraint)
+
+            self.addConstraint(heightConstraint)
+            
+            lastView = btn
+        }
+
+    }
+}
+
 
 func defaultControls(defaultKeyboard: Keyboard, keyNames: [String: String]) -> Keyboard {
     var backspace = Key(.Backspace)
