@@ -33,6 +33,22 @@ class GiellaKeyboard: KeyboardViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func disableInput() {
+        self.forwardingView.userInteractionEnabled = false
+        
+        // Workaround to kill current touches
+        self.forwardingView.removeFromSuperview()
+        self.view.addSubview(self.forwardingView)
+        
+        if self.lastKey != nil {
+            super.hidePopup(self.lastKey!)
+        }
+    }
+    
+    func enableInput() {
+        self.forwardingView.userInteractionEnabled = true
+    }
+    
     override func showLongPress() {
         super.showLongPress()
         
@@ -41,7 +57,12 @@ class GiellaKeyboard: KeyboardViewController {
             //banner.label.text = self.lastKey?.label.text
             if let keyView = self.lastKey? {
                 let key = self.layout!.keyForView(keyView)
-                banner.updateAlternateKeyList(key!.longPressForCase(shiftState.uppercase()))
+                var longpresses = key!.longPressForCase(shiftState.uppercase())
+                
+                if longpresses.count > 0 {
+                    //self.disableInput()
+                    banner.updateAlternateKeyList(longpresses)
+                }
             }
         }
     }
@@ -53,7 +74,7 @@ class GiellaKeyboard: KeyboardViewController {
             //self.lastKey?.label.text = "!"
             //banner.label.text = ""
             banner.updateAlternateKeyList([])
-
+            
         }
     }
 }
@@ -61,9 +82,9 @@ class GiellaKeyboard: KeyboardViewController {
 class GiellaBanner: ExtraView {
     
     //var label: UILabel = UILabel()
-    var keyboard: KeyboardViewController?;
+    var keyboard: GiellaKeyboard?
     
-    convenience init(keyboard: KeyboardViewController) {
+    convenience init(keyboard: GiellaKeyboard) {
         self.init(globalColors: nil, darkMode: false, solidColorMode: false)
         self.keyboard = keyboard
     }
@@ -99,6 +120,27 @@ class GiellaBanner: ExtraView {
         }
     }
     
+    func applyConstraints(btn: UIButton, lastView: UIView, first: Bool) {
+        var leftConstraint: NSLayoutConstraint;
+        
+        btn.setTranslatesAutoresizingMaskIntoConstraints(false)
+        
+        if first {
+            leftConstraint = NSLayoutConstraint(item: btn, attribute: .Left, relatedBy: .Equal, toItem: lastView, attribute: .Left, multiplier: 1.0, constant: 1)
+        } else {
+            leftConstraint = NSLayoutConstraint(item: btn, attribute: .Left, relatedBy: .Equal, toItem: lastView, attribute: .Right, multiplier: 1.0, constant: 1)
+            let widthConstraint = NSLayoutConstraint(item: btn, attribute: .Width, relatedBy: .Equal, toItem: lastView, attribute: NSLayoutAttribute.Width, multiplier: 1, constant: 0)
+            
+            self.addConstraint(widthConstraint)
+        }
+        
+        let heightConstraint = NSLayoutConstraint(item: btn, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Height, multiplier: 1, constant: 0)
+        self.addConstraint(leftConstraint)
+        
+        self.addConstraint(heightConstraint)
+    }
+
+    
     func updateAlternateKeyList(keys: [String]) {
         var sv = self.subviews
         for v in sv {
@@ -108,34 +150,25 @@ class GiellaBanner: ExtraView {
         var lastView: UIView = self
         var first = true;
         
+        var closeButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
+        closeButton.addTarget(self, action: Selector("handleBtnPress:"), forControlEvents: .TouchUpInside)
+        self.addSubview(closeButton)
+        applyConstraints(closeButton, lastView: lastView, first: true)
+        lastView = closeButton
+        first = false
+        
         for char in keys {
             var btn: UIButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
             btn.setTitle(char, forState: UIControlState.Normal)
             
-            btn.addTarget(self, action: "handleBtnPress:", forControlEvents: .TouchUpInside)
+            btn.addTarget(self, action: Selector("handleBtnPress:"), forControlEvents: .TouchUpInside)
 
             self.addSubview(btn)
             
-            btn.setTranslatesAutoresizingMaskIntoConstraints(false)
-            
-            var leftConstraint: NSLayoutConstraint;
-            
-            if first {
-                first = false
-                leftConstraint = NSLayoutConstraint(item: btn, attribute: .Left, relatedBy: .Equal, toItem: lastView, attribute: .Left, multiplier: 1.0, constant: 1)
-            } else {
-                leftConstraint = NSLayoutConstraint(item: btn, attribute: .Left, relatedBy: .Equal, toItem: lastView, attribute: .Right, multiplier: 1.0, constant: 1)
-                let widthConstraint = NSLayoutConstraint(item: btn, attribute: .Width, relatedBy: .Equal, toItem: lastView, attribute: NSLayoutAttribute.Width, multiplier: 1, constant: 0)
-                
-                self.addConstraint(widthConstraint)
-            }
-            
-            let heightConstraint = NSLayoutConstraint(item: btn, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Height, multiplier: 1, constant: 0)
-            self.addConstraint(leftConstraint)
-
-            self.addConstraint(heightConstraint)
+            applyConstraints(btn, lastView: lastView, first: false)
             
             lastView = btn
+            
         }
 
     }
