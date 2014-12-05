@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="nAo-DR-8Pl">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="nAo-DR-8Pl">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6246"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -13,15 +13,15 @@
                         <viewControllerLayoutGuide type="top" id="Bpu-v8-xYb"/>
                         <viewControllerLayoutGuide type="bottom" id="P06-La-EKF"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="aBi-zl-Xx9">
+                    <view key="view" contentMode="scaleToFill" horizontalHuggingPriority="1" id="aBi-zl-Xx9">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="IC3-rM-66w">
+                            <imageView userInteractionEnabled="NO" alpha="0.099999999999999686" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="Background.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="eP1-Rg-eNq">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xea-iY-wvs">
-                                <rect key="frame" x="238" y="20" width="124" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xea-iY-wvs">
+                                <rect key="frame" x="401" y="87" width="184" height="30"/>
                                 <state key="normal" title="Dismiss Keyboard">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -29,67 +29,78 @@
                                     <action selector="dismiss" destination="nAo-DR-8Pl" eventType="touchUpInside" id="P7f-VJ-4k8"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Normal" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jto-Fw-99T">
-                                <rect key="frame" x="16" y="58" width="568" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Type some text here to test" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jto-Fw-99T">
+                                <rect key="frame" x="16" y="88" width="376" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Dark Mode" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zIN-qD-YPT">
-                                <rect key="frame" x="16" y="96" width="568" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" keyboardAppearance="alert"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Word Caps" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Sv9-QE-0tf">
-                                <rect key="frame" x="16" y="134" width="568" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Sentence Caps" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JkG-lS-E73">
-                                <rect key="frame" x="16" y="172" width="568" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="All Caps" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jEi-oU-7aO">
-                                <rect key="frame" x="16" y="210" width="568" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
-                            </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(Waiting for keyboard...)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3bG-47-LNQ">
-                                <rect key="frame" x="209" y="248" width="182" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" misplaced="YES" text="Keyboard Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NEf-oI-cTp" userLabel="Title">
+                                <rect key="frame" x="279" y="37" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="How to enable the keyboards:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qwR-WH-GXA" userLabel="Instructions Title">
+                                <rect key="frame" x="16" y="145" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" lineBreakMode="tailTruncation" numberOfLines="14" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MiU-A4-bHd">
+                                <rect key="frame" x="17" y="174" width="567" height="17"/>
+                                <string key="text">1. In settings, go to General &gt; Keyboard &gt; Keyboards &gt; Add New Keyboard.
+2. Under "Third-Party Keyboards", choose this application.
+3. A page of keyboards will appear. Enable the keyboards you wish to use, and press "Done".
+
+You may now access these keyboards by pressing the globe icon on the keyboard when it appears.
+</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8RY-pf-Xxd">
+                                <rect key="frame" x="277" y="199" width="46" height="30"/>
+                                <state key="normal" title="Open Settings">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="openSettings" destination="nAo-DR-8Pl" eventType="touchUpInside" id="y1N-gs-aka"/>
+                                </connections>
+                            </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="jEi-oU-7aO" firstAttribute="leading" secondItem="aBi-zl-Xx9" secondAttribute="leadingMargin" id="0fI-cc-CKa"/>
-                            <constraint firstItem="JkG-lS-E73" firstAttribute="trailing" secondItem="aBi-zl-Xx9" secondAttribute="trailingMargin" id="1QW-qc-rHz"/>
-                            <constraint firstItem="Jto-Fw-99T" firstAttribute="top" secondItem="xea-iY-wvs" secondAttribute="bottom" constant="8" id="2PO-BH-UYU"/>
-                            <constraint firstAttribute="trailing" secondItem="IC3-rM-66w" secondAttribute="trailing" id="2Tb-f1-RXm"/>
-                            <constraint firstItem="IC3-rM-66w" firstAttribute="leading" secondItem="aBi-zl-Xx9" secondAttribute="leading" id="6fk-Jg-LEU"/>
-                            <constraint firstItem="Sv9-QE-0tf" firstAttribute="trailing" secondItem="aBi-zl-Xx9" secondAttribute="trailingMargin" id="ARH-fd-BD7"/>
-                            <constraint firstItem="P06-La-EKF" firstAttribute="top" secondItem="IC3-rM-66w" secondAttribute="bottom" id="CAM-uD-RD7"/>
-                            <constraint firstItem="IC3-rM-66w" firstAttribute="top" secondItem="aBi-zl-Xx9" secondAttribute="top" id="F9u-ma-0Be"/>
-                            <constraint firstItem="xea-iY-wvs" firstAttribute="top" secondItem="Bpu-v8-xYb" secondAttribute="bottom" id="FcX-JF-0f0"/>
-                            <constraint firstItem="JkG-lS-E73" firstAttribute="top" secondItem="Sv9-QE-0tf" secondAttribute="bottom" constant="8" id="Isy-cH-00j"/>
-                            <constraint firstItem="zIN-qD-YPT" firstAttribute="leading" secondItem="aBi-zl-Xx9" secondAttribute="leadingMargin" id="RS7-5Q-7dX"/>
-                            <constraint firstAttribute="centerX" secondItem="xea-iY-wvs" secondAttribute="centerX" id="Tdh-Nc-qEN"/>
-                            <constraint firstItem="jEi-oU-7aO" firstAttribute="top" secondItem="JkG-lS-E73" secondAttribute="bottom" constant="8" id="UAi-eO-fVu"/>
-                            <constraint firstItem="Sv9-QE-0tf" firstAttribute="top" secondItem="zIN-qD-YPT" secondAttribute="bottom" constant="8" id="WWr-KU-rPx"/>
-                            <constraint firstItem="jEi-oU-7aO" firstAttribute="trailing" secondItem="aBi-zl-Xx9" secondAttribute="trailingMargin" id="cZg-Zj-bxo"/>
-                            <constraint firstItem="Jto-Fw-99T" firstAttribute="trailing" secondItem="aBi-zl-Xx9" secondAttribute="trailingMargin" id="h6R-mk-5xj"/>
-                            <constraint firstItem="Sv9-QE-0tf" firstAttribute="leading" secondItem="aBi-zl-Xx9" secondAttribute="leadingMargin" id="hsX-fG-ejf"/>
-                            <constraint firstItem="zIN-qD-YPT" firstAttribute="top" secondItem="Jto-Fw-99T" secondAttribute="bottom" constant="8" id="huJ-vL-ZtF"/>
-                            <constraint firstAttribute="centerX" secondItem="3bG-47-LNQ" secondAttribute="centerX" constant="-0.5" id="iSm-MK-elT"/>
-                            <constraint firstItem="JkG-lS-E73" firstAttribute="leading" secondItem="aBi-zl-Xx9" secondAttribute="leadingMargin" id="tu3-o3-Xrq"/>
-                            <constraint firstItem="Jto-Fw-99T" firstAttribute="leading" secondItem="aBi-zl-Xx9" secondAttribute="leadingMargin" id="wXH-Yx-oBy"/>
-                            <constraint firstItem="zIN-qD-YPT" firstAttribute="trailing" secondItem="aBi-zl-Xx9" secondAttribute="trailingMargin" id="wod-3F-kte"/>
-                            <constraint firstItem="3bG-47-LNQ" firstAttribute="top" secondItem="jEi-oU-7aO" secondAttribute="bottom" constant="8" id="znP-aw-Mau"/>
+                            <constraint firstItem="MiU-A4-bHd" firstAttribute="leading" secondItem="aBi-zl-Xx9" secondAttribute="leadingMargin" id="4Mr-Tp-sAe"/>
+                            <constraint firstItem="qwR-WH-GXA" firstAttribute="leading" secondItem="aBi-zl-Xx9" secondAttribute="leadingMargin" id="78O-h8-gs4"/>
+                            <constraint firstItem="NEf-oI-cTp" firstAttribute="top" secondItem="Bpu-v8-xYb" secondAttribute="bottom" constant="32" id="80P-ex-OlB"/>
+                            <constraint firstAttribute="centerX" secondItem="NEf-oI-cTp" secondAttribute="centerX" id="86t-SK-HLI"/>
+                            <constraint firstAttribute="height" secondItem="eP1-Rg-eNq" secondAttribute="height" id="C45-MV-DfX"/>
+                            <constraint firstItem="8RY-pf-Xxd" firstAttribute="top" secondItem="MiU-A4-bHd" secondAttribute="bottom" constant="8" id="FiM-gB-5er"/>
+                            <constraint firstItem="MiU-A4-bHd" firstAttribute="trailing" secondItem="aBi-zl-Xx9" secondAttribute="trailingMargin" id="Ihm-s2-7wl"/>
+                            <constraint firstAttribute="width" secondItem="eP1-Rg-eNq" secondAttribute="width" id="IoC-7s-l0K"/>
+                            <constraint firstAttribute="centerX" secondItem="8RY-pf-Xxd" secondAttribute="centerX" constant="260" id="Qqp-dC-ujT"/>
+                            <constraint firstItem="xea-iY-wvs" firstAttribute="leading" secondItem="Jto-Fw-99T" secondAttribute="trailing" constant="16" id="VAV-dD-yw9"/>
+                            <constraint firstAttribute="centerX" secondItem="8RY-pf-Xxd" secondAttribute="centerX" id="WMT-Ul-gN0"/>
+                            <constraint firstItem="Jto-Fw-99T" firstAttribute="leading" secondItem="aBi-zl-Xx9" secondAttribute="leadingMargin" id="eFR-d0-Vr3"/>
+                            <constraint firstItem="qwR-WH-GXA" firstAttribute="top" secondItem="Jto-Fw-99T" secondAttribute="bottom" constant="32" id="n0a-LH-d2Q"/>
+                            <constraint firstItem="xea-iY-wvs" firstAttribute="top" secondItem="Bpu-v8-xYb" secondAttribute="bottom" constant="96" id="nhT-vv-UOm"/>
+                            <constraint firstItem="8RY-pf-Xxd" firstAttribute="top" secondItem="MiU-A4-bHd" secondAttribute="bottom" constant="8" id="o0E-t9-5uj"/>
+                            <constraint firstItem="Jto-Fw-99T" firstAttribute="top" secondItem="Bpu-v8-xYb" secondAttribute="bottom" constant="96" id="osM-SJ-Gak"/>
+                            <constraint firstItem="8RY-pf-Xxd" firstAttribute="leading" secondItem="aBi-zl-Xx9" secondAttribute="leadingMargin" constant="1" id="qo2-bW-3vJ"/>
+                            <constraint firstItem="xea-iY-wvs" firstAttribute="trailing" secondItem="aBi-zl-Xx9" secondAttribute="trailingMargin" constant="1" id="spA-Z3-SMf"/>
+                            <constraint firstItem="MiU-A4-bHd" firstAttribute="top" secondItem="qwR-WH-GXA" secondAttribute="bottom" constant="8" id="xP3-xL-IoA"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="FiM-gB-5er"/>
+                                <exclude reference="Qqp-dC-ujT"/>
+                                <exclude reference="qo2-bW-3vJ"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
-                        <outlet property="stats" destination="3bG-47-LNQ" id="y0X-Tx-RE4"/>
+                        <outlet property="instructionsFld" destination="MiU-A4-bHd" id="KVd-Xt-lGa"/>
+                        <outlet property="titleFld" destination="NEf-oI-cTp" id="GYa-cO-lcd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kvK-BB-OCk" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -98,6 +109,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Background.jpg" width="640" height="1136"/>
+        <image name="Background.jpg" width="1936" height="1936"/>
     </resources>
 </document>
