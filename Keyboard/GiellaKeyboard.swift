@@ -173,9 +173,7 @@ class GiellaBanner: ExtraView {
             btn.frame = CGRectMake(0, 0, 20, 20)
             btn.setTitle(char, forState: .Normal)
             btn.sizeToFit()
-            btn.titleLabel?.font = UIFont.systemFontOfSize(18)
-            
-            
+            btn.titleLabel?.font = UIFont.systemFontOfSize(20)
             btn.setTranslatesAutoresizingMaskIntoConstraints(false)
             btn.backgroundColor = UIColor(hue: (216/360.0), saturation: 0.1, brightness: 0.81, alpha: 1)
             btn.setTitleColor(UIColor(white: 1.0, alpha: 1.0), forState: .Normal)

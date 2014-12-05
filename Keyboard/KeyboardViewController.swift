@@ -358,7 +358,7 @@ class KeyboardViewController: UIInputViewController {
         sender.showPopup()
         
         self.lastKey = sender
-        self.longPressTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector:
+        self.longPressTimer = NSTimer.scheduledTimerWithTimeInterval(0.35, target: self, selector:
             Selector("showLongPress"), userInfo: nil, repeats: false)
     }
     
@@ -379,10 +379,12 @@ class KeyboardViewController: UIInputViewController {
     var longPressTriggered = false;
 
     func showLongPress() {
-        if let key = layout?.keyForView(self.lastKey!) {
-            if (shiftState.uppercase() && key.hasUppercaseLongPress) ||
-                (!shiftState.uppercase() && key.hasUppercaseLongPress) {
-                    self.longPressTriggered = true;
+        if self.lastKey != nil {
+            if let key = layout?.keyForView(self.lastKey!) {
+                if (shiftState.uppercase() && key.hasUppercaseLongPress) ||
+                    (!shiftState.uppercase() && key.hasUppercaseLongPress) {
+                        self.longPressTriggered = true;
+                }
             }
         }
     }
