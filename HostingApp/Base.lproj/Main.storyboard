@@ -48,11 +48,11 @@
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" lineBreakMode="tailTruncation" numberOfLines="14" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MiU-A4-bHd">
                                 <rect key="frame" x="17" y="174" width="567" height="17"/>
-                                <string key="text">1. In settings, go to General &gt; Keyboard &gt; Keyboards &gt; Add New Keyboard.
-2. Under "Third-Party Keyboards", choose this application.
-3. A page of keyboards will appear. Enable the keyboards you wish to use, and press "Done".
+                                <string key="text">1. In Settings, go to General &gt; Keyboard &gt; Keyboards &gt; Add New Keyboard.
+2. Under "Third-Party Keyboards", choose this keyboard.
+3. A list of keyboard layouts will appear. Enable the keyboards you wish to use, and press "Done".
 
-You may now access these keyboards by pressing the globe icon on the keyboard when it appears.
+You may now access these keyboards by pressing the globe icon on the keyboard where it appears.
 </string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
