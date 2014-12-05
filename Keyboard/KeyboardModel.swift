@@ -66,6 +66,8 @@ class Key: Hashable {
     var lowercaseKeyCap: String?
     var uppercaseOutput: String?
     var lowercaseOutput: String?
+    var uppercaseLongPressOutput: [String]?
+    var lowercaseLongPressOutput: [String]?
     var toMode: Int? //if the key is a mode button, this indicates which page it links to
     
     var isCharacter: Bool {
@@ -109,6 +111,18 @@ class Key: Hashable {
         }
     }
     
+    var hasLowercaseLongPress: Bool {
+        get {
+            return self.lowercaseLongPressOutput != nil
+        }
+    }
+    
+    var hasUppercaseLongPress: Bool {
+        get {
+            return self.uppercaseLongPressOutput != nil
+        }
+    }
+    
     // TODO: this is kind of a hack
     var hashValue: Int
     
@@ -133,6 +147,24 @@ class Key: Hashable {
         self.uppercaseOutput = (letter as NSString).uppercaseString
         self.lowercaseKeyCap = self.lowercaseOutput
         self.uppercaseKeyCap = self.uppercaseOutput
+    }
+    
+    func setUppercaseLongPress(letters: [String]) {
+        self.uppercaseLongPressOutput = letters
+    }
+    
+    func setLowercaseLongPress(letters: [String]) {
+        self.lowercaseLongPressOutput = letters
+    }
+    
+    func longPressForCase(uppercase: Bool) -> [String] {
+        if uppercase && self.hasUppercaseLongPress {
+            return self.uppercaseLongPressOutput!
+        } else if !uppercase && self.hasLowercaseLongPress {
+            return self.lowercaseLongPressOutput!
+        } else {
+            return []
+        }
     }
     
     func outputForCase(uppercase: Bool) -> String {

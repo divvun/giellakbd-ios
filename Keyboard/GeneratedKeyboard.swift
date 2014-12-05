@@ -2,9 +2,15 @@
 func generatedKeyboard() -> Keyboard {
     var defaultKeyboard = Keyboard()
     
+    var longPresses = ["O": ["Ø", "Ö", "Ò"]];
+    
     for key in ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"] {
         var keyModel = Key(.Character)
         keyModel.setLetter(key)
+        if let lp = longPresses[key]? {
+            keyModel.setUppercaseLongPress(lp)
+            keyModel.setLowercaseLongPress(lp)
+        }
         defaultKeyboard.addKey(keyModel, row: 0, page: 0)
     }
     
