@@ -13,6 +13,8 @@ class GiellaKeyboard: KeyboardViewController {
         if let textDocumentProxy = self.textDocumentProxy as? UIKeyInput {
             textDocumentProxy.insertText(key.outputForCase(self.shiftState.uppercase()))
         }
+        
+        hideLongPress()
     }
     
     init(keyboard: Keyboard, keyNames: [String: String]) {
@@ -118,6 +120,8 @@ class GiellaBanner: ExtraView {
         if let textDocumentProxy = keyboard?.textDocumentProxy as? UIKeyInput {
             textDocumentProxy.insertText(sender.titleLabel!.text!)
         }
+        
+        keyboard?.hideLongPress()
     }
     
     func applyConstraints(btn: UIButton, lastView: UIView, first: Bool) {
@@ -150,13 +154,6 @@ class GiellaBanner: ExtraView {
         var lastView: UIView = self
         var first = true;
         
-        var closeButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
-        closeButton.addTarget(self, action: Selector("handleBtnPress:"), forControlEvents: .TouchUpInside)
-        self.addSubview(closeButton)
-        applyConstraints(closeButton, lastView: lastView, first: true)
-        lastView = closeButton
-        first = false
-        
         for char in keys {
             var btn: UIButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
             btn.setTitle(char, forState: UIControlState.Normal)
@@ -165,7 +162,10 @@ class GiellaBanner: ExtraView {
 
             self.addSubview(btn)
             
-            applyConstraints(btn, lastView: lastView, first: false)
+            applyConstraints(btn, lastView: lastView, first: first)
+            if first == true {
+                first = false
+            }
             
             lastView = btn
             
