@@ -16,9 +16,9 @@ class HostingAppViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let infoDict = NSBundle.mainBundle().infoDictionary? {
-            if let name: AnyObject = infoDict["CFBundleName"]? {
-                titleFld.text = name as? String
+        if let infoDict = NSBundle.mainBundle().localizedInfoDictionary? {
+            if let name = infoDict["CFBundleName"] as? String {
+                titleFld.text = name
             }
         }
     }
