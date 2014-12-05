@@ -17,17 +17,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" alpha="0.099999999999999686" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="eP1-Rg-eNq">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Keyboard Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NEf-oI-cTp" userLabel="Title">
-                                <rect key="frame" x="230" y="52.5" width="140.5" height="25.5"/>
+                                <rect key="frame" x="230" y="52" width="140.5" height="25.5"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Type some text here to test" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jto-Fw-99T" userLabel="Test Text Field">
-                                <rect key="frame" x="16" y="116" width="429" height="30"/>
+                                <rect key="frame" x="16" y="100" width="568" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <userDefinedRuntimeAttributes>
@@ -35,7 +32,7 @@
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xea-iY-wvs">
-                                <rect key="frame" x="461" y="116" width="124" height="30"/>
+                                <rect key="frame" x="238" y="138" width="124" height="30"/>
                                 <state key="normal" title="Dismiss Keyboard">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -47,7 +44,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How to enable the keyboards:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qwR-WH-GXA" userLabel="Instructions Title">
-                                <rect key="frame" x="16" y="178" width="222" height="19.5"/>
+                                <rect key="frame" x="16" y="200" width="222" height="19.5"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -55,13 +52,13 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="translate" value="instructionsTitle"/>
                                 </userDefinedRuntimeAttributes>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="14" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MiU-A4-bHd" userLabel="Instructions">
-                                <rect key="frame" x="16" y="205.5" width="568" height="134"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="20" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MiU-A4-bHd" userLabel="Instructions">
+                                <rect key="frame" x="16" y="227" width="568" height="117"/>
                                 <string key="text">1. In Settings, go to General &gt; Keyboard &gt; Keyboards &gt; Add New Keyboard.
 2. Under "Third-Party Keyboards", choose this keyboard.
 3. A list of keyboard layouts will appear. Enable the keyboards you wish to use, and press "Done".
 
-You may now access these keyboards by pressing the globe icon on the keyboard where it appears.
+You may now access these keyboards by pressing the globe icon next to the spacebar.
 </string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -71,7 +68,7 @@ You may now access these keyboards by pressing the globe icon on the keyboard wh
                                 </userDefinedRuntimeAttributes>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8RY-pf-Xxd">
-                                <rect key="frame" x="251" y="347.5" width="98" height="30"/>
+                                <rect key="frame" x="251" y="352" width="98" height="30"/>
                                 <state key="normal" title="Open Settings">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -82,43 +79,56 @@ You may now access these keyboards by pressing the globe icon on the keyboard wh
                                     <action selector="openSettings" destination="nAo-DR-8Pl" eventType="touchUpInside" id="y1N-gs-aka"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="78y-vP-hbE">
+                                <rect key="frame" x="16" y="561" width="568" height="27"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="2dI-9o-rtu"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <state key="normal" title="Background image: &quot;Mountains outside Narvik&quot; by Alexander Cahlenstein (CC BY)">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="translate" value="imageSource"/>
+                                </userDefinedRuntimeAttributes>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="2dI-9o-rtu"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <action selector="goToImgSource" destination="nAo-DR-8Pl" eventType="touchUpInside" id="ohQ-ns-mKA"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" alpha="0.099999999999999686" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="eP1-Rg-eNq">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="eP1-Rg-eNq" secondAttribute="centerX" constant="-12" id="0i1-9F-EmI"/>
-                            <constraint firstAttribute="centerY" secondItem="eP1-Rg-eNq" secondAttribute="centerY" constant="-58" id="34o-7g-xhI"/>
+                            <constraint firstAttribute="centerX" secondItem="xea-iY-wvs" secondAttribute="centerX" id="4Ai-fQ-Dfc"/>
                             <constraint firstItem="MiU-A4-bHd" firstAttribute="leading" secondItem="aBi-zl-Xx9" secondAttribute="leadingMargin" id="4Mr-Tp-sAe"/>
                             <constraint firstItem="qwR-WH-GXA" firstAttribute="leading" secondItem="aBi-zl-Xx9" secondAttribute="leadingMargin" id="78O-h8-gs4"/>
                             <constraint firstItem="NEf-oI-cTp" firstAttribute="top" secondItem="Bpu-v8-xYb" secondAttribute="bottom" constant="32" id="80P-ex-OlB"/>
                             <constraint firstAttribute="centerX" secondItem="NEf-oI-cTp" secondAttribute="centerX" id="86t-SK-HLI"/>
+                            <constraint firstItem="xea-iY-wvs" firstAttribute="top" secondItem="Jto-Fw-99T" secondAttribute="bottom" constant="8" id="A9f-pV-rxc"/>
+                            <constraint firstItem="qwR-WH-GXA" firstAttribute="top" secondItem="xea-iY-wvs" secondAttribute="bottom" constant="32" id="Bxg-ha-Ejq"/>
                             <constraint firstAttribute="height" secondItem="eP1-Rg-eNq" secondAttribute="height" id="C45-MV-DfX"/>
-                            <constraint firstItem="8RY-pf-Xxd" firstAttribute="top" secondItem="MiU-A4-bHd" secondAttribute="bottom" constant="8" id="FiM-gB-5er"/>
+                            <constraint firstItem="Jto-Fw-99T" firstAttribute="trailing" secondItem="aBi-zl-Xx9" secondAttribute="trailingMargin" id="EYm-af-s86"/>
+                            <constraint firstItem="P06-La-EKF" firstAttribute="top" secondItem="78y-vP-hbE" secondAttribute="bottom" constant="12" id="GI5-3s-elS"/>
                             <constraint firstItem="MiU-A4-bHd" firstAttribute="trailing" secondItem="aBi-zl-Xx9" secondAttribute="trailingMargin" id="Ihm-s2-7wl"/>
                             <constraint firstAttribute="width" secondItem="eP1-Rg-eNq" secondAttribute="width" id="IoC-7s-l0K"/>
+                            <constraint firstItem="78y-vP-hbE" firstAttribute="trailing" secondItem="aBi-zl-Xx9" secondAttribute="trailingMargin" id="OAv-9R-uLm"/>
                             <constraint firstAttribute="trailingMargin" secondItem="eP1-Rg-eNq" secondAttribute="trailing" constant="-16" id="QlE-6o-rOO"/>
-                            <constraint firstAttribute="centerX" secondItem="8RY-pf-Xxd" secondAttribute="centerX" constant="260" id="Qqp-dC-ujT"/>
                             <constraint firstAttribute="centerY" secondItem="eP1-Rg-eNq" secondAttribute="centerY" id="Rh9-wi-Wlx"/>
                             <constraint firstItem="eP1-Rg-eNq" firstAttribute="leading" secondItem="aBi-zl-Xx9" secondAttribute="leadingMargin" constant="-16" id="UaY-U0-dIJ"/>
-                            <constraint firstItem="xea-iY-wvs" firstAttribute="leading" secondItem="Jto-Fw-99T" secondAttribute="trailing" constant="16" id="VAV-dD-yw9"/>
                             <constraint firstAttribute="centerX" secondItem="8RY-pf-Xxd" secondAttribute="centerX" id="WMT-Ul-gN0"/>
                             <constraint firstItem="Jto-Fw-99T" firstAttribute="leading" secondItem="aBi-zl-Xx9" secondAttribute="leadingMargin" id="eFR-d0-Vr3"/>
-                            <constraint firstItem="qwR-WH-GXA" firstAttribute="top" secondItem="Jto-Fw-99T" secondAttribute="bottom" constant="32" id="n0a-LH-d2Q"/>
-                            <constraint firstItem="xea-iY-wvs" firstAttribute="top" secondItem="Bpu-v8-xYb" secondAttribute="bottom" constant="96" id="nhT-vv-UOm"/>
+                            <constraint firstItem="78y-vP-hbE" firstAttribute="leading" secondItem="aBi-zl-Xx9" secondAttribute="leadingMargin" id="faZ-q7-OyF"/>
                             <constraint firstItem="8RY-pf-Xxd" firstAttribute="top" secondItem="MiU-A4-bHd" secondAttribute="bottom" constant="8" id="o0E-t9-5uj"/>
-                            <constraint firstItem="Jto-Fw-99T" firstAttribute="top" secondItem="Bpu-v8-xYb" secondAttribute="bottom" constant="96" id="osM-SJ-Gak"/>
-                            <constraint firstItem="8RY-pf-Xxd" firstAttribute="leading" secondItem="aBi-zl-Xx9" secondAttribute="leadingMargin" constant="1" id="qo2-bW-3vJ"/>
-                            <constraint firstItem="xea-iY-wvs" firstAttribute="trailing" secondItem="aBi-zl-Xx9" secondAttribute="trailingMargin" constant="1" id="spA-Z3-SMf"/>
+                            <constraint firstItem="Jto-Fw-99T" firstAttribute="top" secondItem="Bpu-v8-xYb" secondAttribute="bottom" constant="80" id="osM-SJ-Gak"/>
                             <constraint firstItem="MiU-A4-bHd" firstAttribute="top" secondItem="qwR-WH-GXA" secondAttribute="bottom" constant="8" id="xP3-xL-IoA"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="0i1-9F-EmI"/>
-                                <exclude reference="34o-7g-xhI"/>
-                                <exclude reference="FiM-gB-5er"/>
-                                <exclude reference="Qqp-dC-ujT"/>
-                                <exclude reference="qo2-bW-3vJ"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
                         <outlet property="instructionsFld" destination="MiU-A4-bHd" id="KVd-Xt-lGa"/>

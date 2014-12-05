@@ -12,6 +12,7 @@ class HostingAppViewController: UIViewController {
     
     @IBOutlet var instructionsFld: UILabel!
     @IBOutlet var titleFld: UILabel!
+    @IBOutlet var bgSrcBtn: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +38,12 @@ class HostingAppViewController: UIViewController {
     
     @IBAction func openSettings() {
         if let url = NSURL(string: UIApplicationOpenSettingsURLString)? {
+            UIApplication.sharedApplication().openURL(url)
+        }
+    }
+    
+    @IBAction func goToImgSource() {
+        if let url = NSURL(string: "https://flic.kr/p/cLhn9J")? {
             UIApplication.sharedApplication().openURL(url)
         }
     }
