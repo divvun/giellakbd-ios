@@ -12,7 +12,13 @@ import AudioToolbox
 let metrics: [String:Double] = [
     "topBanner": 30
 ]
-func metric(name: String) -> CGFloat { return CGFloat(metrics[name]!) }
+func metric(name: String) -> CGFloat {
+    if UIDevice.currentDevice().userInterfaceIdiom != UIUserInterfaceIdiom.Pad {
+        return CGFloat(metrics[name]!)
+    } else {
+        return CGFloat(metrics[name]!) * 3.0
+    }
+}
 
 // TODO: move this somewhere else and localize
 let kAutoCapitalization = "kAutoCapitalization"
@@ -373,7 +379,6 @@ class KeyboardViewController: UIInputViewController {
                 self.keyWithDelayedPopup?.hidePopup()
                 self.keyWithDelayedPopup = sender
             }
-        
         
             if sender.popup != nil {
                 self.popupDelayTimer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: Selector("hidePopupCallback"), userInfo: nil, repeats: false)
