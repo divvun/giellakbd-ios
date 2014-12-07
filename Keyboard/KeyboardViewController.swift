@@ -291,8 +291,18 @@ class KeyboardViewController: UIInputViewController {
         let ext = NSBundle.mainBundle().infoDictionary?["NSExtension"] as NSDictionary
         let attrs = ext["NSExtensionAttributes"] as NSDictionary
         let primaryLanguage = attrs["PrimaryLanguage"] as String
-        let locale = NSLocale(localeIdentifier: primaryLanguage)
-        let displayName = locale.displayNameForKey(NSLocaleIdentifier, value: primaryLanguage)
+        var locale = NSLocale(localeIdentifier: primaryLanguage)
+        var displayName = locale.displayNameForKey(NSLocaleIdentifier, value: primaryLanguage)
+        
+        if displayName == nil {
+            locale = NSLocale.currentLocale()
+            displayName = locale.displayNameForKey(NSLocaleIdentifier, value: primaryLanguage)
+        }
+        
+        if displayName == nil {
+            // Fallback to code itself.
+            displayName = primaryLanguage
+        }
         
         keyView.label.text = displayName
     }
