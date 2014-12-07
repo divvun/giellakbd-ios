@@ -497,6 +497,7 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
             // TODO: actually a bit different
             key.downColor = self.globalColors.regularKey(darkMode, solidColorMode: solidColorMode)
             key.textColor = (darkMode ? self.globalColors.darkModeTextColor : self.globalColors.lightModeTextColor)
+            key.labelInset = 3
         default:
             break
         }
