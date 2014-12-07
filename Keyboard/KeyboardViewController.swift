@@ -310,14 +310,20 @@ class KeyboardViewController: UIInputViewController {
     func changeSpaceName(sender: NSTimer) {
         let keyView = sender.userInfo as KeyboardKey
         
+        setSpaceLocalName(keyView)
+        keyView.label.alpha = 1
+        
         if let key = layout?.keyForView(keyView) {
+            let saved = key.uppercaseKeyCap
+            key.uppercaseKeyCap = keyView.label.text
             
             UIView.animateWithDuration(0.3, delay: 1, options: .CurveEaseOut, animations: {
                     keyView.label.alpha = 0.0
                 }, completion: {
                     (finished: Bool) -> Void in
                     
-                    keyView.label.text = key.uppercaseKeyCap
+                    keyView.label.text = saved
+                    key.uppercaseKeyCap = saved
                     
                     UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseIn, animations: {
                         keyView.label.alpha = 1.0
@@ -356,7 +362,7 @@ class KeyboardViewController: UIInputViewController {
                             keyView.addTarget(self, action: Selector("toggleSettings"), forControlEvents: .TouchUpInside)
                         case Key.KeyType.Space:
                             if nameChangeTimer == nil {
-                                setSpaceLocalName(keyView)
+                                keyView.label.alpha = 0
                                 nameChangeTimer = NSTimer.scheduledTimerWithTimeInterval(0, target: self, selector: Selector("changeSpaceName:"), userInfo: keyView, repeats: false)
                             }
                         default:
