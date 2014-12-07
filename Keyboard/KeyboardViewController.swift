@@ -470,6 +470,7 @@ class KeyboardViewController: UIInputViewController {
                 self.keyPressed(model)
             } else {
                 self.longPressTriggered = false
+                return
             }
             
             // auto exit from special char subkeyboard
