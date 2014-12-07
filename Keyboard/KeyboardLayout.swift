@@ -657,7 +657,7 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
             let keyHeight: CGFloat = {
                 let totalGaps = bottomEdge + topEdge + rowGapTotal
                 var returnHeight = (bounds.height - totalGaps) / CGFloat(numRows)
-                return self.rounded(isPad ? returnHeight * 0.96 : returnHeight)
+                return self.rounded(isPad ? returnHeight * 0.95 : returnHeight)
 
                 }()
             
@@ -665,7 +665,7 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
                 let totalGaps = (sideEdges * CGFloat(2)) + (keyGap * CGFloat(mostKeysInRow - 1))
                 var returnWidth = (bounds.width - totalGaps) / CGFloat(mostKeysInRow)
                 // TODO make the pad multiplier a constant
-                return self.rounded(isPad ? returnWidth * 0.96 : returnWidth)
+                return self.rounded(isPad ? returnWidth * 0.95 : returnWidth)
                 }()
             
             let processRow = { (row: [Key], frames: [CGRect], inout map: [Key:CGRect]) -> Void in
@@ -781,7 +781,8 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
         let firstKey = row[0]
         let lastKey = row[row.count-1]
         let singleSpecialKey = !(firstKey.isSpecial && lastKey.isSpecial)
-        let specialKeyMin = standardKeyWidth * CGFloat(1.5)
+        // TODO constant
+        let specialKeyMin = standardKeyWidth * CGFloat(1.025)
         
         var specialCharacterWidth: CGFloat
         var specialCharacterGap: CGFloat
