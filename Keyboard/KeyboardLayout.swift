@@ -712,7 +712,7 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
     */
     
     func specialKeysRowHeuristic(row: [Key]) -> Bool {
-        return row[0].type == .ModeChange
+        return row[0].type == .ModeChange && row[1].type == .KeyboardChange
     }
     
     func doubleSidedRowHeuristic(row: [Key]) -> Bool {
