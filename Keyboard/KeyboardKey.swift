@@ -83,6 +83,9 @@ class KeyboardKey: UIControl {
     var popupLabel: UILabel?
     var shape: Shape? {
         didSet {
+            if oldValue != nil && shape == nil {
+                oldValue?.removeFromSuperview()
+            }
             self.redrawShape()
             updateColors()
         }
@@ -177,7 +180,7 @@ class KeyboardKey: UIControl {
         if self.bounds.width == 0 || self.bounds.height == 0 {
             return
         }
-        if oldBounds != nil && CGRectEqualToRect(boundingBox, oldBounds!) {
+        if oldBounds != nil && CGSizeEqualToSize(boundingBox.size, oldBounds!.size) {
             return
         }
         oldBounds = boundingBox
