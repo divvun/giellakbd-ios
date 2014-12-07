@@ -797,15 +797,11 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
                 specialCharacterWidth = min(standardKeyWidth, sideSpace - keyGap)
             }
             
-            if specialCharacterWidth == specialKeyMin {
-                remainingSpace = sideSpace - specialCharacterWidth - keyGap
-            } else {
-                remainingSpace = sideSpace / CGFloat(2)
-            }
-            
             // Fixes margin issue on the right.
             specialCharacterWidth += (m * 2)
             specialCharacterGap = sideSpace - specialCharacterWidth
+            
+            remainingSpace = sideSpace / 4
             
         } else {
             specialCharacterWidth = rounded(max(sideSpace * m + c, keyWidth))
