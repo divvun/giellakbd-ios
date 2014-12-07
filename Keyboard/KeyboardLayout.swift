@@ -93,27 +93,40 @@ class LayoutConstants: NSObject {
     
     class func keyGapPortrait(width: CGFloat, rowCharacterCount: Int) -> CGFloat {
         let compressed = (rowCharacterCount >= self.keyCompressedThreshhold)
+        let isPad = UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad
+        var res: CGFloat
+        
         if compressed {
             if width >= self.keyGapPortraitUncompressThreshhold {
-                return self.keyGapPortraitNormal
+                res = self.keyGapPortraitNormal
             }
             else {
-                return self.keyGapPortraitSmall
+                res = self.keyGapPortraitSmall
             }
         }
         else {
-            return self.keyGapPortraitNormal
+            res = self.keyGapPortraitNormal
         }
+        
+        // TODO make constant
+        return isPad ? res * 2.2 : res
     }
+    
     class func keyGapLandscape(width: CGFloat, rowCharacterCount: Int) -> CGFloat {
         let compressed = (rowCharacterCount >= self.keyCompressedThreshhold)
         let shrunk = self.keyboardIsShrunk(width)
+        let isPad = UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad
+        var res: CGFloat
+        
         if compressed || shrunk {
-            return self.keyGapLandscapeSmall
+            res = self.keyGapLandscapeSmall
         }
         else {
-            return self.keyGapLandscapeNormal
+            res = self.keyGapLandscapeNormal
         }
+    
+        // TODO make constant
+        return isPad ? res * 2.2 : res
     }
     
     class func lastRowKeyGapLandscape(width: CGFloat) -> CGFloat {
@@ -645,10 +658,13 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
                 return self.rounded(returnHeight)
                 }()
             
+            let isPad = UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad
+            
             let letterKeyWidth: CGFloat = {
                 let totalGaps = (sideEdges * CGFloat(2)) + (keyGap * CGFloat(mostKeysInRow - 1))
                 var returnWidth = (bounds.width - totalGaps) / CGFloat(mostKeysInRow)
-                return self.rounded(returnWidth)
+                // TODO make the pad multiplier a constant
+                return self.rounded(isPad ? returnWidth * 0.96 : returnWidth)
                 }()
             
             let processRow = { (row: [Key], frames: [CGRect], inout map: [Key:CGRect]) -> Void in
@@ -664,19 +680,20 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
                 
                 var frames: [CGRect]!
                 
-                // basic character row: only typable characters
-                if self.characterRowHeuristic(row) {
-                    frames = self.layoutCharacterRow(row, keyWidth: letterKeyWidth, gapWidth: keyGap, frame: frame)
-                }
                     
-                    // character row with side buttons: shift, backspace, etc.
+                    // bottom row with things like space, return, etc.
+                if self.specialKeysRowHeuristic(row) {
+                    frames = self.layoutSpecialKeysRow(row, keyWidth: letterKeyWidth, gapWidth: lastRowKeyGap, leftSideRatio: lastRowLeftSideRatio, rightSideRatio: lastRowRightSideRatio, micButtonRatio: self.layoutConstants.micButtonPortraitWidthRatioToOtherSpecialButtons, isLandscape: isLandscape, frame: frame)
+                }
+                
+                // character row with side buttons: shift, backspace, etc.
                 else if self.doubleSidedRowHeuristic(row) {
                     frames = self.layoutCharacterWithSidesRow(row, frame: frame, isLandscape: isLandscape, keyWidth: letterKeyWidth, keyGap: keyGap)
                 }
-                    
-                    // bottom row with things like space, return, etc.
+                
+                // basic character row: only typable characters
                 else {
-                    frames = self.layoutSpecialKeysRow(row, keyWidth: letterKeyWidth, gapWidth: lastRowKeyGap, leftSideRatio: lastRowLeftSideRatio, rightSideRatio: lastRowRightSideRatio, micButtonRatio: self.layoutConstants.micButtonPortraitWidthRatioToOtherSpecialButtons, isLandscape: isLandscape, frame: frame)
+                    frames = self.layoutCharacterRow(row, keyWidth: letterKeyWidth, gapWidth: keyGap, frame: frame)
                 }
                 
                 processRow(row, frames, &keyMap)
@@ -685,13 +702,20 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
         
         return keyMap
     }
-    
+    /*
     func characterRowHeuristic(row: [Key]) -> Bool {
-        return (row.count >= 1 && row[0].isCharacter)
+        let last = row.count - 1
+        return (row.count >= 1 && row[0].isCharacter && row[last].isCharacter)
+    }
+    */
+    
+    func specialKeysRowHeuristic(row: [Key]) -> Bool {
+        return row[0].type == .ModeChange
     }
     
     func doubleSidedRowHeuristic(row: [Key]) -> Bool {
-        return (row.count >= 3 && !row[0].isCharacter && row[1].isCharacter)
+        let last = row.count - 1
+        return !row[0].isCharacter || !row[last].isCharacter
     }
     
     func layoutCharacterRow(row: [Key], keyWidth: CGFloat, gapWidth: CGFloat, frame: CGRect) -> [CGRect] {
@@ -730,6 +754,8 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
     // TODO: pass in actual widths instead
     func layoutCharacterWithSidesRow(row: [Key], frame: CGRect, isLandscape: Bool, keyWidth: CGFloat, keyGap: CGFloat) -> [CGRect] {
         var frames = [CGRect]()
+        
+        let isPad = UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad
 
         let standardFullKeyCount = Int(self.layoutConstants.keyCompressedThreshhold) - 1
         let standardGap = (isLandscape ? self.layoutConstants.keyGapLandscape : self.layoutConstants.keyGapPortrait)(frame.width, rowCharacterCount: standardFullKeyCount)
@@ -751,21 +777,41 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
         let m = (isLandscape ? self.layoutConstants.flexibleEndRowTotalWidthToKeyWidthMLandscape : self.layoutConstants.flexibleEndRowTotalWidthToKeyWidthMPortrait)
         let c = (isLandscape ? self.layoutConstants.flexibleEndRowTotalWidthToKeyWidthCLandscape : self.layoutConstants.flexibleEndRowTotalWidthToKeyWidthCPortrait)
         
-        var specialCharacterWidth = sideSpace * m + c
-        specialCharacterWidth = max(specialCharacterWidth, keyWidth)
-        specialCharacterWidth = rounded(specialCharacterWidth)
-        let specialCharacterGap = sideSpace - specialCharacterWidth
+        var specialCharacterWidth = isPad ? standardKeyWidth + (m * 2): sideSpace * m + c
+        if !isPad {
+            specialCharacterWidth = rounded(max(specialCharacterWidth, keyWidth))
+        }
+        let specialCharacterGap = isPad ? actualGap : sideSpace - specialCharacterWidth
         
-        var currentOrigin = frame.origin.x
+        var currentOrigin = frame.origin.x + m
+        let lastKey = row[row.count-1]
+        
         for (k, key) in enumerate(row) {
             if k == 0 {
-                frames.append(CGRectMake(rounded(currentOrigin), frame.origin.y, specialCharacterWidth, frame.height))
-                currentOrigin += (specialCharacterWidth + specialCharacterGap)
+                if !key.isSpecial {
+                    if lastKey.type != .Backspace {
+                        currentOrigin += (specialCharacterGap * 2 + keyGap)
+                    }
+                    frames.append(CGRectMake(rounded(currentOrigin), frame.origin.y, actualKeyWidth, frame.height))
+                    currentOrigin += (actualKeyWidth + keyGap)
+                } else {
+                    //let width = !lastKey.isSpecial ? rounded(frame.width - currentOrigin) : specialCharacterWidth
+                    let width = specialCharacterWidth
+                    frames.append(CGRectMake(rounded(currentOrigin), frame.origin.y, width, frame.height))
+                    currentOrigin += (specialCharacterWidth + specialCharacterGap)
+                }
             }
             else if k == row.count - 1 {
-                currentOrigin += specialCharacterGap
-                frames.append(CGRectMake(rounded(currentOrigin), frame.origin.y, specialCharacterWidth, frame.height))
-                currentOrigin += specialCharacterWidth
+                if !key.isSpecial {
+                    frames.append(CGRectMake(rounded(currentOrigin), frame.origin.y, actualKeyWidth, frame.height))
+                    currentOrigin += (actualKeyWidth)
+                } else {
+                    currentOrigin += specialCharacterGap
+                    //let width = !row[0].isSpecial ? rounded(frame.width - currentOrigin) : specialCharacterWidth
+                    let width = rounded(frame.width - currentOrigin)
+                    frames.append(CGRectMake(rounded(currentOrigin), frame.origin.y, width, frame.height))
+                    currentOrigin += specialCharacterWidth
+                }
             }
             else {
                 frames.append(CGRectMake(rounded(currentOrigin), frame.origin.y, actualKeyWidth, frame.height))

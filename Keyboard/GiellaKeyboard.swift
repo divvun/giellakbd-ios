@@ -220,8 +220,9 @@ class GiellaBanner: ExtraView {
 
 
 func defaultControls(defaultKeyboard: Keyboard, keyNames: [String: String]) -> Keyboard {
+    let isPad = UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad
+
     var backspace = Key(.Backspace)
-    defaultKeyboard.addKey(backspace, row: 2, page: 0)
     
     var keyModeChangeNumbers = Key(.ModeChange)
     keyModeChangeNumbers.uppercaseKeyCap = "123"
@@ -244,7 +245,7 @@ func defaultControls(defaultKeyboard: Keyboard, keyNames: [String: String]) -> K
     returnKey.uppercaseKeyCap = keyNames["return"]
     returnKey.uppercaseOutput = "\n"
     returnKey.lowercaseOutput = "\n"
-    defaultKeyboard.addKey(returnKey, row: 3, page: 0)
+    defaultKeyboard.addKey(isPad ? Key(keyModeChangeNumbers) : returnKey, row: 3, page: 0)
     
     for key in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"] {
         var keyModel = Key(.SpecialCharacter)
