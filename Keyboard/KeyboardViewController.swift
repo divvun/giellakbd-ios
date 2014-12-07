@@ -92,6 +92,8 @@ class KeyboardViewController: UIInputViewController {
         }
     }
     
+    var spaceName: String?
+    
     // TODO: why does the app crash if this isn't here?
     convenience override init() {
         self.init(nibName: nil, bundle: nil)
@@ -100,6 +102,8 @@ class KeyboardViewController: UIInputViewController {
     convenience override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         self.init(nibName: nibNameOrNil, bundle: nibBundleOrNil, keyboard: defaultKeyboard())
     }
+    
+    var nameChangeTimer: NSTimer?
     
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?, keyboard: Keyboard) {
         NSUserDefaults.standardUserDefaults().registerDefaults([
@@ -283,6 +287,37 @@ class KeyboardViewController: UIInputViewController {
     //    super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
     //}
     
+    func setSpaceLocalName(keyView: KeyboardKey) {
+        let ext = NSBundle.mainBundle().infoDictionary?["NSExtension"] as NSDictionary
+        let attrs = ext["NSExtensionAttributes"] as NSDictionary
+        let primaryLanguage = attrs["PrimaryLanguage"] as String
+        let locale = NSLocale(localeIdentifier: primaryLanguage)
+        let displayName = locale.displayNameForKey(NSLocaleIdentifier, value: primaryLanguage)
+        
+        keyView.label.text = displayName
+    }
+    
+    func changeSpaceName(sender: NSTimer) {
+        let keyView = sender.userInfo as KeyboardKey
+        
+        if let key = layout?.keyForView(keyView) {
+            
+            UIView.animateWithDuration(0.3, delay: 1, options: .CurveEaseOut, animations: {
+                    keyView.label.alpha = 0.0
+                }, completion: {
+                    (finished: Bool) -> Void in
+                    
+                    keyView.label.text = key.uppercaseKeyCap
+                    
+                    UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseIn, animations: {
+                        keyView.label.alpha = 1.0
+                    }, completion: nil)
+                }
+            )
+            
+        }
+    }
+    
     func setupKeys() {
         if self.layout == nil {
             return
@@ -309,6 +344,11 @@ class KeyboardViewController: UIInputViewController {
                             keyView.addTarget(self, action: Selector("modeChangeTapped:"), forControlEvents: .TouchUpInside)
                         case Key.KeyType.Settings:
                             keyView.addTarget(self, action: Selector("toggleSettings"), forControlEvents: .TouchUpInside)
+                        case Key.KeyType.Space:
+                            if nameChangeTimer == nil {
+                                setSpaceLocalName(keyView)
+                                nameChangeTimer = NSTimer.scheduledTimerWithTimeInterval(0, target: self, selector: Selector("changeSpaceName:"), userInfo: keyView, repeats: false)
+                            }
                         default:
                             break
                         }

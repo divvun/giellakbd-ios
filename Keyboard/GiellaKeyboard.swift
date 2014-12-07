@@ -20,6 +20,7 @@ class GiellaKeyboard: KeyboardViewController {
     init(keyboard: Keyboard, keyNames: [String: String]) {
         super.init(nibName: nil, bundle: nil,
             keyboard: defaultControls(keyboard, keyNames))
+        spaceName = keyNames["space"]
     }
     
     convenience init() {

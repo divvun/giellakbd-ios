@@ -36,7 +36,7 @@ func generatedKeyboard() -> Keyboard {
         defaultKeyboard.addKey(keyModel, row: 1, page: 0)
     }
     
-    for key in ["Z", "X", "C", "V", "B", "N", "M"] {
+    for key in ["Z", "X", "C", "V", "B", "N", "M", ",", "."] {
         var keyModel = Key(.Character)
         keyModel.setLetter(key)
         if let lp = longPresses[key]? {
@@ -102,5 +102,8 @@ func generatedGetLongPresses() -> [String: [String]] {
 }
 
 func generatedConfig() -> [String: String] {
-    return ["space": "space", "return": "return"]
+    var o: [String:String] = [:]
+    o["space"] = "space"
+    o["return"] = "return"
+    return o
 }
