@@ -292,11 +292,11 @@ class KeyboardViewController: UIInputViewController {
         let attrs = ext["NSExtensionAttributes"] as NSDictionary
         let primaryLanguage = attrs["PrimaryLanguage"] as String
         var locale = NSLocale(localeIdentifier: primaryLanguage)
-        var displayName = locale.displayNameForKey(NSLocaleIdentifier, value: primaryLanguage)
+        var displayName = locale.displayNameForKey(NSLocaleIdentifier, value: primaryLanguage)?.capitalizedString
         
         if displayName == nil {
             locale = NSLocale.currentLocale()
-            displayName = locale.displayNameForKey(NSLocaleIdentifier, value: primaryLanguage)
+            displayName = locale.displayNameForKey(NSLocaleIdentifier, value: primaryLanguage)?.capitalizedString
         }
         
         if displayName == nil {
