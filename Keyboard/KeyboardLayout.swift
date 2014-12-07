@@ -759,7 +759,7 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
         var frames = [CGRect]()
         
         let isPad = UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad
-
+        
         let standardFullKeyCount = Int(self.layoutConstants.keyCompressedThreshhold) - 1
         let standardGap = (isLandscape ? self.layoutConstants.keyGapLandscape : self.layoutConstants.keyGapPortrait)(frame.width, rowCharacterCount: standardFullKeyCount)
         let sideEdges = (isLandscape ? self.layoutConstants.sideEdgesLandscape : self.layoutConstants.sideEdgesPortrait(frame.width))
@@ -789,22 +789,23 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
         var specialCharacterWidth: CGFloat
         var specialCharacterGap: CGFloat
         var remainingSpace: CGFloat
+        
         if isPad {
             if singleSpecialKey {
                 specialCharacterWidth = max(specialKeyMin, sideSpace / CGFloat(2))
             } else {
-                specialCharacterWidth = max(standardKeyWidth, sideSpace / CGFloat(2))
+                specialCharacterWidth = min(standardKeyWidth, sideSpace - keyGap)
             }
             
             if specialCharacterWidth == specialKeyMin {
-                remainingSpace = sideSpace - specialCharacterWidth
+                remainingSpace = sideSpace - specialCharacterWidth - keyGap
             } else {
                 remainingSpace = sideSpace / CGFloat(2)
             }
             
             // Fixes margin issue on the right.
             specialCharacterWidth += (m * 2)
-            specialCharacterGap = keyGap
+            specialCharacterGap = sideSpace - specialCharacterWidth
             
         } else {
             specialCharacterWidth = rounded(max(sideSpace * m + c, keyWidth))
@@ -818,7 +819,7 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
             if k == 0 {
                 if !key.isSpecial {
                     if lastKey.type != .Backspace {
-                        currentOrigin += remainingSpace / 2
+                        currentOrigin += remainingSpace
                     }
                     frames.append(CGRectMake(rounded(currentOrigin), frame.origin.y, actualKeyWidth, frame.height))
                     currentOrigin += (actualKeyWidth + keyGap)
@@ -832,7 +833,11 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
                     frames.append(CGRectMake(rounded(currentOrigin), frame.origin.y, actualKeyWidth, frame.height))
                     currentOrigin += (actualKeyWidth)
                 } else {
-                    currentOrigin += keyGap
+                    if singleSpecialKey {
+                        currentOrigin += keyGap
+                    } else {
+                        currentOrigin += specialCharacterGap
+                    }
                     
                     // HACK: +3 because pixels aren't aligned :/
                     let width = rounded(frame.width - currentOrigin + 3)
@@ -850,7 +855,7 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
                 }
             }
         }
-
+        
         return frames
     }
     
