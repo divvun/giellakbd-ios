@@ -781,13 +781,19 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
         let firstKey = row[0]
         let lastKey = row[row.count-1]
         let singleSpecialKey = !(firstKey.isSpecial && lastKey.isSpecial)
+        let specialKeyMin = standardKeyWidth * CGFloat(1.5)
         
         var specialCharacterWidth: CGFloat
         var specialCharacterGap: CGFloat
         var remainingSpace: CGFloat
         if isPad {
-            specialCharacterWidth = min(standardKeyWidth, sideSpace / CGFloat(2))
-            if (specialCharacterWidth == standardKeyWidth) {
+            if singleSpecialKey {
+                specialCharacterWidth = max(specialKeyMin, sideSpace / CGFloat(2))
+            } else {
+                specialCharacterWidth = min(standardKeyWidth, sideSpace / CGFloat(2))
+            }
+            
+            if specialCharacterWidth == specialKeyMin {
                 remainingSpace = sideSpace - specialCharacterWidth
             } else {
                 remainingSpace = sideSpace / CGFloat(2)
@@ -812,8 +818,7 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
                     frames.append(CGRectMake(rounded(currentOrigin), frame.origin.y, actualKeyWidth, frame.height))
                     currentOrigin += (actualKeyWidth + keyGap)
                 } else {
-                    let width = specialCharacterWidth
-                    frames.append(CGRectMake(rounded(currentOrigin), frame.origin.y, width, frame.height))
+                    frames.append(CGRectMake(rounded(currentOrigin), frame.origin.y, specialCharacterWidth, frame.height))
                     currentOrigin += (specialCharacterWidth + specialCharacterGap)
                 }
             }
