@@ -652,13 +652,14 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
             
             let keyGap: CGFloat = (isLandscape ? self.layoutConstants.keyGapLandscape(bounds.width, rowCharacterCount: mostKeysInRow) : self.layoutConstants.keyGapPortrait(bounds.width, rowCharacterCount: mostKeysInRow))
             
+            let isPad = UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad
+            
             let keyHeight: CGFloat = {
                 let totalGaps = bottomEdge + topEdge + rowGapTotal
                 var returnHeight = (bounds.height - totalGaps) / CGFloat(numRows)
-                return self.rounded(returnHeight)
+                return self.rounded(isPad ? returnHeight * 0.96 : returnHeight)
+
                 }()
-            
-            let isPad = UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad
             
             let letterKeyWidth: CGFloat = {
                 let totalGaps = (sideEdges * CGFloat(2)) + (keyGap * CGFloat(mostKeysInRow - 1))
