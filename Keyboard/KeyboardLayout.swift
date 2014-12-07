@@ -778,21 +778,36 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
         let m = (isLandscape ? self.layoutConstants.flexibleEndRowTotalWidthToKeyWidthMLandscape : self.layoutConstants.flexibleEndRowTotalWidthToKeyWidthMPortrait)
         let c = (isLandscape ? self.layoutConstants.flexibleEndRowTotalWidthToKeyWidthCLandscape : self.layoutConstants.flexibleEndRowTotalWidthToKeyWidthCPortrait)
         
-        var specialCharacterWidth = isPad ? min(standardKeyWidth, sideSpace / CGFloat(2)) + (m * 2): sideSpace * m + c
-        if !isPad {
-            specialCharacterWidth = rounded(max(specialCharacterWidth, keyWidth))
-        }
-        let specialCharacterGap = sideSpace - specialCharacterWidth
-        
-        var currentOrigin = frame.origin.x + m
         let firstKey = row[0]
         let lastKey = row[row.count-1]
+        let singleSpecialKey = !(firstKey.isSpecial && lastKey.isSpecial)
+        
+        var specialCharacterWidth: CGFloat
+        var specialCharacterGap: CGFloat
+        var remainingSpace: CGFloat
+        if isPad {
+            specialCharacterWidth = min(standardKeyWidth, sideSpace / CGFloat(2))
+            if (specialCharacterWidth == standardKeyWidth) {
+                remainingSpace = sideSpace - specialCharacterWidth
+            } else {
+                remainingSpace = sideSpace / CGFloat(2)
+            }
+            specialCharacterWidth += (m * 2)
+            specialCharacterGap = sideSpace - specialCharacterWidth
+            
+        } else {
+            specialCharacterWidth = rounded(max(sideSpace * m + c, keyWidth))
+            specialCharacterGap = sideSpace - specialCharacterWidth
+            remainingSpace = specialCharacterGap
+        }
+        
+        var currentOrigin = frame.origin.x + m
         
         for (k, key) in enumerate(row) {
             if k == 0 {
                 if !key.isSpecial {
                     if lastKey.type != .Backspace {
-                        currentOrigin += sideSpace / CGFloat(2)
+                        currentOrigin += remainingSpace
                     }
                     frames.append(CGRectMake(rounded(currentOrigin), frame.origin.y, actualKeyWidth, frame.height))
                     currentOrigin += (actualKeyWidth + keyGap)
@@ -808,7 +823,7 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
                     currentOrigin += (actualKeyWidth)
                 } else {
                     if firstKey.isSpecial {
-                        currentOrigin += specialCharacterGap
+                        currentOrigin += remainingSpace
                     } else {
                         currentOrigin += keyGap
                     }
