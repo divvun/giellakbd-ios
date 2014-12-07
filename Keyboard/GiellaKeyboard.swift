@@ -76,7 +76,6 @@ class GiellaKeyboard: KeyboardViewController {
             //self.lastKey?.label.text = "!"
             //banner.label.text = ""
             banner.updateAlternateKeyList([])
-            
         }
     }
 }
@@ -110,11 +109,19 @@ class GiellaBanner: ExtraView {
     }
     
     func handleBtnPress(sender: UIButton) {
-        if let textDocumentProxy = keyboard?.textDocumentProxy as? UIKeyInput {
-            textDocumentProxy.insertText(sender.titleLabel!.text!)
+        if let kbd = self.keyboard? {
+            if let textDocumentProxy = kbd.textDocumentProxy as? UIKeyInput {
+                textDocumentProxy.insertText(sender.titleLabel!.text!)
+            }
+            
+            kbd.hideLongPress()
+            
+            if kbd.shiftState == ShiftState.Enabled {
+                kbd.shiftState = ShiftState.Disabled
+            }
+            
+            kbd.setCapsIfNeeded()
         }
-        
-        keyboard?.hideLongPress()
     }
     
     func applyConstraints(currentView: UIButton, prevView: UIView?, nextView: UIView?, firstView: UIView) {

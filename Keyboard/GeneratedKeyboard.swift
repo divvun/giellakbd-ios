@@ -2,21 +2,31 @@
 func generatedKeyboard() -> Keyboard {
     var defaultKeyboard = Keyboard()
     
-    var longPresses = ["O": ["Ø", "Ö", "Ò"]];
+    var longPresses = generatedGetLongPresses();
     
     for key in ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"] {
         var keyModel = Key(.Character)
         keyModel.setLetter(key)
         if let lp = longPresses[key]? {
             keyModel.setUppercaseLongPress(lp)
+        }
+        if let lp = longPresses[key.lowercaseString]? {
             keyModel.setLowercaseLongPress(lp)
         }
+
         defaultKeyboard.addKey(keyModel, row: 0, page: 0)
     }
     
     for key in ["A", "S", "D", "F", "G", "H", "J", "K", "L"] {
         var keyModel = Key(.Character)
         keyModel.setLetter(key)
+        if let lp = longPresses[key]? {
+            keyModel.setUppercaseLongPress(lp)
+        }
+        if let lp = longPresses[key.lowercaseString]? {
+            keyModel.setLowercaseLongPress(lp)
+        }
+
         defaultKeyboard.addKey(keyModel, row: 1, page: 0)
     }
     
@@ -26,10 +36,54 @@ func generatedKeyboard() -> Keyboard {
     for key in ["Z", "X", "C", "V", "B", "N", "M"] {
         var keyModel = Key(.Character)
         keyModel.setLetter(key)
+        if let lp = longPresses[key]? {
+            keyModel.setUppercaseLongPress(lp)
+        }
+        if let lp = longPresses[key.lowercaseString]? {
+            keyModel.setLowercaseLongPress(lp)
+        }
+
         defaultKeyboard.addKey(keyModel, row: 2, page: 0)
     }
     
     return defaultKeyboard
+}
+
+func generatedGetLongPresses() -> [String: [String]] {
+    var lps = [String: [String]]()
+    lps["k"] = ["ǩ"]
+    lps["t"] = ["ŧ", "þ"]
+    lps["d"] = ["đ", "ð"]
+    lps["D"] = ["Đ", "Ð"]
+    lps["Z"] = ["Ž", "Ʒ", "Ǯ"]
+    lps["u"] = ["ü", "ú", "ù", "û", "ũ", "ū", "ŭ"]
+    lps["n"] = ["ŋ"]
+    lps["c"] = ["č", "ç"]
+    lps["e"] = ["ë", "é", "è", "ê", "ẽ", "ė", "ē", "ĕ", "ę"]
+    lps["Æ"] = ["Ä"]
+    lps["Ø"] = ["Ö"]
+    lps["æ"] = ["ä"]
+    lps["A"] = ["Æ", "Ä", "Å", "Á", "À", "Â", "Ã", "Ȧ", "Ā"]
+    lps["s"] = ["š"]
+    lps["ø"] = ["ö"]
+    lps["S"] = ["Š"]
+    lps["K"] = ["Ǩ"]
+    lps["G"] = ["Ĝ", "Ḡ", "Ǧ", "Ǥ"]
+    lps["O"] = ["Œ", "Ö", "Ó", "Ò", "Ô", "Õ", "Ō", "Ŏ"]
+    lps["C"] = ["Č", "Ç"]
+    lps["a"] = ["æ", "ä", "å", "á", "à", "â", "ã", "ȧ", "ā"]
+    lps["E"] = ["Ë", "É", "È", "Ê", "Ẽ", "Ė", "Ē", "Ĕ", "Ę"]
+    lps["N"] = ["Ŋ"]
+    lps["g"] = ["ĝ", "ḡ", "ǧ", "ǥ"]
+    lps["U"] = ["Ü", "Ú", "Ù", "Û", "Ũ", "Ū", "Ŭ"]
+    lps["i"] = ["ï", "í", "ì", "î", "ĩ", "ī", "ĭ"]
+    lps["z"] = ["ž", "ʒ", "ǯ"]
+    lps["o"] = ["œ", "ö", "ó", "ò", "ô", "õ", "ō", "ŏ"]
+    lps["I"] = ["Ï", "Í", "Ì", "Î", "Ĩ", "Ī", "Ĭ"]
+    lps["Y"] = ["Ý", "Ỳ", "Ŷ", "Ẏ", "Ȳ"]
+    lps["y"] = ["ý", "ỳ", "ŷ", "ẏ", "ȳ"]
+    lps["T"] = ["Ŧ", "Þ"]
+    return lps
 }
 
 func generatedConfig() -> [String: String] {
