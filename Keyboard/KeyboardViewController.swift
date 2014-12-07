@@ -16,7 +16,7 @@ func metric(name: String) -> CGFloat {
     if UIDevice.currentDevice().userInterfaceIdiom != UIUserInterfaceIdiom.Pad {
         return CGFloat(metrics[name]!)
     } else {
-        return CGFloat(metrics[name]!) * 3.0
+        return CGFloat(metrics[name]!) * 1.4
     }
 }
 
