@@ -778,25 +778,25 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
         let m = (isLandscape ? self.layoutConstants.flexibleEndRowTotalWidthToKeyWidthMLandscape : self.layoutConstants.flexibleEndRowTotalWidthToKeyWidthMPortrait)
         let c = (isLandscape ? self.layoutConstants.flexibleEndRowTotalWidthToKeyWidthCLandscape : self.layoutConstants.flexibleEndRowTotalWidthToKeyWidthCPortrait)
         
-        var specialCharacterWidth = isPad ? standardKeyWidth + (m * 2): sideSpace * m + c
+        var specialCharacterWidth = isPad ? min(standardKeyWidth, sideSpace / CGFloat(2)) + (m * 2): sideSpace * m + c
         if !isPad {
             specialCharacterWidth = rounded(max(specialCharacterWidth, keyWidth))
         }
-        let specialCharacterGap = isPad ? actualGap : sideSpace - specialCharacterWidth
+        let specialCharacterGap = sideSpace - specialCharacterWidth
         
         var currentOrigin = frame.origin.x + m
+        let firstKey = row[0]
         let lastKey = row[row.count-1]
         
         for (k, key) in enumerate(row) {
             if k == 0 {
                 if !key.isSpecial {
                     if lastKey.type != .Backspace {
-                        currentOrigin += (specialCharacterGap * 2 + keyGap)
+                        currentOrigin += sideSpace / CGFloat(2)
                     }
                     frames.append(CGRectMake(rounded(currentOrigin), frame.origin.y, actualKeyWidth, frame.height))
                     currentOrigin += (actualKeyWidth + keyGap)
                 } else {
-                    //let width = !lastKey.isSpecial ? rounded(frame.width - currentOrigin) : specialCharacterWidth
                     let width = specialCharacterWidth
                     frames.append(CGRectMake(rounded(currentOrigin), frame.origin.y, width, frame.height))
                     currentOrigin += (specialCharacterWidth + specialCharacterGap)
@@ -807,8 +807,11 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
                     frames.append(CGRectMake(rounded(currentOrigin), frame.origin.y, actualKeyWidth, frame.height))
                     currentOrigin += (actualKeyWidth)
                 } else {
-                    currentOrigin += specialCharacterGap
-                    //let width = !row[0].isSpecial ? rounded(frame.width - currentOrigin) : specialCharacterWidth
+                    if firstKey.isSpecial {
+                        currentOrigin += specialCharacterGap
+                    } else {
+                        currentOrigin += keyGap
+                    }
                     let width = rounded(frame.width - currentOrigin)
                     frames.append(CGRectMake(rounded(currentOrigin), frame.origin.y, width, frame.height))
                     currentOrigin += specialCharacterWidth
