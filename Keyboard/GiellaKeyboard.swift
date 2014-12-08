@@ -20,9 +20,9 @@ class GiellaKeyboard: KeyboardViewController {
     }
     
     init(keyboard: Keyboard, names: [String: String]) {
+        self.names = names
         super.init(nibName: nil, bundle: nil,
             keyboard: defaultControls(keyboard, names))
-        self.names = names
     }
     
     convenience init() {
