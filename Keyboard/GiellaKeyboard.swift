@@ -232,7 +232,7 @@ func defaultControls(defaultKeyboard: Keyboard, keyNames: [String: String]) -> K
     var backspace = Key(.Backspace)
     
     var keyModeChangeNumbers = Key(.ModeChange)
-    keyModeChangeNumbers.uppercaseKeyCap = "123"
+    keyModeChangeNumbers.uppercaseKeyCap = isPad ? ".?123" : "123"
     keyModeChangeNumbers.toMode = 1
     defaultKeyboard.addKey(keyModeChangeNumbers, row: 3, page: 0)
     
@@ -253,6 +253,12 @@ func defaultControls(defaultKeyboard: Keyboard, keyNames: [String: String]) -> K
     returnKey.uppercaseOutput = "\n"
     returnKey.lowercaseOutput = "\n"
     defaultKeyboard.addKey(isPad ? Key(keyModeChangeNumbers) : returnKey, row: 3, page: 0)
+    
+    if isPad {
+        let hideKey = Key(.KeyboardHide)
+        hideKey.uppercaseKeyCap = "⥥"
+        defaultKeyboard.addKey(hideKey, row: 3, page: 0)
+    }
     
     for key in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"] {
         var keyModel = Key(.SpecialCharacter)

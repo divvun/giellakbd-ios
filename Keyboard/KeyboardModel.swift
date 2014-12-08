@@ -71,6 +71,7 @@ class Key: Hashable {
         case Backspace
         case ModeChange
         case KeyboardChange
+        case KeyboardHide
         case Period
         case Space
         case Return
@@ -104,17 +105,14 @@ class Key: Hashable {
     var isSpecial: Bool {
         get {
             switch self.type {
-            case .Shift:
-                return true
-            case .Backspace:
-                return true
-            case .ModeChange:
-                return true
-            case .KeyboardChange:
-                return true
-            case .Return:
-                return true
-            case .Settings:
+            case
+            .Shift,
+            .Backspace,
+            .ModeChange,
+            .KeyboardChange,
+            .KeyboardHide,
+            .Return,
+            .Settings:
                 return true
             default:
                 return false

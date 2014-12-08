@@ -346,6 +346,8 @@ class KeyboardViewController: UIInputViewController {
                         switch key.type {
                         case Key.KeyType.KeyboardChange:
                             keyView.addTarget(self, action: "advanceToNextInputMode", forControlEvents: .TouchUpInside)
+                        case Key.KeyType.KeyboardHide:
+                            keyView.addTarget(self, action: "dismissKeyboard", forControlEvents: .TouchUpInside)
                         case Key.KeyType.Backspace:
                             let cancelEvents: UIControlEvents = UIControlEvents.TouchUpInside|UIControlEvents.TouchUpInside|UIControlEvents.TouchDragExit|UIControlEvents.TouchUpOutside|UIControlEvents.TouchCancel|UIControlEvents.TouchDragOutside
                             

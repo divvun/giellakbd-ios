@@ -6,9 +6,13 @@
 //  Copyright (c) 2014 Apple. All rights reserved.
 //
 
+import UIKit
+
 func defaultKeyboard() -> Keyboard {
     var defaultKeyboard = Keyboard()
     
+    let isPad = UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad
+
     for key in ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"] {
         var keyModel = Key(.Character)
         keyModel.setLetter(key)
@@ -34,7 +38,7 @@ func defaultKeyboard() -> Keyboard {
     defaultKeyboard.addKey(backspace, row: 2, page: 0)
     
     var keyModeChangeNumbers = Key(.ModeChange)
-    keyModeChangeNumbers.uppercaseKeyCap = "123"
+    keyModeChangeNumbers.uppercaseKeyCap = isPad ? ".?123" : "123"
     keyModeChangeNumbers.toMode = 1
     defaultKeyboard.addKey(keyModeChangeNumbers, row: 3, page: 0)
     

@@ -389,6 +389,7 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
                 switch model.type {
                 case
                 Key.KeyType.ModeChange,
+                //Key.KeyType.KeyboardHide,
                 Key.KeyType.Space,
                 Key.KeyType.Return:
                     key.label.adjustsFontSizeToFitWidth = true
@@ -505,6 +506,7 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
         case
         Key.KeyType.Return,
         Key.KeyType.KeyboardChange,
+        Key.KeyType.KeyboardHide,
         Key.KeyType.Settings:
             key.color = self.globalColors.specialKey(darkMode, solidColorMode: solidColorMode)
             // TODO: actually a bit different
@@ -903,7 +905,7 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
         }
         
         assert(keysBeforeSpace <= 3, "invalid number of keys before space (only max 3 currently supported)")
-        assert(keysAfterSpace == 1, "invalid number of keys after space (only default 1 currently supported)")
+        assert(keysAfterSpace >= 1 && keysAfterSpace <= 2, "invalid number of keys after space (only 1-2 currently supported)")
         
         let hasButtonInMicButtonPosition = (keysBeforeSpace == 3)
         
@@ -943,8 +945,9 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
                 }
             }
             else {
-                frames.append(CGRectMake(rounded(currentOrigin), frame.origin.y, rightButtonWidth, frame.height))
-                currentOrigin += (rightButtonWidth + gapWidth)
+                let width = rounded(rightButtonWidth)
+                frames.append(CGRectMake(rounded(currentOrigin), frame.origin.y, width, frame.height))
+                currentOrigin += (width + gapWidth)
             }
         }
 
