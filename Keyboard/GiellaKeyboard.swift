@@ -9,7 +9,7 @@
 import UIKit
 
 class GiellaKeyboard: KeyboardViewController {
-    var l10nKeys: [String: String]
+    var keyNames: [String: String]
     
     override func keyPressed(key: Key) {
         if let textDocumentProxy = self.textDocumentProxy as? UIKeyInput {
@@ -19,15 +19,15 @@ class GiellaKeyboard: KeyboardViewController {
         hideLongPress()
     }
     
-    init(keyboard: Keyboard, l10nKeys: [String: String]) {
-        self.l10nKeys = l10nKeys
+    init(keyboard: Keyboard, keyNames: [String: String]) {
+        self.keyNames = keyNames
         super.init(nibName: nil, bundle: nil,
-            keyboard: defaultControls(keyboard, l10nKeys))
+            keyboard: defaultControls(keyboard, keyNames))
     }
     
     convenience init() {
         // XXX: generatedKeyboard() must be generated! :)
-        self.init(keyboard: generatedKeyboard(), l10nKeys: generatedConfig())
+        self.init(keyboard: generatedKeyboard(), keyNames: generatedConfig())
     }
     
     override func createBanner() -> ExtraView? {
@@ -39,7 +39,7 @@ class GiellaKeyboard: KeyboardViewController {
     }
     
     override func setSpaceLocalName(keyView: KeyboardKey) {
-        keyView.label.text = l10nKeys["keyboard"]
+        keyView.label.text = keyNames["keyboard"]
     }
     
     func disableInput() {
