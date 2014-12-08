@@ -92,8 +92,6 @@ class KeyboardViewController: UIInputViewController {
         }
     }
     
-    var spaceName: String?
-    
     // TODO: why does the app crash if this isn't here?
     convenience override init() {
         self.init(nibName: nil, bundle: nil)

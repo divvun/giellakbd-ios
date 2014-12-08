@@ -9,6 +9,8 @@
 import UIKit
 
 class GiellaKeyboard: KeyboardViewController {
+    var names: [String: String]
+    
     override func keyPressed(key: Key) {
         if let textDocumentProxy = self.textDocumentProxy as? UIKeyInput {
             textDocumentProxy.insertText(key.outputForCase(self.shiftState.uppercase()))
@@ -17,15 +19,15 @@ class GiellaKeyboard: KeyboardViewController {
         hideLongPress()
     }
     
-    init(keyboard: Keyboard, keyNames: [String: String]) {
+    init(keyboard: Keyboard, names: [String: String]) {
         super.init(nibName: nil, bundle: nil,
-            keyboard: defaultControls(keyboard, keyNames))
-        spaceName = keyNames["space"]
+            keyboard: defaultControls(keyboard, names))
+        self.names = names
     }
     
     convenience init() {
         // XXX: generatedKeyboard() must be generated! :)
-        self.init(keyboard: generatedKeyboard(), keyNames: generatedConfig())
+        self.init(keyboard: generatedKeyboard(), names: generatedConfig())
     }
     
     override func createBanner() -> ExtraView? {
@@ -34,6 +36,10 @@ class GiellaKeyboard: KeyboardViewController {
     
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func setSpaceLocalName(keyView: KeyboardKey) {
+        keyView.label.text = names["keyboard"]
     }
     
     func disableInput() {

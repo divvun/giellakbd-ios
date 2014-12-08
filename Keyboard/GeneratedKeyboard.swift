@@ -71,6 +71,19 @@ func generatedKeyboard() -> Keyboard {
         
         defaultKeyboard.addKey(Key(.Shift), row: 2, page: 0)
     } else {
+        
+        let commaKey = Key(.SpecialCharacter)
+        commaKey.uppercaseKeyCap = "!\n,"
+        commaKey.uppercaseOutput = "!"
+        commaKey.lowercaseOutput = ","
+        defaultKeyboard.addKey(commaKey, row: 2, page: 0)
+        
+        let periodKey = Key(.SpecialCharacter)
+        periodKey.uppercaseKeyCap = "?\n."
+        periodKey.uppercaseOutput = "?"
+        periodKey.lowercaseOutput = "."
+        defaultKeyboard.addKey(periodKey, row: 2, page: 0)
+        
         defaultKeyboard.addKey(Key(.Backspace), row: 2, page: 0)
     }
 
