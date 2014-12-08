@@ -159,11 +159,14 @@ class KeyboardKey: UIControl {
             
             self.label.textAlignment = NSTextAlignment.Center
             self.label.baselineAdjustment = UIBaselineAdjustment.AlignCenters
+            
+            self.label.numberOfLines = 1
             self.label.font = self.label.font.fontWithSize(22)
+            
             self.label.adjustsFontSizeToFitWidth = true
             self.label.minimumScaleFactor = CGFloat(0.1)
             self.label.userInteractionEnabled = false
-            self.label.numberOfLines = 1
+            
         }()
     }
     
@@ -298,6 +301,19 @@ class KeyboardKey: UIControl {
 //        self.button.frame = self.bounds
 //        
 //        self.button.setTitle(self.text, forState: UIControlState.Normal)
+        
+        if self.label.text?.rangeOfString("\n") != nil {
+            self.label.numberOfLines = 2
+            
+            var style = NSMutableParagraphStyle()
+            style.lineHeightMultiple = 0.65
+            style.alignment = .Center
+            
+            var attrString = NSMutableAttributedString(string: self.label.text!)
+            attrString.addAttribute(NSParagraphStyleAttributeName, value:style, range:NSMakeRange(0, attrString.length))
+            
+            self.label.attributedText = attrString
+        }
     }
     
     func redrawShape() {
