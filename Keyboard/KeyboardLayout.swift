@@ -611,14 +611,14 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
     func getShape(shapeClass: Shape.Type) -> Shape {
         let className = NSStringFromClass(shapeClass)
         
-        if let shape = self.shapePool[className] {
-            return shape
-        }
-        else {
+        //if let shape = self.shapePool[className] {
+        //    return shape
+        //}
+        //else {
             var shape = shapeClass(frame: CGRectZero)
-            self.shapePool[className] = shape
+        //    self.shapePool[className] = shape
             return shape
-        }
+        //}
     }
     
     //////////////////////
