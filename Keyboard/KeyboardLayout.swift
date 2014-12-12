@@ -706,6 +706,7 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
     func getShape(shapeClass: Shape.Type) -> Shape {
         let className = NSStringFromClass(shapeClass)
         
+        /*
         if self.dynamicType.shouldPoolKeys {
             if let shape = self.shapePool[className] {
                 return shape
@@ -716,9 +717,9 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
                 return shape
             }
         }
-        else {
+        else {*/
             return shapeClass(frame: CGRectZero)
-        }
+        //}
     }
     
     //////////////////////
