@@ -55,7 +55,18 @@ class KeyboardKey: UIControl {
     
     var labelInset: CGFloat = 0 {
         didSet {
-            self.label.frame = CGRectMake(self.labelInset, self.labelInset, self.bounds.width - self.labelInset * 2, self.bounds.height - self.labelInset * 2)
+            if oldValue != labelInset {
+                self.label.frame = CGRectMake(self.labelInset, self.labelInset, self.bounds.width - self.labelInset * 2, self.bounds.height - self.labelInset * 2)
+            }
+        }
+    }
+    
+    var shouldRasterize: Bool = false {
+        didSet {
+            for view in [self.displayView, self.borderView, self.underView] {
+                view?.layer.shouldRasterize = shouldRasterize
+                view?.layer.rasterizationScale = UIScreen.mainScreen().scale
+            }
         }
     }
     
@@ -553,8 +564,9 @@ class ShapeView: UIView {
             self.shapeLayer = myLayer
         }
         
-        self.layer.shouldRasterize = true
-        self.layer.rasterizationScale = UIScreen.mainScreen().scale
+        // optimization: off by default to ensure quick mode transitions; re-enable during rotations
+        //self.layer.shouldRasterize = true
+        //self.layer.rasterizationScale = UIScreen.mainScreen().scale
     }
     
     required init(coder aDecoder: NSCoder) {
