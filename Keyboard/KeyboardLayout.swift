@@ -369,25 +369,25 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
 
                 // pass 1: reuse any keys that match the required size
                 for (key, frame) in keyMap {
-                    if var keyView = self.pooledKey(key: key, model: self.model, frame: frame) {
+                    if let keyView = self.pooledKey(key: key, model: self.model, frame: frame) {
                         foundCachedKeys.append(key)
                         setupKey(keyView, key, frame)
                     }
                 }
 
-                foundCachedKeys.map {
+                foundCachedKeys.forEach {
                     keyMap.removeValueForKey($0)
                 }
 
                 // pass 2: fill in the blanks
                 for (key, frame) in keyMap {
-                    var keyView = self.generateKey()
+                    let keyView = self.generateKey()
                     setupKey(keyView, key, frame)
                 }
             }
             else {
                 for (key, frame) in keyMap {
-                    if var keyView = self.pooledKey(key: key, model: self.model, frame: frame) {
+                    if let keyView = self.pooledKey(key: key, model: self.model, frame: frame) {
                         setupKey(keyView, key, frame)
                     }
                 }
@@ -479,8 +479,8 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
             if model.type == Key.KeyType.Settings {
                 if let imageKey = key as? ImageKey {
                     if imageKey.image == nil {
-                        var gearImage = UIImage(named: "gear")
-                        var settingsImageView = UIImageView(image: gearImage)
+                        let gearImage = UIImage(named: "gear")
+                        let settingsImageView = UIImageView(image: gearImage)
                         imageKey.image = settingsImageView
                     }
                 }
@@ -665,7 +665,7 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
     // if pool is disabled, always generates a new key
     func generateKey() -> KeyboardKey {
         let createAndSetupNewKey = { () -> KeyboardKey in
-            var keyView = self.createNewKey()
+            let keyView = self.createNewKey()
 
             keyView.enabled = true
             keyView.delegate = self
@@ -728,7 +728,7 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
     // TODO: no support for more than one of the same shape
     // if pool disabled, always returns new shape
     func getShape(shapeClass: Shape.Type) -> Shape {
-        let className = NSStringFromClass(shapeClass)
+        _ = NSStringFromClass(shapeClass)
 
         /*
         if self.dynamicType.shouldPoolKeys {
@@ -780,8 +780,8 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
         let rowGap: CGFloat = (isLandscape ? self.layoutConstants.rowGapLandscape : self.layoutConstants.rowGapPortrait(bounds.width))
         let lastRowGap: CGFloat = (isLandscape ? rowGap : self.layoutConstants.rowGapPortraitLastRow(bounds.width))
 
-        let flexibleEndRowM = (isLandscape ? self.layoutConstants.flexibleEndRowTotalWidthToKeyWidthMLandscape : self.layoutConstants.flexibleEndRowTotalWidthToKeyWidthMPortrait)
-        let flexibleEndRowC = (isLandscape ? self.layoutConstants.flexibleEndRowTotalWidthToKeyWidthCLandscape : self.layoutConstants.flexibleEndRowTotalWidthToKeyWidthCPortrait)
+        _ = (isLandscape ? self.layoutConstants.flexibleEndRowTotalWidthToKeyWidthMLandscape : self.layoutConstants.flexibleEndRowTotalWidthToKeyWidthMPortrait)
+        _ = (isLandscape ? self.layoutConstants.flexibleEndRowTotalWidthToKeyWidthCLandscape : self.layoutConstants.flexibleEndRowTotalWidthToKeyWidthCPortrait)
 
         let lastRowLeftSideRatio = (isLandscape ? self.layoutConstants.lastRowLandscapeFirstTwoButtonAreaWidthToKeyboardAreaWidth : self.layoutConstants.lastRowPortraitFirstTwoButtonAreaWidthToKeyboardAreaWidth)
         let lastRowRightSideRatio = (isLandscape ? self.layoutConstants.lastRowLandscapeLastButtonAreaWidthToKeyboardAreaWidth : self.layoutConstants.lastRowPortraitLastButtonAreaWidthToKeyboardAreaWidth)
@@ -796,7 +796,7 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
 
             let mostKeysInRow: Int = {
                 var currentMax: Int = 0
-                for (i, row) in page.rows.enumerate() {
+                for (_, row) in page.rows.enumerate() {
                     currentMax = max(currentMax, row.count)
                 }
                 return currentMax
@@ -810,7 +810,7 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
 
             let keyHeight: CGFloat = {
                 let totalGaps = bottomEdge + topEdge + rowGapTotal
-                var returnHeight = (bounds.height - totalGaps) / CGFloat(numRows)
+                let returnHeight = (bounds.height - totalGaps) / CGFloat(numRows)
                 // TODO can only change this if viewport height is recalced
                 return self.rounded(/*isPad ? returnHeight * 0.95 : */returnHeight)
 
@@ -818,7 +818,7 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
 
             let letterKeyWidth: CGFloat = {
                 let totalGaps = (sideEdges * CGFloat(2)) + (keyGap * CGFloat(mostKeysInRow - 1))
-                var returnWidth = (bounds.width - totalGaps) / CGFloat(mostKeysInRow)
+                let returnWidth = (bounds.width - totalGaps) / CGFloat(mostKeysInRow)
                 // TODO make the pad multiplier a constant
                 return self.rounded(isPad ? returnWidth * 0.95 : returnWidth)
                 }()
@@ -890,7 +890,7 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
 
         var currentOrigin = frame.origin.x + sideSpace
 
-        for (k, key) in row.enumerate() {
+        for (_, _) in row.enumerate() {
             let roundedOrigin = rounded(currentOrigin)
 
             // avoiding rounding errors
@@ -1014,7 +1014,7 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
         var keysBeforeSpace = 0
         var keysAfterSpace = 0
         var reachedSpace = false
-        for (k, key) in row.enumerate() {
+        for (_, key) in row.enumerate() {
             if key.type == Key.KeyType.Space {
                 reachedSpace = true
             }
@@ -1088,7 +1088,7 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
 
         let popupWidth = key.bounds.width + self.layoutConstants.popupWidthIncrement
         let popupHeight = totalHeight - self.layoutConstants.popupGap - key.bounds.height
-        let popupCenterY = 0
+        _ = 0
 
         return CGRectMake((key.bounds.width - popupWidth) / CGFloat(2), -popupHeight - self.layoutConstants.popupGap, popupWidth, popupHeight)
     }

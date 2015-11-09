@@ -117,7 +117,7 @@ class KeyboardConnector: KeyboardKeyBackground {
             myConvertedStartPoints.1 = tempPoint
         }
 
-        var path = CGPathCreateMutable();
+        let path = CGPathCreateMutable();
 
         CGPathMoveToPoint(path, nil, myConvertedStartPoints.0.x, myConvertedStartPoints.0.y)
         CGPathAddLineToPoint(path, nil, myConvertedEndPoints.1.x, myConvertedEndPoints.1.y)
@@ -137,7 +137,7 @@ class KeyboardConnector: KeyboardKeyBackground {
             midpoint = myConvertedStartPoints.0.x + (myConvertedEndPoints.1.x - myConvertedStartPoints.0.x) / 2
         }
 
-        var bezierPath = UIBezierPath()
+        let bezierPath = UIBezierPath()
         var currentEdgePath = UIBezierPath()
         var edgePaths = [UIBezierPath]()
         

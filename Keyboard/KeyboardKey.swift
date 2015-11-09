@@ -156,29 +156,26 @@ class KeyboardKey: UIControl {
         self.addSubview(self.background)
         self.background.addSubview(self.label)
         
-        let setupViews: Void = {
-            self.displayView.opaque = false
-            self.underView?.opaque = false
-            self.borderView?.opaque = false
-            
-            self.shadowLayer.shadowOpacity = Float(0.2)
-            self.shadowLayer.shadowRadius = 4
-            self.shadowLayer.shadowOffset = CGSizeMake(0, 3)
-            
-            self.borderView?.lineWidth = CGFloat(0.5)
-            self.borderView?.fillColor = UIColor.clearColor()
-            
-            self.label.textAlignment = NSTextAlignment.Center
-            self.label.baselineAdjustment = UIBaselineAdjustment.AlignCenters
-            
-            self.label.numberOfLines = 1
-            self.label.font = self.label.font.fontWithSize(22)
-            
-            self.label.adjustsFontSizeToFitWidth = true
-            self.label.minimumScaleFactor = CGFloat(0.1)
-            self.label.userInteractionEnabled = false
-            
-        }()
+        self.displayView.opaque = false
+        self.underView?.opaque = false
+        self.borderView?.opaque = false
+        
+        self.shadowLayer.shadowOpacity = Float(0.2)
+        self.shadowLayer.shadowRadius = 4
+        self.shadowLayer.shadowOffset = CGSizeMake(0, 3)
+        
+        self.borderView?.lineWidth = CGFloat(0.5)
+        self.borderView?.fillColor = UIColor.clearColor()
+        
+        self.label.textAlignment = NSTextAlignment.Center
+        self.label.baselineAdjustment = UIBaselineAdjustment.AlignCenters
+        
+        self.label.numberOfLines = 1
+        self.label.font = self.label.font.fontWithSize(22)
+        
+        self.label.adjustsFontSizeToFitWidth = true
+        self.label.minimumScaleFactor = CGFloat(0.1)
+        self.label.userInteractionEnabled = false
     }
     
     required init(coder: NSCoder) {
@@ -193,7 +190,7 @@ class KeyboardKey: UIControl {
     override func layoutSubviews() {
         self.layoutPopupIfNeeded()
         
-        var boundingBox = (self.popup != nil ? CGRectUnion(self.bounds, self.popup!.frame) : self.bounds)
+        let boundingBox = (self.popup != nil ? CGRectUnion(self.bounds, self.popup!.frame) : self.bounds)
         
         if self.bounds.width == 0 || self.bounds.height == 0 {
             return
@@ -236,22 +233,22 @@ class KeyboardKey: UIControl {
         self.popup?.layoutIfNeeded()
         self.connector?.layoutIfNeeded()
         
-        var testPath = UIBezierPath()
-        var edgePath = UIBezierPath()
+        let testPath = UIBezierPath()
+        let edgePath = UIBezierPath()
         
         let unitSquare = CGRectMake(0, 0, 1, 1)
         
         // TODO: withUnder
         let addCurves = { (fromShape: KeyboardKeyBackground?, toPath: UIBezierPath, toEdgePaths: UIBezierPath) -> Void in
             if let shape = fromShape {
-                var path = shape.fillPath
-                var translatedUnitSquare = self.displayView.convertRect(unitSquare, fromView: shape)
+                let path = shape.fillPath
+                let translatedUnitSquare = self.displayView.convertRect(unitSquare, fromView: shape)
                 let transformFromShapeToView = CGAffineTransformMakeTranslation(translatedUnitSquare.origin.x, translatedUnitSquare.origin.y)
                 path?.applyTransform(transformFromShapeToView)
                 if path != nil { toPath.appendPath(path!) }
                 if let edgePaths = shape.edgePaths {
-                    for (e, anEdgePath) in edgePaths.enumerate() {
-                        var editablePath = anEdgePath
+                    for (_, anEdgePath) in edgePaths.enumerate() {
+                        let editablePath = anEdgePath
                         editablePath.applyTransform(transformFromShapeToView)
                         toEdgePaths.appendPath(editablePath)
                     }
@@ -262,19 +259,19 @@ class KeyboardKey: UIControl {
         addCurves(self.popup, testPath, edgePath)
         addCurves(self.connector, testPath, edgePath)
         
-        var shadowPath = UIBezierPath(CGPath: testPath.CGPath)
+        let shadowPath = UIBezierPath(CGPath: testPath.CGPath)
         
         addCurves(self.background, testPath, edgePath)
         
-        var underPath = self.background.underPath
-        var translatedUnitSquare = self.displayView.convertRect(unitSquare, fromView: self.background)
+        let underPath = self.background.underPath
+        let translatedUnitSquare = self.displayView.convertRect(unitSquare, fromView: self.background)
         let transformFromShapeToView = CGAffineTransformMakeTranslation(translatedUnitSquare.origin.x, translatedUnitSquare.origin.y)
         underPath?.applyTransform(transformFromShapeToView)
         
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         
-        if let popup = self.popup {
+        if let _ = self.popup {
             self.shadowLayer.shadowPath = shadowPath.CGPath
         }
         
@@ -316,11 +313,11 @@ class KeyboardKey: UIControl {
         if self.label.text?.rangeOfString("\n") != nil {
             self.label.numberOfLines = 2
             
-            var style = NSMutableParagraphStyle()
+            let style = NSMutableParagraphStyle()
             style.lineHeightMultiple = 0.65
             style.alignment = .Center
             
-            var attrString = NSMutableAttributedString(string: self.label.text!)
+            let attrString = NSMutableAttributedString(string: self.label.text!)
             attrString.addAttribute(NSParagraphStyleAttributeName, value:style, range:NSMakeRange(0, attrString.length))
             
             self.label.attributedText = attrString
@@ -445,11 +442,11 @@ class KeyboardKey: UIControl {
         if self.popup == nil {
             self.layer.zPosition = 1000
             
-            var popup = KeyboardKeyBackground(cornerRadius: 9.0, underOffset: self.underOffset)
+            let popup = KeyboardKeyBackground(cornerRadius: 9.0, underOffset: self.underOffset)
             self.popup = popup
             self.addSubview(popup)
             
-            var popupLabel = UILabel()
+            let popupLabel = UILabel()
             popupLabel.textAlignment = self.label.textAlignment
             popupLabel.baselineAdjustment = self.label.baselineAdjustment
             popupLabel.font = self.label.font.fontWithSize(22 * 2)

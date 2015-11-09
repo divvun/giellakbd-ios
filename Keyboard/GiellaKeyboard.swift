@@ -12,9 +12,9 @@ class GiellaKeyboard: KeyboardViewController {
     var keyNames: [String: String]
     
     override func keyPressed(key: Key) {
-        if let textDocumentProxy = self.textDocumentProxy as? UIKeyInput {
-            textDocumentProxy.insertText(key.outputForCase(self.shiftState.uppercase()))
-        }
+        let textDocumentProxy = self.textDocumentProxy as UIKeyInput
+        
+        textDocumentProxy.insertText(key.outputForCase(self.shiftState.uppercase()))
         
         hideLongPress()
     }
@@ -66,7 +66,7 @@ class GiellaKeyboard: KeyboardViewController {
             //banner.label.text = self.lastKey?.label.text
             if let keyView = self.lastKey {
                 let key = self.layout!.keyForView(keyView)
-                var longpresses = key!.longPressForCase(shiftState.uppercase())
+                let longpresses = key!.longPressForCase(shiftState.uppercase())
                 
                 if longpresses.count > 0 {
                     //self.disableInput()
@@ -117,9 +117,8 @@ class GiellaBanner: ExtraView {
     
     func handleBtnPress(sender: UIButton) {
         if let kbd = self.keyboard {
-            if let textDocumentProxy = kbd.textDocumentProxy as? UIKeyInput {
-                textDocumentProxy.insertText(sender.titleLabel!.text!)
-            }
+            let textDocumentProxy = kbd.textDocumentProxy as UIKeyInput
+            textDocumentProxy.insertText(sender.titleLabel!.text!)
             
             kbd.hideLongPress()
             
@@ -172,7 +171,7 @@ class GiellaBanner: ExtraView {
     
     
     func updateAlternateKeyList(keys: [String]) {
-        var sv = self.subviews
+        let sv = self.subviews
         for v in sv {
             v.removeFromSuperview()
         }
@@ -182,7 +181,7 @@ class GiellaBanner: ExtraView {
         }
         
         for char in keys {
-            var btn: UIButton = UIButton(type: UIButtonType.System) as UIButton
+            let btn: UIButton = UIButton(type: UIButtonType.System) as UIButton
             
             btn.frame = CGRectMake(0, 0, 20, 20)
             btn.setTitle(char, forState: .Normal)
@@ -201,7 +200,7 @@ class GiellaBanner: ExtraView {
         }
         
         let firstBtn = self.subviews[0] as! UIButton
-        var lastN = keys.count-1
+        let lastN = keys.count-1
         var prevBtn: UIButton?
         var nextBtn: UIButton?
         
@@ -229,26 +228,26 @@ class GiellaBanner: ExtraView {
 func defaultControls(defaultKeyboard: Keyboard, keyNames: [String: String]) -> Keyboard {
     let isPad = UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad
 
-    var backspace = Key(.Backspace)
+    let backspace = Key(.Backspace)
     
-    var keyModeChangeNumbers = Key(.ModeChange)
+    let keyModeChangeNumbers = Key(.ModeChange)
     keyModeChangeNumbers.uppercaseKeyCap = isPad ? ".?123" : "123"
     keyModeChangeNumbers.toMode = 1
     defaultKeyboard.addKey(keyModeChangeNumbers, row: 3, page: 0)
     
-    var keyboardChange = Key(.KeyboardChange)
+    let keyboardChange = Key(.KeyboardChange)
     defaultKeyboard.addKey(keyboardChange, row: 3, page: 0)
     
-    var settings = Key(.Settings)
+    let settings = Key(.Settings)
     defaultKeyboard.addKey(settings, row: 3, page: 0)
     
-    var space = Key(.Space)
+    let space = Key(.Space)
     space.uppercaseKeyCap = keyNames["space"]
     space.uppercaseOutput = " "
     space.lowercaseOutput = " "
     defaultKeyboard.addKey(space, row: 3, page: 0)
     
-    var returnKey = Key(.Return)
+    let returnKey = Key(.Return)
     returnKey.uppercaseKeyCap = keyNames["return"]
     returnKey.uppercaseOutput = "\n"
     returnKey.lowercaseOutput = "\n"
@@ -261,31 +260,31 @@ func defaultControls(defaultKeyboard: Keyboard, keyNames: [String: String]) -> K
     }
     
     for key in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"] {
-        var keyModel = Key(.SpecialCharacter)
+        let keyModel = Key(.SpecialCharacter)
         keyModel.setLetter(key)
         defaultKeyboard.addKey(keyModel, row: 0, page: 1)
     }
     
     for key in ["-", "/", ":", ";", "(", ")", "$", "&", "@", "\""] {
-        var keyModel = Key(.SpecialCharacter)
+        let keyModel = Key(.SpecialCharacter)
         keyModel.setLetter(key)
         defaultKeyboard.addKey(keyModel, row: 1, page: 1)
     }
     
-    var keyModeChangeSpecialCharacters = Key(.ModeChange)
+    let keyModeChangeSpecialCharacters = Key(.ModeChange)
     keyModeChangeSpecialCharacters.uppercaseKeyCap = "#+="
     keyModeChangeSpecialCharacters.toMode = 2
     defaultKeyboard.addKey(keyModeChangeSpecialCharacters, row: 2, page: 1)
     
     for key in [".", ",", "?", "!", "'"] {
-        var keyModel = Key(.SpecialCharacter)
+        let keyModel = Key(.SpecialCharacter)
         keyModel.setLetter(key)
         defaultKeyboard.addKey(keyModel, row: 2, page: 1)
     }
     
     defaultKeyboard.addKey(Key(backspace), row: 2, page: 1)
     
-    var keyModeChangeLetters = Key(.ModeChange)
+    let keyModeChangeLetters = Key(.ModeChange)
     keyModeChangeLetters.uppercaseKeyCap = "ABC"
     keyModeChangeLetters.toMode = 0
     defaultKeyboard.addKey(keyModeChangeLetters, row: 3, page: 1)
@@ -299,13 +298,13 @@ func defaultControls(defaultKeyboard: Keyboard, keyNames: [String: String]) -> K
     defaultKeyboard.addKey(Key(returnKey), row: 3, page: 1)
     
     for key in ["[", "]", "{", "}", "#", "%", "^", "*", "+", "="] {
-        var keyModel = Key(.SpecialCharacter)
+        let keyModel = Key(.SpecialCharacter)
         keyModel.setLetter(key)
         defaultKeyboard.addKey(keyModel, row: 0, page: 2)
     }
     
     for key in ["_", "\\", "|", "~", "<", ">", "€", "£", "Y", "•"] {
-        var keyModel = Key(.SpecialCharacter)
+        let keyModel = Key(.SpecialCharacter)
         keyModel.setLetter(key)
         defaultKeyboard.addKey(keyModel, row: 1, page: 2)
     }
@@ -313,7 +312,7 @@ func defaultControls(defaultKeyboard: Keyboard, keyNames: [String: String]) -> K
     defaultKeyboard.addKey(Key(keyModeChangeNumbers), row: 2, page: 2)
     
     for key in [".", ",", "?", "!", "'"] {
-        var keyModel = Key(.SpecialCharacter)
+        let keyModel = Key(.SpecialCharacter)
         keyModel.setLetter(key)
         defaultKeyboard.addKey(keyModel, row: 2, page: 2)
     }

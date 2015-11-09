@@ -37,7 +37,7 @@ class HostingAppViewController: UIViewController {
 
     @IBAction func dismiss() {
         for view in self.view.subviews {
-            if var inputView = view as? UITextField {
+            if let inputView = view as? UITextField {
                 inputView.resignFirstResponder()
             }
         }
@@ -75,7 +75,7 @@ class HostingAppViewController: UIViewController {
     }
 
     func keyboardDidChangeFrame(notification: NSNotification) {
-        let frameBegin: CGRect! = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey]?.CGRectValue
+        //let frameBegin: CGRect! = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey]?.CGRectValue
         let frameEnd: CGRect! = notification.userInfo?[UIKeyboardFrameEndUserInfoKey]?.CGRectValue
 
         if frameEnd.height == referenceHeight {

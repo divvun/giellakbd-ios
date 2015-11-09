@@ -70,7 +70,7 @@ class DefaultSettings: ExtraView, UITableViewDataSource, UITableViewDelegate {
         let assets = NSBundle(forClass: self.dynamicType).loadNibNamed("DefaultSettings", owner: self, options: nil)
         
         if assets.count > 0 {
-            if var rootView = assets.first as? UIView {
+            if let rootView = assets.first as? UIView {
                 rootView.translatesAutoresizingMaskIntoConstraints = false
                 self.addSubview(rootView)
                 
@@ -122,7 +122,7 @@ class DefaultSettings: ExtraView, UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if var cell = tableView.dequeueReusableCellWithIdentifier("cell") as? DefaultSettingsTableViewCell {
+        if let cell = tableView.dequeueReusableCellWithIdentifier("cell") as? DefaultSettingsTableViewCell {
             let key = self.settingsList[indexPath.section].1[indexPath.row]
             
             if cell.sw.allTargets().count == 0 {
@@ -157,13 +157,11 @@ class DefaultSettings: ExtraView, UITableViewDataSource, UITableViewDelegate {
             
             if let visibleCells = self.tableView?.visibleCells {
                 for cell in visibleCells {
-                    if var cell = cell as? UITableViewCell {
-                        cell.backgroundColor = cellBackgroundColorDark
-                        var label = cell.viewWithTag(2) as? UILabel
-                        label?.textColor = cellLabelColorDark
-                        var longLabel = cell.viewWithTag(3) as? UITextView
-                        longLabel?.textColor = cellLongLabelColorDark
-                    }
+                    cell.backgroundColor = cellBackgroundColorDark
+                    let label = cell.viewWithTag(2) as? UILabel
+                    label?.textColor = cellLabelColorDark
+                    let longLabel = cell.viewWithTag(3) as? UITextView
+                    longLabel?.textColor = cellLongLabelColorDark
                 }
             }
         }
@@ -175,13 +173,11 @@ class DefaultSettings: ExtraView, UITableViewDataSource, UITableViewDelegate {
             
             if let visibleCells = self.tableView?.visibleCells {
                 for cell in visibleCells {
-                    if var cell = cell as? UITableViewCell {
-                        cell.backgroundColor = cellBackgroundColorLight
-                        var label = cell.viewWithTag(2) as? UILabel
-                        label?.textColor = cellLabelColorLight
-                        var longLabel = cell.viewWithTag(3) as? UITextView
-                        longLabel?.textColor = cellLongLabelColorLight
-                    }
+                    cell.backgroundColor = cellBackgroundColorLight
+                    let label = cell.viewWithTag(2) as? UILabel
+                    label?.textColor = cellLabelColorLight
+                    let longLabel = cell.viewWithTag(3) as? UITextView
+                    longLabel?.textColor = cellLongLabelColorLight
                 }
             }
         }

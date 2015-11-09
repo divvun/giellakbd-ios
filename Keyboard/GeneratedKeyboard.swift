@@ -2,7 +2,7 @@
 import UIKit
 
 func generatedKeyboard() -> Keyboard {
-    var defaultKeyboard = Keyboard()
+    let defaultKeyboard = Keyboard()
     
     let isPad = UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad
 
@@ -11,7 +11,7 @@ func generatedKeyboard() -> Keyboard {
     defaultKeyboard.addKey(Key(.Shift), row: 2, page: 0)
     
     for key in ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"] {
-        var keyModel = Key(.Character)
+        let keyModel = Key(.Character)
         keyModel.setLetter(key)
         if let lp = longPresses[key] {
             keyModel.setUppercaseLongPress(lp)
@@ -24,7 +24,7 @@ func generatedKeyboard() -> Keyboard {
     }
     
     for key in ["A", "S", "D", "F", "G", "H", "J", "K", "L"] {
-        var keyModel = Key(.Character)
+        let keyModel = Key(.Character)
         keyModel.setLetter(key)
         if let lp = longPresses[key] {
             keyModel.setUppercaseLongPress(lp)
@@ -37,7 +37,7 @@ func generatedKeyboard() -> Keyboard {
     }
     
     for key in ["Z", "X", "C", "V", "B", "N", "M"] {
-        var keyModel = Key(.Character)
+        let keyModel = Key(.Character)
         keyModel.setLetter(key)
         if let lp = longPresses[key] {
             keyModel.setUppercaseLongPress(lp)
@@ -51,7 +51,7 @@ func generatedKeyboard() -> Keyboard {
     
     if isPad {
         defaultKeyboard.addKey(Key(.Backspace), row: 0, page: 0)
-        var returnKey = Key(.Return)
+        let returnKey = Key(.Return)
         returnKey.uppercaseKeyCap = "return"
         returnKey.uppercaseOutput = "\n"
         returnKey.lowercaseOutput = "\n"
