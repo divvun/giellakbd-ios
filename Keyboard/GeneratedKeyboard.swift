@@ -13,10 +13,10 @@ func generatedKeyboard() -> Keyboard {
     for key in ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"] {
         var keyModel = Key(.Character)
         keyModel.setLetter(key)
-        if let lp = longPresses[key]? {
+        if let lp = longPresses[key] {
             keyModel.setUppercaseLongPress(lp)
         }
-        if let lp = longPresses[key.lowercaseString]? {
+        if let lp = longPresses[key.lowercaseString] {
             keyModel.setLowercaseLongPress(lp)
         }
 
@@ -26,10 +26,10 @@ func generatedKeyboard() -> Keyboard {
     for key in ["A", "S", "D", "F", "G", "H", "J", "K", "L"] {
         var keyModel = Key(.Character)
         keyModel.setLetter(key)
-        if let lp = longPresses[key]? {
+        if let lp = longPresses[key] {
             keyModel.setUppercaseLongPress(lp)
         }
-        if let lp = longPresses[key.lowercaseString]? {
+        if let lp = longPresses[key.lowercaseString] {
             keyModel.setLowercaseLongPress(lp)
         }
 
@@ -39,10 +39,10 @@ func generatedKeyboard() -> Keyboard {
     for key in ["Z", "X", "C", "V", "B", "N", "M"] {
         var keyModel = Key(.Character)
         keyModel.setLetter(key)
-        if let lp = longPresses[key]? {
+        if let lp = longPresses[key] {
             keyModel.setUppercaseLongPress(lp)
         }
-        if let lp = longPresses[key.lowercaseString]? {
+        if let lp = longPresses[key.lowercaseString] {
             keyModel.setLowercaseLongPress(lp)
         }
 

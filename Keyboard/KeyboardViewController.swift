@@ -309,8 +309,8 @@ class KeyboardViewController: UIInputViewController {
 
     func setSpaceLocalName(keyView: KeyboardKey) {
         let ext = NSBundle.mainBundle().infoDictionary?["NSExtension"] as! NSDictionary
-        let attrs = ext["NSExtensionAttributes"] as NSDictionary
-        let primaryLanguage = attrs["PrimaryLanguage"] as String
+        let attrs = ext["NSExtensionAttributes"] as! NSDictionary
+        let primaryLanguage = attrs["PrimaryLanguage"] as! String
         var locale = NSLocale(localeIdentifier: primaryLanguage)
         var displayName = locale.displayNameForKey(NSLocaleIdentifier, value: primaryLanguage)?.capitalizedString
 

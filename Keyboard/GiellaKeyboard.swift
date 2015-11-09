@@ -22,7 +22,7 @@ class GiellaKeyboard: KeyboardViewController {
     init(keyboard: Keyboard, keyNames: [String: String]) {
         self.keyNames = keyNames
         super.init(nibName: nil, bundle: nil,
-            keyboard: defaultControls(keyboard, keyNames))
+            keyboard: defaultControls(keyboard, keyNames: keyNames))
     }
     
     convenience init() {
@@ -64,7 +64,7 @@ class GiellaKeyboard: KeyboardViewController {
         if let banner = self.bannerView as? GiellaBanner {
             //self.lastKey?.label.text = "!"
             //banner.label.text = self.lastKey?.label.text
-            if let keyView = self.lastKey? {
+            if let keyView = self.lastKey {
                 let key = self.layout!.keyForView(keyView)
                 var longpresses = key!.longPressForCase(shiftState.uppercase())
                 
@@ -116,7 +116,7 @@ class GiellaBanner: ExtraView {
     }
     
     func handleBtnPress(sender: UIButton) {
-        if let kbd = self.keyboard? {
+        if let kbd = self.keyboard {
             if let textDocumentProxy = kbd.textDocumentProxy as? UIKeyInput {
                 textDocumentProxy.insertText(sender.titleLabel!.text!)
             }
@@ -182,13 +182,13 @@ class GiellaBanner: ExtraView {
         }
         
         for char in keys {
-            var btn: UIButton = UIButton.buttonWithType(UIButtonType.System) as UIButton
+            var btn: UIButton = UIButton(type: UIButtonType.System) as UIButton
             
             btn.frame = CGRectMake(0, 0, 20, 20)
             btn.setTitle(char, forState: .Normal)
             btn.sizeToFit()
             btn.titleLabel?.font = UIFont.systemFontOfSize(20)
-            btn.setTranslatesAutoresizingMaskIntoConstraints(false)
+            btn.translatesAutoresizingMaskIntoConstraints = false
             btn.backgroundColor = UIColor(hue: (216/360.0), saturation: 0.1, brightness: 0.81, alpha: 1)
             btn.setTitleColor(UIColor(white: 1.0, alpha: 1.0), forState: .Normal)
             
@@ -200,13 +200,13 @@ class GiellaBanner: ExtraView {
             self.addSubview(btn)
         }
         
-        let firstBtn = self.subviews[0] as UIButton
+        let firstBtn = self.subviews[0] as! UIButton
         var lastN = keys.count-1
         var prevBtn: UIButton?
         var nextBtn: UIButton?
         
-        for (n, view) in enumerate(self.subviews) {
-            let btn = view as UIButton
+        for (n, view) in self.subviews.enumerate() {
+            let btn = view as! UIButton
             
             if n == lastN {
                 nextBtn = nil

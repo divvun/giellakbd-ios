@@ -787,7 +787,7 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
         let lastRowRightSideRatio = (isLandscape ? self.layoutConstants.lastRowLandscapeLastButtonAreaWidthToKeyboardAreaWidth : self.layoutConstants.lastRowPortraitLastButtonAreaWidthToKeyboardAreaWidth)
         let lastRowKeyGap = (isLandscape ? self.layoutConstants.lastRowKeyGapLandscape(bounds.width) : self.layoutConstants.lastRowKeyGapPortrait)
 
-        for (p, page) in enumerate(model.pages) {
+        for (p, page) in model.pages.enumerate() {
             if p != pageToLayout {
                 continue
             }
@@ -830,7 +830,7 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
                 }
             }
 
-            for (r, row) in enumerate(page.rows) {
+            for (r, row) in page.rows.enumerate() {
                 let rowGapCurrentTotal = (r == page.rows.count - 1 ? rowGapTotal : CGFloat(r) * rowGap)
                 let frame = CGRectMake(rounded(sideEdges), rounded(topEdge + (CGFloat(r) * keyHeight) + rowGapCurrentTotal), rounded(bounds.width - CGFloat(2) * sideEdges), rounded(keyHeight))
 
@@ -890,7 +890,7 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
 
         var currentOrigin = frame.origin.x + sideSpace
 
-        for (k, key) in enumerate(row) {
+        for (k, key) in row.enumerate() {
             let roundedOrigin = rounded(currentOrigin)
 
             // avoiding rounding errors
