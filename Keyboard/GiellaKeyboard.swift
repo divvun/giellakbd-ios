@@ -8,21 +8,118 @@
 
 import UIKit
 
+class SuggestionOp: NSOperation {
+    let word: String
+    let kbd: GiellaKeyboard
+    
+    init (kbd: GiellaKeyboard, word: String) {
+        self.kbd = kbd
+        self.word = word
+    }
+    
+    override func main() {
+        if (cancelled) {
+            return
+        }
+        
+        let suggestions = self.kbd.zhfst?.suggest(word).prefix(3).map({ (pair) in
+            return pair.first as! String
+        })
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            if let suggestions = suggestions {
+                if let banner = self.kbd.bannerView as? GiellaBanner {
+                    banner.mode = .Suggestion
+                    banner.updateAlternateKeyList(suggestions);
+                }
+            }
+        }
+    }
+}
+
 class GiellaKeyboard: KeyboardViewController {
     var keyNames: [String: String]
+    
+    var zhfst: ZHFSTOSpeller?
+    
+    let opQueue = NSOperationQueue()
+    
+    func updateSuggestions() {
+        let documentProxy = self.textDocumentProxy as UITextDocumentProxy
+        
+        guard let banner = self.bannerView as? GiellaBanner else {
+            return
+        }
+        
+        guard let beforeContext = documentProxy.documentContextBeforeInput else {
+            banner.updateAlternateKeyList([])
+            return
+        }
+        
+        guard let lastWord = beforeContext.componentsSeparatedByString(" ").last else {
+            banner.updateAlternateKeyList([])
+            return
+        }
+        
+        if lastWord == "" {
+            banner.updateAlternateKeyList([])
+            return
+        }
+        
+        opQueue.cancelAllOperations()
+        opQueue.addOperation(SuggestionOp(kbd: self, word: lastWord))
+    }
+    
+    override func contextChanged() {
+        super.contextChanged()
+        
+        updateSuggestions()
+    }
     
     override func keyPressed(key: Key) {
         let textDocumentProxy = self.textDocumentProxy as UIKeyInput
         
         textDocumentProxy.insertText(key.outputForCase(self.shiftState.uppercase()))
         
-        hideLongPress()
+        updateSuggestions()
     }
     
     init(keyboard: Keyboard, keyNames: [String: String]) {
         self.keyNames = keyNames
         super.init(nibName: nil, bundle: nil,
             keyboard: defaultControls(keyboard, keyNames: keyNames))
+        
+        opQueue.maxConcurrentOperationCount = 1
+        opQueue.qualityOfService = .UserInteractive
+        loadZHFST()
+    }
+    
+    /*
+    override func didReceiveMemoryWarning(notification: NSNotification) {
+        opQueue.cancelAllOperations()
+        opQueue.addOperationWithBlock() {
+            self.zhfst?.clearSuggestionCache()
+        }
+    }
+    */
+    
+    func loadZHFST() {
+        NSLog("%@", "Loading speller…")
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
+            NSLog("%@", "Dispatching request to load speller…")
+            
+            let path = "\(NSBundle.mainBundle().pathForResource("dicts", ofType: "bundle")!)/se.zhfst"
+            let zhfst = ZHFSTOSpeller()
+            
+            zhfst.readZhfst(path, tempDir: NSTemporaryDirectory())
+            zhfst.setQueueLimit(3)
+            zhfst.setWeightLimit(50)
+            
+            self.zhfst = zhfst
+           
+            NSLog("%@", "ZHFSTOSpeller loaded!")
+        }
     }
     
     convenience init() {
@@ -32,6 +129,12 @@ class GiellaKeyboard: KeyboardViewController {
     
     override func createBanner() -> ExtraView? {
         return GiellaBanner(keyboard: self)
+    }
+    
+    override func backspaceDown(sender: KeyboardKey) {
+        super.backspaceDown(sender)
+        
+        updateSuggestions()
     }
     
     required init(coder: NSCoder) {
@@ -62,14 +165,12 @@ class GiellaKeyboard: KeyboardViewController {
         super.showLongPress()
         
         if let banner = self.bannerView as? GiellaBanner {
-            //self.lastKey?.label.text = "!"
-            //banner.label.text = self.lastKey?.label.text
+            banner.mode = .LongPress
             if let keyView = self.lastKey {
                 let key = self.layout!.keyForView(keyView)
                 let longpresses = key!.longPressForCase(shiftState.uppercase())
                 
                 if longpresses.count > 0 {
-                    //self.disableInput()
                     banner.updateAlternateKeyList(longpresses)
                 }
             }
@@ -80,17 +181,20 @@ class GiellaKeyboard: KeyboardViewController {
         super.hideLongPress()
         
         if let banner = self.bannerView as? GiellaBanner {
-            //self.lastKey?.label.text = "!"
-            //banner.label.text = ""
             banner.updateAlternateKeyList([])
         }
     }
+}
+
+enum BannerModes {
+    case None, LongPress, Suggestion
 }
 
 class GiellaBanner: ExtraView {
     
     //var label: UILabel = UILabel()
     var keyboard: GiellaKeyboard?
+    var mode: BannerModes = .None
     
     convenience init(keyboard: GiellaKeyboard) {
         self.init(globalColors: nil, darkMode: false, solidColorMode: false)
@@ -115,12 +219,39 @@ class GiellaBanner: ExtraView {
         //self.label.center.y = self.center.y
     }
     
+    func setMode(mode: BannerModes) {
+        self.mode = mode;
+    }
+    
     func handleBtnPress(sender: UIButton) {
         if let kbd = self.keyboard {
-            let textDocumentProxy = kbd.textDocumentProxy as UIKeyInput
-            textDocumentProxy.insertText(sender.titleLabel!.text!)
+            let textDocumentProxy = kbd.textDocumentProxy as UITextDocumentProxy
             
             kbd.hideLongPress()
+            
+            if (mode == .LongPress) {
+                textDocumentProxy.insertText(sender.titleLabel!.text!)
+                
+                kbd.contextChanged()
+
+            } else if (mode == .Suggestion) {
+                kbd.hideLongPress()
+                
+                guard let beforeContext = textDocumentProxy.documentContextBeforeInput else {
+                    return
+                }
+                
+                guard let lastWord = beforeContext.componentsSeparatedByString(" ").last else {
+                    return
+                }
+                
+                for _ in 0..<(lastWord.characters.count) {
+                    textDocumentProxy.deleteBackward()
+                }
+                
+                textDocumentProxy.insertText(sender.titleLabel!.text!)
+                textDocumentProxy.insertText(" ")
+            }
             
             if kbd.shiftState == ShiftState.Enabled {
                 kbd.shiftState = ShiftState.Disabled
@@ -186,7 +317,15 @@ class GiellaBanner: ExtraView {
             btn.frame = CGRectMake(0, 0, 20, 20)
             btn.setTitle(char, forState: .Normal)
             btn.sizeToFit()
-            btn.titleLabel?.font = UIFont.systemFontOfSize(20)
+            
+            btn.titleLabel!.font = UIFont.systemFontOfSize(18)
+            btn.titleLabel!.numberOfLines = 1
+            //btn.titleLabel!.adjustsFontSizeToFitWidth = true
+            btn.titleLabel!.lineBreakMode = .ByTruncatingHead
+            //btn.titleLabel!.lineBreakMode = .ByClipping
+            btn.titleLabel!.baselineAdjustment = .AlignCenters
+            btn.titleEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
+            
             btn.translatesAutoresizingMaskIntoConstraints = false
             btn.backgroundColor = UIColor(hue: (216/360.0), saturation: 0.1, brightness: 0.81, alpha: 1)
             btn.setTitleColor(UIColor(white: 1.0, alpha: 1.0), forState: .Normal)
