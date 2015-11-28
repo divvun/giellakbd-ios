@@ -123,6 +123,15 @@ class KeyboardViewController: UIInputViewController {
         self.view.addSubview(self.forwardingView)
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("defaultsChanged:"), name: NSUserDefaultsDidChangeNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserverForName(UIApplicationDidReceiveMemoryWarningNotification, object: nil, queue: nil) { (notif) in
+            self.didReceiveMemoryWarning(notif);
+            }
+
+    }
+    
+    func didReceiveMemoryWarning(notification: NSNotification) {
+        // Overridable woo
     }
 
     required init?(coder: NSCoder) {
