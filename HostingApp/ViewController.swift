@@ -44,7 +44,7 @@ class HostingAppViewController: UIViewController {
     }
 
     @IBAction func openSettings() {
-        if let url = NSURL(string: UIApplicationOpenSettingsURLString) {
+        if let url = NSURL(string: NSString(format: "%@BundleID", UIApplicationOpenSettingsURLString) as String) {
             UIApplication.sharedApplication().openURL(url)
         }
     }
