@@ -171,24 +171,70 @@ class LayoutConstants: NSObject {
 }
 
 class GlobalColors: NSObject {
-    class var lightModeRegularKey: UIColor { get { return UIColor.whiteColor() }}
-    class var darkModeRegularKey: UIColor { get { return UIColor.whiteColor().colorWithAlphaComponent(CGFloat(0.3)) }}
-    class var darkModeSolidColorRegularKey: UIColor { get { return UIColor(red: CGFloat(83)/CGFloat(255), green: CGFloat(83)/CGFloat(255), blue: CGFloat(83)/CGFloat(255), alpha: 1) }}
-    class var lightModeSpecialKey: UIColor { get { return GlobalColors.lightModeSolidColorSpecialKey }}
-    class var lightModeSolidColorSpecialKey: UIColor { get { return UIColor(red: CGFloat(177)/CGFloat(255), green: CGFloat(177)/CGFloat(255), blue: CGFloat(177)/CGFloat(255), alpha: 1) }}
-    class var darkModeSpecialKey: UIColor { get { return UIColor.grayColor().colorWithAlphaComponent(CGFloat(0.3)) }}
-    class var darkModeSolidColorSpecialKey: UIColor { get { return UIColor(red: CGFloat(45)/CGFloat(255), green: CGFloat(45)/CGFloat(255), blue: CGFloat(45)/CGFloat(255), alpha: 1) }}
-    class var darkModeShiftKeyDown: UIColor { get { return UIColor(red: CGFloat(214)/CGFloat(255), green: CGFloat(220)/CGFloat(255), blue: CGFloat(208)/CGFloat(255), alpha: 1) }}
-    class var lightModePopup: UIColor { get { return GlobalColors.lightModeRegularKey }}
-    class var darkModePopup: UIColor { get { return UIColor.grayColor() }}
-    class var darkModeSolidColorPopup: UIColor { get { return GlobalColors.darkModeSolidColorRegularKey }}
+    class var lightModeRegularKey: UIColor { return UIColor.whiteColor() }
+    
+    class var darkModeRegularKey: UIColor { return UIColor.whiteColor().colorWithAlphaComponent(CGFloat(0.3)) }
+    
+    class var darkModeSolidColorRegularKey: UIColor {
+        return UIColor(red: CGFloat(83)/CGFloat(255), green: CGFloat(83)/CGFloat(255), blue: CGFloat(83)/CGFloat(255), alpha: 1)
+    }
+    
+    class var lightModeSpecialKey: UIColor {
+        return GlobalColors.lightModeSolidColorSpecialKey
+    }
+    
+    class var lightModeSolidColorSpecialKey: UIColor {
+        return UIColor(red: CGFloat(183)/CGFloat(255), green: CGFloat(191)/CGFloat(255), blue: CGFloat(202)/CGFloat(255), alpha: 1)
+    }
+    
+    class var darkModeSpecialKey: UIColor {
+        return UIColor.grayColor().colorWithAlphaComponent(CGFloat(0.3))
+    }
+    
+    class var darkModeSolidColorSpecialKey: UIColor {
+        return UIColor(red: CGFloat(45)/CGFloat(255), green: CGFloat(45)/CGFloat(255), blue: CGFloat(45)/CGFloat(255), alpha: 1)
+    }
+    
+    class var darkModeShiftKeyDown: UIColor {
+        return UIColor(red: CGFloat(214)/CGFloat(255), green: CGFloat(220)/CGFloat(255), blue: CGFloat(208)/CGFloat(255), alpha: 1)
+    }
+    
+    class var lightModePopup: UIColor {
+        return GlobalColors.lightModeRegularKey
+    }
+    
+    class var darkModePopup: UIColor {
+        return UIColor.grayColor()
+    }
+    
+    class var darkModeSolidColorPopup: UIColor {
+        return GlobalColors.darkModeSolidColorRegularKey
+    }
 
-    class var lightModeUnderColor: UIColor { get { return UIColor(hue: (220/360.0), saturation: 0.04, brightness: 0.56, alpha: 1) }}
-    class var darkModeUnderColor: UIColor { get { return UIColor(red: CGFloat(38.6)/CGFloat(255), green: CGFloat(18)/CGFloat(255), blue: CGFloat(39.3)/CGFloat(255), alpha: 0.4) }}
-    class var lightModeTextColor: UIColor { get { return UIColor.blackColor() }}
-    class var darkModeTextColor: UIColor { get { return UIColor.whiteColor() }}
-    class var lightModeBorderColor: UIColor { get { return UIColor(hue: (214/360.0), saturation: 0.04, brightness: 0.65, alpha: 1.0) }}
-    class var darkModeBorderColor: UIColor { get { return UIColor.clearColor() }}
+    class var lightModeUnderColor: UIColor {
+        return UIColor(hue: (220/360.0), saturation: 0.04, brightness: 0.56, alpha: 1)
+           // UIColor(red: CGFloat(255-212)/CGFloat(255), green: CGFloat(255-216)/CGFloat(255), blue: CGFloat(255-222)/CGFloat(255), alpha: 1)
+    }
+    
+    class var darkModeUnderColor: UIColor {
+        return UIColor(red: CGFloat(38.6)/CGFloat(255), green: CGFloat(18)/CGFloat(255), blue: CGFloat(39.3)/CGFloat(255), alpha: 0.4)
+    }
+    
+    class var lightModeTextColor: UIColor {
+        return UIColor.blackColor()
+    }
+    
+    class var darkModeTextColor: UIColor {
+        return UIColor.whiteColor()
+    }
+    
+    class var lightModeBorderColor: UIColor {
+        return UIColor(hue: (214/360.0), saturation: 0.04, brightness: 0.65, alpha: 1.0)
+    }
+    
+    class var darkModeBorderColor: UIColor {
+        return UIColor.clearColor()
+    }
 
     class func regularKey(darkMode: Bool, solidColorMode: Bool) -> UIColor {
         if darkMode {
@@ -1032,22 +1078,39 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
         assert(keysAfterSpace >= 1 && keysAfterSpace <= 2, "invalid number of keys after space (only 1-2 currently supported)")
 
         let hasButtonInMicButtonPosition = (keysBeforeSpace == 3)
-
+        
+        let isPad = UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad
+        
+        let gap = isPad ? gapWidth * 1.8 : gapWidth
+        
         var leftSideAreaWidth = frame.width * leftSideRatio
-        let rightSideAreaWidth = frame.width * rightSideRatio
-        var leftButtonWidth = (leftSideAreaWidth - (gapWidth * CGFloat(2 - 1))) / CGFloat(2)
+        var rightSideAreaWidth = frame.width * rightSideRatio
+        var leftButtonWidth = (leftSideAreaWidth - (gap * CGFloat(2 - 1))) / CGFloat(2)
+        
         leftButtonWidth = rounded(leftButtonWidth)
-        var rightButtonWidth = (rightSideAreaWidth - (gapWidth * CGFloat(keysAfterSpace - 1))) / CGFloat(keysAfterSpace)
+        
+        let modeButtonWidth = isPad ? leftButtonWidth / 1.2 : leftButtonWidth
+        
+        if isPad { leftButtonWidth /= 1.8 }
+        
+        var rightButtonWidth = (rightSideAreaWidth - (gap * CGFloat(keysAfterSpace - 1))) / CGFloat(keysAfterSpace)
         rightButtonWidth = rounded(rightButtonWidth)
 
-        let micButtonWidth = (isLandscape ? leftButtonWidth : leftButtonWidth * micButtonRatio)
+        var micButtonWidth = (isLandscape ? leftButtonWidth : leftButtonWidth * micButtonRatio)
+        if isPad { micButtonWidth = leftButtonWidth }
 
         // special case for mic button
         if hasButtonInMicButtonPosition {
-            leftSideAreaWidth = leftSideAreaWidth + gapWidth + micButtonWidth
+            leftSideAreaWidth = leftSideAreaWidth + gap + micButtonWidth
+        }
+        
+        if (isPad) {
+            leftSideAreaWidth -= (leftButtonWidth * 1.8 - leftButtonWidth)
+            leftSideAreaWidth -= (modeButtonWidth * 1.2 - modeButtonWidth)
+            rightSideAreaWidth -= (modeButtonWidth * 1.2 - modeButtonWidth)
         }
 
-        var spaceWidth = frame.width - leftSideAreaWidth - rightSideAreaWidth - gapWidth * CGFloat(2)
+        var spaceWidth = frame.width - leftSideAreaWidth - rightSideAreaWidth - gap * CGFloat(2)
         spaceWidth = rounded(spaceWidth)
 
         var currentOrigin = frame.origin.x
@@ -1055,23 +1118,27 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
         for (k, key) in row.enumerate() {
             if key.type == Key.KeyType.Space {
                 frames.append(CGRectMake(rounded(currentOrigin), frame.origin.y, spaceWidth, frame.height))
-                currentOrigin += (spaceWidth + gapWidth)
+                currentOrigin += (spaceWidth + gap)
                 beforeSpace = false
+            }
+            else if key.type == Key.KeyType.ModeChange {
+                frames.append(CGRectMake(rounded(currentOrigin), frame.origin.y, modeButtonWidth, frame.height))
+                currentOrigin += (modeButtonWidth + gap)
             }
             else if beforeSpace {
                 if hasButtonInMicButtonPosition && k == 2 { //mic button position
                     frames.append(CGRectMake(rounded(currentOrigin), frame.origin.y, micButtonWidth, frame.height))
-                    currentOrigin += (micButtonWidth + gapWidth)
+                    currentOrigin += (micButtonWidth + gap)
                 }
                 else {
                     frames.append(CGRectMake(rounded(currentOrigin), frame.origin.y, leftButtonWidth, frame.height))
-                    currentOrigin += (leftButtonWidth + gapWidth)
+                    currentOrigin += (leftButtonWidth + gap)
                 }
             }
             else {
                 let width = rounded(rightButtonWidth)
                 frames.append(CGRectMake(rounded(currentOrigin), frame.origin.y, width, frame.height))
-                currentOrigin += (width + gapWidth)
+                currentOrigin += (width + gap)
             }
         }
 
