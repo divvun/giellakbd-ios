@@ -709,6 +709,7 @@
 		C609E2F01C0BDC1D003EC520 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CPPFLAGS = "-g -O3";
 				DEBUGGING_SYMBOLS = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -725,6 +726,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
+				CPPFLAGS = "-g -O3";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -737,6 +739,7 @@
 		C6D865641C00B03B0095CA6F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CPPFLAGS = "-g -O3";
 				DEBUGGING_SYMBOLS = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -754,6 +757,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
+				CPPFLAGS = "-g -O3";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
 				LDFLAGS = "-llzma";
@@ -790,7 +794,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
-				CPPFLAGS = "-O3";
+				CPPFLAGS = "-g -O3";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
