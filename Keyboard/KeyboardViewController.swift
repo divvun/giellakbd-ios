@@ -159,7 +159,13 @@ class KeyboardViewController: UIInputViewController {
             kludge.translatesAutoresizingMaskIntoConstraints = false
             kludge.hidden = true
 
-            let a = NSLayoutConstraint(item: kludge, attribute: NSLayoutAttribute.Left, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
+            let a = NSLayoutConstraint(item: kludge,
+                attribute: NSLayoutAttribute.Left,
+                relatedBy: NSLayoutRelation.Equal,
+                toItem: self.view,
+                attribute: NSLayoutAttribute.Left,
+                multiplier: 1,
+                constant: 0)
             let b = NSLayoutConstraint(item: kludge, attribute: NSLayoutAttribute.Right, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: 0)
             let c = NSLayoutConstraint(item: kludge, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
             let d = NSLayoutConstraint(item: kludge, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0)
@@ -909,7 +915,7 @@ class KeyboardViewController: UIInputViewController {
         if !NSUserDefaults.standardUserDefaults().boolForKey(kKeyboardClicks) {
             return
         }
-
+        
         dispatch_async(dispatch_get_main_queue(), {
             UIDevice.currentDevice().playInputClick()
         })

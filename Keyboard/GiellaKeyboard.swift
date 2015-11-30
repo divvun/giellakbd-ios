@@ -109,7 +109,12 @@ class GiellaKeyboard: KeyboardViewController {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
             NSLog("%@", "Dispatching request to load speller…")
             
-            let path = "\(NSBundle.mainBundle().pathForResource("dicts", ofType: "bundle")!)/se.zhfst"
+            guard let bundle = NSBundle.mainBundle().pathForResource("dicts", ofType: "bundle") else {
+                NSLog("No dict bundle found; ZHFST not loaded.")
+                return
+            }
+            
+            let path = "\(bundle)/se.tar.xz"
             let zhfst = ZHFSTOSpeller()
             
             zhfst.readZhfst(path, tempDir: NSTemporaryDirectory())

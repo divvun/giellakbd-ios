@@ -9,6 +9,7 @@
 #ifndef ZHFSTOSpeller_h
 #define ZHFSTOSpeller_h
 
+@import Foundation;
 #import "ZHFSTOSpeller-binding.h"
 
 @interface ZHFSTPair<T, U> : NSObject

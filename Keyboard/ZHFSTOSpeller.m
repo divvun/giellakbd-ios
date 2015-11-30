@@ -32,6 +32,10 @@
     
     if (self) {
         self.handle = zhfst_ospeller_new();
+        
+        if (self.handle == NULL) {
+            @throw [NSException exceptionWithName:@"ZHfstInitError" reason:@"Instance was null" userInfo:nil];
+        }
     }
     
     return self;

@@ -16,6 +16,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        /*
+        let zhfst = ZHFSTOSpeller()
+        let path = "\(NSBundle.mainBundle().pathForResource("dicts", ofType: "bundle")!)/se.zhfst"
+        NSLog("%@", path)
+        zhfst.readZhfst(path, tempDir: NSTemporaryDirectory())
+        zhfst.setQueueLimit(3)
+        
+        let suggs = zhfst.suggest("nuvviDspeller");
+        
+        for pair in suggs {
+            NSLog("%@ %@", pair.first as! NSString, pair.second as! NSNumber);
+        }
+        */
+        
         return true
     }
 
