@@ -1,10 +1,13 @@
 [submodule "libarchive"]
 	path = libarchive
 	url = https://github.com/libarchive/libarchive.git
+	ignore = untracked
 [submodule "xz"]
 	path = xz
 	url = http://git.tukaani.org/xz.git
 	branch = v5.2
+	ignore = untracked
 [submodule "hfst-ospell"]
 	path = hfst-ospell
 	url = https://github.com/bbqsrc/hfst-ospell
+	ignore = untracked
