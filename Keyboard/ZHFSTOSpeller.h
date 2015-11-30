@@ -25,7 +25,7 @@
 @property zhfst_ospeller_t* handle;
 
 - (id)init;
-- (void)readZhfst:(NSString*)filename tempDir:(NSString*)tmpdir;
+- (BOOL)readZhfst:(NSString*)filename tempDir:(NSString*)tmpdir error:(NSError **)error;
 - (void)setQueueLimit:(unsigned long)limit;
 - (void)setWeightLimit:(float)weight;
 - (void)setBeam:(float)beam;
@@ -35,5 +35,8 @@
 
 @end
 
+typedef enum {
+    ZHFSTZipReadingError = 1
+} ZHFSTError;
 
 #endif /* ZHFSTOSpeller_h */

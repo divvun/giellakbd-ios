@@ -134,7 +134,14 @@ class GiellaKeyboard: KeyboardViewController {
             let path = "\(bundle)/\(lang).zhfst"
             let zhfst = ZHFSTOSpeller()
             
-            zhfst.readZhfst(path, tempDir: NSTemporaryDirectory())
+            do {
+                try zhfst.readZhfst(path, tempDir: NSTemporaryDirectory())
+            } catch let err as NSError {
+                NSLog("%@", err)
+                NSLog("ZHFSTOSpeller **not** loaded.")
+                return
+            }
+            
             zhfst.setQueueLimit(3)
             zhfst.setWeightLimit(50)
             

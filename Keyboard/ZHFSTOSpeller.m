@@ -41,22 +41,26 @@
     return self;
 }
 
--(void) dealloc {
+- (void)dealloc {
     zhfst_ospeller_delete(self.handle);
 }
 
--(void) readZhfst:(NSString*)filename tempDir:(NSString*)tmpdir {
-    const char* error = NULL;
-    zhfst_ospeller_read_zhfst(self.handle, [filename UTF8String], [tmpdir UTF8String], &error);
+- (BOOL)readZhfst:(NSString*)filename tempDir:(NSString*)tmpdir error:(NSError **)error {
+    const char* cerror = NULL;
+    zhfst_ospeller_read_zhfst(self.handle, [filename UTF8String], [tmpdir UTF8String], &cerror);
     
-    if (error != NULL) {
-        NSException* e = [NSException
-                          exceptionWithName:@"ZHfstZipReadingError"
-                          reason:[NSString stringWithUTF8String:error]
-                          userInfo:nil];
-        zhfst_string_delete(error);
-        @throw e;
+    if (cerror != NULL) {
+        *error = [NSError errorWithDomain:[[NSBundle mainBundle] bundleIdentifier]
+                          code:ZHFSTZipReadingError
+                          userInfo:@{
+                              NSLocalizedDescriptionKey: NSLocalizedString([NSString stringWithUTF8String:cerror], nil)
+                          }];
+        
+        zhfst_string_delete(cerror);
+        return NO;
     }
+    
+    return YES;
 }
 
 - (void)setQueueLimit:(unsigned long)limit {
