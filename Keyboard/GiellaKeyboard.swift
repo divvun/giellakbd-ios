@@ -103,6 +103,18 @@ class GiellaKeyboard: KeyboardViewController {
     }
     */
     
+    func getPrimaryLanguage() -> String? {
+        if let ex = NSBundle.mainBundle().infoDictionary!["NSExtension"] {
+            if let attrs = ex["NSExtensionAttributes"] as? [String: AnyObject] {
+                if let lang = attrs["PrimaryLanguage"] as? String {
+                    return lang
+                }
+            }
+        }
+        
+        return nil
+    }
+    
     func loadZHFST() {
         NSLog("%@", "Loading speller…")
         
@@ -114,7 +126,12 @@ class GiellaKeyboard: KeyboardViewController {
                 return
             }
             
-            let path = "\(bundle)/se.tar.xz"
+            guard let lang = self.getPrimaryLanguage() else {
+                NSLog("No primary language found for keyboard; ZHFST not loaded.")
+                return
+            }
+            
+            let path = "\(bundle)/\(lang).zhfst"
             let zhfst = ZHFSTOSpeller()
             
             zhfst.readZhfst(path, tempDir: NSTemporaryDirectory())
