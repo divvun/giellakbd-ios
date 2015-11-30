@@ -30,8 +30,6 @@
 		4EF16F9B19D2550D0076AFCB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF16F9A19D2550D0076AFCB /* AppDelegate.swift */; };
 		4EF16F9F19D2552E0076AFCB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4EF16F9D19D2552E0076AFCB /* Main.storyboard */; };
 		C609E2ED1C0AD7DA003EC520 /* liblzma.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C609E2EC1C0AD7DA003EC520 /* liblzma.framework */; };
-		C66C47A01C04B434004188C9 /* libarchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6D8656F1C00C16E0095CA6F /* libarchive.framework */; };
-		C66C47A11C04B436004188C9 /* libhfstospell.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6D865711C00C1810095CA6F /* libhfstospell.framework */; };
 		C6974E611A31557A00D1A0B3 /* Background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C6974E601A31557A00D1A0B3 /* Background.jpg */; };
 		C6A568E219FA286500C8E119 /* GiellaKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A568E119FA286500C8E119 /* GiellaKeyboard.swift */; };
 		C6ABBACB1C0BF00300096F98 /* dicts.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C6ABBACA1C0BF00300096F98 /* dicts.bundle */; };
@@ -149,8 +147,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C66C47A01C04B434004188C9 /* libarchive.framework in Frameworks */,
-				C66C47A11C04B436004188C9 /* libhfstospell.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
