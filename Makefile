@@ -9,6 +9,8 @@ libarchive: # Cool stub!
 xz: # Cool stub!
 hfst-ospell: # Cool stub!
 
+# $(PROJECT_DIR)  set by Xcode
+# $(ARCHS)        set by Xcode, but sadly does not include all target architectures
 
 Frameworks/liblzma.framework: xz
 	cd $< && ./autogen.sh 2>&1
@@ -35,9 +37,7 @@ Frameworks/libhfstospell.framework: hfst-ospell
 		--with-extract=tmpdir
 
 Frameworks/libarchive.framework: libarchive
-	#cd $< && ./autogen.sh
-	# $(PROJECT_DIR)  set by Xcode
-	# $(ARCHS)        set by Xcode, but sadly does not include all target architectures
+	cd $< && ./autogen.sh
 	cd $< && PREFIX=$(PROJECT_DIR) ARCHS=$(ARCHS) autoframework libarchive libarchive.a \
 		--without-bz2lib \
 		--without-lzmadec \
@@ -49,6 +49,4 @@ Frameworks/libarchive.framework: libarchive
 		--without-expat \
 		--disable-bsdcpio \
 		--disable-bsdtar
-		#--with-lzma \
-		#--with-zlib \
 
