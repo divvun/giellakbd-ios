@@ -37,7 +37,7 @@ Frameworks/libhfstospell.framework: hfst-ospell
 		--with-extract=tmpdir
 
 Frameworks/libarchive.framework: libarchive
-	cd $< && ./autogen.sh
+	cd $< && ./build/autogen.sh
 	cd $< && PREFIX=$(PROJECT_DIR) ARCHS=$(ARCHS) autoframework libarchive libarchive.a \
 		--without-bz2lib \
 		--without-lzmadec \
