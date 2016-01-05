@@ -57,8 +57,11 @@ class DefaultSettings: ExtraView, UITableViewDataSource, UITableViewDelegate {
         }
     }
     
-    required init(globalColors: GlobalColors.Type?, darkMode: Bool, solidColorMode: Bool) {
-        super.init(globalColors: globalColors, darkMode: darkMode, solidColorMode: solidColorMode)
+    init(globalColors: GlobalColors.Type?, darkMode: Bool, solidColorMode: Bool) {
+        super.init()
+        self.globalColors = globalColors
+        self.darkMode = darkMode
+        self.solidColorMode = solidColorMode
         self.loadNib()
     }
 

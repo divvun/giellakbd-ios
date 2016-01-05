@@ -937,8 +937,6 @@ class KeyboardViewController: UIInputViewController {
 
     // a banner that sits in the empty space on top of the keyboard
     func createBanner() -> ExtraView? {
-        // note that dark mode is not yet valid here, so we just put false for clarity
-        //return ExtraView(globalColors: self.dynamicType.globalColors, darkMode: false, solidColorMode: self.solidColorMode())
         return nil
     }
 

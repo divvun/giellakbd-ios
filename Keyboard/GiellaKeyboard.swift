@@ -225,27 +225,13 @@ class GiellaBanner: ExtraView {
     var keyboard: GiellaKeyboard?
     var mode: BannerModes = .None
     
-    convenience init(keyboard: GiellaKeyboard) {
-        self.init(globalColors: nil, darkMode: false, solidColorMode: false)
+    init(keyboard: GiellaKeyboard) {
         self.keyboard = keyboard
+        super.init()
     }
-    
-    required init(globalColors: GlobalColors.Type?, darkMode: Bool, solidColorMode: Bool) {
-        super.init(globalColors: globalColors, darkMode: darkMode, solidColorMode: solidColorMode)
-        self.keyboard = nil
-    }
-    
-    required init(coder aDecoder: NSCoder) {
+
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func setNeedsLayout() {
-        super.setNeedsLayout()
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        //self.label.center.y = self.center.y
     }
     
     func setMode(mode: BannerModes) {
