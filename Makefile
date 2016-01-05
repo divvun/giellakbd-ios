@@ -16,7 +16,7 @@ hfst-ospell: # Cool stub!
 # $(ARCHS)	  set by Xcode, but sadly does not include all target architectures
 
 Frameworks/liblzma.framework: xz
-	cd $< && ./autogen.sh 2>&1
+	cd $< && ./autogen.sh 2&>1
 	cd $< && SDKTARGET=$(SDKTARGET) PREFIX=$(PREFIX) ARCHS=$(ARCHS) \
 		autoframework liblzma liblzma.a \
 		--disable-xz \
@@ -42,7 +42,7 @@ Frameworks/libhfstospell.framework: hfst-ospell
 		--with-extract=tmpdir
 
 Frameworks/libarchive.framework: libarchive
-	cd $< && ./build/autogen.sh
+	cd $< && ./build/autogen.sh 2&>1
 	cd $< && SDKTARGET=$(SDKTARGET) PREFIX=$(PREFIX) ARCHS=$(ARCHS) \
 		autoframework libarchive libarchive.a \
 		--without-bz2lib \
