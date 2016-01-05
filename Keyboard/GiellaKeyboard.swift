@@ -10,7 +10,7 @@ import UIKit
 
 class SuggestionOp: NSOperation {
     let word: String
-    let kbd: GiellaKeyboard
+    weak var kbd: GiellaKeyboard?
     
     init (kbd: GiellaKeyboard, word: String) {
         self.kbd = kbd
@@ -22,13 +22,13 @@ class SuggestionOp: NSOperation {
             return
         }
         
-        let suggestions = self.kbd.zhfst?.suggest(word).prefix(3).map({ (pair) in
+        let suggestions = self.kbd?.zhfst?.suggest(word).prefix(3).map({ (pair) in
             return pair.first as! String
         })
         
         dispatch_async(dispatch_get_main_queue()) {
             if let suggestions = suggestions {
-                if let banner = self.kbd.bannerView as? GiellaBanner {
+                if let banner = self.kbd?.bannerView as? GiellaBanner {
                     banner.mode = .Suggestion
                     banner.updateAlternateKeyList(suggestions);
                 }
