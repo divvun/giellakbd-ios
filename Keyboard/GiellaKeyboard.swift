@@ -30,7 +30,7 @@ class SuggestionOp: NSOperation {
             if let suggestions = suggestions {
                 if let banner = self.kbd?.bannerView as? GiellaBanner {
                     banner.mode = .Suggestion
-                    banner.updateAlternateKeyList(suggestions);
+                    banner.updateList(suggestions);
                 }
             }
         }
@@ -44,25 +44,29 @@ class GiellaKeyboard: KeyboardViewController {
     
     let opQueue = NSOperationQueue()
     
-    func updateSuggestions() {
+    func getCurrentWord() -> String {
         let documentProxy = self.textDocumentProxy as UITextDocumentProxy
         
+        guard let beforeContext = documentProxy.documentContextBeforeInput else {
+            return ""
+        }
+        
+        guard let lastWord = beforeContext.componentsSeparatedByString(" ").last else {
+            return ""
+        }
+        
+        return lastWord
+    }
+    
+    func updateSuggestions() {
         guard let banner = self.bannerView as? GiellaBanner else {
             return
         }
         
-        guard let beforeContext = documentProxy.documentContextBeforeInput else {
-            banner.updateAlternateKeyList([])
-            return
-        }
-        
-        guard let lastWord = beforeContext.componentsSeparatedByString(" ").last else {
-            banner.updateAlternateKeyList([])
-            return
-        }
+        let lastWord = getCurrentWord()
         
         if lastWord == "" {
-            banner.updateAlternateKeyList([])
+            banner.updateList([])
             return
         }
         
@@ -200,7 +204,7 @@ class GiellaKeyboard: KeyboardViewController {
                 let longpresses = key!.longPressForCase(shiftState.uppercase())
                 
                 if longpresses.count > 0 {
-                    banner.updateAlternateKeyList(longpresses)
+                    banner.updateList(longpresses)
                 }
             }
         }
@@ -210,7 +214,7 @@ class GiellaKeyboard: KeyboardViewController {
         super.hideLongPress()
         
         if let banner = self.bannerView as? GiellaBanner {
-            banner.updateAlternateKeyList([])
+            banner.updateList([])
         }
     }
 }
@@ -220,10 +224,8 @@ enum BannerModes {
 }
 
 class GiellaBanner: ExtraView {
-    
-    //var label: UILabel = UILabel()
-    var keyboard: GiellaKeyboard?
-    var mode: BannerModes = .None
+    var keyboard: GiellaKeyboard
+    var mode: BannerModes = .Suggestion
     
     init(keyboard: GiellaKeyboard) {
         self.keyboard = keyboard
@@ -239,41 +241,44 @@ class GiellaBanner: ExtraView {
     }
     
     func handleBtnPress(sender: UIButton) {
-        if let kbd = self.keyboard {
-            let textDocumentProxy = kbd.textDocumentProxy as UITextDocumentProxy
-            
+        let kbd = self.keyboard
+        let textDocumentProxy = kbd.textDocumentProxy as UITextDocumentProxy
+        
+        var text = sender.titleLabel?.text ?? ""
+        
+        if text == "" {
+            return // Do nothing!
+        }
+        
+        kbd.hideLongPress()
+
+        if mode == .LongPress {
+            textDocumentProxy.insertText(text)
+
+        } else if (mode == .Suggestion) {
             kbd.hideLongPress()
             
-            if (mode == .LongPress) {
-                textDocumentProxy.insertText(sender.titleLabel!.text!)
-                
-                kbd.contextChanged()
-
-            } else if (mode == .Suggestion) {
-                kbd.hideLongPress()
-                
-                guard let beforeContext = textDocumentProxy.documentContextBeforeInput else {
-                    return
-                }
-                
-                guard let lastWord = beforeContext.componentsSeparatedByString(" ").last else {
-                    return
-                }
-                
-                for _ in 0..<(lastWord.characters.count) {
-                    textDocumentProxy.deleteBackward()
-                }
-                
-                textDocumentProxy.insertText(sender.titleLabel!.text!)
-                textDocumentProxy.insertText(" ")
+            let lastWord = keyboard.getCurrentWord()
+            
+            for _ in 0..<(lastWord.characters.count) {
+                textDocumentProxy.deleteBackward()
             }
             
-            if kbd.shiftState == ShiftState.Enabled {
-                kbd.shiftState = ShiftState.Disabled
+            if text.hasPrefix("\"") && text.hasSuffix("\"") {
+                text = text[text.startIndex.advancedBy(1)...text.endIndex.advancedBy(-2)]
             }
             
-            kbd.setCapsIfNeeded()
+            textDocumentProxy.insertText(text)
+            textDocumentProxy.insertText(" ")
         }
+        
+        kbd.contextChanged()
+        
+        if kbd.shiftState == ShiftState.Enabled {
+            kbd.shiftState = ShiftState.Disabled
+        }
+        
+        kbd.setCapsIfNeeded()
     }
     
     func applyConstraints(currentView: UIButton, prevView: UIView?, nextView: UIView?, firstView: UIView) {
@@ -315,46 +320,79 @@ class GiellaBanner: ExtraView {
         
     }
     
+    func buttonHighlight(sender: UIButton) {
+        sender.backgroundColor = UIColor(red: 235.0/255.0, green: 237.0/255.0, blue: 239.0/255.0, alpha: 1.0)
+    }
     
-    func updateAlternateKeyList(keys: [String]) {
+    func buttonNormal(sender: UIButton) {
+        sender.backgroundColor = UIColor(red: 187.0/255.0, green: 194.0/255.0, blue: 201.0/255.0, alpha: 1.0)
+    }
+    
+    func updateList(keys: [String]) {
         let sv = self.subviews
+        
         for v in sv {
             v.removeFromSuperview()
         }
         
-        if keys.count == 0 {
-            return
+        var mutKeys = keys
+        
+        if mode == .Suggestion {
+            if mutKeys.count < 3 && keyboard.getCurrentWord() != "" {
+                let k = "\"\(keyboard.getCurrentWord())\""
+                if mutKeys.count == 0 {
+                    mutKeys.append(k)
+                } else {
+                    mutKeys.insert(k, atIndex: 0)
+                }
+            }
+        }
+        // If still less than 3!
+        while mutKeys.count < 3 {
+            mutKeys.append("")
         }
         
-        for char in keys {
-            let btn: UIButton = UIButton(type: UIButtonType.System) as UIButton
+        for char in mutKeys {
+            let btn = UIButton(type: .Custom)
+            //let btn: UIButton = UIButton(type: UIButtonType.System) as UIButton
             
             btn.frame = CGRectMake(0, 0, 20, 20)
             btn.setTitle(char, forState: .Normal)
             btn.sizeToFit()
             
-            btn.titleLabel!.font = UIFont.systemFontOfSize(18)
-            btn.titleLabel!.numberOfLines = 1
-            //btn.titleLabel!.adjustsFontSizeToFitWidth = true
-            btn.titleLabel!.lineBreakMode = .ByTruncatingHead
-            //btn.titleLabel!.lineBreakMode = .ByClipping
-            btn.titleLabel!.baselineAdjustment = .AlignCenters
+            if let titleLabel = btn.titleLabel {
+                titleLabel.font = UIFont.systemFontOfSize(18)
+                titleLabel.numberOfLines = 1
+                titleLabel.lineBreakMode = .ByTruncatingHead
+                titleLabel.baselineAdjustment = .AlignCenters
+            }
+            
             btn.titleEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
             
             btn.translatesAutoresizingMaskIntoConstraints = false
-            btn.backgroundColor = UIColor(hue: (216/360.0), saturation: 0.1, brightness: 0.81, alpha: 1)
+            buttonNormal(btn)
+            
             btn.setTitleColor(UIColor(white: 1.0, alpha: 1.0), forState: .Normal)
+            btn.setTitleColor(UIColor.blackColor(), forState: .Highlighted)
             
             btn.setContentHuggingPriority(1000, forAxis: .Horizontal)
             btn.setContentCompressionResistancePriority(1000, forAxis: .Horizontal)
             
-            btn.addTarget(self, action: Selector("handleBtnPress:"), forControlEvents: .TouchUpInside)
+            for event in [UIControlEvents.TouchDragOutside, .TouchDragExit, .TouchCancel, .TouchUpInside, .TouchUpOutside] {
+                btn.addTarget(self, action: Selector("buttonNormal:"), forControlEvents: event)
+            }
             
+            for event in [UIControlEvents.TouchDragInside, .TouchDragEnter, .TouchDown, .TouchDragInside] {
+                btn.addTarget(self, action: Selector("buttonHighlight:"), forControlEvents: event)
+            }
+            
+            btn.addTarget(self, action: Selector("handleBtnPress:"), forControlEvents: .TouchUpInside)
+
             self.addSubview(btn)
         }
         
         let firstBtn = self.subviews[0] as! UIButton
-        let lastN = keys.count-1
+        let lastN = mutKeys.count-1
         var prevBtn: UIButton?
         var nextBtn: UIButton?
         
