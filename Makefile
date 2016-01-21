@@ -6,6 +6,9 @@ FRAMEWORKS = \
 SDKTARGET = $(IPHONEOS_DEPLOYMENT_TARGET)
 PREFIX = $(PROJECT_DIR)
 
+# Support macports
+PATH := $(PATH):/opt/local/bin
+
 all: $(FRAMEWORKS)
 
 libarchive: # Cool stub!
@@ -16,7 +19,7 @@ hfst-ospell: # Cool stub!
 # $(ARCHS)	  set by Xcode, but sadly does not include all target architectures
 
 Frameworks/liblzma.framework: xz
-	cd $< && ./autogen.sh 2&>1
+	cd $< && ./autogen.sh 2>&1
 	cd $< && SDKTARGET=$(SDKTARGET) PREFIX=$(PREFIX) ARCHS=$(ARCHS) \
 		autoframework liblzma liblzma.a \
 		--disable-xz \
@@ -30,7 +33,7 @@ Frameworks/liblzma.framework: xz
 		--disable-rpath
 
 Frameworks/libhfstospell.framework: hfst-ospell
-	cd $< && ./autogen.sh
+	cd $< && ./autogen.sh 2>&1
 	cd $< && SDKTARGET=$(SDKTARGET) PREFIX=$(PREFIX) ARCHS=$(ARCHS) \
 		autoframework libhfstospell libhfstospell.a \
 		--disable-silent-rules \
@@ -42,7 +45,7 @@ Frameworks/libhfstospell.framework: hfst-ospell
 		--with-extract=tmpdir
 
 Frameworks/libarchive.framework: libarchive
-	cd $< && ./build/autogen.sh 2&>1
+	cd $< && ./build/autogen.sh 2>&1
 	cd $< && SDKTARGET=$(SDKTARGET) PREFIX=$(PREFIX) ARCHS=$(ARCHS) \
 		autoframework libarchive libarchive.a \
 		--without-bz2lib \
