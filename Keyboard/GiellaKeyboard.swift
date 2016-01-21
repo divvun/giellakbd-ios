@@ -136,6 +136,13 @@ class GiellaKeyboard: KeyboardViewController {
             }
             
             let path = "\(bundle)/\(lang).zhfst"
+            
+            if !NSFileManager.defaultManager().fileExistsAtPath(path) {
+                NSLog("No speller at: \(path)")
+                NSLog("ZHFSTOSpeller **not** loaded.")
+                return
+            }
+            
             let zhfst = ZHFSTOSpeller()
             
             do {
