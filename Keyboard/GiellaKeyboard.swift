@@ -65,7 +65,7 @@ class GiellaKeyboard: KeyboardViewController {
         
         let lastWord = getCurrentWord()
         
-        if lastWord == "" {
+        if lastWord == "" || zhfst == nil {
             banner.updateList([])
             return
         }
@@ -254,6 +254,7 @@ class GiellaBanner: ExtraView {
 
         if mode == .LongPress {
             textDocumentProxy.insertText(text)
+            mode = .Suggestion
 
         } else if (mode == .Suggestion) {
             kbd.hideLongPress()
@@ -354,7 +355,6 @@ class GiellaBanner: ExtraView {
         
         for char in mutKeys {
             let btn = UIButton(type: .Custom)
-            //let btn: UIButton = UIButton(type: UIButtonType.System) as UIButton
             
             btn.frame = CGRectMake(0, 0, 20, 20)
             btn.setTitle(char, forState: .Normal)
