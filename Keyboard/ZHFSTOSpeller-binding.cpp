@@ -67,7 +67,7 @@ extern "C" {
         try {
             self->set_temporary_dir(std::string(tmpdir));
             self->read_zhfst(std::string(filename));
-        } catch (hfst_ol::ZHfstZipReadingError& e) {
+        } catch (hfst_ol::ZHfstException& e) {
             char* msg = new char[strlen(e.what())+1];
             strncpy(msg, e.what(), strlen(e.what())+1);
             *error = msg;
