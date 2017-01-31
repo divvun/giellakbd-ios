@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SuggestionOp: NSOperation {
+class SuggestionOp: Operation {
     let word: String
     weak var kbd: GiellaKeyboard?
     
@@ -18,18 +18,18 @@ class SuggestionOp: NSOperation {
     }
     
     override func main() {
-        if (cancelled) {
+        if (isCancelled) {
             return
         }
         
-        let suggestions = self.kbd?.zhfst?.suggest(word).prefix(3).map({ (pair) in
-            return pair.first as! String
-        })
+        let suggestions = self.kbd?.zhfst?.suggest(word).prefix(3).flatMap { (pair) in
+            pair.first as String
+        }
         
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             if let suggestions = suggestions {
                 if let banner = self.kbd?.bannerView as? GiellaBanner {
-                    banner.mode = .Suggestion
+                    banner.mode = .suggestion
                     banner.updateList(suggestions);
                 }
             }
@@ -42,7 +42,7 @@ class GiellaKeyboard: KeyboardViewController {
     
     var zhfst: ZHFSTOSpeller?
     
-    let opQueue = NSOperationQueue()
+    let opQueue = OperationQueue()
     
     func getCurrentWord() -> String {
         let documentProxy = self.textDocumentProxy as UITextDocumentProxy
@@ -51,7 +51,7 @@ class GiellaKeyboard: KeyboardViewController {
             return ""
         }
         
-        guard let lastWord = beforeContext.componentsSeparatedByString(" ").last else {
+        guard let lastWord = beforeContext.components(separatedBy: " ").last else {
             return ""
         }
         
@@ -80,7 +80,7 @@ class GiellaKeyboard: KeyboardViewController {
         updateSuggestions()
     }
     
-    override func keyPressed(key: Key) {
+    override func keyPressed(_ key: Key) {
         let textDocumentProxy = self.textDocumentProxy as UIKeyInput
         
         textDocumentProxy.insertText(key.outputForCase(self.shiftState.uppercase()))
@@ -94,7 +94,7 @@ class GiellaKeyboard: KeyboardViewController {
             keyboard: defaultControls(keyboard, keyNames: keyNames))
         
         opQueue.maxConcurrentOperationCount = 1
-        opQueue.qualityOfService = .UserInteractive
+        opQueue.qualityOfService = .userInteractive
         loadZHFST()
     }
     
@@ -108,7 +108,7 @@ class GiellaKeyboard: KeyboardViewController {
     */
     
     func getPrimaryLanguage() -> String? {
-        if let ex = NSBundle.mainBundle().infoDictionary!["NSExtension"] {
+        if let ex = Bundle.main.infoDictionary!["NSExtension"] as? [String: AnyObject]{
             if let attrs = ex["NSExtensionAttributes"] as? [String: AnyObject] {
                 if let lang = attrs["PrimaryLanguage"] as? String {
                     return lang
@@ -122,10 +122,10 @@ class GiellaKeyboard: KeyboardViewController {
     func loadZHFST() {
         NSLog("%@", "Loading speller…")
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
+        DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive).async {
             NSLog("%@", "Dispatching request to load speller…")
             
-            guard let bundle = NSBundle.mainBundle().pathForResource("dicts", ofType: "bundle") else {
+            guard let bundle = Bundle.main.path(forResource: "dicts", ofType: "bundle") else {
                 NSLog("No dict bundle found; ZHFST not loaded.")
                 return
             }
@@ -137,7 +137,7 @@ class GiellaKeyboard: KeyboardViewController {
             
             let path = "\(bundle)/\(lang).zhfst"
             
-            if !NSFileManager.defaultManager().fileExistsAtPath(path) {
+            if !FileManager.default.fileExists(atPath: path) {
                 NSLog("No speller at: \(path)")
                 NSLog("ZHFSTOSpeller **not** loaded.")
                 return
@@ -146,15 +146,15 @@ class GiellaKeyboard: KeyboardViewController {
             let zhfst = ZHFSTOSpeller()
             
             do {
-                try zhfst.readZhfst(path, tempDir: NSTemporaryDirectory())
+                try zhfst?.readZhfst(path, tempDir: NSTemporaryDirectory())
             } catch let err as NSError {
                 NSLog("%@", err)
                 NSLog("ZHFSTOSpeller **not** loaded.")
                 return
             }
             
-            zhfst.setQueueLimit(3)
-            zhfst.setWeightLimit(50)
+            zhfst?.setQueueLimit(3)
+            zhfst?.setWeightLimit(50)
             
             self.zhfst = zhfst
            
@@ -171,7 +171,7 @@ class GiellaKeyboard: KeyboardViewController {
         return GiellaBanner(keyboard: self)
     }
     
-    override func backspaceDown(sender: KeyboardKey) {
+    override func backspaceDown(_ sender: KeyboardKey) {
         super.backspaceDown(sender)
         
         updateSuggestions()
@@ -181,12 +181,12 @@ class GiellaKeyboard: KeyboardViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func setSpaceLocalName(keyView: KeyboardKey) {
+    override func setSpaceLocalName(_ keyView: KeyboardKey) {
         keyView.label.text = keyNames["keyboard"]
     }
     
     func disableInput() {
-        self.forwardingView.userInteractionEnabled = false
+        self.forwardingView.isUserInteractionEnabled = false
         
         // Workaround to kill current touches
         self.forwardingView.removeFromSuperview()
@@ -198,14 +198,14 @@ class GiellaKeyboard: KeyboardViewController {
     }
     
     func enableInput() {
-        self.forwardingView.userInteractionEnabled = true
+        self.forwardingView.isUserInteractionEnabled = true
     }
     
     override func showLongPress() {
         super.showLongPress()
         
         if let banner = self.bannerView as? GiellaBanner {
-            banner.mode = .LongPress
+            banner.mode = .longPress
             if let keyView = self.lastKey {
                 let key = self.layout!.keyForView(keyView)
                 let longpresses = key!.longPressForCase(shiftState.uppercase())
@@ -227,12 +227,12 @@ class GiellaKeyboard: KeyboardViewController {
 }
 
 enum BannerModes {
-    case None, LongPress, Suggestion
+    case none, longPress, suggestion
 }
 
 class GiellaBanner: ExtraView {
     var keyboard: GiellaKeyboard
-    var mode: BannerModes = .Suggestion
+    var mode: BannerModes = .suggestion
     
     init(keyboard: GiellaKeyboard) {
         self.keyboard = keyboard
@@ -243,11 +243,11 @@ class GiellaBanner: ExtraView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setMode(mode: BannerModes) {
+    func setMode(_ mode: BannerModes) {
         self.mode = mode;
     }
     
-    func handleBtnPress(sender: UIButton) {
+    func handleBtnPress(_ sender: UIButton) {
         let kbd = self.keyboard
         let textDocumentProxy = kbd.textDocumentProxy as UITextDocumentProxy
         
@@ -259,11 +259,11 @@ class GiellaBanner: ExtraView {
         
         kbd.hideLongPress()
 
-        if mode == .LongPress {
+        if mode == .longPress {
             textDocumentProxy.insertText(text)
-            mode = .Suggestion
+            mode = .suggestion
 
-        } else if (mode == .Suggestion) {
+        } else if (mode == .suggestion) {
             kbd.hideLongPress()
             
             let lastWord = keyboard.getCurrentWord()
@@ -273,7 +273,7 @@ class GiellaBanner: ExtraView {
             }
             
             if text.hasPrefix("\"") && text.hasSuffix("\"") {
-                text = text[text.startIndex.advancedBy(1)...text.endIndex.advancedBy(-2)]
+                text = text[text.characters.index(text.startIndex, offsetBy: 1)...text.characters.index(text.endIndex, offsetBy: -2)]
             }
             
             textDocumentProxy.insertText(text)
@@ -282,14 +282,14 @@ class GiellaBanner: ExtraView {
         
         kbd.contextChanged()
         
-        if kbd.shiftState == ShiftState.Enabled {
-            kbd.shiftState = ShiftState.Disabled
+        if kbd.shiftState == ShiftState.enabled {
+            kbd.shiftState = ShiftState.disabled
         }
         
         kbd.setCapsIfNeeded()
     }
     
-    func applyConstraints(currentView: UIButton, prevView: UIView?, nextView: UIView?, firstView: UIView) {
+    func applyConstraints(_ currentView: UIButton, prevView: UIView?, nextView: UIView?, firstView: UIView) {
         let parentView = self
         
         var leftConstraint: NSLayoutConstraint
@@ -298,26 +298,26 @@ class GiellaBanner: ExtraView {
         var bottomConstraint: NSLayoutConstraint
         
         // Constrain to top of parent view
-        topConstraint = NSLayoutConstraint(item: currentView, attribute: .Top, relatedBy: .Equal, toItem: parentView,
-            attribute: .Top, multiplier: 1.0, constant: 1)
+        topConstraint = NSLayoutConstraint(item: currentView, attribute: .top, relatedBy: .equal, toItem: parentView,
+            attribute: .top, multiplier: 1.0, constant: 1)
         
         // Constraint to bottom of parent too
-        bottomConstraint = NSLayoutConstraint(item: currentView, attribute: .Bottom, relatedBy: .Equal, toItem: parentView, attribute: .Bottom, multiplier: 1.0, constant: -1)
+        bottomConstraint = NSLayoutConstraint(item: currentView, attribute: .bottom, relatedBy: .equal, toItem: parentView, attribute: .bottom, multiplier: 1.0, constant: -1)
         
         // If last, constrain to right
         if nextView == nil {
-            rightConstraint = NSLayoutConstraint(item: currentView, attribute: .Right, relatedBy: .Equal, toItem: parentView, attribute: .Right, multiplier: 1.0, constant: -1)
+            rightConstraint = NSLayoutConstraint(item: currentView, attribute: .right, relatedBy: .equal, toItem: parentView, attribute: .right, multiplier: 1.0, constant: -1)
         } else {
-            rightConstraint = NSLayoutConstraint(item: currentView, attribute: .Right, relatedBy: .Equal, toItem: nextView, attribute: .Left, multiplier: 1.0, constant: -1)
+            rightConstraint = NSLayoutConstraint(item: currentView, attribute: .right, relatedBy: .equal, toItem: nextView, attribute: .left, multiplier: 1.0, constant: -1)
         }
         
         // If first, constrain to left of parent
         if prevView == nil {
-            leftConstraint = NSLayoutConstraint(item: currentView, attribute: .Left, relatedBy: .Equal, toItem: parentView, attribute: .Left, multiplier: 1.0, constant: 1)
+            leftConstraint = NSLayoutConstraint(item: currentView, attribute: .left, relatedBy: .equal, toItem: parentView, attribute: .left, multiplier: 1.0, constant: 1)
         } else {
-            leftConstraint = NSLayoutConstraint(item: currentView, attribute: .Left, relatedBy: .Equal, toItem: prevView, attribute: .Right, multiplier: 1.0, constant: 1)
+            leftConstraint = NSLayoutConstraint(item: currentView, attribute: .left, relatedBy: .equal, toItem: prevView, attribute: .right, multiplier: 1.0, constant: 1)
             
-            let widthConstraint = NSLayoutConstraint(item: firstView, attribute: .Width, relatedBy: .Equal, toItem: currentView, attribute: .Width, multiplier: 1.0, constant: 0)
+            let widthConstraint = NSLayoutConstraint(item: firstView, attribute: .width, relatedBy: .equal, toItem: currentView, attribute: .width, multiplier: 1.0, constant: 0)
             
             widthConstraint.priority = 800
             
@@ -328,15 +328,15 @@ class GiellaBanner: ExtraView {
         
     }
     
-    func buttonHighlight(sender: UIButton) {
+    func buttonHighlight(_ sender: UIButton) {
         sender.backgroundColor = UIColor(red: 235.0/255.0, green: 237.0/255.0, blue: 239.0/255.0, alpha: 1.0)
     }
     
-    func buttonNormal(sender: UIButton) {
+    func buttonNormal(_ sender: UIButton) {
         sender.backgroundColor = UIColor(red: 187.0/255.0, green: 194.0/255.0, blue: 201.0/255.0, alpha: 1.0)
     }
     
-    func updateList(keys: [String]) {
+    func updateList(_ keys: [String]) {
         let sv = self.subviews
         
         for v in sv {
@@ -345,13 +345,13 @@ class GiellaBanner: ExtraView {
         
         var mutKeys = keys
         
-        if mode == .Suggestion {
+        if mode == .suggestion {
             if mutKeys.count < 3 && keyboard.getCurrentWord() != "" {
                 let k = "\"\(keyboard.getCurrentWord())\""
                 if mutKeys.count == 0 {
                     mutKeys.append(k)
                 } else {
-                    mutKeys.insert(k, atIndex: 0)
+                    mutKeys.insert(k, at: 0)
                 }
             }
         }
@@ -361,17 +361,17 @@ class GiellaBanner: ExtraView {
         }
         
         for char in mutKeys {
-            let btn = UIButton(type: .Custom)
+            let btn = UIButton(type: .custom)
             
-            btn.frame = CGRectMake(0, 0, 20, 20)
-            btn.setTitle(char, forState: .Normal)
+            btn.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+            btn.setTitle(char, for: UIControlState())
             btn.sizeToFit()
             
             if let titleLabel = btn.titleLabel {
-                titleLabel.font = UIFont.systemFontOfSize(18)
+                titleLabel.font = UIFont.systemFont(ofSize: 18)
                 titleLabel.numberOfLines = 1
-                titleLabel.lineBreakMode = .ByTruncatingHead
-                titleLabel.baselineAdjustment = .AlignCenters
+                titleLabel.lineBreakMode = .byTruncatingHead
+                titleLabel.baselineAdjustment = .alignCenters
             }
             
             btn.titleEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
@@ -379,21 +379,21 @@ class GiellaBanner: ExtraView {
             btn.translatesAutoresizingMaskIntoConstraints = false
             buttonNormal(btn)
             
-            btn.setTitleColor(UIColor(white: 1.0, alpha: 1.0), forState: .Normal)
-            btn.setTitleColor(UIColor.blackColor(), forState: .Highlighted)
+            btn.setTitleColor(UIColor(white: 1.0, alpha: 1.0), for: UIControlState())
+            btn.setTitleColor(UIColor.black, for: .highlighted)
             
-            btn.setContentHuggingPriority(1000, forAxis: .Horizontal)
-            btn.setContentCompressionResistancePriority(1000, forAxis: .Horizontal)
+            btn.setContentHuggingPriority(1000, for: .horizontal)
+            btn.setContentCompressionResistancePriority(1000, for: .horizontal)
             
-            for event in [UIControlEvents.TouchDragOutside, .TouchDragExit, .TouchCancel, .TouchUpInside, .TouchUpOutside] {
-                btn.addTarget(self, action: Selector("buttonNormal:"), forControlEvents: event)
+            for event in [UIControlEvents.touchDragOutside, .touchDragExit, .touchCancel, .touchUpInside, .touchUpOutside] {
+                btn.addTarget(self, action: #selector(GiellaBanner.buttonNormal(_:)), for: event)
             }
             
-            for event in [UIControlEvents.TouchDragInside, .TouchDragEnter, .TouchDown, .TouchDragInside] {
-                btn.addTarget(self, action: Selector("buttonHighlight:"), forControlEvents: event)
+            for event in [UIControlEvents.touchDragInside, .touchDragEnter, .touchDown, .touchDragInside] {
+                btn.addTarget(self, action: #selector(GiellaBanner.buttonHighlight(_:)), for: event)
             }
             
-            btn.addTarget(self, action: Selector("handleBtnPress:"), forControlEvents: .TouchUpInside)
+            btn.addTarget(self, action: #selector(GiellaBanner.handleBtnPress(_:)), for: .touchUpInside)
 
             self.addSubview(btn)
         }
@@ -403,7 +403,7 @@ class GiellaBanner: ExtraView {
         var prevBtn: UIButton?
         var nextBtn: UIButton?
         
-        for (n, view) in self.subviews.enumerate() {
+        for (n, view) in self.subviews.enumerated() {
             let btn = view as! UIButton
             
             if n == lastN {
@@ -424,66 +424,66 @@ class GiellaBanner: ExtraView {
 }
 
 
-func defaultControls(defaultKeyboard: Keyboard, keyNames: [String: String]) -> Keyboard {
-    let isPad = UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad
+func defaultControls(_ defaultKeyboard: Keyboard, keyNames: [String: String]) -> Keyboard {
+    let isPad = UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad
 
-    let backspace = Key(.Backspace)
+    let backspace = Key(.backspace)
     
-    let keyModeChangeNumbers = Key(.ModeChange)
+    let keyModeChangeNumbers = Key(.modeChange)
     keyModeChangeNumbers.uppercaseKeyCap = isPad ? ".?123" : "123"
     keyModeChangeNumbers.toMode = 1
     defaultKeyboard.addKey(keyModeChangeNumbers, row: 3, page: 0)
     
-    let keyboardChange = Key(.KeyboardChange)
+    let keyboardChange = Key(.keyboardChange)
     defaultKeyboard.addKey(keyboardChange, row: 3, page: 0)
     
-    let settings = Key(.Settings)
+    let settings = Key(.settings)
     defaultKeyboard.addKey(settings, row: 3, page: 0)
     
-    let space = Key(.Space)
+    let space = Key(.space)
     space.uppercaseKeyCap = keyNames["space"]
     space.uppercaseOutput = " "
     space.lowercaseOutput = " "
     defaultKeyboard.addKey(space, row: 3, page: 0)
     
-    let returnKey = Key(.Return)
+    let returnKey = Key(.return)
     returnKey.uppercaseKeyCap = keyNames["return"]
     returnKey.uppercaseOutput = "\n"
     returnKey.lowercaseOutput = "\n"
     defaultKeyboard.addKey(isPad ? Key(keyModeChangeNumbers) : returnKey, row: 3, page: 0)
     
     if isPad {
-        let hideKey = Key(.KeyboardHide)
+        let hideKey = Key(.keyboardHide)
         hideKey.uppercaseKeyCap = "⥥"
         defaultKeyboard.addKey(hideKey, row: 3, page: 0)
     }
     
     for key in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"] {
-        let keyModel = Key(.SpecialCharacter)
+        let keyModel = Key(.specialCharacter)
         keyModel.setLetter(key)
         defaultKeyboard.addKey(keyModel, row: 0, page: 1)
     }
     
     for key in ["-", "/", ":", ";", "(", ")", "$", "&", "@", "\""] {
-        let keyModel = Key(.SpecialCharacter)
+        let keyModel = Key(.specialCharacter)
         keyModel.setLetter(key)
         defaultKeyboard.addKey(keyModel, row: 1, page: 1)
     }
     
-    let keyModeChangeSpecialCharacters = Key(.ModeChange)
+    let keyModeChangeSpecialCharacters = Key(.modeChange)
     keyModeChangeSpecialCharacters.uppercaseKeyCap = "#+="
     keyModeChangeSpecialCharacters.toMode = 2
     defaultKeyboard.addKey(keyModeChangeSpecialCharacters, row: 2, page: 1)
     
     for key in [".", ",", "?", "!", "'"] {
-        let keyModel = Key(.SpecialCharacter)
+        let keyModel = Key(.specialCharacter)
         keyModel.setLetter(key)
         defaultKeyboard.addKey(keyModel, row: 2, page: 1)
     }
     
     defaultKeyboard.addKey(Key(backspace), row: 2, page: 1)
     
-    let keyModeChangeLetters = Key(.ModeChange)
+    let keyModeChangeLetters = Key(.modeChange)
     keyModeChangeLetters.uppercaseKeyCap = "ABC"
     keyModeChangeLetters.toMode = 0
     defaultKeyboard.addKey(keyModeChangeLetters, row: 3, page: 1)
@@ -497,13 +497,13 @@ func defaultControls(defaultKeyboard: Keyboard, keyNames: [String: String]) -> K
     defaultKeyboard.addKey(Key(returnKey), row: 3, page: 1)
     
     for key in ["[", "]", "{", "}", "#", "%", "^", "*", "+", "="] {
-        let keyModel = Key(.SpecialCharacter)
+        let keyModel = Key(.specialCharacter)
         keyModel.setLetter(key)
         defaultKeyboard.addKey(keyModel, row: 0, page: 2)
     }
     
     for key in ["_", "\\", "|", "~", "<", ">", "€", "£", "Y", "•"] {
-        let keyModel = Key(.SpecialCharacter)
+        let keyModel = Key(.specialCharacter)
         keyModel.setLetter(key)
         defaultKeyboard.addKey(keyModel, row: 1, page: 2)
     }
@@ -511,7 +511,7 @@ func defaultControls(defaultKeyboard: Keyboard, keyNames: [String: String]) -> K
     defaultKeyboard.addKey(Key(keyModeChangeNumbers), row: 2, page: 2)
     
     for key in [".", ",", "?", "!", "'"] {
-        let keyModel = Key(.SpecialCharacter)
+        let keyModel = Key(.specialCharacter)
         keyModel.setLetter(key)
         defaultKeyboard.addKey(keyModel, row: 2, page: 2)
     }

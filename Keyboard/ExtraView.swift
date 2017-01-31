@@ -15,7 +15,7 @@ class ExtraView: UIView {
     var solidColorMode: Bool = false
     
     init() {
-        super.init(frame: CGRectZero)
+        super.init(frame: CGRect.zero)
     }
     
     required init?(coder aDecoder: NSCoder) {
