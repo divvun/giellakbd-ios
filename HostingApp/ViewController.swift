@@ -19,16 +19,16 @@ class HostingAppViewController: UIViewController {
         super.viewDidLoad()
 
         // Localise the title
-        if let infoDict = NSBundle.mainBundle().localizedInfoDictionary {
+        if let infoDict = Bundle.main.localizedInfoDictionary {
             if let name = infoDict["CFBundleName"] as? String {
                 titleFld.text = name
             }
         }
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow"), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardDidHide"), name: UIKeyboardDidHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(HostingAppViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(HostingAppViewController.keyboardDidHide), name: NSNotification.Name.UIKeyboardDidHide, object: nil)
         //NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillChangeFrame:"), name: UIKeyboardWillChangeFrameNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardDidChangeFrame:"), name: UIKeyboardDidChangeFrameNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(HostingAppViewController.keyboardDidChangeFrame(_:)), name: NSNotification.Name.UIKeyboardDidChangeFrame, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -44,20 +44,20 @@ class HostingAppViewController: UIViewController {
     }
 
     @IBAction func openSettings() {
-        if let url = NSURL(string: NSString(format: "%@BundleID", UIApplicationOpenSettingsURLString) as String) {
-            UIApplication.sharedApplication().openURL(url)
+        if let url = URL(string: NSString(format: "%@BundleID", UIApplicationOpenSettingsURLString) as String) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
 
     @IBAction func goToImgSource() {
-        if let url = NSURL(string: "https://flic.kr/p/cLhn9J") {
-            UIApplication.sharedApplication().openURL(url)
+        if let url = URL(string: "https://flic.kr/p/cLhn9J") {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
 
-    var startTime: NSTimeInterval?
-    var firstHeightTime: NSTimeInterval?
-    var secondHeightTime: NSTimeInterval?
+    var startTime: TimeInterval?
+    var firstHeightTime: TimeInterval?
+    var secondHeightTime: TimeInterval?
     var referenceHeight: CGFloat = 216
 
     func keyboardWillShow() {
@@ -74,9 +74,9 @@ class HostingAppViewController: UIViewController {
         self.stats?.text = "(Waiting for keyboard...)"
     }
 
-    func keyboardDidChangeFrame(notification: NSNotification) {
+    func keyboardDidChangeFrame(_ notification: Notification) {
         //let frameBegin: CGRect! = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey]?.CGRectValue
-        let frameEnd: CGRect! = notification.userInfo?[UIKeyboardFrameEndUserInfoKey]?.CGRectValue
+        let frameEnd: CGRect! = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as AnyObject).cgRectValue
 
         if frameEnd.height == referenceHeight {
             if firstHeightTime == nil {
