@@ -22,6 +22,7 @@ class SuggestionOp: Operation {
             return
         }
         
+        /*
         let suggestions = self.kbd?.zhfst?.suggest(word).prefix(3).flatMap { (pair) in
             pair.first as String
         }
@@ -34,13 +35,14 @@ class SuggestionOp: Operation {
                 }
             }
         }
+        */
     }
 }
 
 class GiellaKeyboard: KeyboardViewController {
     var keyNames: [String: String]
     
-    var zhfst: ZHFSTOSpeller?
+    //var zhfst: ZHFSTOSpeller?
     
     let opQueue = OperationQueue()
     
@@ -65,7 +67,7 @@ class GiellaKeyboard: KeyboardViewController {
         
         let lastWord = getCurrentWord()
         
-        if lastWord == "" || zhfst == nil {
+        if lastWord == "" {// || zhfst == nil {
             banner.updateList([])
             return
         }
@@ -143,6 +145,7 @@ class GiellaKeyboard: KeyboardViewController {
                 return
             }
             
+            /*
             let zhfst = ZHFSTOSpeller()
             
             do {
@@ -157,6 +160,7 @@ class GiellaKeyboard: KeyboardViewController {
             zhfst?.setWeightLimit(50)
             
             self.zhfst = zhfst
+            */
            
             NSLog("%@", "ZHFSTOSpeller loaded!")
         }

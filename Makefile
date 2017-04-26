@@ -1,6 +1,5 @@
 ARCHS="armv7 armv7s arm64 i386 x86_64"
 FRAMEWORKS = \
-	Frameworks/liblzma.framework \
 	Frameworks/libarchive.framework \
 	Frameworks/libhfstospell.framework
 SDKTARGET = $(IPHONEOS_DEPLOYMENT_TARGET)

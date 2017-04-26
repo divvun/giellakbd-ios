@@ -29,7 +29,6 @@
 		4EF16F9819D255030076AFCB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF16F9519D255030076AFCB /* ViewController.swift */; };
 		4EF16F9B19D2550D0076AFCB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF16F9A19D2550D0076AFCB /* AppDelegate.swift */; };
 		4EF16F9F19D2552E0076AFCB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4EF16F9D19D2552E0076AFCB /* Main.storyboard */; };
-		C609E2ED1C0AD7DA003EC520 /* liblzma.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C609E2EC1C0AD7DA003EC520 /* liblzma.framework */; };
 		C6974E611A31557A00D1A0B3 /* Background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C6974E601A31557A00D1A0B3 /* Background.jpg */; };
 		C6A568E219FA286500C8E119 /* GiellaKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A568E119FA286500C8E119 /* GiellaKeyboard.swift */; };
 		C6ABBACB1C0BF00300096F98 /* dicts.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C6ABBACA1C0BF00300096F98 /* dicts.bundle */; };
@@ -54,13 +53,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 4E807DB819461DC700D875D1;
 			remoteInfo = Keyboard;
-		};
-		C609E2F21C0BDC50003EC520 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4E807D8B19461D9000D875D1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C609E2EE1C0BDC1D003EC520;
-			remoteInfo = liblzma;
 		};
 		C6D8656B1C00BC680095CA6F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -127,7 +119,6 @@
 		4EF16F9319D255030076AFCB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4EF16F9519D255030076AFCB /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		4EF16F9A19D2550D0076AFCB /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		C609E2EC1C0AD7DA003EC520 /* liblzma.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = liblzma.framework; path = Frameworks/liblzma.framework; sourceTree = "<group>"; };
 		C6974E601A31557A00D1A0B3 /* Background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Background.jpg; sourceTree = "<group>"; };
 		C6A568E119FA286500C8E119 /* GiellaKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiellaKeyboard.swift; sourceTree = "<group>"; };
 		C6ABBACA1C0BF00300096F98 /* dicts.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = dicts.bundle; sourceTree = "<group>"; };
@@ -156,7 +147,6 @@
 			files = (
 				C6D865721C00C1810095CA6F /* libhfstospell.framework in Frameworks */,
 				C6D865701C00C16E0095CA6F /* libarchive.framework in Frameworks */,
-				C609E2ED1C0AD7DA003EC520 /* liblzma.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,7 +198,6 @@
 				4E807DBA19461DC700D875D1 /* Keyboard */,
 				4E807D9419461D9000D875D1 /* Products */,
 				C6ABBACA1C0BF00300096F98 /* dicts.bundle */,
-				C609E2EC1C0AD7DA003EC520 /* liblzma.framework */,
 				C6D8656F1C00C16E0095CA6F /* libarchive.framework */,
 				C6D865711C00C1810095CA6F /* libhfstospell.framework */,
 			);
@@ -281,20 +270,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXLegacyTarget section */
-		C609E2EE1C0BDC1D003EC520 /* liblzma */ = {
-			isa = PBXLegacyTarget;
-			buildArgumentsString = Frameworks/liblzma.framework;
-			buildConfigurationList = C609E2EF1C0BDC1D003EC520 /* Build configuration list for PBXLegacyTarget "liblzma" */;
-			buildPhases = (
-			);
-			buildToolPath = /usr/bin/make;
-			buildWorkingDirectory = "";
-			dependencies = (
-			);
-			name = liblzma;
-			passBuildSettingsInEnvironment = 1;
-			productName = liblzma;
-		};
 		C6D865631C00B03B0095CA6F /* libarchive */ = {
 			isa = PBXLegacyTarget;
 			buildArgumentsString = Frameworks/libarchive.framework;
@@ -304,7 +279,6 @@
 			buildToolPath = /usr/bin/make;
 			buildWorkingDirectory = "";
 			dependencies = (
-				C609E2F31C0BDC50003EC520 /* PBXTargetDependency */,
 			);
 			name = libarchive;
 			passBuildSettingsInEnvironment = 1;
@@ -386,9 +360,6 @@
 						DevelopmentTeam = AE56HWMN8U;
 						LastSwiftMigration = 0820;
 					};
-					C609E2EE1C0BDC1D003EC520 = {
-						CreatedOnToolsVersion = 7.1;
-					};
 					C6D865631C00B03B0095CA6F = {
 						CreatedOnToolsVersion = 7.1;
 					};
@@ -414,7 +385,6 @@
 				4E807DB819461DC700D875D1 /* Keyboard */,
 				C6D865631C00B03B0095CA6F /* libarchive */,
 				C6D865671C00BC240095CA6F /* libhfstospell */,
-				C609E2EE1C0BDC1D003EC520 /* liblzma */,
 			);
 		};
 /* End PBXProject section */
@@ -490,11 +460,6 @@
 			isa = PBXTargetDependency;
 			target = 4E807DB819461DC700D875D1 /* Keyboard */;
 			targetProxy = 4E807DC219461DC700D875D1 /* PBXContainerItemProxy */;
-		};
-		C609E2F31C0BDC50003EC520 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C609E2EE1C0BDC1D003EC520 /* liblzma */;
-			targetProxy = C609E2F21C0BDC50003EC520 /* PBXContainerItemProxy */;
 		};
 		C6D8656C1C00BC680095CA6F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -718,36 +683,6 @@
 			};
 			name = Release;
 		};
-		C609E2F01C0BDC1D003EC520 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CPPFLAGS = "-g -O3";
-				DEBUGGING_SYMBOLS = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		C609E2F11C0BDC1D003EC520 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				CPPFLAGS = "-g -O3";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_NO_COMMON_BLOCKS = YES;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 		C6D865641C00B03B0095CA6F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -849,15 +784,6 @@
 			buildConfigurations = (
 				4E807DC519461DC700D875D1 /* Debug */,
 				4E807DC619461DC700D875D1 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C609E2EF1C0BDC1D003EC520 /* Build configuration list for PBXLegacyTarget "liblzma" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C609E2F01C0BDC1D003EC520 /* Debug */,
-				C609E2F11C0BDC1D003EC520 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
