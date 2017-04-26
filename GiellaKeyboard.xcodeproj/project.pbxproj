@@ -299,7 +299,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 4E807D8E19461D9000D875D1 /* Build configuration list for PBXProject "TastyImitationKeyboard" */;
+			buildConfigurationList = 4E807D8E19461D9000D875D1 /* Build configuration list for PBXProject "GiellaKeyboard" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -609,7 +609,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4E807D8E19461D9000D875D1 /* Build configuration list for PBXProject "TastyImitationKeyboard" */ = {
+		4E807D8E19461D9000D875D1 /* Build configuration list for PBXProject "GiellaKeyboard" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4E807DAD19461D9000D875D1 /* Debug */,
