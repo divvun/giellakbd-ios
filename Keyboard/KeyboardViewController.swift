@@ -33,13 +33,13 @@ class KeyboardViewController: UIInputViewController {
 
     var keyboard: Keyboard!
     var forwardingView: ForwardingView!
-    var layout: KeyboardLayout?
-    var heightConstraint: NSLayoutConstraint?
+    var layout: KeyboardLayout? = nil
+    var heightConstraint: NSLayoutConstraint? = nil
 
-    var bannerView: ExtraView?
-    var settingsView: ExtraView?
+    var bannerView: ExtraView? = nil
+    var settingsView: ExtraView? = nil
 
-    var currentMode: Int {
+    var currentMode: Int = 0 {
         didSet {
             if oldValue != currentMode {
                 setMode(currentMode)
@@ -52,8 +52,8 @@ class KeyboardViewController: UIInputViewController {
             return (backspaceDelayTimer != nil) || (backspaceRepeatTimer != nil)
         }
     }
-    var backspaceDelayTimer: Timer?
-    var backspaceRepeatTimer: Timer?
+    var backspaceDelayTimer: Timer? = nil
+    var backspaceRepeatTimer: Timer? = nil
 
     enum AutoPeriodState {
         case noSpace
@@ -63,7 +63,7 @@ class KeyboardViewController: UIInputViewController {
     var autoPeriodState: AutoPeriodState = .noSpace
     var lastCharCountInBeforeContext = 0
 
-    var shiftState: ShiftState {
+    var shiftState: ShiftState = .disabled {
         didSet {
             switch shiftState {
             case .disabled:
@@ -78,7 +78,7 @@ class KeyboardViewController: UIInputViewController {
 
     // state tracking during shift tap
     var shiftWasMultitapped: Bool = false
-    var shiftStartingState: ShiftState?
+    var shiftStartingState: ShiftState? = nil
 
     var keyboardHeight: CGFloat {
         get {
@@ -94,18 +94,9 @@ class KeyboardViewController: UIInputViewController {
         }
     }
 
-    // TODO: why does the app crash if this isn't here?
-    convenience init() {
-        self.init(nibName: nil, bundle: nil)
-    }
+    var nameChangeTimer: Timer? = nil
 
-    convenience override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        self.init(nibName: nibNameOrNil, bundle: nibBundleOrNil, keyboard: defaultKeyboard())
-    }
-
-    var nameChangeTimer: Timer?
-
-    init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, keyboard: Keyboard) {
+    func configure(with keyboard: Keyboard) {
         UserDefaults.standard.register(defaults: [
             kAutoCapitalization: true,
             kPeriodShortcut: true,
@@ -117,8 +108,7 @@ class KeyboardViewController: UIInputViewController {
 
         self.shiftState = .disabled
         self.currentMode = 0
-
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        
         self.forwardingView = ForwardingView(frame: CGRect.zero)
         self.view.addSubview(self.forwardingView)
 
@@ -126,18 +116,13 @@ class KeyboardViewController: UIInputViewController {
         
         NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationDidReceiveMemoryWarning, object: nil, queue: nil) { (notif) in
             self.didReceiveMemoryWarning(notif);
-            }
-
+        }
     }
     
     func didReceiveMemoryWarning(_ notification: Notification) {
         // Overridable woo
     }
-
-    required init?(coder: NSCoder) {
-        fatalError("NSCoding not supported")
-    }
-
+    
     deinit {
         backspaceDelayTimer?.invalidate()
         backspaceRepeatTimer?.invalidate()
@@ -257,8 +242,8 @@ class KeyboardViewController: UIInputViewController {
         self.forwardingView.frame.origin = newOrigin
     }
 
-    override func loadView() {
-        super.loadView()
+    override func viewDidLoad() {
+        super.viewDidLoad()
 
         if let aBanner = self.createBanner() {
             aBanner.isHidden = true
@@ -268,6 +253,8 @@ class KeyboardViewController: UIInputViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         self.bannerView?.isHidden = false
         self.keyboardHeight = self.heightForOrientation(self.orientation, withTopBanner: true)
     }

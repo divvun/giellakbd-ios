@@ -76,6 +76,11 @@ class GiellaKeyboard: KeyboardViewController {
         opQueue.addOperation(SuggestionOp(kbd: self, word: lastWord))
     }
     
+    override func viewDidLoad() {
+        self.configure(with: generatedKeyboard())
+        super.viewDidLoad()
+    }
+    
     override func contextChanged() {
         super.contextChanged()
         
@@ -88,16 +93,6 @@ class GiellaKeyboard: KeyboardViewController {
         textDocumentProxy.insertText(key.outputForCase(self.shiftState.uppercase()))
         
         updateSuggestions()
-    }
-    
-    init(keyboard: Keyboard, keyNames: [String: String]) {
-        self.keyNames = keyNames
-        super.init(nibName: nil, bundle: nil,
-            keyboard: defaultControls(keyboard, keyNames: keyNames))
-        
-        opQueue.maxConcurrentOperationCount = 1
-        opQueue.qualityOfService = .userInteractive
-        loadZHFST()
     }
     
     /*
@@ -166,11 +161,6 @@ class GiellaKeyboard: KeyboardViewController {
         }
     }
     
-    convenience init() {
-        // XXX: generatedKeyboard() must be generated! :)
-        self.init(keyboard: generatedKeyboard(), keyNames: generatedConfig())
-    }
-    
     override func createBanner() -> ExtraView? {
         return GiellaBanner(keyboard: self)
     }
@@ -179,10 +169,6 @@ class GiellaKeyboard: KeyboardViewController {
         super.backspaceDown(sender)
         
         updateSuggestions()
-    }
-    
-    required init(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     override func setSpaceLocalName(_ keyView: KeyboardKey) {
