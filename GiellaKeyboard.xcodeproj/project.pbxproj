@@ -508,7 +508,7 @@
 					"-lstdc++",
 					"-lz",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "Archagon.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaKeyboard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Keyboard/Keyboard-Bridging-Header.h";
@@ -536,7 +536,7 @@
 					"-lstdc++",
 					"-lz",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "Archagon.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaKeyboard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Keyboard/Keyboard-Bridging-Header.h";
@@ -565,7 +565,7 @@
 					"-lz",
 					"-llzma",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "Archagon.HostingApp.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaKeyboard.Keyboard;
 				PRODUCT_NAME = Keyboard;
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
@@ -596,7 +596,7 @@
 					"-lz",
 					"-llzma",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "Archagon.HostingApp.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaKeyboard.Keyboard;
 				PRODUCT_NAME = Keyboard;
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
