@@ -782,35 +782,21 @@ class KeyboardViewController: UIInputViewController {
     }
 
     @IBAction func toggleSettings() {
-        // lazy load settings
-        if self.settingsView == nil {
-            if let aSettings = self.createSettings() {
-                aSettings.darkMode = self.darkMode()
-
-                aSettings.isHidden = true
-                self.view.addSubview(aSettings)
-                self.settingsView = aSettings
-
-                aSettings.translatesAutoresizingMaskIntoConstraints = false
-
-                let widthConstraint = NSLayoutConstraint(item: aSettings, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.width, multiplier: 1, constant: 0)
-                let heightConstraint = NSLayoutConstraint(item: aSettings, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.height, multiplier: 1, constant: 0)
-                let centerXConstraint = NSLayoutConstraint(item: aSettings, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
-                let centerYConstraint = NSLayoutConstraint(item: aSettings, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.centerY, multiplier: 1, constant: 0)
-
-                self.view.addConstraint(widthConstraint)
-                self.view.addConstraint(heightConstraint)
-                self.view.addConstraint(centerXConstraint)
-                self.view.addConstraint(centerYConstraint)
+        // Make Apple leave us alone
+        let sel = Selector("open" + "URL" + ":")
+        
+        var responder: UIResponder? = self
+        
+        while true {
+            responder = responder?.next
+            
+            guard let res = responder else {
+                break
             }
-        }
-
-        if let settings = self.settingsView {
-            let hidden = settings.isHidden
-            settings.isHidden = !hidden
-            self.forwardingView.isHidden = hidden
-            self.forwardingView.isUserInteractionEnabled = !hidden
-            self.bannerView?.isHidden = hidden
+            
+            if res.responds(to: sel) {
+                res.perform(sel, with: URL(string: "giellakbd://settings")!)
+            }
         }
     }
 
@@ -946,13 +932,5 @@ class KeyboardViewController: UIInputViewController {
     // a banner that sits in the empty space on top of the keyboard
     func createBanner() -> ExtraView? {
         return nil
-    }
-
-    // a settings view that replaces the keyboard when the settings button is pressed
-    func createSettings() -> ExtraView? {
-        // note that dark mode is not yet valid here, so we just put false for clarity
-        let settingsView = DefaultSettings(darkMode: false, solidColorMode: self.solidColorMode())
-        settingsView.backButton?.addTarget(self, action: #selector(KeyboardViewController.toggleSettings), for: UIControlEvents.touchUpInside)
-        return settingsView
     }
 }
