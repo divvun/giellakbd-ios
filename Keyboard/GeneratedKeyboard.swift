@@ -1,58 +1,40 @@
 // GENERATION STUB.
 import UIKit
 
+func addKeyRow(_ keyboard: Keyboard, definition def: KeyboardDefinition, row: Int) {
+    for (key, upperKey) in zip(def.normal[row], def.shifted[row]) {
+        let keyModel = Key(.character)
+        keyModel.setLetter(lower: key, upper: upperKey)
+        
+        if let lp = def.longPress[upperKey] {
+            keyModel.setUppercaseLongPress(lp)
+        }
+        
+        if let lp = def.longPress[key] {
+            keyModel.setLowercaseLongPress(lp)
+        }
+        
+        keyboard.addKey(keyModel, row: row, page: 0)
+    }
+}
+
 func generatedKeyboard() -> Keyboard {
     let defaultKeyboard = Keyboard()
     
     let isPad = UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad
-
-    var longPresses = generatedGetLongPresses();
     
     defaultKeyboard.addKey(Key(.shift), row: 2, page: 0)
     
-    for key in ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"] {
-        let keyModel = Key(.character)
-        keyModel.setLetter(key)
-        if let lp = longPresses[key] {
-            keyModel.setUppercaseLongPress(lp)
-        }
-        if let lp = longPresses[key.lowercased()] {
-            keyModel.setLowercaseLongPress(lp)
-        }
-
-        defaultKeyboard.addKey(keyModel, row: 0, page: 0)
-    }
+    let def = KeyboardDefinition.definitions[0]
     
-    for key in ["A", "S", "D", "F", "G", "H", "J", "K", "L"] {
-        let keyModel = Key(.character)
-        keyModel.setLetter(key)
-        if let lp = longPresses[key] {
-            keyModel.setUppercaseLongPress(lp)
-        }
-        if let lp = longPresses[key.lowercased()] {
-            keyModel.setLowercaseLongPress(lp)
-        }
-
-        defaultKeyboard.addKey(keyModel, row: 1, page: 0)
-    }
-    
-    for key in ["Z", "X", "C", "V", "B", "N", "M"] {
-        let keyModel = Key(.character)
-        keyModel.setLetter(key)
-        if let lp = longPresses[key] {
-            keyModel.setUppercaseLongPress(lp)
-        }
-        if let lp = longPresses[key.lowercased()] {
-            keyModel.setLowercaseLongPress(lp)
-        }
-
-        defaultKeyboard.addKey(keyModel, row: 2, page: 0)
-    }
+    addKeyRow(defaultKeyboard, definition: def, row: 0)
+    addKeyRow(defaultKeyboard, definition: def, row: 1)
+    addKeyRow(defaultKeyboard, definition: def, row: 2)
     
     if isPad {
         defaultKeyboard.addKey(Key(.backspace), row: 0, page: 0)
         let returnKey = Key(.return)
-        returnKey.uppercaseKeyCap = "return"
+        returnKey.uppercaseKeyCap = def.enter
         returnKey.uppercaseOutput = "\n"
         returnKey.lowercaseOutput = "\n"
         defaultKeyboard.addKey(returnKey, row: 1, page: 0)
@@ -86,50 +68,8 @@ func generatedKeyboard() -> Keyboard {
         */
         defaultKeyboard.addKey(Key(.backspace), row: 2, page: 0)
     }
+    
+    return defaultControls(defaultKeyboard, definition: def)
 
-    return defaultKeyboard
-}
-
-func generatedGetLongPresses() -> [String: [String]] {
-    var lps = [String: [String]]()
-    lps["k"] = ["ǩ"]
-    lps["t"] = ["ŧ", "þ"]
-    lps["d"] = ["đ", "ð"]
-    lps["D"] = ["Đ", "Ð"]
-    lps["Z"] = ["Ž", "Ʒ", "Ǯ"]
-    lps["u"] = ["ü", "ú", "ù", "û", "ũ", "ū", "ŭ"]
-    lps["n"] = ["ŋ"]
-    lps["c"] = ["č", "ç"]
-    lps["e"] = ["ë", "é", "è", "ê", "ẽ", "ė", "ē", "ĕ", "ę"]
-    lps["Æ"] = ["Ä"]
-    lps["Ø"] = ["Ö"]
-    lps["æ"] = ["ä"]
-    lps["A"] = ["Æ", "Ä", "Å", "Á", "À", "Â", "Ã", "Ȧ", "Ā"]
-    lps["s"] = ["š"]
-    lps["ø"] = ["ö"]
-    lps["S"] = ["Š"]
-    lps["K"] = ["Ǩ"]
-    lps["G"] = ["Ĝ", "Ḡ", "Ǧ", "Ǥ"]
-    lps["O"] = ["Œ", "Ö", "Ó", "Ò", "Ô", "Õ", "Ō", "Ŏ"]
-    lps["C"] = ["Č", "Ç"]
-    lps["a"] = ["æ", "ä", "å", "á", "à", "â", "ã", "ȧ", "ā"]
-    lps["E"] = ["Ë", "É", "È", "Ê", "Ẽ", "Ė", "Ē", "Ĕ", "Ę"]
-    lps["N"] = ["Ŋ"]
-    lps["g"] = ["ĝ", "ḡ", "ǧ", "ǥ"]
-    lps["U"] = ["Ü", "Ú", "Ù", "Û", "Ũ", "Ū", "Ŭ"]
-    lps["i"] = ["ï", "í", "ì", "î", "ĩ", "ī", "ĭ"]
-    lps["z"] = ["ž", "ʒ", "ǯ"]
-    lps["o"] = ["œ", "ö", "ó", "ò", "ô", "õ", "ō", "ŏ"]
-    lps["I"] = ["Ï", "Í", "Ì", "Î", "Ĩ", "Ī", "Ĭ"]
-    lps["Y"] = ["Ý", "Ỳ", "Ŷ", "Ẏ", "Ȳ"]
-    lps["y"] = ["ý", "ỳ", "ŷ", "ẏ", "ȳ"]
-    lps["T"] = ["Ŧ", "Þ"]
-    return lps
-}
-
-func generatedConfig() -> [String: String] {
-    var o: [String:String] = [:]
-    o["space"] = "space"
-    o["return"] = "return"
-    return o
+    //return defaultKeyboard
 }

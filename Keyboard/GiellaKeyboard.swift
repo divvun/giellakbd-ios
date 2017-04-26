@@ -40,7 +40,7 @@ class SuggestionOp: Operation {
 }
 
 class GiellaKeyboard: KeyboardViewController {
-    var keyNames: [String: String]
+    //var keyNames: [String: String]
     
     //var zhfst: ZHFSTOSpeller?
     
@@ -186,7 +186,7 @@ class GiellaKeyboard: KeyboardViewController {
     }
     
     override func setSpaceLocalName(_ keyView: KeyboardKey) {
-        keyView.label.text = keyNames["keyboard"]
+        //keyView.label.text = keyNames["keyboard"]
     }
     
     func disableInput() {
@@ -428,7 +428,7 @@ class GiellaBanner: ExtraView {
 }
 
 
-func defaultControls(_ defaultKeyboard: Keyboard, keyNames: [String: String]) -> Keyboard {
+func defaultControls(_ defaultKeyboard: Keyboard, definition def: KeyboardDefinition) -> Keyboard {
     let isPad = UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad
 
     let backspace = Key(.backspace)
@@ -445,13 +445,13 @@ func defaultControls(_ defaultKeyboard: Keyboard, keyNames: [String: String]) ->
     defaultKeyboard.addKey(settings, row: 3, page: 0)
     
     let space = Key(.space)
-    space.uppercaseKeyCap = keyNames["space"]
+    space.uppercaseKeyCap = def.space
     space.uppercaseOutput = " "
     space.lowercaseOutput = " "
     defaultKeyboard.addKey(space, row: 3, page: 0)
     
     let returnKey = Key(.return)
-    returnKey.uppercaseKeyCap = keyNames["return"]
+    returnKey.uppercaseKeyCap = def.enter
     returnKey.uppercaseOutput = "\n"
     returnKey.lowercaseOutput = "\n"
     defaultKeyboard.addKey(isPad ? Key(keyModeChangeNumbers) : returnKey, row: 3, page: 0)
@@ -464,13 +464,13 @@ func defaultControls(_ defaultKeyboard: Keyboard, keyNames: [String: String]) ->
     
     for key in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"] {
         let keyModel = Key(.specialCharacter)
-        keyModel.setLetter(key)
+        keyModel.setLetter(lower: key)
         defaultKeyboard.addKey(keyModel, row: 0, page: 1)
     }
     
     for key in ["-", "/", ":", ";", "(", ")", "$", "&", "@", "\""] {
         let keyModel = Key(.specialCharacter)
-        keyModel.setLetter(key)
+        keyModel.setLetter(lower: key)
         defaultKeyboard.addKey(keyModel, row: 1, page: 1)
     }
     
@@ -481,7 +481,7 @@ func defaultControls(_ defaultKeyboard: Keyboard, keyNames: [String: String]) ->
     
     for key in [".", ",", "?", "!", "'"] {
         let keyModel = Key(.specialCharacter)
-        keyModel.setLetter(key)
+        keyModel.setLetter(lower: key)
         defaultKeyboard.addKey(keyModel, row: 2, page: 1)
     }
     
@@ -502,13 +502,13 @@ func defaultControls(_ defaultKeyboard: Keyboard, keyNames: [String: String]) ->
     
     for key in ["[", "]", "{", "}", "#", "%", "^", "*", "+", "="] {
         let keyModel = Key(.specialCharacter)
-        keyModel.setLetter(key)
+        keyModel.setLetter(lower: key)
         defaultKeyboard.addKey(keyModel, row: 0, page: 2)
     }
     
     for key in ["_", "\\", "|", "~", "<", ">", "€", "£", "Y", "•"] {
         let keyModel = Key(.specialCharacter)
-        keyModel.setLetter(key)
+        keyModel.setLetter(lower: key)
         defaultKeyboard.addKey(keyModel, row: 1, page: 2)
     }
     
@@ -516,7 +516,7 @@ func defaultControls(_ defaultKeyboard: Keyboard, keyNames: [String: String]) ->
     
     for key in [".", ",", "?", "!", "'"] {
         let keyModel = Key(.specialCharacter)
-        keyModel.setLetter(key)
+        keyModel.setLetter(lower: key)
         defaultKeyboard.addKey(keyModel, row: 2, page: 2)
     }
     
