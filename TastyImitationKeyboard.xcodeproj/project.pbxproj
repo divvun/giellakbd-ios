@@ -31,13 +31,8 @@
 		4EF16F9F19D2552E0076AFCB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4EF16F9D19D2552E0076AFCB /* Main.storyboard */; };
 		C6974E611A31557A00D1A0B3 /* Background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C6974E601A31557A00D1A0B3 /* Background.jpg */; };
 		C6A568E219FA286500C8E119 /* GiellaKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A568E119FA286500C8E119 /* GiellaKeyboard.swift */; };
-		C6ABBACB1C0BF00300096F98 /* dicts.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C6ABBACA1C0BF00300096F98 /* dicts.bundle */; };
 		C6BC98AC1A0A44D200DCB420 /* GeneratedKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BC98AB1A0A44D200DCB420 /* GeneratedKeyboard.swift */; };
 		C6C7BD4E1EB064A3007E6785 /* ColorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6C7BD4D1EB064A3007E6785 /* ColorTheme.swift */; };
-		C6D865701C00C16E0095CA6F /* libarchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6D8656F1C00C16E0095CA6F /* libarchive.framework */; };
-		C6D865721C00C1810095CA6F /* libhfstospell.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6D865711C00C1810095CA6F /* libhfstospell.framework */; };
-		C6D865741C00C1C40095CA6F /* ZHFSTOSpeller.m in Sources */ = {isa = PBXBuildFile; fileRef = C6D865731C00C1C40095CA6F /* ZHFSTOSpeller.m */; };
-		C6D8657F1C0185F90095CA6F /* ZHFSTOSpeller-binding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C6D865781C00C27C0095CA6F /* ZHFSTOSpeller-binding.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,20 +49,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 4E807DB819461DC700D875D1;
 			remoteInfo = Keyboard;
-		};
-		C6D8656B1C00BC680095CA6F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4E807D8B19461D9000D875D1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C6D865631C00B03B0095CA6F;
-			remoteInfo = libarchive;
-		};
-		C6D8656D1C00C04C0095CA6F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4E807D8B19461D9000D875D1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C6D865671C00BC240095CA6F;
-			remoteInfo = libhfstospell;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -122,17 +103,10 @@
 		4EF16F9A19D2550D0076AFCB /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C6974E601A31557A00D1A0B3 /* Background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Background.jpg; sourceTree = "<group>"; };
 		C6A568E119FA286500C8E119 /* GiellaKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiellaKeyboard.swift; sourceTree = "<group>"; };
-		C6ABBACA1C0BF00300096F98 /* dicts.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = dicts.bundle; sourceTree = "<group>"; };
 		C6B749AF1A31AAF0006FCCD9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C6BC98AB1A0A44D200DCB420 /* GeneratedKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratedKeyboard.swift; sourceTree = "<group>"; };
 		C6C7BD4D1EB064A3007E6785 /* ColorTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ColorTheme.swift; path = Models/ColorTheme.swift; sourceTree = "<group>"; };
 		C6D304A61BFD73750023EC5F /* Keyboard-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Keyboard-Bridging-Header.h"; sourceTree = "<group>"; };
-		C6D8656F1C00C16E0095CA6F /* libarchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = libarchive.framework; path = Frameworks/libarchive.framework; sourceTree = "<group>"; };
-		C6D865711C00C1810095CA6F /* libhfstospell.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = libhfstospell.framework; path = Frameworks/libhfstospell.framework; sourceTree = "<group>"; };
-		C6D865731C00C1C40095CA6F /* ZHFSTOSpeller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHFSTOSpeller.m; sourceTree = "<group>"; };
-		C6D865761C00C2400095CA6F /* ZHFSTOSpeller-binding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ZHFSTOSpeller-binding.h"; sourceTree = "<group>"; };
-		C6D865781C00C27C0095CA6F /* ZHFSTOSpeller-binding.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "ZHFSTOSpeller-binding.cpp"; sourceTree = "<group>"; };
-		C6D8657A1C00CADC0095CA6F /* ZHFSTOSpeller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHFSTOSpeller.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,8 +121,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C6D865721C00C1810095CA6F /* libhfstospell.framework in Frameworks */,
-				C6D865701C00C16E0095CA6F /* libarchive.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,9 +172,6 @@
 				4E807D9519461D9000D875D1 /* HostingApp */,
 				4E807DBA19461DC700D875D1 /* Keyboard */,
 				4E807D9419461D9000D875D1 /* Products */,
-				C6ABBACA1C0BF00300096F98 /* dicts.bundle */,
-				C6D8656F1C00C16E0095CA6F /* libarchive.framework */,
-				C6D865711C00C1810095CA6F /* libhfstospell.framework */,
 			);
 			sourceTree = "<group>";
 		};
@@ -254,10 +223,6 @@
 			children = (
 				4E807DBC19461DC700D875D1 /* Info.plist */,
 				C6D304A61BFD73750023EC5F /* Keyboard-Bridging-Header.h */,
-				C6D865731C00C1C40095CA6F /* ZHFSTOSpeller.m */,
-				C6D865781C00C27C0095CA6F /* ZHFSTOSpeller-binding.cpp */,
-				C6D865761C00C2400095CA6F /* ZHFSTOSpeller-binding.h */,
-				C6D8657A1C00CADC0095CA6F /* ZHFSTOSpeller.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -271,38 +236,6 @@
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
-
-/* Begin PBXLegacyTarget section */
-		C6D865631C00B03B0095CA6F /* libarchive */ = {
-			isa = PBXLegacyTarget;
-			buildArgumentsString = Frameworks/libarchive.framework;
-			buildConfigurationList = C6D865661C00B03B0095CA6F /* Build configuration list for PBXLegacyTarget "libarchive" */;
-			buildPhases = (
-			);
-			buildToolPath = /usr/bin/make;
-			buildWorkingDirectory = "";
-			dependencies = (
-			);
-			name = libarchive;
-			passBuildSettingsInEnvironment = 1;
-			productName = libarchive;
-		};
-		C6D865671C00BC240095CA6F /* libhfstospell */ = {
-			isa = PBXLegacyTarget;
-			buildArgumentsString = Frameworks/libhfstospell.framework;
-			buildConfigurationList = C6D865681C00BC240095CA6F /* Build configuration list for PBXLegacyTarget "libhfstospell" */;
-			buildPhases = (
-			);
-			buildToolPath = /usr/bin/make;
-			buildWorkingDirectory = "";
-			dependencies = (
-				C6D8656C1C00BC680095CA6F /* PBXTargetDependency */,
-			);
-			name = libhfstospell;
-			passBuildSettingsInEnvironment = 1;
-			productName = libhfstospell;
-		};
-/* End PBXLegacyTarget section */
 
 /* Begin PBXNativeTarget section */
 		4E807D9219461D9000D875D1 /* HostingApp */ = {
@@ -337,7 +270,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				C6D8656E1C00C04C0095CA6F /* PBXTargetDependency */,
 			);
 			name = Keyboard;
 			productName = Keyboard;
@@ -365,12 +297,6 @@
 						DevelopmentTeam = AE56HWMN8U;
 						LastSwiftMigration = 0820;
 					};
-					C6D865631C00B03B0095CA6F = {
-						CreatedOnToolsVersion = 7.1;
-					};
-					C6D865671C00BC240095CA6F = {
-						CreatedOnToolsVersion = 7.1;
-					};
 				};
 			};
 			buildConfigurationList = 4E807D8E19461D9000D875D1 /* Build configuration list for PBXProject "TastyImitationKeyboard" */;
@@ -388,8 +314,6 @@
 			targets = (
 				4E807D9219461D9000D875D1 /* HostingApp */,
 				4E807DB819461DC700D875D1 /* Keyboard */,
-				C6D865631C00B03B0095CA6F /* libarchive */,
-				C6D865671C00BC240095CA6F /* libhfstospell */,
 			);
 		};
 /* End PBXProject section */
@@ -411,7 +335,6 @@
 			files = (
 				4E52A6DA1A06C198006A08CE /* DefaultSettings.xib in Resources */,
 				4E52A6D61A06BADA006A08CE /* Media.xcassets in Resources */,
-				C6ABBACB1C0BF00300096F98 /* dicts.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -431,7 +354,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C6D865741C00C1C40095CA6F /* ZHFSTOSpeller.m in Sources */,
 				C6C7BD4E1EB064A3007E6785 /* ColorTheme.swift in Sources */,
 				4E52A6D21A06A61F006A08CE /* ImageKey.swift in Sources */,
 				4E52A6D41A06A626006A08CE /* ExtraView.swift in Sources */,
@@ -450,7 +372,6 @@
 				C6A568E219FA286500C8E119 /* GiellaKeyboard.swift in Sources */,
 				4E60A13E1979FB2E00854CC8 /* DirectionEnum.swift in Sources */,
 				4EC2A46D19DF811E00F789E1 /* KeyboardViewController.swift in Sources */,
-				C6D8657F1C0185F90095CA6F /* ZHFSTOSpeller-binding.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -466,16 +387,6 @@
 			isa = PBXTargetDependency;
 			target = 4E807DB819461DC700D875D1 /* Keyboard */;
 			targetProxy = 4E807DC219461DC700D875D1 /* PBXContainerItemProxy */;
-		};
-		C6D8656C1C00BC680095CA6F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C6D865631C00B03B0095CA6F /* libarchive */;
-			targetProxy = C6D8656B1C00BC680095CA6F /* PBXContainerItemProxy */;
-		};
-		C6D8656E1C00C04C0095CA6F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C6D865671C00BC240095CA6F /* libhfstospell */;
-			targetProxy = C6D8656D1C00C04C0095CA6F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -695,81 +606,6 @@
 			};
 			name = Release;
 		};
-		C6D865641C00B03B0095CA6F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CPPFLAGS = "-g -O3";
-				DEBUGGING_SYMBOLS = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				LDFLAGS = "-llzma";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		C6D865651C00B03B0095CA6F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				CPPFLAGS = "-g -O3";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_NO_COMMON_BLOCKS = YES;
-				LDFLAGS = "-llzma";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-		C6D865691C00BC240095CA6F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CPPFLAGS = "-g -O3";
-				DEBUGGING_SYMBOLS = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 3;
-				LDFLAGS = "-lstdc++ -llzma -larchive";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_CFLAGS = (
-					"-framework",
-					liblzma,
-					"-framework",
-					libarchive,
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		C6D8656A1C00BC240095CA6F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				CPPFLAGS = "-g -O3";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 3;
-				LDFLAGS = "-lstdc++ -llzma -larchive";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_CFLAGS = (
-					"-framework",
-					liblzma,
-					"-framework",
-					libarchive,
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -796,24 +632,6 @@
 			buildConfigurations = (
 				4E807DC519461DC700D875D1 /* Debug */,
 				4E807DC619461DC700D875D1 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C6D865661C00B03B0095CA6F /* Build configuration list for PBXLegacyTarget "libarchive" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C6D865641C00B03B0095CA6F /* Debug */,
-				C6D865651C00B03B0095CA6F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C6D865681C00BC240095CA6F /* Build configuration list for PBXLegacyTarget "libhfstospell" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C6D865691C00BC240095CA6F /* Debug */,
-				C6D8656A1C00BC240095CA6F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
