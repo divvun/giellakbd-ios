@@ -171,10 +171,10 @@ class KeyboardKey: UIControl {
         self.label.baselineAdjustment = UIBaselineAdjustment.alignCenters
         
         self.label.numberOfLines = 1
-        self.label.font = self.label.font.withSize(22)
+        self.label.font = UIFont.systemFont(ofSize: 24)
         
-        self.label.adjustsFontSizeToFitWidth = true
-        self.label.minimumScaleFactor = CGFloat(0.1)
+        //self.label.adjustsFontSizeToFitWidth = true
+        //self.label.minimumScaleFactor = CGFloat(0.1)
         self.label.isUserInteractionEnabled = false
     }
     
@@ -330,7 +330,7 @@ class KeyboardKey: UIControl {
             shape.removeFromSuperview()
             self.addSubview(shape)
             
-            let pointOffset: CGFloat = 4
+            let pointOffset = CGFloat(4)
             let size = CGSize(width: self.bounds.width - pointOffset - pointOffset, height: self.bounds.height - pointOffset - pointOffset)
             shape.frame = CGRect(
                 x: CGFloat((self.bounds.width - size.width) / 2.0),

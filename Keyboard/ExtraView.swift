@@ -9,8 +9,6 @@
 import UIKit
 
 class ExtraView: UIView {
-    
-    var globalColors: GlobalColors.Type?
     var darkMode: Bool = false
     var solidColorMode: Bool = false
     

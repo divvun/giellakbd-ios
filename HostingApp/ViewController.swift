@@ -58,7 +58,7 @@ class HostingAppViewController: UIViewController {
     var startTime: TimeInterval?
     var firstHeightTime: TimeInterval?
     var secondHeightTime: TimeInterval?
-    var referenceHeight: CGFloat = 216
+    var referenceHeight = CGFloat(216)
 
     func keyboardWillShow() {
         if startTime == nil {

@@ -79,7 +79,7 @@ class KeyboardConnector: KeyboardKeyBackground {
     func resizeFrame() {
         generateConvertedPoints()
 
-        let buffer: CGFloat = 32
+        let buffer = CGFloat(32)
         self.offset = CGPoint(x: buffer/2, y: buffer/2)
 
         let minX = min(convertedStartPoints.0.x, convertedStartPoints.1.x, convertedEndPoints.0.x, convertedEndPoints.1.x)

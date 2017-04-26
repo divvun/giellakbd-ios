@@ -10,7 +10,7 @@ import UIKit
 import AudioToolbox
 
 let metrics: [String:Double] = [
-    "topBanner": 30
+    "topBanner": 38
 ]
 func metric(_ name: String) -> CGFloat {
     if UIDevice.current.userInterfaceIdiom != UIUserInterfaceIdiom.pad {
@@ -61,7 +61,7 @@ class KeyboardViewController: UIInputViewController {
     }
 
     var autoPeriodState: AutoPeriodState = .noSpace
-    var lastCharCountInBeforeContext: Int = 0
+    var lastCharCountInBeforeContext = 0
 
     var shiftState: ShiftState {
         didSet {
@@ -197,7 +197,7 @@ class KeyboardViewController: UIInputViewController {
     var constraintsAdded: Bool = false
     func setupLayout() {
         if !constraintsAdded {
-            self.layout = type(of: self).layoutClass.init(model: self.keyboard, superview: self.forwardingView, layoutConstants: type(of: self).layoutConstants, globalColors: type(of: self).globalColors, darkMode: self.darkMode(), solidColorMode: self.solidColorMode())
+            self.layout = type(of: self).layoutClass.init(model: self.keyboard, superview: self.forwardingView, layoutConstants: type(of: self).layoutConstants, darkMode: self.darkMode(), solidColorMode: self.solidColorMode())
 
             self.layout?.initialize()
             self.setMode(0)
@@ -314,13 +314,19 @@ class KeyboardViewController: UIInputViewController {
     func heightForOrientation(_ orientation: UIInterfaceOrientation, withTopBanner: Bool) -> CGFloat {
         let isPad = UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad
         
-        //TODO: hardcoded stuff
-        let actualScreenWidth = (UIScreen.main.nativeBounds.size.width / UIScreen.main.nativeScale)
+        let screenHeight = UIScreen.main.nativeBounds.size.height / UIScreen.main.nativeScale
+        
+        /*
+        
         let canonicalPortraitHeight = (isPad ? CGFloat(264) : CGFloat(orientation.isPortrait && actualScreenWidth >= 400 ? 226 : 216))
         let canonicalLandscapeHeight = (isPad ? CGFloat(352) : CGFloat(162))
-        let topBannerHeight = (withTopBanner ? metric("topBanner") : 0)
+        */
         
-        return CGFloat(orientation.isPortrait ? canonicalPortraitHeight + topBannerHeight : canonicalLandscapeHeight + topBannerHeight)
+        let height = screenHeight / 3
+        
+        let topBannerHeight = withTopBanner ? metric("topBanner") : 0
+        
+        return CGFloat(max(height, 216) + topBannerHeight)
     }
 
     /*
@@ -941,9 +947,8 @@ class KeyboardViewController: UIInputViewController {
     // MOST COMMONLY EXTENDABLE METHODS //
     //////////////////////////////////////
 
-    class var layoutClass: KeyboardLayout.Type { get { return KeyboardLayout.self }}
-    class var layoutConstants: LayoutConstants.Type { get { return LayoutConstants.self }}
-    class var globalColors: GlobalColors.Type { get { return GlobalColors.self }}
+    static let layoutClass: KeyboardLayout.Type = KeyboardLayout.self
+    static let layoutConstants: LayoutConstants.Type = LayoutConstants.self
 
     func keyPressed(_ key: Key) {
         let proxy = (self.textDocumentProxy as UIKeyInput)
@@ -959,7 +964,7 @@ class KeyboardViewController: UIInputViewController {
     // a settings view that replaces the keyboard when the settings button is pressed
     func createSettings() -> ExtraView? {
         // note that dark mode is not yet valid here, so we just put false for clarity
-        let settingsView = DefaultSettings(globalColors: type(of: self).globalColors, darkMode: false, solidColorMode: self.solidColorMode())
+        let settingsView = DefaultSettings(darkMode: false, solidColorMode: self.solidColorMode())
         settingsView.backButton?.addTarget(self, action: #selector(KeyboardViewController.toggleSettings), for: UIControlEvents.touchUpInside)
         return settingsView
     }

@@ -57,9 +57,8 @@ class DefaultSettings: ExtraView, UITableViewDataSource, UITableViewDelegate {
         }
     }
     
-    init(globalColors: GlobalColors.Type?, darkMode: Bool, solidColorMode: Bool) {
+    init(darkMode: Bool, solidColorMode: Bool) {
         super.init()
-        self.globalColors = globalColors
         self.darkMode = darkMode
         self.solidColorMode = solidColorMode
         self.loadNib()
@@ -239,7 +238,7 @@ class DefaultSettingsTableViewCell: UITableViewCell {
     }
     
     func addConstraints() {
-        let margin: CGFloat = 8
+        let margin = CGFloat(8)
         let sideMargin = margin * 2
         
         let hasLongText = self.longLabel.text != nil && !self.longLabel.text.isEmpty
