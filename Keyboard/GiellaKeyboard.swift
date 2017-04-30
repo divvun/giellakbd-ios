@@ -39,6 +39,7 @@ class SuggestionOp: Operation {
     }
 }
 
+/*
 extension UnsafeMutablePointer where Pointee == vec_str_t {
     func toSwift() -> [String] {
         defer {
@@ -50,6 +51,7 @@ extension UnsafeMutablePointer where Pointee == vec_str_t {
         return rawItems.map({ String(cString: $0!) })
     }
 }
+*/
 
 class GiellaKeyboard: KeyboardViewController {
     //var keyNames: [String: String]
