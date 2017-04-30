@@ -18,14 +18,14 @@ func addKeyRow(_ keyboard: Keyboard, definition def: KeyboardDefinition, row: In
     }
 }
 
-func generatedKeyboard() -> Keyboard {
+func selectedKeyboard(index: Int) -> Keyboard {
     let defaultKeyboard = Keyboard()
     
     let isPad = UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad
     
     defaultKeyboard.addKey(Key(.shift), row: 2, page: 0)
     
-    let def = KeyboardDefinition.definitions[0]
+    let def = KeyboardDefinition.definitions[index]
     
     addKeyRow(defaultKeyboard, definition: def, row: 0)
     addKeyRow(defaultKeyboard, definition: def, row: 1)

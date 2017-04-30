@@ -10,7 +10,6 @@ import UIKit
 
 class HostingAppViewController: UIViewController {
 
-    @IBOutlet var stats: UILabel?
     @IBOutlet var instructionsFld: UILabel!
     @IBOutlet var titleFld: UILabel!
     @IBOutlet var bgSrcBtn: UIButton!
@@ -24,11 +23,36 @@ class HostingAppViewController: UIViewController {
                 titleFld.text = name
             }
         }
-
+        
         NotificationCenter.default.addObserver(self, selector: #selector(HostingAppViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(HostingAppViewController.keyboardDidHide), name: NSNotification.Name.UIKeyboardDidHide, object: nil)
-        //NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillChangeFrame:"), name: UIKeyboardWillChangeFrameNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(HostingAppViewController.keyboardDidChangeFrame(_:)), name: NSNotification.Name.UIKeyboardDidChangeFrame, object: nil)
+        
+        // Avoids strange bug where settings will not show if loaded from unloaded app
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+            self.maybeShowSettings()
+        }
+    }
+    
+    func keyboardWillShow() {
+        maybeShowSettings()
+    }
+    
+    func keyboardDidHide() {
+        maybeShowSettings()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        maybeShowSettings()
+    }
+    
+    func maybeShowSettings() {
+        if AppDelegate.instance.wantsKeyboardList {
+            AppDelegate.instance.wantsKeyboardList = false
+            
+            selectKeyboard()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,64 +69,27 @@ class HostingAppViewController: UIViewController {
 
     @IBAction func openSettings() {
         if let url = URL(string: NSString(format: "%@BundleID", UIApplicationOpenSettingsURLString) as String) {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            UIApplication.shared.openURL(url)
         }
     }
 
     @IBAction func goToImgSource() {
         if let url = URL(string: "https://flic.kr/p/cLhn9J") {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            UIApplication.shared.openURL(url)
         }
     }
-
-    var startTime: TimeInterval?
-    var firstHeightTime: TimeInterval?
-    var secondHeightTime: TimeInterval?
-    var referenceHeight = CGFloat(216)
-
-    func keyboardWillShow() {
-        if startTime == nil {
-            startTime = CACurrentMediaTime()
-        }
-    }
-
-    func keyboardDidHide() {
-        startTime = nil
-        firstHeightTime = nil
-        secondHeightTime = nil
-
-        self.stats?.text = "(Waiting for keyboard...)"
-    }
-
-    func keyboardDidChangeFrame(_ notification: Notification) {
-        //let frameBegin: CGRect! = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey]?.CGRectValue
-        let frameEnd: CGRect! = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as AnyObject).cgRectValue
-
-        if frameEnd.height == referenceHeight {
-            if firstHeightTime == nil {
-                firstHeightTime = CACurrentMediaTime()
-
-                if let startTime = self.startTime {
-                    if let firstHeightTime = self.firstHeightTime {
-                        let formatString = NSString(format: "First: %.2f, Total: %.2f", (firstHeightTime - startTime), (firstHeightTime - startTime))
-                        self.stats?.text = formatString as String
-                    }
-                }
-            }
-        }
-        else if frameEnd.height != 0 {
-            if secondHeightTime == nil {
-                secondHeightTime = CACurrentMediaTime()
-
-                if let startTime = self.startTime {
-                    if let firstHeightTime = self.firstHeightTime {
-                        if let secondHeightTime = self.secondHeightTime {
-                            let formatString = NSString(format: "First: %.2f, Second: %.2f, Total: %.2f", (firstHeightTime - startTime), (secondHeightTime - firstHeightTime), (secondHeightTime - startTime))
-                            self.stats?.text = formatString as String
-                        }
-                    }
-                }
-            }
-        }
+    
+    @IBAction func selectKeyboard() {
+        let alert = UIAlertController(title: "Keyboard Layouts", message: nil, preferredStyle: .actionSheet)
+        
+        KeyboardDefinition.definitions.enumerated().forEach({ i, def in
+            alert.addAction(UIAlertAction(title: def.name, style: .default, handler: { _ in
+                KeyboardSettings.currentKeyboard = i
+            }))
+        })
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil)
     }
 }

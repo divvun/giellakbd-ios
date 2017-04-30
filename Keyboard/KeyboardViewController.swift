@@ -115,7 +115,7 @@ class KeyboardViewController: UIInputViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(KeyboardViewController.defaultsChanged(_:)), name: UserDefaults.didChangeNotification, object: nil)
         
         NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationDidReceiveMemoryWarning, object: nil, queue: nil) { (notif) in
-            self.didReceiveMemoryWarning(notif);
+            self.didReceiveMemoryWarning(notif)
         }
     }
     
@@ -798,6 +798,8 @@ class KeyboardViewController: UIInputViewController {
                 res.perform(sel, with: URL(string: "giellakbd://settings")!)
             }
         }
+        
+        dismissKeyboard()
     }
 
     @discardableResult

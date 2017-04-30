@@ -27,6 +27,9 @@
 		4EF16F9B19D2550D0076AFCB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF16F9A19D2550D0076AFCB /* AppDelegate.swift */; };
 		4EF16F9F19D2552E0076AFCB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4EF16F9D19D2552E0076AFCB /* Main.storyboard */; };
 		C6974E611A31557A00D1A0B3 /* Background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C6974E601A31557A00D1A0B3 /* Background.jpg */; };
+		C6A3905B1EB61BF8009378C1 /* KeyboardSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A3905A1EB61BF8009378C1 /* KeyboardSettings.swift */; };
+		C6A3905C1EB61BF8009378C1 /* KeyboardSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A3905A1EB61BF8009378C1 /* KeyboardSettings.swift */; };
+		C6A3905D1EB61C9D009378C1 /* KeyboardDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DCFDD51EB0787A00FABC11 /* KeyboardDefinition.swift */; };
 		C6A568E219FA286500C8E119 /* GiellaKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A568E119FA286500C8E119 /* GiellaKeyboard.swift */; };
 		C6BC98AC1A0A44D200DCB420 /* GeneratedKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BC98AB1A0A44D200DCB420 /* GeneratedKeyboard.swift */; };
 		C6C7BD4E1EB064A3007E6785 /* ColorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6C7BD4D1EB064A3007E6785 /* ColorTheme.swift */; };
@@ -109,7 +112,10 @@
 		4EF16F9519D255030076AFCB /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		4EF16F9A19D2550D0076AFCB /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C6974E601A31557A00D1A0B3 /* Background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Background.jpg; sourceTree = "<group>"; };
+		C6A3905A1EB61BF8009378C1 /* KeyboardSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardSettings.swift; sourceTree = "<group>"; };
 		C6A568E119FA286500C8E119 /* GiellaKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiellaKeyboard.swift; sourceTree = "<group>"; };
+		C6AEFD7B1EB0F5EA00316A2B /* Keyboard.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Keyboard.entitlements; sourceTree = "<group>"; };
+		C6AEFD7C1EB0F5F000316A2B /* HostingApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HostingApp.entitlements; sourceTree = "<group>"; };
 		C6B749AF1A31AAF0006FCCD9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C6BC98AB1A0A44D200DCB420 /* GeneratedKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratedKeyboard.swift; sourceTree = "<group>"; };
 		C6C7BD4D1EB064A3007E6785 /* ColorTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ColorTheme.swift; path = Models/ColorTheme.swift; sourceTree = "<group>"; };
@@ -195,8 +201,10 @@
 		4E807D9519461D9000D875D1 /* HostingApp */ = {
 			isa = PBXGroup;
 			children = (
+				C6A969D71EB6126100A1143E /* Views */,
 				4EF16F9A19D2550D0076AFCB /* AppDelegate.swift */,
 				4EF16F9519D255030076AFCB /* ViewController.swift */,
+				C6A3905A1EB61BF8009378C1 /* KeyboardSettings.swift */,
 				4EF16F9D19D2552E0076AFCB /* Main.storyboard */,
 				4EF16F9319D255030076AFCB /* Images.xcassets */,
 				4E807D9619461D9000D875D1 /* Supporting Files */,
@@ -207,6 +215,7 @@
 		4E807D9619461D9000D875D1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C6AEFD7C1EB0F5F000316A2B /* HostingApp.entitlements */,
 				C6974E601A31557A00D1A0B3 /* Background.jpg */,
 				4EF16F9219D254EA0076AFCB /* Info.plist */,
 			);
@@ -229,6 +238,8 @@
 		4E807DBB19461DC700D875D1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C6AEFD7B1EB0F5EA00316A2B /* Keyboard.entitlements */,
+				C6AEFD771EB0E28E00316A2B /* libhfstospell.a */,
 				4E807DBC19461DC700D875D1 /* Info.plist */,
 				C6D304A61BFD73750023EC5F /* Keyboard-Bridging-Header.h */,
 			);
@@ -241,6 +252,15 @@
 				4EE7599A19F75A0D00B4E6ED /* Utilities.swift */,
 			);
 			name = Utility;
+			sourceTree = "<group>";
+		};
+		C6A969D71EB6126100A1143E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C6A969D81EB6128000A1143E /* MenuView.xib */,
+				C6A969DA1EB6128C00A1143E /* MenuView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -300,11 +320,21 @@
 						DevelopmentTeam = AE56HWMN8U;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					4E807DB819461DC700D875D1 = {
 						CreatedOnToolsVersion = 6.0;
 						DevelopmentTeam = AE56HWMN8U;
 						LastSwiftMigration = 0820;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -334,6 +364,7 @@
 			files = (
 				4EF16F9619D255030076AFCB /* Images.xcassets in Resources */,
 				C6DCFDD41EB070BC00FABC11 /* KeyboardDefinitions.json in Resources */,
+				C6A969D91EB6128000A1143E /* MenuView.xib in Resources */,
 				C6974E611A31557A00D1A0B3 /* Background.jpg in Resources */,
 				4EF16F9F19D2552E0076AFCB /* Main.storyboard in Resources */,
 			);
@@ -355,7 +386,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				4EF16F9B19D2550D0076AFCB /* AppDelegate.swift in Sources */,
+				C6A969DB1EB6128C00A1143E /* MenuView.swift in Sources */,
+				C6A3905D1EB61C9D009378C1 /* KeyboardDefinition.swift in Sources */,
 				4EF16F9819D255030076AFCB /* ViewController.swift in Sources */,
+				C6A3905B1EB61BF8009378C1 /* KeyboardSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,6 +414,7 @@
 				4E60A13E1979FB2E00854CC8 /* DirectionEnum.swift in Sources */,
 				4EC2A46D19DF811E00F789E1 /* KeyboardViewController.swift in Sources */,
 				C6DCFDD61EB0787A00FABC11 /* KeyboardDefinition.swift in Sources */,
+				C6A3905C1EB61BF8009378C1 /* KeyboardSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -448,7 +483,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				METAL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -488,7 +523,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				METAL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -503,13 +538,9 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = HostingApp/HostingApp.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = AE56HWMN8U;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/Frameworks",
-				);
 				INFOPLIST_FILE = HostingApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -531,13 +562,9 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = HostingApp/HostingApp.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = AE56HWMN8U;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/Frameworks",
-				);
 				INFOPLIST_FILE = HostingApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -557,13 +584,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Keyboard/Keyboard.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/Frameworks",
-				);
 				GENERATE_PROFILING_CODE = YES;
 				INFOPLIST_FILE = Keyboard/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
@@ -589,13 +612,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Keyboard/Keyboard.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/Frameworks",
-				);
 				GENERATE_PROFILING_CODE = YES;
 				INFOPLIST_FILE = Keyboard/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
