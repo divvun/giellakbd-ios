@@ -24,21 +24,21 @@ class HostingAppViewController: UIViewController {
             }
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(HostingAppViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(HostingAppViewController.keyboardDidHide), name: NSNotification.Name.UIKeyboardDidHide, object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(HostingAppViewController.maybeShowSettings),
+            name: .UIKeyboardWillShow,
+            object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(HostingAppViewController.maybeShowSettings),
+            name: .UIKeyboardDidHide,
+            object: nil)
         
         // Avoids strange bug where settings will not show if loaded from unloaded app
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
             self.maybeShowSettings()
         }
-    }
-    
-    func keyboardWillShow() {
-        maybeShowSettings()
-    }
-    
-    func keyboardDidHide() {
-        maybeShowSettings()
     }
     
     override func viewWillAppear(_ animated: Bool) {
