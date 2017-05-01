@@ -135,31 +135,6 @@ class KeyboardViewController: UIInputViewController {
         self.updateKeyCaps(self.shiftState.uppercase())
     }
 
-    // without this here kludge, the height constraint for the keyboard does not work for some reason
-    var kludge: UIView?
-    func setupKludge() {
-        if self.kludge == nil {
-            let kludge = UIView()
-            self.view.addSubview(kludge)
-            kludge.translatesAutoresizingMaskIntoConstraints = false
-            kludge.isHidden = true
-
-            let a = NSLayoutConstraint(item: kludge,
-                attribute: NSLayoutAttribute.left,
-                relatedBy: NSLayoutRelation.equal,
-                toItem: self.view,
-                attribute: NSLayoutAttribute.left,
-                multiplier: 1,
-                constant: 0)
-            let b = NSLayoutConstraint(item: kludge, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
-            let c = NSLayoutConstraint(item: kludge, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
-            let d = NSLayoutConstraint(item: kludge, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
-            self.view.addConstraints([a, b, c, d])
-
-            self.kludge = kludge
-        }
-    }
-
     /*
     BUG NOTE
 
@@ -186,8 +161,6 @@ class KeyboardViewController: UIInputViewController {
 
             self.layout?.initialize()
             self.setMode(0)
-
-            self.setupKludge()
 
             self.updateKeyCaps(self.shiftState.uppercase())
             self.setCapsIfNeeded()
