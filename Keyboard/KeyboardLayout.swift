@@ -241,13 +241,20 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
         CATransaction.setDisableActions(true)
 
         // pre-allocate all keys if no cache
-        if !type(of: self).shouldPoolKeys {
+        if !KeyboardLayout.shouldPoolKeys {
             if self.keyPool.isEmpty {
                 for p in 0..<self.model.pages.count {
                     self.positionKeys(p)
                 }
+                
                 self.updateKeyAppearance()
-                self.updateKeyCaps(true, uppercase: uppercase, characterUppercase: characterUppercase, shiftState: shiftState)
+                
+                self.updateKeyCaps(
+                    true,
+                    uppercase: uppercase,
+                    characterUppercase: characterUppercase,
+                    shiftState: shiftState
+                )
             }
         }
 
@@ -255,8 +262,8 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
 
         // reset state
         for (p, page) in self.model.pages.enumerated() {
-            for (_, row) in page.rows.enumerated() {
-                for (_, key) in row.enumerated() {
+            for row in page.rows {
+                for key in row {
                     if let keyView = self.modelToView[key] {
                         keyView.hidePopup()
                         keyView.isHighlighted = false
@@ -266,9 +273,14 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
             }
         }
 
-        if type(of: self).shouldPoolKeys {
+        if KeyboardLayout.shouldPoolKeys {
             self.updateKeyAppearance()
-            self.updateKeyCaps(true, uppercase: uppercase, characterUppercase: characterUppercase, shiftState: shiftState)
+            self.updateKeyCaps(
+                true,
+                uppercase: uppercase,
+                characterUppercase: characterUppercase,
+                shiftState: shiftState
+            )
         }
 
         CATransaction.commit()
@@ -285,7 +297,7 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
         }
 
         if var keyMap = self.generateKeyFrames(self.model, bounds: self.superview.bounds, page: pageNum) {
-            if type(of: self).shouldPoolKeys {
+            if KeyboardLayout.shouldPoolKeys {
                 self.modelToView.removeAll(keepingCapacity: true)
                 self.viewToModel.removeAll(keepingCapacity: true)
 
@@ -505,7 +517,7 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
 
     // if pool is disabled, always returns a unique key view for the corresponding key model
     func pooledKey(key aKey: Key, model: Keyboard, frame: CGRect) -> KeyboardKey? {
-        if !type(of: self).shouldPoolKeys {
+        if !KeyboardLayout.shouldPoolKeys {
             var p: Int!
             var r: Int!
             var k: Int!
@@ -586,7 +598,7 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
             return keyView
         }
 
-        if type(of: self).shouldPoolKeys {
+        if KeyboardLayout.shouldPoolKeys {
             if !self.sizeToKeyMap.isEmpty {
                 var (size, keyArray) = self.sizeToKeyMap[self.sizeToKeyMap.startIndex]
 
@@ -616,7 +628,7 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
 
     // if pool is disabled, doesn't do anything
     func resetKeyPool() {
-        if type(of: self).shouldPoolKeys {
+        if KeyboardLayout.shouldPoolKeys {
             self.sizeToKeyMap.removeAll(keepingCapacity: true)
 
             for key in self.keyPool {

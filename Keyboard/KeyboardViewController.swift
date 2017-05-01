@@ -157,7 +157,13 @@ class KeyboardViewController: UIInputViewController {
     var constraintsAdded: Bool = false
     func setupLayout() {
         if !constraintsAdded {
-            self.layout = type(of: self).layoutClass.init(model: self.keyboard, superview: self.forwardingView, layoutConstants: type(of: self).layoutConstants, darkMode: self.darkMode(), solidColorMode: self.solidColorMode())
+            self.layout = KeyboardLayout(
+                model: self.keyboard,
+                superview: self.forwardingView,
+                layoutConstants: LayoutConstants.self, // TODO: why
+                darkMode: self.darkMode(),
+                solidColorMode: self.solidColorMode()
+            )
 
             self.layout?.initialize()
             self.setMode(0)
@@ -174,12 +180,8 @@ class KeyboardViewController: UIInputViewController {
 
     // only available after frame becomes non-zero
     func darkMode() -> Bool {
-        let darkMode = { () -> Bool in
-            let proxy = self.textDocumentProxy as UITextDocumentProxy
-            return proxy.keyboardAppearance == UIKeyboardAppearance.dark
-        }()
-
-        return darkMode
+        let proxy = self.textDocumentProxy as UITextDocumentProxy
+        return proxy.keyboardAppearance == UIKeyboardAppearance.dark
     }
 
     func solidColorMode() -> Bool {
@@ -895,8 +897,8 @@ class KeyboardViewController: UIInputViewController {
     // MOST COMMONLY EXTENDABLE METHODS //
     //////////////////////////////////////
 
-    static let layoutClass: KeyboardLayout.Type = KeyboardLayout.self
-    static let layoutConstants: LayoutConstants.Type = LayoutConstants.self
+    //static let layoutClass: KeyboardLayout.Type = KeyboardLayout.self
+    //static let layoutConstants: LayoutConstants.Type = LayoutConstants.self
 
     func keyPressed(_ key: Key) {
         let proxy = (self.textDocumentProxy as UIKeyInput)
