@@ -34,7 +34,7 @@ class KeyboardViewController: UIInputViewController {
     var keyboard: Keyboard!
     var forwardingView: ForwardingView!
     var layout: KeyboardLayout? = nil
-    var heightConstraint: NSLayoutConstraint? = nil
+    var heightConstraint: NSLayoutConstraint!
 
     var bannerView: ExtraView? = nil
     var settingsView: ExtraView? = nil
@@ -79,20 +79,6 @@ class KeyboardViewController: UIInputViewController {
     // state tracking during shift tap
     var shiftWasMultitapped: Bool = false
     var shiftStartingState: ShiftState? = nil
-
-    var keyboardHeight: CGFloat {
-        get {
-            if let constraint = self.heightConstraint {
-                return constraint.constant
-            }
-            else {
-                return 0
-            }
-        }
-        set {
-            self.setHeight(newValue)
-        }
-    }
 
     var nameChangeTimer: Timer? = nil
 
@@ -219,6 +205,18 @@ class KeyboardViewController: UIInputViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        heightConstraint = NSLayoutConstraint(
+            item: self.view,
+            attribute: .height,
+            relatedBy: .equal,
+            toItem: nil,
+            attribute: .notAnAttribute,
+            multiplier: 0.0,
+            constant: 50
+        )
+        
+        view.addConstraint(heightConstraint)
 
         if let aBanner = self.createBanner() {
             aBanner.isHidden = true
@@ -231,7 +229,8 @@ class KeyboardViewController: UIInputViewController {
         super.viewWillAppear(animated)
         
         self.bannerView?.isHidden = false
-        self.keyboardHeight = self.heightForOrientation(self.orientation, withTopBanner: true)
+        
+        self.heightConstraint.constant = self.heightForOrientation(self.orientation, withTopBanner: true)
     }
     
     var orientation: UIInterfaceOrientation {
@@ -260,8 +259,8 @@ class KeyboardViewController: UIInputViewController {
                 view.shouldRasterize = true
             }
         }
-
-        self.keyboardHeight = self.heightForOrientation(toInterfaceOrientation, withTopBanner: true)
+        
+        self.heightConstraint.constant = self.heightForOrientation(toInterfaceOrientation, withTopBanner: true)
     }
 
     override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
@@ -501,25 +500,6 @@ class KeyboardViewController: UIInputViewController {
     func contextChanged() {
         self.setCapsIfNeeded()
         self.autoPeriodState = .noSpace
-    }
-
-    func setHeight(_ height: CGFloat) {
-        if self.heightConstraint == nil {
-            self.heightConstraint = NSLayoutConstraint(
-                item:self.view,
-                attribute:NSLayoutAttribute.height,
-                relatedBy:NSLayoutRelation.equal,
-                toItem:nil,
-                attribute:NSLayoutAttribute.notAnAttribute,
-                multiplier:0,
-                constant:height)
-            self.heightConstraint!.priority = 999
-
-            self.view.addConstraint(self.heightConstraint!) // TODO: what if view already has constraint added?
-        }
-        else {
-            self.heightConstraint?.constant = height
-        }
     }
 
     func updateAppearances(_ appearanceIsDark: Bool) {
