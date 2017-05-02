@@ -98,15 +98,12 @@ class KeyboardViewController: UIInputViewController {
         self.forwardingView = ForwardingView(frame: CGRect.zero)
         self.view.addSubview(self.forwardingView)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(KeyboardViewController.defaultsChanged(_:)), name: UserDefaults.didChangeNotification, object: nil)
-        
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationDidReceiveMemoryWarning, object: nil, queue: nil) { (notif) in
-            self.didReceiveMemoryWarning(notif)
-        }
-    }
-    
-    func didReceiveMemoryWarning(_ notification: Notification) {
-        // Overridable woo
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(KeyboardViewController.defaultsChanged(_:)),
+            name: UserDefaults.didChangeNotification,
+            object: nil
+        )
     }
     
     deinit {
@@ -486,12 +483,7 @@ class KeyboardViewController: UIInputViewController {
     /////////////////////
     // POPUP DELAY END //
     /////////////////////
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated
-    }
-
+    
     // TODO: this is currently not working as intended; only called when selection changed -- iOS bug
     override func textDidChange(_ textInput: UITextInput?) {
         self.contextChanged()
@@ -589,18 +581,16 @@ class KeyboardViewController: UIInputViewController {
             }()
 
             if charactersAreInCorrectState {
-                (self.textDocumentProxy as UITextDocumentProxy).deleteBackward()
-                (self.textDocumentProxy as UITextDocumentProxy).deleteBackward()
-                (self.textDocumentProxy as UITextDocumentProxy).insertText(".")
-                (self.textDocumentProxy as UITextDocumentProxy).insertText(" ")
+                let proxy = self.textDocumentProxy as UITextDocumentProxy
+                
+                proxy.deleteBackward()
+                proxy.deleteBackward()
+                proxy.insertText(". ")
             }
 
             self.autoPeriodState = .noSpace
-        }
-        else {
-            if key.type == Key.KeyType.space {
-                self.autoPeriodState = .firstSpace
-            }
+        } else if key.type == Key.KeyType.space {
+            self.autoPeriodState = .firstSpace
         }
     }
 
@@ -823,7 +813,8 @@ class KeyboardViewController: UIInputViewController {
                 return false
             case .words:
                 let beforeContext = documentProxy.documentContextBeforeInput!
-                let previousCharacter = beforeContext[beforeContext.characters.index(before: beforeContext.endIndex)]
+                let i = beforeContext.characters.index(before: beforeContext.endIndex)
+                let previousCharacter = beforeContext[i]
                 return self.characterIsWhitespace(previousCharacter)
             case .sentences:
                 let beforeContext = documentProxy.documentContextBeforeInput!
@@ -868,9 +859,9 @@ class KeyboardViewController: UIInputViewController {
             return
         }
         
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async {
             UIDevice.current.playInputClick()
-        })
+        }
     }
 
     //////////////////////////////////////
