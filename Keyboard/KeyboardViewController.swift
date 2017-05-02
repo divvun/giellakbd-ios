@@ -745,12 +745,12 @@ class KeyboardViewController: UIInputViewController {
             case .none:
                 return false
             case .words:
-                let beforeContext = documentProxy.documentContextBeforeInput!
+                let beforeContext = documentProxy.documentContextBeforeInput ?? ""
                 let i = beforeContext.characters.index(before: beforeContext.endIndex)
                 let previousCharacter = beforeContext[i]
                 return self.characterIsWhitespace(previousCharacter)
             case .sentences:
-                let beforeContext = documentProxy.documentContextBeforeInput!
+                let beforeContext = documentProxy.documentContextBeforeInput ?? ""
                 let offset = min(3, beforeContext.characters.count)
                 var index = beforeContext.endIndex
 
