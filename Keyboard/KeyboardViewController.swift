@@ -118,47 +118,22 @@ class KeyboardViewController: UIInputViewController {
         self.updateKeyCaps(self.shiftState.uppercase())
     }
 
-    /*
-    BUG NOTE
-
-    For some strange reason, a layout pass of the entire keyboard is triggered
-    whenever a popup shows up, if one of the following is done:
-
-    a) The forwarding view uses an autoresizing mask.
-    b) The forwarding view has constraints set anywhere other than init.
-
-    On the other hand, setting (non-autoresizing) constraints or just setting the
-    frame in layoutSubviews works perfectly fine.
-
-    I don't really know what to make of this. Am I doing Autolayout wrong, is it
-    a bug, or is it expected behavior? Perhaps this has to do with the fact that
-    the view's frame is only ever explicitly modified when set directly in layoutSubviews,
-    and not implicitly modified by various Autolayout constraints
-    (even though it should really not be changing).
-    */
-
-    var constraintsAdded: Bool = false
     func setupLayout() {
-        if !constraintsAdded {
-            self.layout = KeyboardLayout(
-                model: self.keyboard,
-                superview: self.forwardingView,
-                layoutConstants: LayoutConstants.self, // TODO: why
-                darkMode: self.darkMode(),
-                solidColorMode: self.solidColorMode()
-            )
+        self.layout = KeyboardLayout(
+            model: self.keyboard,
+            superview: self.forwardingView,
+            layoutConstants: LayoutConstants.self, // TODO: why
+            darkMode: self.darkMode(),
+            solidColorMode: self.solidColorMode()
+        )
 
-            self.layout?.initialize()
-            self.setMode(0)
+        self.setMode(0)
 
-            self.updateKeyCaps(self.shiftState.uppercase())
-            self.setCapsIfNeeded()
+        self.updateKeyCaps(self.shiftState.uppercase())
+        self.setCapsIfNeeded()
 
-            self.updateAppearances(self.darkMode())
-            self.addInputTraitsObservers()
-
-            self.constraintsAdded = true
-        }
+        self.updateAppearances(self.darkMode())
+        self.addInputTraitsObservers()
     }
 
     // only available after frame becomes non-zero
@@ -176,8 +151,6 @@ class KeyboardViewController: UIInputViewController {
         if view.bounds == CGRect.zero {
             return
         }
-
-        self.setupLayout()
 
         let orientationSavvyBounds = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.heightForOrientation(self.orientation, withTopBanner: false))
 
@@ -202,24 +175,28 @@ class KeyboardViewController: UIInputViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        if let banner = createBanner() {
+            banner.isHidden = true
+            view.insertSubview(banner, belowSubview: forwardingView)
+            bannerView = banner
+        }
+        
+        let h = heightForOrientation(orientation, withTopBanner: true)
         
         heightConstraint = NSLayoutConstraint(
-            item: self.view,
+            item: view,
             attribute: .height,
             relatedBy: .equal,
             toItem: nil,
             attribute: .notAnAttribute,
             multiplier: 0.0,
-            constant: 50
+            constant: h
         )
         
         view.addConstraint(heightConstraint)
-
-        if let aBanner = self.createBanner() {
-            aBanner.isHidden = true
-            self.view.insertSubview(aBanner, belowSubview: self.forwardingView)
-            self.bannerView = aBanner
-        }
+        
+        setupLayout()
     }
 
     override func viewWillAppear(_ animated: Bool) {
