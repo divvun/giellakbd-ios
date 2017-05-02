@@ -275,15 +275,15 @@ class KeyboardViewController: UIInputViewController {
     //}
 
     func setSpaceLocalName(_ keyView: KeyboardKey) {
-        let ext = Bundle.main.infoDictionary?["NSExtension"] as! NSDictionary
-        let attrs = ext["NSExtensionAttributes"] as! NSDictionary
+        let ext = Bundle.main.infoDictionary?["NSExtension"] as! [String: Any]
+        let attrs = ext["NSExtensionAttributes"] as! [String: Any]
         let primaryLanguage = attrs["PrimaryLanguage"] as! String
-        var locale = Locale(identifier: primaryLanguage)
+        
+        let locale = Locale(identifier: primaryLanguage)
         var displayName = (locale as NSLocale).displayName(forKey: NSLocale.Key.identifier, value: primaryLanguage)?.capitalized
 
         if displayName == nil {
-            locale = Locale.current
-            displayName = (locale as NSLocale).displayName(forKey: NSLocale.Key.identifier, value: primaryLanguage)?.capitalized
+            displayName = (Locale.current as NSLocale).displayName(forKey: NSLocale.Key.identifier, value: primaryLanguage)?.capitalized
         }
 
         if displayName == nil {
@@ -294,9 +294,7 @@ class KeyboardViewController: UIInputViewController {
         keyView.label.text = displayName
     }
 
-    func changeSpaceName(_ sender: Timer) {
-        let keyView = sender.userInfo as! KeyboardKey
-
+    func changeSpaceName(_ keyView: KeyboardKey, completion: @escaping () -> Void) {
         setSpaceLocalName(keyView)
         keyView.label.alpha = 1
 
@@ -314,7 +312,9 @@ class KeyboardViewController: UIInputViewController {
 
                     UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
                         keyView.label.alpha = 1.0
-                    }, completion: nil)
+                    }, completion: { _ in
+                        completion()
+                    })
                 }
             )
 
@@ -331,52 +331,8 @@ class KeyboardViewController: UIInputViewController {
                 for key in rowKeys {
                     if let keyView = self.layout?.viewForKey(key) {
                         keyView.removeTarget(nil, action: nil, for: UIControlEvents.allEvents)
-
-                        switch key.type {
-                        case Key.KeyType.keyboardChange:
-                            keyView.addTarget(self, action: #selector(KeyboardViewController.advanceTapped(_:)), for: .touchUpInside)
-                        case Key.KeyType.keyboardHide:
-                            keyView.addTarget(self, action: #selector(UIInputViewController.dismissKeyboard), for: .touchUpInside)
-                        case Key.KeyType.backspace:
-                            let cancelEvents: UIControlEvents = [UIControlEvents.touchUpInside, UIControlEvents.touchUpInside, UIControlEvents.touchDragExit, UIControlEvents.touchUpOutside, UIControlEvents.touchCancel, UIControlEvents.touchDragOutside]
-
-                            keyView.addTarget(self, action: #selector(KeyboardViewController.backspaceDown(_:)), for: .touchDown)
-                            keyView.addTarget(self, action: #selector(KeyboardViewController.backspaceUp(_:)), for: cancelEvents)
-                        case Key.KeyType.shift:
-                            keyView.addTarget(self, action: #selector(KeyboardViewController.shiftDown(_:)), for: .touchDown)
-                            keyView.addTarget(self, action: #selector(KeyboardViewController.shiftUp(_:)), for: .touchUpInside)
-                            keyView.addTarget(self, action: #selector(KeyboardViewController.shiftDoubleTapped(_:)), for: .touchDownRepeat)
-                        case Key.KeyType.modeChange:
-                            keyView.addTarget(self, action: #selector(KeyboardViewController.modeChangeTapped(_:)), for: .touchDown)
-                        case Key.KeyType.settings:
-                            keyView.addTarget(self, action: #selector(KeyboardViewController.toggleSettings), for: .touchUpInside)
-                        case Key.KeyType.space:
-                            if nameChangeTimer == nil {
-                                keyView.label.alpha = 0
-                                nameChangeTimer = Timer.scheduledTimer(timeInterval: 0, target: self, selector: #selector(KeyboardViewController.changeSpaceName(_:)), userInfo: keyView, repeats: false)
-                            }
-                        default:
-                            break
-                        }
-
-                        if key.isCharacter {
-                            if UIDevice.current.userInterfaceIdiom != UIUserInterfaceIdiom.pad {
-                                keyView.addTarget(self, action: #selector(KeyboardViewController.showPopup(_:)), for: [.touchDown, .touchDragInside, .touchDragEnter])
-                                keyView.addTarget(keyView, action: Selector(("hidePopup")), for: [.touchDragExit, .touchCancel])
-                                keyView.addTarget(self, action: #selector(KeyboardViewController.hidePopupDelay(_:)), for: [.touchUpInside, .touchUpOutside, .touchDragOutside])
-                            }
-                        }
-
-                        if key.hasOutput {
-                            keyView.addTarget(self, action: #selector(KeyboardViewController.keyPressedHelper(_:)), for: .touchUpInside)
-                        }
-
-                        if key.type != Key.KeyType.shift && key.type != Key.KeyType.modeChange {
-                            keyView.addTarget(self, action: #selector(KeyboardViewController.highlightKey(_:)), for: [.touchDown, .touchDragInside, .touchDragEnter])
-                            keyView.addTarget(self, action: #selector(KeyboardViewController.unHighlightKey(_:)), for: [.touchUpInside, .touchUpOutside, .touchDragOutside, .touchDragExit, .touchCancel])
-                        }
-
-                        keyView.addTarget(self, action: #selector(KeyboardViewController.playKeySound), for: .touchDown)
+                        
+                        key.bind(view: keyView, target: self)
                     }
                 }
             }

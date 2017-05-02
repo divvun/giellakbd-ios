@@ -451,20 +451,20 @@ class GiellaBanner: ExtraView {
 func defaultControls(_ defaultKeyboard: Keyboard, definition def: KeyboardDefinition) -> Keyboard {
     let isPad = UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad
 
-    let backspace = Key(.backspace)
+    let backspace = BackspaceKey()
 
-    let keyModeChangeNumbers = Key(.modeChange)
+    let keyModeChangeNumbers = ModeChangeKey()
     keyModeChangeNumbers.uppercaseKeyCap = isPad ? ".?123" : "123"
     keyModeChangeNumbers.toMode = 1
     defaultKeyboard.addKey(keyModeChangeNumbers, row: 3, page: 0)
 
-    let keyboardChange = Key(.keyboardChange)
+    let keyboardChange = ChangeKey()
     defaultKeyboard.addKey(keyboardChange, row: 3, page: 0)
 
-    let settings = Key(.settings)
+    let settings = SettingsKey()
     defaultKeyboard.addKey(settings, row: 3, page: 0)
 
-    let space = Key(.space)
+    let space = SpaceKey()
     space.uppercaseKeyCap = def.space
     space.uppercaseOutput = " "
     space.lowercaseOutput = " "
@@ -477,7 +477,7 @@ func defaultControls(_ defaultKeyboard: Keyboard, definition def: KeyboardDefini
     defaultKeyboard.addKey(isPad ? Key(keyModeChangeNumbers) : returnKey, row: 3, page: 0)
 
     if isPad {
-        let hideKey = Key(.keyboardHide)
+        let hideKey = HideKey()
         hideKey.uppercaseKeyCap = "⥥"
         defaultKeyboard.addKey(hideKey, row: 3, page: 0)
     }
@@ -494,7 +494,7 @@ func defaultControls(_ defaultKeyboard: Keyboard, definition def: KeyboardDefini
         defaultKeyboard.addKey(keyModel, row: 1, page: 1)
     }
 
-    let keyModeChangeSpecialCharacters = Key(.modeChange)
+    let keyModeChangeSpecialCharacters = ModeChangeKey()
     keyModeChangeSpecialCharacters.uppercaseKeyCap = "#+="
     keyModeChangeSpecialCharacters.toMode = 2
     defaultKeyboard.addKey(keyModeChangeSpecialCharacters, row: 2, page: 1)
@@ -505,18 +505,16 @@ func defaultControls(_ defaultKeyboard: Keyboard, definition def: KeyboardDefini
         defaultKeyboard.addKey(keyModel, row: 2, page: 1)
     }
 
-    defaultKeyboard.addKey(Key(backspace), row: 2, page: 1)
+    defaultKeyboard.addKey(BackspaceKey(), row: 2, page: 1)
 
-    let keyModeChangeLetters = Key(.modeChange)
-    keyModeChangeLetters.uppercaseKeyCap = "ABC"
-    keyModeChangeLetters.toMode = 0
+    let keyModeChangeLetters = ModeChangeKey()
     defaultKeyboard.addKey(keyModeChangeLetters, row: 3, page: 1)
 
-    defaultKeyboard.addKey(Key(keyboardChange), row: 3, page: 1)
+    defaultKeyboard.addKey(ChangeKey(), row: 3, page: 1)
 
-    defaultKeyboard.addKey(Key(settings), row: 3, page: 1)
+    defaultKeyboard.addKey(SettingsKey(), row: 3, page: 1)
 
-    defaultKeyboard.addKey(Key(space), row: 3, page: 1)
+    defaultKeyboard.addKey(SpaceKey(), row: 3, page: 1)
 
     defaultKeyboard.addKey(Key(returnKey), row: 3, page: 1)
 
@@ -532,7 +530,7 @@ func defaultControls(_ defaultKeyboard: Keyboard, definition def: KeyboardDefini
         defaultKeyboard.addKey(keyModel, row: 1, page: 2)
     }
 
-    defaultKeyboard.addKey(Key(keyModeChangeNumbers), row: 2, page: 2)
+    defaultKeyboard.addKey(ModeChangeKey(cap: "123", mode: 1), row: 2, page: 2)
 
     for key in [".", ",", "?", "!", "'"] {
         let keyModel = Key(.specialCharacter)
@@ -540,15 +538,15 @@ func defaultControls(_ defaultKeyboard: Keyboard, definition def: KeyboardDefini
         defaultKeyboard.addKey(keyModel, row: 2, page: 2)
     }
 
-    defaultKeyboard.addKey(Key(backspace), row: 2, page: 2)
+    defaultKeyboard.addKey(BackspaceKey(), row: 2, page: 2)
 
-    defaultKeyboard.addKey(Key(keyModeChangeLetters), row: 3, page: 2)
+    defaultKeyboard.addKey(ModeChangeKey(), row: 3, page: 2)
 
-    defaultKeyboard.addKey(Key(keyboardChange), row: 3, page: 2)
+    defaultKeyboard.addKey(ChangeKey(), row: 3, page: 2)
 
-    defaultKeyboard.addKey(Key(settings), row: 3, page: 2)
+    defaultKeyboard.addKey(SettingsKey(), row: 3, page: 2)
 
-    defaultKeyboard.addKey(Key(space), row: 3, page: 2)
+    defaultKeyboard.addKey(SpaceKey(), row: 3, page: 2)
 
     defaultKeyboard.addKey(Key(returnKey), row: 3, page: 2)
 

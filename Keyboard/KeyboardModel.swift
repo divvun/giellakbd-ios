@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 var counter = 0
 
@@ -63,6 +64,108 @@ class Page {
     }
 }
 
+class ModeChangeKey: Key {
+    init(cap: String = "ABC", mode: Int = 0) {
+        super.init(.modeChange)
+        
+        uppercaseKeyCap = cap
+        toMode = mode
+    }
+    
+    override func bind(view: KeyboardKey, target: KeyboardViewController) {
+        // super.bind(view: view, target: target)
+        
+        view.addTarget(target, action: #selector(KeyboardViewController.modeChangeTapped(_:)), for: .touchDown)
+    }
+}
+
+class SettingsKey: Key {
+    init() {
+        super.init(.settings)
+    }
+    
+    override func bind(view: KeyboardKey, target: KeyboardViewController) {
+        super.bind(view: view, target: target)
+        
+        view.addTarget(target, action: #selector(KeyboardViewController.toggleSettings), for: .touchUpInside)
+    }
+}
+
+class ShiftKey: Key {
+    init() {
+        super.init(.shift)
+    }
+    
+    override func bind(view: KeyboardKey, target: KeyboardViewController) {
+        // super.bind(view: view, target: target)
+        
+        view.addTarget(target, action: #selector(KeyboardViewController.shiftDown(_:)), for: .touchDown)
+        view.addTarget(target, action: #selector(KeyboardViewController.shiftUp(_:)), for: .touchUpInside)
+        view.addTarget(target, action: #selector(KeyboardViewController.shiftDoubleTapped(_:)), for: .touchDownRepeat)
+    }
+}
+
+class SpaceKey: Key {
+    init() {
+        super.init(.space)
+    }
+    
+    var isChanging = false
+    
+    override func bind(view: KeyboardKey, target: KeyboardViewController) {
+        super.bind(view: view, target: target)
+        
+        if isChanging {
+            return
+        }
+        
+        isChanging = true
+        
+        target.changeSpaceName(view, completion: { [weak self] in
+          self?.isChanging = false
+        })
+    }
+}
+
+class ChangeKey: Key {
+    init() {
+        super.init(.keyboardChange)
+    }
+    
+    override func bind(view: KeyboardKey, target: KeyboardViewController) {
+        super.bind(view: view, target: target)
+        
+        view.addTarget(target, action: #selector(KeyboardViewController.advanceTapped(_:)), for: .touchUpInside)
+    }
+}
+
+class HideKey: Key {
+    init() {
+        super.init(.keyboardHide)
+    }
+    
+    override func bind(view: KeyboardKey, target: KeyboardViewController) {
+        super.bind(view: view, target: target)
+        
+        view.addTarget(target, action: #selector(UIInputViewController.dismissKeyboard), for: .touchUpInside)
+    }
+}
+
+class BackspaceKey: Key {
+    init() {
+        super.init(.backspace)
+    }
+    
+    override func bind(view: KeyboardKey, target: KeyboardViewController) {
+        super.bind(view: view, target: target)
+        
+        let cancelEvents: UIControlEvents = [UIControlEvents.touchUpInside, UIControlEvents.touchUpInside, UIControlEvents.touchDragExit, UIControlEvents.touchUpOutside, UIControlEvents.touchCancel, UIControlEvents.touchDragOutside]
+        
+        view.addTarget(target, action: #selector(KeyboardViewController.backspaceDown(_:)), for: .touchDown)
+        view.addTarget(target, action: #selector(KeyboardViewController.backspaceUp(_:)), for: cancelEvents)
+    }
+}
+
 class Key: Hashable {
     enum KeyType {
         case character
@@ -87,6 +190,23 @@ class Key: Hashable {
     var uppercaseLongPressOutput: [String]?
     var lowercaseLongPressOutput: [String]?
     var toMode: Int? //if the key is a mode button, this indicates which page it links to
+    
+    func bind(view: KeyboardKey, target: KeyboardViewController) {
+        if isCharacter && UIDevice.current.userInterfaceIdiom != UIUserInterfaceIdiom.pad {
+            view.addTarget(target, action: #selector(KeyboardViewController.showPopup(_:)), for: [.touchDown, .touchDragInside, .touchDragEnter])
+            // TODO ensure this works, target was view before.
+            view.addTarget(target, action: #selector(KeyboardViewController.hidePopup(_:)), for: [.touchDragExit, .touchCancel])
+            view.addTarget(target, action: #selector(KeyboardViewController.hidePopupDelay(_:)), for: [.touchUpInside, .touchUpOutside, .touchDragOutside])
+        }
+        
+        if hasOutput {
+            view.addTarget(target, action: #selector(KeyboardViewController.keyPressedHelper(_:)), for: .touchUpInside)
+        }
+        
+        view.addTarget(target, action: #selector(KeyboardViewController.highlightKey(_:)), for: [.touchDown, .touchDragInside, .touchDragEnter])
+        view.addTarget(target, action: #selector(KeyboardViewController.unHighlightKey(_:)), for: [.touchUpInside, .touchUpOutside, .touchDragOutside, .touchDragExit, .touchCancel])
+        view.addTarget(target, action: #selector(KeyboardViewController.playKeySound), for: .touchDown)
+    }
     
     var isCharacter: Bool {
         get {

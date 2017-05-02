@@ -23,7 +23,7 @@ func selectedKeyboard(index: Int) -> Keyboard {
     
     let isPad = UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad
     
-    defaultKeyboard.addKey(Key(.shift), row: 2, page: 0)
+    defaultKeyboard.addKey(ShiftKey(), row: 2, page: 0)
     
     let def = KeyboardDefinition.definitions[index]
     
@@ -32,7 +32,7 @@ func selectedKeyboard(index: Int) -> Keyboard {
     addKeyRow(defaultKeyboard, definition: def, row: 2)
     
     if isPad {
-        defaultKeyboard.addKey(Key(.backspace), row: 0, page: 0)
+        defaultKeyboard.addKey(BackspaceKey(), row: 0, page: 0)
         let returnKey = Key(.return)
         returnKey.uppercaseKeyCap = def.enter
         returnKey.uppercaseOutput = "\n"
@@ -51,7 +51,7 @@ func selectedKeyboard(index: Int) -> Keyboard {
         periodKey.lowercaseOutput = "."
         defaultKeyboard.addKey(periodKey, row: 2, page: 0)
         
-        defaultKeyboard.addKey(Key(.shift), row: 2, page: 0)
+        defaultKeyboard.addKey(ShiftKey(), row: 2, page: 0)
     } else {
         /*
         let commaKey = Key(.SpecialCharacter)
@@ -66,7 +66,7 @@ func selectedKeyboard(index: Int) -> Keyboard {
         periodKey.lowercaseOutput = "."
         defaultKeyboard.addKey(periodKey, row: 2, page: 0)
         */
-        defaultKeyboard.addKey(Key(.backspace), row: 2, page: 0)
+        defaultKeyboard.addKey(BackspaceKey(), row: 2, page: 0)
     }
     
     return defaultControls(defaultKeyboard, definition: def)
