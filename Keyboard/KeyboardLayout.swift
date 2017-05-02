@@ -205,25 +205,17 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
 
     var darkMode: Bool
     var solidColorMode: Bool
-    var initialized: Bool
-
+    
     required init(model: Keyboard, superview: UIView, layoutConstants: LayoutConstants.Type, darkMode: Bool, solidColorMode: Bool) {
         self.layoutConstants = layoutConstants
 
-        self.initialized = false
         self.model = model
         self.superview = superview
 
         self.darkMode = darkMode
         self.solidColorMode = solidColorMode
     }
-
-    // TODO: remove this method
-    func initialize() {
-        assert(!self.initialized, "already initialized")
-        self.initialized = true
-    }
-
+    
     func viewForKey(_ model: Key) -> KeyboardKey? {
         return self.modelToView[model]
     }
