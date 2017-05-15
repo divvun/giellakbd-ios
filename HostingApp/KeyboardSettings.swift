@@ -15,4 +15,14 @@ class KeyboardSettings {
         get { return defaults.integer(forKey: "currentKeyboard") }
         set { defaults.set(newValue, forKey: "currentKeyboard") }
     }
+    
+    static var languageCode: String {
+        get { return defaults.string(forKey: "language") ?? Locale.current.languageCode! }
+        set { defaults.set(newValue, forKey: "language") }
+    }
+    
+    static var firstLoad: Bool {
+        get { return defaults.object(forKey: "firstLoad") as? Bool ?? true }
+        set { defaults.set(newValue, forKey: "firstLoad") }
+    }
 }

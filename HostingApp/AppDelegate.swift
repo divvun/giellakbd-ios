@@ -8,30 +8,69 @@
 
 import UIKit
 
+class AppNavControllerDelegate: NSObject, UINavigationControllerDelegate {
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        viewController.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        
+        if viewController is HideNavBar {
+            navigationController.setNavigationBarHidden(true, animated: true)
+        } else {
+            navigationController.setNavigationBarHidden(false, animated: true)
+        }
+    }
+    
+    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        
+        toVC.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        
+        return nil
+    }
+}
+
+let str1 = "containing"
+let str2 = "Bundle"
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     static weak var instance: AppDelegate!
                             
     var window: UIWindow?
     var wantsKeyboardList = false
+    
+    let nc = UINavigationController(rootViewController: HomeController())
+    let ncDelegate = AppNavControllerDelegate()
+    
+    var isKeyboardEnabled: Bool {
+        let x: [Bundle] = UITextInputMode.activeInputModes.flatMap({
+            let s = str1 + str2
+            
+            let v = $0.perform(Selector(s))
+            if let x = v?.takeRetainedValue() as? Bundle {
+                return x
+            }
+            
+            return nil
+        })
+        
+        return x.contains(Bundle.main)
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         AppDelegate.instance = self
-        // Override point for customization after application launch.
-        /*
-        let zhfst = ZHFSTOSpeller()
-        let path = "\(NSBundle.mainBundle().pathForResource("dicts", ofType: "bundle")!)/se.zhfst"
-        NSLog("%@", path)
-        zhfst.readZhfst(path, tempDir: NSTemporaryDirectory())
-        zhfst.setQueueLimit(3)
         
-        let suggs = zhfst.suggest("nuvviDspeller");
+        Strings.languageCode = KeyboardSettings.languageCode
         
-        for pair in suggs {
-            NSLog("%@ %@", pair.first as! NSString, pair.second as! NSNumber);
+        nc.delegate = ncDelegate
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window!.rootViewController = nc
+        window!.makeKeyAndVisible()
+        
+        if !isKeyboardEnabled && KeyboardSettings.firstLoad {
+            KeyboardSettings.firstLoad = false
+            nc.pushViewController(InstructionsController(), animated: false)
         }
-        */
-        
+
         if let url = launchOptions?[UIApplicationLaunchOptionsKey.url] {
             let url = url as! URL
             
@@ -58,12 +97,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func parseUrl(_ url: URL) {
         if url.scheme == "giellakbd" && url.host == "settings" {
-            wantsKeyboardList = true
+            nc.pushViewController(LayoutsController(), animated: true)
         }
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        
         parseUrl(url)
         return true
     }

@@ -193,10 +193,6 @@ class KeyboardViewController: UIInputViewController {
             multiplier: 0.0,
             constant: h
         )
-        
-        view.addConstraint(heightConstraint)
-        
-        setupLayout()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -205,6 +201,18 @@ class KeyboardViewController: UIInputViewController {
         self.bannerView?.isHidden = false
         
         self.heightConstraint.constant = self.heightForOrientation(self.orientation, withTopBanner: true)
+        
+        view.addConstraint(heightConstraint)
+        
+        setupLayout()
+        
+        view.setNeedsUpdateConstraints()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        view.removeConstraints(view.constraints)
     }
     
     var orientation: UIInterfaceOrientation {
@@ -397,7 +405,7 @@ class KeyboardViewController: UIInputViewController {
     func hideLongPress() {
         self.longPressTimer = nil
         self.lastKey = nil
-        self.longPressTriggered = false;
+        self.longPressTriggered = false
     }
 
     func hidePopup(_ sender: KeyboardKey) {

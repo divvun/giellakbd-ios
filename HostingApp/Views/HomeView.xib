@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeView" customModule="HostingApp" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="HomeView" customModule="HostingApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" alpha="0.050000000000000003" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="XcZ-sF-8KW">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Template Keyboard" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2eI-bM-tyI">
+                    <rect key="frame" x="16" y="40" width="343" height="23"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="9Ne-rM-V7i">
+                    <rect key="frame" x="96" y="249.5" width="183" height="168"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="cp8-Sb-uRL">
+                            <rect key="frame" x="0.0" y="0.0" width="183" height="30"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yo2-5r-bvG">
+                                    <rect key="frame" x="0.0" y="0.0" width="183" height="30"/>
+                                    <state key="normal" title="Set Up Template Keyboard"/>
+                                </button>
+                            </subviews>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="5Ej-CW-Ost">
+                            <rect key="frame" x="57.5" y="62" width="68" height="106"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bA9-vt-xCz">
+                                    <rect key="frame" x="7" y="0.0" width="54" height="30"/>
+                                    <state key="normal" title="Layouts"/>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hbp-9L-UVs">
+                                    <rect key="frame" x="0.0" y="38" width="68" height="30"/>
+                                    <state key="normal" title="Language"/>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M5j-fy-oAt">
+                                    <rect key="frame" x="13" y="76" width="42" height="30"/>
+                                    <state key="normal" title="About"/>
+                                </button>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="XcZ-sF-8KW" secondAttribute="bottom" id="7LC-RW-oPx"/>
+                <constraint firstAttribute="trailing" secondItem="XcZ-sF-8KW" secondAttribute="trailing" id="AKC-Kj-7qe"/>
+                <constraint firstAttribute="trailing" secondItem="2eI-bM-tyI" secondAttribute="trailing" constant="16" id="BJq-Gg-trx"/>
+                <constraint firstItem="XcZ-sF-8KW" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="INm-Dh-Ofa"/>
+                <constraint firstItem="9Ne-rM-V7i" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="QR3-Ny-Si6"/>
+                <constraint firstItem="2eI-bM-tyI" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="40" id="a00-NW-IUm"/>
+                <constraint firstItem="2eI-bM-tyI" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="e4N-0V-UBI"/>
+                <constraint firstItem="9Ne-rM-V7i" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="nmK-AZ-SpL"/>
+                <constraint firstItem="XcZ-sF-8KW" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="qF0-1l-R6b"/>
+            </constraints>
+            <connections>
+                <outlet property="aboutButton" destination="M5j-fy-oAt" id="Paa-lf-56D"/>
+                <outlet property="bgImage" destination="XcZ-sF-8KW" id="VXp-WU-abf"/>
+                <outlet property="configStack" destination="cp8-Sb-uRL" id="A7E-3o-rTp"/>
+                <outlet property="helpButton" destination="yo2-5r-bvG" id="dm0-v0-Hl1"/>
+                <outlet property="langButton" destination="Hbp-9L-UVs" id="Zhc-5V-1Jz"/>
+                <outlet property="layoutsButton" destination="bA9-vt-xCz" id="1Gd-TH-grp"/>
+                <outlet property="titleLabel" destination="2eI-bM-tyI" id="cBJ-Rp-SQH"/>
+            </connections>
+            <point key="canvasLocation" x="33.5" y="53.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="Background.jpg" width="1936" height="1936"/>
+    </resources>
+</document>
