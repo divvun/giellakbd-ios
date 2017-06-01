@@ -42,6 +42,7 @@
 		C6A3905C1EB61BF8009378C1 /* KeyboardSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A3905A1EB61BF8009378C1 /* KeyboardSettings.swift */; };
 		C6A3905D1EB61C9D009378C1 /* KeyboardDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DCFDD51EB0787A00FABC11 /* KeyboardDefinition.swift */; };
 		C6A568E219FA286500C8E119 /* GiellaKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A568E119FA286500C8E119 /* GiellaKeyboard.swift */; };
+		C6B638441EDF81B200A6ECB2 /* SimpleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B638431EDF81B200A6ECB2 /* SimpleButton.swift */; };
 		C6BC98AC1A0A44D200DCB420 /* GeneratedKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BC98AB1A0A44D200DCB420 /* GeneratedKeyboard.swift */; };
 		C6C7BD4E1EB064A3007E6785 /* ColorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6C7BD4D1EB064A3007E6785 /* ColorTheme.swift */; };
 		C6DCFDD41EB070BC00FABC11 /* KeyboardDefinitions.json in Resources */ = {isa = PBXBuildFile; fileRef = C6DCFDD21EB070B500FABC11 /* KeyboardDefinitions.json */; };
@@ -142,6 +143,7 @@
 		C6A568E119FA286500C8E119 /* GiellaKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiellaKeyboard.swift; sourceTree = "<group>"; };
 		C6AEFD7B1EB0F5EA00316A2B /* Keyboard.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Keyboard.entitlements; sourceTree = "<group>"; };
 		C6AEFD7C1EB0F5F000316A2B /* HostingApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HostingApp.entitlements; sourceTree = "<group>"; };
+		C6B638431EDF81B200A6ECB2 /* SimpleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleButton.swift; sourceTree = "<group>"; };
 		C6BC98AB1A0A44D200DCB420 /* GeneratedKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratedKeyboard.swift; sourceTree = "<group>"; };
 		C6C7BD4D1EB064A3007E6785 /* ColorTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ColorTheme.swift; path = Models/ColorTheme.swift; sourceTree = "<group>"; };
 		C6D304A61BFD73750023EC5F /* Keyboard-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Keyboard-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 		4E807D9619461D9000D875D1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C6B638421EDF819300A6ECB2 /* Dependencies */,
 				C6974E601A31557A00D1A0B3 /* Background.jpg */,
 				C6AEFD7C1EB0F5F000316A2B /* HostingApp.entitlements */,
 				4EF16F9319D255030076AFCB /* Images.xcassets */,
@@ -302,6 +305,14 @@
 				C65430B11EC94BD1007FC053 /* InstructionsView.xib */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		C6B638421EDF819300A6ECB2 /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				C6B638431EDF81B200A6ECB2 /* SimpleButton.swift */,
+			);
+			path = Dependencies;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -431,6 +442,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C676AD5B1EC9679000523FF3 /* InstructionsController.swift in Sources */,
+				C6B638441EDF81B200A6ECB2 /* SimpleButton.swift in Sources */,
 				C655E8541EC5551100B12BE4 /* Extensions.swift in Sources */,
 				C65430B41EC94BF0007FC053 /* LanguagesController.swift in Sources */,
 				C65430B01EC94BC7007FC053 /* InstructionsView.swift in Sources */,

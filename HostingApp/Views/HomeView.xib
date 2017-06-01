@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -15,7 +15,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" alpha="0.050000000000000003" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="XcZ-sF-8KW">
+                <imageView userInteractionEnabled="NO" alpha="0.10000000000000001" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="XcZ-sF-8KW">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Template Keyboard" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2eI-bM-tyI">
@@ -24,40 +24,52 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="9Ne-rM-V7i">
-                    <rect key="frame" x="96" y="249.5" width="183" height="168"/>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="9Ne-rM-V7i">
+                    <rect key="frame" x="59.5" y="227.5" width="256" height="212"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="cp8-Sb-uRL">
-                            <rect key="frame" x="0.0" y="0.0" width="183" height="30"/>
+                            <rect key="frame" x="0.0" y="0.0" width="256" height="38"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yo2-5r-bvG">
-                                    <rect key="frame" x="0.0" y="0.0" width="183" height="30"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yo2-5r-bvG" customClass="HomePrimaryButton" customModule="HostingApp" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="256" height="38"/>
+                                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                     <state key="normal" title="Set Up Template Keyboard"/>
                                 </button>
                             </subviews>
                         </stackView>
-                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="5Ej-CW-Ost">
-                            <rect key="frame" x="57.5" y="62" width="68" height="106"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="5Ej-CW-Ost">
+                            <rect key="frame" x="0.0" y="70" width="256" height="142"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bA9-vt-xCz">
-                                    <rect key="frame" x="7" y="0.0" width="54" height="30"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bA9-vt-xCz" customClass="HomeMenuButton" customModule="HostingApp" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="256" height="38"/>
+                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                     <state key="normal" title="Layouts"/>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hbp-9L-UVs">
-                                    <rect key="frame" x="0.0" y="38" width="68" height="30"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hbp-9L-UVs" customClass="HomeMenuButton" customModule="HostingApp" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="52" width="256" height="38"/>
+                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                     <state key="normal" title="Language"/>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M5j-fy-oAt">
-                                    <rect key="frame" x="13" y="76" width="42" height="30"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M5j-fy-oAt" customClass="HomeMenuButton" customModule="HostingApp" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="104" width="256" height="38"/>
+                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                     <state key="normal" title="About"/>
                                 </button>
                             </subviews>
                         </stackView>
                     </subviews>
+                    <constraints>
+                        <constraint firstAttribute="width" priority="750" constant="256" id="VQv-C8-ykO"/>
+                    </constraints>
                 </stackView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="9Ne-rM-V7i" secondAttribute="trailing" constant="32" id="72i-ux-WKo"/>
                 <constraint firstAttribute="bottom" secondItem="XcZ-sF-8KW" secondAttribute="bottom" id="7LC-RW-oPx"/>
                 <constraint firstAttribute="trailing" secondItem="XcZ-sF-8KW" secondAttribute="trailing" id="AKC-Kj-7qe"/>
                 <constraint firstAttribute="trailing" secondItem="2eI-bM-tyI" secondAttribute="trailing" constant="16" id="BJq-Gg-trx"/>
@@ -65,8 +77,9 @@
                 <constraint firstItem="9Ne-rM-V7i" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="QR3-Ny-Si6"/>
                 <constraint firstItem="2eI-bM-tyI" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="40" id="a00-NW-IUm"/>
                 <constraint firstItem="2eI-bM-tyI" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="e4N-0V-UBI"/>
-                <constraint firstItem="9Ne-rM-V7i" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="nmK-AZ-SpL"/>
                 <constraint firstItem="XcZ-sF-8KW" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="qF0-1l-R6b"/>
+                <constraint firstItem="9Ne-rM-V7i" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="leading" constant="32" id="vnU-WV-Nbf"/>
+                <constraint firstItem="9Ne-rM-V7i" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" priority="750" id="z0G-GL-ydC"/>
             </constraints>
             <connections>
                 <outlet property="aboutButton" destination="M5j-fy-oAt" id="Paa-lf-56D"/>
