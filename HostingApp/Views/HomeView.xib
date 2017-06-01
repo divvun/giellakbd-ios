@@ -18,17 +18,17 @@
                 <imageView userInteractionEnabled="NO" alpha="0.10000000000000001" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="XcZ-sF-8KW">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Template Keyboard" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2eI-bM-tyI">
-                    <rect key="frame" x="16" y="40" width="343" height="23"/>
-                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="9Ne-rM-V7i">
-                    <rect key="frame" x="59.5" y="227.5" width="256" height="212"/>
+                    <rect key="frame" x="59.5" y="200" width="256" height="267"/>
                     <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Template Keyboard" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2eI-bM-tyI">
+                            <rect key="frame" x="0.0" y="0.0" width="256" height="23"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="cp8-Sb-uRL">
-                            <rect key="frame" x="0.0" y="0.0" width="256" height="38"/>
+                            <rect key="frame" x="0.0" y="55" width="256" height="38"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yo2-5r-bvG" customClass="HomePrimaryButton" customModule="HostingApp" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="256" height="38"/>
@@ -39,7 +39,7 @@
                             </subviews>
                         </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="5Ej-CW-Ost">
-                            <rect key="frame" x="0.0" y="70" width="256" height="142"/>
+                            <rect key="frame" x="0.0" y="125" width="256" height="142"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bA9-vt-xCz" customClass="HomeMenuButton" customModule="HostingApp" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="256" height="38"/>
@@ -72,11 +72,8 @@
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="9Ne-rM-V7i" secondAttribute="trailing" constant="32" id="72i-ux-WKo"/>
                 <constraint firstAttribute="bottom" secondItem="XcZ-sF-8KW" secondAttribute="bottom" id="7LC-RW-oPx"/>
                 <constraint firstAttribute="trailing" secondItem="XcZ-sF-8KW" secondAttribute="trailing" id="AKC-Kj-7qe"/>
-                <constraint firstAttribute="trailing" secondItem="2eI-bM-tyI" secondAttribute="trailing" constant="16" id="BJq-Gg-trx"/>
                 <constraint firstItem="XcZ-sF-8KW" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="INm-Dh-Ofa"/>
                 <constraint firstItem="9Ne-rM-V7i" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="QR3-Ny-Si6"/>
-                <constraint firstItem="2eI-bM-tyI" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="40" id="a00-NW-IUm"/>
-                <constraint firstItem="2eI-bM-tyI" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="e4N-0V-UBI"/>
                 <constraint firstItem="XcZ-sF-8KW" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="qF0-1l-R6b"/>
                 <constraint firstItem="9Ne-rM-V7i" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="leading" constant="32" id="vnU-WV-Nbf"/>
                 <constraint firstItem="9Ne-rM-V7i" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" priority="750" id="z0G-GL-ydC"/>
