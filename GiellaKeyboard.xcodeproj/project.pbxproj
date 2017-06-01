@@ -36,6 +36,8 @@
 		C676AD5B1EC9679000523FF3 /* InstructionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C676AD5A1EC9679000523FF3 /* InstructionsController.swift */; };
 		C676AD5F1EC985EB00523FF3 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C676AD5E1EC985EB00523FF3 /* Strings.swift */; };
 		C6974E611A31557A00D1A0B3 /* Background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C6974E601A31557A00D1A0B3 /* Background.jpg */; };
+		C6A2E01D1EDFA259006BAB69 /* AboutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6A2E01C1EDFA259006BAB69 /* AboutView.xib */; };
+		C6A2E01F1EDFAAA2006BAB69 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A2E01E1EDFAAA2006BAB69 /* AboutView.swift */; };
 		C6A3905B1EB61BF8009378C1 /* KeyboardSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A3905A1EB61BF8009378C1 /* KeyboardSettings.swift */; };
 		C6A3905C1EB61BF8009378C1 /* KeyboardSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A3905A1EB61BF8009378C1 /* KeyboardSettings.swift */; };
 		C6A3905D1EB61C9D009378C1 /* KeyboardDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DCFDD51EB0787A00FABC11 /* KeyboardDefinition.swift */; };
@@ -136,6 +138,8 @@
 		C676AD601EC986F000523FF3 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = HostingApp/nb.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C676AD611EC986FA00523FF3 /* se */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = se; path = HostingApp/se.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C6974E601A31557A00D1A0B3 /* Background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Background.jpg; sourceTree = "<group>"; };
+		C6A2E01C1EDFA259006BAB69 /* AboutView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutView.xib; sourceTree = "<group>"; };
+		C6A2E01E1EDFAAA2006BAB69 /* AboutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		C6A3905A1EB61BF8009378C1 /* KeyboardSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardSettings.swift; sourceTree = "<group>"; };
 		C6A568E119FA286500C8E119 /* GiellaKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiellaKeyboard.swift; sourceTree = "<group>"; };
 		C6AEFD7B1EB0F5EA00316A2B /* Keyboard.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Keyboard.entitlements; sourceTree = "<group>"; };
@@ -296,6 +300,8 @@
 		C6A969D71EB6126100A1143E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				C6A2E01E1EDFAAA2006BAB69 /* AboutView.swift */,
+				C6A2E01C1EDFA259006BAB69 /* AboutView.xib */,
 				C655E8551EC5559200B12BE4 /* HomeView.swift */,
 				C655E8571EC5559E00B12BE4 /* HomeView.xib */,
 				C65430AF1EC94BC7007FC053 /* InstructionsView.swift */,
@@ -414,6 +420,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4EF16F9619D255030076AFCB /* Images.xcassets in Resources */,
+				C6A2E01D1EDFA259006BAB69 /* AboutView.xib in Resources */,
 				C655E85D1EC55D0800B12BE4 /* Localizable.strings in Resources */,
 				C6DCFDD41EB070BC00FABC11 /* KeyboardDefinitions.json in Resources */,
 				C6974E611A31557A00D1A0B3 /* Background.jpg in Resources */,
@@ -445,6 +452,7 @@
 				4EF16F9B19D2550D0076AFCB /* AppDelegate.swift in Sources */,
 				C676AD5F1EC985EB00523FF3 /* Strings.swift in Sources */,
 				C655E85A1EC558D000B12BE4 /* HomeController.swift in Sources */,
+				C6A2E01F1EDFAAA2006BAB69 /* AboutView.swift in Sources */,
 				C6A3905D1EB61C9D009378C1 /* KeyboardDefinition.swift in Sources */,
 				C655E8561EC5559200B12BE4 /* HomeView.swift in Sources */,
 				C6A3905B1EB61BF8009378C1 /* KeyboardSettings.swift in Sources */,

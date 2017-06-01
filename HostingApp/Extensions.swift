@@ -78,6 +78,27 @@ extension Strings {
         return attr
     }
     
+    static func creditWithUrls() -> NSAttributedString {
+        let string: NSString = "SimpleButton © Andreas Tinoco Lobo\nTap icon © Icons8\nLanguage icon © Icons8"
+        
+        let simpleUrl = "https://github.com/aloco/SimpleButton"
+        let languageUrl = "https://icons8.com/icon/25628/language"
+        let tapUrl = "https://icons8.com/icon/8099/tap-filled"
+        
+        let attrString = NSMutableAttributedString(string: string as String)
+        
+        let range1 = string.range(of: "SimpleButton")
+        let range2 = string.range(of: "Tap icon")
+        let range3 = string.range(of: "Language icon")
+        
+        attrString.addAttribute(NSLinkAttributeName, value: simpleUrl, range: range1)
+        attrString.addAttribute(NSLinkAttributeName, value: tapUrl, range: range2)
+        attrString.addAttribute(NSLinkAttributeName, value: languageUrl, range: range3)
+        attrString.addAttribute(NSFontAttributeName, value: UIFont.systemFont(ofSize: 15), range: string.range(of: string as String))
+        
+        return attrString
+    }
+    
     static func openApp(item: String, size: CGFloat = 15) -> NSAttributedString {
         let plain = Strings.openAppPlain(item: item)
         return bolden(string: plain, item: item, size: size)
