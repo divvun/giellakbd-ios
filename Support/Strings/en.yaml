@@ -19,8 +19,14 @@ language: Language
 # Original: Layouts
 layouts: Layouts
 
+# Original: Kildin Sami
+locale_sjd: Kildin Sami
+
 # Original: Open the {item} app
 openAppPlain: 'Open the {item} app'
+
+# Original: Open Settings
+openSettings: Open Settings
 
 # Original: Save
 save: Save
@@ -33,9 +39,6 @@ settingUp: Setting Up
 
 # Original: Settings
 settings: Settings
-
-# Original: Kildin Sami
-sjd: Kildin Sami
 
 # Original: Skip
 skip: Skip
