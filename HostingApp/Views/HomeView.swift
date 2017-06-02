@@ -32,6 +32,10 @@ class HomeMenuButton: SimpleButton {
         setTitleColor(.white, for: .highlighted)
         
         titleEdgeInsets = UIEdgeInsets(top: 8, left: 2, bottom: 8, right: 2)
+        
+        titleLabel?.numberOfLines = 2
+        titleLabel?.adjustsFontSizeToFitWidth = true
+        titleLabel?.lineBreakMode = .byClipping
     }
 }
 
@@ -47,7 +51,8 @@ class HomePrimaryButton: HomeMenuButton {
 class HomeView: UIView, Nibbable {
     @IBOutlet weak var bgImage: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var langButton: HomeMenuButton!
+    @IBOutlet weak var langButton: UIButton!
+    @IBOutlet weak var langButton2: UIButton!
     @IBOutlet weak var helpButton: HomeMenuButton!
     @IBOutlet weak var layoutsButton: HomeMenuButton!
     @IBOutlet weak var aboutButton: HomeMenuButton!
@@ -56,7 +61,7 @@ class HomeView: UIView, Nibbable {
     
     override func awakeFromNib() {
         titleLabel.text = Strings.localizedName
-        langButton.setTitle(Strings.language, for: [])
+        langButton2.setTitle(Strings.language, for: [])
         helpButton.setTitle(Strings.setUp(keyboard: Strings.localizedName), for: [])
         layoutsButton.setTitle(Strings.layouts, for: [])
         aboutButton.setTitle(Strings.about, for: [])

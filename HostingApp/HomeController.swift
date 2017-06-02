@@ -39,6 +39,7 @@ class HomeController: ViewController<HomeView>, HideNavBar {
         
         contentView.layoutsButton.addTarget(self, action: #selector(openLayouts), for: [.touchUpInside])
         contentView.langButton.addTarget(self, action: #selector(openLanguages), for: [.touchUpInside])
+        contentView.langButton2.addTarget(self, action: #selector(openLanguages), for: [.touchUpInside])
         contentView.helpButton.addTarget(self, action: #selector(openInstructions), for: [.touchUpInside])
         contentView.aboutButton.addTarget(self, action: #selector(openAbout), for: [.touchUpInside])
     }

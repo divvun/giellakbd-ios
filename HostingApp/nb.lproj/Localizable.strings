@@ -3,7 +3,7 @@
 "general" = "Generelt";
 "keyboard" = "Tastatur";
 "keyboards" = "Tastatur";
-"language" = "Språk";
+"language" = "Grensesnittsspråk";
 "layouts" = "Tastatur";
 "locale_sjd" = "Kildinsamisk";
 "openAppPlain" = "Åpne %1$@-appen";
@@ -13,4 +13,4 @@
 "settingUp" = "Konfigurasjon";
 "settings" = "Innstillinger";
 "skip" = "Hopp over";
-"tapPlain" = "Berør %1$@";
+"tapPlain" = "Gå til %1$@";
