@@ -59,7 +59,7 @@ extension UIImage {
 
 extension Strings {
     static var localizedName: String {
-        let infoDict = Bundle.main.localizedInfoDictionary ?? Bundle.main.infoDictionary
+        let infoDict = Strings.bundle.localizedInfoDictionary ?? Strings.bundle.infoDictionary
         
         if let name = infoDict?["CFBundleDisplayName"] as? String {
             return name
