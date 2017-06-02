@@ -44,4 +44,4 @@ settings: Innstillinger
 skip: Hopp over
 
 # Original: Tap {item}
-tapPlain: Berør {item}
+tapPlain: Gå til {item}
