@@ -59,10 +59,20 @@ class Strings {
         return string(for: "layouts")
     }
 
+    /** Kildin Sami */
+    static var locale_sjd: String {
+        return string(for: "locale_sjd")
+    }
+
     /** Open the {item} app */
     static func openAppPlain(item: String) -> String {
         let format = string(for: "openAppPlain")
         return String(format: format, item)
+    }
+
+    /** Open Settings */
+    static var openSettings: String {
+        return string(for: "openSettings")
     }
 
     /** Save */
@@ -84,11 +94,6 @@ class Strings {
     /** Settings */
     static var settings: String {
         return string(for: "settings")
-    }
-
-    /** Kildin Sami */
-    static var sjd: String {
-        return string(for: "sjd")
     }
 
     /** Skip */

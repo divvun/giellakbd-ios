@@ -5,11 +5,12 @@
 "keyboards" = "Keyboards";
 "language" = "Language";
 "layouts" = "Layouts";
+"locale_sjd" = "Kildin Sami";
 "openAppPlain" = "Open the %1$@ app";
+"openSettings" = "Open Settings";
 "save" = "Save";
 "setUp" = "Set Up %1$@";
 "settingUp" = "Setting Up";
 "settings" = "Settings";
-"sjd" = "Kildin Sami";
 "skip" = "Skip";
 "tapPlain" = "Tap %1$@";

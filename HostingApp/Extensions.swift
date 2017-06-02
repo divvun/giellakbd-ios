@@ -131,7 +131,7 @@ extension Strings {
             return lc
         }
         
-        return b.localizedString(forKey: lc, value: nil, table: nil)
+        return b.localizedString(forKey: "locale_\(lc)", value: nil, table: nil)
     }
 }
 
