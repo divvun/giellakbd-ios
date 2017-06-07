@@ -19,10 +19,10 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                 </imageView>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="5Ge-bG-US3">
-                    <rect key="frame" x="20" y="90" width="339" height="335.5"/>
+                    <rect key="frame" x="16" y="90" width="343" height="335.5"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="U7J-h6-aN0">
-                            <rect key="frame" x="0.0" y="0.0" width="339" height="204"/>
+                            <rect key="frame" x="0.0" y="0.0" width="343" height="204"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Vem-Ku-ioH">
                                     <rect key="frame" x="0.0" y="0.0" width="203.5" height="24"/>
@@ -151,13 +151,13 @@
                             </subviews>
                         </stackView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="When you have finished, return to this app to continue." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2q9-uV-jkM">
-                            <rect key="frame" x="0.0" y="236" width="339" height="38.5"/>
+                            <rect key="frame" x="0.0" y="236" width="343" height="38.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="If you wish to enable key tap sounds, you must then tap &quot;Template Keyboard&quot; and toggle &quot;Allow Full Access&quot;." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bkS-AO-jyM">
-                            <rect key="frame" x="0.0" y="306.5" width="339" height="29"/>
+                            <rect key="frame" x="0.0" y="306.5" width="343" height="29"/>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -172,7 +172,7 @@
                 <constraint firstItem="5Ge-bG-US3" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="90" id="Nrp-b9-zdv"/>
                 <constraint firstAttribute="trailing" secondItem="5Ge-bG-US3" secondAttribute="trailing" constant="16" id="OTf-Fk-6nw"/>
                 <constraint firstAttribute="bottom" secondItem="piv-tr-ffi" secondAttribute="bottom" id="WVf-67-sVI"/>
-                <constraint firstItem="5Ge-bG-US3" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="Yyj-9v-Apm"/>
+                <constraint firstItem="5Ge-bG-US3" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="Yyj-9v-Apm"/>
                 <constraint firstItem="piv-tr-ffi" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="oqd-aa-lbg"/>
             </constraints>
             <connections>
