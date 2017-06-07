@@ -447,40 +447,67 @@ class GiellaBanner: ExtraView {
     }
 }
 
-
-func defaultControls(_ defaultKeyboard: Keyboard, definition def: KeyboardDefinition) -> Keyboard {
+fileprivate func makeModeKey(to mode: Int, isMain: Bool = false) -> ModeChangeKey {
     let isPad = UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad
-
-    let backspace = BackspaceKey()
-
+    
+    let cap: String
+    
+    switch mode {
+    case 0:
+        cap = "ABC"
+    case 1:
+        cap = "123"
+    case 2:
+        cap = "#+="
+    default:
+        cap = "???"
+    }
+    
     let keyModeChangeNumbers = ModeChangeKey()
-    keyModeChangeNumbers.uppercaseKeyCap = isPad ? ".?123" : "123"
-    keyModeChangeNumbers.toMode = 1
-    defaultKeyboard.addKey(keyModeChangeNumbers, row: 3, page: 0)
+    keyModeChangeNumbers.uppercaseKeyCap = mode == 1 && isPad && isMain ? ".?123" : cap
+    keyModeChangeNumbers.toMode = mode
+    
+    return keyModeChangeNumbers
+}
 
-    let keyboardChange = ChangeKey()
-    defaultKeyboard.addKey(keyboardChange, row: 3, page: 0)
-
-    let settings = SettingsKey()
-    defaultKeyboard.addKey(settings, row: 3, page: 0)
-
-    let space = SpaceKey()
-    space.uppercaseKeyCap = def.space
-    space.uppercaseOutput = " "
-    space.lowercaseOutput = " "
-    defaultKeyboard.addKey(space, row: 3, page: 0)
-
+fileprivate func makeReturnKey(definition def: KeyboardDefinition) -> Key {
     let returnKey = Key(.return)
     returnKey.uppercaseKeyCap = def.enter
     returnKey.uppercaseOutput = "\n"
     returnKey.lowercaseOutput = "\n"
-    defaultKeyboard.addKey(isPad ? Key(keyModeChangeNumbers) : returnKey, row: 3, page: 0)
+    return returnKey
+}
 
+fileprivate func addControls(_ defaultKeyboard: Keyboard, definition def: KeyboardDefinition, row: Int, page: Int, toMode mode: Int, isMain: Bool = false) {
+    let isPad = UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad
+    
+    defaultKeyboard.addKey(makeModeKey(to: mode, isMain: isMain), row: row, page: page)
+    
+    let keyboardChange = ChangeKey()
+    defaultKeyboard.addKey(keyboardChange, row: row, page: page)
+    
+    let settings = SettingsKey()
+    defaultKeyboard.addKey(settings, row: row, page: page)
+    
+    let space = SpaceKey()
+    space.uppercaseKeyCap = def.space
+    space.uppercaseOutput = " "
+    space.lowercaseOutput = " "
+    defaultKeyboard.addKey(space, row: row, page: page)
+    
+    defaultKeyboard.addKey(isPad ? makeModeKey(to: mode, isMain: isMain) : makeReturnKey(definition: def), row: row, page: page)
+    
     if isPad {
         let hideKey = HideKey()
         hideKey.uppercaseKeyCap = "⥥"
-        defaultKeyboard.addKey(hideKey, row: 3, page: 0)
+        defaultKeyboard.addKey(hideKey, row: row, page: page)
     }
+}
+
+func defaultControls(_ defaultKeyboard: Keyboard, definition def: KeyboardDefinition) -> Keyboard {
+    let isPad = UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad
+
+    addControls(defaultKeyboard, definition: def, row: 3, page: 0, toMode: 1, isMain: true)
 
     for key in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"] {
         let keyModel = Key(.specialCharacter)
@@ -488,68 +515,89 @@ func defaultControls(_ defaultKeyboard: Keyboard, definition def: KeyboardDefini
         defaultKeyboard.addKey(keyModel, row: 0, page: 1)
     }
 
-    for key in ["-", "/", ":", ";", "(", ")", "$", "&", "@", "\""] {
+    var page1Row1Keys = ["-", "/", ":", ";", "(", ")", "$", "&", "@"]
+    
+    if !isPad {
+        page1Row1Keys.append("\"")
+    }
+    
+    for key in page1Row1Keys {
         let keyModel = Key(.specialCharacter)
         keyModel.setLetter(lower: key)
         defaultKeyboard.addKey(keyModel, row: 1, page: 1)
     }
 
-    let keyModeChangeSpecialCharacters = ModeChangeKey()
-    keyModeChangeSpecialCharacters.uppercaseKeyCap = "#+="
-    keyModeChangeSpecialCharacters.toMode = 2
-    defaultKeyboard.addKey(keyModeChangeSpecialCharacters, row: 2, page: 1)
-
-    for key in [".", ",", "?", "!", "'"] {
+    defaultKeyboard.addKey(makeModeKey(to: 2), row: 2, page: 1)
+    
+    var page1Row2Keys = [".", ",", "?", "!", "'"]
+    
+    if isPad {
+        page1Row2Keys.append("\"")
+    }
+    
+    for key in page1Row2Keys {
         let keyModel = Key(.specialCharacter)
         keyModel.setLetter(lower: key)
         defaultKeyboard.addKey(keyModel, row: 2, page: 1)
     }
 
-    defaultKeyboard.addKey(BackspaceKey(), row: 2, page: 1)
-
-    let keyModeChangeLetters = ModeChangeKey()
-    defaultKeyboard.addKey(keyModeChangeLetters, row: 3, page: 1)
-
-    defaultKeyboard.addKey(ChangeKey(), row: 3, page: 1)
-
-    defaultKeyboard.addKey(SettingsKey(), row: 3, page: 1)
-
-    defaultKeyboard.addKey(SpaceKey(), row: 3, page: 1)
-
-    defaultKeyboard.addKey(Key(returnKey), row: 3, page: 1)
-
+    if isPad {
+        addControls(defaultKeyboard, definition: def, row: 3, page: 1, toMode: 0)
+        defaultKeyboard.addKey(BackspaceKey(), row: 0, page: 1)
+        defaultKeyboard.addKey(makeReturnKey(definition: def), row: 1, page: 1)
+        defaultKeyboard.addKey(makeModeKey(to: 2), row: 2, page: 1)
+    } else {
+        defaultKeyboard.addKey(BackspaceKey(), row: 2, page: 1)
+        
+        let keyModeChangeLetters = ModeChangeKey()
+        defaultKeyboard.addKey(keyModeChangeLetters, row: 3, page: 1)
+        defaultKeyboard.addKey(ChangeKey(), row: 3, page: 1)
+        defaultKeyboard.addKey(SettingsKey(), row: 3, page: 1)
+        defaultKeyboard.addKey(SpaceKey(), row: 3, page: 1)
+        defaultKeyboard.addKey(makeReturnKey(definition: def), row: 3, page: 1)
+    }
+    
+    // Page 2
+    
     for key in ["[", "]", "{", "}", "#", "%", "^", "*", "+", "="] {
         let keyModel = Key(.specialCharacter)
         keyModel.setLetter(lower: key)
         defaultKeyboard.addKey(keyModel, row: 0, page: 2)
     }
 
-    for key in ["_", "\\", "|", "~", "<", ">", "€", "£", "Y", "•"] {
+    var page2Row1Keys = ["_", "\\", "|", "~", "<", ">", "€", "£", "¥"]
+    if !isPad {
+        page2Row1Keys.append("•")
+    }
+    
+    for key in page2Row1Keys {
         let keyModel = Key(.specialCharacter)
         keyModel.setLetter(lower: key)
         defaultKeyboard.addKey(keyModel, row: 1, page: 2)
     }
 
-    defaultKeyboard.addKey(ModeChangeKey(cap: "123", mode: 1), row: 2, page: 2)
-
-    for key in [".", ",", "?", "!", "'"] {
+    defaultKeyboard.addKey(makeModeKey(to: 1), row: 2, page: 2)
+    
+    for key in page1Row2Keys {
         let keyModel = Key(.specialCharacter)
         keyModel.setLetter(lower: key)
         defaultKeyboard.addKey(keyModel, row: 2, page: 2)
     }
-
-    defaultKeyboard.addKey(BackspaceKey(), row: 2, page: 2)
-
-    defaultKeyboard.addKey(ModeChangeKey(), row: 3, page: 2)
-
-    defaultKeyboard.addKey(ChangeKey(), row: 3, page: 2)
-
-    defaultKeyboard.addKey(SettingsKey(), row: 3, page: 2)
-
-    defaultKeyboard.addKey(SpaceKey(), row: 3, page: 2)
-
-    defaultKeyboard.addKey(Key(returnKey), row: 3, page: 2)
-
+    
+    if isPad {
+        defaultKeyboard.addKey(BackspaceKey(), row: 0, page: 2)
+        defaultKeyboard.addKey(makeReturnKey(definition: def), row: 1, page: 2)
+        defaultKeyboard.addKey(makeModeKey(to: 1), row: 2, page: 2)
+        
+        addControls(defaultKeyboard, definition: def, row: 3, page: 2, toMode: 0)
+    } else {
+        defaultKeyboard.addKey(BackspaceKey(), row: 2, page: 2)
+        defaultKeyboard.addKey(ModeChangeKey(), row: 3, page: 2)
+        defaultKeyboard.addKey(ChangeKey(), row: 3, page: 2)
+        defaultKeyboard.addKey(SettingsKey(), row: 3, page: 2)
+        defaultKeyboard.addKey(SpaceKey(), row: 3, page: 2)
+        defaultKeyboard.addKey(makeReturnKey(definition: def), row: 3, page: 2)
+    }
     return defaultKeyboard
 }
 
