@@ -4,6 +4,12 @@
 # Original: Add New Keyboard…
 #addNewKeyboard: UNTRANSLATED
 
+# Original: Allow Full Access
+#allowFullAccess: UNTRANSLATED
+
+# Original: If you wish to enable key tap sounds, you must then tap  {keyboard} and toggle {allowFullAccess}.
+#enableTapSoundsPlain: UNTRANSLATED
+
 # Original: General
 #general: UNTRANSLATED
 
@@ -45,3 +51,6 @@ language: Giella
 
 # Original: Tap {item}
 #tapPlain: UNTRANSLATED
+
+# Original: When you have finished, return to this app to continue.
+#whenYouHaveFinished: UNTRANSLATED

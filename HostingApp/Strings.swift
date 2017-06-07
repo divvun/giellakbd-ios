@@ -34,6 +34,17 @@ class Strings {
         return string(for: "addNewKeyboard")
     }
 
+    /** Allow Full Access */
+    static var allowFullAccess: String {
+        return string(for: "allowFullAccess")
+    }
+
+    /** If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}. */
+    static func enableTapSoundsPlain(keyboard: String, allowFullAccess: String) -> String {
+        let format = string(for: "enableTapSoundsPlain")
+        return String(format: format, keyboard, allowFullAccess)
+    }
+
     /** General */
     static var general: String {
         return string(for: "general")
@@ -105,6 +116,11 @@ class Strings {
     static func tapPlain(item: String) -> String {
         let format = string(for: "tapPlain")
         return String(format: format, item)
+    }
+
+    /** When you have finished, return to this app to continue. */
+    static var whenYouHaveFinished: String {
+        return string(for: "whenYouHaveFinished")
     }
 
     private init() {}

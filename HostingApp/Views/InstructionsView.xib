@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -18,133 +18,150 @@
                 <imageView userInteractionEnabled="NO" alpha="0.050000000000000003" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="piv-tr-ffi">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                 </imageView>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="U7J-h6-aN0">
-                    <rect key="frame" x="20" y="90" width="339" height="204"/>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="5Ge-bG-US3">
+                    <rect key="frame" x="20" y="90" width="339" height="335.5"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Vem-Ku-ioH">
-                            <rect key="frame" x="0.0" y="0.0" width="203.5" height="24"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="U7J-h6-aN0">
+                            <rect key="frame" x="0.0" y="0.0" width="339" height="204"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tap" translatesAutoresizingMaskIntoConstraints="NO" id="4Gs-Mk-jxN">
-                                    <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="24" id="uLV-du-FHy"/>
-                                        <constraint firstAttribute="width" constant="24" id="zM9-dT-Wie"/>
-                                    </constraints>
-                                </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lfv-tZ-pKq">
-                                    <rect key="frame" x="28" y="3.5" width="175.5" height="20.5"/>
-                                    <attributedString key="attributedText">
-                                        <fragment content="Open the ">
-                                            <attributes>
-                                                <font key="NSFont" metaFont="system" size="17"/>
-                                            </attributes>
-                                        </fragment>
-                                        <fragment content="Settings">
-                                            <attributes>
-                                                <font key="NSFont" size="17" name=".AppleSystemUIFontEmphasized"/>
-                                                <font key="NSOriginalFont" size="17" name=".AppleSystemUIFontEmphasized"/>
-                                            </attributes>
-                                        </fragment>
-                                        <fragment content=" app">
-                                            <attributes>
-                                                <font key="NSFont" metaFont="system" size="17"/>
-                                            </attributes>
-                                        </fragment>
-                                    </attributedString>
-                                    <nil key="highlightedColor"/>
-                                </label>
+                                <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Vem-Ku-ioH">
+                                    <rect key="frame" x="0.0" y="0.0" width="203.5" height="24"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tap" translatesAutoresizingMaskIntoConstraints="NO" id="4Gs-Mk-jxN">
+                                            <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="24" id="uLV-du-FHy"/>
+                                                <constraint firstAttribute="width" constant="24" id="zM9-dT-Wie"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lfv-tZ-pKq">
+                                            <rect key="frame" x="28" y="3.5" width="175.5" height="20.5"/>
+                                            <attributedString key="attributedText">
+                                                <fragment content="Open the ">
+                                                    <attributes>
+                                                        <font key="NSFont" metaFont="system" size="17"/>
+                                                    </attributes>
+                                                </fragment>
+                                                <fragment content="Settings">
+                                                    <attributes>
+                                                        <font key="NSFont" size="17" name=".AppleSystemUIFontEmphasized"/>
+                                                        <font key="NSOriginalFont" size="17" name=".AppleSystemUIFontEmphasized"/>
+                                                    </attributes>
+                                                </fragment>
+                                                <fragment content=" app">
+                                                    <attributes>
+                                                        <font key="NSFont" metaFont="system" size="17"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
+                                <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="V8n-OQ-dXE">
+                                    <rect key="frame" x="0.0" y="36" width="120" height="24"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tap" translatesAutoresizingMaskIntoConstraints="NO" id="SML-cq-hZV">
+                                            <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="24" id="kbo-EW-IFZ"/>
+                                                <constraint firstAttribute="width" constant="24" id="lHW-8V-2GU"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap General" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gt8-FC-YFo">
+                                            <rect key="frame" x="28" y="3.5" width="92" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
+                                <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="E4B-An-WfU">
+                                    <rect key="frame" x="0.0" y="72" width="133.5" height="24"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tap" translatesAutoresizingMaskIntoConstraints="NO" id="lCV-xP-Hiw">
+                                            <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="24" id="UB7-yR-8dF"/>
+                                                <constraint firstAttribute="width" constant="24" id="eFk-Gs-ZJr"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap Keyboard" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ki3-2X-rZU">
+                                            <rect key="frame" x="28" y="3.5" width="105.5" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
+                                <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Fvj-JC-rmv">
+                                    <rect key="frame" x="0.0" y="108" width="142" height="24"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tap" translatesAutoresizingMaskIntoConstraints="NO" id="Ruj-Nr-d5p">
+                                            <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="24" id="Fwz-Ma-E1l"/>
+                                                <constraint firstAttribute="height" constant="24" id="QuU-Hj-0LO"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap Keyboards" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Ge-hm-2gn">
+                                            <rect key="frame" x="28" y="3.5" width="114" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
+                                <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Evu-IB-3k3">
+                                    <rect key="frame" x="0.0" y="144" width="207.5" height="24"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tap" translatesAutoresizingMaskIntoConstraints="NO" id="lc8-gb-5qu">
+                                            <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="24" id="9RC-ZD-Vmn"/>
+                                                <constraint firstAttribute="height" constant="24" id="TIe-Ml-YCK"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap Add New Keyboard" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="seG-Je-CmM">
+                                            <rect key="frame" x="28" y="3.5" width="179.5" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
+                                <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="qfc-s4-UNf">
+                                    <rect key="frame" x="0.0" y="180" width="222.5" height="24"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tap" translatesAutoresizingMaskIntoConstraints="NO" id="JRJ-qi-BqV">
+                                            <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="24" id="KdN-Ps-Bk3"/>
+                                                <constraint firstAttribute="height" constant="24" id="WKB-qa-c8I"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap &quot;Template Keyboard&quot;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m9F-0P-tnE">
+                                            <rect key="frame" x="28" y="3.5" width="194.5" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
                             </subviews>
                         </stackView>
-                        <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="V8n-OQ-dXE">
-                            <rect key="frame" x="0.0" y="36" width="120" height="24"/>
-                            <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tap" translatesAutoresizingMaskIntoConstraints="NO" id="SML-cq-hZV">
-                                    <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="24" id="kbo-EW-IFZ"/>
-                                        <constraint firstAttribute="width" constant="24" id="lHW-8V-2GU"/>
-                                    </constraints>
-                                </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap General" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gt8-FC-YFo">
-                                    <rect key="frame" x="28" y="3.5" width="92" height="20.5"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                            </subviews>
-                        </stackView>
-                        <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="E4B-An-WfU">
-                            <rect key="frame" x="0.0" y="72" width="133.5" height="24"/>
-                            <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tap" translatesAutoresizingMaskIntoConstraints="NO" id="lCV-xP-Hiw">
-                                    <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="24" id="UB7-yR-8dF"/>
-                                        <constraint firstAttribute="width" constant="24" id="eFk-Gs-ZJr"/>
-                                    </constraints>
-                                </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap Keyboard" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ki3-2X-rZU">
-                                    <rect key="frame" x="28" y="3.5" width="105.5" height="20.5"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                            </subviews>
-                        </stackView>
-                        <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Fvj-JC-rmv">
-                            <rect key="frame" x="0.0" y="108" width="142" height="24"/>
-                            <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tap" translatesAutoresizingMaskIntoConstraints="NO" id="Ruj-Nr-d5p">
-                                    <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="24" id="Fwz-Ma-E1l"/>
-                                        <constraint firstAttribute="height" constant="24" id="QuU-Hj-0LO"/>
-                                    </constraints>
-                                </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap Keyboards" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Ge-hm-2gn">
-                                    <rect key="frame" x="28" y="3.5" width="114" height="20.5"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                            </subviews>
-                        </stackView>
-                        <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Evu-IB-3k3">
-                            <rect key="frame" x="0.0" y="144" width="207.5" height="24"/>
-                            <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tap" translatesAutoresizingMaskIntoConstraints="NO" id="lc8-gb-5qu">
-                                    <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="24" id="9RC-ZD-Vmn"/>
-                                        <constraint firstAttribute="height" constant="24" id="TIe-Ml-YCK"/>
-                                    </constraints>
-                                </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap Add New Keyboard" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="seG-Je-CmM">
-                                    <rect key="frame" x="28" y="3.5" width="179.5" height="20.5"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                            </subviews>
-                        </stackView>
-                        <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="qfc-s4-UNf">
-                            <rect key="frame" x="0.0" y="180" width="222.5" height="24"/>
-                            <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tap" translatesAutoresizingMaskIntoConstraints="NO" id="JRJ-qi-BqV">
-                                    <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="24" id="KdN-Ps-Bk3"/>
-                                        <constraint firstAttribute="height" constant="24" id="WKB-qa-c8I"/>
-                                    </constraints>
-                                </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap &quot;Template Keyboard&quot;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m9F-0P-tnE">
-                                    <rect key="frame" x="28" y="3.5" width="194.5" height="20.5"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                            </subviews>
-                        </stackView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="When you have finished, return to this app to continue." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2q9-uV-jkM">
+                            <rect key="frame" x="0.0" y="236" width="339" height="38.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="If you wish to enable key tap sounds, you must then tap &quot;Template Keyboard&quot; and toggle &quot;Allow Full Access&quot;." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bkS-AO-jyM">
+                            <rect key="frame" x="0.0" y="306.5" width="339" height="29"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                 </stackView>
             </subviews>
@@ -152,20 +169,22 @@
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="piv-tr-ffi" secondAttribute="trailing" id="609-uv-EPw"/>
                 <constraint firstItem="piv-tr-ffi" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="9g0-MW-lkS"/>
-                <constraint firstAttribute="trailing" secondItem="U7J-h6-aN0" secondAttribute="trailing" constant="16" id="Awq-p2-Bae"/>
+                <constraint firstItem="5Ge-bG-US3" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="90" id="Nrp-b9-zdv"/>
+                <constraint firstAttribute="trailing" secondItem="5Ge-bG-US3" secondAttribute="trailing" constant="16" id="OTf-Fk-6nw"/>
                 <constraint firstAttribute="bottom" secondItem="piv-tr-ffi" secondAttribute="bottom" id="WVf-67-sVI"/>
-                <constraint firstItem="U7J-h6-aN0" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="nQW-my-V3h"/>
+                <constraint firstItem="5Ge-bG-US3" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="Yyj-9v-Apm"/>
                 <constraint firstItem="piv-tr-ffi" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="oqd-aa-lbg"/>
-                <constraint firstItem="U7J-h6-aN0" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="90" id="utc-Rb-47p"/>
             </constraints>
             <connections>
                 <outlet property="bgImage" destination="piv-tr-ffi" id="QGj-as-t8r"/>
+                <outlet property="finishLabel" destination="2q9-uV-jkM" id="4Ob-6P-FSD"/>
                 <outlet property="step1Label" destination="lfv-tZ-pKq" id="kbc-QQ-y5h"/>
                 <outlet property="step2Label" destination="Gt8-FC-YFo" id="WH2-Zl-1Vn"/>
                 <outlet property="step3Label" destination="ki3-2X-rZU" id="2dM-E1-IhH"/>
                 <outlet property="step4Label" destination="2Ge-hm-2gn" id="zyE-ww-3Vz"/>
                 <outlet property="step5Label" destination="seG-Je-CmM" id="04s-zE-pj5"/>
                 <outlet property="step6Label" destination="m9F-0P-tnE" id="eIK-Bc-Ju1"/>
+                <outlet property="tapSoundsLabel" destination="bkS-AO-jyM" id="Z0l-WF-aJ1"/>
             </connections>
             <point key="canvasLocation" x="33.5" y="53.5"/>
         </view>

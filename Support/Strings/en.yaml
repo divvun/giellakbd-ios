@@ -4,6 +4,14 @@ about: About
 # Original: Add New Keyboard…
 addNewKeyboard: Add New Keyboard…
 
+# Original: Allow Full Access
+allowFullAccess: Allow Full Access
+
+# Original: If you wish to enable key tap sounds, you must then tap  {keyboard} and toggle {allowFullAccess}.
+enableTapSoundsPlain: >-
+  If you wish to enable key tap sounds, you must then tap {keyboard} and toggle
+  {allowFullAccess}.
+
 # Original: General
 general: General
 
@@ -45,3 +53,6 @@ skip: Skip
 
 # Original: Tap {item}
 tapPlain: 'Tap {item}'
+
+# Original: When you have finished, return to this app to continue.
+whenYouHaveFinished: 'When you have finished, return to this app to continue.'

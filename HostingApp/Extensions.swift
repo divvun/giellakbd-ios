@@ -68,6 +68,20 @@ extension Strings {
         return self.keyboard
     }
     
+    static var enableTapSounds: NSAttributedString {
+        let plain = Strings.enableTapSoundsPlain(keyboard: Strings.localizedName, allowFullAccess: Strings.allowFullAccess)
+        let nsplain = plain as NSString
+        let size = CGFloat(12)
+        
+        let attr = NSMutableAttributedString(string: plain)
+        
+        attr.addAttribute(NSFontAttributeName, value: UIFont.systemFont(ofSize: size), range: nsplain.range(of: plain))
+        attr.addAttribute(NSFontAttributeName, value: UIFont.systemFont(ofSize: size, weight: 0.3), range: nsplain.range(of: Strings.localizedName))
+        attr.addAttribute(NSFontAttributeName, value: UIFont.systemFont(ofSize: size, weight: 0.3), range: nsplain.range(of: Strings.allowFullAccess))
+        
+        return attr
+    }
+    
     private static func bolden(string: String, item: String, size: CGFloat) -> NSAttributedString {
         let nsstring = string as NSString
         let attr = NSMutableAttributedString(string: string)

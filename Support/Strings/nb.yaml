@@ -4,6 +4,12 @@ about: Om
 # Original: Add New Keyboard…
 addNewKeyboard: Legg til nytt tastatur…
 
+# Original: Allow Full Access
+#allowFullAccess: UNTRANSLATED
+
+# Original: If you wish to enable key tap sounds, you must then tap  {keyboard} and toggle {allowFullAccess}.
+#enableTapSoundsPlain: UNTRANSLATED
+
 # Original: General
 general: Generelt
 
@@ -14,7 +20,7 @@ keyboard: Tastatur
 keyboards: Tastatur
 
 # Original: Language
-language: Grensesnittsspråk
+language: Språk
 
 # Original: Layouts
 layouts: Tastatur
@@ -23,7 +29,7 @@ layouts: Tastatur
 locale_sjd: Kildinsamisk
 
 # Original: Open the {item} app
-openAppPlain: Åpne {item}-appen
+openAppPlain: 'Åpne {item}-appen'
 
 # Original: Open Settings
 openSettings: Åpne Innstillinger
@@ -32,7 +38,7 @@ openSettings: Åpne Innstillinger
 save: Lagre
 
 # Original: Set Up {keyboard}
-setUp: Konfigurer {keyboard}
+setUp: 'Konfigurer {keyboard}'
 
 # Original: Setting Up
 settingUp: Konfigurasjon
@@ -44,4 +50,7 @@ settings: Innstillinger
 skip: Hopp over
 
 # Original: Tap {item}
-tapPlain: Gå til {item}
+tapPlain: 'Berør {item}'
+
+# Original: When you have finished, return to this app to continue.
+#whenYouHaveFinished: UNTRANSLATED
