@@ -282,7 +282,7 @@ class KeyboardViewController: UIInputViewController {
     //    super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
     //}
 
-    func setSpaceLocalName(_ keyView: KeyboardKey) {
+    func localName() -> String? {
         let ext = Bundle.main.infoDictionary?["NSExtension"] as! [String: Any]
         let attrs = ext["NSExtensionAttributes"] as! [String: Any]
         let primaryLanguage = attrs["PrimaryLanguage"] as! String
@@ -299,16 +299,17 @@ class KeyboardViewController: UIInputViewController {
             displayName = primaryLanguage
         }
 
-        keyView.label.text = displayName
+        //keyView.label.text = displayName
+        return displayName
     }
 
     func changeSpaceName(_ keyView: KeyboardKey, completion: @escaping () -> Void) {
-        setSpaceLocalName(keyView)
+        //setSpaceLocalName(keyView)
         keyView.label.alpha = 1
 
         if let key = layout?.keyForView(keyView) {
             let saved = key.uppercaseKeyCap
-            key.uppercaseKeyCap = keyView.label.text
+            key.uppercaseKeyCap = localName() ?? ""
 
             UIView.animate(withDuration: 0.3, delay: 1, options: .curveEaseOut, animations: {
                     keyView.label.alpha = 0.0

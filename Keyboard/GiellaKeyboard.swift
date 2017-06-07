@@ -204,11 +204,11 @@ class GiellaKeyboard: KeyboardViewController {
 
         updateSuggestions()
     }
-
-    override func setSpaceLocalName(_ keyView: KeyboardKey) {
-        //keyView.label.text = keyNames["keyboard"]
+    
+    override func localName() -> String? {
+        return KeyboardDefinition.definitions[KeyboardSettings.currentKeyboard].name
     }
-
+    
     func disableInput() {
         self.forwardingView.isUserInteractionEnabled = false
 
