@@ -571,15 +571,11 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
         }
     }
 
-    func createNewKey() -> KeyboardKey {
-        return ImageKey(vibrancy: nil)
-    }
-
     // if pool is disabled, always generates a new key
     func generateKey() -> KeyboardKey {
         let createAndSetupNewKey = { () -> KeyboardKey in
-            let keyView = self.createNewKey()
-
+            let keyView = ImageKey(vibrancy: nil)
+            
             keyView.isEnabled = true
             keyView.delegate = self
 
@@ -750,7 +746,7 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
                 var frames: [CGRect]!
 
 
-                    // bottom row with things like space, return, etc.
+                // bottom row with things like space, return, etc.
                 if self.specialKeysRowHeuristic(row) {
                     frames = self.layoutSpecialKeysRow(row, keyWidth: letterKeyWidth, gapWidth: lastRowKeyGap, leftSideRatio: lastRowLeftSideRatio, rightSideRatio: lastRowRightSideRatio, micButtonRatio: self.layoutConstants.micButtonPortraitWidthRatioToOtherSpecialButtons, isLandscape: isLandscape, frame: frame)
                 }
@@ -900,10 +896,13 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
                     } else {
                         currentOrigin += specialCharacterGap
                     }
-
-                    // HACK: +3 because pixels aren't aligned :/
-                    let width = rounded(frame.width - currentOrigin + 3)
-                    frames.append(CGRect(x: rounded(currentOrigin), y: frame.origin.y, width: width, height: frame.height))
+                    
+                    // Unaligned pixel workaround hack
+                    if !isLandscape {
+                        currentOrigin -= 2
+                    }
+                    
+                    frames.append(CGRect(x: rounded(currentOrigin), y: frame.origin.y, width: actualKeyWidth, height: frame.height))
                     currentOrigin += specialCharacterWidth
                 }
             }
