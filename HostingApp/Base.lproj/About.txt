@@ -1,0 +1,6 @@
+This is about text.
+
+The links are automatically detected from the plain text file. Hurray™.
+
+WWW: http://divvun.no
+Email: foo@bar.no

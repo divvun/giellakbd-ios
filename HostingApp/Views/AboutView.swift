@@ -9,12 +9,18 @@
 import UIKit
 
 class AboutView: UIView, Nibbable {
+    @IBOutlet weak var aboutLabel: UITextView!
     @IBOutlet weak var attributionLabel: UILabel!
     @IBOutlet weak var creditsLabel: UITextView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        aboutLabel.text = try? String(contentsOf: Strings.bundle.url(forResource: "About", withExtension: "txt")!)
+        attributionLabel.text = Strings.attributions
         creditsLabel.attributedText = Strings.creditWithUrls()
+        
+        aboutLabel.sizeToFit()
+        creditsLabel.sizeToFit()
     }
 }

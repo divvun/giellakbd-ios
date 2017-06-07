@@ -15,39 +15,42 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="btP-z7-AW7">
-                    <rect key="frame" x="16" y="80" width="343" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Attributions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lab-Jy-DBt">
-                    <rect key="frame" x="16" y="132.5" width="343" height="20.5"/>
-                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="-" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="o7S-3f-DS4">
-                    <rect key="frame" x="12" y="169" width="347" height="36.5"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <inset key="scrollIndicatorInsets" minX="-4" minY="0.0" maxX="-4" maxY="0.0"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                </textView>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="azp-aO-fcI">
+                    <rect key="frame" x="16" y="8" width="343" height="627"/>
+                    <subviews>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="249" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="-" translatesAutoresizingMaskIntoConstraints="NO" id="ByU-RZ-gLA">
+                            <rect key="frame" x="0.0" y="0.0" width="343" height="570"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <inset key="scrollIndicatorInsets" minX="-4" minY="0.0" maxX="-4" maxY="0.0"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                        </textView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Attributions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lab-Jy-DBt">
+                            <rect key="frame" x="0.0" y="570" width="343" height="20.5"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="-" translatesAutoresizingMaskIntoConstraints="NO" id="o7S-3f-DS4">
+                            <rect key="frame" x="0.0" y="590.5" width="343" height="36.5"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <inset key="scrollIndicatorInsets" minX="-4" minY="0.0" maxX="-4" maxY="0.0"/>
+                            <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                    </subviews>
+                </stackView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="btP-z7-AW7" secondAttribute="trailing" constant="16" id="EHa-rN-F9N"/>
-                <constraint firstItem="lab-Jy-DBt" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="OKT-H1-NYP"/>
-                <constraint firstAttribute="trailing" secondItem="o7S-3f-DS4" secondAttribute="trailing" constant="16" id="SeZ-rg-XWj"/>
-                <constraint firstItem="o7S-3f-DS4" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="12" id="T79-Aw-50J"/>
-                <constraint firstItem="btP-z7-AW7" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="80" id="bn5-P7-oT3"/>
-                <constraint firstItem="btP-z7-AW7" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="gAI-Z2-8Sg"/>
-                <constraint firstAttribute="trailing" secondItem="lab-Jy-DBt" secondAttribute="trailing" constant="16" id="nft-iJ-52B"/>
-                <constraint firstItem="lab-Jy-DBt" firstAttribute="top" secondItem="btP-z7-AW7" secondAttribute="bottom" constant="32" id="s6F-Du-cGW"/>
-                <constraint firstItem="o7S-3f-DS4" firstAttribute="top" secondItem="lab-Jy-DBt" secondAttribute="bottom" constant="16" id="yqm-T8-fxN"/>
+                <constraint firstAttribute="trailing" secondItem="azp-aO-fcI" secondAttribute="trailing" constant="16" id="EPg-0N-5zy"/>
+                <constraint firstItem="azp-aO-fcI" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="Plw-0B-Q9B"/>
+                <constraint firstItem="azp-aO-fcI" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="WXt-yo-D7b"/>
+                <constraint firstAttribute="bottom" relation="lessThanOrEqual" secondItem="azp-aO-fcI" secondAttribute="bottom" constant="32" id="j6l-Vj-b8C"/>
             </constraints>
             <connections>
+                <outlet property="aboutLabel" destination="ByU-RZ-gLA" id="nx8-v8-iEZ"/>
                 <outlet property="attributionLabel" destination="lab-Jy-DBt" id="Da0-qU-UdJ"/>
                 <outlet property="creditsLabel" destination="o7S-3f-DS4" id="axE-BT-hQM"/>
             </connections>

@@ -35,6 +35,7 @@
 		C655E85D1EC55D0800B12BE4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C655E85B1EC55D0800B12BE4 /* Localizable.strings */; };
 		C676AD5B1EC9679000523FF3 /* InstructionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C676AD5A1EC9679000523FF3 /* InstructionsController.swift */; };
 		C676AD5F1EC985EB00523FF3 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C676AD5E1EC985EB00523FF3 /* Strings.swift */; };
+		C67A3F3A1EE7F24900C9015C /* About.txt in Resources */ = {isa = PBXBuildFile; fileRef = C67A3F3C1EE7F24900C9015C /* About.txt */; };
 		C6974E611A31557A00D1A0B3 /* Background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C6974E601A31557A00D1A0B3 /* Background.jpg */; };
 		C6A2E01D1EDFA259006BAB69 /* AboutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6A2E01C1EDFA259006BAB69 /* AboutView.xib */; };
 		C6A2E01F1EDFAAA2006BAB69 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A2E01E1EDFAAA2006BAB69 /* AboutView.swift */; };
@@ -137,6 +138,7 @@
 		C676AD5E1EC985EB00523FF3 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		C676AD601EC986F000523FF3 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = HostingApp/nb.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C676AD611EC986FA00523FF3 /* se */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = se; path = HostingApp/se.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C67A3F3B1EE7F24900C9015C /* Base */ = {isa = PBXFileReference; lastKnownFileType = text; name = Base; path = Base.lproj/About.txt; sourceTree = "<group>"; };
 		C6974E601A31557A00D1A0B3 /* Background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Background.jpg; sourceTree = "<group>"; };
 		C6A2E01C1EDFA259006BAB69 /* AboutView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutView.xib; sourceTree = "<group>"; };
 		C6A2E01E1EDFAAA2006BAB69 /* AboutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 				4EF16F9319D255030076AFCB /* Images.xcassets */,
 				4EF16F9219D254EA0076AFCB /* Info.plist */,
 				C655E85B1EC55D0800B12BE4 /* Localizable.strings */,
+				C67A3F3C1EE7F24900C9015C /* About.txt */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -424,6 +427,7 @@
 				C655E85D1EC55D0800B12BE4 /* Localizable.strings in Resources */,
 				C6DCFDD41EB070BC00FABC11 /* KeyboardDefinitions.json in Resources */,
 				C6974E611A31557A00D1A0B3 /* Background.jpg in Resources */,
+				C67A3F3A1EE7F24900C9015C /* About.txt in Resources */,
 				C65430B21EC94BD1007FC053 /* InstructionsView.xib in Resources */,
 				C655E8581EC5559E00B12BE4 /* HomeView.xib in Resources */,
 			);
@@ -512,6 +516,14 @@
 			);
 			name = Localizable.strings;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		C67A3F3C1EE7F24900C9015C /* About.txt */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C67A3F3B1EE7F24900C9015C /* Base */,
+			);
+			name = About.txt;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

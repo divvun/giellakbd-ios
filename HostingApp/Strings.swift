@@ -39,6 +39,11 @@ class Strings {
         return string(for: "allowFullAccess")
     }
 
+    /** Attributions */
+    static var attributions: String {
+        return string(for: "attributions")
+    }
+
     /** If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}. */
     static func enableTapSoundsPlain(keyboard: String, allowFullAccess: String) -> String {
         let format = string(for: "enableTapSoundsPlain")
