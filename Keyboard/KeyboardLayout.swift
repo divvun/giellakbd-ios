@@ -1004,7 +1004,7 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
                 }
             }
             else {
-                let width = (k == row.count - 1) ? frame.width - currentOrigin : rounded(rightButtonWidth)
+                let width = (isPad && k == row.count - 1) ? frame.width - currentOrigin : rounded(rightButtonWidth)
                 frames.append(CGRect(x: rounded(currentOrigin), y: frame.origin.y, width: width, height: frame.height))
                 currentOrigin += (width + gap)
             }
