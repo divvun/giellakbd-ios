@@ -192,7 +192,7 @@ class Key: Hashable {
     var toMode: Int? //if the key is a mode button, this indicates which page it links to
     
     func bind(view: KeyboardKey, target: KeyboardViewController) {
-        if isCharacter && UIDevice.current.userInterfaceIdiom != UIUserInterfaceIdiom.pad {
+        if isCharacter {
             view.addTarget(target, action: #selector(KeyboardViewController.showPopup(_:)), for: [.touchDown, .touchDragInside, .touchDragEnter])
             // TODO ensure this works, target was view before.
             view.addTarget(target, action: #selector(KeyboardViewController.hidePopup(_:)), for: [.touchDragExit, .touchCancel])
