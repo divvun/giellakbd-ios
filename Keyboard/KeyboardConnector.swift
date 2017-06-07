@@ -92,6 +92,38 @@ class KeyboardConnector: KeyboardKeyBackground {
         self.frame = CGRect(x: minX - buffer/2, y: minY - buffer/2, width: width + buffer, height: height + buffer)
     }
     
+    private func firstEdgePath(_ myConvertedStartPoints: (CGPoint, CGPoint), _ myConvertedEndPoints: (CGPoint, CGPoint), midpoint: CGFloat, isVertical: Bool) -> UIBezierPath {
+        let currentEdgePath = UIBezierPath()
+        currentEdgePath.move(to: myConvertedStartPoints.0)
+        currentEdgePath.addCurve(
+            to: myConvertedEndPoints.1,
+            controlPoint1: (isVertical ?
+                CGPoint(x: myConvertedStartPoints.0.x, y: midpoint) :
+                CGPoint(x: midpoint, y: myConvertedStartPoints.0.y)),
+            controlPoint2: (isVertical ?
+                CGPoint(x: myConvertedEndPoints.1.x, y: midpoint) :
+                CGPoint(x: midpoint, y: myConvertedEndPoints.1.y)))
+        currentEdgePath.apply(CGAffineTransform(translationX: 0, y: -self.underOffset))
+        
+        return currentEdgePath
+    }
+    
+    private func secondEdgePath(_ myConvertedStartPoints: (CGPoint, CGPoint), _ myConvertedEndPoints: (CGPoint, CGPoint), midpoint: CGFloat, isVertical: Bool) -> UIBezierPath {
+        let currentEdgePath = UIBezierPath()
+        currentEdgePath.move(to: myConvertedEndPoints.0)
+        currentEdgePath.addCurve(
+            to: myConvertedStartPoints.1,
+            controlPoint1: (isVertical ?
+                CGPoint(x: myConvertedEndPoints.0.x, y: midpoint) :
+                CGPoint(x: midpoint, y: myConvertedEndPoints.0.y)),
+            controlPoint2: (isVertical ?
+                CGPoint(x: myConvertedStartPoints.1.x, y: midpoint) :
+                CGPoint(x: midpoint, y: myConvertedStartPoints.1.y)))
+        currentEdgePath.apply(CGAffineTransform(translationX: 0, y: -self.underOffset))
+        
+        return currentEdgePath
+    }
+    
     override func generatePointsForDrawing(_ bounds: CGRect) {
         if self.startConnectable == nil || self.endConnectable == nil {
             return
@@ -103,27 +135,19 @@ class KeyboardConnector: KeyboardKeyBackground {
 
         let startPoints = self.startConnectable!.attachmentPoints(self.startDir)
         let endPoints = self.endConnectable!.attachmentPoints(self.endDir)
-
+        
         var myConvertedStartPoints = (
             self.convert(startPoints.0, from: self.start),
             self.convert(startPoints.1, from: self.start))
         let myConvertedEndPoints = (
             self.convert(endPoints.0, from: self.end),
             self.convert(endPoints.1, from: self.end))
-
+        
         if self.startDir == self.endDir {
             let tempPoint = myConvertedStartPoints.0
             myConvertedStartPoints.0 = myConvertedStartPoints.1
             myConvertedStartPoints.1 = tempPoint
         }
-
-        let path = CGMutablePath();
-        
-        path.move(to: myConvertedStartPoints.0)
-        path.addLine(to: myConvertedEndPoints.1)
-        path.addLine(to: myConvertedEndPoints.0)
-        path.addLine(to: myConvertedStartPoints.1)
-        path.closeSubpath()
 
         // for now, assuming axis-aligned attachment points
 
@@ -137,9 +161,11 @@ class KeyboardConnector: KeyboardKeyBackground {
             midpoint = myConvertedStartPoints.0.x + (myConvertedEndPoints.1.x - myConvertedStartPoints.0.x) / 2
         }
 
-        let bezierPath = UIBezierPath()
-        var currentEdgePath = UIBezierPath()
         var edgePaths = [UIBezierPath]()
+        edgePaths.append(firstEdgePath(myConvertedStartPoints, myConvertedEndPoints, midpoint: midpoint, isVertical: isVertical))
+        edgePaths.append(secondEdgePath(myConvertedStartPoints, myConvertedEndPoints, midpoint: midpoint, isVertical: isVertical))
+        
+        let bezierPath = UIBezierPath()
         
         bezierPath.move(to: myConvertedStartPoints.0)
         
@@ -152,19 +178,6 @@ class KeyboardConnector: KeyboardKeyBackground {
                 CGPoint(x: myConvertedEndPoints.1.x, y: midpoint) :
                 CGPoint(x: midpoint, y: myConvertedEndPoints.1.y)))
         
-        currentEdgePath = UIBezierPath()
-        currentEdgePath.move(to: myConvertedStartPoints.0)
-        currentEdgePath.addCurve(
-            to: myConvertedEndPoints.1,
-            controlPoint1: (isVertical ?
-                CGPoint(x: myConvertedStartPoints.0.x, y: midpoint) :
-                CGPoint(x: midpoint, y: myConvertedStartPoints.0.y)),
-            controlPoint2: (isVertical ?
-                CGPoint(x: myConvertedEndPoints.1.x, y: midpoint) :
-                CGPoint(x: midpoint, y: myConvertedEndPoints.1.y)))
-        currentEdgePath.apply(CGAffineTransform(translationX: 0, y: -self.underOffset))
-        edgePaths.append(currentEdgePath)
-        
         bezierPath.addLine(to: myConvertedEndPoints.0)
         
         bezierPath.addCurve(
@@ -175,24 +188,11 @@ class KeyboardConnector: KeyboardKeyBackground {
             controlPoint2: (isVertical ?
                 CGPoint(x: myConvertedStartPoints.1.x, y: midpoint) :
                 CGPoint(x: midpoint, y: myConvertedStartPoints.1.y)))
-        bezierPath.addLine(to: myConvertedStartPoints.0)
-        
-        currentEdgePath = UIBezierPath()
-        currentEdgePath.move(to: myConvertedEndPoints.0)
-        currentEdgePath.addCurve(
-            to: myConvertedStartPoints.1,
-            controlPoint1: (isVertical ?
-                CGPoint(x: myConvertedEndPoints.0.x, y: midpoint) :
-                CGPoint(x: midpoint, y: myConvertedEndPoints.0.y)),
-            controlPoint2: (isVertical ?
-                CGPoint(x: myConvertedStartPoints.1.x, y: midpoint) :
-                CGPoint(x: midpoint, y: myConvertedStartPoints.1.y)))
-        currentEdgePath.apply(CGAffineTransform(translationX: 0, y: -self.underOffset))
-        edgePaths.append(currentEdgePath)
         
         bezierPath.addLine(to: myConvertedStartPoints.0)
         
         bezierPath.close()
+        
         bezierPath.apply(CGAffineTransform(translationX: 0, y: -self.underOffset))
         
         self.fillPath = bezierPath
