@@ -15,6 +15,15 @@ class HomeMenuButton: SimpleButton {
     override func configureButtonStyles() {
         super.configureButtonStyles()
         
+        contentEdgeInsets = UIEdgeInsets(top: 8, left: 2, bottom: 8, right: 2)
+        
+        titleLabel?.numberOfLines = 2
+        titleLabel?.adjustsFontSizeToFitWidth = true
+        titleLabel?.lineBreakMode = .byClipping
+        titleLabel?.minimumScaleFactor = 0.3
+        
+        titleLabel?.textAlignment = .center
+        
         setBorderColor(blue)
         setBorderWidth(2)
         
@@ -30,12 +39,6 @@ class HomeMenuButton: SimpleButton {
         
         setTitleColor(blue, for: .normal)
         setTitleColor(.white, for: .highlighted)
-        
-        titleEdgeInsets = UIEdgeInsets(top: 8, left: 2, bottom: 8, right: 2)
-        
-        titleLabel?.numberOfLines = 2
-        titleLabel?.adjustsFontSizeToFitWidth = true
-        titleLabel?.lineBreakMode = .byClipping
     }
 }
 
