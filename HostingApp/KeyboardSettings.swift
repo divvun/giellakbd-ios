@@ -8,9 +8,14 @@
 
 import Foundation
 
-fileprivate let defaults = UserDefaults(suiteName: "group.divvunkbd")!
+fileprivate let defaults = UserDefaults(suiteName: "group.\(KeyboardSettings.groupId)")!
 
 class KeyboardSettings {
+    static var groupId: String = {
+        let schemes = Bundle.main.infoDictionary!["LSApplicationQueriesSchemes"]! as! Array<String>
+        return schemes.first!
+    }()
+    
     static var currentKeyboard: Int {
         get { return defaults.integer(forKey: "currentKeyboard") }
         set { defaults.set(newValue, forKey: "currentKeyboard") }

@@ -677,7 +677,7 @@ class KeyboardViewController: UIInputViewController {
             }
             
             if res.responds(to: sel) {
-                res.perform(sel, with: URL(string: "giellakbd://settings")!)
+                res.perform(sel, with: URL(string: "\(KeyboardSettings.groupId)://settings")!)
             }
         }
         
