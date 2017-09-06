@@ -96,7 +96,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func parseUrl(_ url: URL) {
-        if url.scheme == "giellakbd" && url.host == "settings" {
+        guard let bundleId = Bundle.main.bundleIdentifier else {
+            return
+        }
+        
+        if url.scheme == bundleId && url.host == "settings" {
             nc.pushViewController(LayoutsController(), animated: true)
         }
     }
