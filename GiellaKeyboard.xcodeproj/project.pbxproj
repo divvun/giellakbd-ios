@@ -341,7 +341,7 @@
 				4E807DC319461DC700D875D1 /* PBXTargetDependency */,
 			);
 			name = HostingApp;
-			productName = TastyImitationKeyboard;
+			productName = HostingApp;
 			productReference = 4E807D9319461D9000D875D1 /* HostingApp.app */;
 			productType = "com.apple.product-type.application";
 		};
