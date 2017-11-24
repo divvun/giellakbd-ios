@@ -6,6 +6,8 @@
 	<array>
 		<string>giellakbd</string>
 	</array>
+	<key>DivvunKeyboardIndex</key>
+	<integer>0</integer>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>

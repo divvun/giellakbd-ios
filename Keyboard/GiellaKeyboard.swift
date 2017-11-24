@@ -109,8 +109,10 @@ open class GiellaKeyboard: KeyboardViewController {
     }
     */
 
+    let selectedKeyboardIndex: Int = Bundle.main.infoDictionary!["DivvunKeyboardIndex"] as! Int
+    
     override open func viewDidLoad() {
-        self.configure(with: selectedKeyboard(index: KeyboardSettings.currentKeyboard))
+        self.configure(with: selectedKeyboard(index: selectedKeyboardIndex))
 
         super.viewDidLoad()
     }
@@ -206,7 +208,7 @@ open class GiellaKeyboard: KeyboardViewController {
     }
     
     override func localName() -> String? {
-        return KeyboardDefinition.definitions[KeyboardSettings.currentKeyboard].name
+        return KeyboardDefinition.definitions[selectedKeyboardIndex].name
     }
     
     func disableInput() {

@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>DivvunKeyboardIndex</key>
+	<integer>1</integer>
 	<key>CFBundleDisplayName</key>
 	<string>Keyboard2</string>
 	<key>CFBundleExecutable</key>
@@ -36,7 +38,7 @@
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.keyboard-service</string>
 		<key>NSExtensionPrincipalClass</key>
-		<string>$(PRODUCT_MODULE_NAME).KeyboardViewController</string>
+		<string>${PRODUCT_MODULE_NAME}.EntryKeyboard</string>
 	</dict>
 </dict>
 </plist>
