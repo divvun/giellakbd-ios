@@ -135,7 +135,7 @@ class ChangeKey: Key {
     override func bind(view: KeyboardKey, target: KeyboardViewController) {
         super.bind(view: view, target: target)
         
-        view.addTarget(target, action: #selector(KeyboardViewController.advanceTapped(_:)), for: .touchUpInside)
+        view.addTarget(target, action: #selector(KeyboardViewController.advanceTapped(_:withEvent:)), for: .touchUpInside)
     }
 }
 

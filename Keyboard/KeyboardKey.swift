@@ -343,6 +343,7 @@ class KeyboardKey: UIControl {
     }
     
     func updateColors() {
+        DispatchQueue.main.async {
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         
@@ -398,6 +399,7 @@ class KeyboardKey: UIControl {
         }
         
         CATransaction.commit()
+        }
     }
     
     func layoutPopup(_ dir: Direction) {

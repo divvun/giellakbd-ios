@@ -26,7 +26,7 @@ let kPeriodShortcut = "kPeriodShortcut"
 let kKeyboardClicks = "kKeyboardClicks"
 let kSmallLowercase = "kSmallLowercase"
 
-class KeyboardViewController: UIInputViewController {
+open class KeyboardViewController: UIInputViewController {
 
     let backspaceDelay: TimeInterval = 0.5
     let backspaceRepeat: TimeInterval = 0.07
@@ -147,7 +147,7 @@ class KeyboardViewController: UIInputViewController {
     }
 
     var lastLayoutBounds: CGRect?
-    override func viewDidLayoutSubviews() {
+    override open func viewDidLayoutSubviews() {
         if view.bounds == CGRect.zero {
             return
         }
@@ -173,7 +173,7 @@ class KeyboardViewController: UIInputViewController {
         self.forwardingView.frame.origin = newOrigin
     }
 
-    override func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
 
         if let banner = createBanner() {
@@ -195,7 +195,7 @@ class KeyboardViewController: UIInputViewController {
         )
     }
 
-    override func viewWillAppear(_ animated: Bool) {
+    override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         self.bannerView?.isHidden = false
@@ -209,7 +209,7 @@ class KeyboardViewController: UIInputViewController {
         view.setNeedsUpdateConstraints()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    override open func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         view.removeConstraints(view.constraints)
@@ -230,7 +230,7 @@ class KeyboardViewController: UIInputViewController {
         }
     }
 
-    override func willRotate(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
+    override open func willRotate(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
         self.forwardingView.resetTrackedViews()
         self.shiftStartingState = nil
         self.shiftWasMultitapped = false
@@ -245,7 +245,7 @@ class KeyboardViewController: UIInputViewController {
         self.heightConstraint.constant = self.heightForOrientation(toInterfaceOrientation, withTopBanner: true)
     }
 
-    override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
+    override open func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
         // optimization: ensures quick mode and shift transitions
         if let keyPool = self.layout?.keyPool {
             for view in keyPool {
@@ -422,7 +422,7 @@ class KeyboardViewController: UIInputViewController {
     /////////////////////
     
     // TODO: this is currently not working as intended; only called when selection changed -- iOS bug
-    override func textDidChange(_ textInput: UITextInput?) {
+    override open func textDidChange(_ textInput: UITextInput?) {
         self.contextChanged()
     }
 
@@ -655,12 +655,19 @@ class KeyboardViewController: UIInputViewController {
         self.setupKeys()
     }
 
-    func advanceTapped(_ sender: KeyboardKey) {
+    func advanceTapped(_ sender: KeyboardKey, withEvent event: UIEvent) {
         self.forwardingView.resetTrackedViews()
         self.shiftStartingState = nil
         self.shiftWasMultitapped = false
+        
+        if #available(iOSApplicationExtension 10.0, *) {
+            DispatchQueue.main.async {
+                self.handleInputModeList(from: self.view, with: event)
+            }
+        } else {
+            self.advanceToNextInputMode()
 
-        self.advanceToNextInputMode()
+        }
     }
 
     @IBAction func toggleSettings() {

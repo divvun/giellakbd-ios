@@ -53,7 +53,7 @@ extension UnsafeMutablePointer where Pointee == vec_str_t {
 }
 */
 
-class GiellaKeyboard: KeyboardViewController {
+open class GiellaKeyboard: KeyboardViewController {
     //var keyNames: [String: String]
 
     //var zhfst: ZHFSTOSpeller?
@@ -109,7 +109,7 @@ class GiellaKeyboard: KeyboardViewController {
     }
     */
 
-    override func viewDidLoad() {
+    override open func viewDidLoad() {
         self.configure(with: selectedKeyboard(index: KeyboardSettings.currentKeyboard))
 
         super.viewDidLoad()
