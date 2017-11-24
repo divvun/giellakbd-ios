@@ -21,18 +21,19 @@ class InstructionsController: ViewController<InstructionsView> {
         navigationController?.popViewController(animated: true)
     }
     
-    func openLayouts() {
-        guard let nc = navigationController else { return }
-        
-        var vcs = nc.viewControllers
-        vcs.removeLast()
-        vcs.append(LayoutsController())
-        nc.setViewControllers(vcs, animated: true)
-    }
+//    func openLayouts() {
+//        guard let nc = navigationController else { return }
+//
+//        var vcs = nc.viewControllers
+//        vcs.removeLast()
+//        vcs.append(LayoutsController())
+//        nc.setViewControllers(vcs, animated: true)
+//    }
     
     func checkCurrentStep() {
         if AppDelegate.instance.isKeyboardEnabled {
-            openLayouts()
+//            openLayouts()
+            onSkipTapped()
         }
     }
     

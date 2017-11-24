@@ -99,10 +99,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard let bundleId = Bundle.main.bundleIdentifier else {
             return
         }
-        
-        if url.scheme == bundleId && url.host == "settings" {
-            nc.pushViewController(LayoutsController(), animated: true)
-        }
+//
+//        if url.scheme == bundleId && url.host == "settings" {
+//            nc.pushViewController(LayoutsController(), animated: true)
+//        }
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
