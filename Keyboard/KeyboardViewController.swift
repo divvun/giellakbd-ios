@@ -662,14 +662,16 @@ open class KeyboardViewController: UIInputViewController {
         self.shiftStartingState = nil
         self.shiftWasMultitapped = false
         
-        if #available(iOSApplicationExtension 10.0, *) {
-            DispatchQueue.main.async {
-                self.handleInputModeList(from: self.view, with: event)
-            }
-        } else {
-            self.advanceToNextInputMode()
-
-        }
+        self.advanceToNextInputMode()
+        
+//        if #available(iOSApplicationExtension 10.0, *) {
+//            DispatchQueue.main.async {
+//                self.handleInputModeList(from: self.view, with: event)
+//            }
+//        } else {
+//            self.advanceToNextInputMode()
+//
+//        }
     }
 
     @IBAction func toggleSettings() {
