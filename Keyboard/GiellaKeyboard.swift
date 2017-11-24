@@ -271,7 +271,7 @@ class GiellaBanner: ExtraView {
         self.mode = mode;
     }
 
-    func handleBtnPress(_ sender: UIButton) {
+    @objc func handleBtnPress(_ sender: UIButton) {
         let kbd = self.keyboard
         let textDocumentProxy = kbd.textDocumentProxy as UITextDocumentProxy
 
@@ -292,12 +292,12 @@ class GiellaBanner: ExtraView {
 
             let lastWord = keyboard.getCurrentWord()
 
-            for _ in 0..<(lastWord.characters.count) {
+            for _ in 0..<(lastWord.count) {
                 textDocumentProxy.deleteBackward()
             }
 
             if text.hasPrefix("\"") && text.hasSuffix("\"") {
-                text = text[text.characters.index(text.startIndex, offsetBy: 1)...text.characters.index(text.endIndex, offsetBy: -2)]
+                text = String(text[text.index(text.startIndex, offsetBy: 1)...text.index(text.endIndex, offsetBy: -2)])
             }
 
             textDocumentProxy.insertText(text)
@@ -343,7 +343,7 @@ class GiellaBanner: ExtraView {
 
             let widthConstraint = NSLayoutConstraint(item: firstView, attribute: .width, relatedBy: .equal, toItem: currentView, attribute: .width, multiplier: 1.0, constant: 0)
 
-            widthConstraint.priority = 800
+            widthConstraint.priority = UILayoutPriority(rawValue: 800)
 
             addConstraint(widthConstraint)
         }
@@ -352,11 +352,11 @@ class GiellaBanner: ExtraView {
 
     }
 
-    func buttonHighlight(_ sender: UIButton) {
+    @objc func buttonHighlight(_ sender: UIButton) {
         sender.backgroundColor = UIColor(red: 235.0/255.0, green: 237.0/255.0, blue: 239.0/255.0, alpha: 1.0)
     }
 
-    func buttonNormal(_ sender: UIButton) {
+    @objc func buttonNormal(_ sender: UIButton) {
         sender.backgroundColor = UIColor(red: 187.0/255.0, green: 194.0/255.0, blue: 201.0/255.0, alpha: 1.0)
     }
 
@@ -406,8 +406,8 @@ class GiellaBanner: ExtraView {
             btn.setTitleColor(UIColor(white: 1.0, alpha: 1.0), for: UIControlState())
             btn.setTitleColor(UIColor.black, for: .highlighted)
 
-            btn.setContentHuggingPriority(1000, for: .horizontal)
-            btn.setContentCompressionResistancePriority(1000, for: .horizontal)
+            btn.setContentHuggingPriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
+            btn.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
 
             for event in [UIControlEvents.touchDragOutside, .touchDragExit, .touchCancel, .touchUpInside, .touchUpOutside] {
                 btn.addTarget(self, action: #selector(GiellaBanner.buttonNormal(_:)), for: event)

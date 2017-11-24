@@ -318,7 +318,7 @@ class KeyboardKey: UIControl {
             style.alignment = .center
             
             let attrString = NSMutableAttributedString(string: self.label.text!)
-            attrString.addAttribute(NSParagraphStyleAttributeName, value:style, range:NSMakeRange(0, attrString.length))
+            attrString.addAttribute(NSAttributedStringKey.paragraphStyle, value:style, range:NSMakeRange(0, attrString.length))
             
             self.label.attributedText = attrString
         }

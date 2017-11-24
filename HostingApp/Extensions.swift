@@ -75,9 +75,9 @@ extension Strings {
         
         let attr = NSMutableAttributedString(string: plain)
         
-        attr.addAttribute(NSFontAttributeName, value: UIFont.systemFont(ofSize: size), range: nsplain.range(of: plain))
-        attr.addAttribute(NSFontAttributeName, value: UIFont.systemFont(ofSize: size, weight: 0.3), range: nsplain.range(of: Strings.localizedName))
-        attr.addAttribute(NSFontAttributeName, value: UIFont.systemFont(ofSize: size, weight: 0.3), range: nsplain.range(of: Strings.allowFullAccess))
+        attr.addAttribute(NSAttributedStringKey.font, value: UIFont.systemFont(ofSize: size), range: nsplain.range(of: plain))
+        attr.addAttribute(NSAttributedStringKey.font, value: UIFont.systemFont(ofSize: size, weight: UIFont.Weight(rawValue: 0.3)), range: nsplain.range(of: Strings.localizedName))
+        attr.addAttribute(NSAttributedStringKey.font, value: UIFont.systemFont(ofSize: size, weight: UIFont.Weight(rawValue: 0.3)), range: nsplain.range(of: Strings.allowFullAccess))
         
         return attr
     }
@@ -86,8 +86,8 @@ extension Strings {
         let nsstring = string as NSString
         let attr = NSMutableAttributedString(string: string)
         
-        attr.addAttribute(NSFontAttributeName, value: UIFont.systemFont(ofSize: size), range: nsstring.range(of: string))
-        attr.addAttribute(NSFontAttributeName, value: UIFont.systemFont(ofSize: size, weight: 0.3), range: nsstring.range(of: item))
+        attr.addAttribute(NSAttributedStringKey.font, value: UIFont.systemFont(ofSize: size), range: nsstring.range(of: string))
+        attr.addAttribute(NSAttributedStringKey.font, value: UIFont.systemFont(ofSize: size, weight: UIFont.Weight(rawValue: 0.3)), range: nsstring.range(of: item))
         
         return attr
     }
@@ -105,10 +105,10 @@ extension Strings {
         let range2 = string.range(of: "Tap icon")
         let range3 = string.range(of: "Language icon")
         
-        attrString.addAttribute(NSLinkAttributeName, value: simpleUrl, range: range1)
-        attrString.addAttribute(NSLinkAttributeName, value: tapUrl, range: range2)
-        attrString.addAttribute(NSLinkAttributeName, value: languageUrl, range: range3)
-        attrString.addAttribute(NSFontAttributeName, value: UIFont.systemFont(ofSize: 15), range: string.range(of: string as String))
+        attrString.addAttribute(NSAttributedStringKey.link, value: simpleUrl, range: range1)
+        attrString.addAttribute(NSAttributedStringKey.link, value: tapUrl, range: range2)
+        attrString.addAttribute(NSAttributedStringKey.link, value: languageUrl, range: range3)
+        attrString.addAttribute(NSAttributedStringKey.font, value: UIFont.systemFont(ofSize: 15), range: string.range(of: string as String))
         
         return attrString
     }
