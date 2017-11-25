@@ -53,12 +53,8 @@
 		C6F2494D1F736E2100840F2B /* KeyboardDefinitions.json in Resources */ = {isa = PBXBuildFile; fileRef = C6DCFDD21EB070B500FABC11 /* KeyboardDefinitions.json */; };
 		C6F2494E1F736E3100840F2B /* BaseKeyboard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6F2492F1F736DCE00840F2B /* BaseKeyboard.framework */; };
 		C6F2494F1F736E3E00840F2B /* KeyboardSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A3905A1EB61BF8009378C1 /* KeyboardSettings.swift */; };
-		C6F2495B1F736E8A00840F2B /* Keyboard2.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C6F249541F736E8A00840F2B /* Keyboard2.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		C6F2495F1F736EA000840F2B /* KeyboardDefinitions.json in Resources */ = {isa = PBXBuildFile; fileRef = C6DCFDD21EB070B500FABC11 /* KeyboardDefinitions.json */; };
-		C6F249601F736EB500840F2B /* BaseKeyboard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6F2492F1F736DCE00840F2B /* BaseKeyboard.framework */; };
 		C6F249661F736FB900840F2B /* GiellaKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A568E119FA286500C8E119 /* GiellaKeyboard.swift */; };
 		C6F249681F736FEE00840F2B /* EntryPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F249671F736FEE00840F2B /* EntryPoint.swift */; };
-		C6F249691F736FFA00840F2B /* EntryPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F249671F736FEE00840F2B /* EntryPoint.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,13 +79,6 @@
 			remoteGlobalIDString = C6F2492E1F736DCE00840F2B;
 			remoteInfo = BaseKeyboard;
 		};
-		C6F249591F736E8A00840F2B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4E807D8B19461D9000D875D1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C6F249531F736E8A00840F2B;
-			remoteInfo = Keyboard2;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -110,7 +99,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				C6F2495B1F736E8A00840F2B /* Keyboard2.appex in Embed App Extensions */,
 				4E807DC119461DC700D875D1 /* Keyboard.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
@@ -180,8 +168,6 @@
 		C6F2492F1F736DCE00840F2B /* BaseKeyboard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BaseKeyboard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6F249311F736DCE00840F2B /* BaseKeyboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseKeyboard.h; sourceTree = "<group>"; };
 		C6F249321F736DCE00840F2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C6F249541F736E8A00840F2B /* Keyboard2.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Keyboard2.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		C6F249581F736E8A00840F2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C6F249671F736FEE00840F2B /* EntryPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryPoint.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -206,14 +192,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C6F249511F736E8A00840F2B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C6F249601F736EB500840F2B /* BaseKeyboard.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,7 +243,6 @@
 				4E807D9519461D9000D875D1 /* HostingApp */,
 				4E807DBA19461DC700D875D1 /* Keyboard */,
 				C6F249301F736DCE00840F2B /* BaseKeyboard */,
-				C6F249551F736E8A00840F2B /* Keyboard2 */,
 				4E807D9419461D9000D875D1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -276,7 +253,6 @@
 				4E807D9319461D9000D875D1 /* HostingApp.app */,
 				4E807DB919461DC700D875D1 /* Keyboard.appex */,
 				C6F2492F1F736DCE00840F2B /* BaseKeyboard.framework */,
-				C6F249541F736E8A00840F2B /* Keyboard2.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -382,14 +358,6 @@
 			path = BaseKeyboard;
 			sourceTree = "<group>";
 		};
-		C6F249551F736E8A00840F2B /* Keyboard2 */ = {
-			isa = PBXGroup;
-			children = (
-				C6F249581F736E8A00840F2B /* Info.plist */,
-			);
-			path = Keyboard2;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -420,7 +388,6 @@
 				4E807DC019461DC700D875D1 /* PBXTargetDependency */,
 				4E807DC319461DC700D875D1 /* PBXTargetDependency */,
 				C6F249351F736DCE00840F2B /* PBXTargetDependency */,
-				C6F2495A1F736E8A00840F2B /* PBXTargetDependency */,
 			);
 			name = HostingApp;
 			productName = HostingApp;
@@ -463,23 +430,6 @@
 			productReference = C6F2492F1F736DCE00840F2B /* BaseKeyboard.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		C6F249531F736E8A00840F2B /* Keyboard2 */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C6F2495C1F736E8A00840F2B /* Build configuration list for PBXNativeTarget "Keyboard2" */;
-			buildPhases = (
-				C6F249501F736E8A00840F2B /* Sources */,
-				C6F249511F736E8A00840F2B /* Frameworks */,
-				C6F249521F736E8A00840F2B /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = Keyboard2;
-			productName = Keyboard2;
-			productReference = C6F249541F736E8A00840F2B /* Keyboard2.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -515,11 +465,6 @@
 						LastSwiftMigration = 0910;
 						ProvisioningStyle = Automatic;
 					};
-					C6F249531F736E8A00840F2B = {
-						CreatedOnToolsVersion = 8.3.3;
-						LastSwiftMigration = 0910;
-						ProvisioningStyle = Automatic;
-					};
 				};
 			};
 			buildConfigurationList = 4E807D8E19461D9000D875D1 /* Build configuration list for PBXProject "GiellaKeyboard" */;
@@ -540,7 +485,6 @@
 				4E807D9219461D9000D875D1 /* HostingApp */,
 				4E807DB819461DC700D875D1 /* Keyboard */,
 				C6F2492E1F736DCE00840F2B /* BaseKeyboard */,
-				C6F249531F736E8A00840F2B /* Keyboard2 */,
 			);
 		};
 /* End PBXProject section */
@@ -574,14 +518,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C6F249521F736E8A00840F2B /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C6F2495F1F736EA000840F2B /* KeyboardDefinitions.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -642,14 +578,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C6F249501F736E8A00840F2B /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C6F249691F736FFA00840F2B /* EntryPoint.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -667,11 +595,6 @@
 			isa = PBXTargetDependency;
 			target = C6F2492E1F736DCE00840F2B /* BaseKeyboard */;
 			targetProxy = C6F249341F736DCE00840F2B /* PBXContainerItemProxy */;
-		};
-		C6F2495A1F736E8A00840F2B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C6F249531F736E8A00840F2B /* Keyboard2 */;
-			targetProxy = C6F249591F736E8A00840F2B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -969,47 +892,6 @@
 			};
 			name = Release;
 		};
-		C6F2495D1F736E8A00840F2B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = "";
-				GCC_OPTIMIZATION_LEVEL = 0;
-				INFOPLIST_FILE = Keyboard2/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaKeyboard.Keyboard2;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.0;
-			};
-			name = Debug;
-		};
-		C6F2495E1F736E8A00840F2B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = Keyboard2/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaKeyboard.Keyboard2;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1045,15 +927,6 @@
 			buildConfigurations = (
 				C6F249381F736DCE00840F2B /* Debug */,
 				C6F249391F736DCE00840F2B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C6F2495C1F736E8A00840F2B /* Build configuration list for PBXNativeTarget "Keyboard2" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C6F2495D1F736E8A00840F2B /* Debug */,
-				C6F2495E1F736E8A00840F2B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
