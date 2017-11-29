@@ -298,9 +298,17 @@ open class KeyboardViewController: UIInputViewController {
         //keyView.label.text = displayName
         return displayName
     }
+    
+    var hasChangedSpace = false
 
     func changeSpaceName(_ keyView: KeyboardKey, completion: @escaping () -> Void) {
         //setSpaceLocalName(keyView)
+        
+        if hasChangedSpace {
+            return
+        }
+        
+        hasChangedSpace = true
         
         keyView.label.alpha = 1
 
