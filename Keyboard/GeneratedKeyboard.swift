@@ -23,13 +23,12 @@ func selectedKeyboard(index: Int) -> Keyboard {
     
     let isPad = UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad
     
-    defaultKeyboard.addKey(ShiftKey(), row: 2, page: 0)
-    
     let def = KeyboardDefinition.definitions[index]
+    defaultKeyboard.addKey(ShiftKey(), row: def.normal.count - 1, page: 0)
     
-    addKeyRow(defaultKeyboard, definition: def, row: 0)
-    addKeyRow(defaultKeyboard, definition: def, row: 1)
-    addKeyRow(defaultKeyboard, definition: def, row: 2)
+    for i in 0..<def.normal.count {
+        addKeyRow(defaultKeyboard, definition: def, row: i)
+    }
     
     if isPad {
         defaultKeyboard.addKey(BackspaceKey(), row: 0, page: 0)
@@ -66,7 +65,7 @@ func selectedKeyboard(index: Int) -> Keyboard {
         periodKey.lowercaseOutput = "."
         defaultKeyboard.addKey(periodKey, row: 2, page: 0)
         */
-        defaultKeyboard.addKey(BackspaceKey(), row: 2, page: 0)
+        defaultKeyboard.addKey(BackspaceKey(), row: def.normal.count - 1, page: 0)
     }
     
     return defaultControls(defaultKeyboard, definition: def)

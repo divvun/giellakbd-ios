@@ -508,8 +508,9 @@ fileprivate func addControls(_ defaultKeyboard: Keyboard, definition def: Keyboa
 
 func defaultControls(_ defaultKeyboard: Keyboard, definition def: KeyboardDefinition) -> Keyboard {
     let isPad = UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad
+    let lastRow = def.normal.count
 
-    addControls(defaultKeyboard, definition: def, row: 3, page: 0, toMode: 1, isMain: true)
+    addControls(defaultKeyboard, definition: def, row: lastRow, page: 0, toMode: 1, isMain: true)
 
     for key in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"] {
         let keyModel = Key(.specialCharacter)

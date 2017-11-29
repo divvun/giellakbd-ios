@@ -263,8 +263,9 @@ open class KeyboardViewController: UIInputViewController {
         let height = screenHeight.truncatingRemainder(dividingBy: 3)
         
         let topBannerHeight = withTopBanner ? metric("topBanner") : 0
+        let additionalRowHeight = CGFloat(max(self.keyboard.pages[0].rows.count - 4, 0) * 56)
         
-        return CGFloat(max(height, maxHeight) + topBannerHeight)
+        return CGFloat(max(height, maxHeight) + topBannerHeight + additionalRowHeight)
     }
 
     /*
