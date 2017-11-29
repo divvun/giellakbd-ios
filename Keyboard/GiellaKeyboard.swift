@@ -556,7 +556,7 @@ func defaultControls(_ defaultKeyboard: Keyboard, definition def: KeyboardDefini
         defaultKeyboard.addKey(keyModeChangeLetters, row: 3, page: 1)
         defaultKeyboard.addKey(ChangeKey(), row: 3, page: 1)
         defaultKeyboard.addKey(SettingsKey(), row: 3, page: 1)
-        defaultKeyboard.addKey(SpaceKey(), row: 3, page: 1)
+        defaultKeyboard.addKey(SpaceKey(hasName: false), row: 3, page: 1)
         defaultKeyboard.addKey(makeReturnKey(definition: def), row: 3, page: 1)
     }
     
@@ -598,7 +598,7 @@ func defaultControls(_ defaultKeyboard: Keyboard, definition def: KeyboardDefini
         defaultKeyboard.addKey(ModeChangeKey(), row: 3, page: 2)
         defaultKeyboard.addKey(ChangeKey(), row: 3, page: 2)
         defaultKeyboard.addKey(SettingsKey(), row: 3, page: 2)
-        defaultKeyboard.addKey(SpaceKey(), row: 3, page: 2)
+        defaultKeyboard.addKey(SpaceKey(hasName: false), row: 3, page: 2)
         defaultKeyboard.addKey(makeReturnKey(definition: def), row: 3, page: 2)
     }
     return defaultKeyboard

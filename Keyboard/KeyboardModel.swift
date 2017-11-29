@@ -106,14 +106,24 @@ class ShiftKey: Key {
 }
 
 class SpaceKey: Key {
-    init() {
+    let hasName: Bool
+    
+    init(hasName: Bool = false) {
+        self.hasName = hasName
         super.init(.space)
     }
     
+    var isFirstBind = true
     var isChanging = false
     
     override func bind(view: KeyboardKey, target: KeyboardViewController) {
         super.bind(view: view, target: target)
+        
+        if isFirstBind {
+            isFirstBind = false
+        } else {
+            return
+        }
         
         if isChanging {
             return
