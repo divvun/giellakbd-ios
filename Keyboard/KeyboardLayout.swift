@@ -1017,11 +1017,11 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
     // END LAYOUT //
     ////////////////
 
-    func frameForPopup(_ key: KeyboardKey, direction: Direction) -> CGRect {
+    func frameForPopup(_ key: KeyboardKey, direction: Direction, longpressKeys:[String]) -> CGRect {
         let actualScreenWidth = (UIScreen.main.nativeBounds.size.width / UIScreen.main.nativeScale)
         let totalHeight = self.layoutConstants.popupTotalHeight(actualScreenWidth)
 
-        let popupWidth = key.bounds.width + self.layoutConstants.popupWidthIncrement
+        let popupWidth = (longpressKeys.count > 0 ? CGFloat(longpressKeys.count * 36) : key.bounds.width) + self.layoutConstants.popupWidthIncrement
         let popupHeight = totalHeight - self.layoutConstants.popupGap - key.bounds.height
         _ = 0
 
@@ -1053,7 +1053,7 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
             }
 
             if localFrame.origin.x + localFrame.width > superview.bounds.width - 3 {
-                localFrame.origin.x = key.frame.origin.x + key.frame.width - localFrame.width
+                localFrame.origin.x = localFrame.origin.x - (localFrame.origin.x + localFrame.width - superview.bounds.width) - 3
             }
 
             popup.frame = actualSuperview.convert(localFrame, to: popup.superview)

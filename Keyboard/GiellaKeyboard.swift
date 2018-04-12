@@ -230,15 +230,12 @@ open class GiellaKeyboard: KeyboardViewController {
     override func showLongPress() {
         super.showLongPress()
 
-        if let banner = self.bannerView as? GiellaBanner {
-            banner.mode = .longPress
-            if let keyView = self.lastKey {
-                let key = self.layout!.keyForView(keyView)
-                let longpresses = key!.longPressForCase(shiftState.uppercase())
+        if let keyView = self.lastKey {
+            let key = self.layout!.keyForView(keyView)
+            let longpresses = key!.longPressForCase(shiftState.uppercase())
 
-                if longpresses.count > 0 {
-                    banner.updateList(longpresses)
-                }
+            if longpresses.count > 0 {
+                keyView.showLongpressPopup(keys: longpresses)
             }
         }
     }
@@ -486,6 +483,15 @@ fileprivate func addControls(_ defaultKeyboard: Keyboard, definition def: Keyboa
     defaultKeyboard.addKey(makeModeKey(to: mode, isMain: isMain), row: row, page: page)
     
     let keyboardChange = ChangeKey()
+    // TODO: Hide globe key on iPhone X
+//    if #available(iOSApplicationExtension 11.0, *) {
+//        if UIInputViewController.init().needsInputModeSwitchKey {
+//            defaultKeyboard.addKey(ChangeKey(), row: row, page: page)
+//        }
+//    } else {
+//        defaultKeyboard.addKey(ChangeKey(), row: row, page: page)
+//    }
+
     defaultKeyboard.addKey(keyboardChange, row: row, page: page)
     
     let settings = SettingsKey()

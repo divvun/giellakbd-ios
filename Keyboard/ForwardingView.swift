@@ -10,6 +10,9 @@ import UIKit
 
 class ForwardingView: UIView {
     
+    var longpressEnabled: Bool = false
+    var longpressedKey: KeyboardKey?
+    
     var touchToView: [UITouch:UIView]
     
     override init(frame: CGRect) {
@@ -153,6 +156,9 @@ class ForwardingView: UIView {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if longpressEnabled {
+            return
+        }
         for touch in touches {
             let position = touch.location(in: self)
             let view = findNearestView(position)
@@ -171,6 +177,23 @@ class ForwardingView: UIView {
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let key = longpressedKey, longpressEnabled {
+            for touch in touches {
+                let position = touch.location(in: self)
+                
+                if abs(position.y - key.center.y) > 60 {
+                    key.longpressDidCancel()
+                    self.longpressEnabled = false
+                    self.longpressedKey = nil
+                } else {
+                    if let popup = key.popup {
+                        key.longpressDidMove(x: position.x - key.center.x - popup.frame.minX)
+                    }
+                    return
+                }
+            }
+        }
+
         for touch in touches {
             let position = touch.location(in: self)
             
@@ -196,6 +219,25 @@ class ForwardingView: UIView {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let key = longpressedKey, longpressEnabled {
+            for touch in touches {
+                let position = touch.location(in: self)
+                
+                if abs(position.y - key.center.y) > 60 {
+                    key.longpressDidCancel()
+                    self.longpressEnabled = false
+                    self.longpressedKey = nil
+                } else {
+                    if let popup = key.popup {
+                        key.longpressDidSelect(x: position.x - key.center.x - popup.frame.minX)
+                    }
+                    self.longpressEnabled = false
+                    self.longpressedKey = nil
+                    return
+                }
+            }
+        }
+
         for touch in touches {
             let view = self.touchToView[touch]
             
@@ -213,6 +255,10 @@ class ForwardingView: UIView {
     }
 
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if longpressEnabled {
+            return
+        }
+
         for touch in touches {
             let view = self.touchToView[touch]
             

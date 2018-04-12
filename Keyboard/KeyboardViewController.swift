@@ -381,6 +381,9 @@ open class KeyboardViewController: UIInputViewController {
     var longPressTimer: Timer?
 
     @objc func showPopup(_ sender: KeyboardKey) {
+        if longPressTriggered {
+            return
+        }
         if sender == self.keyWithDelayedPopup {
             self.popupDelayTimer?.invalidate()
         }
@@ -413,7 +416,11 @@ open class KeyboardViewController: UIInputViewController {
         }
     }
 
-    var longPressTriggered = false;
+    var longPressTriggered = false {
+        didSet {
+            self.forwardingView.longpressEnabled = longPressTriggered
+        }
+    }
 
     @objc func showLongPress() {
         if self.lastKey != nil {
@@ -421,6 +428,7 @@ open class KeyboardViewController: UIInputViewController {
                 if (shiftState.uppercase() && key.hasUppercaseLongPress) ||
                     (!shiftState.uppercase() && key.hasUppercaseLongPress) {
                         self.longPressTriggered = true;
+                        self.forwardingView.longpressedKey = self.lastKey
                 }
             }
         }

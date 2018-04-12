@@ -13,7 +13,7 @@ import UIKit
 
 // popup constraints have to be setup with the topmost view in mind; hence these callbacks
 protocol KeyboardKeyProtocol: class {
-    func frameForPopup(_ key: KeyboardKey, direction: Direction) -> CGRect
+    func frameForPopup(_ key: KeyboardKey, direction: Direction, longpressKeys: [String]) -> CGRect
     func willShowPopup(_ key: KeyboardKey, direction: Direction) //may be called multiple times during layout
     func willHidePopup(_ key: KeyboardKey)
 }
@@ -407,7 +407,9 @@ class KeyboardKey: UIControl {
         
         if let popup = self.popup {
             if let delegate = self.delegate {
-                let frame = delegate.frameForPopup(self, direction: dir)
+                let frame = delegate.frameForPopup(self,
+                                                   direction: dir,
+                                                   longpressKeys: self.longpressActive ? self.longpressKeys : [])
                 popup.frame = frame
                 popupLabel?.frame = popup.bounds
             }
@@ -449,6 +451,101 @@ class KeyboardKey: UIControl {
         }
     }
     
+    func longpressDidMove(x:CGFloat) {
+        self.longpressView?.activeIndex = self.longpressIndexForOffset(x)
+    }
+    
+    func longpressDidSelect(x:CGFloat) {
+        let index = self.longpressIndexForOffset(x)
+        if let kbd = self.allTargets.first as? KeyboardViewController,
+            longpressKeys.count > index {
+
+            let textDocumentProxy = kbd.textDocumentProxy as UITextDocumentProxy
+        
+            let text = longpressKeys[index]
+        
+            kbd.hideLongPress()
+        
+            textDocumentProxy.insertText(text)
+        
+            kbd.contextChanged()
+        
+            if kbd.shiftState == ShiftState.enabled {
+                kbd.shiftState = ShiftState.disabled
+            }
+        
+            kbd.setCapsIfNeeded()
+        }
+
+
+        self.hidePopup()
+    }
+    
+    func longpressIndexForOffset(_ offset:CGFloat) -> Int {
+        let items = longpressKeys.count
+        
+        var index = Int(floor(offset / CGFloat(itemWidth)))
+        
+        if index > items {
+            index = items
+        }
+        if index < 0 {
+            index = 0
+        }
+        return index
+    }
+    
+    func longpressDidCancel() {
+        self.hidePopup()
+    }
+    
+    var longpressKeys: [String] = []
+    let itemWidth = 32
+    let padding = 4
+    let popupMargin: Double = 13.0
+
+    var longpressView: ExtraKeysPopupView?
+    var longpressActive = false
+    func showLongpressPopup(keys:[String]) {
+        self.longpressKeys = keys
+        if longpressActive {
+            return
+        }
+        longpressActive = true
+        hidePopup()
+        self.longpressActive = true
+        if self.popup == nil {
+            self.layer.zPosition = 1000
+
+            let popup = KeyboardKeyBackground(cornerRadius: 9.0, underOffset: self.underOffset)
+            
+            let items = keys.count
+
+            let width = Double((items * itemWidth) + ((items - 1) * padding))
+            let popupFrame = CGRect(x: -popupMargin, y: 0.0, width: max(60.0, (popupMargin * 2) + width), height: 50.0)
+            let extrakeysView = ExtraKeysPopupView(frame: CGRect(origin: CGPoint(x: popupMargin, y: 0.0), size: CGSize(width: popupFrame.width - CGFloat(popupMargin * 2), height: 50.0)))
+            extrakeysView.keys = keys
+            extrakeysView.layer.cornerRadius = 4
+            extrakeysView.backgroundColor = UIColor.clear
+            extrakeysView.setup()
+            
+            popup.layer.cornerRadius = 9.0
+            popup.frame = popupFrame
+            popup.bounds = CGRect(origin: CGPoint.zero, size: popupFrame.size)
+
+            self.popup = popup
+            popup.translatesAutoresizingMaskIntoConstraints = false
+            self.addSubview(popup)
+            self.popupDirection = nil
+            popup.addSubview(extrakeysView)
+            self.longpressView = extrakeysView
+            
+            NotificationCenter.default.post(name: NSNotification.Name.init("didShowLongpress"), object: extrakeysView)
+            
+            self.label.isHidden = true
+        }
+    }
+    
     func showPopup() {
         if self.popup == nil {
             self.layer.zPosition = 1000
@@ -477,6 +574,9 @@ class KeyboardKey: UIControl {
     func hidePopup() {
         if self.popup != nil {
             self.delegate?.willHidePopup(self)
+            
+            self.longpressActive = false
+            self.longpressView = nil
             
             self.popupLabel?.removeFromSuperview()
             self.popupLabel = nil

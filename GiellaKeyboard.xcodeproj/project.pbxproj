@@ -55,6 +55,8 @@
 		C6F2494F1F736E3E00840F2B /* KeyboardSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A3905A1EB61BF8009378C1 /* KeyboardSettings.swift */; };
 		C6F249661F736FB900840F2B /* GiellaKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A568E119FA286500C8E119 /* GiellaKeyboard.swift */; };
 		C6F249681F736FEE00840F2B /* EntryPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F249671F736FEE00840F2B /* EntryPoint.swift */; };
+		FD93A49B206260B200E5B6EF /* ExtraKeysPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD99CDE20625AFD00FC7F15 /* ExtraKeysPopupView.swift */; };
+		FDD99CDF20625AFD00FC7F15 /* ExtraKeysPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD99CDE20625AFD00FC7F15 /* ExtraKeysPopupView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -169,6 +171,7 @@
 		C6F249311F736DCE00840F2B /* BaseKeyboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseKeyboard.h; sourceTree = "<group>"; };
 		C6F249321F736DCE00840F2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C6F249671F736FEE00840F2B /* EntryPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryPoint.swift; sourceTree = "<group>"; };
+		FDD99CDE20625AFD00FC7F15 /* ExtraKeysPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtraKeysPopupView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -207,6 +210,7 @@
 				4E60A13B1979FA8E00854CC8 /* KeyboardConnector.swift */,
 				4E52A6D31A06A626006A08CE /* ExtraView.swift */,
 				4EEFD78A19E0DF15004D4974 /* Shapes.swift */,
+				FDD99CDE20625AFD00FC7F15 /* ExtraKeysPopupView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -443,20 +447,20 @@
 					4E807D9219461D9000D875D1 = {
 						CreatedOnToolsVersion = 6.0;
 						LastSwiftMigration = 0910;
-						ProvisioningStyle = Manual;
+                        ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
-								enabled = 1;
+                                enabled = 1;
 							};
 						};
 					};
 					4E807DB819461DC700D875D1 = {
 						CreatedOnToolsVersion = 6.0;
 						LastSwiftMigration = 0910;
-						ProvisioningStyle = Manual;
+                        ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
-								enabled = 1;
+                                enabled = 1;
 							};
 						};
 					};
@@ -549,6 +553,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDD99CDF20625AFD00FC7F15 /* ExtraKeysPopupView.swift in Sources */,
 				C6F249681F736FEE00840F2B /* EntryPoint.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -568,6 +573,7 @@
 				C6F249401F736E0700840F2B /* ExtraView.swift in Sources */,
 				C6F2493C1F736E0700840F2B /* KeyboardKey.swift in Sources */,
 				C6F249461F736E1400840F2B /* KeyboardDefinition.swift in Sources */,
+				FD93A49B206260B200E5B6EF /* ExtraKeysPopupView.swift in Sources */,
 				C6F249471F736E1A00840F2B /* KeyboardViewController.swift in Sources */,
 				C6F2493F1F736E0700840F2B /* KeyboardConnector.swift in Sources */,
 				C6F2493D1F736E0700840F2B /* ImageKey.swift in Sources */,
@@ -728,9 +734,9 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_ENTITLEMENTS = HostingApp/HostingApp.entitlements;
+                CODE_SIGN_ENTITLEMENTS = HostingApp/HostingApp.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+                DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = HostingApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -752,9 +758,9 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_ENTITLEMENTS = HostingApp/HostingApp.entitlements;
+                CODE_SIGN_ENTITLEMENTS = HostingApp/HostingApp.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+                DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = HostingApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -774,10 +780,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = Keyboard/Keyboard.entitlements;
+                CODE_SIGN_ENTITLEMENTS = Keyboard/Keyboard.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+                DEVELOPMENT_TEAM = "";
 				GENERATE_PROFILING_CODE = YES;
 				INFOPLIST_FILE = Keyboard/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
@@ -804,10 +810,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = Keyboard/Keyboard.entitlements;
+                CODE_SIGN_ENTITLEMENTS = Keyboard/Keyboard.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+                DEVELOPMENT_TEAM = "";
 				GENERATE_PROFILING_CODE = YES;
 				INFOPLIST_FILE = Keyboard/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
