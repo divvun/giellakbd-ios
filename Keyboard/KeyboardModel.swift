@@ -143,9 +143,15 @@ class ChangeKey: Key {
     }
     
     override func bind(view: KeyboardKey, target: KeyboardViewController) {
-        super.bind(view: view, target: target)
+        // Not calling super to make sure we _dont_ bind it to anything else
+        //super.bind(view: view, target: target)
         
-        view.addTarget(target, action: #selector(KeyboardViewController.advanceTapped(_:withEvent:)), for: .touchUpInside)
+        if #available(iOSApplicationExtension 10.0, *) {
+            view.addTarget(target, action: #selector(KeyboardViewController.handleInputModeList(from:with:)), for: .allTouchEvents)
+        } else {
+            view.addTarget(target, action: #selector(KeyboardViewController.advanceTapped(_:withEvent:)), for: .touchUpInside)
+        }
+
     }
 }
 

@@ -34,6 +34,12 @@ class ForwardingView: UIView {
     override func draw(_ rect: CGRect) {}
     
     override func hitTest(_ point: CGPoint, with event: UIEvent!) -> UIView? {
+        let view = findNearestView(point)
+        
+        // Forward Keyboard change key events directly to it
+        if let kbdKey = view as? KeyboardKey, let _ = kbdKey.shape as? GlobeShape {
+            return kbdKey
+        }
         if self.isHidden || self.alpha == 0 || !self.isUserInteractionEnabled {
             return nil
         }
