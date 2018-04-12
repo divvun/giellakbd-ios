@@ -34,7 +34,6 @@ open class KeyboardViewController: UIInputViewController {
     var keyboard: Keyboard!
     var forwardingView: ForwardingView!
     var layout: KeyboardLayout? = nil
-    var heightConstraint: NSLayoutConstraint!
 
     var bannerView: ExtraView? = nil
     var settingsView: ExtraView? = nil
@@ -173,26 +172,34 @@ open class KeyboardViewController: UIInputViewController {
         self.forwardingView.frame.origin = newOrigin
     }
 
+    var heightView: UIView?
     override open func viewDidLoad() {
         super.viewDidLoad()
 
-        if let banner = createBanner() {
-            banner.isHidden = true
-            view.insertSubview(banner, belowSubview: forwardingView)
-            bannerView = banner
+        // iOS refuses to set the keyboards height directly, so this hidden view autolayouts it for us instead
+        if heightView == nil {
+            let heightView = UIView(frame: CGRect(x: 0, y: 0, width: 300, height: 500))
+            heightView.backgroundColor = UIColor.clear
+            heightView.isUserInteractionEnabled = false
+            heightView.translatesAutoresizingMaskIntoConstraints = false
+            self.view.addSubview(heightView)
+            heightView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+            heightView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+            heightView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
+            heightView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
+            self.heightView = heightView
         }
+
+    }
+    
+    open override func updateViewConstraints() {
+        super.updateViewConstraints()
         
-        let h = heightForOrientation(orientation, withTopBanner: true)
-        
-        heightConstraint = NSLayoutConstraint(
-            item: view,
-            attribute: .height,
-            relatedBy: .equal,
-            toItem: nil,
-            attribute: .notAnAttribute,
-            multiplier: 0.0,
-            constant: h
-        )
+        if (view.frame.size.width == 0 || view.frame.size.height == 0) {
+            return
+        }
+
+        self.updateHeightConstraint()
     }
 
     override open func viewWillAppear(_ animated: Bool) {
@@ -200,15 +207,26 @@ open class KeyboardViewController: UIInputViewController {
         
         self.bannerView?.isHidden = false
         
-        self.heightConstraint.constant = self.heightForOrientation(self.orientation, withTopBanner: true)
-        
-        view.addConstraint(heightConstraint)
-        
         setupLayout()
         
         view.setNeedsUpdateConstraints()
     }
     
+    
+    // MARK: Set up height constraint
+    func updateHeightConstraint() {
+        self.updateHeightConstraint(orientation: self.orientation)
+    }
+    
+    func updateHeightConstraint(orientation: UIInterfaceOrientation) {
+        var bannerEnabled = false
+        if let bannerView = self.bannerView as? GiellaBanner {
+            bannerEnabled = bannerView.mode == .suggestion
+        }
+        let h = self.heightForOrientation(orientation, withTopBanner: bannerEnabled)
+        self.heightView?.heightAnchor.constraint(equalToConstant: h).isActive = true
+    }
+
     override open func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -242,7 +260,7 @@ open class KeyboardViewController: UIInputViewController {
             }
         }
         
-        self.heightConstraint.constant = self.heightForOrientation(toInterfaceOrientation, withTopBanner: true)
+        self.updateHeightConstraint(orientation: toInterfaceOrientation)
     }
 
     override open func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
