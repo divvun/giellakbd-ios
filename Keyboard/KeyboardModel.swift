@@ -209,7 +209,7 @@ class Key: Hashable {
     
     func bind(view: KeyboardKey, target: KeyboardViewController) {
         if isCharacter {
-            view.addTarget(target, action: #selector(KeyboardViewController.showPopup(_:)), for: [.touchDown, .touchDragInside, .touchDragEnter])
+            view.addTarget(target, action: #selector(KeyboardViewController.showPopup(_:)), for: [.touchDown, /*.touchDragInside,*/ .touchDragEnter])
             // TODO ensure this works, target was view before.
             view.addTarget(target, action: #selector(KeyboardViewController.hidePopup(_:)), for: [.touchDragExit, .touchCancel])
             view.addTarget(target, action: #selector(KeyboardViewController.hidePopupDelay(_:)), for: [.touchUpInside, .touchUpOutside, .touchDragOutside])
