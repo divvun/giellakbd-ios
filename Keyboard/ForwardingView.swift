@@ -233,6 +233,7 @@ class ForwardingView: UIView {
                     }
                     self.longpressEnabled = false
                     self.longpressedKey = nil
+                    self.touchToView[touch] = nil
                     return
                 }
             }
