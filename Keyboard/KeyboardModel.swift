@@ -258,6 +258,7 @@ class Key: Hashable {
     
     var hasOutput: Bool {
         get {
+            if self.type == .space { return true }
             return (self.uppercaseOutput != nil) || (self.lowercaseOutput != nil)
         }
     }
