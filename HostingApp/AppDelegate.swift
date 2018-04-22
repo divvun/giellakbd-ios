@@ -96,7 +96,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func parseUrl(_ url: URL) {
-        guard let bundleId = Bundle.main.bundleIdentifier else {
+        guard let _ = Bundle.main.bundleIdentifier else {
             return
         }
 //
