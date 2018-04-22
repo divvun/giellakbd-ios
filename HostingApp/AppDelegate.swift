@@ -45,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let s = str1 + str2
             
             let v = $0.perform(Selector(s))
-            if let x = v?.takeRetainedValue() as? Bundle {
+            if let x = v?.takeUnretainedValue() as? Bundle {
                 return x
             }
             
