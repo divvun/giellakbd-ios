@@ -2,5 +2,5 @@ The Sámi keyboard app is made by the Divvun group at UiT The Arctic University 
 
 We appreciate any feedback you can give. See feedback e-mail address below.
 
-WWW: http://divvun.no
+WWW: http://divvun.no/keyboards/mobileindex.html
 Email: feedback@divun.no
