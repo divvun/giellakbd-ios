@@ -1,4 +1,4 @@
-Samiiske tastaturer-appen er utviklet av Divvun-gruppa ved UiT Norges arktiske universitet. Hele appen er tilgjengelig som åpen kildekode, og kildekoden finnes i github.com/divvun. Tastaturdefinisjonene finnes i Subversion-repositoriet vårt. Du får flere detaljer via lenken nedenfor.
+Samiske tastaturer-appen er utviklet av Divvun-gruppa ved UiT Norges arktiske universitet. Hele appen er tilgjengelig som åpen kildekode, og kildekoden finnes i github.com/divvun. Tastaturdefinisjonene finnes i Subversion-repositoriet vårt. Du får flere detaljer via lenken nedenfor.
 
 Vi setter stor pris på tilbakemeldinger, som du kan gi via e-postlenken nedenfor.
 
