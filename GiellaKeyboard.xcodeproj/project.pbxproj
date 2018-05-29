@@ -142,7 +142,6 @@
 		C65430AF1EC94BC7007FC053 /* InstructionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsView.swift; sourceTree = "<group>"; };
 		C65430B11EC94BD1007FC053 /* InstructionsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InstructionsView.xib; sourceTree = "<group>"; };
 		C65430B31EC94BF0007FC053 /* LanguagesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguagesController.swift; sourceTree = "<group>"; };
-		C65430B51EC94E1B007FC054 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = HostingApp/sjd.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C655E8531EC5551100B12BE4 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		C655E8551EC5559200B12BE4 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		C655E8571EC5559E00B12BE4 /* HomeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeView.xib; sourceTree = "<group>"; };
@@ -447,20 +446,20 @@
 					4E807D9219461D9000D875D1 = {
 						CreatedOnToolsVersion = 6.0;
 						LastSwiftMigration = 0910;
-                        ProvisioningStyle = Manual;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
-                                enabled = 1;
+								enabled = 1;
 							};
 						};
 					};
 					4E807DB819461DC700D875D1 = {
 						CreatedOnToolsVersion = 6.0;
 						LastSwiftMigration = 0910;
-                        ProvisioningStyle = Manual;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
-                                enabled = 1;
+								enabled = 1;
 							};
 						};
 					};
@@ -609,7 +608,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				C655E85C1EC55D0800B12BE4 /* Base */,
-				C65430B51EC94E1B007FC054 /* de */,
 				C676AD601EC986F000523FF3 /* nb */,
 				C676AD611EC986FA00523FF3 /* se */,
 			);
@@ -734,9 +732,9 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-                CODE_SIGN_ENTITLEMENTS = HostingApp/HostingApp.entitlements;
+				CODE_SIGN_ENTITLEMENTS = HostingApp/HostingApp.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-                DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = HostingApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -758,9 +756,9 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-                CODE_SIGN_ENTITLEMENTS = HostingApp/HostingApp.entitlements;
+				CODE_SIGN_ENTITLEMENTS = HostingApp/HostingApp.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-                DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = HostingApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -780,10 +778,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-                CODE_SIGN_ENTITLEMENTS = Keyboard/Keyboard.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Keyboard/Keyboard.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-                DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = "";
 				GENERATE_PROFILING_CODE = YES;
 				INFOPLIST_FILE = Keyboard/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
@@ -810,10 +808,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-                CODE_SIGN_ENTITLEMENTS = Keyboard/Keyboard.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Keyboard/Keyboard.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-                DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = "";
 				GENERATE_PROFILING_CODE = YES;
 				INFOPLIST_FILE = Keyboard/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
