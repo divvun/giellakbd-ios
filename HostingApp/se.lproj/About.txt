@@ -1,6 +1,6 @@
-Samiiske tastaturer-appen er utviklet av Divvun-gruppa ved UiT Norges arktiske universitet. Hele appen er tilgjengelig som åpen kildekode, og kildekoden finnes i github.com/divvun. Tastaturdefinisjonene finnes i Subversion-repositoriet vårt. Du får flere detaljer via lenken nedenfor.
+Divvun-joavku Uit Norgga árktalaš universitehtas lea ovdánahttán Samiske tastaturer-áppa. Olles áppa lea olámuttus rabas gáldokodan, ja gávdno github.com/divvun:s. Hámuhusdefinišuvnnaid gávdná min Subversion-vuorkás. Gávnnat eanet dieđuid liŋkkas mii lea dás vuolábealde.
 
-Vi setter stor pris på tilbakemeldinger, som du kan gi via e-postlenken nedenfor.
+Sáddes áinnas rámi ja meattáhusdieđuid midjiide e-boastačujuhusa bokte maid gávnnat dás vuolábealde.
 
 WWW: http://divvun.no/keyboards/mobileindex.html
-Email: feedback@divun.no
+E-boasta: feedback@divun.no
