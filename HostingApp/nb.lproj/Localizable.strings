@@ -1,8 +1,8 @@
 "about" = "Om";
 "addNewKeyboard" = "Legg til nytt tastatur…";
-"allowFullAccess" = "Allow Full Access";
-"attributions" = "Attributions";
-"enableTapSoundsPlain" = "If you wish to enable key tap sounds, you must then tap %1$@ and toggle %2$@.";
+"allowFullAccess" = "Gi full tilgang";
+"attributions" = "Andre kilder";
+"enableTapSoundsPlain" = "Om du vil slå på tastaturklikkelyder må du trykke %1$@ og slå på %2$@.";
 "general" = "Generelt";
 "keyboard" = "Tastatur";
 "keyboards" = "Tastatur";
@@ -17,4 +17,4 @@
 "settings" = "Innstillinger";
 "skip" = "Hopp over";
 "tapPlain" = "Berør %1$@";
-"whenYouHaveFinished" = "When you have finished, return to this app to continue.";
+"whenYouHaveFinished" = "Når du er ferdig – gå tilbake til denne appen for å fortsette.";
