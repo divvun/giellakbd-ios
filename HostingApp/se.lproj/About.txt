@@ -1,6 +1,6 @@
-Divvun-joavku Uit Norgga árktalaš universitehtas lea ovdánahttán Samiske tastaturer-áppa. Olles áppa lea olámuttus rabas gáldokodan, ja gávdno github.com/divvun:s. Hámuhusdefinišuvnnaid gávdná min Subversion-vuorkás. Gávnnat eanet dieđuid liŋkkas mii lea dás vuolábealde.
+Divvun-joavku Uit Norgga árktalaš universitehtas lea ovdánahttán Samiske tastaturer-áppa. Olles áppa lea olámuttus rabas gáldokodan, ja gávdno github.com/divvun​:s. Hámuhusdefinišuvnnaid gávdná min Subversion-vuorkás. Gávnnat eanet dieđuid liŋkkas mii lea dás vuolábealde.
 
 Sáddes áinnas rámi ja meattáhusdieđuid midjiide e-boastačujuhusa bokte maid gávnnat dás vuolábealde.
 
 WWW: http://divvun.no/keyboards/mobileindex.html
-E-boasta: feedback@divun.no
+E-boasta: feedback@divvun.no
