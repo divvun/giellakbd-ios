@@ -123,13 +123,21 @@ extension Strings {
         return bolden(string: plain, item: item, size: size)
     }
     
-    static var supportedLocales: [Locale] =
-        Bundle.main.localizations
+    static var supportedLocales: [Locale] = {
+        return Bundle.main.localizations
             .filter({ $0 != "Base" })
+            .filter({ loc in
+                guard let bp = Bundle.main.path(forResource: loc, ofType: "lproj"), let b = Bundle(path: bp) else {
+                    return false
+                }
+                
+                return b.path(forResource: "Localizable", ofType: "strings") != nil
+            })
             .map({ Locale(identifier: $0) })
             .sorted(by: {
                 languageName(for: $0)! < languageName(for: $1)!
             })
+    }()
     
     static func languageName(for locale: Locale) -> String? {
         guard let lc = locale.languageCode else {
