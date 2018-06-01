@@ -1,6 +1,0 @@
-The Sámi keyboard app is made by the Divvun group at UiT The Arctic University of Norway. It is open source, and the app code can be found in github.com/divvun. The keyboard layout definitions can be found in our Subversion repository. More details at the link below.
-
-We appreciate any feedback you can give. See feedback e-mail address below.
-
-WWW: http://divvun.no/keyboards/mobileindex.html
-Email: feedback@divvun.no
