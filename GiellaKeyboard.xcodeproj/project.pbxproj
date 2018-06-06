@@ -139,11 +139,9 @@
 		4EF16F9219D254EA0076AFCB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4EF16F9319D255030076AFCB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4EF16F9A19D2550D0076AFCB /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C61CC29120C8A5C000B213B8 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = HostingApp/sv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C643BF5A20BD483C00124DDC /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		C643BF6C20BEB8AA00124DDC /* nb */ = {isa = PBXFileReference; lastKnownFileType = text; name = nb; path = nb.lproj/About.txt; sourceTree = "<group>"; };
-		C643BF6D20BEB8AD00124DDC /* se */ = {isa = PBXFileReference; lastKnownFileType = text; name = se; path = se.lproj/About.txt; sourceTree = "<group>"; };
 		C643BF6E20BEB91600124DDC /* nn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nn; path = HostingApp/nn.lproj/Localizable.strings; sourceTree = "<group>"; };
-		C643BF6F20BEB91600124DDC /* nn */ = {isa = PBXFileReference; lastKnownFileType = text; name = nn; path = nn.lproj/About.txt; sourceTree = "<group>"; };
 		C65430A91EC93EB0007FC053 /* LayoutsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutsController.swift; sourceTree = "<group>"; };
 		C65430AF1EC94BC7007FC053 /* InstructionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsView.swift; sourceTree = "<group>"; };
 		C65430B11EC94BD1007FC053 /* InstructionsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InstructionsView.xib; sourceTree = "<group>"; };
@@ -487,6 +485,7 @@
 				nb,
 				se,
 				nn,
+				sv,
 			);
 			mainGroup = 4E807D8A19461D9000D875D1;
 			productRefGroup = 4E807D9419461D9000D875D1 /* Products */;
@@ -620,6 +619,7 @@
 				C676AD601EC986F000523FF3 /* nb */,
 				C676AD611EC986FA00523FF3 /* se */,
 				C643BF6E20BEB91600124DDC /* nn */,
+				C61CC29120C8A5C000B213B8 /* sv */,
 			);
 			name = Localizable.strings;
 			path = ..;
@@ -629,9 +629,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				C67A3F3B1EE7F24900C9015C /* Base */,
-				C643BF6C20BEB8AA00124DDC /* nb */,
-				C643BF6D20BEB8AD00124DDC /* se */,
-				C643BF6F20BEB91600124DDC /* nn */,
 			);
 			name = About.txt;
 			sourceTree = "<group>";
