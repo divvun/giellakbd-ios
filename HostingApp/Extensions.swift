@@ -125,7 +125,6 @@ extension Strings {
     
     static var supportedLocales: [Locale] = {
         return Bundle.main.localizations
-            .filter({ $0 != "Base" })
             .filter({ loc in
                 guard let bp = Bundle.main.path(forResource: loc, ofType: "lproj"), let b = Bundle(path: bp) else {
                     return false
@@ -133,7 +132,7 @@ extension Strings {
                 
                 return b.path(forResource: "Localizable", ofType: "strings") != nil
             })
-            .map({ Locale(identifier: $0) })
+            .map({ Locale(identifier: $0 == "Base" ? "en" : $0) })
             .sorted(by: {
                 languageName(for: $0)! < languageName(for: $1)!
             })
