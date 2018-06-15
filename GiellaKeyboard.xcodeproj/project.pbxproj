@@ -139,6 +139,7 @@
 		4EF16F9219D254EA0076AFCB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4EF16F9319D255030076AFCB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4EF16F9A19D2550D0076AFCB /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C610DA4720D3E40E00C84945 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = HostingApp/fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C61CC29120C8A5C000B213B8 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = HostingApp/sv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C643BF5A20BD483C00124DDC /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C643BF6E20BEB91600124DDC /* nn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nn; path = HostingApp/nn.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -486,6 +487,7 @@
 				se,
 				nn,
 				sv,
+				fi,
 			);
 			mainGroup = 4E807D8A19461D9000D875D1;
 			productRefGroup = 4E807D9419461D9000D875D1 /* Products */;
@@ -620,6 +622,7 @@
 				C676AD611EC986FA00523FF3 /* se */,
 				C643BF6E20BEB91600124DDC /* nn */,
 				C61CC29120C8A5C000B213B8 /* sv */,
+				C610DA4720D3E40E00C84945 /* fi */,
 			);
 			name = Localizable.strings;
 			path = ..;
