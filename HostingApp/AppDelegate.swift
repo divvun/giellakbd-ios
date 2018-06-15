@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Sentry
 
 class AppNavControllerDelegate: NSObject, UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
@@ -57,6 +58,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         AppDelegate.instance = self
+        
+        if let sentryDSN = Bundle.main.infoDictionary?["SentryDSN"] as? String {
+            do {
+                Client.shared = try Client(dsn: sentryDSN)
+                try Client.shared?.startCrashHandler()
+            } catch let error {
+                print("\(error)")
+                // Wrong DSN or KSCrash not installed
+            }
+        }
         
         Strings.languageCode = KeyboardSettings.languageCode
         

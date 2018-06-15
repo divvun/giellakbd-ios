@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Sentry
 import AudioToolbox
 
 let metrics: [String:Double] = [
@@ -27,6 +28,20 @@ let kKeyboardClicks = "kKeyboardClicks"
 let kSmallLowercase = "kSmallLowercase"
 
 open class KeyboardViewController: UIInputViewController {
+    open override func loadView() {
+        if let sentryDSN = Bundle.top.infoDictionary?["SentryDSN"] as? String {
+            do {
+                Client.shared = try Client(dsn: sentryDSN)
+                Client.shared?.tags?["bundle"] = Bundle.main.bundleIdentifier ?? "unknown"
+                try Client.shared?.startCrashHandler()
+            } catch let error {
+                print("\(error)")
+                // Wrong DSN or KSCrash not installed
+            }
+        }
+        
+        super.loadView()
+    }
 
     let backspaceDelay: TimeInterval = 0.5
     let backspaceRepeat: TimeInterval = 0.07
