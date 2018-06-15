@@ -6,6 +6,8 @@ class Strings {
         didSet {
             if let dir = Bundle.main.path(forResource: languageCode, ofType: "lproj"), let bundle = Bundle(path: dir) {
                 self.bundle = bundle
+            } else if let dir = Bundle.main.path(forResource: "Base", ofType: "lproj"), let bundle = Bundle(path: dir) {
+                self.bundle = bundle
             } else {
                 self.bundle = Bundle.main
             }
