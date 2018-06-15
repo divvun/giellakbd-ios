@@ -13,8 +13,6 @@
 		4EF16F9B19D2550D0076AFCB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF16F9A19D2550D0076AFCB /* AppDelegate.swift */; };
 		C610DA4920D3F27100C84945 /* Sentry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C610DA4820D3F27100C84945 /* Sentry.framework */; };
 		C610DA4A20D3F27200C84945 /* Sentry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C610DA4820D3F27100C84945 /* Sentry.framework */; };
-		C610DA4B20D3F56100C84945 /* Sentry.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C610DA4820D3F27100C84945 /* Sentry.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C610DA4D20D3F56F00C84945 /* Sentry.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C610DA4820D3F27100C84945 /* Sentry.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C643BF5B20BD483C00124DDC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C643BF5A20BD483C00124DDC /* LaunchScreen.storyboard */; };
 		C65430AA1EC93EB0007FC053 /* LayoutsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65430A91EC93EB0007FC053 /* LayoutsController.swift */; };
 		C65430B01EC94BC7007FC053 /* InstructionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65430AF1EC94BC7007FC053 /* InstructionsView.swift */; };
@@ -95,7 +93,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C610DA4B20D3F56100C84945 /* Sentry.framework in Embed Frameworks */,
 				C6F249371F736DCE00840F2B /* BaseKeyboard.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -110,17 +107,6 @@
 				4E807DC119461DC700D875D1 /* Keyboard.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C610DA4C20D3F56800C84945 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				C610DA4D20D3F56F00C84945 /* Sentry.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C6DCFDD71EB07E0600FABC11 /* CopyFiles */ = {
@@ -410,6 +396,7 @@
 				4E807D9119461D9000D875D1 /* Resources */,
 				4E807DC719461DC700D875D1 /* Embed App Extensions */,
 				4E5B67C4196E07B300114361 /* Embed Frameworks */,
+				C610DA4F20D3FE5A00C84945 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -449,7 +436,7 @@
 				C6F2492B1F736DCE00840F2B /* Frameworks */,
 				C6F2492C1F736DCE00840F2B /* Headers */,
 				C6F2492D1F736DCE00840F2B /* Resources */,
-				C610DA4C20D3F56800C84945 /* Embed Frameworks */,
+				C610DA5020D3FE9400C84945 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -556,6 +543,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		C610DA4F20D3FE5A00C84945 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Support/Sentry.framework",
+			);
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Sentry.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "carthage copy-frameworks $@";
+		};
+		C610DA5020D3FE9400C84945 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Support/Sentry.framework",
+			);
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Sentry.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "carthage copy-frameworks $@";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		4E807D8F19461D9000D875D1 /* Sources */ = {
