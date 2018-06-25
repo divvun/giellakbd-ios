@@ -812,19 +812,18 @@ open class KeyboardViewController: UIInputViewController {
             case .none:
                 return false
             case .words:
-                let beforeContext = documentProxy.documentContextBeforeInput ?? ""
-                let i = beforeContext.index(before: beforeContext.endIndex)
-                let previousCharacter = beforeContext[i]
-                return self.characterIsWhitespace(previousCharacter)
+                guard let ch = documentProxy.documentContextBeforeInput?.last else {
+                    return true
+                }
+                return self.characterIsWhitespace(ch)
             case .sentences:
-                let beforeContext = documentProxy.documentContextBeforeInput ?? ""
+                guard let beforeContext = documentProxy.documentContextBeforeInput else {
+                    return true
+                }
+                
                 let offset = min(3, beforeContext.count)
-                var index = beforeContext.endIndex
-
-                for i in 0..<offset {
-                    index = beforeContext.index(before: index)
-                    let char = beforeContext[index]
-
+                
+                for (i, char) in beforeContext.reversed().prefix(offset).enumerated() {
                     if characterIsPunctuation(char) {
                         if i == 0 {
                             return false //not enough spaces after punctuation
