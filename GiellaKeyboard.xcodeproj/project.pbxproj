@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4E52A6D61A06BADA006A08CE /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E52A6D51A06BADA006A08CE /* Media.xcassets */; };
 		4E807DC119461DC700D875D1 /* Keyboard.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 4E807DB919461DC700D875D1 /* Keyboard.appex */; };
 		4EF16F9619D255030076AFCB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4EF16F9319D255030076AFCB /* Images.xcassets */; };
 		4EF16F9B19D2550D0076AFCB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF16F9A19D2550D0076AFCB /* AppDelegate.swift */; };
@@ -23,6 +22,7 @@
 		C655E8581EC5559E00B12BE4 /* HomeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C655E8571EC5559E00B12BE4 /* HomeView.xib */; };
 		C655E85A1EC558D000B12BE4 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C655E8591EC558D000B12BE4 /* HomeController.swift */; };
 		C655E85D1EC55D0800B12BE4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C655E85B1EC55D0800B12BE4 /* Localizable.strings */; };
+		C667141320E38A0100DBD7B7 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E52A6D51A06BADA006A08CE /* Media.xcassets */; };
 		C676AD5B1EC9679000523FF3 /* InstructionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C676AD5A1EC9679000523FF3 /* InstructionsController.swift */; };
 		C676AD5F1EC985EB00523FF3 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C676AD5E1EC985EB00523FF3 /* Strings.swift */; };
 		C67A3F3A1EE7F24900C9015C /* About.txt in Resources */ = {isa = PBXBuildFile; fileRef = C67A3F3C1EE7F24900C9015C /* About.txt */; };
@@ -557,7 +557,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4E52A6D61A06BADA006A08CE /* Media.xcassets in Resources */,
 				C6F2494D1F736E2100840F2B /* KeyboardDefinitions.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -566,6 +565,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C667141320E38A0100DBD7B7 /* Media.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -615,12 +615,10 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-HostingApp/Pods-HostingApp-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/KSCrash/KSCrash.framework",
 				"${BUILT_PRODUCTS_DIR}/Sentry/Sentry.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KSCrash.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sentry.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
