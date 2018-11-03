@@ -25,7 +25,7 @@ extension KeyboardViewController {
         // note that KVO doesn't work on textDocumentProxy, so we have to poll
         traitPollingTimer?.invalidate()
         traitPollingTimer = UIScreen.main.displayLink(withTarget: self, selector: #selector(KeyboardViewController.pollTraits))
-        traitPollingTimer?.add(to: RunLoop.current, forMode: RunLoopMode.defaultRunLoopMode)
+        traitPollingTimer?.add(to: RunLoop.current, forMode: RunLoop.Mode.default)
     }
     
     @objc func pollTraits() {

@@ -20,7 +20,7 @@ class AppNavControllerDelegate: NSObject, UINavigationControllerDelegate {
         }
     }
     
-    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
         toVC.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
@@ -56,7 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return x.contains(Bundle.main)
     }
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         AppDelegate.instance = self
         
         if let sentryDSN = Bundle.main.infoDictionary?["SentryDSN"] as? String {
@@ -82,7 +82,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             nc.pushViewController(InstructionsController(), animated: false)
         }
 
-        if let url = launchOptions?[UIApplicationLaunchOptionsKey.url] {
+        if let url = launchOptions?[UIApplication.LaunchOptionsKey.url] {
             let url = url as! URL
             
             parseUrl(url)
@@ -116,7 +116,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        }
     }
     
-    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         parseUrl(url)
         return true
     }

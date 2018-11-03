@@ -386,7 +386,7 @@ class GiellaBanner: ExtraView {
             let btn = UIButton(type: .custom)
 
             btn.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
-            btn.setTitle(char, for: UIControlState())
+            btn.setTitle(char, for: UIControl.State())
             btn.sizeToFit()
 
             if let titleLabel = btn.titleLabel {
@@ -401,17 +401,17 @@ class GiellaBanner: ExtraView {
             btn.translatesAutoresizingMaskIntoConstraints = false
             buttonNormal(btn)
 
-            btn.setTitleColor(UIColor(white: 1.0, alpha: 1.0), for: UIControlState())
+            btn.setTitleColor(UIColor(white: 1.0, alpha: 1.0), for: UIControl.State())
             btn.setTitleColor(UIColor.black, for: .highlighted)
 
             btn.setContentHuggingPriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
             btn.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
 
-            for event in [UIControlEvents.touchDragOutside, .touchDragExit, .touchCancel, .touchUpInside, .touchUpOutside] {
+            for event in [UIControl.Event.touchDragOutside, .touchDragExit, .touchCancel, .touchUpInside, .touchUpOutside] {
                 btn.addTarget(self, action: #selector(GiellaBanner.buttonNormal(_:)), for: event)
             }
 
-            for event in [UIControlEvents.touchDragInside, .touchDragEnter, .touchDown, .touchDragInside] {
+            for event in [UIControl.Event.touchDragInside, .touchDragEnter, .touchDown, .touchDragInside] {
                 btn.addTarget(self, action: #selector(GiellaBanner.buttonHighlight(_:)), for: event)
             }
 

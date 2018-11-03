@@ -157,7 +157,7 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     func solidColorMode() -> Bool {
-        return UIAccessibilityIsReduceTransparencyEnabled()
+        return UIAccessibility.isReduceTransparencyEnabled
     }
 
     var lastLayoutBounds: CGRect?
@@ -377,7 +377,7 @@ open class KeyboardViewController: UIInputViewController {
             for rowKeys in page.rows { // TODO: quick hack
                 for key in rowKeys {
                     if let keyView = self.layout?.viewForKey(key) {
-                        keyView.removeTarget(nil, action: nil, for: UIControlEvents.allEvents)
+                        keyView.removeTarget(nil, action: nil, for: UIControl.Event.allEvents)
                         
                         key.bind(view: keyView, target: self)
                     }

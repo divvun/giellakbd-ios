@@ -175,7 +175,7 @@ class BackspaceKey: Key {
     override func bind(view: KeyboardKey, target: KeyboardViewController) {
         super.bind(view: view, target: target)
         
-        let cancelEvents: UIControlEvents = [UIControlEvents.touchUpInside, UIControlEvents.touchUpInside, UIControlEvents.touchDragExit, UIControlEvents.touchUpOutside, UIControlEvents.touchCancel, UIControlEvents.touchDragOutside]
+        let cancelEvents: UIControl.Event = [UIControl.Event.touchUpInside, UIControl.Event.touchUpInside, UIControl.Event.touchDragExit, UIControl.Event.touchUpOutside, UIControl.Event.touchCancel, UIControl.Event.touchDragOutside]
         
         view.addTarget(target, action: #selector(KeyboardViewController.backspaceDown(_:)), for: .touchDown)
         view.addTarget(target, action: #selector(KeyboardViewController.backspaceUp(_:)), for: cancelEvents)

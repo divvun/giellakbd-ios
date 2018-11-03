@@ -57,7 +57,7 @@ class InstructionsController: ViewController<InstructionsView> {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: .UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: UIImage(named: "language")!.with(width: 24, height: 24),
