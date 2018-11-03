@@ -79,6 +79,13 @@
 			remoteGlobalIDString = 4E807DB819461DC700D875D1;
 			remoteInfo = Keyboard;
 		};
+		C649384E218DCE8E00D0C9DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4E807D8B19461D9000D875D1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C64937C9218DBBA300D0C9DC;
+			remoteInfo = "hfst-ospell-rs";
+		};
 		C6F249341F736DCE00840F2B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4E807D8B19461D9000D875D1 /* Project object */;
@@ -493,6 +500,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				C649384F218DCE8E00D0C9DC /* PBXTargetDependency */,
 			);
 			name = BaseKeyboard;
 			productName = BaseKeyboard;
@@ -730,6 +738,11 @@
 			isa = PBXTargetDependency;
 			target = 4E807DB819461DC700D875D1 /* Keyboard */;
 			targetProxy = 4E807DC219461DC700D875D1 /* PBXContainerItemProxy */;
+		};
+		C649384F218DCE8E00D0C9DC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C64937C9218DBBA300D0C9DC /* hfst-ospell-rs */;
+			targetProxy = C649384E218DCE8E00D0C9DC /* PBXContainerItemProxy */;
 		};
 		C6F249351F736DCE00840F2B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
