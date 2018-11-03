@@ -56,7 +56,7 @@ extension UnsafeMutablePointer where Pointee == vec_str_t {
 open class GiellaKeyboard: KeyboardViewController {
     //var keyNames: [String: String]
 
-    //var zhfst: ZHFSTOSpeller?
+    private var speller: Speller? = nil
 
     let opQueue = OperationQueue()
 
@@ -114,6 +114,8 @@ open class GiellaKeyboard: KeyboardViewController {
     override open func viewDidLoad() {
         self.configure(with: selectedKeyboard(index: selectedKeyboardIndex))
 
+        loadZHFST()
+        
         super.viewDidLoad()
     }
 
@@ -155,10 +157,10 @@ open class GiellaKeyboard: KeyboardViewController {
     func loadZHFST() {
         NSLog("%@", "Loading speller…")
 
-        DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive).async {
+        DispatchQueue.global(qos: .userInteractive).async {
             NSLog("%@", "Dispatching request to load speller…")
 
-            guard let bundle = Bundle.main.path(forResource: "dicts", ofType: "bundle") else {
+            guard let bundle = Bundle.top.url(forResource: "dicts", withExtension: "bundle") else {
                 NSLog("No dict bundle found; ZHFST not loaded.")
                 return
             }
@@ -168,32 +170,29 @@ open class GiellaKeyboard: KeyboardViewController {
                 return
             }
 
-            let path = "\(bundle)/\(lang).zhfst"
-
-            if !FileManager.default.fileExists(atPath: path) {
+            let path = bundle.appendingPathComponent("\(lang).zhfst")
+            
+            if !FileManager.default.fileExists(atPath: path.path) {
                 NSLog("No speller at: \(path)")
-                NSLog("ZHFSTOSpeller **not** loaded.")
+                NSLog("HfstSpell **not** loaded.")
                 return
             }
-
-            /*
-            let zhfst = ZHFSTOSpeller()
-
+            
+            let speller: Speller
+            
             do {
-                try zhfst?.readZhfst(path, tempDir: NSTemporaryDirectory())
-            } catch let err as NSError {
-                NSLog("%@", err)
-                NSLog("ZHFSTOSpeller **not** loaded.")
+                speller = try Speller(path: path)
+            } catch {
+                if let error = error as? SpellerInitError {
+                    NSLog("%@", error.message)
+                }
+                NSLog("HfstSpell **not** loaded.")
                 return
             }
-
-            zhfst?.setQueueLimit(3)
-            zhfst?.setWeightLimit(50)
-
-            self.zhfst = zhfst
-            */
-
-            NSLog("%@", "ZHFSTOSpeller loaded!")
+            
+            NSLog("%@", "HfstSpell loaded!")
+            
+            self.speller = speller
         }
     }
 

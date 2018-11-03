@@ -1,0 +1,18 @@
+PODS:
+  - Sentry (4.0.1):
+    - Sentry/Core (= 4.0.1)
+  - Sentry/Core (4.0.1)
+
+DEPENDENCIES:
+  - Sentry
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Sentry
+
+SPEC CHECKSUMS:
+  Sentry: a38f7879924c02239e121b19d993d23bdd1684db
+
+PODFILE CHECKSUM: 4329b59e739732175bbf785afaeb5ad6b8ad87ea
+
+COCOAPODS: 1.5.0

@@ -42,7 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let ncDelegate = AppNavControllerDelegate()
     
     var isKeyboardEnabled: Bool {
-        let x: [Bundle] = UITextInputMode.activeInputModes.flatMap({
+        let x: [Bundle] = UITextInputMode.activeInputModes.compactMap({
             let s = str1 + str2
             
             let v = $0.perform(Selector(s))
