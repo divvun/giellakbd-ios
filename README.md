@@ -4,7 +4,15 @@ An open source reimplementation of Apple's native iOS keyboard with a specific f
 
 ## Dependencies
 
-Download [sentry-cocoa](https://github.com/getsentry/sentry-cocoa/releases). Unzip somewhere, take all files in `Carthage/build/iOS` and paste them into the `Support/` directory of this repo.
+In order to build the hfst-ospell-rs dependency, you will need to install the Rust compiler. See https://rustup.rs for instructions.
+
+Run the following commands:
+
+```
+cargo install cargo-lipo
+git submodule update --init
+pod install
+```
 
 To enable Sentry, add a `SentryDSN` key to the `HostingApp/Supporting Files/Info.plist` file.
 
