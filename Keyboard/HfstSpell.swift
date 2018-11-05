@@ -44,16 +44,20 @@ extension Token {
 }
 
 public class TokenizerSequence: Sequence {
-    public struct Iterator: IteratorProtocol {
+    public class Iterator: IteratorProtocol {
         private let handle: UnsafeMutableRawPointer
         private let record: UnsafeMutablePointer<UnsafeMutablePointer<token_record_t>?>
+        private let value: [CChar]
         
-        init(_ handle: UnsafeMutableRawPointer) {
-            self.handle = handle
+        init(_ value: String) {
+            self.value = value.cString(using: .utf8)!
+            self.handle = speller_tokenize(self.value)!
             self.record = UnsafeMutablePointer<UnsafeMutablePointer<token_record_t>?>.allocate(capacity: 1)
+
+            self.record.pointee = nil
         }
         
-        mutating public func next() -> Token? {
+        public func next() -> Token? {
             if !speller_token_next(handle, record) {
                 return nil
             }
@@ -64,42 +68,43 @@ public class TokenizerSequence: Sequence {
             
             return Token.from(c: record.pointee)
         }
+        
+        deinit {
+            speller_tokenizer_free(handle)
+        }
     }
     
-    private let handle: UnsafeMutableRawPointer
+    private let value: String
     
-    fileprivate init(handle: UnsafeMutableRawPointer) {
-        self.handle = handle
+    fileprivate init(string: String) {
+        self.value = string
     }
     
     public func makeIterator() -> TokenizerSequence.Iterator {
-        return TokenizerSequence.Iterator(handle)
-    }
-    
-    deinit {
-        speller_tokenizer_free(handle)
+        return TokenizerSequence.Iterator(value)
     }
 }
 
 public extension String {
     func tokenize() -> TokenizerSequence {
-        let handle = speller_tokenize(self.cString(using: .utf8))!
-        return TokenizerSequence(handle: handle)
+        return TokenizerSequence(string: self)
     }
 }
 
-class SuggestionSequence: Sequence {
-    struct Iterator: IteratorProtocol {
+public class SuggestionSequence: Sequence {
+    public class Iterator: IteratorProtocol {
         private var i = 0
         private let size: Int
+        private let spellerHandle: UnsafeMutableRawPointer
         private let handle: UnsafeMutableRawPointer
         
-        init(_ handle: UnsafeMutableRawPointer) {
-            self.handle = handle
+        init(_ value: String, count: Int, speller: UnsafeMutableRawPointer) {
+            self.spellerHandle = speller
+            self.handle = speller_suggest(speller, value.cString(using: .utf8), count, 0.0)!
             self.size = suggest_vec_len(handle)
         }
         
-        mutating func next() -> String? {
+        public func next() -> String? {
             if i >= size {
                 return nil
             }
@@ -111,24 +116,28 @@ class SuggestionSequence: Sequence {
             i += 1
             return value
         }
+        
+        deinit {
+            suggest_vec_free(handle)
+        }
     }
     
-    private let handle: UnsafeMutableRawPointer
+    private let spellerHandle: UnsafeMutableRawPointer
+    private let value: String
+    private let suggestionCount: Int
     
-    fileprivate init(handle: UnsafeMutableRawPointer) {
-        self.handle = handle
+    fileprivate init(handle: UnsafeMutableRawPointer, word: String, count: Int = 10) {
+        self.spellerHandle = handle
+        self.value = word
+        self.suggestionCount = count
     }
     
-    func makeIterator() -> SuggestionSequence.Iterator {
-        return SuggestionSequence.Iterator(handle)
-    }
-    
-    deinit {
-        suggest_vec_free(handle)
+    public func makeIterator() -> SuggestionSequence.Iterator {
+        return SuggestionSequence.Iterator(value, count: suggestionCount, speller: spellerHandle)
     }
 }
 
-class Speller {
+public class Speller {
     private let handle: UnsafeMutableRawPointer
     
     lazy var locale: String = {
@@ -149,9 +158,8 @@ class Speller {
         self.handle = handle
     }
     
-    func suggest(word: String, count: Int = 3) -> SuggestionSequence {
-        let rawSuggestions = speller_suggest(handle, word.cString(using: .utf8), count, 0.0)!
-        return SuggestionSequence(handle: rawSuggestions)
+    func suggest(word: String, count: Int = 10) -> SuggestionSequence {
+        return SuggestionSequence(handle: self.handle, word: word, count: count)
     }
     
     func isCorrect(word: String) -> Bool {
