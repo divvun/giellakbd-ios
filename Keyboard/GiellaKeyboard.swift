@@ -22,20 +22,17 @@ class SuggestionOp: Operation {
             return
         }
 
-        /*
-        let suggestions = self.kbd?.zhfst?.suggest(word).prefix(3).flatMap { (pair) in
-            pair.first as String
-        }
+        var suggestions = [String]()
+        self.kbd?.speller?.suggest(word: self.word, count: 3).forEach({ (suggest) in
+            suggestions.append(suggest)
+        })
 
         DispatchQueue.main.async {
-            if let suggestions = suggestions {
-                if let banner = self.kbd?.bannerView as? GiellaBanner {
-                    banner.mode = .suggestion
-                    banner.updateList(suggestions);
-                }
+            if let banner = self.kbd?.bannerView as? GiellaBanner {
+                banner.mode = .suggestion
+                banner.updateList(suggestions);
             }
         }
-        */
     }
 }
 
@@ -56,7 +53,7 @@ extension UnsafeMutablePointer where Pointee == vec_str_t {
 open class GiellaKeyboard: KeyboardViewController {
     //var keyNames: [String: String]
 
-    private var speller: Speller? = nil
+    var speller: Speller? = nil
 
     let opQueue = OperationQueue()
 
@@ -81,7 +78,7 @@ open class GiellaKeyboard: KeyboardViewController {
 
         let lastWord = getCurrentWord()
 
-        if lastWord == "" {// || zhfst == nil {
+        if lastWord == "" || self.speller == nil {
             banner.updateList([])
             return
         }
@@ -90,31 +87,19 @@ open class GiellaKeyboard: KeyboardViewController {
         opQueue.addOperation(SuggestionOp(kbd: self, word: lastWord))
     }
 
-    /*
-    class Speller {
-        private let handle: UnsafeMutableRawPointer
-
-        init() {
-            handle = speller_new()
-        }
-
-        deinit {
-            speller_free(handle)
-        }
-
-        func suggest(_ word: String) -> [String] {
-            let cstr = UnsafePointer(word.cString(using: .utf8)!)
-            return speller_suggest(handle, cstr).toSwift()
-        }
-    }
-    */
-
     let selectedKeyboardIndex: Int = Bundle.main.infoDictionary!["DivvunKeyboardIndex"] as! Int
     
     override open func viewDidLoad() {
         self.configure(with: selectedKeyboard(index: selectedKeyboardIndex))
 
         loadZHFST()
+        
+        let banner = GiellaBanner(keyboard: self)
+        banner.mode = .suggestion
+        
+        self.bannerView = banner
+        
+        self.view.insertSubview(self.bannerView!, at: 0)
         
         super.viewDidLoad()
     }
