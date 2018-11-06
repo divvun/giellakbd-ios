@@ -27,10 +27,12 @@ class SuggestionOp: Operation {
             suggestions.append(suggest)
         })
 
-        DispatchQueue.main.async {
-            if let banner = self.kbd?.bannerView as? GiellaBanner {
-                banner.mode = .suggestion
-                banner.updateList(suggestions);
+        if !isCancelled {
+            DispatchQueue.main.async {
+                if let banner = self.kbd?.bannerView as? GiellaBanner {
+                    banner.mode = .suggestion
+                    banner.updateList(suggestions);
+                }
             }
         }
     }
@@ -55,7 +57,11 @@ open class GiellaKeyboard: KeyboardViewController {
 
     var speller: Speller? = nil
 
-    let opQueue = OperationQueue()
+    let opQueue: OperationQueue = {
+        let o = OperationQueue()
+        o.maxConcurrentOperationCount = 1
+        return o
+    }()
 
     func getCurrentWord() -> String {
         let documentProxy = self.textDocumentProxy as UITextDocumentProxy
@@ -82,7 +88,6 @@ open class GiellaKeyboard: KeyboardViewController {
             banner.updateList([])
             return
         }
-
         opQueue.cancelAllOperations()
         opQueue.addOperation(SuggestionOp(kbd: self, word: lastWord))
     }
