@@ -14,16 +14,30 @@ class ForwardingView: UIView {
     var longpressedKey: KeyboardKey?
     
     var touchToView: [UITouch:UIView]
+    let hitTestWorkaroundView: UIView!
     
     override init(frame: CGRect) {
         self.touchToView = [:]
         
+        // WORKAROUND: hitTest is only called if a subview is tapped, for unknown reasons,
+        // so make sure there is always a subview to tap
+        self.hitTestWorkaroundView = UIView(frame: CGRect.zero)
+
         super.init(frame: frame)
         
         self.contentMode = UIView.ContentMode.redraw
         self.isMultipleTouchEnabled = true
         self.isUserInteractionEnabled = true
         self.isOpaque = false
+        
+        hitTestWorkaroundView.backgroundColor = UIColor(white: 1.0, alpha: 0.01)
+        hitTestWorkaroundView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(hitTestWorkaroundView)
+        hitTestWorkaroundView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
+        hitTestWorkaroundView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        hitTestWorkaroundView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        hitTestWorkaroundView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        
     }
     
     required init(coder: NSCoder) {
@@ -73,7 +87,7 @@ class ForwardingView: UIView {
         
         var closest: (UIView, CGFloat)? = nil
         
-        for view in self.subviews {
+        for view in self.subviews.filter({ $0 != self.hitTestWorkaroundView }) {
             if view.isHidden {
                 continue
             }

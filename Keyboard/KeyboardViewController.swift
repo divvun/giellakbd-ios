@@ -197,7 +197,7 @@ open class KeyboardViewController: UIInputViewController {
             heightView.backgroundColor = UIColor.clear
             heightView.isUserInteractionEnabled = false
             heightView.translatesAutoresizingMaskIntoConstraints = false
-            self.view.addSubview(heightView)
+            self.view.insertSubview(heightView, at:0)
             heightView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
             heightView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
             heightView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
