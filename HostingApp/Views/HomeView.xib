@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -42,7 +42,7 @@
                             <rect key="frame" x="0.0" y="125" width="256" height="38"/>
                             <subviews>
                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bA9-vt-xCz" customClass="HomeMenuButton" customModule="HostingApp" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="-377" width="256" height="0.0"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="256" height="0.0"/>
                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                     <state key="normal" title="Layouts"/>
@@ -61,7 +61,7 @@
                     </constraints>
                 </stackView>
                 <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="FzJ-FA-ZXf">
-                    <rect key="frame" x="12" y="24" width="106" height="32"/>
+                    <rect key="frame" x="12" y="28" width="106" height="32"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sCp-CJ-ReN">
                             <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
@@ -91,7 +91,7 @@
                 <constraint firstAttribute="trailing" secondItem="XcZ-sF-8KW" secondAttribute="trailing" id="AKC-Kj-7qe"/>
                 <constraint firstItem="XcZ-sF-8KW" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="INm-Dh-Ofa"/>
                 <constraint firstItem="9Ne-rM-V7i" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="QR3-Ny-Si6"/>
-                <constraint firstItem="FzJ-FA-ZXf" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="24" id="gzF-nD-RAP"/>
+                <constraint firstItem="FzJ-FA-ZXf" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="topMargin" constant="8" id="ePT-Tg-ptW"/>
                 <constraint firstItem="XcZ-sF-8KW" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="qF0-1l-R6b"/>
                 <constraint firstItem="9Ne-rM-V7i" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="leading" constant="32" id="vnU-WV-Nbf"/>
                 <constraint firstItem="9Ne-rM-V7i" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" priority="750" id="z0G-GL-ydC"/>
