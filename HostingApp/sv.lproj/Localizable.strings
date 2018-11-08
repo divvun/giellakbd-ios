@@ -3,7 +3,7 @@
 "allowFullAccess" = "Ge full åtkomst";
 "attributions" = "Andra källor";
 "enableTapSoundsPlain" = "Om du vill slå på tangentbordsklickljud måste du trycka %1$@ och sen slå på %2$@.";
-"general" = "Generellt";
+"general" = "Allmänt";
 "keyboard" = "Tangentbord";
 "keyboards" = "Tangentbord";
 "language" = "Språk";
@@ -12,7 +12,7 @@
 "openAppPlain" = "Öppna %1$@-appen";
 "openSettings" = "Öppna Inställningar";
 "save" = "Spara";
-"setUp" = "Konfigurer %1$@";
+"setUp" = "Konfigurera %1$@";
 "settingUp" = "Konfiguration";
 "settings" = "Inställningar";
 "skip" = "Hoppa över";
