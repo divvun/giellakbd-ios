@@ -123,15 +123,6 @@ open class GiellaKeyboard: KeyboardViewController {
         updateSuggestions()
     }
 
-    /*
-    override func didReceiveMemoryWarning(notification: NSNotification) {
-        opQueue.cancelAllOperations()
-        opQueue.addOperationWithBlock() {
-            self.zhfst?.clearSuggestionCache()
-        }
-    }
-    */
-
     func getPrimaryLanguage() -> String? {
         if let ex = Bundle.main.infoDictionary!["NSExtension"] as? [String: AnyObject]{
             if let attrs = ex["NSExtensionAttributes"] as? [String: AnyObject] {
@@ -145,26 +136,26 @@ open class GiellaKeyboard: KeyboardViewController {
     }
 
     func loadZHFST() {
-        NSLog("%@", "Loading speller…")
+        print("Loading speller…")
 
-        DispatchQueue.global(qos: .userInteractive).async {
-            NSLog("%@", "Dispatching request to load speller…")
+        DispatchQueue.global(qos: .background).async {
+            print("Dispatching request to load speller…")
 
             guard let bundle = Bundle.top.url(forResource: "dicts", withExtension: "bundle") else {
-                NSLog("No dict bundle found; ZHFST not loaded.")
+                print("No dict bundle found; ZHFST not loaded.")
                 return
             }
 
             guard let lang = self.getPrimaryLanguage() else {
-                NSLog("No primary language found for keyboard; ZHFST not loaded.")
+                print("No primary language found for keyboard; ZHFST not loaded.")
                 return
             }
 
             let path = bundle.appendingPathComponent("\(lang).zhfst")
             
             if !FileManager.default.fileExists(atPath: path.path) {
-                NSLog("No speller at: \(path)")
-                NSLog("HfstSpell **not** loaded.")
+                print("No speller at: \(path)")
+                print("HfstSpell **not** loaded.")
                 return
             }
             
@@ -174,13 +165,13 @@ open class GiellaKeyboard: KeyboardViewController {
                 speller = try Speller(path: path)
             } catch {
                 if let error = error as? SpellerInitError {
-                    NSLog("%@", error.message)
+                    print(error.message)
                 }
-                NSLog("HfstSpell **not** loaded.")
+                print("HfstSpell **not** loaded.")
                 return
             }
             
-            NSLog("%@", "HfstSpell loaded!")
+            print("HfstSpell loaded!")
             
             self.speller = speller
         }
