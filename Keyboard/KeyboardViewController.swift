@@ -147,7 +147,6 @@ open class KeyboardViewController: UIInputViewController {
         self.setCapsIfNeeded()
 
         self.updateAppearances(self.darkMode())
-        self.addInputTraitsObservers()
     }
 
     // only available after frame becomes non-zero
