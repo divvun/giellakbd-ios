@@ -60,6 +60,7 @@
 		C6F249661F736FB900840F2B /* GiellaKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A568E119FA286500C8E119 /* GiellaKeyboard.swift */; };
 		C6F249681F736FEE00840F2B /* EntryPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F249671F736FEE00840F2B /* EntryPoint.swift */; };
 		FD294BA12191ADA700A5BD02 /* Keyboard-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = C6D304A61BFD73750023EC5F /* Keyboard-Bridging-Header.h */; };
+		FD8EC148219882860073545F /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E52A6D51A06BADA006A08CE /* Media.xcassets */; };
 		FD93A49B206260B200E5B6EF /* ExtraKeysPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD99CDE20625AFD00FC7F15 /* ExtraKeysPopupView.swift */; };
 		FDD99CDF20625AFD00FC7F15 /* ExtraKeysPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD99CDE20625AFD00FC7F15 /* ExtraKeysPopupView.swift */; };
 /* End PBXBuildFile section */
