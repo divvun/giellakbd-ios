@@ -218,12 +218,24 @@ open class KeyboardViewController: UIInputViewController {
 
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        self.bannerView?.isHidden = false
+
+//        self.bannerView?.isHidden = false
         
         setupLayout()
         
         view.setNeedsUpdateConstraints()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
+            let proxy = self.textDocumentProxy as UITextInputTraits
+            
+            if let layout = self.layout {
+                let appearanceIsDark = (proxy.keyboardAppearance == UIKeyboardAppearance.dark)
+                
+                if appearanceIsDark != layout.darkMode {
+                    self.updateAppearances(appearanceIsDark)
+                }
+            }
+        }
     }
     
     

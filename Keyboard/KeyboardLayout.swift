@@ -409,7 +409,7 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
             if model.type == Key.KeyType.settings {
                 if let imageKey = key as? ImageKey {
                     if imageKey.image == nil {
-                        let gearImage = UIImage(named: "gear")
+                        let gearImage = UIImage(named: "gear", in: Bundle.top, compatibleWith: nil)
                         let settingsImageView = UIImageView(image: gearImage)
                         imageKey.image = settingsImageView
                     }
