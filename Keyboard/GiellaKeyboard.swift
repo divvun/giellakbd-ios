@@ -94,19 +94,17 @@ open class GiellaKeyboard: KeyboardViewController {
 
     let selectedKeyboardIndex: Int = Bundle.main.infoDictionary!["DivvunKeyboardIndex"] as! Int
     
-    func createInsufferableBanner() {
-        let banner = GiellaBanner(keyboard: self)
-        banner.mode = .suggestion
-        self.bannerView = banner
-        self.view.insertSubview(self.bannerView!, at: 0)
-        self.updateHeightConstraint()
-        self.bannerView?.isHidden = false
-    }
-    
     override open func viewDidLoad() {
         self.configure(with: selectedKeyboard(index: selectedKeyboardIndex))
-        
+
         loadZHFST()
+        
+        let banner = GiellaBanner(keyboard: self)
+        banner.mode = .suggestion
+        
+        self.bannerView = banner
+        
+        self.view.insertSubview(self.bannerView!, at: 0)
         
         super.viewDidLoad()
     }
@@ -161,7 +159,6 @@ open class GiellaKeyboard: KeyboardViewController {
                 return
             }
             
-            
             let speller: Speller
             
             do {
@@ -177,10 +174,6 @@ open class GiellaKeyboard: KeyboardViewController {
             print("HfstSpell loaded!")
             
             self.speller = speller
-            
-            DispatchQueue.main.async {
-                self.createInsufferableBanner()
-            }
         }
     }
 
