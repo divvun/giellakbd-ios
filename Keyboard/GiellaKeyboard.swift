@@ -462,17 +462,15 @@ fileprivate func addControls(_ defaultKeyboard: Keyboard, definition def: Keyboa
     
     defaultKeyboard.addKey(makeModeKey(to: mode, isMain: isMain), row: row, page: page)
     
-    let keyboardChange = ChangeKey()
-    // TODO: Hide globe key on iPhone X
-//    if #available(iOSApplicationExtension 11.0, *) {
-//        if UIInputViewController.init().needsInputModeSwitchKey {
-//            defaultKeyboard.addKey(ChangeKey(), row: row, page: page)
-//        }
-//    } else {
-//        defaultKeyboard.addKey(ChangeKey(), row: row, page: page)
-//    }
-
-    defaultKeyboard.addKey(keyboardChange, row: row, page: page)
+    // The iPhone X family of devices adds its own globe button
+    if #available(iOSApplicationExtension 11.0, *) {
+        // Workaround for UIInputViewController.needsInputModeSwitchKey always returning true
+        if !UIDevice.current.isXFamily {
+            defaultKeyboard.addKey(ChangeKey(), row: row, page: page)
+        }
+    } else {
+        defaultKeyboard.addKey(ChangeKey(), row: row, page: page)
+    }
     
     let settings = SettingsKey()
     defaultKeyboard.addKey(settings, row: row, page: page)

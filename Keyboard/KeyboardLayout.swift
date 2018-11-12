@@ -775,7 +775,9 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
     */
 
     func specialKeysRowHeuristic(_ row: [Key]) -> Bool {
-        return row[0].type == .modeChange && row[1].type == .keyboardChange
+        return row.contains(where: { (key) -> Bool in
+            key.type == .space
+        })
     }
 
     func doubleSidedRowHeuristic(_ row: [Key]) -> Bool {
@@ -928,7 +930,7 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
         var keysBeforeSpace = 0
         var keysAfterSpace = 0
         var reachedSpace = false
-        for (_, key) in row.enumerated() {
+        for (_, key) in UIDevice.current.isXFamily ? row.filter({ $0.type != Key.KeyType.keyboardChange }).enumerated() : row.enumerated() {
             if key.type == Key.KeyType.space {
                 reachedSpace = true
             }
