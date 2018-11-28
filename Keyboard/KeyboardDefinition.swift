@@ -8,10 +8,23 @@
 
 import UIKit
 
+extension Bundle {
+    static var top: Bundle {
+        if Bundle.main.bundleURL.pathExtension == "appex" {
+            let url = Bundle.main.bundleURL.deletingLastPathComponent().deletingLastPathComponent()
+            if let other = Bundle(url: url) {
+                return other
+            }
+        }
+        
+        return Bundle.main
+    }
+}
+
 struct KeyboardDefinition {
     static let definitions: [KeyboardDefinition] = {
         let rawDefinitions: [[String: Any]] = {
-            let path = Bundle.main.url(forResource: "KeyboardDefinitions", withExtension: "json")!
+            let path = Bundle.top.url(forResource: "KeyboardDefinitions", withExtension: "json")!
             let data = try! String(contentsOf: path).data(using: .utf8)!
             let obj = try! JSONSerialization.jsonObject(with: data, options: [])
             return obj as! [[String: Any]]

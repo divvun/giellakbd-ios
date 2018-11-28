@@ -9,19 +9,6 @@
 import Foundation
 import UIKit
 
-extension Bundle {
-    static var top: Bundle {
-        if Bundle.main.bundleURL.pathExtension == "appex" {
-            let url = Bundle.main.bundleURL.deletingLastPathComponent().deletingLastPathComponent()
-            if let other = Bundle(url: url) {
-                return other
-            }
-        }
-        
-        return Bundle.main
-    }
-}
-
 // from https://gist.github.com/berkus/8a9e104f8aac5d025eb5
 //func memoize<T: Hashable, U>( body: ( (T)->U, T ) -> U ) -> (T) -> U {
 //    var memo = Dictionary<T, U>()
