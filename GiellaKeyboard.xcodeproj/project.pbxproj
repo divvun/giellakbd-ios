@@ -34,7 +34,7 @@
 		C6A3905D1EB61C9D009378C1 /* KeyboardDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DCFDD51EB0787A00FABC11 /* KeyboardDefinition.swift */; };
 		C6B638441EDF81B200A6ECB2 /* SimpleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B638431EDF81B200A6ECB2 /* SimpleButton.swift */; };
 		C6B638461EDF94CA00A6ECB2 /* AboutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B638451EDF94CA00A6ECB2 /* AboutController.swift */; };
-		C6DCFDD41EB070BC00FABC11 /* KeyboardDefinitions.json in Resources */ = {isa = PBXBuildFile; fileRef = C6DCFDD21EB070B500FABC11 /* KeyboardDefinitions.json */; };
+		C6EA31BF21AF11A30014F3B6 /* KeyboardDefinitions.json in Resources */ = {isa = PBXBuildFile; fileRef = C6DCFDD21EB070B500FABC11 /* KeyboardDefinitions.json */; };
 		C6F249331F736DCE00840F2B /* BaseKeyboard.h in Headers */ = {isa = PBXBuildFile; fileRef = C6F249311F736DCE00840F2B /* BaseKeyboard.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C6F249361F736DCE00840F2B /* BaseKeyboard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6F2492F1F736DCE00840F2B /* BaseKeyboard.framework */; };
 		C6F249371F736DCE00840F2B /* BaseKeyboard.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C6F2492F1F736DCE00840F2B /* BaseKeyboard.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -53,7 +53,6 @@
 		C6F249491F736E1A00840F2B /* KeyboardLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC2A46A19DF811E00F789E1 /* KeyboardLayout.swift */; };
 		C6F2494A1F736E1A00840F2B /* ForwardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC2A46C19DF811E00F789E1 /* ForwardingView.swift */; };
 		C6F2494C1F736E1A00840F2B /* GeneratedKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BC98AB1A0A44D200DCB420 /* GeneratedKeyboard.swift */; };
-		C6F2494D1F736E2100840F2B /* KeyboardDefinitions.json in Resources */ = {isa = PBXBuildFile; fileRef = C6DCFDD21EB070B500FABC11 /* KeyboardDefinitions.json */; };
 		C6F2494E1F736E3100840F2B /* BaseKeyboard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6F2492F1F736DCE00840F2B /* BaseKeyboard.framework */; };
 		C6F2494F1F736E3E00840F2B /* KeyboardSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A3905A1EB61BF8009378C1 /* KeyboardSettings.swift */; };
 		C6F249661F736FB900840F2B /* GiellaKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A568E119FA286500C8E119 /* GiellaKeyboard.swift */; };
@@ -580,7 +579,6 @@
 				4EF16F9619D255030076AFCB /* Images.xcassets in Resources */,
 				C6A2E01D1EDFA259006BAB69 /* AboutView.xib in Resources */,
 				C655E85D1EC55D0800B12BE4 /* Localizable.strings in Resources */,
-				C6DCFDD41EB070BC00FABC11 /* KeyboardDefinitions.json in Resources */,
 				C6974E611A31557A00D1A0B3 /* Background.jpg in Resources */,
 				C67A3F3A1EE7F24900C9015C /* About.txt in Resources */,
 				C64937D2218DC7FA00D0C9DC /* dicts.bundle in Resources */,
@@ -593,7 +591,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C6F2494D1F736E2100840F2B /* KeyboardDefinitions.json in Resources */,
+				C6EA31BF21AF11A30014F3B6 /* KeyboardDefinitions.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
