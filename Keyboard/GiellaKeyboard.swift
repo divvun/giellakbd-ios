@@ -462,15 +462,7 @@ fileprivate func addControls(_ defaultKeyboard: Keyboard, definition def: Keyboa
     
     defaultKeyboard.addKey(makeModeKey(to: mode, isMain: isMain), row: row, page: page)
     
-    // The iPhone X family of devices adds its own globe button
-    if #available(iOSApplicationExtension 11.0, *) {
-        // Workaround for UIInputViewController.needsInputModeSwitchKey always returning true
-        if !UIDevice.current.isXFamily {
-            defaultKeyboard.addKey(ChangeKey(), row: row, page: page)
-        }
-    } else {
-        defaultKeyboard.addKey(ChangeKey(), row: row, page: page)
-    }
+    addGlobeKeyIfNotXFamily(defaultKeyboard: defaultKeyboard, row: row, page: page)
     
     let settings = SettingsKey()
     defaultKeyboard.addKey(settings, row: row, page: page)
@@ -487,6 +479,18 @@ fileprivate func addControls(_ defaultKeyboard: Keyboard, definition def: Keyboa
         let hideKey = HideKey()
         hideKey.uppercaseKeyCap = "⥥"
         defaultKeyboard.addKey(hideKey, row: row, page: page)
+    }
+}
+
+fileprivate func addGlobeKeyIfNotXFamily(defaultKeyboard: Keyboard, row: Int, page: Int) {
+    // The iPhone X family of devices adds its own globe button
+    if #available(iOSApplicationExtension 11.0, *) {
+        // Workaround for UIInputViewController.needsInputModeSwitchKey always returning true
+        if !UIDevice.current.isXFamily {
+            defaultKeyboard.addKey(ChangeKey(), row: row, page: page)
+        }
+    } else {
+        defaultKeyboard.addKey(ChangeKey(), row: row, page: page)
     }
 }
 
@@ -538,9 +542,13 @@ func defaultControls(_ defaultKeyboard: Keyboard, definition def: KeyboardDefini
         
         let keyModeChangeLetters = ModeChangeKey()
         defaultKeyboard.addKey(keyModeChangeLetters, row: 3, page: 1)
-        defaultKeyboard.addKey(ChangeKey(), row: 3, page: 1)
+        addGlobeKeyIfNotXFamily(defaultKeyboard: defaultKeyboard, row: 3, page: 1)
         defaultKeyboard.addKey(SettingsKey(), row: 3, page: 1)
-        defaultKeyboard.addKey(SpaceKey(hasName: false), row: 3, page: 1)
+        let space = SpaceKey(hasName: true)
+        space.uppercaseKeyCap = def.space
+        space.uppercaseOutput = " "
+        space.lowercaseOutput = " "
+        defaultKeyboard.addKey(space, row: 3, page: 1)
         defaultKeyboard.addKey(makeReturnKey(definition: def), row: 3, page: 1)
     }
     
@@ -580,9 +588,13 @@ func defaultControls(_ defaultKeyboard: Keyboard, definition def: KeyboardDefini
     } else {
         defaultKeyboard.addKey(BackspaceKey(), row: 2, page: 2)
         defaultKeyboard.addKey(ModeChangeKey(), row: 3, page: 2)
-        defaultKeyboard.addKey(ChangeKey(), row: 3, page: 2)
+        addGlobeKeyIfNotXFamily(defaultKeyboard: defaultKeyboard, row: 3, page: 2)
         defaultKeyboard.addKey(SettingsKey(), row: 3, page: 2)
-        defaultKeyboard.addKey(SpaceKey(hasName: false), row: 3, page: 2)
+        let space = SpaceKey(hasName: true)
+        space.uppercaseKeyCap = def.space
+        space.uppercaseOutput = " "
+        space.lowercaseOutput = " "
+        defaultKeyboard.addKey(space, row: 3, page: 2)
         defaultKeyboard.addKey(makeReturnKey(definition: def), row: 3, page: 2)
     }
     return defaultKeyboard
