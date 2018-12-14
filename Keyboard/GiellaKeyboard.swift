@@ -349,7 +349,12 @@ class GiellaBanner: ExtraView {
         var mutKeys = keys
 
         if mode == .suggestion {
-            if mutKeys.count < 3 && keyboard.getCurrentWord() != "" {
+            // Make center item the correct one
+            if mutKeys.count == 3 {
+                mutKeys = [keys[2], keys[0], keys[1]]
+            }
+            
+            if mutKeys.count < 3 {
                 let k = "\"\(keyboard.getCurrentWord())\""
                 if mutKeys.count == 0 {
                     mutKeys.append(k)
