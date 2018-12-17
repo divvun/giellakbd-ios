@@ -28,8 +28,8 @@ public enum TokenType: UInt8 {
 
 public struct Token {
     let type: TokenType
-    let start: UInt64
-    let end: UInt64
+    let start: UInt32
+    let end: UInt32
     let value: String
 }
 
@@ -98,9 +98,9 @@ public class SuggestionSequence: Sequence {
         private let spellerHandle: UnsafeMutableRawPointer
         private let handle: UnsafeMutableRawPointer
         
-        init(_ value: String, count: Int, speller: UnsafeMutableRawPointer) {
+        init(_ value: String, count: Int, maxWeight: Float, speller: UnsafeMutableRawPointer) {
             self.spellerHandle = speller
-            self.handle = speller_suggest(speller, value.cString(using: .utf8), count, 0.0)!
+            self.handle = speller_suggest(speller, value.cString(using: .utf8), count, maxWeight, 0.0)!
             self.size = suggest_vec_len(handle)
         }
         
@@ -125,15 +125,17 @@ public class SuggestionSequence: Sequence {
     private let spellerHandle: UnsafeMutableRawPointer
     private let value: String
     private let suggestionCount: Int
+    private let maxWeight: Float
     
-    fileprivate init(handle: UnsafeMutableRawPointer, word: String, count: Int = 10) {
+    fileprivate init(handle: UnsafeMutableRawPointer, word: String, count: Int = 10, maxWeight: Float = 4999.99) {
         self.spellerHandle = handle
         self.value = word
         self.suggestionCount = count
+        self.maxWeight = maxWeight
     }
     
     public func makeIterator() -> SuggestionSequence.Iterator {
-        return SuggestionSequence.Iterator(value, count: suggestionCount, speller: spellerHandle)
+        return SuggestionSequence.Iterator(value, count: suggestionCount, maxWeight: maxWeight, speller: spellerHandle)
     }
 }
 
