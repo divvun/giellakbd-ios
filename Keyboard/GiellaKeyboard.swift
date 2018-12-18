@@ -24,7 +24,7 @@ class SuggestionOp: Operation {
         }
 
         var suggestions = [String]()
-        self.kbd?.speller?.suggest(word: self.word, count: 3).forEach({ (suggest) in
+        self.kbd?.speller?.suggest(word: self.word, count: 3, maxWeight: 4999.99).forEach({ (suggest) in
             suggestions.append(suggest)
         })
 
@@ -60,6 +60,7 @@ open class GiellaKeyboard: KeyboardViewController {
 
     let opQueue: OperationQueue = {
         let o = OperationQueue()
+        o.underlyingQueue = DispatchQueue.global(qos: .userInteractive)
         o.maxConcurrentOperationCount = 1
         return o
     }()
