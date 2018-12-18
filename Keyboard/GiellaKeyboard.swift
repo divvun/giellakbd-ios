@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Sentry
 
 class SuggestionOp: Operation {
     let word: String
@@ -136,17 +137,24 @@ open class GiellaKeyboard: KeyboardViewController {
     }
 
     func loadZHFST() {
+        
         print("Loading speller…")
 
         DispatchQueue.global(qos: .background).async {
             print("Dispatching request to load speller…")
+            
+            let sentryEvent = Sentry.Event(level: .debug)
 
             guard let bundle = Bundle.top.url(forResource: "dicts", withExtension: "bundle") else {
+                sentryEvent.message = "No dict bundle found; ZHFST not loaded."
+                Client.shared?.send(event: sentryEvent, completion: nil)
                 print("No dict bundle found; ZHFST not loaded.")
                 return
             }
 
             guard let lang = self.getPrimaryLanguage() else {
+                sentryEvent.message = "No primary language found for keyboard; ZHFST not loaded."
+                Client.shared?.send(event: sentryEvent, completion: nil)
                 print("No primary language found for keyboard; ZHFST not loaded.")
                 return
             }
@@ -154,6 +162,8 @@ open class GiellaKeyboard: KeyboardViewController {
             let path = bundle.appendingPathComponent("\(lang).zhfst")
             
             if !FileManager.default.fileExists(atPath: path.path) {
+                sentryEvent.message = "No speller at: \(path)"
+                Client.shared?.send(event: sentryEvent, completion: nil)
                 print("No speller at: \(path)")
                 print("HfstSpell **not** loaded.")
                 return
@@ -164,9 +174,15 @@ open class GiellaKeyboard: KeyboardViewController {
             do {
                 speller = try Speller(path: path)
             } catch {
+                let e = Sentry.Event(level: .error)
+//                Client.shared?.send(event: , completion: nil)
                 if let error = error as? SpellerInitError {
+                    e.message = error.message
                     print(error.message)
+                } else {
+                    e.message = error.localizedDescription
                 }
+                Client.shared?.send(event: e, completion: nil)
                 print("HfstSpell **not** loaded.")
                 return
             }
