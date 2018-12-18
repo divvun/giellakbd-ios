@@ -139,6 +139,11 @@ public class SuggestionSequence: Sequence {
     }
 }
 
+public struct Suggestion : Decodable {
+    let value: String
+    let weight: Float
+}
+
 public class Speller {
     private let handle: UnsafeMutableRawPointer
     
@@ -160,8 +165,14 @@ public class Speller {
         self.handle = handle
     }
     
-    func suggest(word: String, count: Int = 10) -> SuggestionSequence {
-        return SuggestionSequence(handle: self.handle, word: word, count: count)
+    func suggest(word: String, count: Int = 10, maxWeight: Float = 0.0) -> [String] {
+//        return SuggestionSequence(handle: self.handle, word: word, count: count)
+        let result = speller_suggest_json(self.handle, word.cString(using: .utf8), count, maxWeight, 0.0)!
+        defer { speller_str_free(result) }
+        if let v = try? JSONDecoder().decode([Suggestion].self, from: String(cString: result).data(using: .utf8)!) {
+            return v.map { $0.value }
+        }
+        return []
     }
     
     func isCorrect(word: String) -> Bool {

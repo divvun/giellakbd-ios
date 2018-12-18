@@ -175,7 +175,6 @@ open class GiellaKeyboard: KeyboardViewController {
                 speller = try Speller(path: path)
             } catch {
                 let e = Sentry.Event(level: .error)
-//                Client.shared?.send(event: , completion: nil)
                 if let error = error as? SpellerInitError {
                     e.message = error.message
                     print(error.message)
@@ -371,7 +370,8 @@ class GiellaBanner: ExtraView {
             }
             
             if mutKeys.count < 3 {
-                let k = "\"\(keyboard.getCurrentWord())\""
+                let w = keyboard.getCurrentWord()
+                let k = w.count > 0 ? "\"\(w)\"" : ""
                 if mutKeys.count == 0 {
                     mutKeys.append(k)
                 } else {

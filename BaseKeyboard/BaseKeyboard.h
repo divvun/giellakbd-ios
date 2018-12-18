@@ -44,6 +44,9 @@ speller_str_free(const char* _Nonnull str);
 extern suggest_vec_t* _Nonnull
 speller_suggest(speller_t* _Nonnull handle, const char* _Nonnull word, size_t n_best, float max_weight, float beam);
 
+extern const char* _Nonnull
+speller_suggest_json(speller_t* _Nonnull handle, const char* _Nonnull word, size_t n_best, float max_weight, float beam);
+
 extern bool
 speller_is_correct(speller_t* _Nonnull handle, const char* _Nonnull word);
 
