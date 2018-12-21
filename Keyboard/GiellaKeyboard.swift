@@ -142,7 +142,7 @@ open class GiellaKeyboard: KeyboardViewController {
         if let ex = Bundle.main.infoDictionary!["NSExtension"] as? [String: AnyObject]{
             if let attrs = ex["NSExtensionAttributes"] as? [String: AnyObject] {
                 if let lang = attrs["PrimaryLanguage"] as? String {
-                    return lang
+                    return String(lang.split(separator: "_")[0])
                 }
             }
         }
