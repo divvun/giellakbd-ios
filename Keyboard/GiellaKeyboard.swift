@@ -83,7 +83,11 @@ open class GiellaKeyboard: KeyboardViewController {
         guard let banner = self.bannerView as? GiellaBanner else {
             return
         }
-
+        
+        if banner.mode == .error {
+            return
+        }
+        
         let lastWord = getCurrentWord()
 
         if lastWord == "" || self.speller == nil {
@@ -93,7 +97,16 @@ open class GiellaKeyboard: KeyboardViewController {
         opQueue.cancelAllOperations()
         opQueue.addOperation(SuggestionOp(kbd: self, word: lastWord))
     }
-
+    
+    func setBannerError(message: String) {
+        guard let banner = self.bannerView as? GiellaBanner else {
+            return
+        }
+        
+        banner.setBannerMode(.error)
+        banner.updateList([message])
+    }
+    
     let selectedKeyboardIndex: Int = Bundle.main.infoDictionary!["DivvunKeyboardIndex"] as! Int
     
     override open func viewDidLoad() {
@@ -179,6 +192,9 @@ open class GiellaKeyboard: KeyboardViewController {
                 if let error = error as? SpellerInitError {
                     e.message = error.message
                     print(error.message)
+                    DispatchQueue.main.async {
+                        self.setBannerError(message: "Speller could not load.")
+                    }
                 } else {
                     e.message = error.localizedDescription
                 }
@@ -238,15 +254,15 @@ open class GiellaKeyboard: KeyboardViewController {
 
     override func hideLongPress() {
         super.hideLongPress()
-
-        if let banner = self.bannerView as? GiellaBanner {
+        
+        if let banner = self.bannerView as? GiellaBanner, banner.mode != .error {
             banner.updateList([])
         }
     }
 }
 
 enum BannerModes {
-    case none, longPress, suggestion
+    case none, longPress, suggestion, error
 }
 
 class GiellaBanner: ExtraView {
@@ -261,11 +277,11 @@ class GiellaBanner: ExtraView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    func setMode(_ mode: BannerModes) {
+    
+    func setBannerMode(_ mode: BannerModes) {
         self.mode = mode;
     }
-
+    
     @objc func handleBtnPress(_ sender: UIButton) {
         let kbd = self.keyboard
         let textDocumentProxy = kbd.textDocumentProxy as UITextDocumentProxy
@@ -318,53 +334,55 @@ class GiellaBanner: ExtraView {
 
         // Constrain to top of parent view
         topConstraint = NSLayoutConstraint(item: currentView, attribute: .top, relatedBy: .equal, toItem: parentView,
-            attribute: .top, multiplier: 1.0, constant: 1)
-
+                                           attribute: .top, multiplier: 1.0, constant: 1)
+        
         // Constraint to bottom of parent too
         bottomConstraint = NSLayoutConstraint(item: currentView, attribute: .bottom, relatedBy: .equal, toItem: parentView, attribute: .bottom, multiplier: 1.0, constant: -1)
-
+        
         // If last, constrain to right
         if nextView == nil {
             rightConstraint = NSLayoutConstraint(item: currentView, attribute: .right, relatedBy: .equal, toItem: parentView, attribute: .right, multiplier: 1.0, constant: -1)
         } else {
             rightConstraint = NSLayoutConstraint(item: currentView, attribute: .right, relatedBy: .equal, toItem: nextView, attribute: .left, multiplier: 1.0, constant: -1)
         }
-
+        
         // If first, constrain to left of parent
         if prevView == nil {
             leftConstraint = NSLayoutConstraint(item: currentView, attribute: .left, relatedBy: .equal, toItem: parentView, attribute: .left, multiplier: 1.0, constant: 1)
         } else {
             leftConstraint = NSLayoutConstraint(item: currentView, attribute: .left, relatedBy: .equal, toItem: prevView, attribute: .right, multiplier: 1.0, constant: 1)
-
+            
             let widthConstraint = NSLayoutConstraint(item: firstView, attribute: .width, relatedBy: .equal, toItem: currentView, attribute: .width, multiplier: 1.0, constant: 0)
-
+            
             widthConstraint.priority = UILayoutPriority(rawValue: 800)
-
+            
             addConstraint(widthConstraint)
         }
-
+        
         addConstraints([topConstraint, bottomConstraint, rightConstraint, leftConstraint])
-
+        
     }
-
+    
     @objc func buttonHighlight(_ sender: UIButton) {
         sender.backgroundColor = UIColor(red: 235.0/255.0, green: 237.0/255.0, blue: 239.0/255.0, alpha: 1.0)
     }
-
+    
     @objc func buttonNormal(_ sender: UIButton) {
         sender.backgroundColor = UIColor(red: 187.0/255.0, green: 194.0/255.0, blue: 201.0/255.0, alpha: 1.0)
     }
-
+    
     func updateList(_ keys: [String]) {
         let sv = self.subviews
-
+        
         for v in sv {
             v.removeFromSuperview()
         }
-
+        
         var mutKeys = keys
-
-        if mode == .suggestion {
+        
+        if mode == .error {
+            // Do nothing
+        } else if mode == .suggestion {
             // Make center item the correct one
             if mutKeys.count == 3 {
                 mutKeys = [keys[2], keys[0], keys[1]]
@@ -379,12 +397,13 @@ class GiellaBanner: ExtraView {
                     mutKeys.insert(k, at: 0)
                 }
             }
+            
+            // If still less than 3!
+            while mutKeys.count < 3 {
+                mutKeys.append("")
+            }
         }
-        // If still less than 3!
-        while mutKeys.count < 3 {
-            mutKeys.append("")
-        }
-
+        
         for char in mutKeys {
             let btn = UIButton(type: .custom)
 
@@ -393,7 +412,11 @@ class GiellaBanner: ExtraView {
             btn.sizeToFit()
 
             if let titleLabel = btn.titleLabel {
-                titleLabel.font = UIFont.systemFont(ofSize: 18)
+                if mode == .error {
+                    titleLabel.font = UIFont.systemFont(ofSize: 12)
+                } else {
+                    titleLabel.font = UIFont.systemFont(ofSize: 18)
+                }
                 titleLabel.numberOfLines = 1
                 titleLabel.lineBreakMode = .byTruncatingHead
                 titleLabel.baselineAdjustment = .alignCenters

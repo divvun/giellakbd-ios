@@ -154,25 +154,20 @@ public class Speller {
     }()
     
     init(path: URL) throws {
-        var errorPtr = UnsafeMutablePointer<UInt8>.allocate(capacity: 1)
-        guard let handle = speller_archive_new(path.asStringPointer(), errorPtr) else {
-            let errMsgPtr = speller_get_error(errorPtr.pointee)!
-            defer { speller_str_free(errMsgPtr) }
-            
-            throw SpellerInitError(code: errorPtr.pointee, message: String(cString: errMsgPtr))
-        }
+        var errorPtr: UnsafeMutablePointer<CChar>? = nil
         
+        guard let handle = speller_archive_new(path.asStringPointer(), &errorPtr) else {
+            if let errorPtr = errorPtr {
+                defer { speller_str_free(errorPtr) }
+                throw SpellerInitError(code: 0, message: String(cString: errorPtr))
+            }
+            throw SpellerInitError(code: 255, message: "Unknown error")
+        }
         self.handle = handle
     }
     
     func suggest(word: String, count: Int = 10, maxWeight: Float = 0.0) -> SuggestionSequence {
        return SuggestionSequence(handle: self.handle, word: word, count: count, maxWeight: maxWeight)
-        // let result = speller_suggest_json(self.handle, word.cString(using: .utf8), count, maxWeight, 0.0)!
-        // defer { speller_str_free(result) }
-        // if let v = try? JSONDecoder().decode([Suggestion].self, from: String(cString: result).data(using: .utf8)!) {
-        //     return v.map { $0.value }
-        // }
-        // return []
     }
     
     func isCorrect(word: String) -> Bool {

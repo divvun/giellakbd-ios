@@ -27,10 +27,7 @@ typedef void speller_t;
 typedef void suggest_vec_t;
 
 extern speller_t*
-speller_archive_new(const char* _Nonnull path, uint8_t* error);
-
-extern const char* _Nonnull
-speller_get_error(uint8_t code);
+speller_archive_new(const char* _Nonnull path, char** error);
 
 extern void
 speller_archive_free(speller_t* _Nonnull handle);
