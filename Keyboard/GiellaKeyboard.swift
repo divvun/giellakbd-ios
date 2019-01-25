@@ -56,7 +56,7 @@ extension UnsafeMutablePointer where Pointee == vec_str_t {
 open class GiellaKeyboard: KeyboardViewController {
     //var keyNames: [String: String]
 
-    var speller: Speller? = nil
+    var speller: ChfstSpeller? = nil
 
     let opQueue: OperationQueue = {
         let o = OperationQueue()
@@ -173,7 +173,7 @@ open class GiellaKeyboard: KeyboardViewController {
                 return
             }
 
-            let path = bundle.appendingPathComponent("\(lang).zhfst")
+            let path = bundle.appendingPathComponent("\(lang).chfst")
             
             if !FileManager.default.fileExists(atPath: path.path) {
                 sentryEvent.message = "No speller at: \(path)"
@@ -183,10 +183,10 @@ open class GiellaKeyboard: KeyboardViewController {
                 return
             }
             
-            let speller: Speller
+            let speller: ChfstSpeller
             
             do {
-                speller = try Speller(path: path)
+                speller = try ChfstSpeller(path: path)
             } catch {
                 let e = Sentry.Event(level: .error)
                 if let error = error as? SpellerInitError {

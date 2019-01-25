@@ -940,7 +940,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Dependencies/hfst-ospell-rs/target/universal/release";
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
-				OTHER_LDFLAGS = "-lhfstospell";
+				OTHER_LDFLAGS = "-ldivvunspell";
 				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaKeyboard.Keyboard;
 				PRODUCT_NAME = Keyboard;
 				PROVISIONING_PROFILE = "";
@@ -969,7 +969,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Dependencies/hfst-ospell-rs/target/universal/release";
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
-				OTHER_LDFLAGS = "-lhfstospell";
+				OTHER_LDFLAGS = "-ldivvunspell";
 				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaKeyboard.Keyboard;
 				PRODUCT_NAME = Keyboard;
 				PROVISIONING_PROFILE = "";
@@ -1065,7 +1065,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
-					"-lhfstospell",
+					"-ldivvunspell",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.BaseKeyboard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1111,7 +1111,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
-					"-lhfstospell",
+					"-ldivvunspell",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.BaseKeyboard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
