@@ -33,63 +33,63 @@ public struct Token {
     let value: String
 }
 
-extension Token {
-    fileprivate static func from(c record: token_record_t) -> Token {
-        return Token(
-            type: TokenType(rawValue: record.type) ?? .other,
-            start: record.start,
-            end: record.end,
-            value: String(cString: record.value))
-    }
-}
-
-public class TokenizerSequence: Sequence {
-    public class Iterator: IteratorProtocol {
-        private let handle: UnsafeMutableRawPointer
-        private let record: UnsafeMutablePointer<UnsafeMutablePointer<token_record_t>?>
-        private let value: [CChar]
-        
-        init(_ value: String) {
-            self.value = value.cString(using: .utf8)!
-            self.handle = speller_tokenize(self.value)!
-            self.record = UnsafeMutablePointer<UnsafeMutablePointer<token_record_t>?>.allocate(capacity: 1)
-
-            self.record.pointee = nil
-        }
-        
-        public func next() -> Token? {
-            if !speller_token_next(handle, record) {
-                return nil
-            }
-            
-            guard let record = record.pointee else {
-                return nil
-            }
-            
-            return Token.from(c: record.pointee)
-        }
-        
-        deinit {
-            speller_tokenizer_free(handle)
-        }
-    }
-    
-    private let value: String
-    
-    fileprivate init(string: String) {
-        self.value = string
-    }
-    
-    public func makeIterator() -> TokenizerSequence.Iterator {
-        return TokenizerSequence.Iterator(value)
-    }
-}
-
-public extension String {
-    func tokenize() -> TokenizerSequence {
-        return TokenizerSequence(string: self)
-    }
-}
+//extension Token {
+//    fileprivate static func from(c record: token_record_t) -> Token {
+//        return Token(
+//            type: TokenType(rawValue: record.type) ?? .other,
+//            start: record.start,
+//            end: record.end,
+//            value: String(cString: record.value))
+//    }
+//}
+//
+//public class TokenizerSequence: Sequence {
+//    public class Iterator: IteratorProtocol {
+//        private let handle: UnsafeMutableRawPointer
+//        private let record: UnsafeMutablePointer<UnsafeMutablePointer<token_record_t>?>
+//        private let value: [CChar]
+//        
+//        init(_ value: String) {
+//            self.value = value.cString(using: .utf8)!
+//            self.handle = speller_tokenize(self.value)!
+//            self.record = UnsafeMutablePointer<UnsafeMutablePointer<token_record_t>?>.allocate(capacity: 1)
+//            
+//            self.record.pointee = nil
+//        }
+//        
+//        public func next() -> Token? {
+//            if !speller_token_next(handle, record) {
+//                return nil
+//            }
+//            
+//            guard let record = record.pointee else {
+//                return nil
+//            }
+//            
+//            return Token.from(c: record.pointee)
+//        }
+//        
+//        deinit {
+//            speller_tokenizer_free(handle)
+//        }
+//    }
+//    
+//    private let value: String
+//    
+//    fileprivate init(string: String) {
+//        self.value = string
+//    }
+//    
+//    public func makeIterator() -> TokenizerSequence.Iterator {
+//        return TokenizerSequence.Iterator(value)
+//    }
+//}
+//
+//public extension String {
+//    func tokenize() -> TokenizerSequence {
+//        return TokenizerSequence(string: self)
+//    }
+//}
 
 public class SuggestionSequence: Sequence {
     public class Iterator: IteratorProtocol {
@@ -262,3 +262,4 @@ public class ChfstSpeller {
         chfst_free(handle)
     }
 }
+

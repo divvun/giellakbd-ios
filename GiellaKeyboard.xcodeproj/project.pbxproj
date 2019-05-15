@@ -155,7 +155,7 @@
 		C61CC29120C8A5C000B213B8 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = HostingApp/sv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C643BF5A20BD483C00124DDC /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C643BF6E20BEB91600124DDC /* nn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nn; path = HostingApp/nn.lproj/Localizable.strings; sourceTree = "<group>"; };
-		C64937CD218DC26500D0C9DC /* libhfstospell.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libhfstospell.a; path = "Dependencies/hfst-ospell-rs/target/universal/$(CONFIGURATION)/libhfstospell.a"; sourceTree = "<group>"; };
+		C64937CD218DC26500D0C9DC /* libdivvunspell.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libdivvunspell.a; path = "Dependencies/hfst-ospell-rs/target/universal/$(CONFIGURATION)/libdivvunspell.a"; sourceTree = "<group>"; };
 		C64937CF218DC43800D0C9DC /* HfstSpell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HfstSpell.swift; sourceTree = "<group>"; };
 		C64937D1218DC7FA00D0C9DC /* dicts.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = dicts.bundle; sourceTree = "<group>"; };
 		C65430A91EC93EB0007FC053 /* LayoutsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutsController.swift; sourceTree = "<group>"; };
@@ -358,7 +358,7 @@
 		64F4D84E0649A1185050129C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C64937CD218DC26500D0C9DC /* libhfstospell.a */,
+				C64937CD218DC26500D0C9DC /* libdivvunspell.a */,
 				9024FCA6C422ADE3CBC979B9 /* Pods_BaseKeyboard.framework */,
 				8902A09E56DB03DDF4926837 /* Pods_HostingApp.framework */,
 			);
