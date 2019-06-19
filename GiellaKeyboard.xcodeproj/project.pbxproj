@@ -70,13 +70,6 @@
 			remoteGlobalIDString = 4E807DB819461DC700D875D1;
 			remoteInfo = Keyboard;
 		};
-		4E807DC219461DC700D875D1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4E807D8B19461D9000D875D1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4E807DB819461DC700D875D1;
-			remoteInfo = Keyboard;
-		};
 		C649384E218DCE8E00D0C9DC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4E807D8B19461D9000D875D1 /* Project object */;
@@ -620,15 +613,11 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-HostingApp/Pods-HostingApp-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Sentry/Sentry.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sentry.framework",
 			);
@@ -721,11 +710,6 @@
 			isa = PBXTargetDependency;
 			target = 4E807DB819461DC700D875D1 /* Keyboard */;
 			targetProxy = 4E807DBF19461DC700D875D1 /* PBXContainerItemProxy */;
-		};
-		4E807DC319461DC700D875D1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4E807DB819461DC700D875D1 /* Keyboard */;
-			targetProxy = 4E807DC219461DC700D875D1 /* PBXContainerItemProxy */;
 		};
 		C649384F218DCE8E00D0C9DC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
