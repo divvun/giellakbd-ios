@@ -13,11 +13,7 @@ class AppNavControllerDelegate: NSObject, UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         viewController.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
-        if viewController is HideNavBar {
-            navigationController.setNavigationBarHidden(true, animated: true)
-        } else {
-            navigationController.setNavigationBarHidden(false, animated: true)
-        }
+        navigationController.setNavigationBarHidden(viewController is HideNavBar, animated: true)
     }
     
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {

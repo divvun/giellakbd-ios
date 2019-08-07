@@ -10,101 +10,21 @@ import UIKit
 import Sentry
 import AudioToolbox
 
-/*
-let metrics: [String:Double] = [
-    "topBanner": 38
-]
-func metric(_ name: String) -> CGFloat {
-    if UIDevice.current.userInterfaceIdiom != UIUserInterfaceIdiom.pad {
-        return CGFloat(metrics[name]!)
-    } else {
-        return CGFloat(metrics[name]!) * 1.4
-    }
-}
-
-// TODO: move this somewhere else and localize
-let kAutoCapitalization = "kAutoCapitalization"
-let kPeriodShortcut = "kPeriodShortcut"
-let kKeyboardClicks = "kKeyboardClicks"
-let kSmallLowercase = "kSmallLowercase"*/
-
-open class KeyboardViewController: UIInputViewController, KeyboardViewDelegate, BannerViewDelegate {
-    func didSelectBannerItem(_ item: BannerItem) {
-        print("Did select item \(item.title) - \(item.value)")
-    }
-    
-    func didTriggerHoldKey(_ key: KeyDefinition) {
-        if case .backspace = key.type {
-            self.textDocumentProxy.deleteBackward()
-        }
-    }
-    
-    func didTriggerDoubleTap(forKey key: KeyDefinition) {
-        if case .shift = key.type {
-            keyboardView.page = (keyboardView.page == .capslock ? .normal : .capslock)
-        } else if key.type.supportsDoubleTap {
-            didTriggerKey(key)
-        }
-    }
-    
-    func didTriggerKey(_ key: KeyDefinition) {
-        switch key.type {
-            
-        case .input(let string):
-            if keyboardView.page == .shifted {
-                keyboardView.page = .normal
-            }
-            self.textDocumentProxy.insertText(string)
-            
-            if string == "c" {
-                bannerVisible = !bannerVisible
-                self.bannerView.items = [BannerItem(title: "Number uno", value: 1),BannerItem(title: "Number dos", value: 2),BannerItem(title: "Number tres", value: 3),BannerItem(title: "Number quattro", value: 4)]
-            }
-        case .spacer:
-            break
-        case .shift:
-            keyboardView.page = (keyboardView.page == .normal ? .shifted : .normal)
-        case .backspace:
-            self.textDocumentProxy.deleteBackward()
-        case .spacebar:
-            self.textDocumentProxy.insertText(" ")
-        case .returnkey:
-            self.textDocumentProxy.insertText("\n")
-        case .symbols:
-            keyboardView.page = (keyboardView.page == .symbols1 || keyboardView.page == .symbols2 ? .normal : .symbols1)
-        case .shiftSymbols:
-            keyboardView.page = (keyboardView.page == .symbols1 ? .symbols2 : .symbols1)
-        case .keyboard:
-            self.advanceToNextInputMode()
-        }
-    }
-    
-    
+open class KeyboardViewController: UIInputViewController {
     @IBOutlet var nextKeyboardButton: UIButton!
-    var keyboardView: KeyboardView!
-    
-    override open func updateViewConstraints() {
-        super.updateViewConstraints()
-        
-        // Add custom view sizing constraints here
-    }
+    private var keyboardView: KeyboardView!
     
     // Gets updated to match device in viewDidAppear
-    var defaultHeightForDevice: CGFloat?
-    
-    var heightConstraint: NSLayoutConstraint!
-    
-    let bannerHeight: CGFloat = 55.0
-    
-    var bannerView: BannerView!
-    
-    var extraSpacingView: UIView!
+    private var defaultHeightForDevice: CGFloat?
+    private var heightConstraint: NSLayoutConstraint!
+    private let bannerHeight: CGFloat = 55.0
+    private var bannerView: BannerView!
+    private var extraSpacingView: UIView!
     
     override open func viewDidLoad() {
         super.viewDidLoad()
         
         self.inputView?.allowsSelfSizing = true
-        
         setupKeyboardView()
         setupBannerView()
         
@@ -112,7 +32,10 @@ open class KeyboardViewController: UIInputViewController, KeyboardViewDelegate, 
     }
     
     private func setupKeyboardView() {
-        keyboardView = KeyboardView(definition: KeyboardDefinition.definitions.first!)
+        guard let index = Bundle.main.infoDictionary?["DivvunKeyboardIndex"] as? Int else {
+            fatalError("There was no DivvunKeyboardIndex")
+        }
+        keyboardView = KeyboardView(definition: KeyboardDefinition.definitions[index])
         keyboardView.translatesAutoresizingMaskIntoConstraints = false
         
         self.view.addSubview(keyboardView)
@@ -133,7 +56,6 @@ open class KeyboardViewController: UIInputViewController, KeyboardViewDelegate, 
         self.extraSpacingView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
         self.extraSpacingView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
         
-        
         self.bannerView = BannerView(frame: .zero)
         self.bannerView.backgroundColor = KeyboardView.theme.bannerBackgroundColor
         self.bannerView.translatesAutoresizingMaskIntoConstraints = false
@@ -148,7 +70,7 @@ open class KeyboardViewController: UIInputViewController, KeyboardViewDelegate, 
         self.bannerView.bottomAnchor.constraint(equalTo: self.keyboardView.topAnchor)
         self.bannerView.topAnchor.constraint(equalTo: self.extraSpacingView.bottomAnchor).isActive = true
         
-        self.bannerView.isHidden = true
+        self.bannerView.isHidden = false
     }
     
     private func updateHeightConstraint() {
@@ -176,12 +98,9 @@ open class KeyboardViewController: UIInputViewController, KeyboardViewDelegate, 
             self.heightConstraint.isActive = true
             
             self.keyboardView.heightAnchor.constraint(equalToConstant: self.defaultHeightForDevice!).isActive = true
-            
-            self.bannerVisible = false
         }
         
         keyboardView.update()
-        
         disablesDelayingGestureRecognizers = true
     }
     
@@ -191,10 +110,14 @@ open class KeyboardViewController: UIInputViewController, KeyboardViewDelegate, 
         disablesDelayingGestureRecognizers = false
     }
     
-    var bannerVisible: Bool = false {
-        didSet {
+    var bannerVisible: Bool {
+        set {
             self.bannerView.isHidden = !bannerVisible
             updateHeightConstraint()
+        }
+        
+        get {
+            return !self.bannerView.isHidden
         }
     }
     
@@ -235,5 +158,55 @@ open class KeyboardViewController: UIInputViewController, KeyboardViewDelegate, 
                 }
             }
         }
+    }
+}
+
+extension KeyboardViewController: KeyboardViewDelegate {
+    func didTriggerHoldKey(_ key: KeyDefinition) {
+        if case .backspace = key.type {
+            self.textDocumentProxy.deleteBackward()
+        }
+    }
+    
+    func didTriggerDoubleTap(forKey key: KeyDefinition) {
+        if case .shift = key.type {
+            keyboardView.page = (keyboardView.page == .capslock ? .normal : .capslock)
+        } else if key.type.supportsDoubleTap {
+            didTriggerKey(key)
+        }
+    }
+    
+    func didTriggerKey(_ key: KeyDefinition) {
+        switch key.type {
+            
+        case .input(let string):
+            if keyboardView.page == .shifted {
+                keyboardView.page = .normal
+            }
+            
+            self.textDocumentProxy.insertText(string)
+        case .spacer:
+            break
+        case .shift:
+            keyboardView.page = (keyboardView.page == .normal ? .shifted : .normal)
+        case .backspace:
+            self.textDocumentProxy.deleteBackward()
+        case .spacebar:
+            self.textDocumentProxy.insertText(" ")
+        case .returnkey:
+            self.textDocumentProxy.insertText("\n")
+        case .symbols:
+            keyboardView.page = (keyboardView.page == .symbols1 || keyboardView.page == .symbols2 ? .normal : .symbols1)
+        case .shiftSymbols:
+            keyboardView.page = (keyboardView.page == .symbols1 ? .symbols2 : .symbols1)
+        case .keyboard:
+            self.advanceToNextInputMode()
+        }
+    }
+}
+
+extension KeyboardViewController: BannerViewDelegate {
+    func didSelectBannerItem(_ item: BannerItem) {
+        print("Did select item \(item.title) - \(item.value)")
     }
 }
