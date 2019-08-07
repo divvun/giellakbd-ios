@@ -20,9 +20,17 @@ open class KeyboardViewController: UIInputViewController {
     private let bannerHeight: CGFloat = 55.0
     private var bannerView: BannerView!
     private var extraSpacingView: UIView!
+    private var keyboardDefinition: KeyboardDefinition!
+    private var deadKeyHandler: DeadKeyHandler!
     
     override open func viewDidLoad() {
         super.viewDidLoad()
+        
+        guard let kbdIndex = Bundle.main.infoDictionary?["DivvunKeyboardIndex"] as? Int else {
+            fatalError("There was no DivvunKeyboardIndex")
+        }
+        keyboardDefinition = KeyboardDefinition.definitions[kbdIndex]
+        deadKeyHandler = DeadKeyHandler(keyboard: keyboardDefinition)
         
         self.inputView?.allowsSelfSizing = true
         setupKeyboardView()
@@ -32,10 +40,7 @@ open class KeyboardViewController: UIInputViewController {
     }
     
     private func setupKeyboardView() {
-        guard let index = Bundle.main.infoDictionary?["DivvunKeyboardIndex"] as? Int else {
-            fatalError("There was no DivvunKeyboardIndex")
-        }
-        keyboardView = KeyboardView(definition: KeyboardDefinition.definitions[index])
+        keyboardView = KeyboardView(definition: keyboardDefinition)
         keyboardView.translatesAutoresizingMaskIntoConstraints = false
         
         self.view.addSubview(keyboardView)
@@ -121,6 +126,14 @@ open class KeyboardViewController: UIInputViewController {
         }
     }
     
+    private func insertText(_ input: String) {
+        self.textDocumentProxy.insertText(input)
+    }
+    
+    private func deleteBackward() {
+        self.textDocumentProxy.deleteBackward()
+    }
+    
     override open func textWillChange(_ textInput: UITextInput?) {
         // The app is about to change the document's contents. Perform any preparation here.
     }
@@ -164,7 +177,7 @@ open class KeyboardViewController: UIInputViewController {
 extension KeyboardViewController: KeyboardViewDelegate {
     func didTriggerHoldKey(_ key: KeyDefinition) {
         if case .backspace = key.type {
-            self.textDocumentProxy.deleteBackward()
+            self.deleteBackward()
         }
     }
     
@@ -178,23 +191,44 @@ extension KeyboardViewController: KeyboardViewDelegate {
     
     func didTriggerKey(_ key: KeyDefinition) {
         switch key.type {
-            
         case .input(let string):
+            switch deadKeyHandler.handleInput(string, page: keyboardView.page) {
+            case .none:
+                self.insertText(string)
+            case .transforming:
+                // Do nothing for now
+                break
+            case let .output(value):
+                self.insertText(value)
+            }
+            
             if keyboardView.page == .shifted {
                 keyboardView.page = .normal
             }
-            
-            self.textDocumentProxy.insertText(string)
         case .spacer:
             break
         case .shift:
             keyboardView.page = (keyboardView.page == .normal ? .shifted : .normal)
         case .backspace:
-            self.textDocumentProxy.deleteBackward()
+            if let value = deadKeyHandler.finish() {
+                self.insertText(value)
+            }
+            self.deleteBackward()
         case .spacebar:
-            self.textDocumentProxy.insertText(" ")
+            switch deadKeyHandler.handleInput(" ", page: keyboardView.page) {
+            case .none:
+                self.insertText(" ")
+            case .transforming:
+                // Do nothing for now
+                break
+            case let .output(value):
+                self.insertText(value)
+            }
         case .returnkey:
-            self.textDocumentProxy.insertText("\n")
+            if let value = deadKeyHandler.finish() {
+                self.insertText(value)
+            }
+            self.insertText("\n")
         case .symbols:
             keyboardView.page = (keyboardView.page == .symbols1 || keyboardView.page == .symbols2 ? .normal : .symbols1)
         case .shiftSymbols:

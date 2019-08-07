@@ -4,6 +4,15 @@
     "internalName": "northern_sami",
     "return": "linnj\u00e1molsun",
     "space": "gaske",
+    "deadKeys": {
+        "normal": ["`"]
+    },
+    "transforms": {
+        "`": {
+            " ": "`",
+            "a": "à"
+        }
+    },
     "longPress": {
       "\u00c1": [
         "Q"
@@ -48,7 +57,8 @@
         "i",
         "o",
         "p",
-        "\u014b"
+        "\u014b",
+        "`"
       ],
       [
         "a",
