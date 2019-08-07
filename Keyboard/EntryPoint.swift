@@ -1,3 +1,3 @@
 import BaseKeyboard
 
-class EntryKeyboard: GiellaKeyboard {}
+class EntryKeyboard: KeyboardViewController {}

@@ -35,21 +35,36 @@ struct KeyboardDefinition {
     
     let name: String
     let internalName: String
-    let space: String
-    let enter: String
+    let spaceName: String
+    let enterName: String
     
     let longPress: [String: [String]]
-    let normal: [[String]]
-    let shifted: [[String]]
+    let normal: [[KeyDefinition]]
+    let shifted: [[KeyDefinition]]
     
     fileprivate init(raw: [String: Any]) {
         name = raw["name"] as! String
         internalName = raw["internalName"] as! String
-        space = raw["space"] as! String
-        enter = raw["return"] as! String
+        spaceName = raw["space"] as! String
+        enterName = raw["return"] as! String
         
         longPress = raw["longPress"] as! [String: [String]]
-        normal = raw["normal"] as! [[String]]
-        shifted = raw["shifted"] as! [[String]]
+        
+        var normalrows = (raw["normal"] as! [[Any]]).map { $0.compactMap { return KeyDefinition(input: $0) } }
+        normalrows.append(SystemKeys.systemKeyRowsForCurrentDevice(spaceName: spaceName, returnName: enterName))
+        normal = normalrows
+        
+        var shiftedrows = (raw["shifted"] as! [[Any]]).map { $0.compactMap { return KeyDefinition(input: $0) } }
+        shiftedrows.append(SystemKeys.systemKeyRowsForCurrentDevice(spaceName: spaceName, returnName: enterName))
+        shifted = shiftedrows
+        
     }
+}
+
+enum KeyboardPage {
+    case normal
+    case shifted
+    case capslock
+    case symbols1
+    case symbols2
 }
