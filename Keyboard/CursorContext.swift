@@ -8,11 +8,12 @@
 
 import Foundation
 
-struct CursorContext {
-    let previousWord: String?
-    let currentWord: String
-    let nextWord: String?
-    let selectedText: String?
+public struct CursorContext {
+    public let previousWord: String?
+    public let currentWord: String
+    public let currentOffset: Int
+    public let nextWord: String?
+    public let selectedText: String?
 }
 
 extension CursorContext {
@@ -70,15 +71,22 @@ fileprivate func resolveWordContext(before beforeInput: String, after afterInput
         }
     }
     
+    var offset: Int = 0
     if let left = leftCurrentChunk, let right = rightCurrentChunk {
         currentWord = "\(left)\(right)"
+        offset = left.count
     } else if let left = leftCurrentChunk {
         currentWord = String(left)
+        offset = currentWord.count
     } else if let right = rightCurrentChunk {
         currentWord = String(right)
     } else {
         currentWord = ""
     }
     
-    return CursorContext(previousWord: previousWord, currentWord: currentWord, nextWord: nextWord, selectedText: selectedText)
+    return CursorContext(previousWord: previousWord,
+                         currentWord: currentWord,
+                         currentOffset: offset,
+                         nextWord: nextWord,
+                         selectedText: selectedText)
 }

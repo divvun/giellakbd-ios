@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum KeyType: Hashable {
+public enum KeyType: Hashable {
     private static let definitions: [String: KeyType] = [
         "_spacer": .spacer,
         "_backspace": .backspace,
@@ -78,9 +78,9 @@ enum KeyType: Hashable {
     }
 }
 
-struct KeyDefinition {
-    let type: KeyType
-    let size: CGSize
+public struct KeyDefinition {
+    public let type: KeyType
+    public let size: CGSize
     
     init(type: KeyType, size: CGSize = CGSize(width: 1, height: 1)) {
         self.type = type

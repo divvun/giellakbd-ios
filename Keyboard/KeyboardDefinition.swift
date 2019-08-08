@@ -26,7 +26,7 @@ public indirect enum TransformTree {
     case leaf(String)
 }
 
-struct KeyboardDefinition {
+public struct KeyboardDefinition {
     static let definitions: [KeyboardDefinition] = {
         let rawDefinitions: [[String: Any]] = {
             let path = Bundle.top.url(forResource: "KeyboardDefinitions", withExtension: "json")!
@@ -38,16 +38,16 @@ struct KeyboardDefinition {
         return rawDefinitions.map({ KeyboardDefinition(raw: $0) })
     }()
     
-    let name: String
-    let internalName: String
-    let spaceName: String
-    let enterName: String
+    public let name: String
+    public let internalName: String
+    public let spaceName: String
+    public let enterName: String
     
-    let deadKeys: [String: [String]]
-    let transforms: [String: TransformTree]
-    let longPress: [String: [String]]
-    let normal: [[KeyDefinition]]
-    let shifted: [[KeyDefinition]]
+    public let deadKeys: [String: [String]]
+    public let transforms: [String: TransformTree]
+    public let longPress: [String: [String]]
+    public let normal: [[KeyDefinition]]
+    public let shifted: [[KeyDefinition]]
     
     private static func recurseTransforms(_ current: [String: Any]) -> [String: TransformTree] {
         var transforms = [String: TransformTree]()

@@ -18,10 +18,10 @@ open class KeyboardViewController: UIInputViewController {
     private var defaultHeightForDevice: CGFloat?
     private var heightConstraint: NSLayoutConstraint!
     private let bannerHeight: CGFloat = 55.0
-    private var bannerView: BannerView!
     private var extraSpacingView: UIView!
-    private var keyboardDefinition: KeyboardDefinition!
     private var deadKeyHandler: DeadKeyHandler!
+    private(set) public var bannerView: BannerView!
+    private(set) public var keyboardDefinition: KeyboardDefinition!
     
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -64,7 +64,6 @@ open class KeyboardViewController: UIInputViewController {
         self.bannerView = BannerView(frame: .zero)
         self.bannerView.backgroundColor = KeyboardView.theme.bannerBackgroundColor
         self.bannerView.translatesAutoresizingMaskIntoConstraints = false
-        self.bannerView.delegate = self
         
         self.view.insertSubview(self.bannerView, at: 0)
         
@@ -126,18 +125,30 @@ open class KeyboardViewController: UIInputViewController {
         }
     }
     
-    private func insertText(_ input: String) {
+    private func propagateTextInputUpdateToBanner() {
+        let proxy = self.textDocumentProxy
+        if let bannerView = bannerView {
+            bannerView.delegate?.textInputDidChange(bannerView, context: CursorContext.from(proxy: proxy))
+        }
+    }
+    
+    func replaceSelected(with input: String) {
+        for _ in 0..<CursorContext.from(proxy: self.textDocumentProxy).currentOffset {
+            self.deleteBackward()
+        }
+        insertText(input)
+    }
+    
+    func insertText(_ input: String) {
         let proxy = self.textDocumentProxy
         proxy.insertText(input)
-        
-        self.bannerView?.delegate?.textInputDidChange(CursorContext.from(proxy: proxy))
+        propagateTextInputUpdateToBanner()
     }
     
     private func deleteBackward() {
         let proxy = self.textDocumentProxy
         proxy.deleteBackward()
-        
-        self.bannerView?.delegate?.textInputDidChange(CursorContext.from(proxy: proxy))
+        propagateTextInputUpdateToBanner()
     }
     
     override open func textWillChange(_ textInput: UITextInput?) {
@@ -156,7 +167,7 @@ open class KeyboardViewController: UIInputViewController {
             textColor = UIColor.black
         }
         
-        self.bannerView?.delegate?.textInputDidChange(CursorContext.from(proxy: proxy))
+        propagateTextInputUpdateToBanner()
     }
     
     
