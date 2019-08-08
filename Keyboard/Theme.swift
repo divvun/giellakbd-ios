@@ -9,12 +9,6 @@
 import Foundation
 import UIKit
 
-extension UIColor {
-    convenience init(r: Int, g: Int, b: Int, a: Double = 1) {
-        self.init(red: CGFloat(r)/CGFloat(255), green: CGFloat(g)/CGFloat(255), blue: CGFloat(b)/CGFloat(255), alpha: CGFloat(a))
-    }
-}
-
 protocol Theme {
     var regularKeyColor: UIColor { get }
     var specialKeyColor: UIColor { get }

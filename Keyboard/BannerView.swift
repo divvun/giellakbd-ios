@@ -14,6 +14,7 @@ struct BannerItem {
 }
 
 protocol BannerViewDelegate {
+    func textInputDidChange(_ context: CursorContext)
     func didSelectBannerItem(_ item: BannerItem)
 }
 

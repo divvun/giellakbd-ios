@@ -22,8 +22,8 @@ struct DeadKeyHandler {
         self.keyboard = keyboard
     }
     
-    func finish() -> String? {
-        if let .output(value) = handleInput(" ", page: .normal) {
+    mutating func finish() -> String? {
+        if case let .output(value) = handleInput(" ", page: .normal) {
             return value
         }
         return nil

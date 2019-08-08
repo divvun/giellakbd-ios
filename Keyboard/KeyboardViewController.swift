@@ -127,11 +127,17 @@ open class KeyboardViewController: UIInputViewController {
     }
     
     private func insertText(_ input: String) {
-        self.textDocumentProxy.insertText(input)
+        let proxy = self.textDocumentProxy
+        proxy.insertText(input)
+        
+        self.bannerView?.delegate?.textInputDidChange(CursorContext.from(proxy: proxy))
     }
     
     private func deleteBackward() {
-        self.textDocumentProxy.deleteBackward()
+        let proxy = self.textDocumentProxy
+        proxy.deleteBackward()
+        
+        self.bannerView?.delegate?.textInputDidChange(CursorContext.from(proxy: proxy))
     }
     
     override open func textWillChange(_ textInput: UITextInput?) {
@@ -141,6 +147,7 @@ open class KeyboardViewController: UIInputViewController {
     override open func textDidChange(_ textInput: UITextInput?) {
         // The app has just changed the document's contents, the document context has been updated.
         
+        
         var textColor: UIColor
         let proxy = self.textDocumentProxy
         if proxy.keyboardAppearance == UIKeyboardAppearance.dark {
@@ -148,7 +155,10 @@ open class KeyboardViewController: UIInputViewController {
         } else {
             textColor = UIColor.black
         }
+        
+        self.bannerView?.delegate?.textInputDidChange(CursorContext.from(proxy: proxy))
     }
+    
     
     // Disable edge swipe gestures
     private var recognizersThatDelayTouches: Set<Int> = Set<Int>()
@@ -242,5 +252,9 @@ extension KeyboardViewController: KeyboardViewDelegate {
 extension KeyboardViewController: BannerViewDelegate {
     func didSelectBannerItem(_ item: BannerItem) {
         print("Did select item \(item.title) - \(item.value)")
+    }
+    
+    func textInputDidChange(_ context: CursorContext) {
+        print(context)
     }
 }
