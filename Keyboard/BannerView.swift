@@ -48,7 +48,6 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
             heightConstraint?.constant = superview?.bounds.height ?? 0
             heightConstraint?.isActive = true
             
-            
             self.backgroundColor = KeyboardView.theme.bannerBackgroundColor
             self.titleLabel.textColor = KeyboardView.theme.bannerTextColor
             
@@ -122,7 +121,7 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let title = items[indexPath.item].title
         let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: collectionView.frame.height)
@@ -131,11 +130,12 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
         return CGSize(width: max(self.frame.width/3.0, boundingBox.width + KeyboardView.theme.bannerHorizontalMargin * 2), height: collectionView.frame.height)
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         
         self.delegate?.didSelectBannerItem(self, item: items[indexPath.item])
     }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

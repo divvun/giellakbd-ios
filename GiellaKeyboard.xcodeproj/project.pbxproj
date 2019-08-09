@@ -33,6 +33,7 @@
 		C6996B5722FC2C93007EBC3D /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6996B5422FC2C8B007EBC3D /* Utils.swift */; };
 		C6996B5A22FC2CC7007EBC3D /* SystemKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6996B5822FC2CC2007EBC3D /* SystemKeys.swift */; };
 		C6996B5C22FC2D3E007EBC3D /* CursorContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6996B5B22FC2D3E007EBC3D /* CursorContext.swift */; };
+		C6996B5E22FC3257007EBC3D /* DivvunSpellBannerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6996B5D22FC3257007EBC3D /* DivvunSpellBannerPlugin.swift */; };
 		C6A2E01D1EDFA259006BAB69 /* AboutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6A2E01C1EDFA259006BAB69 /* AboutView.xib */; };
 		C6A2E01F1EDFAAA2006BAB69 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A2E01E1EDFAAA2006BAB69 /* AboutView.swift */; };
 		C6A3905B1EB61BF8009378C1 /* KeyboardSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A3905A1EB61BF8009378C1 /* KeyboardSettings.swift */; };
@@ -153,6 +154,7 @@
 		C6996B5422FC2C8B007EBC3D /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		C6996B5822FC2CC2007EBC3D /* SystemKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemKeys.swift; sourceTree = "<group>"; };
 		C6996B5B22FC2D3E007EBC3D /* CursorContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CursorContext.swift; sourceTree = "<group>"; };
+		C6996B5D22FC3257007EBC3D /* DivvunSpellBannerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DivvunSpellBannerPlugin.swift; sourceTree = "<group>"; };
 		C6A2E01C1EDFA259006BAB69 /* AboutView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutView.xib; sourceTree = "<group>"; };
 		C6A2E01E1EDFAAA2006BAB69 /* AboutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		C6A3905A1EB61BF8009378C1 /* KeyboardSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardSettings.swift; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 				FDAF59A822F9CCF200F7C9FC /* LongPressController.swift */,
 				C6F249671F736FEE00840F2B /* EntryPoint.swift */,
 				C6996B5122FB0055007EBC3D /* DeadKeyHandler.swift */,
+				C6996B5D22FC3257007EBC3D /* DivvunSpellBannerPlugin.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -664,6 +667,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C6996B5322FB06FA007EBC3D /* DeadKeyHandler.swift in Sources */,
+				C6996B5E22FC3257007EBC3D /* DivvunSpellBannerPlugin.swift in Sources */,
 				C6996B5C22FC2D3E007EBC3D /* CursorContext.swift in Sources */,
 				C6996B5A22FC2CC7007EBC3D /* SystemKeys.swift in Sources */,
 				C6F249461F736E1400840F2B /* KeyboardDefinition.swift in Sources */,

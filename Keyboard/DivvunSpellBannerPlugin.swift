@@ -60,6 +60,10 @@ extension DivvunSpellBannerPlugin: BannerViewDelegate {
         }
         
         keyboard.replaceSelected(with: item.title)
+        keyboard.insertText(" ")
+        opQueue.cancelAllOperations()
+        
+        banner.items = []
     }
 }
 
