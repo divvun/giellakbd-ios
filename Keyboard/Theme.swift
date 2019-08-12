@@ -107,7 +107,7 @@ class DarkThemeImpl: Theme {
     let popupKeyFont = UIFont.systemFont(ofSize: 26.0)
     let bannerFont = UIFont.systemFont(ofSize: 16.0)
 
-    var bannerBackgroundColor: UIColor { return self.backgroundColor }
+    var bannerBackgroundColor: UIColor { return self.regularKeyColor }
     var bannerSeparatorColor: UIColor { return self.solidSpecialKeyColor }
     var bannerTextColor: UIColor  { return .white }
 

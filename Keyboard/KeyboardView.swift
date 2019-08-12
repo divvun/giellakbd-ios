@@ -494,14 +494,7 @@ class KeyView: UIView {
             if case .input(_) = self.key.type {
                 
             }
-            if let contentView = self.imageView {
-                
-                let activeColor = key.type.isSpecialKeyStyle ? KeyboardView.theme.regularKeyColor : KeyboardView.theme.specialKeyColor
-                let regularColor = key.type.isSpecialKeyStyle ? KeyboardView.theme.specialKeyColor : KeyboardView.theme.regularKeyColor
-                
-                contentView.backgroundColor = active ? activeColor : regularColor
-            }
-            if let contentView = self.label {
+            if let contentView = self.contentView {
                 
                 let activeColor = key.type.isSpecialKeyStyle ? KeyboardView.theme.regularKeyColor : KeyboardView.theme.specialKeyColor
                 let regularColor = key.type.isSpecialKeyStyle ? KeyboardView.theme.specialKeyColor : KeyboardView.theme.regularKeyColor
