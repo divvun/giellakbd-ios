@@ -262,13 +262,3 @@ extension KeyboardViewController: KeyboardViewDelegate {
         }
     }
 }
-
-extension KeyboardViewController: BannerViewDelegate {
-    func didSelectBannerItem(_ item: BannerItem) {
-        print("Did select item \(item.title) - \(item.value)")
-    }
-    
-    func textInputDidChange(_ context: CursorContext) {
-        print(context)
-    }
-}
