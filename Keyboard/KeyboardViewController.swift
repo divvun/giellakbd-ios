@@ -146,16 +146,39 @@ open class KeyboardViewController: UIInputViewController {
         let proxy = self.textDocumentProxy
         proxy.insertText(input)
         propagateTextInputUpdateToBanner()
+        updateCapitalization()
     }
     
     private func deleteBackward() {
         let proxy = self.textDocumentProxy
         proxy.deleteBackward()
         propagateTextInputUpdateToBanner()
+        updateCapitalization()
     }
     
     override open func textWillChange(_ textInput: UITextInput?) {
         // The app is about to change the document's contents. Perform any preparation here.
+    }
+    
+    private func updateCapitalization() {
+        let proxy = self.textDocumentProxy
+        let ctx = CursorContext.from(proxy: self.textDocumentProxy)
+        if let autoCapitalizationType = proxy.autocapitalizationType {
+            switch autoCapitalizationType {
+            case .words:
+                if ctx.currentWord == "" {
+                    self.keyboardView.page = .shifted
+                }
+            case .sentences:
+                if ctx.currentWord == "" && (ctx.previousWord?.last == Character(".") || ctx.previousWord == nil) {
+                    self.keyboardView.page = .shifted
+                }
+            case .allCharacters:
+                self.keyboardView.page = .shifted
+            default:
+                break
+            }
+        }
     }
     
     override open func textDidChange(_ textInput: UITextInput?) {
@@ -171,6 +194,7 @@ open class KeyboardViewController: UIInputViewController {
         }
         
         propagateTextInputUpdateToBanner()
+        updateCapitalization()
     }
     
     
