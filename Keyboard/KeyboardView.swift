@@ -181,7 +181,15 @@ class KeyboardView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
     }
     
     func longpress(didCreateOverlayContentView contentView: UIView) {
-        guard let overlayContentView = self.overlays.first?.value.contentView else { return }
+        if self.overlays.first?.value.contentView == nil {
+            if let activeKey = activeKey {
+                showOverlay(forKeyAtIndexPath: activeKey.indexPath)
+            }
+        }
+        
+        guard let overlayContentView = self.overlays.first?.value.contentView else {
+            return
+        }
         
         overlayContentView.subviews.forEach { $0.removeFromSuperview() }
         overlayContentView.addSubview(contentView)
@@ -424,6 +432,8 @@ class KeyboardView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
                 
                 self.longpressController = LongPressController(key: key, longpressValues: longpressValues)
                 self.longpressController?.delegate = self
+
+                self.longpressController?.touchesBegan(longpressGestureRecognizer.location(in: collectionView))
             }
         }
     }
