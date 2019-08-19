@@ -95,4 +95,13 @@ enum KeyboardPage {
     case capslock
     case symbols1
     case symbols2
+    
+    func alternatePage() -> KeyboardPage {
+        switch self {
+        case .normal, .shifted, .capslock:
+            return .symbols1
+        default:
+            return .symbols2
+        }
+    }
 }

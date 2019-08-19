@@ -19,6 +19,7 @@ class KeyboardView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
     static private(set) var theme: Theme = LightTheme
     static private let keyRepeatTimeInterval: TimeInterval = 0.1
     
+    public var swipeDownKeysEnabled: Bool = UIDevice.current.kind == UIDevice.Kind.iPad
     
     let definition: KeyboardDefinition
     var delegate: KeyboardViewDelegate?
@@ -32,7 +33,11 @@ class KeyboardView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
     }()
 
     private var currentPage: [[KeyDefinition]] {
-        switch self.page {
+        return keyDefinitionsForPage(self.page)
+    }
+    
+    private func keyDefinitionsForPage(_ page: KeyboardPage) -> [[KeyDefinition]] {
+        switch page {
         case .symbols1:
             return firstSymbolsPage
         case .symbols2:
@@ -265,7 +270,7 @@ class KeyboardView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
                 let cell = collectionView.cellForItem(at: activeKey.indexPath) as? KeyCell,
                 activeKey.indexPath != oldValue?.indexPath {
                 cell.keyView?.active = true
-                if case .input(_) = activeKey.key.type {
+                if case .input(_) = activeKey.key.type, !swipeDownKeysEnabled {
                     showOverlay(forKeyAtIndexPath: activeKey.indexPath)
                 }
             }
@@ -327,6 +332,32 @@ class KeyboardView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
             longpressController.touchesMoved(touch.location(in: collectionView))
             return
         }
+        
+        // Swipe key handling
+        if self.swipeDownKeysEnabled {
+            
+            if let activeKey = activeKey,
+                let cell = collectionView.cellForItem(at: activeKey.indexPath) as? KeyCell,
+                let swipeKeyView = cell.keyView, swipeKeyView.isSwipeKey,
+                let touchLocation = touches.first?.location(in: cell.superview) {
+                
+                let deadZone: CGFloat = 20.0
+                let delta: CGFloat = 60.0
+                let yOffset = touchLocation.y - cell.center.y
+                
+                var percentage: CGFloat = 0.0
+                if yOffset > deadZone {
+                    if yOffset - deadZone > delta {
+                        percentage = 1.0
+                    } else {
+                        percentage = (yOffset - deadZone) / delta
+                    }
+                }
+                swipeKeyView.percentageAlternative = percentage
+            }
+            
+            return
+        }
 
         if let _ = activeKey {
             for touch in touches {
@@ -354,10 +385,17 @@ class KeyboardView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
             return
         }
 
-        if let key = activeKey?.key {
-            if key.type.triggersOnTouchUp {
-                if let delegate = delegate {
-                    delegate.didTriggerKey(key)
+        if let activeKey = activeKey {
+            if activeKey.key.type.triggersOnTouchUp {
+                if let cell = collectionView.cellForItem(at: activeKey.indexPath) as? KeyCell,
+                 let swipeKeyView = cell.keyView,
+                    let alternateKey = self.validAlternateKey(forIndexPath: activeKey.indexPath),
+                    swipeKeyView.isSwipeKey,
+                    swipeKeyView.percentageAlternative > 0.5 {
+                    
+                    delegate?.didTriggerKey(alternateKey)
+                } else {
+                    delegate?.didTriggerKey(activeKey.key)
                 }
             }
         }
@@ -429,7 +467,15 @@ class KeyboardView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! KeyCell
         let key = currentPage[indexPath.section][indexPath.row]
         
-        cell.setKey(key: key)
+        if let alternateKey = self.validAlternateKey(forIndexPath: indexPath) {
+            cell.setKey(key: key, alternateKey: alternateKey)
+
+            if let swipeKeyView = cell.keyView, swipeKeyView.isSwipeKey {
+                swipeKeyView.percentageAlternative = 0.0
+            }
+        } else {
+            cell.setKey(key: key)
+        }
         
         return cell
     }
@@ -450,6 +496,20 @@ class KeyboardView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
         return 0
     }
     
+    func validAlternateKey(forIndexPath indexPath: IndexPath) -> KeyDefinition? {
+        let key = currentPage[indexPath.section][indexPath.row]
+        let alternatePage = self.keyDefinitionsForPage(self.page.alternatePage())
+        
+        if (swipeDownKeysEnabled && alternatePage.count > indexPath.section && alternatePage[indexPath.section].count > indexPath.row) {
+            let alternateKey = alternatePage[indexPath.section][indexPath.row]
+            
+            if case .input(_) = key.type, case .input(_) = alternateKey.type {
+                return alternateKey
+            }
+        }
+        return nil
+    }
+    
     class KeyCell: UICollectionViewCell {
         var keyView: KeyView?
         
@@ -457,7 +517,7 @@ class KeyboardView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
             super.init(frame: frame)
         }
         
-        func setKey(key: KeyDefinition) {
+        func setKey(key: KeyDefinition, alternateKey: KeyDefinition? = nil) {
             let _ = self.contentView.subviews.forEach { (view) in
                 view.removeFromSuperview()
             }
@@ -469,6 +529,11 @@ class KeyboardView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
                 emptyview.backgroundColor = .clear
                 contentView.addSubview(emptyview)
                 emptyview.fillSuperview(contentView)
+            } else if let alternateKey = alternateKey, case .input = key.type, case .input = alternateKey.type, alternateKey.type != key.type {
+                keyView = KeyView(key: key, alternateKey: alternateKey)
+                keyView!.translatesAutoresizingMaskIntoConstraints = false
+                contentView.addSubview(keyView!)
+                keyView!.fillSuperview(contentView)
             } else {
                 keyView = KeyView(key: key)
                 keyView!.translatesAutoresizingMaskIntoConstraints = false
@@ -484,16 +549,26 @@ class KeyboardView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
 }
 
 class KeyView: UIView {
-    let key: KeyDefinition
+    private var key: KeyDefinition
+    private var alternateKey: KeyDefinition?
+    
+    var isSwipeKey: Bool {
+        if let alternateKey = self.alternateKey, let _ = self.alternateLabel, case .input(_) = alternateKey.type {
+            return true
+        } else {
+            return false
+        }
+    }
     
     var label: UILabel?
+    var alternateLabel: UILabel?
+    
+    var swipeLayoutConstraint: NSLayoutConstraint?
+    
     var imageView: UIImageView?
     
     var active: Bool = false {
         didSet {
-            if case .input(_) = self.key.type {
-                
-            }
             if let contentView = self.contentView {
                 
                 let activeColor = key.type.isSpecialKeyStyle ? KeyboardView.theme.regularKeyColor : KeyboardView.theme.specialKeyColor
@@ -501,20 +576,49 @@ class KeyView: UIView {
                 
                 contentView.backgroundColor = active ? activeColor : regularColor
             }
+            if active == false {
+                percentageAlternative = 0.0
+            }
+        }
+    }
+    
+    var percentageAlternative: CGFloat = 0.0 {
+        didSet {
+            let minValue = self.frame.height / 3.0
+            let maxValue = (self.frame.height / 3.0) * 2.0
+            
+            self.swipeLayoutConstraint?.constant = minValue + (maxValue - minValue) * percentageAlternative
+            self.alternateLabel?.textColor = UIColor.interpolate(from: KeyboardView.theme.inactiveTextColor, to: KeyboardView.theme.textColor, with: percentageAlternative)
+            self.label?.textColor = UIColor.interpolate(from: KeyboardView.theme.textColor, to: KeyboardView.theme.inactiveTextColor, with: percentageAlternative)
+            
+            let fontSizeDelta = KeyboardView.theme.keyFont.pointSize - KeyboardView.theme.alternateKeyFontSize
+            self.alternateLabel?.font = KeyboardView.theme.keyFont.withSize(KeyboardView.theme.alternateKeyFontSize + fontSizeDelta * percentageAlternative)
+            self.label?.font = KeyboardView.theme.keyFont.withSize(KeyboardView.theme.keyFont.pointSize - fontSizeDelta * percentageAlternative)
         }
     }
     
     var contentView: UIView!
 
-    init(key: KeyDefinition) {
+    init(key: KeyDefinition, alternateKey: KeyDefinition? = nil) {
         self.key = key
+        self.alternateKey = alternateKey
         super.init(frame: .zero)
         self.backgroundColor = .clear
         
+        // If the alternate key is not an input key, ignore it
+        if let alternateKey = self.alternateKey, case .input(_) = alternateKey.type, case .input(_) = key.type {
+            // Continue
+        } else {
+            self.alternateKey = nil
+        }
         
         switch key.type {
         case KeyType.input(let string), KeyType.spacebar(let string), KeyType.returnkey(let string):
             self.label = UILabel()
+            if let _ = self.alternateKey {
+                self.alternateLabel = UILabel(frame: .zero)
+            }
+            
             if let label = self.label {
                 let labelHoldingView = UIView(frame: .zero)
                 labelHoldingView.translatesAutoresizingMaskIntoConstraints = false
@@ -526,13 +630,45 @@ class KeyView: UIView {
                 label.adjustsFontSizeToFitWidth = true
                 label.textAlignment = .center
                 label.backgroundColor = .clear
+                label.clipsToBounds = false
                 label.translatesAutoresizingMaskIntoConstraints = false
                 label.setContentHuggingPriority(.defaultLow, for: .horizontal)
                 label.setContentHuggingPriority(.defaultLow, for: .vertical)
                 
+                if let alternateKey = self.alternateKey, let alternateLabel = self.alternateLabel, case .input(let alternateString) = alternateKey.type {
+                    alternateLabel.textColor = KeyboardView.theme.inactiveTextColor
+                    alternateLabel.font = KeyboardView.theme.keyFont
+                    alternateLabel.text = alternateString
+                    alternateLabel.adjustsFontSizeToFitWidth = true
+                    alternateLabel.textAlignment = .center
+                    alternateLabel.backgroundColor = .clear
+                    alternateLabel.clipsToBounds = false
+                    alternateLabel.translatesAutoresizingMaskIntoConstraints = false
+                    alternateLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+                    alternateLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
+                    
+                    labelHoldingView.addSubview(alternateLabel)
+                }
+
+                
                 labelHoldingView.addSubview(label)
                 self.addSubview(labelHoldingView)
-                label.fillSuperview(labelHoldingView)
+                label.centerXAnchor.constraint(equalTo: labelHoldingView.centerXAnchor).isActive = true
+                label.widthAnchor.constraint(equalTo: label.heightAnchor).isActive = true
+                
+                if let alternateKey = self.alternateKey, let alternateLabel = self.alternateLabel, case .input(_) = alternateKey.type {
+                    swipeLayoutConstraint = label.topAnchor.constraint(equalTo: labelHoldingView.topAnchor, constant: 24)
+                    swipeLayoutConstraint?.isActive = true
+                    
+                    label.bottomAnchor.constraint(equalTo: labelHoldingView.bottomAnchor, constant: -8).isActive = true
+                    alternateLabel.centerXAnchor.constraint(equalTo: labelHoldingView.centerXAnchor).isActive = true
+                    alternateLabel.widthAnchor.constraint(equalTo: alternateLabel.heightAnchor).isActive = true
+                    alternateLabel.topAnchor.constraint(equalTo: labelHoldingView.topAnchor, constant: 0).isActive = true
+                    alternateLabel.bottomAnchor.constraint(equalTo: label.topAnchor).isActive = true
+                } else {
+                    label.centerYAnchor.constraint(equalTo: labelHoldingView.centerYAnchor, constant: 0).isActive = true
+                    swipeLayoutConstraint = nil
+                }
                 
                 contentView = labelHoldingView
             }
@@ -569,6 +705,9 @@ class KeyView: UIView {
     }
     
     func updateSubviews() {
+        
+        let percentageAlternative = self.percentageAlternative
+        self.percentageAlternative = percentageAlternative
         
         if let subview = contentView {
             subview.layer.borderWidth = 1.0
