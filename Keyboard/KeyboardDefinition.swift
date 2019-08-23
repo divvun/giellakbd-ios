@@ -46,8 +46,10 @@ public struct KeyboardDefinition {
     public let deadKeys: [String: [String]]
     public let transforms: [String: TransformTree]
     public let longPress: [String: [String]]
-    public let normal: [[KeyDefinition]]
-    public let shifted: [[KeyDefinition]]
+    public var normal: [[KeyDefinition]]
+    public var shifted: [[KeyDefinition]]
+    public var symbols1: [[KeyDefinition]]
+    public var symbols2: [[KeyDefinition]]
     
     private static func recurseTransforms(_ current: [String: Any]) -> [String: TransformTree] {
         var transforms = [String: TransformTree]()
@@ -79,13 +81,53 @@ public struct KeyboardDefinition {
             self.transforms = [:]
         }
         
-        var normalrows = (raw["normal"] as! [[Any]]).map { $0.compactMap { return KeyDefinition(input: $0) } }
-        normalrows.append(SystemKeys.systemKeyRowsForCurrentDevice(spaceName: spaceName, returnName: enterName))
+        let normalrows = (raw["normal"] as! [[Any]]).map { $0.compactMap { return KeyDefinition(input: $0) } }
         normal = normalrows
         
-        var shiftedrows = (raw["shifted"] as! [[Any]]).map { $0.compactMap { return KeyDefinition(input: $0) } }
-        shiftedrows.append(SystemKeys.systemKeyRowsForCurrentDevice(spaceName: spaceName, returnName: enterName))
+        let shiftedrows = (raw["shifted"] as! [[Any]]).map { $0.compactMap { return KeyDefinition(input: $0) } }
         shifted = shiftedrows
+        
+        symbols1 = SystemKeys.symbolKeysFirstPage
+        symbols2 = SystemKeys.symbolKeysSecondPage
+        
+        normal.platformize(page: .normal, spaceName: spaceName, returnName: enterName)
+        shifted.platformize(page: .shifted, spaceName: spaceName, returnName: enterName)
+        symbols1.platformize(page: .symbols1, spaceName: spaceName, returnName: enterName)
+        symbols2.platformize(page: .symbols2, spaceName: spaceName, returnName: enterName)
+    }
+    
+    
+
+}
+
+extension Array where Element == Array<KeyDefinition> {
+    mutating func platformize(page: KeyboardPage, spaceName: String, returnName: String) {
+        var shiftType: KeyType = .shift
+        
+        if case page = KeyboardPage.symbols1 {
+            shiftType = .shiftSymbols
+        }
+        if case page = KeyboardPage.symbols2 {
+            shiftType = .shiftSymbols
+        }
+
+        if UIDevice.current.kind == UIDevice.Kind.iPad {
+            
+            self[2].insert(KeyDefinition.init(type: shiftType), at: 0)
+            self[2].append(KeyDefinition.init(type: shiftType, size: CGSize(width: 1.5, height: 1.0)))
+            
+            self[0].append(KeyDefinition.init(type: .backspace))
+            self[1].append(KeyDefinition.init(type: KeyType.returnkey(name: returnName), size: CGSize(width: 2.0, height: 1.0)))
+            
+        } else {
+            self[2].insert(KeyDefinition.init(type: shiftType, size: CGSize(width: 1.5, height: 1.0)), at: 0)
+            self[2].insert(KeyDefinition.init(type: .spacer, size: CGSize(width: 0.5, height: 1.0)), at: 1)
+
+            self[2].append(KeyDefinition.init(type: .spacer, size: CGSize(width: 0.5, height: 1.0)))
+            self[2].append(KeyDefinition.init(type: .backspace, size: CGSize(width: 1.5, height: 1.0)))
+            
+        }
+        self.append(SystemKeys.systemKeyRowsForCurrentDevice(spaceName: spaceName, returnName: returnName))
     }
 }
 

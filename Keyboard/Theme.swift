@@ -63,7 +63,7 @@ class LightThemeImpl: Theme {
     var activeColor: UIColor = UIColor(r: 31, g: 126, b: 249)
     var activeTextColor: UIColor = UIColor.white
     
-    var keyCornerRadius: CGFloat { return 8.0 }
+    var keyCornerRadius: CGFloat { return 6.0 }
     var popupCornerRadius: CGFloat = 12.0
     var keyHorizontalMargin: CGFloat { return 2.5 }
     var keyVerticalMargin: CGFloat { return 5.0 }
@@ -96,7 +96,7 @@ class DarkThemeImpl: Theme {
     
     var keyShadowColor: UIColor = UIColor(r: 103, g: 106, b: 110, a: 0.5)
     
-    var regularKeyColor = UIColor.white.withAlphaComponent(CGFloat(0.3))
+    var regularKeyColor = UIColor.white.withAlphaComponent(CGFloat(0.4))
     var specialKeyColor = UIColor.gray.withAlphaComponent(CGFloat(0.3))
     var popupColor = UIColor.gray
     var underColor = UIColor(r: 39, g: 18, b: 39, a: 0.4)
@@ -111,12 +111,12 @@ class DarkThemeImpl: Theme {
     var activeColor: UIColor = UIColor(r: 31, g: 126, b: 249)
     var activeTextColor: UIColor = UIColor.white
 
-    var keyCornerRadius: CGFloat = 8.0
+    var keyCornerRadius: CGFloat { return 8.0 }
     var popupCornerRadius: CGFloat = 12.0
-    var keyHorizontalMargin: CGFloat = 2.5
-    var keyVerticalMargin: CGFloat = 5.0
+    var keyHorizontalMargin: CGFloat { return 2.5 }
+    var keyVerticalMargin: CGFloat { return 5.0 }
 
-    var keyFont = UIFont.systemFont(ofSize: 22.0)
+    var keyFont: UIFont { return UIFont.systemFont(ofSize: 22.0) }
     var alternateKeyFontSize: CGFloat { return 20.0 }
     var popupKeyFont = UIFont.systemFont(ofSize: 26.0)
     var bannerFont = UIFont.systemFont(ofSize: 16.0)
@@ -131,5 +131,13 @@ class DarkThemeImpl: Theme {
     fileprivate init() {}
 }
 
+class DarkThemeIpadImpl: DarkThemeImpl {
+    override var keyCornerRadius: CGFloat { return 12.0 }
+    override var keyHorizontalMargin: CGFloat { return 9.0 }
+    override var keyVerticalMargin: CGFloat { return 7.0 }
+    
+    override var keyFont: UIFont { return UIFont.systemFont(ofSize: 28.0) }
+}
+
 let LightTheme = UIDevice.current.kind == UIDevice.Kind.iPad ? LightThemeIpadImpl() : LightThemeImpl()
-let DarkTheme = DarkThemeImpl()
+let DarkTheme = UIDevice.current.kind == UIDevice.Kind.iPad ? DarkThemeIpadImpl() : DarkThemeImpl()

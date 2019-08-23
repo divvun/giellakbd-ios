@@ -39,9 +39,9 @@ class KeyboardView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
     private func keyDefinitionsForPage(_ page: KeyboardPage) -> [[KeyDefinition]] {
         switch page {
         case .symbols1:
-            return firstSymbolsPage
+            return definition.symbols1
         case .symbols2:
-            return secondSymbolsPage
+            return definition.symbols2
         case .shifted, .capslock:
             return definition.shifted
         default:
