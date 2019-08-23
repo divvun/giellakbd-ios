@@ -329,7 +329,7 @@ class KeyboardView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
                     }
                 }
                 
-                if key.type.triggersOnTouchUp {
+                if key.type.triggersOnTouchUp || key.type.supportsRepeatTrigger {
                     activeKey = ActiveKey(key: key, indexPath: indexPath)
                 }
             }
