@@ -22,6 +22,8 @@ class LongPressController: NSObject, UICollectionViewDelegate, UICollectionViewD
     
     class LongpressCollectionView: UICollectionView {}
     
+    static let multirowThreshold = 3
+    
     private let deadZone: CGFloat = 20.0
     
     let key: KeyDefinition
@@ -105,8 +107,9 @@ class LongPressController: NSObject, UICollectionViewDelegate, UICollectionViewD
         let frame = wholeView.convert(collectionView.frame, from: collectionView.superview)
         
         // TODO: Logic for multiline popups
-        if let indexPath = collectionView.indexPathForItem(at: CGPoint(x: min(max(point.x - frame.minX, collectionView.bounds.minX + cellSize.width/2.0), collectionView.bounds.maxX - cellSize.width/2.0), y: collectionView.bounds.midY)) {
-            self.selectedKey = longpressValues[indexPath.row]
+        if let indexPath = collectionView.indexPathForItem(at: CGPoint(x: min(max(point.x - frame.minX, collectionView.bounds.minX + cellSize.width/2.0), collectionView.bounds.maxX - cellSize.width/2.0),
+                                                                       y: min(max(point.y - (baselinePoint?.y ?? 0), collectionView.bounds.minY + cellSize.height/2.0), collectionView.bounds.maxY - cellSize.height/2.0))) {
+            self.selectedKey = longpressValues[indexPath.row + Int(ceil(Double(longpressValues.count) / 2.0)) * indexPath.section]
         } else {
             self.selectedKey = nil
 
@@ -117,13 +120,20 @@ class LongPressController: NSObject, UICollectionViewDelegate, UICollectionViewD
         }
     }
     
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return longpressValues.count >= LongPressController.multirowThreshold ? 2 : 1
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if longpressValues.count >= LongPressController.multirowThreshold {
+            return section == 0 ? Int(ceil(Double(longpressValues.count) / 2.0)) : Int(floor(Double(longpressValues.count) / 2.0))
+        }
         return longpressValues.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! LongpressKeyCell
-        let key = longpressValues[indexPath.row]
+        let key = longpressValues[indexPath.row + Int(ceil(Double(longpressValues.count) / 2.0)) * indexPath.section]
         
         if case let .input(string) = key.type {
             cell.label.text = string

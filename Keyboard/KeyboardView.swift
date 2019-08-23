@@ -195,13 +195,15 @@ class KeyboardView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
         overlayContentView.addSubview(contentView)
         contentView.setContentCompressionResistancePriority(.required, for: .vertical)
         contentView.fillSuperview(overlayContentView)
-        contentView.heightAnchor.constraint(equalToConstant: self.longpressKeySize().height).isActive = true
 
         // MARK: Hack! Because uicollectionview's intrinsic size just isn't enough
         if let activeKey = activeKey,
             case let .input(string) = activeKey.key.type,
             let count = self.definition.longPress[string]?.count {
-            contentView.widthAnchor.constraint(equalToConstant: self.longpressKeySize().width * CGFloat(count)).isActive = true
+            contentView.widthAnchor.constraint(equalToConstant: count >= LongPressController.multirowThreshold ? self.longpressKeySize().width * ceil(CGFloat(count)/2.0) : self.longpressKeySize().width * CGFloat(count)).isActive = true
+            contentView.heightAnchor.constraint(equalToConstant: count >= LongPressController.multirowThreshold ? self.longpressKeySize().height * 2 : self.longpressKeySize().height).isActive = true
+        } else {
+            contentView.heightAnchor.constraint(equalToConstant: self.longpressKeySize().height).isActive = true
         }
         contentView.layoutIfNeeded()
     }
