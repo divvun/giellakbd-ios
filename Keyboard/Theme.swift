@@ -47,12 +47,12 @@ protocol Theme {
 
 class LightThemeImpl: Theme {
     var regularKeyColor = UIColor.white
-    var specialKeyColor = UIColor(r: 172, g: 177, b: 185)
+    var specialKeyColor = UIColor(r: 162, g: 167, b: 177)
     var popupColor = UIColor.white
-    var backgroundColor = UIColor(r: 202, g: 205, b: 212)
+    var backgroundColor = UIColor(r: 203, g: 206, b: 212)
     var underColor = UIColor(hue: 0.611, saturation: 0.04, brightness: 0.56, alpha: 1)
     var textColor = UIColor.black
-    var inactiveTextColor: UIColor = UIColor.lightGray
+    var inactiveTextColor: UIColor = UIColor(white: 0.0, alpha: 0.3)
     var borderColor = UIColor.clear//UIColor(hue: 0.595, saturation: 0.04, brightness: 0.65, alpha: 1.0)
     var specialKeyBorderColor: UIColor { return .clear }
     var keyShadowColor = UIColor(r: 103, g: 106, b: 110, a: 0.5)
@@ -63,7 +63,7 @@ class LightThemeImpl: Theme {
     var activeColor: UIColor = UIColor(r: 31, g: 126, b: 249)
     var activeTextColor: UIColor = UIColor.white
     
-    var keyCornerRadius: CGFloat { return 6.0 }
+    var keyCornerRadius: CGFloat { return 5.0 }
     var popupCornerRadius: CGFloat = 12.0
     var keyHorizontalMargin: CGFloat { return 2.5 }
     var keyVerticalMargin: CGFloat { return 5.0 }
@@ -84,11 +84,12 @@ class LightThemeImpl: Theme {
 }
 
 class LightThemeIpadImpl: LightThemeImpl {
-    override var keyCornerRadius: CGFloat { return 12.0 }
-    override var keyHorizontalMargin: CGFloat { return 9.0 }
+    override var keyCornerRadius: CGFloat { return 7.0 }
+    override var keyHorizontalMargin: CGFloat { return 7.0 }
     override var keyVerticalMargin: CGFloat { return 7.0 }
     
     override var keyFont: UIFont { return UIFont.systemFont(ofSize: 28.0) }
+    override var alternateKeyFontSize: CGFloat { return 17.0 }
 }
 
 class DarkThemeImpl: Theme {

@@ -15,7 +15,9 @@ open class KeyboardViewController: UIInputViewController {
     private var keyboardView: KeyboardView!
     
     // Gets updated to match device in viewDidAppear
-    private var defaultHeightForDevice: CGFloat?
+    private var defaultHeightForDevice: CGFloat {
+        return UIDevice.current.kind == .iPad ? 688.0/2.0 : 428.0/2.0
+    }
     private var heightConstraint: NSLayoutConstraint!
     private let bannerHeight: CGFloat = 55.0
     private var extraSpacingView: UIView!
@@ -78,10 +80,7 @@ open class KeyboardViewController: UIInputViewController {
     }
     
     private func updateHeightConstraint() {
-        guard let defaultHeightForDevice = self.defaultHeightForDevice else {
-            // Too early, device height not available yet
-            return
-        }
+        guard let _ = self.heightConstraint else { return }
         
         self.heightConstraint.constant = bannerVisible ? defaultHeightForDevice + self.bannerHeight : defaultHeightForDevice
     }
@@ -93,16 +92,12 @@ open class KeyboardViewController: UIInputViewController {
     }
     
     override open func viewDidAppear(_ animated: Bool) {
-        if let _ = self.defaultHeightForDevice {} else {
-            self.defaultHeightForDevice = self.view.bounds.height
-            
-            self.heightConstraint = self.view.heightAnchor.constraint(equalToConstant: self.defaultHeightForDevice!)
-            
-            self.heightConstraint.priority = UILayoutPriority.required
-            self.heightConstraint.isActive = true
-            
-            self.keyboardView.heightAnchor.constraint(equalToConstant: self.defaultHeightForDevice!).isActive = true
-        }
+        self.heightConstraint = self.view.heightAnchor.constraint(equalToConstant: self.defaultHeightForDevice)
+        
+        self.heightConstraint.priority = UILayoutPriority.required
+        self.heightConstraint.isActive = true
+        
+        self.keyboardView.heightAnchor.constraint(equalToConstant: self.defaultHeightForDevice).isActive = true
         
         keyboardView.update()
         disablesDelayingGestureRecognizers = true

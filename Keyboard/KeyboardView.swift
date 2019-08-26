@@ -601,7 +601,7 @@ class KeyView: UIView {
             
             self.swipeLayoutConstraint?.constant = minValue + (maxValue - minValue) * percentageAlternative
             self.alternateLabel?.textColor = UIColor.interpolate(from: KeyboardView.theme.inactiveTextColor, to: KeyboardView.theme.textColor, with: percentageAlternative)
-            self.label?.textColor = UIColor.interpolate(from: KeyboardView.theme.textColor, to: KeyboardView.theme.inactiveTextColor, with: percentageAlternative)
+            self.label?.textColor = UIColor.interpolate(from: KeyboardView.theme.textColor, to: UIColor.clear, with: percentageAlternative)
             
             let fontSizeDelta = KeyboardView.theme.keyFont.pointSize - KeyboardView.theme.alternateKeyFontSize
             self.alternateLabel?.font = KeyboardView.theme.keyFont.withSize(KeyboardView.theme.alternateKeyFontSize + fontSizeDelta * percentageAlternative)
@@ -672,10 +672,10 @@ class KeyView: UIView {
                     swipeLayoutConstraint = label.topAnchor.constraint(equalTo: labelHoldingView.topAnchor, constant: 24)
                     swipeLayoutConstraint?.isActive = true
                     
-                    label.bottomAnchor.constraint(equalTo: labelHoldingView.bottomAnchor, constant: -8).isActive = true
+                    label.bottomAnchor.constraint(equalTo: labelHoldingView.bottomAnchor, constant: 0).isActive = true
                     alternateLabel.centerXAnchor.constraint(equalTo: labelHoldingView.centerXAnchor).isActive = true
                     alternateLabel.widthAnchor.constraint(equalTo: alternateLabel.heightAnchor).isActive = true
-                    alternateLabel.topAnchor.constraint(equalTo: labelHoldingView.topAnchor, constant: 0).isActive = true
+                    alternateLabel.topAnchor.constraint(equalTo: labelHoldingView.topAnchor, constant: 8).isActive = true
                     alternateLabel.bottomAnchor.constraint(equalTo: label.topAnchor).isActive = true
                 } else {
                     label.centerYAnchor.constraint(equalTo: labelHoldingView.centerYAnchor, constant: 0).isActive = true
@@ -697,7 +697,7 @@ class KeyView: UIView {
         }
         
         self.layer.shadowColor = KeyboardView.theme.keyShadowColor.cgColor
-        self.layer.shadowOffset = CGSize(width: 0, height: 2)
+        self.layer.shadowOffset = CGSize(width: 0, height: 1)
         self.layer.shadowOpacity = 1.0
         self.layer.shadowRadius = 0.0
 
