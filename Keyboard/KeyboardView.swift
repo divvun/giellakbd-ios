@@ -12,9 +12,10 @@ protocol KeyboardViewDelegate {
     func didTriggerKey(_ key: KeyDefinition)
     func didTriggerDoubleTap(forKey key: KeyDefinition)
     func didTriggerHoldKey(_ key: KeyDefinition)
+    func didMoveCursor(_ movement: Int)
 }
 
-class KeyboardView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, LongPressControllerDelegate {
+class KeyboardView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, LongPressOverlayDelegate, LongPressCursorMovementDelegate {
     
     static private(set) var theme: Theme = LightTheme
     static private let keyRepeatTimeInterval: TimeInterval = 0.1
@@ -59,7 +60,7 @@ class KeyboardView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
     let collectionView: UICollectionView
     private let layout = UICollectionViewFlowLayout.init()
     
-    var longpressController: LongPressController? = nil
+    var longpressController: LongPressBehaviorProvider? = nil
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -200,8 +201,8 @@ class KeyboardView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
         if let activeKey = activeKey,
             case let .input(string) = activeKey.key.type,
             let count = self.definition.longPress[string]?.count {
-            contentView.widthAnchor.constraint(equalToConstant: count >= LongPressController.multirowThreshold ? self.longpressKeySize().width * ceil(CGFloat(count)/2.0) : self.longpressKeySize().width * CGFloat(count)).isActive = true
-            contentView.heightAnchor.constraint(equalToConstant: count >= LongPressController.multirowThreshold ? self.longpressKeySize().height * 2 : self.longpressKeySize().height).isActive = true
+            contentView.widthAnchor.constraint(equalToConstant: count >= LongPressOverlayController.multirowThreshold ? self.longpressKeySize().width * ceil(CGFloat(count)/2.0) : self.longpressKeySize().width * CGFloat(count)).isActive = true
+            contentView.heightAnchor.constraint(equalToConstant: count >= LongPressOverlayController.multirowThreshold ? self.longpressKeySize().height * 2 : self.longpressKeySize().height).isActive = true
         } else {
             contentView.heightAnchor.constraint(equalToConstant: self.longpressKeySize().height).isActive = true
         }
@@ -210,6 +211,7 @@ class KeyboardView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
     
     func longpressDidCancel() {
         self.longpressController = nil
+        self.collectionView.alpha = 1.0
     }
     
     func longpress(didSelectKey key: KeyDefinition) {
@@ -224,6 +226,11 @@ class KeyboardView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
     func longpressKeySize() -> CGSize {
         return CGSize(width: self.bounds.size.width / 10, height: (self.bounds.size.height / CGFloat(currentPage.count)) - KeyboardView.theme.popupCornerRadius * 2)
     }
+    
+    func longpress(movedCursor: Int) {
+        delegate?.didMoveCursor(movedCursor)
+    }
+
     
     // MARK: - Input handling
     // MARK: -
@@ -432,10 +439,20 @@ class KeyboardView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
                 let longpressValues = self.definition.longPress[string]?.compactMap({ KeyDefinition(input: $0) }),
                 longpressGestureRecognizer.state == .began {
                 
-                self.longpressController = LongPressController(key: key, longpressValues: longpressValues)
-                self.longpressController?.delegate = self
+                let longpressController = LongPressOverlayController(key: key, longpressValues: longpressValues)
+                longpressController.delegate = self
+                
+                self.longpressController = longpressController
 
-                self.longpressController?.touchesBegan(longpressGestureRecognizer.location(in: collectionView))
+                longpressController.touchesBegan(longpressGestureRecognizer.location(in: collectionView))
+            }
+            
+            if case .spacebar = key.type,
+                longpressGestureRecognizer.state == .began {
+                let longpressController = LongPressCursorMovementController()
+                longpressController.delegate = self
+                self.longpressController = longpressController
+                self.collectionView.alpha = 0.4
             }
         }
     }

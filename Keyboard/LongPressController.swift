@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol LongPressControllerDelegate {
+protocol LongPressOverlayDelegate {
     
     func longpress(didCreateOverlayContentView contentView: UIView)
     func longpressDidCancel()
@@ -18,7 +18,56 @@ protocol LongPressControllerDelegate {
     func longpressKeySize() -> CGSize
 }
 
-class LongPressController: NSObject, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+protocol LongPressCursorMovementDelegate {
+    func longpress(movedCursor: Int)
+    func longpressDidCancel()
+}
+
+protocol LongPressBehaviorProvider {
+    func touchesBegan(_ point: CGPoint)
+    func touchesMoved(_ point: CGPoint)
+    func touchesEnded(_ point: CGPoint)
+}
+
+class LongPressCursorMovementController: NSObject, LongPressBehaviorProvider {
+    public var delegate: LongPressCursorMovementDelegate?
+    
+    private var baselinePoint: CGPoint?
+    let delta: CGFloat = 20.0
+
+    public func touchesBegan(_ point: CGPoint) {
+        if baselinePoint == nil {
+            baselinePoint = point
+        }
+        pointUpdated(point)
+    }
+    
+    public func touchesMoved(_ point: CGPoint) {
+        if baselinePoint == nil {
+            baselinePoint = point
+        }
+        pointUpdated(point)
+    }
+    
+    public func touchesEnded(_ point: CGPoint) {
+        pointUpdated(point)
+        delegate?.longpressDidCancel()
+    }
+    
+    private func pointUpdated(_ point: CGPoint) {
+        guard let baselinePoint = baselinePoint else { return }
+        
+        let diff = point.x - baselinePoint.x
+        if abs(diff) > delta {
+            let cursorMovement = Int((diff/delta).rounded(.towardZero))
+            delegate?.longpress(movedCursor: cursorMovement)
+            self.baselinePoint = CGPoint(x: baselinePoint.x + (delta * CGFloat(cursorMovement)), y: baselinePoint.y)
+        }
+    }
+    
+}
+
+class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     class LongpressCollectionView: UICollectionView {}
     
@@ -42,7 +91,7 @@ class LongPressController: NSObject, UICollectionViewDelegate, UICollectionViewD
         }
     }
     
-    var delegate: LongPressControllerDelegate?
+    var delegate: LongPressOverlayDelegate?
     
     init(key: KeyDefinition, longpressValues: [KeyDefinition]) {
         self.key = key
@@ -121,11 +170,11 @@ class LongPressController: NSObject, UICollectionViewDelegate, UICollectionViewD
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return longpressValues.count >= LongPressController.multirowThreshold ? 2 : 1
+        return longpressValues.count >= LongPressOverlayController.multirowThreshold ? 2 : 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if longpressValues.count >= LongPressController.multirowThreshold {
+        if longpressValues.count >= LongPressOverlayController.multirowThreshold {
             return section == 0 ? Int(ceil(Double(longpressValues.count) / 2.0)) : Int(floor(Double(longpressValues.count) / 2.0))
         }
         return longpressValues.count

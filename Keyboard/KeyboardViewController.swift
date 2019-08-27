@@ -218,6 +218,10 @@ open class KeyboardViewController: UIInputViewController {
 }
 
 extension KeyboardViewController: KeyboardViewDelegate {
+    func didMoveCursor(_ movement: Int) {
+        self.textDocumentProxy.adjustTextPosition(byCharacterOffset: movement)
+    }
+    
     func didTriggerHoldKey(_ key: KeyDefinition) {
         if case .backspace = key.type {
             self.deleteBackward()
