@@ -24,6 +24,7 @@ class KeyOverlayView: UIView {
         self.key = key
         self.contentView = UIView(frame: origin.bounds)
         super.init(frame: CGRect(x: 0, y: 0, width: origin.frame.width, height: origin.frame.height * 2))
+        self.backgroundColor = .clear
         self.contentView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(self.contentView)
         self.contentView.topAnchor.constraint(equalTo: self.topAnchor, constant: KeyboardView.theme.popupCornerRadius).isActive = true
@@ -51,7 +52,7 @@ class KeyOverlayView: UIView {
         let shadowView = KeyOverlayShadowView()
         self.shadowView = shadowView
         shadowView.translatesAutoresizingMaskIntoConstraints = false
-        shadowView.backgroundColor = UIColor.black
+        shadowView.backgroundColor = UIColor.black.withAlphaComponent(0.001)
         superview.insertSubview(shadowView, belowSubview: self)
         shadowView.fillSuperview(self.contentView)
         shadowView.layer.shadowColor = UIColor.init(white: 0.0, alpha: 1.0).cgColor

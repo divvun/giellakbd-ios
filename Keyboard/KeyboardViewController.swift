@@ -64,7 +64,7 @@ open class KeyboardViewController: UIInputViewController {
         self.extraSpacingView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
         
         self.bannerView = BannerView(frame: .zero)
-        self.bannerView.backgroundColor = KeyboardView.theme.bannerBackgroundColor
+//        self.bannerView.backgroundColor = KeyboardView.theme.bannerBackgroundColor
         self.bannerView.translatesAutoresizingMaskIntoConstraints = false
         
         self.view.insertSubview(self.bannerView, at: 0)
@@ -91,7 +91,15 @@ open class KeyboardViewController: UIInputViewController {
         super.viewDidLayoutSubviews()
     }
     
+    open override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        KeyboardView.theme = self.textDocumentProxy.keyboardAppearance == UIKeyboardAppearance.dark ? DarkTheme : LightTheme
+    }
+    
     override open func viewDidAppear(_ animated: Bool) {
+        KeyboardView.theme = self.textDocumentProxy.keyboardAppearance == UIKeyboardAppearance.dark ? DarkTheme : LightTheme
+
         self.heightConstraint = self.view.heightAnchor.constraint(equalToConstant: self.defaultHeightForDevice)
         
         self.heightConstraint.priority = UILayoutPriority.required
@@ -100,6 +108,7 @@ open class KeyboardViewController: UIInputViewController {
         self.keyboardView.heightAnchor.constraint(equalToConstant: self.defaultHeightForDevice).isActive = true
         
         keyboardView.update()
+        bannerView.update()
         disablesDelayingGestureRecognizers = true
     }
     

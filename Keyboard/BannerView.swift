@@ -96,6 +96,7 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
     override init(frame: CGRect) {
         self.collectionView = UICollectionView(frame: frame, collectionViewLayout: UICollectionViewFlowLayout())
         super.init(frame: frame)
+        self.backgroundColor = .clear
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(self.collectionView)
@@ -108,6 +109,11 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
         self.collectionView.dataSource = self
         
         self.collectionView.collectionViewLayout = createCollectionViewLayout()
+    }
+    
+    func update() {
+        self.collectionView.backgroundColor = KeyboardView.theme.bannerSeparatorColor
+        self.collectionView.reloadData()
     }
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

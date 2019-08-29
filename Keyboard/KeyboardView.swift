@@ -17,7 +17,7 @@ protocol KeyboardViewDelegate {
 
 class KeyboardView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, LongPressOverlayDelegate, LongPressCursorMovementDelegate {
     
-    static private(set) var theme: Theme = LightTheme
+    static public var theme: Theme = LightTheme
     static private let keyRepeatTimeInterval: TimeInterval = 0.1
     
     public var swipeDownKeysEnabled: Bool = UIDevice.current.kind == UIDevice.Kind.iPad
@@ -632,7 +632,9 @@ class KeyView: UIView {
         self.key = key
         self.alternateKey = alternateKey
         super.init(frame: .zero)
-        self.backgroundColor = .clear
+        
+        // HACK: UIColor.clear here breaks indexPathForItemAtPoint:
+        self.backgroundColor = UIColor.green.withAlphaComponent(0.01)
         
         // If the alternate key is not an input key, ignore it
         if let alternateKey = self.alternateKey, case .input(_) = alternateKey.type, case .input(_) = key.type {

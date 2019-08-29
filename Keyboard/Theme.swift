@@ -93,18 +93,18 @@ class LightThemeIpadImpl: LightThemeImpl {
 }
 
 class DarkThemeImpl: Theme {
-    var backgroundColor: UIColor = UIColor(r: 0, g: 0, b: 0, a: 0.8)
+    var backgroundColor: UIColor = .clear
     
     var keyShadowColor: UIColor = UIColor(r: 103, g: 106, b: 110, a: 0.5)
     
-    var regularKeyColor = UIColor.white.withAlphaComponent(CGFloat(0.4))
+    var regularKeyColor = UIColor.lightGray.withAlphaComponent(CGFloat(0.4))
     var specialKeyColor = UIColor.gray.withAlphaComponent(CGFloat(0.3))
-    var popupColor = UIColor.gray
+    var popupColor = UIColor(r: 111, g: 103, b: 111, a: 1.0)
     var underColor = UIColor(r: 39, g: 18, b: 39, a: 0.4)
     var textColor = UIColor.white
     var inactiveTextColor: UIColor = UIColor.lightGray
     var borderColor = UIColor.clear
-    var specialKeyBorderColor: UIColor { return specialKeyColor }
+    var specialKeyBorderColor: UIColor { return .clear }
     var shiftActiveColor = UIColor(r: 214, g: 220, b: 208)
     var solidRegularKeyColor = UIColor(r: 83, g: 83, b: 83)
     var solidSpecialKeyColor = UIColor(r: 45, g: 45, b: 45)
@@ -123,7 +123,7 @@ class DarkThemeImpl: Theme {
     var bannerFont = UIFont.systemFont(ofSize: 16.0)
 
     var bannerBackgroundColor: UIColor { return self.regularKeyColor }
-    var bannerSeparatorColor: UIColor { return self.solidSpecialKeyColor }
+    var bannerSeparatorColor: UIColor { return .clear }
     var bannerTextColor: UIColor  { return .white }
 
     var bannerHorizontalMargin: CGFloat = 16.0
