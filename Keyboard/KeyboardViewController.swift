@@ -290,6 +290,16 @@ extension KeyboardViewController: KeyboardViewDelegate {
         case .shiftSymbols:
             keyboardView.page = (keyboardView.page == .symbols1 ? .symbols2 : .symbols1)
         case .keyboard:
+            break
+        }
+    }
+}
+
+extension KeyboardViewController: KeyboardViewKeyboardKeyDelegate {
+    func didTriggerKeyboardButton(sender: UIView, forEvent event: UIEvent) {
+        if #available(iOSApplicationExtension 10.0, *) {
+            self.handleInputModeList(from: sender, with: event)
+        } else {
             self.advanceToNextInputMode()
         }
     }

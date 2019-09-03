@@ -15,15 +15,19 @@ protocol KeyboardViewDelegate {
     func didMoveCursor(_ movement: Int)
 }
 
+@objc protocol KeyboardViewKeyboardKeyDelegate {
+    @objc func didTriggerKeyboardButton(sender: UIView, forEvent event: UIEvent)
+}
+
 class KeyboardView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, LongPressOverlayDelegate, LongPressCursorMovementDelegate {
     
     static public var theme: Theme = LightTheme
-    static private let keyRepeatTimeInterval: TimeInterval = 0.1
+    static private let keyRepeatTimeInterval: TimeInterval = 0.25
     
     public var swipeDownKeysEnabled: Bool = UIDevice.current.kind == UIDevice.Kind.iPad
     
     let definition: KeyboardDefinition
-    var delegate: KeyboardViewDelegate?
+    weak var delegate: (KeyboardViewDelegate & KeyboardViewKeyboardKeyDelegate)?
     
     lazy var firstSymbolsPage: [[KeyDefinition]] = {
         return SystemKeys.symbolKeysFirstPage + [SystemKeys.systemKeyRowsForCurrentDevice(spaceName: definition.spaceName, returnName: definition.enterName)]
@@ -61,6 +65,26 @@ class KeyboardView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
     private let layout = UICollectionViewFlowLayout.init()
     
     var longpressController: LongPressBehaviorProvider? = nil
+    
+    // Sorry. The globe button is the greatest lie of them all. This is the only known way to have a UIEvent we can trigger the
+    // keyboard switcher popup with. I don't like it either.
+    private var keyboardButtonFrame: CGRect? {
+        didSet {
+            if let keyboardButtonExtraButton = keyboardButtonExtraButton {
+                keyboardButtonExtraButton.removeFromSuperview()
+                self.keyboardButtonExtraButton = nil
+            }
+            if let keyboardButtonFrame = keyboardButtonFrame {
+                self.keyboardButtonExtraButton = UIButton(frame: keyboardButtonFrame)
+                self.keyboardButtonExtraButton?.backgroundColor = .clear
+            }
+            if let keyboardButtonExtraButton = keyboardButtonExtraButton {
+                self.addSubview(keyboardButtonExtraButton)
+                keyboardButtonExtraButton.addTarget(self.delegate, action: #selector(KeyboardViewKeyboardKeyDelegate.didTriggerKeyboardButton), for: UIControl.Event.allEvents)
+            }
+        }
+    }
+    private var keyboardButtonExtraButton: UIButton?
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -103,6 +127,7 @@ class KeyboardView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
     
     public func update() {
         self.backgroundColor = KeyboardView.theme.backgroundColor
+        self.keyboardButtonFrame = nil
         self.calculateRows()
     }
     
@@ -435,24 +460,27 @@ class KeyboardView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
         if let indexPath = collectionView.indexPathForItem(at: longpressGestureRecognizer.location(in: collectionView)), longpressController == nil {
 
             let key = currentPage[indexPath.section][indexPath.row]
-            if case let .input(string) = key.type,
-                let longpressValues = self.definition.longPress[string]?.compactMap({ KeyDefinition(input: $0) }),
-                longpressGestureRecognizer.state == .began {
-                
-                let longpressController = LongPressOverlayController(key: key, longpressValues: longpressValues)
-                longpressController.delegate = self
-                
-                self.longpressController = longpressController
-
-                longpressController.touchesBegan(longpressGestureRecognizer.location(in: collectionView))
-            }
-            
-            if case .spacebar = key.type,
-                longpressGestureRecognizer.state == .began {
-                let longpressController = LongPressCursorMovementController()
-                longpressController.delegate = self
-                self.longpressController = longpressController
-                self.collectionView.alpha = 0.4
+            switch (key.type) {
+            case let .input(string):
+                if let longpressValues = self.definition.longPress[string]?.compactMap({ KeyDefinition(input: $0) }),
+                    longpressGestureRecognizer.state == .began {
+                    
+                    let longpressController = LongPressOverlayController(key: key, longpressValues: longpressValues)
+                    longpressController.delegate = self
+                    
+                    self.longpressController = longpressController
+                    
+                    longpressController.touchesBegan(longpressGestureRecognizer.location(in: collectionView))
+                }
+            case .spacebar:
+                if longpressGestureRecognizer.state == .began {
+                    let longpressController = LongPressCursorMovementController()
+                    longpressController.delegate = self
+                    self.longpressController = longpressController
+                    self.collectionView.alpha = 0.4
+                }
+            default:
+                self.delegate?.didTriggerHoldKey(key)
             }
         }
     }
@@ -489,6 +517,15 @@ class KeyboardView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return currentPage[section].count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! KeyCell
+        let key = currentPage[indexPath.section][indexPath.row]
+
+        if key.type == .keyboard {
+            keyboardButtonFrame = cell.frame
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
