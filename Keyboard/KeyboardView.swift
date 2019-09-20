@@ -673,12 +673,15 @@ class KeyView: UIView {
             let maxValue = (self.frame.height / 3.0) * 2.0
             
             self.swipeLayoutConstraint?.constant = minValue + (maxValue - minValue) * percentageAlternative
-            self.alternateLabel?.textColor = UIColor.interpolate(from: KeyboardView.theme.inactiveTextColor, to: KeyboardView.theme.textColor, with: percentageAlternative)
-            self.label?.textColor = UIColor.interpolate(from: KeyboardView.theme.textColor, to: UIColor.clear, with: percentageAlternative)
             
-            let fontSizeDelta = KeyboardView.theme.keyFont.pointSize - KeyboardView.theme.alternateKeyFontSize
-            self.alternateLabel?.font = KeyboardView.theme.keyFont.withSize(KeyboardView.theme.alternateKeyFontSize + fontSizeDelta * percentageAlternative)
-            self.label?.font = KeyboardView.theme.keyFont.withSize(KeyboardView.theme.keyFont.pointSize - fontSizeDelta * percentageAlternative)
+            if isSwipeKey {
+                self.alternateLabel?.textColor = UIColor.interpolate(from: KeyboardView.theme.inactiveTextColor, to: KeyboardView.theme.textColor, with: percentageAlternative)
+                self.label?.textColor = UIColor.interpolate(from: KeyboardView.theme.textColor, to: UIColor.clear, with: percentageAlternative)
+                
+                let fontSizeDelta = KeyboardView.theme.keyFont.pointSize - KeyboardView.theme.alternateKeyFontSize
+                self.alternateLabel?.font = KeyboardView.theme.keyFont.withSize(KeyboardView.theme.alternateKeyFontSize + fontSizeDelta * percentageAlternative)
+                self.label?.font = KeyboardView.theme.keyFont.withSize(KeyboardView.theme.keyFont.pointSize - fontSizeDelta * percentageAlternative)
+            }
         }
     }
     
@@ -714,9 +717,15 @@ class KeyView: UIView {
                 labelHoldingView.backgroundColor = .clear
                 
                 label.textColor = KeyboardView.theme.textColor
-                label.font = KeyboardView.theme.keyFont
+                if case .input = key.type {
+                    label.font = KeyboardView.theme.keyFont
+                } else {
+                    label.font = KeyboardView.theme.keyFont.withSize(KeyboardView.theme.alternateKeyFontSize)
+                }
                 label.text = string
                 label.adjustsFontSizeToFitWidth = true
+                label.numberOfLines = 0
+                label.minimumScaleFactor = 0.4
                 label.textAlignment = .center
                 label.backgroundColor = .clear
                 label.clipsToBounds = false
@@ -761,6 +770,7 @@ class KeyView: UIView {
                     label.bottomAnchor.constraint(equalTo: labelHoldingView.bottomAnchor, constant: 0).isActive = true
                 } else {
                     label.centerYAnchor.constraint(equalTo: labelHoldingView.centerYAnchor, constant: 0).isActive = true
+                    label.widthAnchor.constraint(lessThanOrEqualTo: labelHoldingView.widthAnchor, multiplier: 1.0).isActive = true
                     swipeLayoutConstraint = nil
                 }
                 

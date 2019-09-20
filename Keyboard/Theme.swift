@@ -69,7 +69,7 @@ class LightThemeImpl: Theme {
     var keyVerticalMargin: CGFloat { return 5.0 }
 
     var keyFont: UIFont { return UIFont.systemFont(ofSize: 22.0) }
-    var alternateKeyFontSize: CGFloat { return 20.0 }
+    var alternateKeyFontSize: CGFloat { return 17.0 }
     var popupKeyFont = UIFont.systemFont(ofSize: 26.0)
     var bannerFont = UIFont.systemFont(ofSize: 16.0)
 
@@ -118,7 +118,7 @@ class DarkThemeImpl: Theme {
     var keyVerticalMargin: CGFloat { return 5.0 }
 
     var keyFont: UIFont { return UIFont.systemFont(ofSize: 22.0) }
-    var alternateKeyFontSize: CGFloat { return 20.0 }
+    var alternateKeyFontSize: CGFloat { return 17.0 }
     var popupKeyFont = UIFont.systemFont(ofSize: 26.0)
     var bannerFont = UIFont.systemFont(ofSize: 16.0)
 
@@ -138,4 +138,5 @@ class DarkThemeIpadImpl: DarkThemeImpl {
     override var keyVerticalMargin: CGFloat { return 7.0 }
     
     override var keyFont: UIFont { return UIFont.systemFont(ofSize: 28.0) }
+    override var alternateKeyFontSize: CGFloat { return 17.0 }
 }
