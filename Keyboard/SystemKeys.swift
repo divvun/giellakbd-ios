@@ -20,7 +20,9 @@ class SystemKeys {
         keys.append(KeyDefinition(type: .spacebar(name: spaceName), size: CGSize(width: 5.0, height: 1.0)))
         if UIDevice.current.kind == .iPad {
             keys.append(KeyDefinition(type: .symbols))
+            keys.append(KeyDefinition(type: .keyboardMode))
         } else {
+            keys.append(KeyDefinition(type: .keyboardMode))
             keys.append(KeyDefinition(type: .returnkey(name: returnName), size: CGSize(width: 2.0, height: 1.0)))
         }
         

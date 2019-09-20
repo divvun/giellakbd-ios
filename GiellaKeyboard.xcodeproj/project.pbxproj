@@ -55,6 +55,7 @@
 		FDAF59AD22F9CD0700F7C9FC /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAF59AA22F9CD0600F7C9FC /* BannerView.swift */; };
 		FDAF59AE22F9CD0700F7C9FC /* KeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAF59AB22F9CD0600F7C9FC /* KeyboardView.swift */; };
 		FDAF59AF22F9CD0700F7C9FC /* KeyOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAF59AC22F9CD0700F7C9FC /* KeyOverlayView.swift */; };
+		FDBD09C52333A56800303152 /* SplitKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDBD09C32333A50E00303152 /* SplitKeyboard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -176,6 +177,7 @@
 		FDAF59AA22F9CD0600F7C9FC /* BannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
 		FDAF59AB22F9CD0600F7C9FC /* KeyboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardView.swift; sourceTree = "<group>"; };
 		FDAF59AC22F9CD0700F7C9FC /* KeyOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyOverlayView.swift; sourceTree = "<group>"; };
+		FDBD09C32333A50E00303152 /* SplitKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitKeyboard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -248,6 +250,7 @@
 				C6F249671F736FEE00840F2B /* EntryPoint.swift */,
 				C6996B5122FB0055007EBC3D /* DeadKeyHandler.swift */,
 				C6996B5D22FC3257007EBC3D /* DivvunSpellBannerPlugin.swift */,
+				FDBD09C32333A50E00303152 /* SplitKeyboard.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -677,6 +680,7 @@
 				FDAF59AE22F9CD0700F7C9FC /* KeyboardView.swift in Sources */,
 				FDAF59A722F9CCE100F7C9FC /* KeyDefinition.swift in Sources */,
 				FDAF59A522F9CCE100F7C9FC /* Theme.swift in Sources */,
+				FDBD09C52333A56800303152 /* SplitKeyboard.swift in Sources */,
 				FDAF59AD22F9CD0700F7C9FC /* BannerView.swift in Sources */,
 				FDAF59A922F9CCF200F7C9FC /* LongPressController.swift in Sources */,
 				C6F2494F1F736E3E00840F2B /* KeyboardSettings.swift in Sources */,

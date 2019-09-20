@@ -80,7 +80,7 @@ class LightThemeImpl: Theme {
     var bannerHorizontalMargin: CGFloat = 16.0
     var bannerVerticalMargin: CGFloat = 8.0
 
-    fileprivate init() {}
+    public init() {}
 }
 
 class LightThemeIpadImpl: LightThemeImpl {
@@ -129,7 +129,7 @@ class DarkThemeImpl: Theme {
     var bannerHorizontalMargin: CGFloat = 16.0
     var bannerVerticalMargin: CGFloat = 8.0
 
-    fileprivate init() {}
+    public init() {}
 }
 
 class DarkThemeIpadImpl: DarkThemeImpl {
@@ -139,6 +139,3 @@ class DarkThemeIpadImpl: DarkThemeImpl {
     
     override var keyFont: UIFont { return UIFont.systemFont(ofSize: 28.0) }
 }
-
-let LightTheme = UIDevice.current.kind == UIDevice.Kind.iPad ? LightThemeIpadImpl() : LightThemeImpl()
-let DarkTheme = UIDevice.current.kind == UIDevice.Kind.iPad ? DarkThemeIpadImpl() : DarkThemeImpl()

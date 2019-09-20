@@ -28,6 +28,10 @@ public enum KeyType: Hashable {
     case symbols
     case shiftSymbols
     case keyboard
+    case keyboardMode
+    case splitKeyboard
+    case sideKeyboardLeft
+    case sideKeyboardRight
     
     init(string: String) {
         if let type = KeyType.definitions[string] {

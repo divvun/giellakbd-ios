@@ -71,7 +71,7 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
     
     class LongpressCollectionView: UICollectionView {}
     
-    static let multirowThreshold = 3
+    static let multirowThreshold = 4
     
     private let deadZone: CGFloat = 20.0
     
@@ -186,8 +186,14 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
         
         if case let .input(string) = key.type {
             cell.label.text = string
+        } else if case .splitKeyboard = key.type {
+            cell.label.text = "◼︎ ◼︎"
+        } else if case .sideKeyboardLeft = key.type {
+            cell.label.text = "←"
+        } else if case .sideKeyboardRight = key.type {
+            cell.label.text = "→"
         } else {
-            print("ERROR: Non-input key type in longpress")
+            print("ERROR: Invalid key type in longpress")
         }
         
         cell.isSelectedKey = key.type == self.selectedKey?.type

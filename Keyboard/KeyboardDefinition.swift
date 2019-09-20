@@ -88,8 +88,20 @@ public struct KeyboardDefinition {
         shifted = shiftedrows
         
         symbols1 = SystemKeys.symbolKeysFirstPage
-        symbols2 = SystemKeys.symbolKeysSecondPage
+        // Naively pad out the symbols. Should rather be a larger list and trimmed in the future
+        for (rowIndex, _) in symbols1.enumerated() {
+            while symbols1[rowIndex].count < normal[rowIndex].count {
+                symbols1[rowIndex].append(KeyDefinition(type: KeyType.spacer, size: CGSize(width: 0.0, height: 1.0)))
+            }
+        }
         
+        symbols2 = SystemKeys.symbolKeysSecondPage
+        for (rowIndex, _) in symbols2.enumerated() {
+            while symbols2[rowIndex].count < normal[rowIndex].count {
+                symbols2[rowIndex].append(KeyDefinition(type: KeyType.spacer, size: CGSize(width: 0.0, height: 1.0)))
+            }
+        }
+
         normal.platformize(page: .normal, spaceName: spaceName, returnName: enterName)
         shifted.platformize(page: .shifted, spaceName: spaceName, returnName: enterName)
         symbols1.platformize(page: .symbols1, spaceName: spaceName, returnName: enterName)
@@ -128,6 +140,34 @@ extension Array where Element == Array<KeyDefinition> {
             
         }
         self.append(SystemKeys.systemKeyRowsForCurrentDevice(spaceName: spaceName, returnName: returnName))
+    }
+    
+    func splitAndBalanceSpacebar() -> [[KeyDefinition]] {
+        var copy = self
+        for (i, row) in copy.enumerated() {
+            var splitPoint = row.count/2
+            var length: CGFloat = 0.0
+            for (keyIndex, key) in row.enumerated() {
+                length += key.size.width
+                if case .spacebar = key.type {
+                    let splitSpace = KeyDefinition(type: key.type, size: CGSize(width: key.size.width / 2.0, height: key.size.height))
+                    copy[i].remove(at: keyIndex)
+
+                    copy[i].insert(splitSpace, at: keyIndex)
+                    copy[i].insert(splitSpace, at: keyIndex)
+                    splitPoint = keyIndex + 1
+                }
+            }
+            
+            while splitPoint != (copy[i].count / 2) {
+                if splitPoint > copy[i].count / 2 {
+                    copy[i].append(KeyDefinition(type: .spacer, size: CGSize(width: 0.0, height: 1.0)))
+                } else {
+                    copy[i].insert(KeyDefinition(type: .spacer, size: CGSize(width: 0.0, height: 1.0)), at: 0)
+                }
+            }
+        }
+        return copy
     }
 }
 

@@ -10,9 +10,35 @@ import UIKit
 import Sentry
 import AudioToolbox
 
+protocol KeyboardViewProvider {
+    var swipeDownKeysEnabled: Bool { get set }
+    
+    var delegate: (KeyboardViewDelegate & KeyboardViewKeyboardKeyDelegate)? { get set }
+    
+    var page: BaseKeyboard.KeyboardPage { get set }
+    
+    func updateTheme(theme: Theme)
+    
+    func update()
+    
+    var topAnchor: NSLayoutYAxisAnchor { get }
+    var heightAnchor: NSLayoutDimension { get }
+    
+    init(definition: KeyboardDefinition)
+    
+    func remove()
+}
+
+enum KeyboardMode {
+    case normal
+    case split
+    case left
+    case right
+}
+
 open class KeyboardViewController: UIInputViewController {
     @IBOutlet var nextKeyboardButton: UIButton!
-    private var keyboardView: KeyboardView!
+    private var keyboardView: KeyboardViewProvider!
     
     // Gets updated to match device in viewDidAppear
     private var defaultHeightForDevice: CGFloat {
@@ -25,6 +51,19 @@ open class KeyboardViewController: UIInputViewController {
     private(set) public var bannerView: BannerView!
     private(set) public var keyboardDefinition: KeyboardDefinition!
     
+    var keyboardMode: KeyboardMode = .normal {
+        didSet {
+            KeyboardView.theme = self.textDocumentProxy.keyboardAppearance == UIKeyboardAppearance.dark ? DarkTheme : LightTheme
+
+            setupKeyboardView()
+
+            keyboardDidReset()
+        }
+    }
+    
+    var LightTheme: Theme { return self.keyboardMode == .normal && UIDevice.current.kind == UIDevice.Kind.iPad ? LightThemeIpadImpl() : LightThemeImpl() }
+    var DarkTheme: Theme { return self.keyboardMode == .normal && UIDevice.current.kind == UIDevice.Kind.iPad ? DarkThemeIpadImpl() : DarkThemeImpl() }
+
     override open func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,16 +81,78 @@ open class KeyboardViewController: UIInputViewController {
     }
     
     private func setupKeyboardView() {
-        keyboardView = KeyboardView(definition: keyboardDefinition)
-        keyboardView.translatesAutoresizingMaskIntoConstraints = false
-        
-        self.view.addSubview(keyboardView)
-        
-        keyboardView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
-        keyboardView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
-        keyboardView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
-        
-        keyboardView.delegate = self
+        if keyboardView != nil {
+            keyboardView.remove()
+            keyboardView = nil
+        }
+        switch keyboardMode {
+        case .split:
+            let splitKeyboardView = SplitKeyboardView(definition: keyboardDefinition)
+            
+            self.view.addSubview(splitKeyboardView.leftKeyboardView)
+            self.view.addSubview(splitKeyboardView.rightKeyboardView)
+            
+            splitKeyboardView.leftKeyboardView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+            splitKeyboardView.leftKeyboardView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
+            splitKeyboardView.leftKeyboardView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.25).isActive = true
+            
+            splitKeyboardView.rightKeyboardView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+            splitKeyboardView.rightKeyboardView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.25).isActive = true
+            splitKeyboardView.rightKeyboardView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
+            
+            splitKeyboardView.rightKeyboardView.topAnchor.constraint(equalTo: splitKeyboardView.leftKeyboardView.topAnchor).isActive = true
+            splitKeyboardView.rightKeyboardView.heightAnchor.constraint(equalTo: splitKeyboardView.leftKeyboardView.heightAnchor).isActive = true
+            
+            splitKeyboardView.delegate = self
+            
+            self.keyboardView = splitKeyboardView
+
+        case .left:
+            let keyboardView = KeyboardView(definition: keyboardDefinition)
+            keyboardView.translatesAutoresizingMaskIntoConstraints = false
+            
+            self.view.addSubview(keyboardView)
+            
+            keyboardView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+            keyboardView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
+            keyboardView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.8).isActive = true
+            
+            keyboardView.delegate = self
+            
+            self.keyboardView = keyboardView
+            
+        case .right:
+            let keyboardView = KeyboardView(definition: keyboardDefinition)
+            keyboardView.translatesAutoresizingMaskIntoConstraints = false
+            
+            self.view.addSubview(keyboardView)
+            
+            keyboardView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+            keyboardView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
+            keyboardView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.8).isActive = true
+            
+            keyboardView.delegate = self
+            
+            self.keyboardView = keyboardView
+            
+
+        default:
+            let keyboardView = KeyboardView(definition: keyboardDefinition)
+            keyboardView.translatesAutoresizingMaskIntoConstraints = false
+            
+            self.view.addSubview(keyboardView)
+            
+            keyboardView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+            keyboardView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
+            keyboardView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
+            
+            keyboardView.delegate = self
+            
+            self.keyboardView = keyboardView
+        }
+        if bannerView != nil {
+            self.bannerView.bottomAnchor.constraint(equalTo: self.keyboardView.topAnchor)
+        }
     }
     
     private func setupBannerView() {
@@ -98,6 +199,10 @@ open class KeyboardViewController: UIInputViewController {
     }
     
     override open func viewDidAppear(_ animated: Bool) {
+        keyboardDidReset()
+    }
+    
+    func keyboardDidReset() {
         KeyboardView.theme = self.textDocumentProxy.keyboardAppearance == UIKeyboardAppearance.dark ? DarkTheme : LightTheme
 
         self.heightConstraint = self.view.heightAnchor.constraint(equalToConstant: self.defaultHeightForDevice)
@@ -110,6 +215,8 @@ open class KeyboardViewController: UIInputViewController {
         keyboardView.update()
         bannerView.update()
         disablesDelayingGestureRecognizers = true
+        
+        self.view.backgroundColor = KeyboardView.theme.backgroundColor
     }
     
     override open func viewDidDisappear(_ animated: Bool) {
@@ -291,6 +398,14 @@ extension KeyboardViewController: KeyboardViewDelegate {
             keyboardView.page = (keyboardView.page == .symbols1 ? .symbols2 : .symbols1)
         case .keyboard:
             break
+        case .splitKeyboard:
+            keyboardMode = keyboardMode == .split ? .normal : .split
+        case .sideKeyboardLeft:
+            keyboardMode = keyboardMode == .left ? .normal : .left
+        case .sideKeyboardRight:
+            keyboardMode = keyboardMode == .right ? .normal : .right
+        case .keyboardMode:
+            self.dismissKeyboard()
         }
     }
 }

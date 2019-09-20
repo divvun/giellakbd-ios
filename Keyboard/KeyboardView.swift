@@ -19,9 +19,9 @@ protocol KeyboardViewDelegate {
     @objc func didTriggerKeyboardButton(sender: UIView, forEvent event: UIEvent)
 }
 
-class KeyboardView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, LongPressOverlayDelegate, LongPressCursorMovementDelegate {
+class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, LongPressOverlayDelegate, LongPressCursorMovementDelegate {
     
-    static public var theme: Theme = LightTheme
+    static public var theme: Theme = LightThemeImpl()
     static private let keyRepeatTimeInterval: TimeInterval = 0.25
     
     public var swipeDownKeysEnabled: Bool = UIDevice.current.kind == UIDevice.Kind.iPad
@@ -29,13 +29,6 @@ class KeyboardView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
     let definition: KeyboardDefinition
     weak var delegate: (KeyboardViewDelegate & KeyboardViewKeyboardKeyDelegate)?
     
-    lazy var firstSymbolsPage: [[KeyDefinition]] = {
-        return SystemKeys.symbolKeysFirstPage + [SystemKeys.systemKeyRowsForCurrentDevice(spaceName: definition.spaceName, returnName: definition.enterName)]
-    }()
-    
-    lazy var secondSymbolsPage: [[KeyDefinition]] = {
-        return SystemKeys.symbolKeysSecondPage + [SystemKeys.systemKeyRowsForCurrentDevice(spaceName: definition.spaceName, returnName: definition.enterName)]
-    }()
 
     private var currentPage: [[KeyDefinition]] {
         return keyDefinitionsForPage(self.page)
@@ -90,7 +83,7 @@ class KeyboardView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(definition: KeyboardDefinition) {
+    required init(definition: KeyboardDefinition) {
         self.definition = definition
 
         self.collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
@@ -129,6 +122,11 @@ class KeyboardView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
         self.backgroundColor = KeyboardView.theme.backgroundColor
         self.keyboardButtonFrame = nil
         self.calculateRows()
+    }
+    
+    func remove() {
+        self.delegate = nil
+        self.removeFromSuperview()
     }
     
     // MARK: - Overlay handling
@@ -224,9 +222,9 @@ class KeyboardView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
 
         // MARK: Hack! Because uicollectionview's intrinsic size just isn't enough
         if let activeKey = activeKey,
-            case let .input(string) = activeKey.key.type,
-            let count = self.definition.longPress[string]?.count {
-            contentView.widthAnchor.constraint(equalToConstant: count >= LongPressOverlayController.multirowThreshold ? self.longpressKeySize().width * ceil(CGFloat(count)/2.0) : self.longpressKeySize().width * CGFloat(count)).isActive = true
+            let longpressValues = (self.longpressController as? LongPressOverlayController)?.longpressValues {
+                let count = longpressValues.count
+            contentView.widthAnchor.constraint(equalToConstant: count >= LongPressOverlayController.multirowThreshold ? self.longpressKeySize().width * ceil(CGFloat(count)/2.0) + KeyboardView.theme.keyHorizontalMargin : self.longpressKeySize().width * CGFloat(count) + KeyboardView.theme.keyHorizontalMargin).isActive = true
             contentView.heightAnchor.constraint(equalToConstant: count >= LongPressOverlayController.multirowThreshold ? self.longpressKeySize().height * 2 : self.longpressKeySize().height).isActive = true
         } else {
             contentView.heightAnchor.constraint(equalToConstant: self.longpressKeySize().height).isActive = true
@@ -249,7 +247,7 @@ class KeyboardView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
     }
 
     func longpressKeySize() -> CGSize {
-        return CGSize(width: self.bounds.size.width / 10, height: (self.bounds.size.height / CGFloat(currentPage.count)) - KeyboardView.theme.popupCornerRadius * 2)
+        return CGSize(width: (self.bounds.size.width / CGFloat(currentPage.first?.count ?? 10)), height: (self.bounds.size.height / CGFloat(currentPage.count)) - KeyboardView.theme.popupCornerRadius * 2)
     }
     
     func longpress(movedCursor: Int) {
@@ -472,6 +470,21 @@ class KeyboardView: UIView, UICollectionViewDataSource, UICollectionViewDelegate
                     
                     longpressController.touchesBegan(longpressGestureRecognizer.location(in: collectionView))
                 }
+            case .keyboardMode:
+                if longpressGestureRecognizer.state == .began {
+                    
+                    let longpressController = LongPressOverlayController(key: key, longpressValues: [
+                        KeyDefinition(type: .sideKeyboardLeft),
+                        KeyDefinition(type: .splitKeyboard),
+                        KeyDefinition(type: .sideKeyboardRight)
+                        ])
+                    longpressController.delegate = self
+                    
+                    self.longpressController = longpressController
+                    
+                    longpressController.touchesBegan(longpressGestureRecognizer.location(in: collectionView))
+                }
+
             case .spacebar:
                 if longpressGestureRecognizer.state == .began {
                     let longpressController = LongPressCursorMovementController()
