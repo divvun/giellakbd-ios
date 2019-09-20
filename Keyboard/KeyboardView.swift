@@ -552,6 +552,8 @@ class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataSource, UI
             if let swipeKeyView = cell.keyView, swipeKeyView.isSwipeKey {
                 swipeKeyView.percentageAlternative = 0.0
             }
+        } else if swipeDownKeysEnabled {
+            cell.setKey(key: key, alternateKey: KeyDefinition(type: .spacer))
         } else {
             cell.setKey(key: key)
         }
@@ -614,7 +616,11 @@ class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataSource, UI
                 contentView.addSubview(keyView!)
                 keyView!.fillSuperview(contentView)
             } else {
-                keyView = KeyView(key: key)
+                if let _ = alternateKey {
+                    keyView = KeyView(key: key, alternateKey: KeyDefinition(type: .spacer))
+                } else {
+                    keyView = KeyView(key: key)
+                }
                 keyView!.translatesAutoresizingMaskIntoConstraints = false
                 contentView.addSubview(keyView!)
                 keyView!.fillSuperview(contentView)
@@ -689,6 +695,8 @@ class KeyView: UIView {
         // If the alternate key is not an input key, ignore it
         if let alternateKey = self.alternateKey, case .input(_) = alternateKey.type, case .input(_) = key.type {
             // Continue
+        } else if let alternateKey = self.alternateKey, case .spacer = alternateKey.type, case .input(_) = key.type {
+            // Continue
         } else {
             self.alternateKey = nil
         }
@@ -746,6 +754,11 @@ class KeyView: UIView {
                     alternateLabel.widthAnchor.constraint(equalTo: alternateLabel.heightAnchor).isActive = true
                     alternateLabel.topAnchor.constraint(equalTo: labelHoldingView.topAnchor, constant: 8).isActive = true
                     alternateLabel.bottomAnchor.constraint(equalTo: label.topAnchor).isActive = true
+                } else if let alternateKey = self.alternateKey, case .spacer = alternateKey.type {
+                    swipeLayoutConstraint = label.topAnchor.constraint(equalTo: labelHoldingView.topAnchor, constant: 24)
+                    swipeLayoutConstraint?.isActive = true
+                    
+                    label.bottomAnchor.constraint(equalTo: labelHoldingView.bottomAnchor, constant: 0).isActive = true
                 } else {
                     label.centerYAnchor.constraint(equalTo: labelHoldingView.centerYAnchor, constant: 0).isActive = true
                     swipeLayoutConstraint = nil
