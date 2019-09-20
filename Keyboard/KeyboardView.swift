@@ -22,7 +22,7 @@ protocol KeyboardViewDelegate {
 class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, LongPressOverlayDelegate, LongPressCursorMovementDelegate {
     
     static public var theme: Theme = LightThemeImpl()
-    static private let keyRepeatTimeInterval: TimeInterval = 0.25
+    static private let keyRepeatTimeInterval: TimeInterval = 0.15
     
     public var swipeDownKeysEnabled: Bool = UIDevice.current.kind == UIDevice.Kind.iPad
     
@@ -492,6 +492,9 @@ class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataSource, UI
                     self.longpressController = longpressController
                     self.collectionView.alpha = 0.4
                 }
+            case .backspace:
+                // Cancel, the repeat trigger timing deals with this
+                break
             default:
                 self.delegate?.didTriggerHoldKey(key)
             }
