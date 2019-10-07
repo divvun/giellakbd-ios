@@ -69,7 +69,7 @@ struct DeadKeyHandler {
         if deadKeys.contains(input) {
             current = keyboard.transforms
 
-            switch self.transform(input) {
+            switch transform(input) {
             case let .tree(ref):
                 return ref
             default:

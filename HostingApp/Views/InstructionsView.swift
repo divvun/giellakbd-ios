@@ -9,17 +9,17 @@
 import UIKit
 
 class InstructionsView: UIView, Nibbable {
-    @IBOutlet weak var step1Label: UILabel!
-    @IBOutlet weak var step2Label: UILabel!
-    @IBOutlet weak var step3Label: UILabel!
-    @IBOutlet weak var step4Label: UILabel!
-    @IBOutlet weak var step5Label: UILabel!
-    @IBOutlet weak var step6Label: UILabel!
+    @IBOutlet var step1Label: UILabel!
+    @IBOutlet var step2Label: UILabel!
+    @IBOutlet var step3Label: UILabel!
+    @IBOutlet var step4Label: UILabel!
+    @IBOutlet var step5Label: UILabel!
+    @IBOutlet var step6Label: UILabel!
 
-    @IBOutlet weak var finishLabel: UILabel!
-    @IBOutlet weak var tapSoundsLabel: UILabel!
+    @IBOutlet var finishLabel: UILabel!
+    @IBOutlet var tapSoundsLabel: UILabel!
 
-    @IBOutlet weak var bgImage: UIImageView!
+    @IBOutlet var bgImage: UIImageView!
 
     override func awakeFromNib() {
         step1Label.attributedText = Strings.openApp(item: Strings.settings)

@@ -9,20 +9,20 @@
 import UIKit
 
 class HomeController: ViewController<HomeView>, HideNavBar {
-//    @objc private func openLayouts() {
-//        self.navigationController?.pushViewController(LayoutsController(), animated: true)
-//    }
+    //    @objc private func openLayouts() {
+    //        self.navigationController?.pushViewController(LayoutsController(), animated: true)
+    //    }
 
     @objc private func openLanguages() {
-        self.navigationController?.pushViewController(LanguagesController(), animated: true)
+        navigationController?.pushViewController(LanguagesController(), animated: true)
     }
 
     @objc private func openInstructions() {
-        self.navigationController?.pushViewController(InstructionsController(), animated: true)
+        navigationController?.pushViewController(InstructionsController(), animated: true)
     }
 
     @objc private func openAbout() {
-        self.navigationController?.pushViewController(AboutController(), animated: true)
+        navigationController?.pushViewController(AboutController(), animated: true)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -37,7 +37,7 @@ class HomeController: ViewController<HomeView>, HideNavBar {
 
         title = Strings.localizedName
 
-//        contentView.layoutsButton.addTarget(self, action: #selector(openLayouts), for: [.touchUpInside])
+        //        contentView.layoutsButton.addTarget(self, action: #selector(openLayouts), for: [.touchUpInside])
         contentView.langButton.addTarget(self, action: #selector(openLanguages), for: [.touchUpInside])
         contentView.langButton2.addTarget(self, action: #selector(openLanguages), for: [.touchUpInside])
         contentView.helpButton.addTarget(self, action: #selector(openInstructions), for: [.touchUpInside])

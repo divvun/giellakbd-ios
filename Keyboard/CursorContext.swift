@@ -53,7 +53,7 @@ private func resolveWordContext(before beforeInput: String, after afterInput: St
     if let currentLeftIndex = currentLeftIndex {
         let leftFullChunk = beforeInput.prefix(upTo: currentLeftIndex)
         let leftIndex = leftFullChunk.lastIndex(after: " ") ?? leftFullChunk.startIndex
-        let leftChunk = beforeInput[leftIndex..<currentLeftIndex]
+        let leftChunk = beforeInput[leftIndex ..< currentLeftIndex]
 
         if !leftChunk.isEmpty {
             previousWord = String(leftChunk)

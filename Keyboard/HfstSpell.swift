@@ -8,9 +8,9 @@
 
 import Foundation
 
-fileprivate extension URL {
+private extension URL {
     func asStringPointer() -> UnsafePointer<Int8>? {
-        return (self.absoluteURL.path as NSString?)?.fileSystemRepresentation
+        return (absoluteURL.path as NSString?)?.fileSystemRepresentation
     }
 }
 
@@ -33,7 +33,7 @@ public struct Token {
     let value: String
 }
 
-//extension Token {
+// extension Token {
 //    fileprivate static func from(c record: token_record_t) -> Token {
 //        return Token(
 //            type: TokenType(rawValue: record.type) ?? .other,
@@ -41,55 +41,55 @@ public struct Token {
 //            end: record.end,
 //            value: String(cString: record.value))
 //    }
-//}
+// }
 //
-//public class TokenizerSequence: Sequence {
+// public class TokenizerSequence: Sequence {
 //    public class Iterator: IteratorProtocol {
 //        private let handle: UnsafeMutableRawPointer
 //        private let record: UnsafeMutablePointer<UnsafeMutablePointer<token_record_t>?>
 //        private let value: [CChar]
-//        
+//
 //        init(_ value: String) {
 //            self.value = value.cString(using: .utf8)!
 //            self.handle = speller_tokenize(self.value)!
 //            self.record = UnsafeMutablePointer<UnsafeMutablePointer<token_record_t>?>.allocate(capacity: 1)
-//            
+//
 //            self.record.pointee = nil
 //        }
-//        
+//
 //        public func next() -> Token? {
 //            if !speller_token_next(handle, record) {
 //                return nil
 //            }
-//            
+//
 //            guard let record = record.pointee else {
 //                return nil
 //            }
-//            
+//
 //            return Token.from(c: record.pointee)
 //        }
-//        
+//
 //        deinit {
 //            speller_tokenizer_free(handle)
 //        }
 //    }
-//    
+//
 //    private let value: String
-//    
+//
 //    fileprivate init(string: String) {
 //        self.value = string
 //    }
-//    
+//
 //    public func makeIterator() -> TokenizerSequence.Iterator {
 //        return TokenizerSequence.Iterator(value)
 //    }
-//}
+// }
 //
-//public extension String {
+// public extension String {
 //    func tokenize() -> TokenizerSequence {
 //        return TokenizerSequence(string: self)
 //    }
-//}
+// }
 
 public class SuggestionSequence: Sequence {
     public class Iterator: IteratorProtocol {
@@ -99,9 +99,9 @@ public class SuggestionSequence: Sequence {
         private let handle: UnsafeMutableRawPointer
 
         init(_ value: String, count: Int, maxWeight: Float, speller: UnsafeMutableRawPointer) {
-            self.spellerHandle = speller
-            self.handle = speller_suggest(speller, value.cString(using: .utf8)!, count, maxWeight, 0.0)
-            self.size = suggest_vec_len(handle)
+            spellerHandle = speller
+            handle = speller_suggest(speller, value.cString(using: .utf8)!, count, maxWeight, 0.0)
+            size = suggest_vec_len(handle)
         }
 
         public func next() -> String? {
@@ -128,9 +128,9 @@ public class SuggestionSequence: Sequence {
     private let maxWeight: Float
 
     fileprivate init(handle: UnsafeMutableRawPointer, word: String, count: Int = 10, maxWeight: Float = 4999.99) {
-        self.spellerHandle = handle
-        self.value = word
-        self.suggestionCount = count
+        spellerHandle = handle
+        value = word
+        suggestionCount = count
         self.maxWeight = maxWeight
     }
 
@@ -147,9 +147,9 @@ public class ChfstSuggestionSequence: Sequence {
         private let handle: UnsafeMutableRawPointer
 
         init(_ value: String, count: Int, maxWeight: Float, speller: UnsafeMutableRawPointer) {
-            self.spellerHandle = speller
-            self.handle = chfst_suggest(speller, value.cString(using: .utf8)!, count, maxWeight, 0.0)
-            self.size = suggest_vec_len(handle)
+            spellerHandle = speller
+            handle = chfst_suggest(speller, value.cString(using: .utf8)!, count, maxWeight, 0.0)
+            size = suggest_vec_len(handle)
         }
 
         public func next() -> String? {
@@ -176,9 +176,9 @@ public class ChfstSuggestionSequence: Sequence {
     private let maxWeight: Float
 
     fileprivate init(handle: UnsafeMutableRawPointer, word: String, count: Int = 10, maxWeight: Float = 4999.99) {
-        self.spellerHandle = handle
-        self.value = word
-        self.suggestionCount = count
+        spellerHandle = handle
+        value = word
+        suggestionCount = count
         self.maxWeight = maxWeight
     }
 
@@ -215,7 +215,7 @@ public class ZhfstSpeller {
     }
 
     func suggest(word: String, count: Int = 10, maxWeight: Float = 0.0) -> SuggestionSequence {
-        return SuggestionSequence(handle: self.handle, word: word, count: count, maxWeight: maxWeight)
+        return SuggestionSequence(handle: handle, word: word, count: count, maxWeight: maxWeight)
     }
 
     func isCorrect(word: String) -> Bool {
@@ -250,7 +250,7 @@ public class ChfstSpeller {
     }
 
     func suggest(word: String, count: Int = 10, maxWeight: Float = 0.0) -> ChfstSuggestionSequence {
-        return ChfstSuggestionSequence(handle: self.handle, word: word, count: count, maxWeight: maxWeight)
+        return ChfstSuggestionSequence(handle: handle, word: word, count: count, maxWeight: maxWeight)
     }
 
     func isCorrect(word: String) -> Bool {

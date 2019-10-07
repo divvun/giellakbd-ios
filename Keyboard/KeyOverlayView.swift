@@ -20,29 +20,28 @@ class KeyOverlayView: UIView {
     var path: CGPath!
 
     init(origin: UIView, key: KeyDefinition) {
-        self.originView = origin
+        originView = origin
         self.key = key
-        self.contentView = UIView(frame: origin.bounds)
+        contentView = UIView(frame: origin.bounds)
         super.init(frame: CGRect(x: 0, y: 0, width: origin.frame.width, height: origin.frame.height * 2))
-        self.backgroundColor = .clear
-        self.contentView.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(self.contentView)
-        self.contentView.topAnchor.constraint(equalTo: self.topAnchor, constant: KeyboardView.theme.popupCornerRadius).isActive = true
-        self.contentView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: KeyboardView.theme.popupCornerRadius).isActive = true
-        self.contentView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -KeyboardView.theme.popupCornerRadius).isActive = true
-        let bottomConstraint = self.contentView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -(origin.frame.height - KeyboardView.theme.keyHorizontalMargin * 2) - KeyboardView.theme.popupCornerRadius)
+        backgroundColor = .clear
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(contentView)
+        contentView.topAnchor.constraint(equalTo: topAnchor, constant: KeyboardView.theme.popupCornerRadius).isActive = true
+        contentView.leftAnchor.constraint(equalTo: leftAnchor, constant: KeyboardView.theme.popupCornerRadius).isActive = true
+        contentView.rightAnchor.constraint(equalTo: rightAnchor, constant: -KeyboardView.theme.popupCornerRadius).isActive = true
+        let bottomConstraint = contentView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -(origin.frame.height - KeyboardView.theme.keyHorizontalMargin * 2) - KeyboardView.theme.popupCornerRadius)
         bottomConstraint.priority = .defaultLow
         bottomConstraint.isActive = true
-        let bottomConstraint2 = self.bottomAnchor.constraint(greaterThanOrEqualTo: self.contentView.bottomAnchor, constant: -KeyboardView.theme.popupCornerRadius)
+        let bottomConstraint2 = bottomAnchor.constraint(greaterThanOrEqualTo: contentView.bottomAnchor, constant: -KeyboardView.theme.popupCornerRadius)
         bottomConstraint2.priority = .required
         bottomConstraint2.isActive = true
 
-        let heightConstraint = self.contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: origin.frame.height - KeyboardView.theme.popupCornerRadius * 2)
+        let heightConstraint = contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: origin.frame.height - KeyboardView.theme.popupCornerRadius * 2)
         heightConstraint.priority = .defaultLow
         heightConstraint.isActive = true
-        self.contentView.backgroundColor = .clear
-        self.isUserInteractionEnabled = false
-
+        contentView.backgroundColor = .clear
+        isUserInteractionEnabled = false
     }
 
     func addShadow() {
@@ -54,8 +53,8 @@ class KeyOverlayView: UIView {
         shadowView.translatesAutoresizingMaskIntoConstraints = false
         shadowView.backgroundColor = UIColor.black.withAlphaComponent(0.001)
         superview.insertSubview(shadowView, belowSubview: self)
-        shadowView.fillSuperview(self.contentView)
-        shadowView.layer.shadowColor = UIColor.init(white: 0.0, alpha: 1.0).cgColor
+        shadowView.fillSuperview(contentView)
+        shadowView.layer.shadowColor = UIColor(white: 0.0, alpha: 1.0).cgColor
         shadowView.layer.shadowOffset = .zero
         shadowView.layer.shadowOpacity = 1.0
         shadowView.layer.shadowRadius = 12.0
@@ -63,26 +62,26 @@ class KeyOverlayView: UIView {
     }
 
     override func didMoveToSuperview() {
-        self.shadowView?.removeFromSuperview()
-        self.shadowView = nil
+        shadowView?.removeFromSuperview()
+        shadowView = nil
 
         addShadow()
         super.didMoveToSuperview()
     }
 
     override func removeFromSuperview() {
-        self.shadowView?.removeFromSuperview()
+        shadowView?.removeFromSuperview()
         super.removeFromSuperview()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func draw(_ rect: CGRect) {
+    override func draw(_: CGRect) {
         guard let _ = self.superview else { return }
 
-        path = self.createPath()
+        path = createPath()
 
         let bezier = UIBezierPath(cgPath: path)
 
@@ -99,7 +98,7 @@ class KeyOverlayView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        self.setNeedsDisplay()
+        setNeedsDisplay()
     }
 
     fileprivate struct PopupPathPoint {
@@ -114,7 +113,7 @@ class KeyOverlayView: UIView {
 
         var points: [PopupPathPoint]
 
-        if originFrameInLocalBounds.maxY < self.bounds.maxY - KeyboardView.theme.popupCornerRadius {
+        if originFrameInLocalBounds.maxY < bounds.maxY - KeyboardView.theme.popupCornerRadius {
             // Only draw a rounded rect
             points = [
                 CGPoint(x: self.frame.midX, y: 0.0).withRadius(radius: KeyboardView.theme.popupCornerRadius),
@@ -125,7 +124,7 @@ class KeyOverlayView: UIView {
                 CGPoint(x: self.bounds.midX, y: 0.0).withRadius(radius: KeyboardView.theme.popupCornerRadius),
                 CGPoint(x: self.bounds.midX, y: 0.0).withRadius(radius: KeyboardView.theme.popupCornerRadius)
             ]
-        } else if originFrameInLocalBounds.maxX + KeyboardView.theme.popupCornerRadius * 2 >= self.bounds.maxX {
+        } else if originFrameInLocalBounds.maxX + KeyboardView.theme.popupCornerRadius * 2 >= bounds.maxX {
             // Regular bubble
             points = [
                 CGPoint(x: self.frame.midX, y: 0.0).withRadius(radius: KeyboardView.theme.popupCornerRadius),
@@ -158,11 +157,11 @@ class KeyOverlayView: UIView {
         }
 
         let path = CGMutablePath()
-        path.move(to: CGPoint(x: self.frame.midX, y: 0.0))
+        path.move(to: CGPoint(x: frame.midX, y: 0.0))
 
         for (index, point) in points.enumerated() {
-            if (index < points.count - 1) {
-                path.addArc(tangent1End: point.point, tangent2End: points[index+1].point, radius: point.radius)
+            if index < points.count - 1 {
+                path.addArc(tangent1End: point.point, tangent2End: points[index + 1].point, radius: point.radius)
             }
         }
 
@@ -172,7 +171,7 @@ class KeyOverlayView: UIView {
     }
 }
 
-fileprivate extension CGPoint {
+private extension CGPoint {
     func withRadius(radius: CGFloat) -> KeyOverlayView.PopupPathPoint {
         return KeyOverlayView.PopupPathPoint(radius: radius, point: self)
     }

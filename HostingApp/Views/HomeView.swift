@@ -52,15 +52,15 @@ class HomePrimaryButton: HomeMenuButton {
 }
 
 class HomeView: UIView, Nibbable {
-    @IBOutlet weak var bgImage: UIImageView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var langButton: UIButton!
-    @IBOutlet weak var langButton2: UIButton!
-    @IBOutlet weak var helpButton: HomeMenuButton!
-    @IBOutlet weak var layoutsButton: HomeMenuButton!
-    @IBOutlet weak var aboutButton: HomeMenuButton!
+    @IBOutlet var bgImage: UIImageView!
+    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var langButton: UIButton!
+    @IBOutlet var langButton2: UIButton!
+    @IBOutlet var helpButton: HomeMenuButton!
+    @IBOutlet var layoutsButton: HomeMenuButton!
+    @IBOutlet var aboutButton: HomeMenuButton!
 
-    @IBOutlet weak var configStack: UIStackView?
+    @IBOutlet var configStack: UIStackView?
 
     override func awakeFromNib() {
         titleLabel.text = Strings.localizedName

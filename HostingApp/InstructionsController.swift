@@ -21,18 +21,18 @@ class InstructionsController: ViewController<InstructionsView> {
         navigationController?.popViewController(animated: true)
     }
 
-//    func openLayouts() {
-//        guard let nc = navigationController else { return }
-//
-//        var vcs = nc.viewControllers
-//        vcs.removeLast()
-//        vcs.append(LayoutsController())
-//        nc.setViewControllers(vcs, animated: true)
-//    }
+    //    func openLayouts() {
+    //        guard let nc = navigationController else { return }
+    //
+    //        var vcs = nc.viewControllers
+    //        vcs.removeLast()
+    //        vcs.append(LayoutsController())
+    //        nc.setViewControllers(vcs, animated: true)
+    //    }
 
     func checkCurrentStep() {
         if AppDelegate.instance.isKeyboardEnabled {
-//            openLayouts()
+            //            openLayouts()
             onSkipTapped()
         }
     }
@@ -63,7 +63,8 @@ class InstructionsController: ViewController<InstructionsView> {
             image: UIImage(named: "language")!.with(width: 24, height: 24),
             style: .plain,
             target: self,
-            action: #selector(openLanguages))
+            action: #selector(openLanguages)
+        )
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: Strings.skip, style: .plain, target: self, action: #selector(onSkipTapped))
     }

@@ -9,7 +9,6 @@
 import UIKit
 
 protocol LongPressOverlayDelegate {
-
     func longpress(didCreateOverlayContentView contentView: UIView)
     func longpressDidCancel()
     func longpress(didSelectKey key: KeyDefinition)
@@ -59,16 +58,14 @@ class LongPressCursorMovementController: NSObject, LongPressBehaviorProvider {
 
         let diff = point.x - baselinePoint.x
         if abs(diff) > delta {
-            let cursorMovement = Int((diff/delta).rounded(.towardZero))
+            let cursorMovement = Int((diff / delta).rounded(.towardZero))
             delegate?.longpress(movedCursor: cursorMovement)
             self.baselinePoint = CGPoint(x: baselinePoint.x + (delta * CGFloat(cursorMovement)), y: baselinePoint.y)
         }
     }
-
 }
 
 class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-
     class LongpressCollectionView: UICollectionView {}
 
     static let multirowThreshold = 4
@@ -86,7 +83,7 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
     private var selectedKey: KeyDefinition? {
         didSet {
             if selectedKey?.type != oldValue?.type {
-                self.collectionView?.reloadData()
+                collectionView?.reloadData()
             }
         }
     }
@@ -99,19 +96,19 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
     }
 
     private func setup() {
-        self.collectionView = LongpressCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
-        self.collectionView?.register(LongpressKeyCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        self.collectionView?.translatesAutoresizingMaskIntoConstraints = false
-        self.collectionView?.delegate = self
-        self.collectionView?.dataSource = self
-        self.collectionView?.backgroundColor = .clear
+        collectionView = LongpressCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView?.register(LongpressKeyCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView?.translatesAutoresizingMaskIntoConstraints = false
+        collectionView?.delegate = self
+        collectionView?.dataSource = self
+        collectionView?.backgroundColor = .clear
 
         if let delegate = self.delegate {
-            delegate.longpress(didCreateOverlayContentView: self.collectionView!)
+            delegate.longpress(didCreateOverlayContentView: collectionView!)
         }
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -142,13 +139,13 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
     }
 
     private func pointUpdated(_ point: CGPoint) {
-        let cellSize = self.delegate?.longpressKeySize() ?? CGSize(width: 20, height: 30.0)
+        let cellSize = delegate?.longpressKeySize() ?? CGSize(width: 20, height: 30.0)
         let bigFrame = delegate!.longpressFrameOfReference()
         var superView: UIView? = collectionView
 
         repeat {
             superView = superView?.superview
-        } while (superView?.bounds != bigFrame && superView != nil)
+        } while superView?.bounds != bigFrame && superView != nil
 
         guard let wholeView = superView else { return }
         guard let collectionView = self.collectionView else { return }
@@ -156,11 +153,11 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
         let frame = wholeView.convert(collectionView.frame, from: collectionView.superview)
 
         // TODO: Logic for multiline popups
-        if let indexPath = collectionView.indexPathForItem(at: CGPoint(x: min(max(point.x - frame.minX, collectionView.bounds.minX + cellSize.width/2.0), collectionView.bounds.maxX - cellSize.width/2.0),
-                                                                       y: min(max(point.y - (baselinePoint?.y ?? 0), collectionView.bounds.minY + cellSize.height/2.0), collectionView.bounds.maxY - cellSize.height/2.0))) {
-            self.selectedKey = longpressValues[indexPath.row + Int(ceil(Double(longpressValues.count) / 2.0)) * indexPath.section]
+        if let indexPath = collectionView.indexPathForItem(at: CGPoint(x: min(max(point.x - frame.minX, collectionView.bounds.minX + cellSize.width / 2.0), collectionView.bounds.maxX - cellSize.width / 2.0),
+                                                                       y: min(max(point.y - (baselinePoint?.y ?? 0), collectionView.bounds.minY + cellSize.height / 2.0), collectionView.bounds.maxY - cellSize.height / 2.0))) {
+            selectedKey = longpressValues[indexPath.row + Int(ceil(Double(longpressValues.count) / 2.0)) * indexPath.section]
         } else {
-            self.selectedKey = nil
+            selectedKey = nil
 
             // TODO: Logic for canceling it
             if false {
@@ -169,11 +166,11 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
         }
     }
 
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
+    func numberOfSections(in _: UICollectionView) -> Int {
         return longpressValues.count >= LongPressOverlayController.multirowThreshold ? 2 : 1
     }
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if longpressValues.count >= LongPressOverlayController.multirowThreshold {
             return section == 0 ? Int(ceil(Double(longpressValues.count) / 2.0)) : Int(floor(Double(longpressValues.count) / 2.0))
         }
@@ -196,25 +193,25 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
             print("ERROR: Invalid key type in longpress")
         }
 
-        cell.isSelectedKey = key.type == self.selectedKey?.type
+        cell.isSelectedKey = key.type == selectedKey?.type
 
         return cell
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return self.delegate?.longpressKeySize() ?? CGSize(width: 20, height: 30.0)
+    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt _: IndexPath) -> CGSize {
+        return delegate?.longpressKeySize() ?? CGSize(width: 20, height: 30.0)
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, minimumInteritemSpacingForSectionAt _: Int) -> CGFloat {
         return 0
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, minimumLineSpacingForSectionAt _: Int) -> CGFloat {
         return 0
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        let cellSize = self.delegate?.longpressKeySize() ?? CGSize(width: 20, height: 30.0)
+    func collectionView(_ collectionView: UICollectionView, layout _: UICollectionViewLayout, insetForSectionAt _: Int) -> UIEdgeInsets {
+        let cellSize = delegate?.longpressKeySize() ?? CGSize(width: 20, height: 30.0)
         let cellWidth = cellSize.width
         let numberOfCells = CGFloat(longpressValues.count)
 
@@ -241,11 +238,11 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
             label.layer.cornerRadius = KeyboardView.theme.keyCornerRadius
             label.clipsToBounds = true
             super.init(frame: frame)
-            self.addSubview(label)
+            addSubview(label)
             label.fillSuperview(self)
         }
 
-        required init?(coder aDecoder: NSCoder) {
+        required init?(coder _: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }
     }

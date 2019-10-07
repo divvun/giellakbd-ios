@@ -53,13 +53,13 @@ class LightThemeImpl: Theme {
     var underColor = UIColor(hue: 0.611, saturation: 0.04, brightness: 0.56, alpha: 1)
     var textColor = UIColor.black
     var inactiveTextColor: UIColor = UIColor(white: 0.0, alpha: 0.3)
-    var borderColor = UIColor.clear//UIColor(hue: 0.595, saturation: 0.04, brightness: 0.65, alpha: 1.0)
+    var borderColor = UIColor.clear // UIColor(hue: 0.595, saturation: 0.04, brightness: 0.65, alpha: 1.0)
     var specialKeyBorderColor: UIColor { return .clear }
     var keyShadowColor = UIColor(r: 103, g: 106, b: 110, a: 0.5)
     var shiftActiveColor = UIColor.white
-    var solidRegularKeyColor: UIColor { return self.regularKeyColor }
+    var solidRegularKeyColor: UIColor { return regularKeyColor }
     var solidSpecialKeyColor = UIColor(r: 183, g: 191, b: 202)
-    var solidPopupColor: UIColor { return self.popupColor }
+    var solidPopupColor: UIColor { return popupColor }
     var activeColor: UIColor = UIColor(r: 31, g: 126, b: 249)
     var activeTextColor: UIColor = UIColor.white
 
@@ -73,8 +73,8 @@ class LightThemeImpl: Theme {
     var popupKeyFont = UIFont.systemFont(ofSize: 26.0)
     var bannerFont = UIFont.systemFont(ofSize: 16.0)
 
-    var bannerBackgroundColor: UIColor { return self.backgroundColor }
-    var bannerSeparatorColor: UIColor { return self.solidSpecialKeyColor }
+    var bannerBackgroundColor: UIColor { return backgroundColor }
+    var bannerSeparatorColor: UIColor { return solidSpecialKeyColor }
     var bannerTextColor: UIColor { return .black }
 
     var bannerHorizontalMargin: CGFloat = 16.0
@@ -108,7 +108,7 @@ class DarkThemeImpl: Theme {
     var shiftActiveColor = UIColor(r: 214, g: 220, b: 208)
     var solidRegularKeyColor = UIColor(r: 83, g: 83, b: 83)
     var solidSpecialKeyColor = UIColor(r: 45, g: 45, b: 45)
-    var solidPopupColor: UIColor { return self.solidRegularKeyColor }
+    var solidPopupColor: UIColor { return solidRegularKeyColor }
     var activeColor: UIColor = UIColor(r: 31, g: 126, b: 249)
     var activeTextColor: UIColor = UIColor.white
 
@@ -122,7 +122,7 @@ class DarkThemeImpl: Theme {
     var popupKeyFont = UIFont.systemFont(ofSize: 26.0)
     var bannerFont = UIFont.systemFont(ofSize: 16.0)
 
-    var bannerBackgroundColor: UIColor { return self.regularKeyColor }
+    var bannerBackgroundColor: UIColor { return regularKeyColor }
     var bannerSeparatorColor: UIColor { return .clear }
     var bannerTextColor: UIColor { return .white }
 

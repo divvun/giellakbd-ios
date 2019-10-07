@@ -1,14 +1,14 @@
 import Foundation
 
 class Strings {
-    static var languageCode: String? = nil {
+    static var languageCode: String? {
         didSet {
             if let dir = Bundle.main.path(forResource: languageCode, ofType: "lproj"), let bundle = Bundle(path: dir) {
                 self.bundle = bundle
             } else if let dir = Bundle.main.path(forResource: "Base", ofType: "lproj"), let bundle = Bundle(path: dir) {
                 self.bundle = bundle
             } else {
-                self.bundle = Bundle.main
+                bundle = Bundle.main
             }
         }
     }
@@ -20,7 +20,7 @@ class Strings {
     }
 
     fileprivate static func stringArray(for key: String, length: Int) -> [String] {
-        return (0..<length).map {
+        return (0 ..< length).map {
             bundle.localizedString(forKey: "\(key)_\($0)", value: nil, table: nil)
         }
     }

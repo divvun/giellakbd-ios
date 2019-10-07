@@ -21,7 +21,7 @@ extension Nibbable where Self: UIView {
 
         guard let views = bundle.loadNibNamed(nibName, owner: Self.self, options: nil),
             let view = views.first as? Self else {
-                fatalError("Nib could not be loaded for nibName: \(self.nibName); check that the XIB owner has been set to the given view: \(self)")
+                fatalError("Nib could not be loaded for nibName: \(nibName); check that the XIB owner has been set to the given view: \(self)")
         }
 
         return view
@@ -39,7 +39,7 @@ class ViewController<T: UIView>: UIViewController where T: Nibbable {
         super.init(nibName: nil, bundle: nil)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
@@ -65,7 +65,7 @@ extension Strings {
             return name
         }
 
-        return self.keyboard
+        return keyboard
     }
 
     static var enableTapSounds: NSAttributedString {
@@ -124,18 +124,18 @@ extension Strings {
     }
 
     static var supportedLocales: [Locale] = {
-        return Bundle.main.localizations
-            .filter({ loc in
+        Bundle.main.localizations
+            .filter { loc in
                 guard let bp = Bundle.main.path(forResource: loc, ofType: "lproj"), let b = Bundle(path: bp) else {
                     return false
                 }
 
                 return b.path(forResource: "Localizable", ofType: "strings") != nil
-            })
-            .map({ Locale(identifier: $0 == "Base" ? "en" : $0) })
-            .sorted(by: {
-                languageName(for: $0)! < languageName(for: $1)!
-            })
+        }
+        .map { Locale(identifier: $0 == "Base" ? "en" : $0) }
+        .sorted(by: {
+            languageName(for: $0)! < languageName(for: $1)!
+        })
     }()
 
     static func languageName(for locale: Locale) -> String? {

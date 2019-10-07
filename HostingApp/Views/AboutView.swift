@@ -9,16 +9,16 @@
 import UIKit
 
 class AboutView: UIView, Nibbable {
-    @IBOutlet weak var aboutLabel: UITextView!
-    @IBOutlet weak var attributionLabel: UILabel!
-    @IBOutlet weak var creditsLabel: UITextView!
+    @IBOutlet var aboutLabel: UITextView!
+    @IBOutlet var attributionLabel: UILabel!
+    @IBOutlet var creditsLabel: UITextView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
 
         let aboutFile =
             Strings.bundle.url(forResource: "About", withExtension: "txt") ??
-            Bundle.main.url(forResource: "About", withExtension: "txt")
+                Bundle.main.url(forResource: "About", withExtension: "txt")
 
         if let file = aboutFile {
             aboutLabel.text = try? String(contentsOf: file)

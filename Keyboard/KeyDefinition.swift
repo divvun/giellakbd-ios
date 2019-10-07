@@ -93,13 +93,13 @@ public struct KeyDefinition {
 
     init?(input: Any) {
         if let stringInput = input as? String {
-            self.type = KeyType(string: stringInput)
-            self.size = CGSize(width: 1, height: 1)
+            type = KeyType(string: stringInput)
+            size = CGSize(width: 1, height: 1)
         } else if let objectInput = input as? [String: Any] {
             guard let typeString = objectInput["id"] as? String else {
                 return nil
             }
-            self.type = KeyType(string: typeString)
+            type = KeyType(string: typeString)
 
             var tempSize = CGSize(width: 1, height: 1)
 
@@ -107,11 +107,11 @@ public struct KeyDefinition {
                 tempSize.width = width
             }
 
-//            if let height = objectInput["height"] as? CGFloat {
-//                tempSize.height = height
-//            }
+            //            if let height = objectInput["height"] as? CGFloat {
+            //                tempSize.height = height
+            //            }
 
-            self.size = tempSize
+            size = tempSize
         } else {
             return nil
         }

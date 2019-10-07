@@ -13,13 +13,13 @@ class SuggestionOp: Operation {
     weak var plugin: DivvunSpellBannerPlugin?
     let word: String
 
-    init (plugin: DivvunSpellBannerPlugin, word: String) {
+    init(plugin: DivvunSpellBannerPlugin, word: String) {
         self.plugin = plugin
         self.word = word
     }
 
     override func main() {
-        if (isCancelled) {
+        if isCancelled {
             return
         }
 
@@ -27,8 +27,8 @@ class SuggestionOp: Operation {
         guard let speller = plugin.speller else { return }
 
         let suggestions = speller
-            .suggest(word: self.word, count: 3, maxWeight: 4999.99)
-            .map({ BannerItem(title: $0, value: "suggestion") })
+            .suggest(word: word, count: 3, maxWeight: 4999.99)
+            .map { BannerItem(title: $0, value: "suggestion") }
 
         if !isCancelled {
             DispatchQueue.main.async {
@@ -152,7 +152,7 @@ public class DivvunSpellBannerPlugin {
 
     public init(keyboard: KeyboardViewController) {
         self.keyboard = keyboard
-        self.banner = keyboard.bannerView
+        banner = keyboard.bannerView
 
         banner.delegate = self
         loadZHFST()

@@ -39,7 +39,8 @@ class LanguagesController: UITableViewController {
             title: Strings.save,
             style: .done,
             target: self,
-            action: #selector(onDoneTapped))
+            action: #selector(onDoneTapped)
+        )
 
         title = Strings.language
 
@@ -48,11 +49,11 @@ class LanguagesController: UITableViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     }
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    override func numberOfSections(in _: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         return rows.count
     }
 

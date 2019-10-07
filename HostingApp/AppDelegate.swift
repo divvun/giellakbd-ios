@@ -6,18 +6,17 @@
 //  Copyright (c) 2014 Apple. All rights reserved.
 //
 
-import UIKit
 import Sentry
+import UIKit
 
 class AppNavControllerDelegate: NSObject, UINavigationControllerDelegate {
-    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated _: Bool) {
         viewController.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
         navigationController.setNavigationBarHidden(viewController is HideNavBar, animated: true)
     }
 
-    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-
+    func navigationController(_: UINavigationController, animationControllerFor _: UINavigationController.Operation, from _: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         toVC.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
         return nil
@@ -29,7 +28,7 @@ let str2 = "Bundle"
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    static weak var instance: AppDelegate!
+    weak static var instance: AppDelegate!
 
     var window: UIWindow?
     var wantsKeyboardList = false
@@ -38,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let ncDelegate = AppNavControllerDelegate()
 
     var isKeyboardEnabled: Bool {
-        let x: [Bundle] = UITextInputMode.activeInputModes.compactMap({
+        let x: [Bundle] = UITextInputMode.activeInputModes.compactMap {
             let s = str1 + str2
 
             let v = $0.perform(Selector(s))
@@ -47,19 +46,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
 
             return nil
-        })
+        }
 
         return x.contains(Bundle.main)
     }
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(_: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         AppDelegate.instance = self
 
         if let sentryDSN = Bundle.main.infoDictionary?["SentryDSN"] as? String {
             do {
                 Client.shared = try Client(dsn: sentryDSN)
                 try Client.shared?.startCrashHandler()
-            } catch let error {
+            } catch {
                 print("\(error)")
                 // Wrong DSN or KSCrash not installed
             }
@@ -73,7 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window!.rootViewController = nc
         window!.makeKeyAndVisible()
 
-        if !isKeyboardEnabled && KeyboardSettings.firstLoad {
+        if !isKeyboardEnabled, KeyboardSettings.firstLoad {
             KeyboardSettings.firstLoad = false
             nc.pushViewController(InstructionsController(), animated: false)
         }
@@ -87,32 +86,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    func applicationWillResignActive(_ application: UIApplication) {
-    }
+    func applicationWillResignActive(_: UIApplication) {}
 
-    func applicationDidEnterBackground(_ application: UIApplication) {
-    }
+    func applicationDidEnterBackground(_: UIApplication) {}
 
-    func applicationWillEnterForeground(_ application: UIApplication) {
-    }
+    func applicationWillEnterForeground(_: UIApplication) {}
 
-    func applicationDidBecomeActive(_ application: UIApplication) {
-    }
+    func applicationDidBecomeActive(_: UIApplication) {}
 
-    func applicationWillTerminate(_ application: UIApplication) {
-    }
+    func applicationWillTerminate(_: UIApplication) {}
 
-    func parseUrl(_ url: URL) {
+    func parseUrl(_: URL) {
         guard let _ = Bundle.main.bundleIdentifier else {
             return
         }
-//
-//        if url.scheme == bundleId && url.host == "settings" {
-//            nc.pushViewController(LayoutsController(), animated: true)
-//        }
+        //
+        //        if url.scheme == bundleId && url.host == "settings" {
+        //            nc.pushViewController(LayoutsController(), animated: true)
+        //        }
     }
 
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+    func application(_: UIApplication, open url: URL, options _: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         parseUrl(url)
         return true
     }

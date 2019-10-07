@@ -9,19 +9,19 @@
 import UIKit
 
 private func leftHalf(_ pageOfKeys: [[KeyDefinition]]) -> [[KeyDefinition]] {
-    return pageOfKeys.map({ row in
-        return row.enumerated().filter { (i, _) in
-            return i < (row.count / 2)
-            }.map { $0.1 }
-    })
+    return pageOfKeys.map { row in
+        row.enumerated().filter { i, _ in
+            i < (row.count / 2)
+        }.map { $0.1 }
+    }
 }
 
 private func rightHalf(_ pageOfKeys: [[KeyDefinition]]) -> [[KeyDefinition]] {
-    return pageOfKeys.map({ row in
-        return row.enumerated().filter { (i, _) in
-            return i >= (row.count / 2)
-            }.map { $0.1 }
-    })
+    return pageOfKeys.map { row in
+        row.enumerated().filter { i, _ in
+            i >= (row.count / 2)
+        }.map { $0.1 }
+    }
 }
 
 class SplitKeyboardView: KeyboardViewProvider {
@@ -65,22 +65,17 @@ class SplitKeyboardView: KeyboardViewProvider {
     }
 
     var topAnchor: NSLayoutYAxisAnchor {
-        get {
-            return leftKeyboardView.topAnchor
-        }
+        return leftKeyboardView.topAnchor
     }
 
     var heightAnchor: NSLayoutDimension {
-        get {
-            return leftKeyboardView.heightAnchor
-        }
+        return leftKeyboardView.heightAnchor
     }
 
     var leftKeyboardView: KeyboardView
     var rightKeyboardView: KeyboardView
 
     required init(definition: KeyboardDefinition) {
-
         var leftDefinition = definition
         leftDefinition.normal = leftHalf(definition.normal.splitAndBalanceSpacebar())
         leftDefinition.shifted = leftHalf(definition.shifted.splitAndBalanceSpacebar())
@@ -100,7 +95,6 @@ class SplitKeyboardView: KeyboardViewProvider {
         let rightKeyboardView = KeyboardView(definition: rightDefinition)
         rightKeyboardView.translatesAutoresizingMaskIntoConstraints = false
         self.rightKeyboardView = rightKeyboardView
-
     }
 
     func remove() {

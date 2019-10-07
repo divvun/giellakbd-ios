@@ -6,9 +6,9 @@
 ////  Copyright © 2017 Apple. All rights reserved.
 ////
 //
-//import UIKit
+// import UIKit
 //
-//class LayoutsController: UITableViewController {
+// class LayoutsController: UITableViewController {
 //    var rows = KeyboardDefinition.definitions
 //
 //    var selectedRow = IndexPath(item: KeyboardSettings.currentKeyboard, section: 0)
@@ -60,4 +60,4 @@
 //
 //        return cell
 //    }
-//}
+// }

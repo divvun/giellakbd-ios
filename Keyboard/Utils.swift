@@ -11,33 +11,32 @@ import UIKit
 
 extension String {
     func suffix(after index: String.Index) -> String.SubSequence {
-        if index >= self.endIndex {
-            return self.suffix(from: self.endIndex)
+        if index >= endIndex {
+            return suffix(from: endIndex)
         }
 
-        return self.suffix(from: self.index(after: index))
+        return suffix(from: self.index(after: index))
     }
 }
 
 extension Substring {
     func lastIndex(after character: Character) -> String.Index? {
         guard let index = self.lastIndex(of: character) else { return nil }
-        if index == self.endIndex { return nil }
+        if index == endIndex { return nil }
         return self.index(after: index)
     }
 }
 
 extension UIColor {
     convenience init(r: Int, g: Int, b: Int, a: Double = 1) {
-        self.init(red: CGFloat(r)/CGFloat(255), green: CGFloat(g)/CGFloat(255), blue: CGFloat(b)/CGFloat(255), alpha: CGFloat(a))
+        self.init(red: CGFloat(r) / CGFloat(255), green: CGFloat(g) / CGFloat(255), blue: CGFloat(b) / CGFloat(255), alpha: CGFloat(a))
     }
 }
 
 // From https://stackoverflow.com/a/52821290
 public extension UIDevice {
-
     var isXFamily: Bool {
-        return [UIDevice.Kind.iPhone_X_Xs, UIDevice.Kind.iPhone_Xr, UIDevice.Kind.iPhone_Xs_Max].contains(self.kind)
+        return [UIDevice.Kind.iPhone_X_Xs, UIDevice.Kind.iPhone_Xr, UIDevice.Kind.iPhone_Xs_Max].contains(kind)
     }
 
     enum Kind {
@@ -85,10 +84,10 @@ extension UIView {
 
 public extension UIColor {
     var components: (r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat) {
-        let components = self.cgColor.components!
+        let components = cgColor.components!
 
         switch components.count == 2 {
-        case true : return (r: components[0], g: components[0], b: components[0], a: components[1])
+        case true: return (r: components[0], g: components[0], b: components[0], a: components[1])
         case false: return (r: components[0], g: components[1], b: components[2], a: components[3])
         }
     }

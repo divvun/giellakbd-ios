@@ -12,15 +12,15 @@ private let defaults = UserDefaults(suiteName: "group.\(KeyboardSettings.groupId
 
 class KeyboardSettings {
     static var groupId: String = {
-        let schemes = Bundle.main.infoDictionary!["LSApplicationQueriesSchemes"]! as! Array<String>
+        let schemes = Bundle.main.infoDictionary!["LSApplicationQueriesSchemes"]! as! [String]
         return schemes.first!
     }()
 
-//    static var currentKeyboard: Int {
-//        get { return defaults.integer(forKey: "currentKeyboard") }
-//        set { defaults.set(newValue, forKey: "currentKeyboard") }
-//    }
-//
+    //    static var currentKeyboard: Int {
+    //        get { return defaults.integer(forKey: "currentKeyboard") }
+    //        set { defaults.set(newValue, forKey: "currentKeyboard") }
+    //    }
+    //
     static var languageCode: String {
         get { return defaults.string(forKey: "language") ?? Locale.current.languageCode! }
         set { defaults.set(newValue, forKey: "language") }
