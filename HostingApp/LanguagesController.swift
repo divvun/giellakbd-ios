@@ -27,7 +27,7 @@ class LanguagesController: UITableViewController {
         
         let selectedLocale = Locale(identifier: KeyboardSettings.languageCode)
         
-        if let i = rows.index(where: { $0.languageCode == selectedLocale.languageCode }) {
+        if let i = rows.firstIndex(where: { $0.languageCode == selectedLocale.languageCode }) {
             selectedRow = IndexPath(item: i, section: 0)
             tableView.reloadData()
         }
