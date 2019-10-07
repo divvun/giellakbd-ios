@@ -139,12 +139,20 @@ class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataSource, UI
             update()
         }
     }
+    
+    private func ensureValidKeyView(at indexPath: IndexPath) -> Bool {
+        guard let _ = collectionView.cellForItem(at: indexPath)?.subviews.first?.subviews.first?.subviews.first else {
+            return false
+        }
+        
+        return true
+    }
 
     private func showOverlay(forKeyAtIndexPath indexPath: IndexPath) {
         guard let keyCell = collectionView.cellForItem(at: indexPath)?.subviews.first else {
             return
         }
-        guard let keyView = collectionView.cellForItem(at: indexPath)?.subviews.first?.subviews.first?.subviews.first else {
+        if !ensureValidKeyView(at: indexPath) {
             return
         }
         let key = currentPage[indexPath.section][indexPath.row]
@@ -221,7 +229,7 @@ class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataSource, UI
         contentView.fillSuperview(overlayContentView)
 
         // MARK: Hack! Because uicollectionview's intrinsic size just isn't enough
-        if let activeKey = activeKey,
+        if activeKey != nil,
             let longpressValues = (self.longpressController as? LongPressOverlayController)?.longpressValues {
                 let count = longpressValues.count
             
