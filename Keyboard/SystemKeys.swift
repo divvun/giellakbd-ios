@@ -12,17 +12,22 @@ import UIKit
 class SystemKeys {
     static func systemKeyRowsForCurrentDevice(spaceName: String, returnName: String) -> [KeyDefinition] {
         var keys = [KeyDefinition]()
-
+        
+        // Left side of space bar
         keys.append(KeyDefinition(type: .symbols))
         if !UIDevice.current.isXFamily {
             keys.append(KeyDefinition(type: .keyboard))
         }
+        if UIDevice.current.kind != .iPad {
+            keys.append(KeyDefinition(type: .keyboardMode))
+        }
         keys.append(KeyDefinition(type: .spacebar(name: spaceName), size: CGSize(width: 5.0, height: 1.0)))
+        
+        // Right of spacebar
         if UIDevice.current.kind == .iPad {
             keys.append(KeyDefinition(type: .symbols))
             keys.append(KeyDefinition(type: .keyboardMode))
         } else {
-            keys.append(KeyDefinition(type: .keyboardMode))
             keys.append(KeyDefinition(type: .returnkey(name: returnName), size: CGSize(width: 2.0, height: 1.0)))
         }
 
