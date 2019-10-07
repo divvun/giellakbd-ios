@@ -14,7 +14,7 @@ extension String {
         if index >= self.endIndex {
             return self.suffix(from: self.endIndex)
         }
-        
+
         return self.suffix(from: self.index(after: index))
     }
 }
@@ -35,11 +35,11 @@ extension UIColor {
 
 // From https://stackoverflow.com/a/52821290
 public extension UIDevice {
-    
+
     var isXFamily: Bool {
-        return [UIDevice.Kind.iPhone_X_Xs, UIDevice.Kind.iPhone_Xr ,UIDevice.Kind.iPhone_Xs_Max].contains(self.kind)
+        return [UIDevice.Kind.iPhone_X_Xs, UIDevice.Kind.iPhone_Xr, UIDevice.Kind.iPhone_Xs_Max].contains(self.kind)
     }
-    
+
     enum Kind {
         case iPad
         case iPhone_unknown
@@ -50,7 +50,7 @@ public extension UIDevice {
         case iPhone_Xs_Max
         case iPhone_Xr
     }
-    
+
     var kind: Kind {
         if userInterfaceIdiom == .phone {
             switch UIScreen.main.nativeBounds.height {
@@ -86,22 +86,22 @@ extension UIView {
 public extension UIColor {
     var components: (r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat) {
         let components = self.cgColor.components!
-        
+
         switch components.count == 2 {
         case true : return (r: components[0], g: components[0], b: components[0], a: components[1])
         case false: return (r: components[0], g: components[1], b: components[2], a: components[3])
         }
     }
-    
+
     static func interpolate(from fromColor: UIColor, to toColor: UIColor, with progress: CGFloat) -> UIColor {
         let fromComponents = fromColor.components
         let toComponents = toColor.components
-        
+
         let r = (1 - progress) * fromComponents.r + progress * toComponents.r
         let g = (1 - progress) * fromComponents.g + progress * toComponents.g
         let b = (1 - progress) * fromComponents.b + progress * toComponents.b
         let a = (1 - progress) * fromComponents.a + progress * toComponents.a
-        
+
         return UIColor(red: r, green: g, blue: b, alpha: a)
     }
 }

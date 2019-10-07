@@ -12,7 +12,7 @@ import UIKit
 class SystemKeys {
     static func systemKeyRowsForCurrentDevice(spaceName: String, returnName: String) -> [KeyDefinition] {
         var keys = [KeyDefinition]()
-        
+
         keys.append(KeyDefinition(type: .symbols))
         if !UIDevice.current.isXFamily {
             keys.append(KeyDefinition(type: .keyboard))
@@ -25,10 +25,10 @@ class SystemKeys {
             keys.append(KeyDefinition(type: .keyboardMode))
             keys.append(KeyDefinition(type: .returnkey(name: returnName), size: CGSize(width: 2.0, height: 1.0)))
         }
-        
+
         return keys
     }
-    
+
     static var symbolKeysFirstPage: [[KeyDefinition]] {
         let currencySign = "kr"
         return [
@@ -44,7 +44,7 @@ class SystemKeys {
                 "9",
                 "0"
                 ].compactMap { KeyDefinition(input: $0) },
-            
+
             [
                 "-",
                 "/",
@@ -57,7 +57,7 @@ class SystemKeys {
                 "@",
                 "\""
                 ].compactMap { KeyDefinition(input: $0) },
-            
+
             ([
                 KeyDefinition(type: .spacer, size: CGSize(width: 0.1, height: 1.0))
                 ]
@@ -67,7 +67,7 @@ class SystemKeys {
                     ",",
                     "?",
                     "!",
-                    "'",
+                    "'"
                     ].compactMap { KeyDefinition(input: $0) }
                 +
                 [
@@ -75,7 +75,7 @@ class SystemKeys {
                 ])
         ]
     }
-    
+
     static var symbolKeysSecondPage: [[KeyDefinition]] {
         return [
             [
@@ -90,7 +90,7 @@ class SystemKeys {
                 "+",
                 "="
                 ].compactMap { KeyDefinition(input: $0) },
-            
+
             [
                 "_",
                 "\\",
@@ -103,7 +103,7 @@ class SystemKeys {
                 "£",
                 "•"
                 ].compactMap { KeyDefinition(input: $0) },
-            
+
             ([
                 KeyDefinition(type: .spacer, size: CGSize(width: 0.1, height: 1.0))
                 ]
@@ -113,7 +113,7 @@ class SystemKeys {
                     ",",
                     "?",
                     "!",
-                    "'",
+                    "'"
                     ].compactMap { KeyDefinition(input: $0) }
                 +
                 [
@@ -121,5 +121,5 @@ class SystemKeys {
                 ])
         ]
     }
-    
+
 }

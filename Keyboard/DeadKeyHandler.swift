@@ -15,29 +15,29 @@ enum DeadKeyState {
 }
 
 struct DeadKeyHandler {
-    private var current: [String: TransformTree]? = nil
+    private var current: [String: TransformTree]?
     private let keyboard: KeyboardDefinition
-    
+
     init(keyboard: KeyboardDefinition) {
         self.keyboard = keyboard
     }
-    
+
     mutating func finish() -> String? {
         if case let .output(value) = handleInput(" ", page: .normal) {
             return value
         }
         return nil
     }
-    
+
     mutating func handleInput(_ input: String, page: KeyboardPage) -> DeadKeyState {
         if let deadKeyRef = deadKey(input, page: page) {
             current = deadKeyRef
             return .transforming
         }
-        
+
         if current != nil {
             let t = transform(input)
-            
+
             switch t {
             case let .leaf(value):
                 current = nil
@@ -47,10 +47,10 @@ struct DeadKeyHandler {
                 return .transforming
             }
         }
-        
+
         return .none
     }
-    
+
     private mutating func deadKey(_ input: String, page: KeyboardPage) -> [String: TransformTree]? {
         let key: String
         switch page {
@@ -61,14 +61,14 @@ struct DeadKeyHandler {
         default:
             return nil
         }
-        
+
         guard let deadKeys = keyboard.deadKeys[key] else {
             return nil
         }
-        
+
         if deadKeys.contains(input) {
             current = keyboard.transforms
-            
+
             switch self.transform(input) {
             case let .tree(ref):
                 return ref
@@ -79,20 +79,20 @@ struct DeadKeyHandler {
             return nil
         }
     }
-    
+
     func transform(_ input: String) -> TransformTree {
         guard let current = current else {
             // Fallback, this is an invalid case that should never happen.
             return .leaf(input)
         }
-        
+
         if let result = current[input] {
             return result
         } else {
             if case let .some(.leaf(v)) = current[" "] {
                 return .leaf("\(v)\(input)")
             }
-            
+
             return .leaf(input)
         }
     }

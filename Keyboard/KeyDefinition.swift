@@ -18,7 +18,7 @@ public enum KeyType: Hashable {
         "_symbols": .symbols,
         "_keyboard": .keyboard
     ]
-    
+
     case input(key: String)
     case spacer
     case shift
@@ -32,7 +32,7 @@ public enum KeyType: Hashable {
     case splitKeyboard
     case sideKeyboardLeft
     case sideKeyboardRight
-    
+
     init(string: String) {
         if let type = KeyType.definitions[string] {
             self = type
@@ -40,7 +40,7 @@ public enum KeyType: Hashable {
             self = .input(key: string)
         }
     }
-    
+
     var supportsDoubleTap: Bool {
         switch self {
         case .shift:
@@ -49,7 +49,7 @@ public enum KeyType: Hashable {
             return false
         }
     }
-    
+
     var triggersOnTouchDown: Bool {
         switch self {
         case .shift, .backspace, .symbols:
@@ -58,11 +58,11 @@ public enum KeyType: Hashable {
             return false
         }
     }
-    
+
     var triggersOnTouchUp: Bool {
         return !triggersOnTouchDown
     }
-    
+
     var supportsRepeatTrigger: Bool {
         switch self {
         case .backspace:
@@ -71,7 +71,7 @@ public enum KeyType: Hashable {
             return false
         }
     }
-    
+
     var isSpecialKeyStyle: Bool {
         switch self {
         case .input, .spacebar:
@@ -85,12 +85,12 @@ public enum KeyType: Hashable {
 public struct KeyDefinition {
     public let type: KeyType
     public let size: CGSize
-    
+
     init(type: KeyType, size: CGSize = CGSize(width: 1, height: 1)) {
         self.type = type
         self.size = size
     }
-    
+
     init?(input: Any) {
         if let stringInput = input as? String {
             self.type = KeyType(string: stringInput)
@@ -102,15 +102,15 @@ public struct KeyDefinition {
             self.type = KeyType(string: typeString)
 
             var tempSize = CGSize(width: 1, height: 1)
-            
+
             if let width = objectInput["width"] as? CGFloat {
                 tempSize.width = width
             }
-            
+
 //            if let height = objectInput["height"] as? CGFloat {
 //                tempSize.height = height
 //            }
-            
+
             self.size = tempSize
         } else {
             return nil

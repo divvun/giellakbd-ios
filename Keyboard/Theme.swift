@@ -36,11 +36,11 @@ protocol Theme {
     var alternateKeyFontSize: CGFloat { get }
     var popupKeyFont: UIFont { get }
     var bannerFont: UIFont { get }
-    
+
     var bannerBackgroundColor: UIColor { get }
     var bannerSeparatorColor: UIColor { get }
     var bannerTextColor: UIColor { get }
-    
+
     var bannerHorizontalMargin: CGFloat { get }
     var bannerVerticalMargin: CGFloat { get }
 }
@@ -62,7 +62,7 @@ class LightThemeImpl: Theme {
     var solidPopupColor: UIColor { return self.popupColor }
     var activeColor: UIColor = UIColor(r: 31, g: 126, b: 249)
     var activeTextColor: UIColor = UIColor.white
-    
+
     var keyCornerRadius: CGFloat { return 5.0 }
     var popupCornerRadius: CGFloat = 12.0
     var keyHorizontalMargin: CGFloat { return 2.5 }
@@ -75,8 +75,8 @@ class LightThemeImpl: Theme {
 
     var bannerBackgroundColor: UIColor { return self.backgroundColor }
     var bannerSeparatorColor: UIColor { return self.solidSpecialKeyColor }
-    var bannerTextColor: UIColor  { return .black }
-    
+    var bannerTextColor: UIColor { return .black }
+
     var bannerHorizontalMargin: CGFloat = 16.0
     var bannerVerticalMargin: CGFloat = 8.0
 
@@ -87,16 +87,16 @@ class LightThemeIpadImpl: LightThemeImpl {
     override var keyCornerRadius: CGFloat { return 7.0 }
     override var keyHorizontalMargin: CGFloat { return 7.0 }
     override var keyVerticalMargin: CGFloat { return 7.0 }
-    
+
     override var keyFont: UIFont { return UIFont.systemFont(ofSize: 28.0) }
     override var alternateKeyFontSize: CGFloat { return 17.0 }
 }
 
 class DarkThemeImpl: Theme {
     var backgroundColor: UIColor = .clear
-    
+
     var keyShadowColor: UIColor = UIColor(r: 103, g: 106, b: 110, a: 0.5)
-    
+
     var regularKeyColor = UIColor.lightGray.withAlphaComponent(CGFloat(0.4))
     var specialKeyColor = UIColor.gray.withAlphaComponent(CGFloat(0.3))
     var popupColor = UIColor(r: 111, g: 103, b: 111, a: 1.0)
@@ -124,7 +124,7 @@ class DarkThemeImpl: Theme {
 
     var bannerBackgroundColor: UIColor { return self.regularKeyColor }
     var bannerSeparatorColor: UIColor { return .clear }
-    var bannerTextColor: UIColor  { return .white }
+    var bannerTextColor: UIColor { return .white }
 
     var bannerHorizontalMargin: CGFloat = 16.0
     var bannerVerticalMargin: CGFloat = 8.0
@@ -136,7 +136,7 @@ class DarkThemeIpadImpl: DarkThemeImpl {
     override var keyCornerRadius: CGFloat { return 12.0 }
     override var keyHorizontalMargin: CGFloat { return 9.0 }
     override var keyVerticalMargin: CGFloat { return 7.0 }
-    
+
     override var keyFont: UIFont { return UIFont.systemFont(ofSize: 28.0) }
     override var alternateKeyFontSize: CGFloat { return 17.0 }
 }
