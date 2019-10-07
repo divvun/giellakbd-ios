@@ -224,8 +224,24 @@ class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataSource, UI
         if let activeKey = activeKey,
             let longpressValues = (self.longpressController as? LongPressOverlayController)?.longpressValues {
                 let count = longpressValues.count
-            contentView.widthAnchor.constraint(equalToConstant: count >= LongPressOverlayController.multirowThreshold ? self.longpressKeySize().width * ceil(CGFloat(count)/2.0) + KeyboardView.theme.keyHorizontalMargin : self.longpressKeySize().width * CGFloat(count) + KeyboardView.theme.keyHorizontalMargin).isActive = true
-            contentView.heightAnchor.constraint(equalToConstant: count >= LongPressOverlayController.multirowThreshold ? self.longpressKeySize().height * 2 : self.longpressKeySize().height).isActive = true
+            
+            let widthConstant: CGFloat
+            if count >= LongPressOverlayController.multirowThreshold {
+                widthConstant = self.longpressKeySize().width * ceil(CGFloat(count)/2.0) + KeyboardView.theme.keyHorizontalMargin
+            } else {
+                widthConstant = self.longpressKeySize().width * CGFloat(count) + KeyboardView.theme.keyHorizontalMargin
+            }
+            
+            let heightConstant: CGFloat
+            
+            if count >= LongPressOverlayController.multirowThreshold {
+                heightConstant = self.longpressKeySize().height * 2
+            } else {
+                heightConstant = self.longpressKeySize().height
+            }
+            
+            contentView.widthAnchor.constraint(equalToConstant: widthConstant).isActive = true
+            contentView.heightAnchor.constraint(equalToConstant: heightConstant).isActive = true
         } else {
             contentView.heightAnchor.constraint(equalToConstant: self.longpressKeySize().height).isActive = true
         }

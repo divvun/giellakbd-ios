@@ -151,7 +151,7 @@ open class KeyboardViewController: UIInputViewController {
             self.keyboardView = keyboardView
         }
         if bannerView != nil {
-            self.bannerView.bottomAnchor.constraint(equalTo: self.keyboardView.topAnchor)
+            self.bannerView.bottomAnchor.constraint(equalTo: self.keyboardView.topAnchor).isActive = true
         }
     }
     
@@ -174,7 +174,7 @@ open class KeyboardViewController: UIInputViewController {
         self.bannerView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
         self.bannerView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
         
-        self.bannerView.bottomAnchor.constraint(equalTo: self.keyboardView.topAnchor)
+        self.bannerView.bottomAnchor.constraint(equalTo: self.keyboardView.topAnchor).isActive = true
         self.bannerView.topAnchor.constraint(equalTo: self.extraSpacingView.bottomAnchor).isActive = true
         
         self.bannerView.isHidden = false
@@ -227,7 +227,7 @@ open class KeyboardViewController: UIInputViewController {
     
     var bannerVisible: Bool {
         set {
-            self.bannerView.isHidden = !bannerVisible
+            self.bannerView.isHidden = !newValue
             updateHeightConstraint()
         }
         

@@ -7,7 +7,7 @@ DEPENDENCIES:
   - Sentry
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - Sentry
 
 SPEC CHECKSUMS:
@@ -15,4 +15,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 4329b59e739732175bbf785afaeb5ad6b8ad87ea
 
-COCOAPODS: 1.6.0.beta.2
+COCOAPODS: 1.8.3
