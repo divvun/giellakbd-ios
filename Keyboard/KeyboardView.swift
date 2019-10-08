@@ -801,6 +801,19 @@ class KeyView: UIView {
 
                 contentView = labelHoldingView
             }
+        case KeyType.symbols:
+            imageView = UIImageView()
+            if let imageView = self.imageView {
+                self.imageView?.translatesAutoresizingMaskIntoConstraints = false
+
+                imageView.image = #imageLiteral(resourceName: "language")
+                imageView.contentMode = .scaleAspectFit
+                imageView.tintColor = KeyboardView.theme.textColor
+                
+                addSubview(imageView)
+
+                contentView = imageView
+            }
         default:
             imageView = UIImageView()
             if let imageView = self.imageView {

@@ -183,12 +183,16 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
 
         if case let .input(string) = key.type {
             cell.label.text = string
+            cell.imageView.image = nil
         } else if case .splitKeyboard = key.type {
-            cell.label.text = "◼︎ ◼︎"
+            cell.label.text = nil
+            cell.imageView.image = #imageLiteral(resourceName: "language")
         } else if case .sideKeyboardLeft = key.type {
-            cell.label.text = "←"
+            cell.label.text = nil
+            cell.imageView.image = #imageLiteral(resourceName: "tap")
         } else if case .sideKeyboardRight = key.type {
-            cell.label.text = "→"
+            cell.label.text = nil
+            cell.imageView.image = #imageLiteral(resourceName: "gear")
         } else {
             print("ERROR: Invalid key type in longpress")
         }
@@ -224,6 +228,7 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
 
     class LongpressKeyCell: UICollectionViewCell {
         let label: UILabel
+        let imageView: UIImageView
         var isSelectedKey: Bool = false {
             didSet {
                 label.textColor = isSelectedKey ? KeyboardView.theme.activeTextColor : KeyboardView.theme.textColor
@@ -237,8 +242,16 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
             label.textAlignment = .center
             label.layer.cornerRadius = KeyboardView.theme.keyCornerRadius
             label.clipsToBounds = true
+            
+            imageView = UIImageView()
+            imageView.tintColor = KeyboardView.theme.textColor
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            imageView.contentMode = .scaleAspectFit
+            
             super.init(frame: frame)
             addSubview(label)
+            addSubview(imageView)
+            imageView.fillSuperview(self)
             label.fillSuperview(self)
         }
 
