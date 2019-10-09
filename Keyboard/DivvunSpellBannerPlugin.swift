@@ -8,6 +8,7 @@
 
 import Foundation
 import Sentry
+import libdivvunspell
 
 class SuggestionOp: Operation {
     weak var plugin: DivvunSpellBannerPlugin?
@@ -26,9 +27,11 @@ class SuggestionOp: Operation {
         guard let plugin = self.plugin else { return }
         guard let speller = plugin.speller else { return }
 
-        let suggestions = speller
-            .suggest(word: word, count: 3, maxWeight: 4999.99)
-            .map { BannerItem(title: $0, value: "suggestion") }
+        
+        let suggestions = (try? speller
+            .suggest(word: word)//, count: 3, maxWeight: 4999.99)
+            .prefix(3)
+            .map { BannerItem(title: $0, value: "suggestion") }) ?? []
 
         if !isCancelled {
             DispatchQueue.main.async {
@@ -71,7 +74,10 @@ public class DivvunSpellBannerPlugin {
     unowned let banner: BannerView
     unowned let keyboard: KeyboardViewController
 
-    fileprivate var speller: ChfstSpeller?
+    fileprivate var archive: ThfstChunkedBoxSpellerArchive?
+    fileprivate var speller: ThfstChunkedBoxSpeller? {
+        try? archive?.speller()
+    }
 
     let opQueue: OperationQueue = {
         let o = OperationQueue()
@@ -124,29 +130,25 @@ public class DivvunSpellBannerPlugin {
                 return
             }
 
-            let speller: ChfstSpeller
-
             do {
-                speller = try ChfstSpeller(path: path)
+                self.archive = try ThfstChunkedBoxSpellerArchive.open(path: path.path)
+                print("DivvunSpell loaded!")
             } catch {
                 let e = Sentry.Event(level: .error)
-                if let error = error as? SpellerInitError {
-                    e.message = error.message
-                    print(error.message)
-                    DispatchQueue.main.async {
-                        self.banner.items = [BannerItem(title: "Speller could not load. Tap to hide.", value: "error")]
-                    }
-                } else {
-                    e.message = error.localizedDescription
-                }
+//                if let error = error as? SpellerInitError {
+//                    e.message = error.message
+//                    print(error.message)
+//                    DispatchQueue.main.async {
+//                        self.banner.items = [BannerItem(title: "Speller could not load. Tap to hide.", value: "error")]
+//                    }
+//                } else {
+//                    e.message = error.localizedDescription
+//                }
                 Client.shared?.send(event: e, completion: nil)
                 print("DivvunSpell **not** loaded.")
                 return
             }
 
-            print("DivvunSpell loaded!")
-
-            self.speller = speller
         }
     }
 

@@ -1,11 +1,3 @@
-//
-//  KeyboardDefinition.swift
-//  GiellaKeyboard
-//
-//  Created by Brendan Molloy on 26/4/17.
-//  Copyright © 2017 Apple. All rights reserved.
-//
-
 import UIKit
 
 extension Bundle {
@@ -111,16 +103,23 @@ public struct KeyboardDefinition {
 
 extension Array where Element == [KeyDefinition] {
     mutating func platformize(page: KeyboardPage, spaceName: String, returnName: String) {
-        var shiftType: KeyType = .shift
-
-        if case page = KeyboardPage.symbols1 {
+        let shiftType: KeyType
+        let isSymbols: Bool
+        
+        switch page {
+        case .symbols1, .symbols2:
+            isSymbols = true
             shiftType = .shiftSymbols
+        default:
+            isSymbols = false
+            shiftType = .shift
         }
-        if case page = KeyboardPage.symbols2 {
-            shiftType = .shiftSymbols
-        }
-
+        
         if UIDevice.current.kind == UIDevice.Kind.iPad {
+            // Add comma and fullstop keys
+            self[2].append(KeyDefinition(type: .input(key: ",")))
+            self[2].append(KeyDefinition(type: .input(key: ".")))
+            
             self[2].insert(KeyDefinition(type: shiftType), at: 0)
             self[2].append(KeyDefinition(type: shiftType, size: CGSize(width: 1.5, height: 1.0)))
 
@@ -166,7 +165,7 @@ extension Array where Element == [KeyDefinition] {
     }
 }
 
-enum KeyboardPage {
+public enum KeyboardPage {
     case normal
     case shifted
     case capslock

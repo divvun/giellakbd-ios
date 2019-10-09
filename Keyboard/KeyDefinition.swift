@@ -32,6 +32,15 @@ public enum KeyType: Hashable {
     case splitKeyboard
     case sideKeyboardLeft
     case sideKeyboardRight
+    
+    var inputValue: String? {
+        switch self {
+        case .input(let key):
+            return key
+        default:
+            return nil
+        }
+    }
 
     init(string: String) {
         if let type = KeyType.definitions[string] {
@@ -85,6 +94,8 @@ public enum KeyType: Hashable {
 public struct KeyDefinition {
     public let type: KeyType
     public let size: CGSize
+    
+    
 
     init(type: KeyType, size: CGSize = CGSize(width: 1, height: 1)) {
         self.type = type

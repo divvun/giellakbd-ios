@@ -1,18 +1,32 @@
 PODS:
-  - Sentry (4.1.0):
-    - Sentry/Core (= 4.1.0)
-  - Sentry/Core (4.1.0)
+  - libdivvunspell (0.1.1)
+  - Sentry (4.4.0):
+    - Sentry/Core (= 4.4.0)
+  - Sentry/Core (4.4.0)
 
 DEPENDENCIES:
+  - libdivvunspell (from `https://github.com/bbqsrc/divvunspell-swift`)
   - Sentry
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  trunk:
     - Sentry
 
-SPEC CHECKSUMS:
-  Sentry: 44b85e768f435ede4d12ea279af588ff275c3939
+EXTERNAL SOURCES:
+  libdivvunspell:
+    :git: https://github.com/bbqsrc/divvunspell-swift
+    :submodules: true
 
-PODFILE CHECKSUM: 4329b59e739732175bbf785afaeb5ad6b8ad87ea
+CHECKOUT OPTIONS:
+  libdivvunspell:
+    :commit: be9d81952d71b25dec39283463cb6d2ae1685f37
+    :git: https://github.com/bbqsrc/divvunspell-swift
+    :submodules: true
+
+SPEC CHECKSUMS:
+  libdivvunspell: 7626605f37cdeeebdea2a3264e59b023341bf7f9
+  Sentry: 26650184fe71eb7476dfd2737acb5ea6cc64b4b1
+
+PODFILE CHECKSUM: 19f75a7030663a8ea472ab126e686cbda2990047
 
 COCOAPODS: 1.8.3
