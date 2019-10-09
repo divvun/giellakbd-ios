@@ -6,12 +6,13 @@ class SystemKeys {
         var keys = [KeyDefinition]()
         
         // Left side of space bar
-        keys.append(KeyDefinition(type: .symbols))
         if !UIDevice.current.isXFamily {
+            keys.append(KeyDefinition(type: .symbols))
             keys.append(KeyDefinition(type: .keyboard))
-        }
-        if UIDevice.current.kind != .iPad {
-            keys.append(KeyDefinition(type: .keyboardMode))
+        } else if UIDevice.current.kind != .iPad {
+            keys.append(KeyDefinition(type: .symbols, size: CGSize(width: 2.0, height: 1.0)))
+        } else {
+            keys.append(KeyDefinition(type: .symbols))
         }
         keys.append(KeyDefinition(type: .spacebar(name: spaceName), size: CGSize(width: 5.0, height: 1.0)))
         

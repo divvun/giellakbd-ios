@@ -163,8 +163,6 @@ class KeyView: UIView {
             self.alternateKey = nil
         }
         
-        let isiPad = UIDevice.current.kind == .iPad
-
         switch key.type {
         case let KeyType.input(string), let KeyType.spacebar(string), let KeyType.returnkey(string):
             text(string)
@@ -180,7 +178,7 @@ class KeyView: UIView {
             image(UIImage(named: "backspace")!)
         case .keyboard:
             image(UIImage(named: "globe")!)
-        case .shift:
+        case .shift, .shiftSymbols:
             image(UIImage(named: "shift")!)
         default:
             imageView = UIImageView()
