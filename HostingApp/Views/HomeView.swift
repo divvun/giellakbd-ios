@@ -1,11 +1,3 @@
-//
-//  HomeView.swift
-//  GiellaKeyboard
-//
-//  Created by Brendan Molloy on 12/5/17.
-//  Copyright © 2017 Apple. All rights reserved.
-//
-
 import UIKit
 
 private let blue = UIColor(r: 92, g: 133, b: 224)

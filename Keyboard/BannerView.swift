@@ -1,11 +1,3 @@
-//
-//  BannerView.swift
-//  RewriteKeyboard
-//
-//  Created by Ville Petersson on 2019-07-29.
-//  Copyright © 2019 The Techno Creatives AB. All rights reserved.
-//
-
 import UIKit
 
 public struct BannerItem {

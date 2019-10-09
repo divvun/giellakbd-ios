@@ -1,11 +1,3 @@
-//
-//  DeadKeyHandler.swift
-//  Keyboard
-//
-//  Created by Brendan Molloy on 2019-08-07.
-//  Copyright © 2019. All rights reserved.
-//
-
 import Foundation
 
 enum DeadKeyState {

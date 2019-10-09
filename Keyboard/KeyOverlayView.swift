@@ -1,11 +1,3 @@
-//
-//  KeyOverlayView.swift
-//  RewriteKeyboard
-//
-//  Created by Ville Petersson on 2019-07-08.
-//  Copyright © 2019 The Techno Creatives AB. All rights reserved.
-//
-
 import UIKit
 
 class KeyOverlayView: UIView {

@@ -1,11 +1,3 @@
-//
-//  SplitKeyboard.swift
-//  Keyboard
-//
-//  Created by Ville Petersson on 2019-09-19.
-//  Copyright © 2019. All rights reserved.
-//
-
 import UIKit
 
 private func leftHalf(_ pageOfKeys: [[KeyDefinition]]) -> [[KeyDefinition]] {

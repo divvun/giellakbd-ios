@@ -1,11 +1,3 @@
-//
-//  KeyboardSettings.swift
-//  GiellaKeyboard
-//
-//  Created by Brendan Molloy on 30/4/17.
-//  Copyright © 2017 Apple. All rights reserved.
-//
-
 import Foundation
 
 private let defaults = UserDefaults(suiteName: "group.\(KeyboardSettings.groupId)")!

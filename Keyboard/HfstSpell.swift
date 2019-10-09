@@ -1,11 +1,3 @@
-////
-////  HfstSpell.swift
-////  Keyboard
-////
-////  Created by Brendan Molloy on 2018-11-01.
-////  Copyright © 2018 Divvun. All rights reserved.
-////
-//
 //import Foundation
 //
 //private extension URL {

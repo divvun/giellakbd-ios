@@ -1,11 +1,3 @@
-//
-//  KeyDefinition.swift
-//  NewKeyboard
-//
-//  Created by Ville Petersson on 2019-06-25.
-//  Copyright © 2019 The Techno Creatives AB. All rights reserved.
-//
-
 import UIKit
 
 public enum KeyType: Hashable {

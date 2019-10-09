@@ -1,11 +1,3 @@
-//
-//  SystemKeys.swift
-//  Keyboard
-//
-//  Created by Brendan Molloy on 2019-08-08.
-//  Copyright © 2019 Apple. All rights reserved.
-//
-
 import Foundation
 import UIKit
 
