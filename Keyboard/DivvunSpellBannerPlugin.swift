@@ -68,7 +68,7 @@ public class DivvunSpellBannerPlugin {
 
     fileprivate var archive: ThfstChunkedBoxSpellerArchive?
     fileprivate var speller: ThfstChunkedBoxSpeller? {
-        try? archive?.speller()
+        return try? archive?.speller()
     }
 
     let opQueue: OperationQueue = {

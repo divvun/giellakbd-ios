@@ -19,14 +19,14 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   libdivvunspell:
-    :commit: be9d81952d71b25dec39283463cb6d2ae1685f37
+    :commit: 2c0ce026b974e34725aac69cce38098f2b964cd0
     :git: https://github.com/bbqsrc/divvunspell-swift
     :submodules: true
 
 SPEC CHECKSUMS:
-  libdivvunspell: 7626605f37cdeeebdea2a3264e59b023341bf7f9
+  libdivvunspell: a4d6f7f8bacd8288caaeaf605b039d85eea79481
   Sentry: 26650184fe71eb7476dfd2737acb5ea6cc64b4b1
 
-PODFILE CHECKSUM: 19f75a7030663a8ea472ab126e686cbda2990047
+PODFILE CHECKSUM: 8c9aa330c639e04cabcc94c8ed54f57b8b191740
 
 COCOAPODS: 1.8.3
