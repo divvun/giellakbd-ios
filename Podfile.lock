@@ -1,5 +1,5 @@
 PODS:
-  - libdivvunspell (0.1.1)
+  - libdivvunspell (0.1.4)
   - Sentry (4.4.0):
     - Sentry/Core (= 4.4.0)
   - Sentry/Core (4.4.0)
@@ -19,12 +19,12 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   libdivvunspell:
-    :commit: 2c0ce026b974e34725aac69cce38098f2b964cd0
+    :commit: 73736310b58e490004645b647aff2a7cae5d30b2
     :git: https://github.com/bbqsrc/divvunspell-swift
     :submodules: true
 
 SPEC CHECKSUMS:
-  libdivvunspell: a4d6f7f8bacd8288caaeaf605b039d85eea79481
+  libdivvunspell: b6cb0d6e7136521b86d5d39c1429d8749fe6bb1b
   Sentry: 26650184fe71eb7476dfd2737acb5ea6cc64b4b1
 
 PODFILE CHECKSUM: 8c9aa330c639e04cabcc94c8ed54f57b8b191740

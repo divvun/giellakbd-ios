@@ -90,7 +90,7 @@ public class DivvunSpellBannerPlugin {
         return nil
     }
 
-    private func loadZHFST() {
+    private func loadBHFST() {
         print("Loading speller…")
 
         DispatchQueue.global(qos: .background).async {
@@ -99,20 +99,20 @@ public class DivvunSpellBannerPlugin {
             let sentryEvent = Sentry.Event(level: .debug)
 
             guard let bundle = Bundle.top.url(forResource: "dicts", withExtension: "bundle") else {
-                sentryEvent.message = "No dict bundle found; ZHFST not loaded."
+                sentryEvent.message = "No dict bundle found; BHFST not loaded."
                 Client.shared?.send(event: sentryEvent, completion: nil)
-                print("No dict bundle found; ZHFST not loaded.")
+                print("No dict bundle found; BHFST not loaded.")
                 return
             }
 
             guard let lang = self.getPrimaryLanguage() else {
-                sentryEvent.message = "No primary language found for keyboard; ZHFST not loaded."
+                sentryEvent.message = "No primary language found for keyboard; BHFST not loaded."
                 Client.shared?.send(event: sentryEvent, completion: nil)
-                print("No primary language found for keyboard; ZHFST not loaded.")
+                print("No primary language found for keyboard; BHFST not loaded.")
                 return
             }
 
-            let path = bundle.appendingPathComponent("\(lang).chfst")
+            let path = bundle.appendingPathComponent("\(lang).bhfst")
 
             if !FileManager.default.fileExists(atPath: path.path) {
                 sentryEvent.message = "No speller at: \(path)"
@@ -149,6 +149,6 @@ public class DivvunSpellBannerPlugin {
         banner = keyboard.bannerView
 
         banner.delegate = self
-        loadZHFST()
+        loadBHFST()
     }
 }
