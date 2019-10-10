@@ -31,7 +31,7 @@ public struct KeyboardDefinition {
     }()
 
     public let name: String
-    public let internalName: String
+    public let locale: String
     public let spaceName: String
     public let enterName: String
 
@@ -60,7 +60,7 @@ public struct KeyboardDefinition {
 
     private init(raw: [String: Any]) {
         name = raw["name"] as! String
-        internalName = raw["internalName"] as! String
+        locale = raw["locale"] as! String
         spaceName = raw["space"] as! String
         enterName = raw["return"] as! String
 

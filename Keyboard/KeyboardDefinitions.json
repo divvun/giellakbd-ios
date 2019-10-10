@@ -1,7 +1,7 @@
 [
   {
     "name": "S\u00e1megiella",
-    "internalName": "northern_sami",
+    "locale": "northern_sami",
     "return": "linnj\u00e1\u00admolsun",
     "space": "gaske",
     "deadKeys": {
@@ -126,7 +126,7 @@
   },
   {
     "name": "\u041a\u04e3\u043b\u043b\u0442 \u0441\u0430\u0304\u043c\u044c \u043a\u04e3\u043b\u043b",
-    "internalName": "kildin_sami",
+    "locale": "kildin_sami",
     "return": "\u0412\u0432\u043e\u0434",
     "space": "\u041f\u0440\u043e\u0431\u0435\u043b",
     "longPress": {

@@ -70,7 +70,7 @@ open class KeyboardViewController: UIInputViewController {
         setupKeyboardView()
         setupBannerView()
 
-        print("\(KeyboardDefinition.definitions.map { $0.internalName + " " })")
+        print("\(KeyboardDefinition.definitions.map { $0.locale + " " })")
     }
 
     private func setupKeyboardView() {
