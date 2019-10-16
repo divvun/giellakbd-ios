@@ -146,7 +146,8 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
 
         // TODO: Logic for multiline popups
         if let indexPath = collectionView.indexPathForItem(at: CGPoint(x: min(max(point.x - frame.minX, collectionView.bounds.minX + cellSize.width / 2.0), collectionView.bounds.maxX - cellSize.width / 2.0),
-                                                                       y: min(max(point.y - (baselinePoint?.y ?? 0), collectionView.bounds.minY + cellSize.height / 2.0), collectionView.bounds.maxY - cellSize.height / 2.0))) {
+                                                                       y: min(max(point.y - (UIDevice.current.kind == .iPad ? -cellSize.width / 2.0 : (baselinePoint?.y ?? 0)),
+                                                                                  collectionView.bounds.minY + cellSize.height / 2.0), collectionView.bounds.maxY - cellSize.height / 2.0))) {
             selectedKey = longpressValues[indexPath.row + Int(ceil(Double(longpressValues.count) / 2.0)) * indexPath.section]
         } else {
             selectedKey = nil
