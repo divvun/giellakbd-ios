@@ -25,6 +25,8 @@ protocol Theme {
     var keyHorizontalMargin: CGFloat { get }
 
     var keyFont: UIFont { get }
+    var lowerKeyFont: UIFont { get }
+    var capitalKeyFont: UIFont { get }
     var alternateKeyFontSize: CGFloat { get }
     var popupKeyFont: UIFont { get }
     var bannerFont: UIFont { get }
@@ -38,6 +40,10 @@ protocol Theme {
 }
 
 class LightThemeImpl: Theme {
+    private let _keyFont: UIFont = UIFont.systemFont(ofSize: 26.0)
+    private let _lowerKeyFont: UIFont = UIFont.systemFont(ofSize: 26.0, weight: .light)
+    private let _capitalKeyFont: UIFont = UIFont.systemFont(ofSize: 24.0)
+    
     var regularKeyColor = UIColor.white
     var specialKeyColor = UIColor(r: 162, g: 167, b: 177)
     var popupColor = UIColor.white
@@ -60,10 +66,14 @@ class LightThemeImpl: Theme {
     var keyHorizontalMargin: CGFloat { return 2.5 }
     var keyVerticalMargin: CGFloat { return 5.0 }
 
-    var keyFont: UIFont { return UIFont.systemFont(ofSize: 22.0) }
+    var keyFont: UIFont { return _keyFont }
+    var lowerKeyFont: UIFont { return _lowerKeyFont }
+    var capitalKeyFont: UIFont { return _capitalKeyFont }
+//    var keyFont: UIFont { return UIFont.init(name: ".SFUIDisplay-Light", size: 26.0)! }
+//    var capitalKeyFont: UIFont { return UIFont.init(name: ".SFUIDisplay-Light", size: 24.0)! }
     var alternateKeyFontSize: CGFloat { return 17.0 }
-    var popupKeyFont = UIFont.systemFont(ofSize: 26.0)
-    var bannerFont = UIFont.systemFont(ofSize: 16.0)
+    var popupKeyFont = UIFont.systemFont(ofSize: 36.0)
+    var bannerFont = UIFont.systemFont(ofSize: 18.0)
 
     var bannerBackgroundColor: UIColor { return backgroundColor }
     var bannerSeparatorColor: UIColor { return solidSpecialKeyColor }
@@ -76,15 +86,21 @@ class LightThemeImpl: Theme {
 }
 
 class LightThemeIpadImpl: LightThemeImpl {
+    let _keyFont: UIFont = UIFont.systemFont(ofSize: 28.0)
+    
     override var keyCornerRadius: CGFloat { return 7.0 }
     override var keyHorizontalMargin: CGFloat { return 7.0 }
     override var keyVerticalMargin: CGFloat { return 7.0 }
-
-    override var keyFont: UIFont { return UIFont.systemFont(ofSize: 28.0) }
+    
+    override var keyFont: UIFont { return _keyFont }
     override var alternateKeyFontSize: CGFloat { return 17.0 }
 }
 
 class DarkThemeImpl: Theme {
+    private let _keyFont: UIFont = UIFont.systemFont(ofSize: 26.0)
+    private let _lowerKeyFont: UIFont = UIFont.systemFont(ofSize: 26.0, weight: .light)
+    private let _capitalKeyFont: UIFont = UIFont.systemFont(ofSize: 24.0)
+    
     var backgroundColor: UIColor = .clear
 
     var keyShadowColor: UIColor = UIColor(r: 103, g: 106, b: 110, a: 0.5)
@@ -109,7 +125,9 @@ class DarkThemeImpl: Theme {
     var keyHorizontalMargin: CGFloat { return 2.5 }
     var keyVerticalMargin: CGFloat { return 5.0 }
 
-    var keyFont: UIFont { return UIFont.systemFont(ofSize: 22.0) }
+    var keyFont: UIFont { return _keyFont }
+    var lowerKeyFont: UIFont { return _lowerKeyFont }
+    var capitalKeyFont: UIFont { return _capitalKeyFont }
     var alternateKeyFontSize: CGFloat { return 17.0 }
     var popupKeyFont = UIFont.systemFont(ofSize: 26.0)
     var bannerFont = UIFont.systemFont(ofSize: 16.0)

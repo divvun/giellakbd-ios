@@ -127,11 +127,11 @@ extension Array where Element == [KeyDefinition] {
             self[1].append(KeyDefinition(type: KeyType.returnkey(name: returnName), size: CGSize(width: 2.0, height: 1.0)))
 
         } else {
-            self[2].insert(KeyDefinition(type: shiftType, size: CGSize(width: 1.5, height: 1.0)), at: 0)
-            self[2].insert(KeyDefinition(type: .spacer, size: CGSize(width: 0.5, height: 1.0)), at: 1)
+            self[2].insert(KeyDefinition(type: shiftType, size: CGSize(width: 1, height: 1.0)), at: 0)
+//            self[2].insert(KeyDefinition(type: .spacer, size: CGSize(width: 0.5, height: 1.0)), at: 1)
 
-            self[2].append(KeyDefinition(type: .spacer, size: CGSize(width: 0.5, height: 1.0)))
-            self[2].append(KeyDefinition(type: .backspace, size: CGSize(width: 1.5, height: 1.0)))
+//            self[2].append(KeyDefinition(type: .spacer, size: CGSize(width: 0.5, height: 1.0)))
+            self[2].append(KeyDefinition(type: .backspace, size: CGSize(width: 1, height: 1.0)))
         }
         append(SystemKeys.systemKeyRowsForCurrentDevice(spaceName: spaceName, returnName: returnName))
     }

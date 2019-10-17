@@ -129,6 +129,35 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
             delegate?.longpressDidCancel()
         }
     }
+    
+    private func longPressTouchPoint(at point: CGPoint, cellSize: CGSize, frame: CGRect, view collectionView: UICollectionView) -> CGPoint {
+        // Calculate the long press finger position relative to the long press popup
+        let halfWidth = cellSize.width / 2.0
+        let halfHeight = cellSize.height / 2.0
+        let heightOffset: CGFloat
+        if UIDevice.current.kind == .iPad {
+            heightOffset = -halfHeight
+        } else {
+            heightOffset = baselinePoint?.y ?? 0
+        }
+        
+        let x = min(
+            max(
+                point.x - frame.minX,
+                collectionView.bounds.minX + halfWidth
+            ),
+            collectionView.bounds.maxX - halfWidth
+        )
+        let y = min(
+            max(
+                point.y - heightOffset,
+                collectionView.bounds.minY + halfHeight
+            ),
+            collectionView.bounds.maxY - halfHeight
+        )
+        
+        return CGPoint(x: x, y: y)
+    }
 
     private func pointUpdated(_ point: CGPoint) {
         let cellSize = delegate?.longpressKeySize() ?? CGSize(width: 20, height: 30.0)
@@ -143,19 +172,18 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
         guard let collectionView = self.collectionView else { return }
 
         let frame = wholeView.convert(collectionView.frame, from: collectionView.superview)
-
+        let point = longPressTouchPoint(at: point, cellSize: cellSize, frame: frame, view: collectionView)
+        
         // TODO: Logic for multiline popups
-        if let indexPath = collectionView.indexPathForItem(at: CGPoint(x: min(max(point.x - frame.minX, collectionView.bounds.minX + cellSize.width / 2.0), collectionView.bounds.maxX - cellSize.width / 2.0),
-                                                                       y: min(max(point.y - (UIDevice.current.kind == .iPad ? -cellSize.width / 2.0 : (baselinePoint?.y ?? 0)),
-                                                                                  collectionView.bounds.minY + cellSize.height / 2.0), collectionView.bounds.maxY - cellSize.height / 2.0))) {
+        if let indexPath = collectionView.indexPathForItem(at: point) {
             selectedKey = longpressValues[indexPath.row + Int(ceil(Double(longpressValues.count) / 2.0)) * indexPath.section]
         } else {
             selectedKey = nil
 
             // TODO: Logic for canceling it
-            if false {
-                delegate?.longpressDidCancel()
-            }
+//            if false {
+//                delegate?.longpressDidCancel()
+//            }
         }
     }
 

@@ -59,7 +59,7 @@ class KeyView: UIView {
 
     var contentView: UIView!
     
-    private func text(_ string: String) {
+    private func text(_ string: String, page: KeyboardPage) {
         label = UILabel()
         if let _ = self.alternateKey {
             alternateLabel = UILabel(frame: .zero)
@@ -69,15 +69,20 @@ class KeyView: UIView {
             let labelHoldingView = UIView(frame: .zero)
             labelHoldingView.translatesAutoresizingMaskIntoConstraints = false
             labelHoldingView.backgroundColor = .clear
+            labelHoldingView.clipsToBounds = false
 
             label.textColor = KeyboardView.theme.textColor
             if case .input = key.type {
-                label.font = KeyboardView.theme.keyFont
+                if case .shifted = page {
+                    label.font = KeyboardView.theme.capitalKeyFont
+                } else {
+                    label.font = KeyboardView.theme.lowerKeyFont
+                }
             } else {
                 label.font = KeyboardView.theme.keyFont.withSize(KeyboardView.theme.alternateKeyFontSize)
             }
             label.text = string
-            label.adjustsFontSizeToFitWidth = true
+            label.adjustsFontSizeToFitWidth = false
             label.numberOfLines = 0
             label.minimumScaleFactor = 0.4
             label.textAlignment = .center
@@ -89,7 +94,13 @@ class KeyView: UIView {
 
             if let alternateKey = self.alternateKey, let alternateLabel = self.alternateLabel, case let .input(alternateString) = alternateKey.type {
                 alternateLabel.textColor = KeyboardView.theme.inactiveTextColor
-                alternateLabel.font = KeyboardView.theme.keyFont
+                
+                if case .shifted = page {
+                    alternateLabel.font = KeyboardView.theme.capitalKeyFont
+                } else {
+                    alternateLabel.font = KeyboardView.theme.keyFont
+                }
+                
                 alternateLabel.text = alternateString
                 alternateLabel.adjustsFontSizeToFitWidth = true
                 alternateLabel.textAlignment = .center
@@ -122,7 +133,13 @@ class KeyView: UIView {
 
                 label.bottomAnchor.constraint(equalTo: labelHoldingView.bottomAnchor, constant: 0).isActive = true
             } else {
-                label.centerYAnchor.constraint(equalTo: labelHoldingView.centerYAnchor, constant: 0).isActive = true
+                let yConstant: CGFloat
+                if case .normal = page, case KeyType.input(_) = self.key.type {
+                    yConstant = -2.0
+                } else {
+                    yConstant = 0.0
+                }
+                label.centerYAnchor.constraint(equalTo: labelHoldingView.centerYAnchor, constant: yConstant).isActive = true
                 label.widthAnchor.constraint(lessThanOrEqualTo: labelHoldingView.widthAnchor, multiplier: 1.0).isActive = true
                 swipeLayoutConstraint = nil
             }
@@ -146,7 +163,7 @@ class KeyView: UIView {
         }
     }
     
-    init(key: KeyDefinition, alternateKey: KeyDefinition? = nil) {
+    init(page: KeyboardPage, key: KeyDefinition, alternateKey: KeyDefinition? = nil) {
         self.key = key
         self.alternateKey = alternateKey
         super.init(frame: .zero)
@@ -165,12 +182,18 @@ class KeyView: UIView {
         
         switch key.type {
         case let KeyType.input(string), let KeyType.spacebar(string), let KeyType.returnkey(string):
-            text(string)
+            text(string, page: page)
         case KeyType.symbols:
-            if UIDevice.current.kind == .iPad {
-                text(".?123")
+            if case .symbols1 = page {
+                text("ABC", page: page)
+            } else if case .symbols2 = page {
+                text("ABC", page: page)
             } else {
-                text("123")
+                if UIDevice.current.kind == .iPad {
+                    text(".?123", page: page)
+                } else {
+                    text("123", page: page)
+                }
             }
         case .keyboardMode:
             image(UIImage(named: "close-keyboard-ipad")!)
@@ -178,8 +201,16 @@ class KeyView: UIView {
             image(UIImage(named: "backspace")!)
         case .keyboard:
             image(UIImage(named: "globe")!)
-        case .shift, .shiftSymbols:
+        case .shift:
             image(UIImage(named: "shift")!)
+        case .shiftSymbols:
+            if case .symbols1 = page {
+                text("#+=", page: page)
+            } else if case .symbols2 = page {
+                text("123", page: page)
+            } else {
+                image(UIImage(named: "shift")!)
+            }
         default:
             imageView = UIImageView()
             if let imageView = self.imageView {

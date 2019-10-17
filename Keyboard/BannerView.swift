@@ -19,8 +19,10 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
 
         override init(frame: CGRect) {
             titleLabel = UILabel(frame: frame)
+            
             super.init(frame: frame)
-
+            
+            isHidden = false
             contentView.translatesAutoresizingMaskIntoConstraints = false
             titleLabel.translatesAutoresizingMaskIntoConstraints = false
             contentView.fillSuperview(self)

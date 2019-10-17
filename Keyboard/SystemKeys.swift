@@ -26,9 +26,8 @@ class SystemKeys {
 
         return keys
     }
-
-    static var symbolKeysFirstPage: [[KeyDefinition]] {
-        let currencySign = "kr"
+    
+    private static func phoneSymbolKeysFirstPage(currencySign: String) -> [[KeyDefinition]] {
         return [
             [
                 "1",
@@ -73,8 +72,8 @@ class SystemKeys {
                 ])
         ]
     }
-
-    static var symbolKeysSecondPage: [[KeyDefinition]] {
+    
+    private static func phoneSymbolKeysSecondPage(currencySign: String) -> [[KeyDefinition]] {
         return [
             [
                 "[",
@@ -95,10 +94,10 @@ class SystemKeys {
                 "|",
                 "~",
                 "<",
-                "?",
-                "€",
+                ">",
                 "$",
-                "£",
+                "€",
+                "¥",
                 "•"
                 ].compactMap { KeyDefinition(input: $0) },
 
@@ -118,5 +117,25 @@ class SystemKeys {
                     KeyDefinition(type: .spacer, size: CGSize(width: 0.1, height: 1.0))
                 ])
         ]
+    }
+
+    static var symbolKeysFirstPage: [[KeyDefinition]] {
+        let currencySign = "kr"
+        
+        if UIDevice.current.kind == .iPad {
+            return phoneSymbolKeysFirstPage(currencySign: currencySign)
+        } else {
+            return phoneSymbolKeysFirstPage(currencySign: currencySign)
+        }
+    }
+    
+    static var symbolKeysSecondPage: [[KeyDefinition]] {
+        let currencySign = "kr"
+        
+        if UIDevice.current.kind == .iPad {
+            return phoneSymbolKeysSecondPage(currencySign: currencySign)
+        } else {
+            return phoneSymbolKeysSecondPage(currencySign: currencySign)
+        }
     }
 }

@@ -16,7 +16,7 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
     internal static var theme: Theme = LightThemeImpl()
     private static let keyRepeatTimeInterval: TimeInterval = 0.15
 
-    public var swipeDownKeysEnabled: Bool = UIDevice.current.kind == UIDevice.Kind.iPad
+    public var swipeDownKeysEnabled: Bool = false // UIDevice.current.kind == UIDevice.Kind.iPad
 
     let definition: KeyboardDefinition
     weak var delegate: (KeyboardViewDelegate & KeyboardViewKeyboardKeyDelegate)?
@@ -496,7 +496,7 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
                 }
             case .keyboardMode:
                 if longpressGestureRecognizer.state == .began {
-                    showKeyboardModeOverlay(longpressGestureRecognizer, key: key)
+//                    showKeyboardModeOverlay(longpressGestureRecognizer, key: key)
                 }
 
             case .spacebar:
@@ -563,17 +563,17 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! KeyCell
         let key = currentPage[indexPath.section][indexPath.row]
 
-        if let alternateKey = self.validAlternateKey(forIndexPath: indexPath) {
-            cell.setKey(key: key, alternateKey: alternateKey)
-
-            if let swipeKeyView = cell.keyView, swipeKeyView.isSwipeKey {
-                swipeKeyView.percentageAlternative = 0.0
-            }
-        } else if swipeDownKeysEnabled {
-            cell.setKey(key: key, alternateKey: KeyDefinition(type: .spacer))
-        } else {
-            cell.setKey(key: key)
-        }
+//        if let alternateKey = self.validAlternateKey(forIndexPath: indexPath) {
+//            cell.setKey(page: page, key: key, alternateKey: alternateKey)
+//
+//            if let swipeKeyView = cell.keyView, swipeKeyView.isSwipeKey {
+//                swipeKeyView.percentageAlternative = 0.0
+//            }
+//        } else if swipeDownKeysEnabled {
+//            cell.setKey(page: page, key: key, alternateKey: KeyDefinition(type: .spacer))
+//        } else {
+            cell.setKey(page: page, key: key)
+//        }
 
         return cell
     }
@@ -626,7 +626,7 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
             super.init(frame: frame)
         }
 
-        func setKey(key: KeyDefinition, alternateKey: KeyDefinition? = nil) {
+        func setKey(page: KeyboardPage, key: KeyDefinition, alternateKey: KeyDefinition? = nil) {
             _ = contentView.subviews.forEach { view in
                 view.removeFromSuperview()
             }
@@ -638,21 +638,22 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
                 contentView.addSubview(emptyview)
                 emptyview.fillSuperview(contentView)
             } else if let alternateKey = alternateKey, case .input = key.type, case .input = alternateKey.type, alternateKey.type != key.type {
-                let keyView = KeyView(key: key, alternateKey: alternateKey)
+                let keyView = KeyView(page: page, key: key, alternateKey: alternateKey)
                 keyView.translatesAutoresizingMaskIntoConstraints = false
                 contentView.addSubview(keyView)
                 keyView.fillSuperview(contentView)
             } else {
                 let keyView: KeyView
                 if let _ = alternateKey {
-                    keyView = KeyView(key: key, alternateKey: KeyDefinition(type: .spacer))
+                    keyView = KeyView(page: page, key: key, alternateKey: KeyDefinition(type: .spacer))
                 } else {
-                    keyView = KeyView(key: key)
+                    keyView = KeyView(page: page, key: key)
                 }
                 keyView.translatesAutoresizingMaskIntoConstraints = false
                 contentView.addSubview(keyView)
                 keyView.fillSuperview(contentView)
             }
+            contentView.clipsToBounds = false
         }
 
         required init?(coder _: NSCoder) {

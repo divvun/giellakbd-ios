@@ -28,13 +28,25 @@ enum KeyboardMode {
     case right
 }
 
+private let almostRequiredPriority = UILayoutPriority(rawValue: 1.0)
+
+extension NSLayoutConstraint {
+    @discardableResult
+    func enable(priority: UILayoutPriority? = nil) -> NSLayoutConstraint {
+        if let priority = priority {
+            self.priority = priority
+        }
+        self.isActive = true
+        return self
+    }
+}
+
 open class KeyboardViewController: UIInputViewController {
     @IBOutlet var nextKeyboardButton: UIButton!
     private var keyboardView: KeyboardViewProvider!
 
-    // Gets updated to match device in viewDidAppear
     private var defaultHeightForDevice: CGFloat {
-        return UIDevice.current.kind == .iPad ? 688.0 / 2.0 : 428.0 / 2.0
+        return UIDevice.current.kind == .iPad ? 688.0 / 2.0 : 420.0 / 2.0
     }
 
     private var heightConstraint: NSLayoutConstraint!
@@ -244,19 +256,27 @@ open class KeyboardViewController: UIInputViewController {
         }
         insertText(input)
     }
+    
+    private var lastInput: String = ""
 
     func insertText(_ input: String) {
         let proxy = textDocumentProxy
         proxy.insertText(input)
-        propagateTextInputUpdateToBanner()
-        updateCapitalization()
+        
+        if lastInput != " " && input == " " {
+            handleAutoFullStop()
+            lastInput = ""
+        } else {
+            lastInput = input
+        }
+        
+        updateInputState()
     }
 
     private func deleteBackward() {
         let proxy = textDocumentProxy
         proxy.deleteBackward()
-        propagateTextInputUpdateToBanner()
-        updateCapitalization()
+        updateInputState()
     }
 
     open override func textWillChange(_: UITextInput?) {
@@ -266,6 +286,19 @@ open class KeyboardViewController: UIInputViewController {
     private func updateCapitalization() {
         let proxy = textDocumentProxy
         let ctx = CursorContext.from(proxy: textDocumentProxy)
+        
+        guard let page = keyboardView?.page else {
+            return
+        }
+        
+        switch page {
+        case .symbols1, .symbols2:
+            keyboardView.page = .normal
+            return
+        default:
+            break
+        }
+        
         if let autoCapitalizationType = proxy.autocapitalizationType {
             switch autoCapitalizationType {
             case .words:
@@ -275,6 +308,10 @@ open class KeyboardViewController: UIInputViewController {
             case .sentences:
                 if ctx.currentWord == "", ctx.previousWord?.last == Character(".") || ctx.previousWord == nil {
                     keyboardView.page = .shifted
+                } else if case .shifted = page {
+                    if !(ctx.previousWord?.last?.isUppercase ?? false) {
+                        keyboardView.page = .normal
+                    }
                 }
             case .allCharacters:
                 keyboardView.page = .shifted
@@ -282,6 +319,25 @@ open class KeyboardViewController: UIInputViewController {
                 break
             }
         }
+    }
+    
+    private func handleAutoFullStop() {
+        let proxy = textDocumentProxy
+        
+        if let text = proxy.documentContextBeforeInput?.suffix(3), text.count == 3 && text.suffix(2) == "  " {
+            let first = text.prefix(1)
+            
+            if first != "." && first != " " {
+                proxy.deleteBackward()
+                proxy.deleteBackward()
+                proxy.insertText(". ")
+            }
+        }
+    }
+    
+    private func updateInputState() {
+        propagateTextInputUpdateToBanner()
+        updateCapitalization()
     }
 
     open override func textDidChange(_: UITextInput?) {
@@ -294,9 +350,8 @@ open class KeyboardViewController: UIInputViewController {
         } else {
             textColor = UIColor.black
         }
-
-        propagateTextInputUpdateToBanner()
-        updateCapitalization()
+        
+        updateInputState()
     }
 
     // Disable edge swipe gestures
