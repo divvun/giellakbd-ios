@@ -1,6 +1,13 @@
 import Foundation
 
-private let defaults = UserDefaults(suiteName: "group.\(KeyboardSettings.groupId)")!
+private let defaults: UserDefaults = {
+    let x = UserDefaults(suiteName: "group.\(KeyboardSettings.groupId)")!
+    x.registerDefaultsFromSettingsBundle()
+    return x
+}()
+
+func wat() {
+}
 
 class KeyboardSettings {
     static var groupId: String = {
@@ -21,5 +28,46 @@ class KeyboardSettings {
     static var firstLoad: Bool {
         get { return defaults.object(forKey: "firstLoad") as? Bool ?? true }
         set { defaults.set(newValue, forKey: "firstLoad") }
+    }
+    
+    static var isKeySoundEnabled: Bool {
+        get { return defaults.bool(forKey: "isKeySoundEnabled") }
+        set { defaults.set(newValue, forKey: "isKeySoundEnabled") }
+    }
+}
+
+extension Bundle {
+    static var top: Bundle {
+        if Bundle.main.bundleURL.pathExtension == "appex" {
+            let url = Bundle.main.bundleURL.deletingLastPathComponent().deletingLastPathComponent()
+            if let other = Bundle(url: url) {
+                return other
+            }
+        }
+
+        return Bundle.main
+    }
+}
+
+extension UserDefaults {
+    func registerDefaultsFromSettingsBundle() {
+        if let settingsURL = Bundle.top.url(forResource: "Root", withExtension: "plist", subdirectory: "Settings.bundle"),
+            let settings = NSDictionary(contentsOf: settingsURL),
+            let preferences = settings["PreferenceSpecifiers"] as? [NSDictionary] {
+
+            var defaultsToRegister = [String: AnyObject]()
+            for prefSpecification in preferences {
+                if let key = prefSpecification["Key"] as? String,
+                    let value = prefSpecification["DefaultValue"]
+                {
+                    debugPrint(key, value)
+                    defaultsToRegister[key] = value as AnyObject
+                }
+            }
+
+            self.register(defaults: defaultsToRegister)
+        } else {
+            debugPrint("registerDefaultsFromSettingsBundle: Could not find Settings.bundle")
+        }
     }
 }

@@ -135,7 +135,7 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
         let halfWidth = cellSize.width / 2.0
         let halfHeight = cellSize.height / 2.0
         let heightOffset: CGFloat
-        if UIDevice.current.kind == .iPad {
+        if UIDevice.current.dc.deviceFamily == .iPad {
             heightOffset = -halfHeight
         } else {
             heightOffset = baselinePoint?.y ?? 0
@@ -202,7 +202,7 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! LongpressKeyCell
         let key = longpressValues[indexPath.row + Int(ceil(Double(longpressValues.count) / 2.0)) * indexPath.section]
 
-        if case let .input(string) = key.type {
+        if case let .input(string, _) = key.type {
             cell.label.text = string
             cell.imageView.image = nil
         } else if case .splitKeyboard = key.type {

@@ -1,18 +1,16 @@
 
 class KeyView: UIView {
     private var key: KeyDefinition
-    private var alternateKey: KeyDefinition?
 
     var isSwipeKey: Bool {
-        if let alternateKey = self.alternateKey, let _ = self.alternateLabel, case .input = alternateKey.type {
+        if case let .input(_, alt) = key.type, alt != nil {
             return true
-        } else {
-            return false
         }
+        return false
     }
 
-    var label: UILabel?
-    var alternateLabel: UILabel?
+    private var label: UILabel! = UILabel()
+    private var alternateLabel: UILabel?
 
     var swipeLayoutConstraint: NSLayoutConstraint?
 
@@ -48,104 +46,130 @@ class KeyView: UIView {
 
             if isSwipeKey {
                 alternateLabel?.textColor = UIColor.interpolate(from: KeyboardView.theme.inactiveTextColor, to: KeyboardView.theme.textColor, with: percentageAlternative)
-                label?.textColor = UIColor.interpolate(from: KeyboardView.theme.textColor, to: UIColor.clear, with: percentageAlternative)
+                label.textColor = UIColor.interpolate(from: KeyboardView.theme.textColor, to: UIColor.clear, with: percentageAlternative)
 
-                let fontSizeDelta = KeyboardView.theme.keyFont.pointSize - KeyboardView.theme.alternateKeyFontSize
-                alternateLabel?.font = KeyboardView.theme.keyFont.withSize(KeyboardView.theme.alternateKeyFontSize + fontSizeDelta * percentageAlternative)
-                label?.font = KeyboardView.theme.keyFont.withSize(KeyboardView.theme.keyFont.pointSize - fontSizeDelta * percentageAlternative)
+                let fontSizeDelta = KeyboardView.theme.keyFont.pointSize - KeyboardView.theme.modifierKeyFontSize
+                alternateLabel?.font = KeyboardView.theme.altKeyFont.withSize(KeyboardView.theme.altKeyFontSize + fontSizeDelta * percentageAlternative)
+                label.font = KeyboardView.theme.keyFont.withSize(KeyboardView.theme.keyFont.pointSize - fontSizeDelta * percentageAlternative)
             }
         }
     }
 
-    var contentView: UIView!
+    private var contentView: UIView!
+    
+    private func configureKeyLabel(_ label: UILabel, page: KeyboardPage) {
+        label.textColor = KeyboardView.theme.textColor
+        if case .input = key.type {
+            switch page {
+            case .shifted, .capslock, .symbols1, .symbols2:
+                label.font = KeyboardView.theme.capitalKeyFont
+            default:
+                label.font = KeyboardView.theme.lowerKeyFont
+            }
+            label.adjustsFontSizeToFitWidth = false
+        } else {
+            label.font = KeyboardView.theme.keyFont.withSize(KeyboardView.theme.modifierKeyFontSize)
+            label.adjustsFontSizeToFitWidth = true
+        }
+        label.numberOfLines = 0
+        label.minimumScaleFactor = 0.4
+        label.textAlignment = .center
+        label.backgroundColor = .clear
+        label.clipsToBounds = false
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        label.setContentHuggingPriority(.defaultLow, for: .vertical)
+    }
+    
+    private func configureAltKeyLabel(_ alternateLabel: UILabel, page: KeyboardPage) {
+        alternateLabel.textColor = KeyboardView.theme.inactiveTextColor
+        
+        alternateLabel.adjustsFontSizeToFitWidth = false
+        alternateLabel.numberOfLines = 0
+        alternateLabel.textAlignment = .center
+        alternateLabel.backgroundColor = .clear
+        alternateLabel.clipsToBounds = false
+        alternateLabel.translatesAutoresizingMaskIntoConstraints = false
+        alternateLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        alternateLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
+        alternateLabel.font = KeyboardView.theme.altKeyFont
+    }
+    
+    private func input(string: String, alt: String?, page: KeyboardPage) {
+        let labelHoldingView = UIView(frame: .zero)
+        labelHoldingView.translatesAutoresizingMaskIntoConstraints = false
+        labelHoldingView.backgroundColor = .clear
+        labelHoldingView.clipsToBounds = false
+
+        configureKeyLabel(label, page: page)
+        label.text = string
+
+        if let alternateString = alt {
+            self.alternateLabel = UILabel(frame: .zero)
+            configureAltKeyLabel(self.alternateLabel!, page: page)
+            alternateLabel!.text = alternateString
+            
+            labelHoldingView.addSubview(alternateLabel!)
+        }
+
+        labelHoldingView.addSubview(label)
+        addSubview(labelHoldingView)
+        
+        label.centerXAnchor.constraint(equalTo: labelHoldingView.centerXAnchor).isActive = true
+        label.widthAnchor.constraint(equalTo: label.heightAnchor).isActive = true
+
+        let yConstant: CGFloat
+        if case .normal = page, case KeyType.input(_) = self.key.type {
+            yConstant = -2.0
+        } else {
+            yConstant = 0.0
+        }
+        
+        if let alternateLabel = self.alternateLabel {
+            swipeLayoutConstraint = label.topAnchor.constraint(equalTo: labelHoldingView.topAnchor, constant: 24)
+            swipeLayoutConstraint?.isActive = true
+
+            label.bottomAnchor.constraint(equalTo: labelHoldingView.bottomAnchor, constant: yConstant).isActive = true
+            
+            alternateLabel.centerXAnchor.constraint(equalTo: labelHoldingView.centerXAnchor).isActive = true
+            alternateLabel.widthAnchor.constraint(lessThanOrEqualTo: labelHoldingView.widthAnchor, multiplier: 1.0).isActive = true
+//            alternateLabel.widthAnchor.constraint(equalTo: alternateLabel.heightAnchor).isActive = true
+            alternateLabel.topAnchor.constraint(equalTo: labelHoldingView.topAnchor, constant: 8).isActive = true
+            alternateLabel.bottomAnchor.constraint(equalTo: label.topAnchor).isActive = true
+        } else {
+            label.centerYAnchor.constraint(equalTo: labelHoldingView.centerYAnchor, constant: yConstant).isActive = true
+            label.widthAnchor.constraint(lessThanOrEqualTo: labelHoldingView.widthAnchor, multiplier: 1.0).isActive = true
+            swipeLayoutConstraint = nil
+        }
+
+        contentView = labelHoldingView
+    }
     
     private func text(_ string: String, page: KeyboardPage) {
-        label = UILabel()
-        if let _ = self.alternateKey {
-            alternateLabel = UILabel(frame: .zero)
+        let labelHoldingView = UIView(frame: .zero)
+        labelHoldingView.translatesAutoresizingMaskIntoConstraints = false
+        labelHoldingView.backgroundColor = .clear
+        labelHoldingView.clipsToBounds = false
+
+        configureKeyLabel(label, page: page)
+        label.text = string
+
+        labelHoldingView.addSubview(label)
+        addSubview(labelHoldingView)
+        label.centerXAnchor.constraint(equalTo: labelHoldingView.centerXAnchor).isActive = true
+        label.widthAnchor.constraint(equalTo: label.heightAnchor).isActive = true
+
+        let yConstant: CGFloat
+        if case .normal = page, case KeyType.input(_) = self.key.type {
+            yConstant = -2.0
+        } else {
+            yConstant = 0.0
         }
+        label.centerYAnchor.constraint(equalTo: labelHoldingView.centerYAnchor, constant: yConstant).isActive = true
+        label.widthAnchor.constraint(lessThanOrEqualTo: labelHoldingView.widthAnchor, multiplier: 1.0).isActive = true
+        swipeLayoutConstraint = nil
 
-        if let label = self.label {
-            let labelHoldingView = UIView(frame: .zero)
-            labelHoldingView.translatesAutoresizingMaskIntoConstraints = false
-            labelHoldingView.backgroundColor = .clear
-            labelHoldingView.clipsToBounds = false
-
-            label.textColor = KeyboardView.theme.textColor
-            if case .input = key.type {
-                if case .shifted = page {
-                    label.font = KeyboardView.theme.capitalKeyFont
-                } else {
-                    label.font = KeyboardView.theme.lowerKeyFont
-                }
-            } else {
-                label.font = KeyboardView.theme.keyFont.withSize(KeyboardView.theme.alternateKeyFontSize)
-            }
-            label.text = string
-            label.adjustsFontSizeToFitWidth = false
-            label.numberOfLines = 0
-            label.minimumScaleFactor = 0.4
-            label.textAlignment = .center
-            label.backgroundColor = .clear
-            label.clipsToBounds = false
-            label.translatesAutoresizingMaskIntoConstraints = false
-            label.setContentHuggingPriority(.defaultLow, for: .horizontal)
-            label.setContentHuggingPriority(.defaultLow, for: .vertical)
-
-            if let alternateKey = self.alternateKey, let alternateLabel = self.alternateLabel, case let .input(alternateString) = alternateKey.type {
-                alternateLabel.textColor = KeyboardView.theme.inactiveTextColor
-                
-                if case .shifted = page {
-                    alternateLabel.font = KeyboardView.theme.capitalKeyFont
-                } else {
-                    alternateLabel.font = KeyboardView.theme.keyFont
-                }
-                
-                alternateLabel.text = alternateString
-                alternateLabel.adjustsFontSizeToFitWidth = true
-                alternateLabel.textAlignment = .center
-                alternateLabel.backgroundColor = .clear
-                alternateLabel.clipsToBounds = false
-                alternateLabel.translatesAutoresizingMaskIntoConstraints = false
-                alternateLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
-                alternateLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
-
-                labelHoldingView.addSubview(alternateLabel)
-            }
-
-            labelHoldingView.addSubview(label)
-            addSubview(labelHoldingView)
-            label.centerXAnchor.constraint(equalTo: labelHoldingView.centerXAnchor).isActive = true
-            label.widthAnchor.constraint(equalTo: label.heightAnchor).isActive = true
-
-            if let alternateKey = self.alternateKey, let alternateLabel = self.alternateLabel, case .input = alternateKey.type {
-                swipeLayoutConstraint = label.topAnchor.constraint(equalTo: labelHoldingView.topAnchor, constant: 24)
-                swipeLayoutConstraint?.isActive = true
-
-                label.bottomAnchor.constraint(equalTo: labelHoldingView.bottomAnchor, constant: 0).isActive = true
-                alternateLabel.centerXAnchor.constraint(equalTo: labelHoldingView.centerXAnchor).isActive = true
-                alternateLabel.widthAnchor.constraint(equalTo: alternateLabel.heightAnchor).isActive = true
-                alternateLabel.topAnchor.constraint(equalTo: labelHoldingView.topAnchor, constant: 8).isActive = true
-                alternateLabel.bottomAnchor.constraint(equalTo: label.topAnchor).isActive = true
-            } else if let alternateKey = self.alternateKey, case .spacer = alternateKey.type {
-                swipeLayoutConstraint = label.topAnchor.constraint(equalTo: labelHoldingView.topAnchor, constant: 24)
-                swipeLayoutConstraint?.isActive = true
-
-                label.bottomAnchor.constraint(equalTo: labelHoldingView.bottomAnchor, constant: 0).isActive = true
-            } else {
-                let yConstant: CGFloat
-                if case .normal = page, case KeyType.input(_) = self.key.type {
-                    yConstant = -2.0
-                } else {
-                    yConstant = 0.0
-                }
-                label.centerYAnchor.constraint(equalTo: labelHoldingView.centerYAnchor, constant: yConstant).isActive = true
-                label.widthAnchor.constraint(lessThanOrEqualTo: labelHoldingView.widthAnchor, multiplier: 1.0).isActive = true
-                swipeLayoutConstraint = nil
-            }
-
-            contentView = labelHoldingView
-        }
+        contentView = labelHoldingView
     }
 
     private func image(_ image: UIImage) {
@@ -163,33 +187,27 @@ class KeyView: UIView {
         }
     }
     
-    init(page: KeyboardPage, key: KeyDefinition, alternateKey: KeyDefinition? = nil) {
+    init(page: KeyboardPage, key: KeyDefinition) {
         self.key = key
-        self.alternateKey = alternateKey
         super.init(frame: .zero)
 
         // HACK: UIColor.clear here breaks indexPathForItemAtPoint:
         backgroundColor = UIColor.black.withAlphaComponent(0.0001)
-
-        // If the alternate key is not an input key, ignore it
-        if let alternateKey = self.alternateKey, case .input = alternateKey.type, case .input = key.type {
-            // Continue
-        } else if let alternateKey = self.alternateKey, case .spacer = alternateKey.type, case .input = key.type {
-            // Continue
-        } else {
-            self.alternateKey = nil
-        }
         
         switch key.type {
-        case let KeyType.input(string), let KeyType.spacebar(string), let KeyType.returnkey(string):
+        case let .input(string, alt):
+            input(string: string, alt: alt, page: page)
+        case let .spacebar(string):
             text(string, page: page)
-        case KeyType.symbols:
+        case let .returnkey(string):
+            text(string, page: page)
+        case .symbols:
             if case .symbols1 = page {
                 text("ABC", page: page)
             } else if case .symbols2 = page {
                 text("ABC", page: page)
             } else {
-                if UIDevice.current.kind == .iPad {
+                if UIDevice.current.dc.deviceFamily == .iPad {
                     text(".?123", page: page)
                 } else {
                     text("123", page: page)
@@ -211,7 +229,7 @@ class KeyView: UIView {
             } else {
                 image(UIImage(named: "shift")!)
             }
-        default:
+        case .spacer, .splitKeyboard, .sideKeyboardLeft, .sideKeyboardRight:
             imageView = UIImageView()
             if let imageView = self.imageView {
                 self.imageView?.translatesAutoresizingMaskIntoConstraints = false
@@ -220,6 +238,14 @@ class KeyView: UIView {
 
                 contentView = imageView
             }
+        case .comma:
+            text(",", page: page)
+        case .fullStop:
+            text(".", page: page)
+        case .caps:
+            text("caps lock", page: page)
+        case .tab:
+            text("tab", page: page)
         }
 
         layer.shadowColor = KeyboardView.theme.keyShadowColor.cgColor
@@ -228,10 +254,12 @@ class KeyView: UIView {
         layer.shadowRadius = 0.0
 
         contentView.fillSuperview(self, margins: UIEdgeInsets(
-            top: KeyboardView.theme.keyVerticalMargin,
+            top: KeyboardView.theme.keyVerticalMargin + 2.0,
             left: KeyboardView.theme.keyHorizontalMargin,
-            bottom: KeyboardView.theme.keyVerticalMargin,
+            bottom: KeyboardView.theme.keyVerticalMargin - 2.0,
             right: KeyboardView.theme.keyHorizontalMargin))
+        
+        contentView.clipsToBounds = false
 
         contentView.backgroundColor = key.type.isSpecialKeyStyle
             ? KeyboardView.theme.specialKeyColor

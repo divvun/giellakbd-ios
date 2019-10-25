@@ -4,10 +4,12 @@ use_frameworks!
 target 'BaseKeyboard' do
   pod 'Sentry'
   pod 'libdivvunspell', :git => "https://github.com/bbqsrc/divvunspell-swift", :submodules => true
+  pod 'UIDeviceComplete', :git => "https://github.com/bbqsrc/UIDeviceComplete"
 end
 
 target 'HostingApp' do
   pod 'Sentry'
+  pod 'UIDeviceComplete', :git => "https://github.com/bbqsrc/UIDeviceComplete"
 end
 
 post_install do |installer|

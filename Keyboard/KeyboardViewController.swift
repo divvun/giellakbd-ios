@@ -1,10 +1,9 @@
-import AudioToolbox
 import Sentry
 import UIKit
+import UIDeviceComplete
+import AVFoundation
 
 protocol KeyboardViewProvider {
-    var swipeDownKeysEnabled: Bool { get set }
-
     var delegate: (KeyboardViewDelegate & KeyboardViewKeyboardKeyDelegate)? { get set }
 
     var page: BaseKeyboard.KeyboardPage { get set }
@@ -41,16 +40,68 @@ extension NSLayoutConstraint {
     }
 }
 
+fileprivate let portraitDeviceHeight: CGFloat = {
+    let size = UIScreen.main.bounds.size
+    return max(size.height, size.width)
+}()
+
+fileprivate let landscapeDeviceHeight: CGFloat = {
+    let size = UIScreen.main.bounds.size
+    return min(size.height, size.width)
+}()
+
 open class KeyboardViewController: UIInputViewController {
     @IBOutlet var nextKeyboardButton: UIButton!
     private var keyboardView: KeyboardViewProvider!
-
-    private var defaultHeightForDevice: CGFloat {
-        return UIDevice.current.kind == .iPad ? 688.0 / 2.0 : 420.0 / 2.0
+    
+    private var landscapeHeight: CGFloat {
+        let height = landscapeDeviceHeight
+        
+        switch UIDevice.current.dc.deviceFamily {
+        default:
+            return height / 2.0 - 55
+        }
+    }
+    
+    private var portraitHeight: CGFloat {
+        let height = portraitDeviceHeight
+        let sizeInches = UIDevice.current.dc.screenSize.sizeInches ?? 0
+        
+        switch UIDevice.current.dc.deviceFamily {
+        case .iPad:
+            // Smol iPads and 9 inch iPad Pro
+            if sizeInches < 10 {
+                return 314.0
+            }
+            
+            // iPads from 10 to 13 inches
+            if sizeInches < 13 {
+                return 384.0
+            }
+            
+            return height / 4.0
+        case .iPhone, .iPod:
+            switch UIDevice.current.dc.deviceModel {
+            case .iPhone5S, .iPhone5C:
+                return 254.0
+            case .iPhone6, .iPhone6S, .iPhone6Plus, .iPhone6SPlus, .iPhone7, .iPhone7Plus:
+                return 260.0
+            case .iPhone8:
+                return 260.0
+            case .iPhone8Plus, .iPhoneX, .iPhoneXR, .iPhoneXS, .iPhone11, .iPhone11Pro, .iPhone11ProMax:
+                return 272.0
+            case .iPhoneXSMax:
+                return 272.0
+            default:
+                break
+            }
+            return 254.0
+        default:
+            return height / 3.0
+        }
     }
 
     private var heightConstraint: NSLayoutConstraint!
-    private let bannerHeight: CGFloat = 55.0
     private var extraSpacingView: UIView!
     private var deadKeyHandler: DeadKeyHandler!
     public private(set) var bannerView: BannerView!
@@ -60,14 +111,48 @@ open class KeyboardViewController: UIInputViewController {
         didSet {
             KeyboardView.theme = textDocumentProxy.keyboardAppearance == UIKeyboardAppearance.dark ? DarkTheme : LightTheme
 
-            setupKeyboardView()
-
-            keyboardDidReset()
+//            setupKeyboardView()
+//            keyboardDidReset()
         }
     }
 
-    var LightTheme: Theme { return keyboardMode == .normal && UIDevice.current.kind == UIDevice.Kind.iPad ? LightThemeIpadImpl() : LightThemeImpl() }
-    var DarkTheme: Theme { return self.keyboardMode == .normal && UIDevice.current.kind == UIDevice.Kind.iPad ? DarkThemeIpadImpl() : DarkThemeImpl() }
+    var LightTheme: Theme {
+        return keyboardMode == .normal && UIDevice.current.dc.deviceFamily == .iPad
+            ? LightThemeIpadImpl()
+            : LightThemeImpl()
+    }
+    
+    var DarkTheme: Theme {
+        return self.keyboardMode == .normal && UIDevice.current.dc.deviceFamily == .iPad
+            ? DarkThemeIpadImpl()
+            : DarkThemeImpl()
+    }
+    
+    private var isSoundEnabled = KeyboardSettings.isKeySoundEnabled
+    
+    open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        // This could have changed, so we hook here.
+        isSoundEnabled = KeyboardSettings.isKeySoundEnabled
+        
+        DispatchQueue.main.async {
+            self.updateHeightConstraint()
+        }
+    }
+    
+    private var isDeviceLandscape: Bool {
+        let s = UIScreen.main.bounds.size
+        return s.width > s.height
+    }
+    
+    private func initHeightConstraint() {
+        let c: NSLayoutConstraint
+        if isDeviceLandscape {
+            c = view.heightAnchor.constraint(equalToConstant: landscapeHeight)
+        } else {
+            c = view.heightAnchor.constraint(equalToConstant: portraitHeight)
+        }
+        heightConstraint = c.enable(priority: .required)
+    }
 
     open override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,7 +166,7 @@ open class KeyboardViewController: UIInputViewController {
         inputView?.allowsSelfSizing = true
         setupKeyboardView()
         setupBannerView()
-
+        
         print("\(KeyboardDefinition.definitions.map { $0.locale + " " })")
     }
 
@@ -169,12 +254,11 @@ open class KeyboardViewController: UIInputViewController {
         extraSpacingView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
 
         bannerView = BannerView(frame: .zero)
-        //        self.bannerView.backgroundColor = KeyboardView.theme.bannerBackgroundColor
         bannerView.translatesAutoresizingMaskIntoConstraints = false
 
         view.insertSubview(bannerView, at: 0)
 
-        bannerView.heightAnchor.constraint(equalToConstant: bannerHeight).isActive = true
+        bannerView.heightAnchor.constraint(equalToConstant: KeyboardView.theme.bannerHeight).isActive = true
         bannerView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         bannerView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
 
@@ -186,12 +270,28 @@ open class KeyboardViewController: UIInputViewController {
 
     private func updateHeightConstraint() {
         guard let _ = self.heightConstraint else { return }
-
-        heightConstraint.constant = bannerVisible ? defaultHeightForDevice + bannerHeight : defaultHeightForDevice
+        
+        DispatchQueue.main.async {
+            var value = self.bannerVisible ? KeyboardView.theme.bannerHeight : 0
+            
+            if !self.isDeviceLandscape {
+                print("Portrait")
+                value += self.portraitHeight
+            } else {
+                print("Landscape")
+                value += self.landscapeHeight
+            }
+            
+            self.heightConstraint.constant = value
+        }
     }
 
+    private var isFirstRun = true
     open override func viewDidLayoutSubviews() {
-        updateHeightConstraint()
+        if isFirstRun {
+            isFirstRun = false
+            initHeightConstraint()
+        }
 
         super.viewDidLayoutSubviews()
     }
@@ -201,26 +301,30 @@ open class KeyboardViewController: UIInputViewController {
 
         KeyboardView.theme = textDocumentProxy.keyboardAppearance == UIKeyboardAppearance.dark ? DarkTheme : LightTheme
     }
-
-    open override func viewDidAppear(_: Bool) {
-        keyboardDidReset()
+    
+    private var application: UIApplication? {
+        var responder: UIResponder? = self
+        while responder != nil {
+            if let app = responder as? UIApplication {
+                return app
+            }
+            responder = responder?.next
+        }
+        return nil
     }
 
     func keyboardDidReset() {
-        KeyboardView.theme = textDocumentProxy.keyboardAppearance == UIKeyboardAppearance.dark ? DarkTheme : LightTheme
+//        updateHeightConstraint()
+        
+//            KeyboardView.theme = (self.textDocumentProxy.keyboardAppearance == UIKeyboardAppearance.dark)
+//                ? self.DarkTheme
+//                : self.LightTheme
+//
+//            self.keyboardView.update()
+//            self.bannerView.update()
+        self.disablesDelayingGestureRecognizers = true
 
-        heightConstraint = view.heightAnchor.constraint(equalToConstant: defaultHeightForDevice)
-
-        heightConstraint.priority = UILayoutPriority.required
-        heightConstraint.isActive = true
-
-        keyboardView.heightAnchor.constraint(equalToConstant: defaultHeightForDevice).isActive = true
-
-        keyboardView.update()
-        bannerView.update()
-        disablesDelayingGestureRecognizers = true
-
-        view.backgroundColor = KeyboardView.theme.backgroundColor
+        self.view.backgroundColor = KeyboardView.theme.backgroundColor
     }
 
     open override func viewDidDisappear(_ animated: Bool) {
@@ -343,14 +447,6 @@ open class KeyboardViewController: UIInputViewController {
     open override func textDidChange(_: UITextInput?) {
         // The app has just changed the document's contents, the document context has been updated.
 
-        var textColor: UIColor
-        let proxy = textDocumentProxy
-        if proxy.keyboardAppearance == UIKeyboardAppearance.dark {
-            textColor = UIColor.white
-        } else {
-            textColor = UIColor.black
-        }
-        
         updateInputState()
     }
 
@@ -378,6 +474,11 @@ open class KeyboardViewController: UIInputViewController {
     }
 }
 
+private let clickSound: SystemSoundID = 1123
+private let deleteSound: SystemSoundID = 1155
+private let modifierSound: SystemSoundID = 1156
+private let fallbackSound: SystemSoundID = 1104
+
 extension KeyboardViewController: KeyboardViewDelegate {
     func didMoveCursor(_ movement: Int) {
         textDocumentProxy.adjustTextPosition(byCharacterOffset: movement)
@@ -396,42 +497,94 @@ extension KeyboardViewController: KeyboardViewDelegate {
             didTriggerKey(key)
         }
     }
-
-    func didTriggerKey(_ key: KeyDefinition) {
-        switch key.type {
-        case let .input(string):
-            switch deadKeyHandler.handleInput(string, page: keyboardView.page) {
-            case .none:
-                insertText(string)
-            case .transforming:
-                // Do nothing for now
-                break
-            case let .output(value):
-                insertText(value)
-            }
-
+    
+    private func handleDeadKey(string: String, endShifted: Bool = true) {
+        switch deadKeyHandler.handleInput(string, page: keyboardView.page) {
+        case .none:
+            insertText(string)
+        case .transforming:
+            // Do nothing for now
+            break
+        case let .output(value):
+            insertText(value)
+        }
+        
+        if endShifted {
             if keyboardView.page == .shifted {
                 keyboardView.page = .normal
             }
+        }
+    }
+    
+    private func playSound(_ key: KeyDefinition) {
+        if !isSoundEnabled {
+            return
+        }
+        
+        var sound: SystemSoundID? = nil
+        
+        switch key.type {
+        case .input(_), .comma, .fullStop, .tab:
+            sound = clickSound
+        case .caps, .keyboard, .keyboardMode, .shift, .shiftSymbols, .symbols, .spacebar, .returnkey:
+            sound = modifierSound
+        case .backspace:
+            sound = deleteSound
+        default:
+            return
+        }
+        
+        if #available(iOS 10.0, *) {
+            // Nothing
+        } else if sound != nil {
+            sound = fallbackSound
+        }
+        
+        DispatchQueue.global().async {
+            if let sound = sound {
+                AudioServicesPlaySystemSound(sound)
+            }
+        }
+    }
+    
+    func didSwipeKey(_ key: KeyDefinition) {
+        switch key.type {
+        case let .input(_, alt):
+            if let alt = alt {
+                handleDeadKey(string: alt)
+            }
+        default:
+            break
+        }
+    }
+
+    func didTriggerKey(_ key: KeyDefinition) {
+        playSound(key)
+        
+        switch key.type {
+        case .comma:
+            handleDeadKey(string: ",")
+        case .fullStop:
+            handleDeadKey(string: ".")
+        case .tab:
+            break
+//            textDocumentProxy.
+        case let .input(string, _):
+            handleDeadKey(string: string)
         case .spacer:
+            // TODO: hit most approximate key instead!
             break
         case .shift:
             keyboardView.page = (keyboardView.page == .normal ? .shifted : .normal)
+        case .caps:
+            keyboardView.page = (keyboardView.page == .capslock ? .normal : .capslock)
         case .backspace:
             if let value = deadKeyHandler.finish() {
                 insertText(value)
             }
             deleteBackward()
         case .spacebar:
-            switch deadKeyHandler.handleInput(" ", page: keyboardView.page) {
-            case .none:
-                insertText(" ")
-            case .transforming:
-                // Do nothing for now
-                break
-            case let .output(value):
-                insertText(value)
-            }
+            handleDeadKey(string: " ", endShifted: false)
         case .returnkey:
             if let value = deadKeyHandler.finish() {
                 insertText(value)

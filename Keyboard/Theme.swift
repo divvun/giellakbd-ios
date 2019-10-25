@@ -27,7 +27,9 @@ protocol Theme {
     var keyFont: UIFont { get }
     var lowerKeyFont: UIFont { get }
     var capitalKeyFont: UIFont { get }
-    var alternateKeyFontSize: CGFloat { get }
+    var modifierKeyFontSize: CGFloat { get }
+    var altKeyFontSize: CGFloat { get }
+    var altKeyFont: UIFont { get }
     var popupKeyFont: UIFont { get }
     var bannerFont: UIFont { get }
 
@@ -37,12 +39,11 @@ protocol Theme {
 
     var bannerHorizontalMargin: CGFloat { get }
     var bannerVerticalMargin: CGFloat { get }
+    var bannerHeight: CGFloat { get }
 }
 
 class LightThemeImpl: Theme {
-    private let _keyFont: UIFont = UIFont.systemFont(ofSize: 26.0)
-    private let _lowerKeyFont: UIFont = UIFont.systemFont(ofSize: 26.0, weight: .light)
-    private let _capitalKeyFont: UIFont = UIFont.systemFont(ofSize: 24.0)
+    var bannerHeight: CGFloat { return IPhoneThemeBase.bannerHeight }
     
     var regularKeyColor = UIColor.white
     var specialKeyColor = UIColor(r: 162, g: 167, b: 177)
@@ -60,20 +61,20 @@ class LightThemeImpl: Theme {
     var solidPopupColor: UIColor { return popupColor }
     var activeColor: UIColor = UIColor(r: 31, g: 126, b: 249)
     var activeTextColor: UIColor = UIColor.white
-
-    var keyCornerRadius: CGFloat { return 5.0 }
+    
+    var keyCornerRadius: CGFloat { return IPhoneThemeBase.keyCornerRadius }
     var popupCornerRadius: CGFloat = 12.0
-    var keyHorizontalMargin: CGFloat { return 2.5 }
-    var keyVerticalMargin: CGFloat { return 5.0 }
+    var keyHorizontalMargin: CGFloat { return IPhoneThemeBase.keyHorizontalMargin }
+    var keyVerticalMargin: CGFloat { return IPhoneThemeBase.keyVerticalMargin }
 
-    var keyFont: UIFont { return _keyFont }
-    var lowerKeyFont: UIFont { return _lowerKeyFont }
-    var capitalKeyFont: UIFont { return _capitalKeyFont }
-//    var keyFont: UIFont { return UIFont.init(name: ".SFUIDisplay-Light", size: 26.0)! }
-//    var capitalKeyFont: UIFont { return UIFont.init(name: ".SFUIDisplay-Light", size: 24.0)! }
-    var alternateKeyFontSize: CGFloat { return 17.0 }
+    var keyFont: UIFont { return IPhoneThemeBase.keyFont }
+    var lowerKeyFont: UIFont { return IPhoneThemeBase.lowerKeyFont }
+    var capitalKeyFont: UIFont { return IPhoneThemeBase.capitalKeyFont }
+    var modifierKeyFontSize: CGFloat { return IPhoneThemeBase.modifierKeyFontSize }
     var popupKeyFont = UIFont.systemFont(ofSize: 36.0)
     var bannerFont = UIFont.systemFont(ofSize: 18.0)
+    var altKeyFont: UIFont { return IPadThemeBase.altKeyFont }
+    var altKeyFontSize: CGFloat { return IPadThemeBase.altKeyFontSize }
 
     var bannerBackgroundColor: UIColor { return backgroundColor }
     var bannerSeparatorColor: UIColor { return solidSpecialKeyColor }
@@ -85,22 +86,8 @@ class LightThemeImpl: Theme {
     public init() {}
 }
 
-class LightThemeIpadImpl: LightThemeImpl {
-    let _keyFont: UIFont = UIFont.systemFont(ofSize: 28.0)
-    
-    override var keyCornerRadius: CGFloat { return 7.0 }
-    override var keyHorizontalMargin: CGFloat { return 7.0 }
-    override var keyVerticalMargin: CGFloat { return 7.0 }
-    
-    override var keyFont: UIFont { return _keyFont }
-    override var alternateKeyFontSize: CGFloat { return 17.0 }
-}
-
 class DarkThemeImpl: Theme {
-    private let _keyFont: UIFont = UIFont.systemFont(ofSize: 26.0)
-    private let _lowerKeyFont: UIFont = UIFont.systemFont(ofSize: 26.0, weight: .light)
-    private let _capitalKeyFont: UIFont = UIFont.systemFont(ofSize: 24.0)
-    
+    var bannerHeight: CGFloat { return IPhoneThemeBase.bannerHeight }
     var backgroundColor: UIColor = .clear
 
     var keyShadowColor: UIColor = UIColor(r: 103, g: 106, b: 110, a: 0.5)
@@ -119,16 +106,18 @@ class DarkThemeImpl: Theme {
     var solidPopupColor: UIColor { return solidRegularKeyColor }
     var activeColor: UIColor = UIColor(r: 31, g: 126, b: 249)
     var activeTextColor: UIColor = UIColor.white
-
-    var keyCornerRadius: CGFloat { return 8.0 }
+    var altKeyFont: UIFont { return IPadThemeBase.altKeyFont }
+    var altKeyFontSize: CGFloat { return IPadThemeBase.altKeyFontSize }
+    
+    var keyCornerRadius: CGFloat { return IPhoneThemeBase.keyCornerRadius }
     var popupCornerRadius: CGFloat = 12.0
-    var keyHorizontalMargin: CGFloat { return 2.5 }
-    var keyVerticalMargin: CGFloat { return 5.0 }
+    var keyHorizontalMargin: CGFloat { return IPhoneThemeBase.keyHorizontalMargin }
+    var keyVerticalMargin: CGFloat { return IPhoneThemeBase.keyVerticalMargin }
 
-    var keyFont: UIFont { return _keyFont }
-    var lowerKeyFont: UIFont { return _lowerKeyFont }
-    var capitalKeyFont: UIFont { return _capitalKeyFont }
-    var alternateKeyFontSize: CGFloat { return 17.0 }
+    var keyFont: UIFont { return IPhoneThemeBase.keyFont }
+    var lowerKeyFont: UIFont { return IPhoneThemeBase.lowerKeyFont }
+    var capitalKeyFont: UIFont { return IPhoneThemeBase.capitalKeyFont }
+    var modifierKeyFontSize: CGFloat { return IPhoneThemeBase.modifierKeyFontSize }
     var popupKeyFont = UIFont.systemFont(ofSize: 26.0)
     var bannerFont = UIFont.systemFont(ofSize: 16.0)
 
@@ -142,11 +131,88 @@ class DarkThemeImpl: Theme {
     public init() {}
 }
 
-class DarkThemeIpadImpl: DarkThemeImpl {
-    override var keyCornerRadius: CGFloat { return 12.0 }
-    override var keyHorizontalMargin: CGFloat { return 9.0 }
-    override var keyVerticalMargin: CGFloat { return 7.0 }
+private class IPhoneThemeBase {
+    static let keyHorizontalMargin: CGFloat = {
+        switch UIDevice.current.dc.deviceModel {
+        case .iPhoneX, .iPhoneXR, .iPhoneXS, .iPhone11, .iPhone11Pro:
+            return 3.0
+        case .iPhone11ProMax, .iPhoneXSMax:
+            return 3.0
+        case .iPhone5S, .iPhone5C:
+            return 3.0
+        default:
+            return 3.0
+        }
+    }()
+    static let keyVerticalMargin: CGFloat = {
+        switch UIDevice.current.dc.deviceModel {
+        case .iPhone5S, .iPhone5C:
+            return 8.0
+        case .iPhone6, .iPhone6S, .iPhone6Plus, .iPhone6SPlus, .iPhone7, .iPhone7Plus, .iPhone8:
+            return 6.5
+        case .iPhone8Plus, .iPhoneX, .iPhoneXR, .iPhoneXS, .iPhone11, .iPhone11Pro, .iPhone11ProMax, .iPhoneXSMax:
+            return 6.0
+        default:
+            return 6.0
+        }
+    }()
+    static let keyCornerRadius: CGFloat = {
+        switch UIDevice.current.dc.deviceModel {
+        case .iPhone5S, .iPhone5C:
+            return 4.0
+        case .iPhone6, .iPhone6S, .iPhone6Plus, .iPhone6SPlus, .iPhone7, .iPhone7Plus, .iPhone8, .iPhone8Plus, .iPhoneX, .iPhoneXR, .iPhoneXS, .iPhone11, .iPhone11Pro, .iPhone11ProMax, .iPhoneXSMax:
+            return 5.0
+        default:
+            return 5.0
+        }
+    }()
+    
+    static let bannerHeight: CGFloat = 42.0
+    
+    static let keyFont: UIFont = UIFont.systemFont(ofSize: 28.0) // TODO: this can be deprecated
+    static let lowerKeyFont: UIFont = UIFont.systemFont(ofSize: 25.0, weight: .light)
+    static let capitalKeyFont: UIFont = UIFont.systemFont(ofSize: 22.0)
+    static let modifierKeyFontSize: CGFloat = 16.0
+    
+    private init() { fatalError() }
+    
+}
 
-    override var keyFont: UIFont { return UIFont.systemFont(ofSize: 28.0) }
-    override var alternateKeyFontSize: CGFloat { return 17.0 }
+private class IPadThemeBase {
+    static let altKeyFontSize: CGFloat = 13.0
+    static let altKeyFont: UIFont = UIFont.systemFont(ofSize: altKeyFontSize)
+    static let keyFont: UIFont = UIFont.systemFont(ofSize: 21.0)
+    static let alternateKeyFontSize: CGFloat = 17.0
+    
+    static let bannerHeight: CGFloat = 55.0
+    
+    static let keyCornerRadius: CGFloat = 5.0
+    static let keyHorizontalMargin: CGFloat = (UIDevice.current.dc.screenSize.sizeInches ?? 0.0) > 10
+        ? 3.0
+        : 5.0
+    static let keyVerticalMargin: CGFloat = (UIDevice.current.dc.screenSize.sizeInches ?? 0.0) > 10
+        ? 3.0
+        : 5.0
+    
+    private init() { fatalError() }
+}
+
+class LightThemeIpadImpl: LightThemeImpl {
+    override var keyCornerRadius: CGFloat { return IPadThemeBase.keyCornerRadius }
+    override var keyHorizontalMargin: CGFloat { return IPadThemeBase.keyHorizontalMargin }
+    override var keyVerticalMargin: CGFloat { return IPadThemeBase.keyVerticalMargin }
+    
+    override var keyFont: UIFont { return IPadThemeBase.keyFont }
+    override var modifierKeyFontSize: CGFloat { return IPadThemeBase.alternateKeyFontSize }
+    override var bannerHeight: CGFloat { return IPadThemeBase.bannerHeight }
+}
+
+class DarkThemeIpadImpl: DarkThemeImpl {
+    override var keyCornerRadius: CGFloat { return IPadThemeBase.keyCornerRadius }
+    override var keyHorizontalMargin: CGFloat { return IPadThemeBase.keyHorizontalMargin }
+    override var keyVerticalMargin: CGFloat { return IPadThemeBase.keyVerticalMargin }
+
+    override var keyFont: UIFont { return IPadThemeBase.keyFont }
+    override var modifierKeyFontSize: CGFloat { return IPadThemeBase.alternateKeyFontSize }
+    override var bannerHeight: CGFloat { return IPadThemeBase.bannerHeight }
 }

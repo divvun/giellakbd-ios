@@ -1,17 +1,5 @@
 import UIKit
-
-extension Bundle {
-    static var top: Bundle {
-        if Bundle.main.bundleURL.pathExtension == "appex" {
-            let url = Bundle.main.bundleURL.deletingLastPathComponent().deletingLastPathComponent()
-            if let other = Bundle(url: url) {
-                return other
-            }
-        }
-
-        return Bundle.main
-    }
-}
+import UIDeviceComplete
 
 public indirect enum TransformTree {
     case tree([String: TransformTree])
@@ -33,16 +21,48 @@ public struct KeyboardDefinition {
     public let name: String
     public let locale: String
     public let spaceName: String
-    public let enterName: String
+    public let returnName: String
 
     public let deadKeys: [String: [String]]
     public let transforms: [String: TransformTree]
     public let longPress: [String: [String]]
-    public var normal: [[KeyDefinition]]
-    public var shifted: [[KeyDefinition]]
-    public var symbols1: [[KeyDefinition]]
-    public var symbols2: [[KeyDefinition]]
+    private(set) public var normal: [[KeyDefinition]] = []
+    private(set) public var shifted: [[KeyDefinition]] = []
+    private(set) public var symbols1: [[KeyDefinition]] = []
+    private(set) public var symbols2: [[KeyDefinition]] = []
+    
+    public func copy(
+        normal: [[KeyDefinition]],
+        shifted: [[KeyDefinition]],
+        symbols1: [[KeyDefinition]],
+        symbols2: [[KeyDefinition]]
+    ) -> KeyboardDefinition {
+        return KeyboardDefinition(
+            other: self, normal: normal, shifted: shifted, symbols1: symbols1, symbols2: symbols2)
+    }
 
+    private init(
+        other: KeyboardDefinition,
+        normal: [[KeyDefinition]],
+        shifted: [[KeyDefinition]],
+        symbols1: [[KeyDefinition]],
+        symbols2: [[KeyDefinition]]
+    ) {
+        self.name = other.name
+        self.locale = other.locale
+        self.spaceName = other.spaceName
+        self.returnName = other.returnName
+        
+        self.deadKeys = other.deadKeys
+        self.transforms = other.transforms
+        self.longPress = other.longPress
+        
+        self.normal = normal
+        self.shifted = shifted
+        self.symbols1 = symbols1
+        self.symbols2 = symbols2
+    }
+    
     private static func recurseTransforms(_ current: [String: Any]) -> [String: TransformTree] {
         var transforms = [String: TransformTree]()
 
@@ -62,7 +82,7 @@ public struct KeyboardDefinition {
         name = raw["name"] as! String
         locale = raw["locale"] as! String
         spaceName = raw["space"] as! String
-        enterName = raw["return"] as! String
+        returnName = raw["return"] as! String
 
         longPress = raw["longPress"] as! [String: [String]]
 
@@ -73,66 +93,90 @@ public struct KeyboardDefinition {
             transforms = [:]
         }
 
-        let normalrows = (raw["normal"] as! [[Any]]).map { $0.compactMap { KeyDefinition(input: $0) } }
-        normal = normalrows
-
-        let shiftedrows = (raw["shifted"] as! [[Any]]).map { $0.compactMap { KeyDefinition(input: $0) } }
-        shifted = shiftedrows
-
-        symbols1 = SystemKeys.symbolKeysFirstPage
-        // Naively pad out the symbols. Should rather be a larger list and trimmed in the future
-        for (rowIndex, _) in symbols1.enumerated() {
-            while symbols1[rowIndex].count < normal[rowIndex].count {
-                symbols1[rowIndex].append(KeyDefinition(type: KeyType.spacer, size: CGSize(width: 0.0, height: 1.0)))
+        let modes: [String: [[Any]]?]
+        let family = UIDevice.current.dc.deviceFamily
+        print("\(family)")
+        if family == .iPad {
+            if (UIDevice.current.dc.screenSize.sizeInches ?? 0.0) < 12.0 {
+                modes = raw["ipad-9in"] as! [String: [[Any]]?]
+                
+                // On iPad Pro 9 inch, we want to have swipe keys so we merge all of our layers
+                let normal = modes["normal"]!!
+                let shifted = modes["shifted"]!!
+                let alt = modes["alt"]!!
+                let altShift = modes["alt+shift"]!!
+                let symbols1 = modes["symbols-1"]!!
+                let symbols2 = modes["symbols-2"]!!
+                
+                self.normal = zip(normal, alt)
+                    .map { zip($0, $1).map { KeyDefinition(input: $0, alternate: $1, spaceName: spaceName, returnName: returnName) }}
+                self.shifted = zip(shifted, altShift)
+                    .map { zip($0, $1).map { KeyDefinition(input: $0, alternate: $1, spaceName: spaceName, returnName: returnName) }}
+                self.symbols1 = zip(symbols1, symbols2).map {
+                    zip($0, $1).map {
+                        return KeyDefinition(input: $0, alternate: $1, spaceName: spaceName, returnName: returnName)
+                    }
+                }
+                self.symbols2 = symbols2.map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) } }
+                
+            } else {
+                // On iPad Pro 12 inch, we want to have swipe keys only on the top row
+                modes = raw["ipad-12in"] as! [String: [[Any]]?]
+                let normal = modes["normal"]!!
+                let shifted = modes["shifted"]!!
+                let symbols1 = modes["symbols-1"]!!
+//                let symbols2 = modes["symbols-2"]!!
+                
+                var normal1: [[KeyDefinition]] = [zip(normal[0], symbols1[0]).map {
+                    KeyDefinition(input: $0, alternate: $1, spaceName: spaceName, returnName: returnName)
+                }]
+                normal.suffix(from: 1)
+                    .forEach { normal1.append($0.compactMap { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) }) }
+                self.normal = normal1
+                
+                var shifted1: [[KeyDefinition]] = [zip(shifted[0], symbols1[0]).map {
+                    KeyDefinition(input: $0, alternate: $1, spaceName: spaceName, returnName: returnName)
+                }]
+                shifted.suffix(from: 1)
+                    .forEach { shifted1.append($0.compactMap { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) }) }
+                self.shifted = shifted1
+                
+                self.symbols1 = symbols1.map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) } }
             }
+        } else {
+            modes = raw["iphone"] as! [String: [[Any]]?]
+            
+            normal = (modes["normal"]!!).map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) } }
+            shifted = (modes["shifted"]!!).map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) } }
+            
+            symbols1 = modes["symbols-1"]!!.map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) }}
+            symbols2 = modes["symbols-2"]!!.map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) }}
+
+//            symbols1 = SystemKeys.symbolKeysFirstPage
+//            // Naively pad out the symbols. Should rather be a larger list and trimmed in the future
+//            for (rowIndex, _) in symbols1.enumerated() {
+//                while symbols1[rowIndex].count < normal[rowIndex].count {
+//                    symbols1[rowIndex].append(KeyDefinition(type: KeyType.spacer, size: CGSize(width: 0.0, height: 1.0)))
+//                }
+//            }
+//
+//            symbols2 = SystemKeys.symbolKeysSecondPage
+//            for (rowIndex, _) in symbols2.enumerated() {
+//                while symbols2[rowIndex].count < normal[rowIndex].count {
+//                    symbols2[rowIndex].append(KeyDefinition(type: KeyType.spacer, size: CGSize(width: 0.0, height: 1.0)))
+//                }
+//            }
         }
 
-        symbols2 = SystemKeys.symbolKeysSecondPage
-        for (rowIndex, _) in symbols2.enumerated() {
-            while symbols2[rowIndex].count < normal[rowIndex].count {
-                symbols2[rowIndex].append(KeyDefinition(type: KeyType.spacer, size: CGSize(width: 0.0, height: 1.0)))
-            }
-        }
-
-        normal.platformize(page: .normal, spaceName: spaceName, returnName: enterName)
-        shifted.platformize(page: .shifted, spaceName: spaceName, returnName: enterName)
-        symbols1.platformize(page: .symbols1, spaceName: spaceName, returnName: enterName)
-        symbols2.platformize(page: .symbols2, spaceName: spaceName, returnName: enterName)
+        normal.platformize(page: .normal, spaceName: spaceName, returnName: returnName)
+        shifted.platformize(page: .shifted, spaceName: spaceName, returnName: returnName)
+        symbols1.platformize(page: .symbols1, spaceName: spaceName, returnName: returnName)
+        symbols2.platformize(page: .symbols2, spaceName: spaceName, returnName: returnName)
     }
 }
 
 extension Array where Element == [KeyDefinition] {
     mutating func platformize(page: KeyboardPage, spaceName: String, returnName: String) {
-        let shiftType: KeyType
-        let isSymbols: Bool
-        
-        switch page {
-        case .symbols1, .symbols2:
-            isSymbols = true
-            shiftType = .shiftSymbols
-        default:
-            isSymbols = false
-            shiftType = .shift
-        }
-        
-        if UIDevice.current.kind == UIDevice.Kind.iPad {
-            // Add comma and fullstop keys
-            self[2].append(KeyDefinition(type: .input(key: ",")))
-            self[2].append(KeyDefinition(type: .input(key: ".")))
-            
-            self[2].insert(KeyDefinition(type: shiftType), at: 0)
-            self[2].append(KeyDefinition(type: shiftType, size: CGSize(width: 1.5, height: 1.0)))
-
-            self[0].append(KeyDefinition(type: .backspace))
-            self[1].append(KeyDefinition(type: KeyType.returnkey(name: returnName), size: CGSize(width: 2.0, height: 1.0)))
-
-        } else {
-            self[2].insert(KeyDefinition(type: shiftType, size: CGSize(width: 1, height: 1.0)), at: 0)
-//            self[2].insert(KeyDefinition(type: .spacer, size: CGSize(width: 0.5, height: 1.0)), at: 1)
-
-//            self[2].append(KeyDefinition(type: .spacer, size: CGSize(width: 0.5, height: 1.0)))
-            self[2].append(KeyDefinition(type: .backspace, size: CGSize(width: 1, height: 1.0)))
-        }
         append(SystemKeys.systemKeyRowsForCurrentDevice(spaceName: spaceName, returnName: returnName))
     }
 

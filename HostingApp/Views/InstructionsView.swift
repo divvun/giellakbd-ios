@@ -12,6 +12,7 @@ class InstructionsView: UIView, Nibbable {
     @IBOutlet var tapSoundsLabel: UILabel!
 
     @IBOutlet var bgImage: UIImageView!
+    @IBOutlet var settingsButton: MenuButton!
 
     override func awakeFromNib() {
         step1Label.attributedText = Strings.openApp(item: Strings.settings)
@@ -20,6 +21,7 @@ class InstructionsView: UIView, Nibbable {
         step4Label.attributedText = Strings.tap(item: Strings.keyboards)
         step5Label.attributedText = Strings.tap(item: Strings.addNewKeyboard)
         step6Label.attributedText = Strings.tap(item: Strings.localizedName)
+        settingsButton.setTitle(Strings.settings, for: .normal)
 
         finishLabel.text = Strings.whenYouHaveFinished
         tapSoundsLabel.attributedText = Strings.enableTapSounds

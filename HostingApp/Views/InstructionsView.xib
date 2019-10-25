@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -19,7 +17,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                 </imageView>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="5Ge-bG-US3">
-                    <rect key="frame" x="16" y="90" width="343" height="335.5"/>
+                    <rect key="frame" x="16" y="90" width="343" height="401.5"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="U7J-h6-aN0">
                             <rect key="frame" x="0.0" y="0.0" width="343" height="204"/>
@@ -44,8 +42,8 @@
                                                 </fragment>
                                                 <fragment content="Settings">
                                                     <attributes>
-                                                        <font key="NSFont" size="17" name=".AppleSystemUIFontEmphasized"/>
-                                                        <font key="NSOriginalFont" size="17" name=".AppleSystemUIFontEmphasized"/>
+                                                        <font key="NSFont" metaFont="systemBold" size="17"/>
+                                                        <font key="NSOriginalFont" metaFont="systemBold" size="17"/>
                                                     </attributes>
                                                 </fragment>
                                                 <fragment content=" app">
@@ -59,7 +57,7 @@
                                     </subviews>
                                 </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="V8n-OQ-dXE">
-                                    <rect key="frame" x="0.0" y="36" width="120" height="24"/>
+                                    <rect key="frame" x="0.0" y="36" width="119.5" height="24"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tap" translatesAutoresizingMaskIntoConstraints="NO" id="SML-cq-hZV">
                                             <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
@@ -69,7 +67,7 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap General" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gt8-FC-YFo">
-                                            <rect key="frame" x="28" y="3.5" width="92" height="20.5"/>
+                                            <rect key="frame" x="28" y="3.5" width="91.5" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -77,7 +75,7 @@
                                     </subviews>
                                 </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="E4B-An-WfU">
-                                    <rect key="frame" x="0.0" y="72" width="133.5" height="24"/>
+                                    <rect key="frame" x="0.0" y="72" width="133" height="24"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tap" translatesAutoresizingMaskIntoConstraints="NO" id="lCV-xP-Hiw">
                                             <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
@@ -87,7 +85,7 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap Keyboard" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ki3-2X-rZU">
-                                            <rect key="frame" x="28" y="3.5" width="105.5" height="20.5"/>
+                                            <rect key="frame" x="28" y="3.5" width="105" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -95,7 +93,7 @@
                                     </subviews>
                                 </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Fvj-JC-rmv">
-                                    <rect key="frame" x="0.0" y="108" width="142" height="24"/>
+                                    <rect key="frame" x="0.0" y="108" width="141.5" height="24"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tap" translatesAutoresizingMaskIntoConstraints="NO" id="Ruj-Nr-d5p">
                                             <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
@@ -105,7 +103,7 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap Keyboards" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Ge-hm-2gn">
-                                            <rect key="frame" x="28" y="3.5" width="114" height="20.5"/>
+                                            <rect key="frame" x="28" y="3.5" width="113.5" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -113,7 +111,7 @@
                                     </subviews>
                                 </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Evu-IB-3k3">
-                                    <rect key="frame" x="0.0" y="144" width="207.5" height="24"/>
+                                    <rect key="frame" x="0.0" y="144" width="207" height="24"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tap" translatesAutoresizingMaskIntoConstraints="NO" id="lc8-gb-5qu">
                                             <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
@@ -123,7 +121,7 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap Add New Keyboard" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="seG-Je-CmM">
-                                            <rect key="frame" x="28" y="3.5" width="179.5" height="20.5"/>
+                                            <rect key="frame" x="28" y="3.5" width="179" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -131,7 +129,7 @@
                                     </subviews>
                                 </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="qfc-s4-UNf">
-                                    <rect key="frame" x="0.0" y="180" width="222.5" height="24"/>
+                                    <rect key="frame" x="0.0" y="180" width="221.5" height="24"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tap" translatesAutoresizingMaskIntoConstraints="NO" id="JRJ-qi-BqV">
                                             <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
@@ -141,7 +139,7 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap &quot;Template Keyboard&quot;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m9F-0P-tnE">
-                                            <rect key="frame" x="28" y="3.5" width="194.5" height="20.5"/>
+                                            <rect key="frame" x="28" y="3.5" width="193.5" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -156,8 +154,12 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g0R-D3-c6g" customClass="HomePrimaryButton" customModule="HostingApp" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="306.5" width="343" height="34"/>
+                            <state key="normal" title="Open Settings"/>
+                        </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="If you wish to enable key tap sounds, you must then tap &quot;Template Keyboard&quot; and toggle &quot;Allow Full Access&quot;." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bkS-AO-jyM">
-                            <rect key="frame" x="0.0" y="306.5" width="343" height="29"/>
+                            <rect key="frame" x="0.0" y="372.5" width="343" height="29"/>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -178,6 +180,7 @@
             <connections>
                 <outlet property="bgImage" destination="piv-tr-ffi" id="QGj-as-t8r"/>
                 <outlet property="finishLabel" destination="2q9-uV-jkM" id="4Ob-6P-FSD"/>
+                <outlet property="settingsButton" destination="g0R-D3-c6g" id="agg-Us-KJ4"/>
                 <outlet property="step1Label" destination="lfv-tZ-pKq" id="kbc-QQ-y5h"/>
                 <outlet property="step2Label" destination="Gt8-FC-YFo" id="WH2-Zl-1Vn"/>
                 <outlet property="step3Label" destination="ki3-2X-rZU" id="2dM-E1-IhH"/>
@@ -190,7 +193,7 @@
         </view>
     </objects>
     <resources>
-        <image name="Background.jpg" width="1936" height="1936"/>
+        <image name="Background.jpg" width="580.79998779296875" height="580.79998779296875"/>
         <image name="tap" width="100" height="100"/>
     </resources>
 </document>

@@ -123,6 +123,8 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
 
     public func collectionView(_ collectionView: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let title = items[indexPath.item].title
+        
+        // It is constrained by infinity so it isn't constrained.
         let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: collectionView.frame.height)
         let boundingBox = title.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: KeyboardView.theme.bannerFont], context: nil)
 

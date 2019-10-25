@@ -17,16 +17,6 @@ private func rightHalf(_ pageOfKeys: [[KeyDefinition]]) -> [[KeyDefinition]] {
 }
 
 class SplitKeyboardView: KeyboardViewProvider {
-    var swipeDownKeysEnabled: Bool {
-        get {
-            return leftKeyboardView.swipeDownKeysEnabled
-        }
-        set {
-            leftKeyboardView.swipeDownKeysEnabled = newValue
-            rightKeyboardView.swipeDownKeysEnabled = newValue
-        }
-    }
-
     var delegate: (KeyboardViewDelegate & KeyboardViewKeyboardKeyDelegate)? {
         get {
             return leftKeyboardView.delegate
@@ -68,18 +58,20 @@ class SplitKeyboardView: KeyboardViewProvider {
     var rightKeyboardView: KeyboardView
 
     required init(definition: KeyboardDefinition) {
-        var leftDefinition = definition
-        leftDefinition.normal = leftHalf(definition.normal.splitAndBalanceSpacebar())
-        leftDefinition.shifted = leftHalf(definition.shifted.splitAndBalanceSpacebar())
-        leftDefinition.symbols1 = leftHalf(definition.symbols1.splitAndBalanceSpacebar())
-        leftDefinition.symbols2 = leftHalf(definition.symbols2.splitAndBalanceSpacebar())
-
-        var rightDefinition = definition
-        rightDefinition.normal = rightHalf(definition.normal.splitAndBalanceSpacebar())
-        rightDefinition.shifted = rightHalf(definition.shifted.splitAndBalanceSpacebar())
-        rightDefinition.symbols1 = rightHalf(definition.symbols1.splitAndBalanceSpacebar())
-        rightDefinition.symbols2 = rightHalf(definition.symbols2.splitAndBalanceSpacebar())
-
+        let leftDefinition = definition.copy(
+            normal: leftHalf(definition.normal.splitAndBalanceSpacebar()),
+            shifted: leftHalf(definition.shifted.splitAndBalanceSpacebar()),
+            symbols1: leftHalf(definition.symbols1.splitAndBalanceSpacebar()),
+            symbols2: leftHalf(definition.symbols2.splitAndBalanceSpacebar())
+        )
+        
+        let rightDefinition = definition.copy(
+            normal: rightHalf(definition.normal.splitAndBalanceSpacebar()),
+            shifted: rightHalf(definition.shifted.splitAndBalanceSpacebar()),
+            symbols1: rightHalf(definition.symbols1.splitAndBalanceSpacebar()),
+            symbols2: rightHalf(definition.symbols2.splitAndBalanceSpacebar())
+        )
+        
         let leftKeyboardView = KeyboardView(definition: leftDefinition)
         leftKeyboardView.translatesAutoresizingMaskIntoConstraints = false
         self.leftKeyboardView = leftKeyboardView
