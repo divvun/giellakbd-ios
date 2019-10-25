@@ -53,18 +53,18 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
     // keyboard switcher popup with. I don't like it either.
     private var keyboardButtonFrame: CGRect? {
         didSet {
-//            if let keyboardButtonExtraButton = keyboardButtonExtraButton {
-//                keyboardButtonExtraButton.removeFromSuperview()
-//                self.keyboardButtonExtraButton = nil
-//            }
-//            if let keyboardButtonFrame = keyboardButtonFrame {
-//                keyboardButtonExtraButton = UIButton(frame: keyboardButtonFrame)
-//                keyboardButtonExtraButton?.backgroundColor = .clear
-//            }
-//            if let keyboardButtonExtraButton = keyboardButtonExtraButton {
-//                addSubview(keyboardButtonExtraButton)
-//                keyboardButtonExtraButton.addTarget(delegate, action: #selector(KeyboardViewKeyboardKeyDelegate.didTriggerKeyboardButton), for: UIControl.Event.allEvents)
-//            }
+            if let keyboardButtonExtraButton = keyboardButtonExtraButton {
+                keyboardButtonExtraButton.removeFromSuperview()
+                self.keyboardButtonExtraButton = nil
+            }
+            if let keyboardButtonFrame = keyboardButtonFrame {
+                keyboardButtonExtraButton = UIButton(frame: keyboardButtonFrame)
+                keyboardButtonExtraButton?.backgroundColor = .clear
+            }
+            if let keyboardButtonExtraButton = keyboardButtonExtraButton {
+                addSubview(keyboardButtonExtraButton)
+                keyboardButtonExtraButton.addTarget(delegate, action: #selector(KeyboardViewKeyboardKeyDelegate.didTriggerKeyboardButton), for: UIControl.Event.allEvents)
+            }
         }
     }
 
