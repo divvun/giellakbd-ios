@@ -149,8 +149,12 @@ public struct KeyboardDefinition {
             normal = (modes["normal"]!!).map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) } }
             shifted = (modes["shifted"]!!).map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) } }
             
-            symbols1 = (modes["symbols-1"] ?? [])!.map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) }}
-            symbols2 = (modes["symbols-2"] ?? [])!.map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) }}
+            if case let .some(symbols) = modes["symbols-1"] as? [[String]] {
+                symbols1 = symbols.map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) }}
+            }
+            if case let .some(symbols) = modes["symbols-2"] as? [[String]] {
+                symbols2 = symbols.map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) }}
+            }
         }
 
         normal.platformize(page: .normal, spaceName: spaceName, returnName: returnName)
