@@ -149,23 +149,8 @@ public struct KeyboardDefinition {
             normal = (modes["normal"]!!).map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) } }
             shifted = (modes["shifted"]!!).map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) } }
             
-            symbols1 = modes["symbols-1"]!!.map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) }}
-            symbols2 = modes["symbols-2"]!!.map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) }}
-
-//            symbols1 = SystemKeys.symbolKeysFirstPage
-//            // Naively pad out the symbols. Should rather be a larger list and trimmed in the future
-//            for (rowIndex, _) in symbols1.enumerated() {
-//                while symbols1[rowIndex].count < normal[rowIndex].count {
-//                    symbols1[rowIndex].append(KeyDefinition(type: KeyType.spacer, size: CGSize(width: 0.0, height: 1.0)))
-//                }
-//            }
-//
-//            symbols2 = SystemKeys.symbolKeysSecondPage
-//            for (rowIndex, _) in symbols2.enumerated() {
-//                while symbols2[rowIndex].count < normal[rowIndex].count {
-//                    symbols2[rowIndex].append(KeyDefinition(type: KeyType.spacer, size: CGSize(width: 0.0, height: 1.0)))
-//                }
-//            }
+            symbols1 = (modes["symbols-1"] ?? [])!.map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) }}
+            symbols2 = (modes["symbols-2"] ?? [])!.map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) }}
         }
 
         normal.platformize(page: .normal, spaceName: spaceName, returnName: returnName)
