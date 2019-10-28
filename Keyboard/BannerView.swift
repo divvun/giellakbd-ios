@@ -25,7 +25,7 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
             isHidden = false
             contentView.translatesAutoresizingMaskIntoConstraints = false
             titleLabel.translatesAutoresizingMaskIntoConstraints = false
-            contentView.fillSuperview(self)
+            contentView.fill(superview: self)
             contentView.addSubview(titleLabel)
 
             titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: KeyboardView.theme.bannerVerticalMargin).isActive = true
@@ -94,7 +94,7 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
 
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(collectionView)
-        collectionView.fillSuperview(self)
+        collectionView.fill(superview: self)
         collectionView.register(BannerCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView.backgroundColor = KeyboardView.theme.bannerSeparatorColor
         collectionView.showsHorizontalScrollIndicator = false

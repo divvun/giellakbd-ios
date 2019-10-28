@@ -50,22 +50,36 @@ fileprivate let landscapeDeviceHeight: CGFloat = {
     return min(size.height, size.width)
 }()
 
+extension UIScreen {
+    var isDeviceLandscape: Bool {
+        let s = self.bounds.size
+        return s.width > s.height
+    }
+    
+}
+
 open class KeyboardViewController: UIInputViewController {
     @IBOutlet var nextKeyboardButton: UIButton!
     private var keyboardView: KeyboardViewProvider!
     
     private var landscapeHeight: CGFloat {
-        let height = landscapeDeviceHeight
-        
         switch UIDevice.current.dc.deviceFamily {
+        case .iPad:
+            let sizeInches = UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches
+            
+            if sizeInches < 10 {
+                return landscapeDeviceHeight / 2.0
+            }
+            
+            return landscapeDeviceHeight / 2.0 - 120
         default:
-            return height / 2.0 - 55
+            return portraitHeight - 56
         }
     }
     
     private var portraitHeight: CGFloat {
         let height = portraitDeviceHeight
-        let sizeInches = UIDevice.current.dc.screenSize.sizeInches ?? 0
+        let sizeInches = UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches
         
         switch UIDevice.current.dc.deviceFamily {
         case .iPad:
@@ -139,19 +153,22 @@ open class KeyboardViewController: UIInputViewController {
         }
     }
     
-    private var isDeviceLandscape: Bool {
-        let s = UIScreen.main.bounds.size
-        return s.width > s.height
-    }
-    
     private func initHeightConstraint() {
-        let c: NSLayoutConstraint
-        if isDeviceLandscape {
-            c = view.heightAnchor.constraint(equalToConstant: landscapeHeight)
+        var value: CGFloat
+        
+        if UIScreen.main.isDeviceLandscape {
+            value = landscapeHeight
         } else {
-            c = view.heightAnchor.constraint(equalToConstant: portraitHeight)
+            value = portraitHeight
         }
-        heightConstraint = c.enable(priority: .required)
+        
+        if !bannerVisible {
+             value -= KeyboardView.theme.bannerHeight
+        }
+        
+        print("Init setting height constraint: \(value)")
+        
+        heightConstraint = view.heightAnchor.constraint(equalToConstant: value).enable(priority: .required)
     }
 
     open override func viewDidLoad() {
@@ -272,15 +289,21 @@ open class KeyboardViewController: UIInputViewController {
         guard let _ = self.heightConstraint else { return }
         
         DispatchQueue.main.async {
-            var value = self.bannerVisible ? KeyboardView.theme.bannerHeight : 0
+            var value: CGFloat
             
-            if !self.isDeviceLandscape {
+            if !UIScreen.main.isDeviceLandscape {
                 print("Portrait")
-                value += self.portraitHeight
+                value = self.portraitHeight
             } else {
                 print("Landscape")
-                value += self.landscapeHeight
+                value = self.landscapeHeight
             }
+            
+            if !self.bannerVisible {
+                 value -= KeyboardView.theme.bannerHeight
+            }
+            
+            print("Setting height constraint to: \(value)")
             
             self.heightConstraint.constant = value
         }
@@ -314,14 +337,6 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     func keyboardDidReset() {
-//        updateHeightConstraint()
-        
-//            KeyboardView.theme = (self.textDocumentProxy.keyboardAppearance == UIKeyboardAppearance.dark)
-//                ? self.DarkTheme
-//                : self.LightTheme
-//
-//            self.keyboardView.update()
-//            self.bannerView.update()
         self.disablesDelayingGestureRecognizers = true
 
         self.view.backgroundColor = KeyboardView.theme.backgroundColor
@@ -553,6 +568,10 @@ extension KeyboardViewController: KeyboardViewDelegate {
             if let alt = alt {
                 handleDeadKey(string: alt)
             }
+        case .fullStop:
+            handleDeadKey(string: ":")
+        case .comma:
+            handleDeadKey(string: ";")
         default:
             break
         }

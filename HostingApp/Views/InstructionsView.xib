@@ -23,7 +23,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="343" height="204"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Vem-Ku-ioH">
-                                    <rect key="frame" x="0.0" y="0.0" width="203.5" height="24"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="205.5" height="24"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tap" translatesAutoresizingMaskIntoConstraints="NO" id="4Gs-Mk-jxN">
                                             <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
@@ -33,7 +33,7 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lfv-tZ-pKq">
-                                            <rect key="frame" x="28" y="3.5" width="175.5" height="20.5"/>
+                                            <rect key="frame" x="28" y="3.5" width="177.5" height="20.5"/>
                                             <attributedString key="attributedText">
                                                 <fragment content="Open the ">
                                                     <attributes>

@@ -6,7 +6,12 @@ class KeyView: UIView {
         if case let .input(_, alt) = key.type, alt != nil {
             return true
         }
-        return false
+        switch key.type {
+        case .comma, .fullStop:
+            return true
+        default:
+            return false
+        }
     }
 
     private var label: UILabel! = UILabel()
@@ -116,8 +121,8 @@ class KeyView: UIView {
         addSubview(labelHoldingView)
         
         label.centerXAnchor.constraint(equalTo: labelHoldingView.centerXAnchor).isActive = true
-        label.widthAnchor.constraint(equalTo: label.heightAnchor).isActive = true
-
+        label.widthAnchor.constraint(equalTo: labelHoldingView.widthAnchor).isActive = true
+        
         let yConstant: CGFloat
         if case .normal = page, case KeyType.input(_) = self.key.type {
             yConstant = -2.0
@@ -132,13 +137,11 @@ class KeyView: UIView {
             label.bottomAnchor.constraint(equalTo: labelHoldingView.bottomAnchor, constant: yConstant).isActive = true
             
             alternateLabel.centerXAnchor.constraint(equalTo: labelHoldingView.centerXAnchor).isActive = true
-            alternateLabel.widthAnchor.constraint(lessThanOrEqualTo: labelHoldingView.widthAnchor, multiplier: 1.0).isActive = true
-//            alternateLabel.widthAnchor.constraint(equalTo: alternateLabel.heightAnchor).isActive = true
+            alternateLabel.widthAnchor.constraint(lessThanOrEqualTo: labelHoldingView.widthAnchor).isActive = true
             alternateLabel.topAnchor.constraint(equalTo: labelHoldingView.topAnchor, constant: 8).isActive = true
             alternateLabel.bottomAnchor.constraint(equalTo: label.topAnchor).isActive = true
         } else {
             label.centerYAnchor.constraint(equalTo: labelHoldingView.centerYAnchor, constant: yConstant).isActive = true
-            label.widthAnchor.constraint(lessThanOrEqualTo: labelHoldingView.widthAnchor, multiplier: 1.0).isActive = true
             swipeLayoutConstraint = nil
         }
 
@@ -156,8 +159,6 @@ class KeyView: UIView {
 
         labelHoldingView.addSubview(label)
         addSubview(labelHoldingView)
-        label.centerXAnchor.constraint(equalTo: labelHoldingView.centerXAnchor).isActive = true
-        label.widthAnchor.constraint(equalTo: label.heightAnchor).isActive = true
 
         let yConstant: CGFloat
         if case .normal = page, case KeyType.input(_) = self.key.type {
@@ -165,8 +166,9 @@ class KeyView: UIView {
         } else {
             yConstant = 0.0
         }
+        label.centerXAnchor.constraint(equalTo: labelHoldingView.centerXAnchor).isActive = true
         label.centerYAnchor.constraint(equalTo: labelHoldingView.centerYAnchor, constant: yConstant).isActive = true
-        label.widthAnchor.constraint(lessThanOrEqualTo: labelHoldingView.widthAnchor, multiplier: 1.0).isActive = true
+        label.widthAnchor.constraint(equalTo: labelHoldingView.widthAnchor).isActive = true
         swipeLayoutConstraint = nil
 
         contentView = labelHoldingView
@@ -189,6 +191,7 @@ class KeyView: UIView {
     
     init(page: KeyboardPage, key: KeyDefinition) {
         self.key = key
+        
         super.init(frame: .zero)
 
         // HACK: UIColor.clear here breaks indexPathForItemAtPoint:
@@ -239,11 +242,11 @@ class KeyView: UIView {
                 contentView = imageView
             }
         case .comma:
-            text(",", page: page)
+            input(string: ",", alt: ";", page: page)
         case .fullStop:
-            text(".", page: page)
+            input(string: ".", alt: ":", page: page)
         case .caps:
-            text("caps lock", page: page)
+            image(UIImage(named: "caps")!)
         case .tab:
             text("tab", page: page)
         }
@@ -252,8 +255,8 @@ class KeyView: UIView {
         layer.shadowOffset = CGSize(width: 0, height: 1)
         layer.shadowOpacity = 1.0
         layer.shadowRadius = 0.0
-
-        contentView.fillSuperview(self, margins: UIEdgeInsets(
+        
+        contentView.fill(superview: self, margins: UIEdgeInsets(
             top: KeyboardView.theme.keyVerticalMargin + 2.0,
             left: KeyboardView.theme.keyHorizontalMargin,
             bottom: KeyboardView.theme.keyVerticalMargin - 2.0,

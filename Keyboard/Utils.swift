@@ -26,11 +26,16 @@ extension UIColor {
 }
 
 extension UIView {
-    func fillSuperview(_ other: UIView, margins: UIEdgeInsets = .zero) {
+    func fill(superview other: UIView, margins: UIEdgeInsets = .zero) {
         leftAnchor.constraint(equalTo: other.leftAnchor, constant: margins.left).isActive = true
         rightAnchor.constraint(equalTo: other.rightAnchor, constant: -margins.right).isActive = true
         topAnchor.constraint(equalTo: other.topAnchor, constant: margins.top).isActive = true
         bottomAnchor.constraint(equalTo: other.bottomAnchor, constant: -margins.bottom).isActive = true
+    }
+    
+    func centerIn(superview other: UIView) {
+        centerXAnchor.constraint(equalTo: other.centerXAnchor).isActive = true
+        centerYAnchor.constraint(equalTo: other.centerYAnchor).isActive = true
     }
 }
 

@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import UIDeviceComplete
 
 protocol Theme {
     var regularKeyColor: UIColor { get }
@@ -16,6 +17,7 @@ protocol Theme {
     var solidRegularKeyColor: UIColor { get }
     var solidSpecialKeyColor: UIColor { get }
     var solidPopupColor: UIColor { get }
+    var popupBorderColor: UIColor { get }
     var activeColor: UIColor { get }
     var activeTextColor: UIColor { get }
 
@@ -30,7 +32,10 @@ protocol Theme {
     var modifierKeyFontSize: CGFloat { get }
     var altKeyFontSize: CGFloat { get }
     var altKeyFont: UIFont { get }
-    var popupKeyFont: UIFont { get }
+    var popupLowerKeyFont: UIFont { get }
+    var popupCapitalKeyFont: UIFont { get }
+    var popupLongpressLowerKeyFont: UIFont { get }
+    var popupLongpressCapitalKeyFont: UIFont { get }
     var bannerFont: UIFont { get }
 
     var bannerBackgroundColor: UIColor { get }
@@ -52,7 +57,8 @@ class LightThemeImpl: Theme {
     var underColor = UIColor(hue: 0.611, saturation: 0.04, brightness: 0.56, alpha: 1)
     var textColor = UIColor.black
     var inactiveTextColor: UIColor = UIColor(white: 0.0, alpha: 0.3)
-    var borderColor = UIColor.clear // UIColor(hue: 0.595, saturation: 0.04, brightness: 0.65, alpha: 1.0)
+    var borderColor = UIColor.clear
+    var popupBorderColor = UIColor(hue: 0.595, saturation: 0.04, brightness: 0.65, alpha: 1.0)
     var specialKeyBorderColor: UIColor { return .clear }
     var keyShadowColor = UIColor(r: 103, g: 106, b: 110, a: 0.5)
     var shiftActiveColor = UIColor.white
@@ -71,7 +77,11 @@ class LightThemeImpl: Theme {
     var lowerKeyFont: UIFont { return IPhoneThemeBase.lowerKeyFont }
     var capitalKeyFont: UIFont { return IPhoneThemeBase.capitalKeyFont }
     var modifierKeyFontSize: CGFloat { return IPhoneThemeBase.modifierKeyFontSize }
-    var popupKeyFont = UIFont.systemFont(ofSize: 36.0)
+    var popupLowerKeyFont: UIFont { return IPhoneThemeBase.lowerKeyFont.withSize(IPhoneThemeBase.lowerKeyFont.pointSize + 16.0) }
+    var popupCapitalKeyFont: UIFont { return IPhoneThemeBase.capitalKeyFont.withSize(IPhoneThemeBase.capitalKeyFont.pointSize + 16.0) }
+    var popupLongpressCapitalKeyFont = IPhoneThemeBase.capitalKeyFont //UIFont.systemFont(ofSize: 36.0)
+    var popupLongpressLowerKeyFont = IPhoneThemeBase.lowerKeyFont //UIFont.systemFont(ofSize: 34.0, weight: .light)
+//    var popupLongpressKeyFont = UIFont.systemFont(ofSize: 24.0)
     var bannerFont = UIFont.systemFont(ofSize: 18.0)
     var altKeyFont: UIFont { return IPadThemeBase.altKeyFont }
     var altKeyFontSize: CGFloat { return IPadThemeBase.altKeyFontSize }
@@ -87,6 +97,7 @@ class LightThemeImpl: Theme {
 }
 
 class DarkThemeImpl: Theme {
+    
     var bannerHeight: CGFloat { return IPhoneThemeBase.bannerHeight }
     var backgroundColor: UIColor = .clear
 
@@ -99,6 +110,7 @@ class DarkThemeImpl: Theme {
     var textColor = UIColor.white
     var inactiveTextColor: UIColor = UIColor.lightGray
     var borderColor = UIColor.clear
+    var popupBorderColor = UIColor.clear
     var specialKeyBorderColor: UIColor { return .clear }
     var shiftActiveColor = UIColor(r: 214, g: 220, b: 208)
     var solidRegularKeyColor = UIColor(r: 83, g: 83, b: 83)
@@ -108,6 +120,7 @@ class DarkThemeImpl: Theme {
     var activeTextColor: UIColor = UIColor.white
     var altKeyFont: UIFont { return IPadThemeBase.altKeyFont }
     var altKeyFontSize: CGFloat { return IPadThemeBase.altKeyFontSize }
+//    var popupLongpressKeyFont = UIFont.systemFont(ofSize: 30.0)
     
     var keyCornerRadius: CGFloat { return IPhoneThemeBase.keyCornerRadius }
     var popupCornerRadius: CGFloat = 12.0
@@ -118,7 +131,10 @@ class DarkThemeImpl: Theme {
     var lowerKeyFont: UIFont { return IPhoneThemeBase.lowerKeyFont }
     var capitalKeyFont: UIFont { return IPhoneThemeBase.capitalKeyFont }
     var modifierKeyFontSize: CGFloat { return IPhoneThemeBase.modifierKeyFontSize }
-    var popupKeyFont = UIFont.systemFont(ofSize: 26.0)
+    var popupLowerKeyFont: UIFont { return IPhoneThemeBase.lowerKeyFont.withSize(IPhoneThemeBase.lowerKeyFont.pointSize + 10.0) }
+    var popupCapitalKeyFont: UIFont { return IPhoneThemeBase.capitalKeyFont.withSize(IPhoneThemeBase.capitalKeyFont.pointSize + 10.0) }
+    var popupLongpressCapitalKeyFont = IPhoneThemeBase.capitalKeyFont //UIFont.systemFont(ofSize: 36.0)
+    var popupLongpressLowerKeyFont = IPhoneThemeBase.lowerKeyFont //UIFont.systemFont(ofSize: 34.0, weight: .light)
     var bannerFont = UIFont.systemFont(ofSize: 16.0)
 
     var bannerBackgroundColor: UIColor { return regularKeyColor }
@@ -144,7 +160,7 @@ private class IPhoneThemeBase {
             return 3.0
         }
     }()
-    static let keyVerticalMargin: CGFloat = {
+    static let portraitKeyVerticalMargin: CGFloat = {
         switch UIDevice.current.dc.deviceModel {
         case .iPhone5S, .iPhone5C:
             return 8.0
@@ -156,6 +172,27 @@ private class IPhoneThemeBase {
             return 6.0
         }
     }()
+    static let landscapeKeyVerticalMargin: CGFloat = {
+        switch UIDevice.current.dc.deviceModel {
+        case .iPhone5S, .iPhone5C:
+            return 4.5
+        case .iPhone6, .iPhone6S, .iPhone6Plus, .iPhone6SPlus, .iPhone7, .iPhone7Plus, .iPhone8:
+            return 3.5
+        case .iPhone8Plus, .iPhoneX, .iPhoneXR, .iPhoneXS, .iPhone11, .iPhone11Pro, .iPhone11ProMax, .iPhoneXSMax:
+            return 3.5
+        default:
+            return 3.5
+        }
+    }()
+    
+    static var keyVerticalMargin: CGFloat {
+        if UIScreen.main.isDeviceLandscape {
+            return landscapeKeyVerticalMargin
+        } else {
+            return portraitKeyVerticalMargin
+        }
+    }
+    
     static let keyCornerRadius: CGFloat = {
         switch UIDevice.current.dc.deviceModel {
         case .iPhone5S, .iPhone5C:
@@ -187,10 +224,10 @@ private class IPadThemeBase {
     static let bannerHeight: CGFloat = 55.0
     
     static let keyCornerRadius: CGFloat = 5.0
-    static let keyHorizontalMargin: CGFloat = (UIDevice.current.dc.screenSize.sizeInches ?? 0.0) > 10
+    static let keyHorizontalMargin: CGFloat = (UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches) > 10
         ? 3.0
         : 5.0
-    static let keyVerticalMargin: CGFloat = (UIDevice.current.dc.screenSize.sizeInches ?? 0.0) > 10
+    static let keyVerticalMargin: CGFloat = (UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches) > 10
         ? 3.0
         : 5.0
     

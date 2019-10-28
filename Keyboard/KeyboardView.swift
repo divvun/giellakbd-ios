@@ -44,10 +44,10 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
     }
 
     private let reuseIdentifier = "cell"
-    let collectionView: UICollectionView
+    private let collectionView: UICollectionView
     private let layout = UICollectionViewFlowLayout()
 
-    var longpressController: LongPressBehaviorProvider?
+    private var longpressController: LongPressBehaviorProvider?
 
     // Sorry. The globe button is the greatest lie of them all. This is the only known way to have a UIEvent we can trigger the
     // keyboard switcher popup with. I don't like it either.
@@ -139,6 +139,47 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
 
         return true
     }
+    
+    private func applyOverlayConstraints(to overlay: KeyOverlayView, ref keyCell: UIView) {
+        guard let superview = superview else {
+            return
+//            fatalError("superview not found for overlay constraints")
+        }
+        
+        overlay.heightAnchor
+            .constraint(lessThanOrEqualTo: keyCell.heightAnchor, multiplier: 2.0)
+            .enable(priority: .defaultLow)
+
+        overlay.widthAnchor.constraint(
+            greaterThanOrEqualTo: keyCell.widthAnchor,
+            multiplier: 1.0,
+            constant: KeyboardView.theme.popupCornerRadius * 2)
+            .enable(priority: .required)
+        
+        overlay.topAnchor
+            .constraint(greaterThanOrEqualTo: superview.topAnchor)
+            .enable(priority: .defaultLow)
+
+        overlay.bottomAnchor.constraint(equalTo: keyCell.bottomAnchor)
+            .enable(priority: .defaultLow)
+            
+        overlay.centerXAnchor.constraint(equalTo: keyCell.centerXAnchor)
+            .enable(priority: .defaultHigh)
+        
+        // Handle the left and right sides not getting crushed on the edges of the screen
+        
+        overlay.leftAnchor.constraint(greaterThanOrEqualTo: keyCell.leftAnchor)
+            .enable(priority: .defaultHigh)
+        overlay.leftAnchor
+            .constraint(greaterThanOrEqualTo: superview.leftAnchor)
+            .enable(priority: .required)
+        
+        overlay.rightAnchor.constraint(lessThanOrEqualTo: keyCell.rightAnchor)
+            .enable(priority: .defaultHigh)
+        overlay.rightAnchor
+            .constraint(lessThanOrEqualTo: superview.rightAnchor)
+            .enable(priority: .required)
+    }
 
     private func showOverlay(forKeyAtIndexPath indexPath: IndexPath) {
         guard let keyCell = collectionView.cellForItem(at: indexPath)?.subviews.first else {
@@ -153,41 +194,32 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
 
         let overlay = KeyOverlayView(origin: keyCell, key: key)
         overlay.translatesAutoresizingMaskIntoConstraints = false
-        ( /* self.superview ?? */ self).addSubview(overlay)
-
-        let height = overlay.heightAnchor.constraint(greaterThanOrEqualTo: keyCell.heightAnchor, multiplier: 2.0)
-        height.priority = UILayoutPriority.defaultLow
-        height.isActive = true
-
-        let width = overlay.widthAnchor.constraint(greaterThanOrEqualTo: keyCell.widthAnchor, multiplier: 1.0, constant: KeyboardView.theme.popupCornerRadius * 2)
-        width.isActive = true
-
-        let bottom = overlay.bottomAnchor.constraint(equalTo: keyCell.bottomAnchor)
-        bottom.priority = .defaultLow
-        bottom.isActive = true
-
-        let center = overlay.centerXAnchor.constraint(equalTo: keyCell.centerXAnchor)
-        center.priority = UILayoutPriority.defaultLow
-        center.isActive = true
-
-        overlay.leftAnchor.constraint(lessThanOrEqualTo: keyCell.leftAnchor).isActive = true
-        overlay.rightAnchor.constraint(greaterThanOrEqualTo: keyCell.rightAnchor).isActive = true
-
-        overlay.topAnchor.constraint(greaterThanOrEqualTo: (superview ?? self).topAnchor).isActive = true
-        overlay.leftAnchor.constraint(greaterThanOrEqualTo: (superview ?? self).leftAnchor).isActive = true
-        overlay.rightAnchor.constraint(lessThanOrEqualTo: (superview ?? self).rightAnchor).isActive = true
+        self.addSubview(overlay)
+        
+        applyOverlayConstraints(to: overlay, ref: keyCell)
         overlays[key.type] = overlay
-
+        
+        overlay.originFrameView.clipsToBounds = false
+        overlay.clipsToBounds = false
+        
         let keyLabel = UILabel(frame: .zero)
+        keyLabel.clipsToBounds = false
         if case let .input(title, _) = key.type {
             keyLabel.text = title
         }
         keyLabel.textColor = KeyboardView.theme.textColor
-        keyLabel.font = KeyboardView.theme.popupKeyFont
+        
+        switch page {
+        case .normal:
+            keyLabel.font = KeyboardView.theme.popupLowerKeyFont
+        default:
+            keyLabel.font = KeyboardView.theme.popupCapitalKeyFont
+        }
         keyLabel.textAlignment = .center
         keyLabel.translatesAutoresizingMaskIntoConstraints = false
-        overlay.contentView.addSubview(keyLabel)
-        keyLabel.fillSuperview(overlay.contentView)
+        overlay.originFrameView.addSubview(keyLabel)
+        keyLabel.centerIn(superview: overlay.originFrameView)
+        
 
         superview?.setNeedsLayout()
     }
@@ -205,22 +237,22 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
     }
 
     func longpress(didCreateOverlayContentView contentView: UIView) {
-        if overlays.first?.value.contentView == nil {
+        if overlays.first?.value.originFrameView == nil {
             if let activeKey = activeKey {
                 showOverlay(forKeyAtIndexPath: activeKey.indexPath)
             }
         }
 
-        guard let overlayContentView = self.overlays.first?.value.contentView else {
+        guard let overlayContentView = self.overlays.first?.value.originFrameView else {
             return
         }
 
         overlayContentView.subviews.forEach { $0.removeFromSuperview() }
         overlayContentView.addSubview(contentView)
         contentView.setContentCompressionResistancePriority(.required, for: .vertical)
-        contentView.fillSuperview(overlayContentView)
+        contentView.fill(superview: overlayContentView)
 
-        // MARK: Hack! Because uicollectionview's intrinsic size just isn't enough
+        // HACK: Because uicollectionview's intrinsic size just isn't enough
 
         if activeKey != nil,
             let longpressValues = (self.longpressController as? LongPressOverlayController)?.longpressValues {
@@ -241,10 +273,11 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
                 heightConstant = longpressKeySize().height
             }
 
-            contentView.widthAnchor.constraint(equalToConstant: widthConstant).isActive = true
-            contentView.heightAnchor.constraint(equalToConstant: heightConstant).isActive = true
+            contentView.widthAnchor.constraint(equalToConstant: widthConstant).enable(priority: .required)
+            contentView.heightAnchor.constraint(equalToConstant: heightConstant).enable(priority: .required)
         } else {
-            contentView.heightAnchor.constraint(equalToConstant: longpressKeySize().height).isActive = true
+            let constant = longpressKeySize().height
+            contentView.heightAnchor.constraint(equalToConstant: constant).enable(priority: .required)
         }
         contentView.layoutIfNeeded()
     }
@@ -264,7 +297,13 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
     }
 
     func longpressKeySize() -> CGSize {
-        return CGSize(width: bounds.size.width / CGFloat(currentPage.first?.count ?? 10), height: (bounds.size.height / CGFloat(currentPage.count)) - KeyboardView.theme.popupCornerRadius * 2)
+        let width = bounds.size.width / CGFloat(currentPage.first?.count ?? 10)
+        let h = (bounds.size.height / CGFloat(currentPage.count)) - KeyboardView.theme.popupCornerRadius * 2
+        let height = max(32.0, h)
+        return CGSize(
+            width: width,
+            height: height
+        )
     }
 
     func longpress(movedCursor: Int) {
@@ -465,7 +504,7 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
     }
     
     private func showKeyboardModeOverlay(_ longpressGestureRecognizer: UILongPressGestureRecognizer, key: KeyDefinition) {
-        let longpressController = LongPressOverlayController(key: key, longpressValues: [
+        let longpressController = LongPressOverlayController(key: key, page: page, longpressValues: [
             KeyDefinition(type: .sideKeyboardLeft),
             KeyDefinition(type: .splitKeyboard),
             KeyDefinition(type: .sideKeyboardRight)
@@ -493,6 +532,7 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
                 {
                     let longpressController = LongPressOverlayController(
                         key: key,
+                        page: page,
                         longpressValues: longpressValues)
                     longpressController.delegate = self
 
@@ -609,12 +649,12 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
                 emptyview.translatesAutoresizingMaskIntoConstraints = false
                 emptyview.backgroundColor = .clear
                 contentView.addSubview(emptyview)
-                emptyview.fillSuperview(contentView)
+                emptyview.fill(superview: contentView)
             } else {
                 let keyView = KeyView(page: page, key: key)
                 keyView.translatesAutoresizingMaskIntoConstraints = false
                 contentView.addSubview(keyView)
-                keyView.fillSuperview(contentView)
+                keyView.fill(superview: contentView)
                 self.keyView = keyView
             }
             

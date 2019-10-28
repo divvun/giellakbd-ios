@@ -135,7 +135,12 @@ public struct KeyDefinition {
     
     init(map input: [String: Any], alternate: String? = nil, spaceName: String, returnName: String) {
         if let typeString = input["id"] as? String {
-            type = KeyType(string: typeString, alternate: alternate, spaceName: spaceName, returnName: returnName)
+            type = KeyType(
+                string: typeString,
+                alternate: alternate,
+                spaceName: spaceName,
+                returnName: returnName
+            )
         } else {
             type = KeyType(string: "", spaceName: spaceName, returnName: returnName)
         }

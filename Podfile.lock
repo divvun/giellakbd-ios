@@ -1,8 +1,8 @@
 PODS:
-  - libdivvunspell (0.1.4)
-  - Sentry (4.4.0):
-    - Sentry/Core (= 4.4.0)
-  - Sentry/Core (4.4.0)
+  - libdivvunspell (0.1.5)
+  - Sentry (4.4.1):
+    - Sentry/Core (= 4.4.1)
+  - Sentry/Core (4.4.1)
   - UIDeviceComplete (2.6.5)
 
 DEPENDENCIES:
@@ -23,16 +23,16 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   libdivvunspell:
-    :commit: 73736310b58e490004645b647aff2a7cae5d30b2
+    :commit: f709ad4066ce56edd90ffc5f50586d961dae399e
     :git: https://github.com/bbqsrc/divvunspell-swift
     :submodules: true
   UIDeviceComplete:
-    :commit: 1f302a99dc361e6b04e8d8c2d1bda16bef71181f
+    :commit: 8c9daafea9ade9e7a9f2df36a58c7fee9ca003e2
     :git: https://github.com/bbqsrc/UIDeviceComplete
 
 SPEC CHECKSUMS:
-  libdivvunspell: b6cb0d6e7136521b86d5d39c1429d8749fe6bb1b
-  Sentry: 26650184fe71eb7476dfd2737acb5ea6cc64b4b1
+  libdivvunspell: b137ce97822c55cd43037123a3a9b2c4ff8fff32
+  Sentry: 5d312a04e369154aeac616214f4dfc3cbcc8b296
   UIDeviceComplete: 5654c8f59f25adf3b0ea876c2a0463dc64c49226
 
 PODFILE CHECKSUM: 248306e5d49817d8f1d3a716e8accaa479196329

@@ -60,7 +60,7 @@ class LongPressCursorMovementController: NSObject, LongPressBehaviorProvider {
 class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     class LongpressCollectionView: UICollectionView {}
 
-    static let multirowThreshold = 4
+    static let multirowThreshold = UIDevice.current.dc.isIpad ? 4 : 6
 
     private let deadZone: CGFloat = 20.0
 
@@ -81,10 +81,17 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
     }
 
     var delegate: LongPressOverlayDelegate?
+    private let labelFont: UIFont
 
-    init(key: KeyDefinition, longpressValues: [KeyDefinition]) {
+    init(key: KeyDefinition, page: KeyboardPage, longpressValues: [KeyDefinition]) {
         self.key = key
         self.longpressValues = longpressValues
+        switch page {
+        case .normal:
+            labelFont = KeyboardView.theme.popupLongpressLowerKeyFont
+        default:
+            labelFont = KeyboardView.theme.popupLongpressCapitalKeyFont
+        }
     }
 
     private func setup() {
@@ -201,7 +208,9 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! LongpressKeyCell
         let key = longpressValues[indexPath.row + Int(ceil(Double(longpressValues.count) / 2.0)) * indexPath.section]
-
+        
+        cell.label.font = labelFont
+        
         if case let .input(string, _) = key.type {
             cell.label.text = string
             cell.imageView.image = nil
@@ -236,7 +245,7 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
     }
 
     func collectionView(_ collectionView: UICollectionView, layout _: UICollectionViewLayout, insetForSectionAt _: Int) -> UIEdgeInsets {
-        let cellSize = delegate?.longpressKeySize() ?? CGSize(width: 20, height: 30.0)
+        let cellSize = delegate?.longpressKeySize() ?? CGSize(width: 20.0, height: 30.0)
         let cellWidth = cellSize.width
         let numberOfCells = CGFloat(longpressValues.count)
 
@@ -272,8 +281,8 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
             super.init(frame: frame)
             addSubview(label)
             addSubview(imageView)
-            imageView.fillSuperview(self)
-            label.fillSuperview(self)
+            imageView.fill(superview: self)
+            label.fill(superview: self)
         }
 
         required init?(coder _: NSCoder) {

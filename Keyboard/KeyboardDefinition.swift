@@ -97,7 +97,7 @@ public struct KeyboardDefinition {
         let family = UIDevice.current.dc.deviceFamily
         print("\(family)")
         if family == .iPad {
-            if (UIDevice.current.dc.screenSize.sizeInches ?? 0.0) < 12.0 {
+            if (UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches) < 12.0 {
                 modes = raw["ipad-9in"] as! [String: [[Any]]?]
                 
                 // On iPad Pro 9 inch, we want to have swipe keys so we merge all of our layers
