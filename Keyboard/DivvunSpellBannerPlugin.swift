@@ -82,7 +82,7 @@ public class DivvunSpellBannerPlugin {
         if let ex = Bundle.main.infoDictionary!["NSExtension"] as? [String: AnyObject] {
             if let attrs = ex["NSExtensionAttributes"] as? [String: AnyObject] {
                 if let lang = attrs["PrimaryLanguage"] as? String {
-                    return String(lang.split(separator: "_")[0])
+                    return String(lang.split(separator: "-")[0])
                 }
             }
         }
@@ -96,18 +96,12 @@ public class DivvunSpellBannerPlugin {
         DispatchQueue.global(qos: .background).async {
             print("Dispatching request to load speller…")
 
-            let sentryEvent = Sentry.Event(level: .debug)
-
             guard let bundle = Bundle.top.url(forResource: "dicts", withExtension: "bundle") else {
-                sentryEvent.message = "No dict bundle found; BHFST not loaded."
-                Client.shared?.send(event: sentryEvent, completion: nil)
                 print("No dict bundle found; BHFST not loaded.")
                 return
             }
 
             guard let lang = self.getPrimaryLanguage() else {
-                sentryEvent.message = "No primary language found for keyboard; BHFST not loaded."
-                Client.shared?.send(event: sentryEvent, completion: nil)
                 print("No primary language found for keyboard; BHFST not loaded.")
                 return
             }
@@ -115,8 +109,6 @@ public class DivvunSpellBannerPlugin {
             let path = bundle.appendingPathComponent("\(lang).bhfst")
 
             if !FileManager.default.fileExists(atPath: path.path) {
-                sentryEvent.message = "No speller at: \(path)"
-                Client.shared?.send(event: sentryEvent, completion: nil)
                 print("No speller at: \(path)")
                 print("DivvunSpell **not** loaded.")
                 return
@@ -127,15 +119,6 @@ public class DivvunSpellBannerPlugin {
                 print("DivvunSpell loaded!")
             } catch {
                 let e = Sentry.Event(level: .error)
-//                if let error = error as? SpellerInitError {
-//                    e.message = error.message
-//                    print(error.message)
-//                    DispatchQueue.main.async {
-//                        self.banner.items = [BannerItem(title: "Speller could not load. Tap to hide.", value: "error")]
-//                    }
-//                } else {
-//                    e.message = error.localizedDescription
-//                }
                 Client.shared?.send(event: e, completion: nil)
                 print("DivvunSpell **not** loaded.")
                 return
