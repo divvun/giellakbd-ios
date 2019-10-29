@@ -16,6 +16,10 @@ class HomeController: ViewController<HomeView>, HideNavBar {
     @objc private func openAbout() {
         navigationController?.pushViewController(AboutController(), animated: true)
     }
+    
+    @objc private func openTesting() {
+        navigationController?.pushViewController(TestingController(), animated: true)
+    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -34,5 +38,6 @@ class HomeController: ViewController<HomeView>, HideNavBar {
         contentView.langButton2.addTarget(self, action: #selector(openLanguages), for: [.touchUpInside])
         contentView.helpButton.addTarget(self, action: #selector(openInstructions), for: [.touchUpInside])
         contentView.aboutButton.addTarget(self, action: #selector(openAbout), for: [.touchUpInside])
+        contentView.testingButton.addTarget(self, action: #selector(openTesting), for: [.touchUpInside])
     }
 }

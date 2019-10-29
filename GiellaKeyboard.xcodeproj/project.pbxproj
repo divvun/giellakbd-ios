@@ -25,12 +25,15 @@
 		C65430B41EC94BF0007FC053 /* LanguagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65430B31EC94BF0007FC053 /* LanguagesController.swift */; };
 		C655E8541EC5551100B12BE4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C655E8531EC5551100B12BE4 /* Extensions.swift */; };
 		C655E8561EC5559200B12BE4 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C655E8551EC5559200B12BE4 /* HomeView.swift */; };
-		C655E8581EC5559E00B12BE4 /* HomeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C655E8571EC5559E00B12BE4 /* HomeView.xib */; };
 		C655E85A1EC558D000B12BE4 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C655E8591EC558D000B12BE4 /* HomeController.swift */; };
 		C655E85D1EC55D0800B12BE4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C655E85B1EC55D0800B12BE4 /* Localizable.strings */; };
 		C676AD5B1EC9679000523FF3 /* InstructionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C676AD5A1EC9679000523FF3 /* InstructionsController.swift */; };
 		C676AD5F1EC985EB00523FF3 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C676AD5E1EC985EB00523FF3 /* Strings.swift */; };
 		C67A3F3A1EE7F24900C9015C /* About.txt in Resources */ = {isa = PBXBuildFile; fileRef = C67A3F3C1EE7F24900C9015C /* About.txt */; };
+		C691A0E723682C8B00085AC3 /* TestingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C691A0E623682C8B00085AC3 /* TestingController.swift */; };
+		C691A0EA23682C9700085AC3 /* TestingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C691A0E823682C9700085AC3 /* TestingView.xib */; };
+		C691A0EB23682C9700085AC3 /* TestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C691A0E923682C9700085AC3 /* TestingView.swift */; };
+		C691A0ED23682CC000085AC3 /* HomeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C691A0EC23682CC000085AC3 /* HomeView.xib */; };
 		C6974E611A31557A00D1A0B3 /* Background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C6974E601A31557A00D1A0B3 /* Background.jpg */; };
 		C6996B5322FB06FA007EBC3D /* DeadKeyHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6996B5122FB0055007EBC3D /* DeadKeyHandler.swift */; };
 		C6996B5622FC2C92007EBC3D /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6996B5422FC2C8B007EBC3D /* Utils.swift */; };
@@ -143,7 +146,6 @@
 		C65430B31EC94BF0007FC053 /* LanguagesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguagesController.swift; sourceTree = "<group>"; };
 		C655E8531EC5551100B12BE4 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		C655E8551EC5559200B12BE4 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		C655E8571EC5559E00B12BE4 /* HomeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeView.xib; sourceTree = "<group>"; };
 		C655E8591EC558D000B12BE4 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		C655E85C1EC55D0800B12BE4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = HostingApp/Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C676AD5A1EC9679000523FF3 /* InstructionsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsController.swift; sourceTree = "<group>"; };
@@ -151,6 +153,10 @@
 		C676AD601EC986F000523FF3 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = HostingApp/nb.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C676AD611EC986FA00523FF3 /* se */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = se; path = HostingApp/se.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C67A3F3B1EE7F24900C9015C /* Base */ = {isa = PBXFileReference; lastKnownFileType = text; name = Base; path = Base.lproj/About.txt; sourceTree = "<group>"; };
+		C691A0E623682C8B00085AC3 /* TestingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestingController.swift; sourceTree = "<group>"; };
+		C691A0E823682C9700085AC3 /* TestingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestingView.xib; sourceTree = "<group>"; };
+		C691A0E923682C9700085AC3 /* TestingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestingView.swift; sourceTree = "<group>"; };
+		C691A0EC23682CC000085AC3 /* HomeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeView.xib; sourceTree = "<group>"; };
 		C6974E601A31557A00D1A0B3 /* Background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Background.jpg; sourceTree = "<group>"; };
 		C6996B5122FB0055007EBC3D /* DeadKeyHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeadKeyHandler.swift; sourceTree = "<group>"; };
 		C6996B5422FC2C8B007EBC3D /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
@@ -359,6 +365,7 @@
 				C65430B31EC94BF0007FC053 /* LanguagesController.swift */,
 				C65430A91EC93EB0007FC053 /* LayoutsController.swift */,
 				C6B638451EDF94CA00A6ECB2 /* AboutController.swift */,
+				C691A0E623682C8B00085AC3 /* TestingController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -369,10 +376,12 @@
 				C6A2E01E1EDFAAA2006BAB69 /* AboutView.swift */,
 				C6A2E01C1EDFA259006BAB69 /* AboutView.xib */,
 				C655E8551EC5559200B12BE4 /* HomeView.swift */,
-				C655E8571EC5559E00B12BE4 /* HomeView.xib */,
+				C691A0EC23682CC000085AC3 /* HomeView.xib */,
 				C65430AF1EC94BC7007FC053 /* InstructionsView.swift */,
 				C65430B11EC94BD1007FC053 /* InstructionsView.xib */,
 				C643BF5A20BD483C00124DDC /* LaunchScreen.storyboard */,
+				C691A0E923682C9700085AC3 /* TestingView.swift */,
+				C691A0E823682C9700085AC3 /* TestingView.xib */,
 				C63EE0FE2361D86800A1E15A /* MenuButton.swift */,
 			);
 			path = Views;
@@ -538,16 +547,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				C6EA31C321AF181D0014F3B6 /* KeyboardDefinitions.json in Resources */,
+				C691A0EA23682C9700085AC3 /* TestingView.xib in Resources */,
 				C643BF5B20BD483C00124DDC /* LaunchScreen.storyboard in Resources */,
 				4EF16F9619D255030076AFCB /* Images.xcassets in Resources */,
 				C6A2E01D1EDFA259006BAB69 /* AboutView.xib in Resources */,
+				C691A0ED23682CC000085AC3 /* HomeView.xib in Resources */,
 				C655E85D1EC55D0800B12BE4 /* Localizable.strings in Resources */,
 				C6974E611A31557A00D1A0B3 /* Background.jpg in Resources */,
 				C67A3F3A1EE7F24900C9015C /* About.txt in Resources */,
 				C64937D2218DC7FA00D0C9DC /* dicts.bundle in Resources */,
 				C65430B21EC94BD1007FC053 /* InstructionsView.xib in Resources */,
 				C63EE1012362F7E500A1E15A /* Settings.bundle in Resources */,
-				C655E8581EC5559E00B12BE4 /* HomeView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -639,6 +649,7 @@
 				C6B638441EDF81B200A6ECB2 /* SimpleButton.swift in Sources */,
 				C63EE0FF2361D86800A1E15A /* MenuButton.swift in Sources */,
 				C655E8541EC5551100B12BE4 /* Extensions.swift in Sources */,
+				C691A0E723682C8B00085AC3 /* TestingController.swift in Sources */,
 				C65430B41EC94BF0007FC053 /* LanguagesController.swift in Sources */,
 				C65430B01EC94BC7007FC053 /* InstructionsView.swift in Sources */,
 				4EF16F9B19D2550D0076AFCB /* AppDelegate.swift in Sources */,
@@ -649,6 +660,7 @@
 				C655E8561EC5559200B12BE4 /* HomeView.swift in Sources */,
 				C6A3905B1EB61BF8009378C1 /* KeyboardSettings.swift in Sources */,
 				C65430AA1EC93EB0007FC053 /* LayoutsController.swift in Sources */,
+				C691A0EB23682C9700085AC3 /* TestingView.swift in Sources */,
 				C6B638461EDF94CA00A6ECB2 /* AboutController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

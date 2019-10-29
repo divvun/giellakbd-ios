@@ -19,6 +19,7 @@ class HomeView: UIView, Nibbable {
     @IBOutlet var helpButton: MenuButton!
     @IBOutlet var layoutsButton: MenuButton!
     @IBOutlet var aboutButton: MenuButton!
+    @IBOutlet var testingButton: MenuButton!
 
     @IBOutlet var configStack: UIStackView?
 
