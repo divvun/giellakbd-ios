@@ -31,20 +31,20 @@ private func resolveWordContext(before beforeInput: String, after afterInput: St
     var rightCurrentChunk: String.SubSequence?
 
     // Build current word
-    let currentLeftIndex = beforeInput.lastIndex(of: " ")
+    let currentLeftIndex = beforeInput.lastIndex(where: { $0 == " " || $0 == "\n" })
     if let currentLeftIndex = currentLeftIndex {
         leftCurrentChunk = beforeInput.suffix(after: currentLeftIndex)
     } else {
         leftCurrentChunk = beforeInput.suffix(from: beforeInput.startIndex)
     }
 
-    let currentRightIndex = afterInput.firstIndex(of: " ") ?? afterInput.endIndex
+    let currentRightIndex = afterInput.firstIndex(where: { $0 == " " || $0 == "\n" }) ?? afterInput.endIndex
     rightCurrentChunk = afterInput.prefix(upTo: currentRightIndex)
 
     // Try left side
     if let currentLeftIndex = currentLeftIndex {
         let leftFullChunk = beforeInput.prefix(upTo: currentLeftIndex)
-        let leftIndex = leftFullChunk.lastIndex(after: " ") ?? leftFullChunk.startIndex
+        let leftIndex = leftFullChunk.lastIndex(where: { $0 == " " || $0 == "\n" }) ?? leftFullChunk.startIndex
         let leftChunk = beforeInput[leftIndex ..< currentLeftIndex]
 
         if !leftChunk.isEmpty {
@@ -55,7 +55,7 @@ private func resolveWordContext(before beforeInput: String, after afterInput: St
     // Try right side
     if currentRightIndex != afterInput.endIndex {
         let rightFullChunk = afterInput.suffix(after: currentRightIndex)
-        let rightIndex = rightFullChunk.firstIndex(of: " ") ?? rightFullChunk.endIndex
+        let rightIndex = rightFullChunk.firstIndex(where: { $0 == " " || $0 == "\n" }) ?? rightFullChunk.endIndex
         let rightChunk = rightFullChunk.prefix(upTo: rightIndex)
 
         if !rightChunk.isEmpty {

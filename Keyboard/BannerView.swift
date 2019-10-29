@@ -11,8 +11,10 @@ public protocol BannerViewDelegate {
 }
 
 public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    private var theme: ThemeType
+    
     class BannerCell: UICollectionViewCell {
-        let titleLabel: UILabel
+        private let titleLabel: UILabel
 
         private var heightConstraint: NSLayoutConstraint?
         private var widthConstraint: NSLayoutConstraint?
@@ -21,18 +23,23 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
             titleLabel = UILabel(frame: frame)
             
             super.init(frame: frame)
-            
+        }
+        
+        func configure(theme: ThemeType) {
             isHidden = false
             contentView.translatesAutoresizingMaskIntoConstraints = false
             titleLabel.translatesAutoresizingMaskIntoConstraints = false
             contentView.fill(superview: self)
             contentView.addSubview(titleLabel)
 
-            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: KeyboardView.theme.bannerVerticalMargin).isActive = true
-            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -KeyboardView.theme.bannerVerticalMargin).isActive = true
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: theme.bannerVerticalMargin).isActive = true
+            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -theme.bannerVerticalMargin).isActive = true
             titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-            titleLabel.font = KeyboardView.theme.bannerFont
+            titleLabel.font = theme.bannerFont
             titleLabel.textAlignment = .center
+
+            backgroundColor = theme.bannerBackgroundColor
+            titleLabel.textColor = theme.bannerTextColor
 
             heightConstraint = contentView.heightAnchor.constraint(equalToConstant: 0)
         }
@@ -42,13 +49,10 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
             heightConstraint?.constant = superview?.bounds.height ?? 0
             heightConstraint?.isActive = true
 
-            backgroundColor = KeyboardView.theme.bannerBackgroundColor
-            titleLabel.textColor = KeyboardView.theme.bannerTextColor
-
             super.updateConstraints()
         }
 
-        func setItem(_ item: BannerItem) {
+        func set(item: BannerItem) {
             titleLabel.text = item.title
         }
 
@@ -87,16 +91,17 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
         return flowLayout
     }
 
-    override init(frame: CGRect) {
-        collectionView = UICollectionView(frame: frame, collectionViewLayout: UICollectionViewFlowLayout())
-        super.init(frame: frame)
+    init(theme: ThemeType) {
+        self.theme = theme
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        super.init(frame: .zero)
         backgroundColor = .clear
 
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(collectionView)
         collectionView.fill(superview: self)
         collectionView.register(BannerCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        collectionView.backgroundColor = KeyboardView.theme.bannerSeparatorColor
+        collectionView.backgroundColor = theme.bannerSeparatorColor
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.bounces = false
         collectionView.delegate = self
@@ -104,9 +109,14 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
 
         collectionView.collectionViewLayout = createCollectionViewLayout()
     }
+    
+    func updateTheme(theme: ThemeType) {
+        self.theme = theme
+        update()
+    }
 
     func update() {
-        collectionView.backgroundColor = KeyboardView.theme.bannerSeparatorColor
+        collectionView.backgroundColor = theme.bannerSeparatorColor
         collectionView.reloadData()
     }
 
@@ -116,7 +126,8 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
 
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! BannerCell
-        cell.setItem(items[indexPath.item])
+        cell.configure(theme: theme)
+        cell.set(item: items[indexPath.item])
 
         return cell
     }
@@ -126,9 +137,9 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
         
         // It is constrained by infinity so it isn't constrained.
         let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: collectionView.frame.height)
-        let boundingBox = title.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: KeyboardView.theme.bannerFont], context: nil)
+        let boundingBox = title.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: theme.bannerFont], context: nil)
 
-        return CGSize(width: max(frame.width / 3.0, boundingBox.width + KeyboardView.theme.bannerHorizontalMargin * 2), height: collectionView.frame.height)
+        return CGSize(width: max(frame.width / 3.0, boundingBox.width + theme.bannerHorizontalMargin * 2), height: collectionView.frame.height)
     }
 
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

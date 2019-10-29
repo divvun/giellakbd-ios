@@ -1,6 +1,9 @@
 
 class KeyView: UIView {
-    private var key: KeyDefinition
+    private let key: KeyDefinition
+    private let theme: ThemeType
+    
+    private var contentView: UIView!
 
     var isSwipeKey: Bool {
         if case let .input(_, alt) = key.type, alt != nil {
@@ -25,11 +28,11 @@ class KeyView: UIView {
         didSet {
             if let contentView = self.contentView {
                 let activeColor = key.type.isSpecialKeyStyle
-                    ? KeyboardView.theme.regularKeyColor
-                    : KeyboardView.theme.specialKeyColor
+                    ? theme.regularKeyColor
+                    : theme.specialKeyColor
                 let regularColor = key.type.isSpecialKeyStyle
-                    ? KeyboardView.theme.specialKeyColor
-                    : KeyboardView.theme.regularKeyColor
+                    ? theme.specialKeyColor
+                    : theme.regularKeyColor
 
                 contentView.backgroundColor = active
                     ? activeColor
@@ -50,30 +53,28 @@ class KeyView: UIView {
             swipeLayoutConstraint?.constant = minValue + (maxValue - minValue) * percentageAlternative
 
             if isSwipeKey {
-                alternateLabel?.textColor = UIColor.interpolate(from: KeyboardView.theme.inactiveTextColor, to: KeyboardView.theme.textColor, with: percentageAlternative)
-                label.textColor = UIColor.interpolate(from: KeyboardView.theme.textColor, to: UIColor.clear, with: percentageAlternative)
+                alternateLabel?.textColor = UIColor.interpolate(from: theme.inactiveTextColor, to: theme.textColor, with: percentageAlternative)
+                label.textColor = UIColor.interpolate(from: theme.textColor, to: UIColor.clear, with: percentageAlternative)
 
-                let fontSizeDelta = KeyboardView.theme.keyFont.pointSize - KeyboardView.theme.modifierKeyFontSize
-                alternateLabel?.font = KeyboardView.theme.altKeyFont.withSize(KeyboardView.theme.altKeyFontSize + fontSizeDelta * percentageAlternative)
-                label.font = KeyboardView.theme.keyFont.withSize(KeyboardView.theme.keyFont.pointSize - fontSizeDelta * percentageAlternative)
+                let fontSizeDelta = theme.keyFont.pointSize - theme.modifierKeyFontSize
+                alternateLabel?.font = theme.altKeyFont.withSize(theme.altKeyFontSize + fontSizeDelta * percentageAlternative)
+                label.font = theme.keyFont.withSize(theme.keyFont.pointSize - fontSizeDelta * percentageAlternative)
             }
         }
     }
-
-    private var contentView: UIView!
     
     private func configureKeyLabel(_ label: UILabel, page: KeyboardPage) {
-        label.textColor = KeyboardView.theme.textColor
+        label.textColor = theme.textColor
         if case .input = key.type {
             switch page {
             case .shifted, .capslock, .symbols1, .symbols2:
-                label.font = KeyboardView.theme.capitalKeyFont
+                label.font = theme.capitalKeyFont
             default:
-                label.font = KeyboardView.theme.lowerKeyFont
+                label.font = theme.lowerKeyFont
             }
             label.adjustsFontSizeToFitWidth = false
         } else {
-            label.font = KeyboardView.theme.keyFont.withSize(KeyboardView.theme.modifierKeyFontSize)
+            label.font = theme.keyFont.withSize(theme.modifierKeyFontSize)
             label.adjustsFontSizeToFitWidth = true
         }
         label.numberOfLines = 0
@@ -87,7 +88,7 @@ class KeyView: UIView {
     }
     
     private func configureAltKeyLabel(_ alternateLabel: UILabel, page: KeyboardPage) {
-        alternateLabel.textColor = KeyboardView.theme.inactiveTextColor
+        alternateLabel.textColor = theme.inactiveTextColor
         
         alternateLabel.adjustsFontSizeToFitWidth = false
         alternateLabel.numberOfLines = 0
@@ -97,7 +98,7 @@ class KeyView: UIView {
         alternateLabel.translatesAutoresizingMaskIntoConstraints = false
         alternateLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         alternateLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
-        alternateLabel.font = KeyboardView.theme.altKeyFont
+        alternateLabel.font = theme.altKeyFont
     }
     
     private func input(string: String, alt: String?, page: KeyboardPage) {
@@ -181,7 +182,7 @@ class KeyView: UIView {
 
             imageView.image = image
             imageView.contentMode = .center
-            imageView.tintColor = KeyboardView.theme.textColor
+            imageView.tintColor = theme.textColor
 
             addSubview(imageView)
 
@@ -189,8 +190,9 @@ class KeyView: UIView {
         }
     }
     
-    init(page: KeyboardPage, key: KeyDefinition) {
+    init(page: KeyboardPage, key: KeyDefinition, theme: ThemeType) {
         self.key = key
+        self.theme = theme
         
         super.init(frame: .zero)
 
@@ -251,22 +253,22 @@ class KeyView: UIView {
             text("tab", page: page)
         }
 
-        layer.shadowColor = KeyboardView.theme.keyShadowColor.cgColor
+        layer.shadowColor = theme.keyShadowColor.cgColor
         layer.shadowOffset = CGSize(width: 0, height: 1)
         layer.shadowOpacity = 1.0
         layer.shadowRadius = 0.0
         
         contentView.fill(superview: self, margins: UIEdgeInsets(
-            top: KeyboardView.theme.keyVerticalMargin + 2.0,
-            left: KeyboardView.theme.keyHorizontalMargin,
-            bottom: KeyboardView.theme.keyVerticalMargin - 2.0,
-            right: KeyboardView.theme.keyHorizontalMargin))
+            top: theme.keyVerticalMargin + 2.0,
+            left: theme.keyHorizontalMargin,
+            bottom: theme.keyVerticalMargin - 2.0,
+            right: theme.keyHorizontalMargin))
         
         contentView.clipsToBounds = false
 
         contentView.backgroundColor = key.type.isSpecialKeyStyle
-            ? KeyboardView.theme.specialKeyColor
-            : KeyboardView.theme.regularKeyColor
+            ? theme.specialKeyColor
+            : theme.regularKeyColor
     }
 
     override func layoutSubviews() {
@@ -281,8 +283,8 @@ class KeyView: UIView {
 
         if let subview = contentView {
             subview.layer.borderWidth = 1.0
-            subview.layer.borderColor = (key.type.isSpecialKeyStyle ? KeyboardView.theme.specialKeyBorderColor : KeyboardView.theme.borderColor).cgColor
-            subview.layer.cornerRadius = KeyboardView.theme.keyCornerRadius
+            subview.layer.borderColor = (key.type.isSpecialKeyStyle ? theme.specialKeyBorderColor : theme.borderColor).cgColor
+            subview.layer.cornerRadius = theme.keyCornerRadius
             subview.clipsToBounds = true
         }
     }

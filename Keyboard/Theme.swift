@@ -2,7 +2,48 @@ import Foundation
 import UIKit
 import UIDeviceComplete
 
-protocol Theme {
+struct _Theme {
+    let dark: ThemeType
+    let light: ThemeType
+}
+
+extension _Theme {
+    @available(iOSApplicationExtension 12.0, *)
+    func select(byUIStyle interfaceStyle: UIUserInterfaceStyle) -> ThemeType {
+        switch interfaceStyle {
+        case .light:
+            return self.light
+        case .dark:
+            return self.dark
+        case .unspecified:
+            // This should probably not be possible to get into, so assume light
+            return self.light
+        @unknown default:
+            return self.light
+        }
+    }
+    
+    func select(byAppearance appearance: UIKeyboardAppearance, traits: UITraitCollection) -> ThemeType {
+        switch appearance {
+        case .dark, .alert:
+            return self.dark
+        case .light:
+            return self.light
+        case .default:
+            if #available(iOSApplicationExtension 12.0, *) {
+                return select(byUIStyle: traits.userInterfaceStyle)
+            } else {
+                return self.light
+            }
+        @unknown default:
+            return self.light
+        }
+    }
+}
+
+protocol ThemeType {
+    var appearance: UIKeyboardAppearance { get }
+    
     var regularKeyColor: UIColor { get }
     var specialKeyColor: UIColor { get }
     var popupColor: UIColor { get }
@@ -47,7 +88,8 @@ protocol Theme {
     var bannerHeight: CGFloat { get }
 }
 
-class LightThemeImpl: Theme {
+class LightThemeImpl: ThemeType {
+    var appearance: UIKeyboardAppearance { return .light }
     var bannerHeight: CGFloat { return IPhoneThemeBase.bannerHeight }
     
     var regularKeyColor = UIColor.white
@@ -96,8 +138,8 @@ class LightThemeImpl: Theme {
     public init() {}
 }
 
-class DarkThemeImpl: Theme {
-    
+class DarkThemeImpl: ThemeType {
+    var appearance: UIKeyboardAppearance { return .dark }
     var bannerHeight: CGFloat { return IPhoneThemeBase.bannerHeight }
     var backgroundColor: UIColor = .clear
 
@@ -253,3 +295,8 @@ class DarkThemeIpadImpl: DarkThemeImpl {
     override var modifierKeyFontSize: CGFloat { return IPadThemeBase.alternateKeyFontSize }
     override var bannerHeight: CGFloat { return IPadThemeBase.bannerHeight }
 }
+
+private let LightTheme = UIDevice.current.dc.isIpad ? LightThemeIpadImpl() : LightThemeImpl()
+private let DarkTheme = UIDevice.current.dc.isIpad ? DarkThemeIpadImpl() : DarkThemeImpl()
+
+let Theme = _Theme(dark: DarkTheme, light: LightTheme)

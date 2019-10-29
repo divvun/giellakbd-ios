@@ -1,20 +1,24 @@
 import UIKit
 
 class KeyOverlayView: UIView {
-    class KeyOverlayShadowView: UIView {}
+    private class KeyOverlayShadowView: UIView {}
 
-    let originView: UIView
-    let key: KeyDefinition
+    private let originView: UIView
+    private let key: KeyDefinition
+    private let theme: ThemeType
 
     let originFrameView: UIView
     private var shadowView: KeyOverlayShadowView?
 
-    var path: CGPath!
+    private var path: CGPath!
 
-    init(origin: UIView, key: KeyDefinition) {
+    init(origin: UIView, key: KeyDefinition, theme: ThemeType) {
         originView = origin
         self.key = key
+        self.theme = theme
         originFrameView = UIView(frame: origin.bounds)
+        originFrameView.clipsToBounds = false
+        
         super.init(frame: CGRect(x: 0, y: 0, width: origin.frame.width, height: origin.frame.height * 2))
         backgroundColor = .clear
         originFrameView.translatesAutoresizingMaskIntoConstraints = false
@@ -22,19 +26,19 @@ class KeyOverlayView: UIView {
         
         // This one breaks the top of the keyboard when given any chance to do so
         originFrameView.topAnchor
-            .constraint(equalTo: topAnchor, constant: KeyboardView.theme.popupCornerRadius)
+            .constraint(equalTo: topAnchor, constant: theme.popupCornerRadius)
             .enable(priority: .defaultHigh)
 
         leftAnchor
-            .constraint(lessThanOrEqualTo: originFrameView.leftAnchor, constant: -KeyboardView.theme.popupCornerRadius)
+            .constraint(lessThanOrEqualTo: originFrameView.leftAnchor, constant: -theme.popupCornerRadius)
             .enable(priority: .required)
 
         rightAnchor
-            .constraint(greaterThanOrEqualTo: originFrameView.rightAnchor, constant: KeyboardView.theme.popupCornerRadius)
+            .constraint(greaterThanOrEqualTo: originFrameView.rightAnchor, constant: theme.popupCornerRadius)
             .enable(priority: .required)
         
         originFrameView.heightAnchor
-            .constraint(lessThanOrEqualToConstant: origin.frame.height - KeyboardView.theme.popupCornerRadius * 2)
+            .constraint(lessThanOrEqualToConstant: origin.frame.height - theme.popupCornerRadius * 2)
             .enable(priority: .defaultHigh)
         
         originFrameView.widthAnchor
@@ -86,9 +90,9 @@ class KeyOverlayView: UIView {
 
         let bezier = UIBezierPath(cgPath: path)
 
-        KeyboardView.theme.popupColor.setFill()
+        theme.popupColor.setFill()
         bezier.fill()
-        KeyboardView.theme.popupBorderColor.setStroke()
+        theme.popupBorderColor.setStroke()
         bezier.stroke()
 
         let mask = CAShapeLayer()
@@ -112,50 +116,50 @@ class KeyOverlayView: UIView {
         let originFrameInSuperview = originView.convert(originView.frame, to: superview)
         let originFrameInLocalBounds = superview
             .convert(originFrameInSuperview, to: self)
-            .insetBy(dx: KeyboardView.theme.keyHorizontalMargin, dy: KeyboardView.theme.keyVerticalMargin)
+            .insetBy(dx: theme.keyHorizontalMargin, dy: theme.keyVerticalMargin)
 
         var points: [PopupPathPoint]
 
-        if originFrameInLocalBounds.maxY < bounds.maxY - KeyboardView.theme.popupCornerRadius {
+        if originFrameInLocalBounds.maxY < bounds.maxY - theme.popupCornerRadius {
             // Only draw a rounded rect
             points = [
-                CGPoint(x: self.frame.midX, y: 0.0).withRadius(radius: KeyboardView.theme.popupCornerRadius),
-                CGPoint.zero.withRadius(radius: KeyboardView.theme.popupCornerRadius),
-                CGPoint(x: 0, y: originFrameView.frame.height + KeyboardView.theme.popupCornerRadius * 2).withRadius(radius: KeyboardView.theme.popupCornerRadius),
-                CGPoint(x: self.frame.width, y: originFrameView.frame.height + KeyboardView.theme.popupCornerRadius * 2).withRadius(radius: KeyboardView.theme.popupCornerRadius),
-                CGPoint(x: self.frame.width, y: 0.0).withRadius(radius: KeyboardView.theme.popupCornerRadius),
-                CGPoint(x: self.bounds.midX, y: 0.0).withRadius(radius: KeyboardView.theme.popupCornerRadius),
-                CGPoint(x: self.bounds.midX, y: 0.0).withRadius(radius: KeyboardView.theme.popupCornerRadius)
+                CGPoint(x: self.frame.midX, y: 0.0).withRadius(radius: theme.popupCornerRadius),
+                CGPoint.zero.withRadius(radius: theme.popupCornerRadius),
+                CGPoint(x: 0, y: originFrameView.frame.height + theme.popupCornerRadius * 2).withRadius(radius: theme.popupCornerRadius),
+                CGPoint(x: self.frame.width, y: originFrameView.frame.height + theme.popupCornerRadius * 2).withRadius(radius: theme.popupCornerRadius),
+                CGPoint(x: self.frame.width, y: 0.0).withRadius(radius: theme.popupCornerRadius),
+                CGPoint(x: self.bounds.midX, y: 0.0).withRadius(radius: theme.popupCornerRadius),
+                CGPoint(x: self.bounds.midX, y: 0.0).withRadius(radius: theme.popupCornerRadius)
             ]
-        } else if originFrameInLocalBounds.maxX + KeyboardView.theme.popupCornerRadius * 2 >= bounds.maxX {
+        } else if originFrameInLocalBounds.maxX + theme.popupCornerRadius * 2 >= bounds.maxX {
             // Regular bubble
             points = [
-                CGPoint(x: self.frame.midX, y: 0.0).withRadius(radius: KeyboardView.theme.popupCornerRadius),
-                CGPoint.zero.withRadius(radius: KeyboardView.theme.popupCornerRadius),
-                CGPoint(x: 0, y: originFrameView.frame.height + KeyboardView.theme.popupCornerRadius * 2).withRadius(radius: KeyboardView.theme.popupCornerRadius),
-                CGPoint(x: originFrameInLocalBounds.minX, y: originFrameView.frame.height + KeyboardView.theme.popupCornerRadius * 3).withRadius(radius: KeyboardView.theme.popupCornerRadius),
-                CGPoint(x: originFrameInLocalBounds.minX, y: self.bounds.maxY).withRadius(radius: KeyboardView.theme.keyCornerRadius),
-                CGPoint(x: originFrameInLocalBounds.maxX, y: self.bounds.maxY).withRadius(radius: KeyboardView.theme.keyCornerRadius),
-                CGPoint(x: originFrameInLocalBounds.maxX, y: originFrameView.frame.height + KeyboardView.theme.popupCornerRadius * 3).withRadius(radius: KeyboardView.theme.popupCornerRadius),
-                CGPoint(x: self.frame.width, y: originFrameView.frame.height + KeyboardView.theme.popupCornerRadius * 2).withRadius(radius: KeyboardView.theme.popupCornerRadius),
-                CGPoint(x: self.frame.width, y: 0.0).withRadius(radius: KeyboardView.theme.popupCornerRadius),
-                CGPoint(x: self.bounds.midX, y: 0.0).withRadius(radius: KeyboardView.theme.popupCornerRadius),
-                CGPoint(x: self.bounds.midX, y: 0.0).withRadius(radius: KeyboardView.theme.popupCornerRadius)
+                CGPoint(x: self.frame.midX, y: 0.0).withRadius(radius: theme.popupCornerRadius),
+                CGPoint.zero.withRadius(radius: theme.popupCornerRadius),
+                CGPoint(x: 0, y: originFrameView.frame.height + theme.popupCornerRadius * 2).withRadius(radius: theme.popupCornerRadius),
+                CGPoint(x: originFrameInLocalBounds.minX, y: originFrameView.frame.height + theme.popupCornerRadius * 3).withRadius(radius: theme.popupCornerRadius),
+                CGPoint(x: originFrameInLocalBounds.minX, y: self.bounds.maxY).withRadius(radius: theme.keyCornerRadius),
+                CGPoint(x: originFrameInLocalBounds.maxX, y: self.bounds.maxY).withRadius(radius: theme.keyCornerRadius),
+                CGPoint(x: originFrameInLocalBounds.maxX, y: originFrameView.frame.height + theme.popupCornerRadius * 3).withRadius(radius: theme.popupCornerRadius),
+                CGPoint(x: self.frame.width, y: originFrameView.frame.height + theme.popupCornerRadius * 2).withRadius(radius: theme.popupCornerRadius),
+                CGPoint(x: self.frame.width, y: 0.0).withRadius(radius: theme.popupCornerRadius),
+                CGPoint(x: self.bounds.midX, y: 0.0).withRadius(radius: theme.popupCornerRadius),
+                CGPoint(x: self.bounds.midX, y: 0.0).withRadius(radius: theme.popupCornerRadius)
             ]
         } else {
             // Longpress bubble
             points = [
-                CGPoint(x: self.frame.midX, y: 0.0).withRadius(radius: KeyboardView.theme.popupCornerRadius),
-                CGPoint.zero.withRadius(radius: KeyboardView.theme.popupCornerRadius),
-                CGPoint(x: 0, y: originFrameView.frame.height + KeyboardView.theme.popupCornerRadius * 2).withRadius(radius: originFrameInLocalBounds.minX < KeyboardView.theme.popupCornerRadius ? 0 : KeyboardView.theme.popupCornerRadius),
-                CGPoint(x: originFrameInLocalBounds.minX, y: originFrameView.frame.height + KeyboardView.theme.popupCornerRadius * 2).withRadius(radius: KeyboardView.theme.popupCornerRadius),
-                CGPoint(x: originFrameInLocalBounds.minX, y: self.bounds.maxY).withRadius(radius: KeyboardView.theme.keyCornerRadius),
-                CGPoint(x: originFrameInLocalBounds.maxX, y: self.bounds.maxY).withRadius(radius: KeyboardView.theme.keyCornerRadius),
-                CGPoint(x: originFrameInLocalBounds.maxX, y: originFrameView.frame.height + KeyboardView.theme.popupCornerRadius * 2).withRadius(radius: KeyboardView.theme.popupCornerRadius),
-                CGPoint(x: self.frame.width, y: originFrameView.frame.height + KeyboardView.theme.popupCornerRadius * 2).withRadius(radius: originFrameInLocalBounds.maxX > self.frame.width - KeyboardView.theme.popupCornerRadius ? 0 : KeyboardView.theme.popupCornerRadius),
-                CGPoint(x: self.frame.width, y: 0.0).withRadius(radius: KeyboardView.theme.popupCornerRadius),
-                CGPoint(x: self.bounds.midX, y: 0.0).withRadius(radius: KeyboardView.theme.popupCornerRadius),
-                CGPoint(x: self.bounds.midX, y: 0.0).withRadius(radius: KeyboardView.theme.popupCornerRadius)
+                CGPoint(x: self.frame.midX, y: 0.0).withRadius(radius: theme.popupCornerRadius),
+                CGPoint.zero.withRadius(radius: theme.popupCornerRadius),
+                CGPoint(x: 0, y: originFrameView.frame.height + theme.popupCornerRadius * 2).withRadius(radius: originFrameInLocalBounds.minX < theme.popupCornerRadius ? 0 : theme.popupCornerRadius),
+                CGPoint(x: originFrameInLocalBounds.minX, y: originFrameView.frame.height + theme.popupCornerRadius * 2).withRadius(radius: theme.popupCornerRadius),
+                CGPoint(x: originFrameInLocalBounds.minX, y: self.bounds.maxY).withRadius(radius: theme.keyCornerRadius),
+                CGPoint(x: originFrameInLocalBounds.maxX, y: self.bounds.maxY).withRadius(radius: theme.keyCornerRadius),
+                CGPoint(x: originFrameInLocalBounds.maxX, y: originFrameView.frame.height + theme.popupCornerRadius * 2).withRadius(radius: theme.popupCornerRadius),
+                CGPoint(x: self.frame.width, y: originFrameView.frame.height + theme.popupCornerRadius * 2).withRadius(radius: originFrameInLocalBounds.maxX > self.frame.width - theme.popupCornerRadius ? 0 : theme.popupCornerRadius),
+                CGPoint(x: self.frame.width, y: 0.0).withRadius(radius: theme.popupCornerRadius),
+                CGPoint(x: self.bounds.midX, y: 0.0).withRadius(radius: theme.popupCornerRadius),
+                CGPoint(x: self.bounds.midX, y: 0.0).withRadius(radius: theme.popupCornerRadius)
             ]
         }
 

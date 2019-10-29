@@ -64,7 +64,8 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
 
     private let deadZone: CGFloat = 20.0
 
-    let key: KeyDefinition
+    private let key: KeyDefinition
+    private let theme: ThemeType
     let longpressValues: [KeyDefinition]
 
     private var baselinePoint: CGPoint?
@@ -83,14 +84,15 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
     var delegate: LongPressOverlayDelegate?
     private let labelFont: UIFont
 
-    init(key: KeyDefinition, page: KeyboardPage, longpressValues: [KeyDefinition]) {
+    init(key: KeyDefinition, page: KeyboardPage, theme: ThemeType, longpressValues: [KeyDefinition]) {
         self.key = key
+        self.theme = theme
         self.longpressValues = longpressValues
         switch page {
         case .normal:
-            labelFont = KeyboardView.theme.popupLongpressLowerKeyFont
+            labelFont = theme.popupLongpressLowerKeyFont
         default:
-            labelFont = KeyboardView.theme.popupLongpressCapitalKeyFont
+            labelFont = theme.popupLongpressCapitalKeyFont
         }
     }
 
@@ -207,6 +209,7 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! LongpressKeyCell
+        cell.configure(theme: theme)
         let key = longpressValues[indexPath.row + Int(ceil(Double(longpressValues.count) / 2.0)) * indexPath.section]
         
         cell.label.font = labelFont
@@ -226,8 +229,12 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
         } else {
             print("ERROR: Invalid key type in longpress")
         }
-
-        cell.isSelectedKey = key.type == selectedKey?.type
+        
+        if key.type == selectedKey?.type {
+            cell.select(theme: theme)
+        } else {
+            cell.deselect(theme: theme)
+        }
 
         return cell
     }
@@ -259,30 +266,48 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
     class LongpressKeyCell: UICollectionViewCell {
         let label: UILabel
         let imageView: UIImageView
-        var isSelectedKey: Bool = false {
-            didSet {
-                label.textColor = isSelectedKey ? KeyboardView.theme.activeTextColor : KeyboardView.theme.textColor
-                label.backgroundColor = isSelectedKey ? KeyboardView.theme.activeColor : KeyboardView.theme.popupColor
-            }
+        
+        
+        private(set) var isSelectedKey: Bool = false
+//            didSet {
+//                label.textColor = isSelectedKey ? theme.activeTextColor : theme.textColor
+//                label.backgroundColor = isSelectedKey ? theme.activeColor : theme.popupColor
+//            }
+//        }
+        
+        func select(theme: ThemeType) {
+            label.textColor = theme.activeTextColor
+            label.backgroundColor = theme.activeColor
+            isSelectedKey = true
+        }
+        
+        func deselect(theme: ThemeType) {
+            label.textColor = theme.textColor
+            label.backgroundColor = theme.popupColor
+            isSelectedKey = false
         }
 
         override init(frame: CGRect) {
             label = UILabel(frame: frame)
             label.translatesAutoresizingMaskIntoConstraints = false
             label.textAlignment = .center
-            label.layer.cornerRadius = KeyboardView.theme.keyCornerRadius
             label.clipsToBounds = true
             
             imageView = UIImageView()
-            imageView.tintColor = KeyboardView.theme.textColor
             imageView.translatesAutoresizingMaskIntoConstraints = false
             imageView.contentMode = .scaleAspectFit
             
             super.init(frame: frame)
+            
             addSubview(label)
             addSubview(imageView)
             imageView.fill(superview: self)
             label.fill(superview: self)
+        }
+        
+        func configure(theme: ThemeType) {
+            label.layer.cornerRadius = theme.keyCornerRadius
+            imageView.tintColor = theme.textColor
         }
 
         required init?(coder _: NSCoder) {

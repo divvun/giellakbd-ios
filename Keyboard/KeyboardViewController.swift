@@ -8,14 +8,14 @@ protocol KeyboardViewProvider {
 
     var page: BaseKeyboard.KeyboardPage { get set }
 
-    func updateTheme(theme: Theme)
+    func updateTheme(theme: ThemeType)
 
     func update()
 
     var topAnchor: NSLayoutYAxisAnchor { get }
     var heightAnchor: NSLayoutDimension { get }
 
-    init(definition: KeyboardDefinition)
+    init(definition: KeyboardDefinition, theme: ThemeType)
 
     func remove()
 }
@@ -120,29 +120,16 @@ open class KeyboardViewController: UIInputViewController {
     private var deadKeyHandler: DeadKeyHandler!
     public private(set) var bannerView: BannerView!
     public private(set) var keyboardDefinition: KeyboardDefinition!
-
-    var keyboardMode: KeyboardMode = .normal {
-        didSet {
-            KeyboardView.theme = textDocumentProxy.keyboardAppearance == UIKeyboardAppearance.dark ? DarkTheme : LightTheme
-
-//            setupKeyboardView()
-//            keyboardDidReset()
-        }
-    }
-
-    var LightTheme: Theme {
-        return keyboardMode == .normal && UIDevice.current.dc.deviceFamily == .iPad
-            ? LightThemeIpadImpl()
-            : LightThemeImpl()
-    }
-    
-    var DarkTheme: Theme {
-        return self.keyboardMode == .normal && UIDevice.current.dc.deviceFamily == .iPad
-            ? DarkThemeIpadImpl()
-            : DarkThemeImpl()
-    }
+    private var keyboardMode: KeyboardMode = .normal
     
     private var isSoundEnabled = KeyboardSettings.isKeySoundEnabled
+    private(set) lazy var theme: ThemeType = {
+        if #available(iOSApplicationExtension 12.0, *) {
+            return Theme.select(byUIStyle: self.traitCollection.userInterfaceStyle)
+        } else {
+            return Theme.light
+        }
+    }()
     
     open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         // This could have changed, so we hook here.
@@ -163,7 +150,7 @@ open class KeyboardViewController: UIInputViewController {
         }
         
         if !bannerVisible {
-             value -= KeyboardView.theme.bannerHeight
+             value -= theme.bannerHeight
         }
         
         print("Init setting height constraint: \(value)")
@@ -177,14 +164,16 @@ open class KeyboardViewController: UIInputViewController {
         guard let kbdIndex = Bundle.main.infoDictionary?["DivvunKeyboardIndex"] as? Int else {
             fatalError("There was no DivvunKeyboardIndex")
         }
+        
         keyboardDefinition = KeyboardDefinition.definitions[kbdIndex]
         deadKeyHandler = DeadKeyHandler(keyboard: keyboardDefinition)
 
         inputView?.allowsSelfSizing = true
+        
         setupKeyboardView()
         setupBannerView()
         
-        print("\(KeyboardDefinition.definitions.map { $0.locale + " " })")
+        print("\(KeyboardDefinition.definitions.map { $0.locale })")
     }
 
     private func setupKeyboardView() {
@@ -194,7 +183,7 @@ open class KeyboardViewController: UIInputViewController {
         }
         switch keyboardMode {
         case .split:
-            let splitKeyboardView = SplitKeyboardView(definition: keyboardDefinition)
+            let splitKeyboardView = SplitKeyboardView(definition: keyboardDefinition, theme: theme)
 
             view.addSubview(splitKeyboardView.leftKeyboardView)
             view.addSubview(splitKeyboardView.rightKeyboardView)
@@ -215,7 +204,7 @@ open class KeyboardViewController: UIInputViewController {
             self.keyboardView = splitKeyboardView
 
         case .left:
-            let keyboardView = KeyboardView(definition: keyboardDefinition)
+            let keyboardView = KeyboardView(definition: keyboardDefinition, theme: theme)
             keyboardView.translatesAutoresizingMaskIntoConstraints = false
 
             view.addSubview(keyboardView)
@@ -229,7 +218,7 @@ open class KeyboardViewController: UIInputViewController {
             self.keyboardView = keyboardView
 
         case .right:
-            let keyboardView = KeyboardView(definition: keyboardDefinition)
+            let keyboardView = KeyboardView(definition: keyboardDefinition, theme: theme)
             keyboardView.translatesAutoresizingMaskIntoConstraints = false
 
             view.addSubview(keyboardView)
@@ -243,7 +232,7 @@ open class KeyboardViewController: UIInputViewController {
             self.keyboardView = keyboardView
 
         default:
-            let keyboardView = KeyboardView(definition: keyboardDefinition)
+            let keyboardView = KeyboardView(definition: keyboardDefinition, theme: theme)
             keyboardView.translatesAutoresizingMaskIntoConstraints = false
 
             view.addSubview(keyboardView)
@@ -270,12 +259,12 @@ open class KeyboardViewController: UIInputViewController {
         extraSpacingView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         extraSpacingView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
 
-        bannerView = BannerView(frame: .zero)
+        bannerView = BannerView(theme: theme)
         bannerView.translatesAutoresizingMaskIntoConstraints = false
 
         view.insertSubview(bannerView, at: 0)
 
-        bannerView.heightAnchor.constraint(equalToConstant: KeyboardView.theme.bannerHeight).isActive = true
+        bannerView.heightAnchor.constraint(equalToConstant: theme.bannerHeight).isActive = true
         bannerView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         bannerView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
 
@@ -300,7 +289,7 @@ open class KeyboardViewController: UIInputViewController {
             }
             
             if !self.bannerVisible {
-                 value -= KeyboardView.theme.bannerHeight
+                value -= self.theme.bannerHeight
             }
             
             print("Setting height constraint to: \(value)")
@@ -321,8 +310,9 @@ open class KeyboardViewController: UIInputViewController {
 
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
-        KeyboardView.theme = textDocumentProxy.keyboardAppearance == UIKeyboardAppearance.dark ? DarkTheme : LightTheme
+        
+        self.disablesDelayingGestureRecognizers = true
+        checkDarkMode()
     }
     
     private var application: UIApplication? {
@@ -337,9 +327,7 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     func keyboardDidReset() {
-        self.disablesDelayingGestureRecognizers = true
 
-        self.view.backgroundColor = KeyboardView.theme.backgroundColor
     }
 
     open override func viewDidDisappear(_ animated: Bool) {
@@ -454,7 +442,47 @@ open class KeyboardViewController: UIInputViewController {
         }
     }
     
+    open override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        coordinator.animate(alongsideTransition: { _ in
+            if #available(iOSApplicationExtension 12.0, *) {
+                self.checkDarkMode(traits: newCollection)
+            } else {
+                // Do nothing
+            }
+        }, completion: nil)
+    }
+    
+    @available(iOSApplicationExtension 12.0, *)
+    private func checkDarkMode(traits: UITraitCollection) {
+        guard let appearance = textDocumentProxy.keyboardAppearance else { return }
+        
+        let newTheme = Theme.select(byAppearance: appearance, traits: traits)
+        
+        debugPrint(traits.userInterfaceStyle, appearance, newTheme.appearance)
+        
+        if theme.appearance != newTheme.appearance {
+            theme = newTheme
+            
+            self.updateAfterThemeChange()
+            self.bannerView.updateTheme(theme: self.theme)
+            self.keyboardView.updateTheme(theme: self.theme)
+        }
+    }
+    
+    private func checkDarkMode() {
+        if #available(iOSApplicationExtension 12.0, *) {
+            self.checkDarkMode(traits: self.traitCollection)
+        } else {
+            // Do nothing
+        }
+    }
+    
+    private func updateAfterThemeChange() {
+        self.view.backgroundColor = theme.backgroundColor
+    }
+    
     private func updateInputState() {
+        checkDarkMode()
         propagateTextInputUpdateToBanner()
         updateCapitalization()
     }
@@ -633,6 +661,37 @@ extension KeyboardViewController: KeyboardViewKeyboardKeyDelegate {
             self.handleInputModeList(from: sender, with: event)
         } else {
             advanceToNextInputMode()
+        }
+    }
+}
+
+@available(iOSApplicationExtension 12.0, *)
+extension UIUserInterfaceStyle: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        switch self {
+        case .dark:
+            return "UIUserInterfaceStyle.dark"
+        case .light:
+            return "UIUserInterfaceStyle.light"
+        case .unspecified:
+            return "UIUserInterfaceStyle.unspecified"
+        @unknown default:
+            fatalError("Could not debug print unknown UIUserInterfaceStyle (\(self.rawValue))")
+        }
+    }
+}
+
+extension UIKeyboardAppearance: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        switch self {
+        case .dark:
+            return "UIKeyboardAppearance.dark"
+        case .light:
+            return "UIKeyboardAppearance.light"
+        case .default:
+            return "UIKeyboardAppearance.default"
+        @unknown default:
+            fatalError("Could not debug print unknown UIKeyboardAppearance (\(self.rawValue))")
         }
     }
 }

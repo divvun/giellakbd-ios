@@ -17,6 +17,7 @@ private func rightHalf(_ pageOfKeys: [[KeyDefinition]]) -> [[KeyDefinition]] {
 }
 
 class SplitKeyboardView: KeyboardViewProvider {
+    
     var delegate: (KeyboardViewDelegate & KeyboardViewKeyboardKeyDelegate)? {
         get {
             return leftKeyboardView.delegate
@@ -37,8 +38,9 @@ class SplitKeyboardView: KeyboardViewProvider {
         }
     }
 
-    func updateTheme(theme: Theme) {
+    func updateTheme(theme: ThemeType) {
         leftKeyboardView.updateTheme(theme: theme)
+        rightKeyboardView.updateTheme(theme: theme)
     }
 
     func update() {
@@ -57,7 +59,7 @@ class SplitKeyboardView: KeyboardViewProvider {
     var leftKeyboardView: KeyboardView
     var rightKeyboardView: KeyboardView
 
-    required init(definition: KeyboardDefinition) {
+    required init(definition: KeyboardDefinition, theme: ThemeType) {
         let leftDefinition = definition.copy(
             normal: leftHalf(definition.normal.splitAndBalanceSpacebar()),
             shifted: leftHalf(definition.shifted.splitAndBalanceSpacebar()),
@@ -72,11 +74,11 @@ class SplitKeyboardView: KeyboardViewProvider {
             symbols2: rightHalf(definition.symbols2.splitAndBalanceSpacebar())
         )
         
-        let leftKeyboardView = KeyboardView(definition: leftDefinition)
+        let leftKeyboardView = KeyboardView(definition: leftDefinition, theme: theme)
         leftKeyboardView.translatesAutoresizingMaskIntoConstraints = false
         self.leftKeyboardView = leftKeyboardView
 
-        let rightKeyboardView = KeyboardView(definition: rightDefinition)
+        let rightKeyboardView = KeyboardView(definition: rightDefinition, theme: theme)
         rightKeyboardView.translatesAutoresizingMaskIntoConstraints = false
         self.rightKeyboardView = rightKeyboardView
     }
