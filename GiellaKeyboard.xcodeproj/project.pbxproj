@@ -16,7 +16,6 @@
 		C63EE1012362F7E500A1E15A /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C63EE1002362F7E500A1E15A /* Settings.bundle */; };
 		C643BF5B20BD483C00124DDC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C643BF5A20BD483C00124DDC /* LaunchScreen.storyboard */; };
 		C64937D2218DC7FA00D0C9DC /* dicts.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C64937D1218DC7FA00D0C9DC /* dicts.bundle */; };
-		C64937D5218DCB5300D0C9DC /* HfstSpell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64937CF218DC43800D0C9DC /* HfstSpell.swift */; };
 		C649D3D4234B7C8000EF4273 /* KeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C649D3D2234B7C7A00EF4273 /* KeyView.swift */; };
 		C649D3D5234B7D8400EF4273 /* KeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAF59AB22F9CD0600F7C9FC /* KeyboardView.swift */; };
 		C65430AA1EC93EB0007FC053 /* LayoutsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65430A91EC93EB0007FC053 /* LayoutsController.swift */; };
@@ -137,7 +136,6 @@
 		C643BF5A20BD483C00124DDC /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C643BF6E20BEB91600124DDC /* nn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nn; path = HostingApp/nn.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C64937CD218DC26500D0C9DC /* libdivvunspell.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libdivvunspell.a; path = "Dependencies/hfst-ospell-rs/target/universal/$(CONFIGURATION)/libdivvunspell.a"; sourceTree = "<group>"; };
-		C64937CF218DC43800D0C9DC /* HfstSpell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HfstSpell.swift; sourceTree = "<group>"; };
 		C64937D1218DC7FA00D0C9DC /* dicts.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = dicts.bundle; sourceTree = "<group>"; };
 		C649D3D2234B7C7A00EF4273 /* KeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyView.swift; sourceTree = "<group>"; };
 		C65430A91EC93EB0007FC053 /* LayoutsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutsController.swift; sourceTree = "<group>"; };
@@ -341,7 +339,6 @@
 		4EE7599519F759F300B4E6ED /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				C64937CF218DC43800D0C9DC /* HfstSpell.swift */,
 				C6996B5422FC2C8B007EBC3D /* Utils.swift */,
 			);
 			name = Utility;
@@ -693,7 +690,6 @@
 				FDAF59A922F9CCF200F7C9FC /* LongPressController.swift in Sources */,
 				C649D3D5234B7D8400EF4273 /* KeyboardView.swift in Sources */,
 				C6F2494F1F736E3E00840F2B /* KeyboardSettings.swift in Sources */,
-				C64937D5218DCB5300D0C9DC /* HfstSpell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
