@@ -25,7 +25,7 @@ extension _Theme {
     
     func select(byAppearance appearance: UIKeyboardAppearance, traits: UITraitCollection) -> ThemeType {
         switch appearance {
-        case .dark, .alert:
+        case .dark:
             return self.dark
         case .light:
             return self.light
