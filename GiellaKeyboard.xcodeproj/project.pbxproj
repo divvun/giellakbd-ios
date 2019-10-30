@@ -135,7 +135,6 @@
 		C63EE1002362F7E500A1E15A /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		C643BF5A20BD483C00124DDC /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C643BF6E20BEB91600124DDC /* nn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nn; path = HostingApp/nn.lproj/Localizable.strings; sourceTree = "<group>"; };
-		C64937CD218DC26500D0C9DC /* libdivvunspell.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libdivvunspell.a; path = "Dependencies/hfst-ospell-rs/target/universal/$(CONFIGURATION)/libdivvunspell.a"; sourceTree = "<group>"; };
 		C64937D1218DC7FA00D0C9DC /* dicts.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = dicts.bundle; sourceTree = "<group>"; };
 		C649D3D2234B7C7A00EF4273 /* KeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyView.swift; sourceTree = "<group>"; };
 		C65430A91EC93EB0007FC053 /* LayoutsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutsController.swift; sourceTree = "<group>"; };
@@ -930,7 +929,6 @@
 				INFOPLIST_FILE = Keyboard/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Dependencies/hfst-ospell-rs/target/universal/release";
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaKeyboard.Keyboard;
 				PRODUCT_NAME = Keyboard;
@@ -959,7 +957,6 @@
 				INFOPLIST_FILE = Keyboard/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Dependencies/hfst-ospell-rs/target/universal/release";
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaKeyboard.Keyboard;
 				PRODUCT_NAME = Keyboard;
@@ -1000,7 +997,6 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Dependencies/hfst-ospell-rs/target/universal/release";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.BaseKeyboard;
@@ -1043,7 +1039,6 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Dependencies/hfst-ospell-rs/target/universal/release";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.BaseKeyboard;
