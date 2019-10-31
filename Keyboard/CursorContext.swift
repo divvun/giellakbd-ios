@@ -42,24 +42,26 @@ private func resolveWordContext(before beforeInput: String, after afterInput: St
     rightCurrentChunk = afterInput.prefix(upTo: currentRightIndex)
 
     // Try left side
-    if let currentLeftIndex = currentLeftIndex {
+    if let currentLeftIndex = currentLeftIndex, beforeInput[currentLeftIndex] != "\n" {
         let leftFullChunk = beforeInput.prefix(upTo: currentLeftIndex)
         let leftIndex = leftFullChunk.lastIndex(where: { $0 == " " || $0 == "\n" }) ?? leftFullChunk.startIndex
-        let leftChunk = beforeInput[leftIndex ..< currentLeftIndex]
+        let leftChunk = beforeInput[leftIndex..<currentLeftIndex]
 
-        if !leftChunk.isEmpty {
-            previousWord = String(leftChunk)
+        let candidate = leftChunk.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !candidate.isEmpty {
+            previousWord = candidate
         }
     }
 
     // Try right side
-    if currentRightIndex != afterInput.endIndex {
+    if currentRightIndex != afterInput.endIndex && afterInput[currentRightIndex] != "\n" {
         let rightFullChunk = afterInput.suffix(after: currentRightIndex)
         let rightIndex = rightFullChunk.firstIndex(where: { $0 == " " || $0 == "\n" }) ?? rightFullChunk.endIndex
         let rightChunk = rightFullChunk.prefix(upTo: rightIndex)
-
-        if !rightChunk.isEmpty {
-            nextWord = String(rightChunk)
+        
+        let candidate = rightChunk.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !candidate.isEmpty {
+            previousWord = candidate
         }
     }
 
