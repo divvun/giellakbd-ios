@@ -664,34 +664,3 @@ extension KeyboardViewController: KeyboardViewKeyboardKeyDelegate {
         }
     }
 }
-
-@available(iOSApplicationExtension 12.0, *)
-extension UIUserInterfaceStyle: CustomDebugStringConvertible {
-    public var debugDescription: String {
-        switch self {
-        case .dark:
-            return "UIUserInterfaceStyle.dark"
-        case .light:
-            return "UIUserInterfaceStyle.light"
-        case .unspecified:
-            return "UIUserInterfaceStyle.unspecified"
-        @unknown default:
-            fatalError("Could not debug print unknown UIUserInterfaceStyle (\(self.rawValue))")
-        }
-    }
-}
-
-extension UIKeyboardAppearance: CustomDebugStringConvertible {
-    public var debugDescription: String {
-        switch self {
-        case .dark:
-            return "UIKeyboardAppearance.dark"
-        case .light:
-            return "UIKeyboardAppearance.light"
-        case .default:
-            return "UIKeyboardAppearance.default"
-        @unknown default:
-            fatalError("Could not debug print unknown UIKeyboardAppearance (\(self.rawValue))")
-        }
-    }
-}

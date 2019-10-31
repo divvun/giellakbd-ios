@@ -63,8 +63,20 @@ class KeyView: UIView {
         }
     }
     
-    private func configureKeyLabel(_ label: UILabel, page: KeyboardPage) {
+    private func configureKeyLabel(_ label: UILabel, page: KeyboardPage, text: String) {
         label.textColor = theme.textColor
+        label.numberOfLines = 0
+        label.minimumScaleFactor = 0.1
+        label.textAlignment = .center
+        label.backgroundColor = .clear
+        label.clipsToBounds = false
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.lineBreakMode = .byWordWrapping
+        label.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        label.setContentHuggingPriority(.defaultLow, for: .vertical)
+        label.adjustsFontSizeToFitWidth = false
+        label.text = text
+        
         if case .input = key.type {
             switch page {
             case .shifted, .capslock, .symbols1, .symbols2:
@@ -72,19 +84,18 @@ class KeyView: UIView {
             default:
                 label.font = theme.lowerKeyFont
             }
-            label.adjustsFontSizeToFitWidth = false
         } else {
+            // ABC key and friends will not shrink properly
+            if text.count > 6 {
+                label.numberOfLines = 2
+            } else {
+                label.numberOfLines = 1
+            }
+            label.lineBreakMode = .byTruncatingTail
             label.font = theme.keyFont.withSize(theme.modifierKeyFontSize)
             label.adjustsFontSizeToFitWidth = true
+            label.sizeToFit()
         }
-        label.numberOfLines = 0
-        label.minimumScaleFactor = 0.4
-        label.textAlignment = .center
-        label.backgroundColor = .clear
-        label.clipsToBounds = false
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        label.setContentHuggingPriority(.defaultLow, for: .vertical)
     }
     
     private func configureAltKeyLabel(_ alternateLabel: UILabel, page: KeyboardPage) {
@@ -107,8 +118,7 @@ class KeyView: UIView {
         labelHoldingView.backgroundColor = .clear
         labelHoldingView.clipsToBounds = false
 
-        configureKeyLabel(label, page: page)
-        label.text = string
+        configureKeyLabel(label, page: page, text: string)
 
         if let alternateString = alt {
             self.alternateLabel = UILabel(frame: .zero)
@@ -155,8 +165,7 @@ class KeyView: UIView {
         labelHoldingView.backgroundColor = .clear
         labelHoldingView.clipsToBounds = false
 
-        configureKeyLabel(label, page: page)
-        label.text = string
+        configureKeyLabel(label, page: page, text: string)
 
         labelHoldingView.addSubview(label)
         addSubview(labelHoldingView)
@@ -167,9 +176,17 @@ class KeyView: UIView {
         } else {
             yConstant = 0.0
         }
-        label.centerXAnchor.constraint(equalTo: labelHoldingView.centerXAnchor).isActive = true
-        label.centerYAnchor.constraint(equalTo: labelHoldingView.centerYAnchor, constant: yConstant).isActive = true
-        label.widthAnchor.constraint(equalTo: labelHoldingView.widthAnchor).isActive = true
+        
+        label.centerXAnchor
+            .constraint(equalTo: labelHoldingView.centerXAnchor)
+            .enable()
+        label.centerYAnchor
+            .constraint(equalTo: labelHoldingView.centerYAnchor, constant: yConstant)
+            .enable()
+        label.widthAnchor
+            .constraint(equalTo: labelHoldingView.widthAnchor, multiplier: 1.0, constant: -4.0)
+            .enable()
+        
         swipeLayoutConstraint = nil
 
         contentView = labelHoldingView
@@ -197,7 +214,7 @@ class KeyView: UIView {
         super.init(frame: .zero)
 
         // HACK: UIColor.clear here breaks indexPathForItemAtPoint:
-        backgroundColor = UIColor.black.withAlphaComponent(0.0001)
+        backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.0)
         
         switch key.type {
         case let .input(string, alt):
@@ -259,9 +276,9 @@ class KeyView: UIView {
         layer.shadowRadius = 0.0
         
         contentView.fill(superview: self, margins: UIEdgeInsets(
-            top: theme.keyVerticalMargin + 2.0,
+            top: theme.keyVerticalMargin,
             left: theme.keyHorizontalMargin,
-            bottom: theme.keyVerticalMargin - 2.0,
+            bottom: theme.keyVerticalMargin,
             right: theme.keyHorizontalMargin))
         
         contentView.clipsToBounds = false
