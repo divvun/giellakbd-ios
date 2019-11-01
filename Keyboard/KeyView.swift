@@ -20,6 +20,9 @@ class KeyView: UIView {
 
     private var label: UILabel! = UILabel()
     private var alternateLabel: UILabel?
+    
+    private var fontSize: CGFloat = 0.0
+    private var altFontSize: CGFloat = 0.0
 
     var swipeLayoutConstraint: NSLayoutConstraint?
 
@@ -48,18 +51,21 @@ class KeyView: UIView {
 
     var percentageAlternative: CGFloat = 0.0 {
         didSet {
-            let minValue = frame.height / 3.0
-            let maxValue = (frame.height / 3.0) * 2.0
+            let minValue = theme.altLabelTopAnchorConstant
+            let maxValue = frame.height / 6.5
 
-            swipeLayoutConstraint?.constant = minValue + (maxValue - minValue) * percentageAlternative
+            swipeLayoutConstraint?.constant = minValue + (maxValue * percentageAlternative)
 
             if isSwipeKey {
-                alternateLabel?.textColor = UIColor.interpolate(from: theme.inactiveTextColor, to: theme.textColor, with: percentageAlternative)
+                let fontSizeDelta = fontSize - theme.modifierKeyFontSize
+                
+                if let alternateLabel = alternateLabel {
+                    alternateLabel.textColor = UIColor.interpolate(from: theme.altKeyTextColor, to: theme.textColor, with: percentageAlternative)
+                    alternateLabel.font = alternateLabel.font.withSize(altFontSize + fontSizeDelta * percentageAlternative)
+                }
+                
                 label.textColor = UIColor.interpolate(from: theme.textColor, to: UIColor.clear, with: percentageAlternative)
-
-                let fontSizeDelta = theme.keyFont.pointSize - theme.modifierKeyFontSize
-                alternateLabel?.font = theme.altKeyFont.withSize(theme.altKeyFontSize + fontSizeDelta * percentageAlternative)
-                label.font = theme.keyFont.withSize(theme.keyFont.pointSize - fontSizeDelta * percentageAlternative)
+                label.font = label.font.withSize(fontSize - fontSizeDelta * percentageAlternative)
             }
         }
     }
@@ -93,10 +99,12 @@ class KeyView: UIView {
                 label.numberOfLines = 1
             }
             label.lineBreakMode = .byTruncatingTail
-            label.font = theme.keyFont.withSize(theme.modifierKeyFontSize)
+            label.font = theme.capitalKeyFont.withSize(theme.modifierKeyFontSize)
             label.adjustsFontSizeToFitWidth = true
             label.sizeToFit()
         }
+        
+        fontSize = label.font.pointSize
     }
     
     private func configureAltKeyLabel(_ alternateLabel: UILabel, page: KeyboardPage) {
@@ -110,7 +118,19 @@ class KeyView: UIView {
         alternateLabel.translatesAutoresizingMaskIntoConstraints = false
         alternateLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         alternateLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
-        alternateLabel.font = theme.altKeyFont
+        
+        if UIDevice.current.dc.isIpad && (UIDevice.current.dc.screenSize.sizeInches ?? 0.0) > 12 {
+            switch page {
+            case .shifted, .capslock, .symbols1, .symbols2:
+                alternateLabel.font = theme.capitalKeyFont
+            default:
+                alternateLabel.font = theme.lowerKeyFont
+            }
+        } else {
+            alternateLabel.font = theme.altKeyFont
+        }
+        
+        altFontSize = alternateLabel.font.pointSize
     }
     
     private func input(string: String, alt: String?, page: KeyboardPage) {
@@ -143,15 +163,18 @@ class KeyView: UIView {
         }
         
         if let alternateLabel = self.alternateLabel {
-            swipeLayoutConstraint = label.topAnchor.constraint(equalTo: labelHoldingView.topAnchor, constant: 24)
-            swipeLayoutConstraint?.isActive = true
-
-            label.bottomAnchor.constraint(equalTo: labelHoldingView.bottomAnchor, constant: yConstant).isActive = true
+            swipeLayoutConstraint = alternateLabel.topAnchor
+                .constraint(equalTo: labelHoldingView.topAnchor, constant: theme.altLabelTopAnchorConstant)
+                .enable()
             
-            alternateLabel.centerXAnchor.constraint(equalTo: labelHoldingView.centerXAnchor).isActive = true
-            alternateLabel.widthAnchor.constraint(lessThanOrEqualTo: labelHoldingView.widthAnchor).isActive = true
-            alternateLabel.topAnchor.constraint(equalTo: labelHoldingView.topAnchor, constant: 8).isActive = true
-            alternateLabel.bottomAnchor.constraint(equalTo: label.topAnchor).isActive = true
+            label.bottomAnchor.constraint(equalTo: labelHoldingView.bottomAnchor, constant: theme.altLabelBottomAnchorConstant).enable()
+            
+            alternateLabel.centerXAnchor
+                .constraint(equalTo: labelHoldingView.centerXAnchor)
+                .enable()
+            alternateLabel.widthAnchor
+                .constraint(equalTo: labelHoldingView.widthAnchor, multiplier: 1.0, constant: -4.0)
+                .enable()
         } else {
             label.centerYAnchor.constraint(equalTo: labelHoldingView.centerYAnchor, constant: yConstant).isActive = true
             swipeLayoutConstraint = nil

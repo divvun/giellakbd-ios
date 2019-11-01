@@ -102,54 +102,34 @@ public struct KeyboardDefinition {
                 if let deadKeys = deadKeysMap["ipad-9in"] {
                     self.deadKeys = deadKeys
                 }
-                
-                // On iPad Pro 9 inch, we want to have swipe keys so we merge all of our layers
-                let normal = modes["normal"]!!
-                let shifted = modes["shifted"]!!
-                let alt = modes["alt"]!!
-                let altShift = modes["alt+shift"]!!
-                let symbols1 = modes["symbols-1"]!!
-                let symbols2 = modes["symbols-2"]!!
-                
-                self.normal = zip(normal, alt)
-                    .map { zip($0, $1).map { KeyDefinition(input: $0, alternate: $1, spaceName: spaceName, returnName: returnName) }}
-                self.shifted = zip(shifted, altShift)
-                    .map { zip($0, $1).map { KeyDefinition(input: $0, alternate: $1, spaceName: spaceName, returnName: returnName) }}
-                self.symbols1 = zip(symbols1, symbols2).map {
-                    zip($0, $1).map {
-                        return KeyDefinition(input: $0, alternate: $1, spaceName: spaceName, returnName: returnName)
-                    }
-                }
-                self.symbols2 = symbols2.map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) } }
-                
             } else {
-                // On iPad Pro 12 inch, we want to have swipe keys only on the top row
                 modes = raw["ipad-12in"] as! [String: [[Any]]?]
                 if let deadKeys = deadKeysMap["ipad-12in"] {
                     self.deadKeys = deadKeys
                 }
+            }
                 
-                let normal = modes["normal"]!!
-                let shifted = modes["shifted"]!!
-                let alt = modes["alt"]!!
-                let symbols1 = modes["symbols-1"]!!
-//                let symbols2 = modes["symbols-2"]!!
-                
-                var normal1: [[KeyDefinition]] = [zip(normal[0], alt[0]).map {
-                    KeyDefinition(input: $0, alternate: $1, spaceName: spaceName, returnName: returnName)
-                }]
-                normal.suffix(from: 1)
-                    .forEach { normal1.append($0.compactMap { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) }) }
-                self.normal = normal1
-                
-                var shifted1: [[KeyDefinition]] = [zip(shifted[0], symbols1[0]).map {
-                    KeyDefinition(input: $0, alternate: $1, spaceName: spaceName, returnName: returnName)
-                }]
-                shifted.suffix(from: 1)
-                    .forEach { shifted1.append($0.compactMap { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) }) }
-                self.shifted = shifted1
-                
-                self.symbols1 = symbols1.map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) } }
+            // On iPad Pro 9 inch, we want to have swipe keys so we merge all of our layers
+            let normal = modes["normal"]!!
+            let shifted = modes["shifted"]!!
+            let alt = modes["alt"]!!
+            let altShift = modes["alt+shift"]!!
+            let symbols1 = modes["symbols-1"]!!
+            let symbols2 = modes["symbols-2"]!!
+            
+            self.normal = zip(normal, alt)
+                .map { zip($0, $1).map { KeyDefinition(input: $0, alternate: $1, spaceName: spaceName, returnName: returnName) }}
+            self.shifted = zip(shifted, altShift)
+                .map { zip($0, $1).map { KeyDefinition(input: $0, alternate: $1, spaceName: spaceName, returnName: returnName) }}
+            self.symbols1 = zip(symbols1, symbols2).map {
+                zip($0, $1).map {
+                    return KeyDefinition(input: $0, alternate: $1, spaceName: spaceName, returnName: returnName)
+                }
+            }
+            self.symbols2 = symbols2.map {
+                return $0.map {
+                    return KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName)
+                }
             }
         } else {
             modes = raw["iphone"] as! [String: [[Any]]?]
