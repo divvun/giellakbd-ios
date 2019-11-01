@@ -47,11 +47,15 @@ struct DeadKeyHandler {
         let key: String
         switch page {
         case .normal:
-            key = "normal"
+            key = "default"
         case .shifted:
-            key = "shifted"
-        default:
-            return nil
+            key = "shift"
+        case .symbols1:
+            key = "symbols-1"
+        case .symbols2:
+            key = "symbols-2"
+        case .capslock:
+            key = "caps"
         }
 
         guard let deadKeys = keyboard.deadKeys[key] else {
