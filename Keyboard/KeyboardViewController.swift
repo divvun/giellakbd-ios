@@ -153,8 +153,6 @@ open class KeyboardViewController: UIInputViewController {
              value -= theme.bannerHeight
         }
         
-        print("Init setting height constraint: \(value)")
-        
         heightConstraint = view.heightAnchor.constraint(equalToConstant: value).enable(priority: .required)
     }
 
@@ -281,18 +279,14 @@ open class KeyboardViewController: UIInputViewController {
             var value: CGFloat
             
             if !UIScreen.main.isDeviceLandscape {
-                print("Portrait")
                 value = self.portraitHeight
             } else {
-                print("Landscape")
                 value = self.landscapeHeight
             }
             
             if !self.bannerVisible {
                 value -= self.theme.bannerHeight
             }
-            
-            print("Setting height constraint to: \(value)")
             
             self.heightConstraint.constant = value
         }
@@ -457,8 +451,6 @@ open class KeyboardViewController: UIInputViewController {
         guard let appearance = textDocumentProxy.keyboardAppearance else { return }
         
         let newTheme = Theme.select(byAppearance: appearance, traits: traits)
-        
-        debugPrint(traits.userInterfaceStyle, appearance, newTheme.appearance)
         
         if theme.appearance != newTheme.appearance {
             theme = newTheme
