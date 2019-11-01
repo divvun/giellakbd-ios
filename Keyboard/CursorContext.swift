@@ -61,7 +61,7 @@ private func resolveWordContext(before beforeInput: String, after afterInput: St
         
         let candidate = rightChunk.trimmingCharacters(in: .whitespacesAndNewlines)
         if !candidate.isEmpty {
-            previousWord = candidate
+            nextWord = candidate
         }
     }
 
