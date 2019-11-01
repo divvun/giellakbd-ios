@@ -55,7 +55,8 @@ extension DivvunSpellBannerPlugin: BannerViewDelegate {
         }
 
         keyboard.replaceSelected(with: item.title)
-        keyboard.insertText(" ")
+        // TODO: Sami languages want to autosuggest compounds, so let's not add spaces without configuration
+//        keyboard.insertText(" ")
         opQueue.cancelAllOperations()
 
         banner.items = []
