@@ -23,7 +23,7 @@ public struct KeyboardDefinition {
     public let spaceName: String
     public let returnName: String
 
-    public let deadKeys: [String: [String]]
+    private(set) public var deadKeys: [String: [String]] = [:]
     public let transforms: [String: TransformTree]
     public let longPress: [String: [String]]
     private(set) public var normal: [[KeyDefinition]] = []
@@ -83,10 +83,10 @@ public struct KeyboardDefinition {
         locale = raw["locale"] as! String
         spaceName = raw["space"] as! String
         returnName = raw["return"] as! String
+        
+        let deadKeysMap = raw["deadKeys"] as? [String: [String: [String]]] ?? [:]
 
         longPress = raw["longPress"] as! [String: [String]]
-
-        deadKeys = raw["deadKeys"] as? [String: [String]] ?? [:]
         if let rawTransforms = raw["transforms"] as? [String: Any] {
             transforms = KeyboardDefinition.recurseTransforms(rawTransforms)
         } else {
@@ -95,10 +95,13 @@ public struct KeyboardDefinition {
 
         let modes: [String: [[Any]]?]
         let family = UIDevice.current.dc.deviceFamily
-        print("\(family)")
+        
         if family == .iPad {
             if (UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches) < 12.0 {
                 modes = raw["ipad-9in"] as! [String: [[Any]]?]
+                if let deadKeys = deadKeysMap["ipad-9in"] {
+                    self.deadKeys = deadKeys
+                }
                 
                 // On iPad Pro 9 inch, we want to have swipe keys so we merge all of our layers
                 let normal = modes["normal"]!!
@@ -122,12 +125,17 @@ public struct KeyboardDefinition {
             } else {
                 // On iPad Pro 12 inch, we want to have swipe keys only on the top row
                 modes = raw["ipad-12in"] as! [String: [[Any]]?]
+                if let deadKeys = deadKeysMap["ipad-12in"] {
+                    self.deadKeys = deadKeys
+                }
+                
                 let normal = modes["normal"]!!
                 let shifted = modes["shifted"]!!
+                let alt = modes["alt"]!!
                 let symbols1 = modes["symbols-1"]!!
 //                let symbols2 = modes["symbols-2"]!!
                 
-                var normal1: [[KeyDefinition]] = [zip(normal[0], symbols1[0]).map {
+                var normal1: [[KeyDefinition]] = [zip(normal[0], alt[0]).map {
                     KeyDefinition(input: $0, alternate: $1, spaceName: spaceName, returnName: returnName)
                 }]
                 normal.suffix(from: 1)
@@ -145,6 +153,9 @@ public struct KeyboardDefinition {
             }
         } else {
             modes = raw["iphone"] as! [String: [[Any]]?]
+            if let deadKeys = deadKeysMap["iphone"] {
+                self.deadKeys = deadKeys
+            }
             
             normal = (modes["normal"]!!).map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) } }
             shifted = (modes["shifted"]!!).map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) } }
