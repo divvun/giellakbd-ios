@@ -1,3 +1,4 @@
+import UIDeviceComplete
 
 class KeyView: UIView {
     private let key: KeyDefinition
@@ -261,9 +262,25 @@ class KeyView: UIView {
                 contentView = imageView
             }
         case .comma:
-            input(string: ",", alt: ";", page: page)
+            if UIDevice.current.dc.isIpad {
+                if (UIDevice.current.dc.screenSize.sizeInches ?? 0) < 12.0 {
+                    input(string: ",", alt: "!", page: page)
+                } else {
+                    input(string: ",", alt: ";", page: page)
+                }
+            } else {
+                input(string: ",", alt: nil, page: page)
+            }
         case .fullStop:
-            input(string: ".", alt: ":", page: page)
+            if UIDevice.current.dc.isIpad {
+                if (UIDevice.current.dc.screenSize.sizeInches ?? 0) < 12.0 {
+                    input(string: ".", alt: "?", page: page)
+                } else {
+                    input(string: ".", alt: ":", page: page)
+                }
+            } else {
+                input(string: ".", alt: nil, page: page)
+            }
         case .caps:
             image(UIImage(named: "caps")!)
         case .tab:
