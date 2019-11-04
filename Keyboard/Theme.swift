@@ -98,7 +98,7 @@ class LightThemeImpl: ThemeType {
     var regularKeyColor = UIColor.white
     var specialKeyColor = UIColor(r: 162, g: 167, b: 177)
     var popupColor = UIColor.white
-    var backgroundColor = UIColor(r: 203, g: 206, b: 212)
+    var backgroundColor = UIColor(r: 208, g: 210, b: 216)
     var underColor = UIColor(hue: 0.611, saturation: 0.04, brightness: 0.56, alpha: 1)
     var textColor = UIColor.black
     var inactiveTextColor: UIColor = UIColor(white: 0.0, alpha: 0.3)
@@ -153,7 +153,6 @@ class DarkThemeImpl: ThemeType {
     var backgroundColor: UIColor = .clear
 
     var keyShadowColor: UIColor = UIColor(r: 103, g: 106, b: 110, a: 0.5)
-
     var regularKeyColor = UIColor.lightGray.withAlphaComponent(CGFloat(0.4))
     var specialKeyColor = UIColor.gray.withAlphaComponent(CGFloat(0.3))
     var popupColor = UIColor(r: 111, g: 103, b: 111, a: 1.0)

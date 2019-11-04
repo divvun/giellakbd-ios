@@ -17,7 +17,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                 </imageView>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="9Ne-rM-V7i">
-                    <rect key="frame" x="59.5" y="226" width="256" height="215"/>
+                    <rect key="frame" x="59.5" y="252" width="256" height="163"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Template Keyboard" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2eI-bM-tyI">
                             <rect key="frame" x="0.0" y="0.0" width="256" height="23"/>
@@ -37,7 +37,7 @@
                             </subviews>
                         </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="5Ej-CW-Ost">
-                            <rect key="frame" x="0.0" y="125" width="256" height="90"/>
+                            <rect key="frame" x="0.0" y="125" width="256" height="38"/>
                             <subviews>
                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bA9-vt-xCz" customClass="MenuButton" customModule="HostingApp" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="256" height="0.0"/>
@@ -51,8 +51,8 @@
                                     <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                     <state key="normal" title="About"/>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NQY-9A-SWq" customClass="MenuButton" customModule="HostingApp" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="52" width="256" height="38"/>
+                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NQY-9A-SWq" customClass="MenuButton" customModule="HostingApp" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="256" height="0.0"/>
                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                     <state key="normal" title="Debug Testing"/>

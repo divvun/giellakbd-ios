@@ -102,9 +102,7 @@ open class KeyboardViewController: UIInputViewController {
                 return 260.0
             case .iPhone8:
                 return 260.0
-            case .iPhone8Plus, .iPhoneX, .iPhoneXR, .iPhoneXS, .iPhone11, .iPhone11Pro, .iPhone11ProMax:
-                return 272.0
-            case .iPhoneXSMax:
+            case .iPhone8Plus, .iPhoneX, .iPhoneXR, .iPhoneXS, .iPhoneXSMax, .iPhone11, .iPhone11Pro, .iPhone11ProMax:
                 return 272.0
             default:
                 break
