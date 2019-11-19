@@ -65,13 +65,46 @@ open class KeyboardViewController: UIInputViewController {
     private var landscapeHeight: CGFloat {
         switch UIDevice.current.dc.deviceFamily {
         case .iPad:
-            let sizeInches = UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches
             
-            if sizeInches < 10 {
-                return landscapeDeviceHeight / 2.0
+           switch UIDevice.current.dc.deviceModel {
+                case .iPadMini2, .iPadMini3, .iPadMini4, .iPadMini5:
+                    return 405.0
+                case .iPadThirdGen, .iPadFourthGen, .iPadFifthGen, .iPadSixthGen, .iPadAir, .iPadAir2, .iPadPro9_7Inch:
+                    return 405.0
+                case .iPadAir3, .iPadPro10_5Inch:
+                    return 405.0
+                case .iPadPro11Inch:
+                    return 405.0
+                case .iPadPro12_9Inch, .iPadPro12_9Inch_SecondGen, .iPadPro12_9Inch_ThirdGen:
+                    return 405.0
+                case .iPadSevenGen:
+                    return 405.0
+                default:
+                    let sizeInches = UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches
+                    
+                    if sizeInches < 10 {
+                        return landscapeDeviceHeight / 2.0
+                    }
+                    
+                    return landscapeDeviceHeight / 2.0 - 120
             }
-            
-            return landscapeDeviceHeight / 2.0 - 120
+        case .iPhone, .iPod:
+            switch UIDevice.current.dc.deviceModel {
+            case .iPhone5S, .iPhone5C, .iPhoneSE, .iPodTouchSeventhGen:
+                return 203.0
+            case .iPhone6, .iPhone6S, .iPhone7, .iPhone8:
+                return 203.0
+            case .iPhone6Plus, .iPhone6SPlus, .iPhone7Plus, .iPhone8Plus:
+                return 203.0
+            case .iPhone11, .iPhoneXR:
+                return 190.0
+            case .iPhoneX, .iPhoneXS, .iPhone11Pro:
+                return 190.0
+            case .iPhoneXSMax, .iPhone11ProMax:
+                return 190.0
+            default:
+                return portraitHeight - 56
+            }
         default:
             return portraitHeight - 56
         }
@@ -83,31 +116,68 @@ open class KeyboardViewController: UIInputViewController {
         
         switch UIDevice.current.dc.deviceFamily {
         case .iPad:
-            // Smol iPads and 9 inch iPad Pro
-            if sizeInches < 10 {
-                return 314.0
-            }
-            
-            // iPads from 10 to 13 inches
-            if sizeInches < 13 {
-                return 384.0
-            }
-            
-            return height / 4.0
-        case .iPhone, .iPod:
+
             switch UIDevice.current.dc.deviceModel {
-            case .iPhone5S, .iPhone5C:
-                return 254.0
-            case .iPhone6, .iPhone6S, .iPhone6Plus, .iPhone6SPlus, .iPhone7, .iPhone7Plus:
-                return 260.0
-            case .iPhone8:
-                return 260.0
-            case .iPhone8Plus, .iPhoneX, .iPhoneXR, .iPhoneXS, .iPhoneXSMax, .iPhone11, .iPhone11Pro, .iPhone11ProMax:
-                return 272.0
+            case .iPadMini2, .iPadMini3, .iPadMini4, .iPadMini5:
+                return 320.0
+            case .iPadThirdGen, .iPadFourthGen, .iPadFifthGen, .iPadSixthGen, .iPadAir, .iPadAir2, .iPadPro9_7Inch:
+                return 320.0
+            case .iPadAir3, .iPadPro10_5Inch:
+                return 320.0
+            case .iPadPro11Inch:
+                return 320.0
+            case .iPadPro12_9Inch, .iPadPro12_9Inch_SecondGen, .iPadPro12_9Inch_ThirdGen:
+                return 320.0
+            case .iPadSevenGen:
+                return 320.0
             default:
-                break
+                // Fail safe
+                
+                // Smol iPads and 9 inch iPad Pro
+                if sizeInches < 10 {
+                    return 314.0
+                }
+    
+                // iPads from 10 to 13 inches
+                if sizeInches < 13 {
+                    return 384.0
+                }
+                
+                return height / 4.0
             }
-            return 254.0
+        case .iPhone, .iPod:
+//            switch UIDevice.current.dc.deviceModel {
+//            case .iPhone5S, .iPhone5C:
+//                return 254.0
+//            case .iPhone6, .iPhone6S, .iPhone6Plus, .iPhone6SPlus, .iPhone7, .iPhone7Plus:
+//                return 260.0
+//            case .iPhone8:
+//                return 260.0
+//            case .iPhone8Plus, .iPhoneX, .iPhoneXR, .iPhoneXS, .iPhoneXSMax, .iPhone11, .iPhone11Pro, .iPhone11ProMax:
+//                return 272.0
+//            default:
+//                break
+//            }
+//            return 254.0
+            
+
+            //https://iosref.com/res/
+            switch UIDevice.current.dc.deviceModel {
+            case .iPhone5S, .iPhone5C, .iPhoneSE, .iPodTouchSeventhGen:
+                return 258.0
+            case .iPhone6, .iPhone6S, .iPhone7, .iPhone8:
+                return 258.0
+            case .iPhone6Plus, .iPhone6SPlus, .iPhone7Plus, .iPhone8Plus:
+                return 268.0
+            case .iPhone11, .iPhoneXR:
+                return 268.0
+            case .iPhoneX, .iPhoneXS, .iPhone11Pro:
+                return 258.0
+            case .iPhoneXSMax, .iPhone11ProMax:
+                return 268.0
+            default:
+                return 258.0
+            }
         default:
             return height / 3.0
         }
