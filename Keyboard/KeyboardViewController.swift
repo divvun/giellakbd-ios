@@ -462,9 +462,6 @@ open class KeyboardViewController: UIInputViewController {
         
         switch page {
         case .symbols1, .symbols2:
-            if lastInput == " " {
-                keyboardView.page = .normal
-            }
             return
         default:
             break
@@ -693,7 +690,10 @@ extension KeyboardViewController: KeyboardViewDelegate {
             }
             deleteBackward()
         case .spacebar:
-            handleDeadKey(string: " ", endShifted: false)
+            if let page = keyboardView?.page, page == .symbols1 || page == .symbols2 {
+                keyboardView.page = .normal
+            }
+             handleDeadKey(string: " ", endShifted: false)
         case .returnkey:
             if let value = deadKeyHandler.finish() {
                 insertText(value)
