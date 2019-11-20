@@ -91,24 +91,6 @@ public enum KeyType: Hashable {
     }
 }
 
-
-private enum Input {
-    case string(String)
-    case map([String: Any])
-}
-
-extension Input {
-    static func from(_ input: Any) -> Input? {
-        if let i = input as? String {
-            return .string(i)
-        } else if let i = input as? [String: Any] {
-            return .map(i)
-        } else {
-            return nil
-        }
-    }
-}
-
 public struct KeyDefinition {
     public let type: KeyType
     public let size: CGSize
@@ -118,79 +100,42 @@ public struct KeyDefinition {
         self.size = size
     }
     
-    init(string input: String, spaceName: String, returnName: String) {
-        type = KeyType(string: input, spaceName: spaceName, returnName: returnName)
-        size = CGSize(width: 1, height: 1)
-    }
-    
-    init(string input: String, alternate: String, spaceName: String, returnName: String) {
-        if input == alternate {
-            type = KeyType(string: input, spaceName: spaceName, returnName: returnName)
-        } else {
-            type = KeyType(string: input, alternate: alternate, spaceName: spaceName, returnName: returnName)
-        }
-        
-        size = CGSize(width: 1, height: 1)
-    }
-    
-    init(map input: [String: Any], alternate: String? = nil, spaceName: String, returnName: String) {
-        if let typeString = input["id"] as? String {
-            type = KeyType(
-                string: typeString,
-                alternate: alternate,
-                spaceName: spaceName,
-                returnName: returnName
-            )
-        } else {
-            type = KeyType(string: "", spaceName: spaceName, returnName: returnName)
-        }
-
-        var tempSize = CGSize(width: 1, height: 1)
-
-        if let width = input["width"] as? CGFloat {
-            tempSize.width = width
-        }
-
-        //            if let height = objectInput["height"] as? CGFloat {
-        //                tempSize.height = height
-        //            }
-
-        size = tempSize
-    }
-    
-    init(input: Any, spaceName: String, returnName: String) {
-        if let input = input as? String {
-            self.init(string: input, spaceName: spaceName, returnName: returnName)
-        } else if let input = input as? [String: Any] {
-            self.init(map: input, spaceName: spaceName, returnName: returnName)
-        } else {
-            fatalError("Unsupported type passed to KeyDefinition init")
-        }
-    }
-    
-    init(input: Any, alternate: Any, spaceName: String, returnName: String) {
-        guard let input = Input.from(input) else {
-            fatalError("Unsupported type passed to KeyDefinition init as input")
-        }
-        
-        guard let alt = Input.from(alternate) else {
-            fatalError("Unsupported type passed to KeyDefinition init as alt")
-        }
-        
-        let alternate: String
-        switch alt {
-        case let .string(s):
-            alternate = s
-        case let .map(m):
-            alternate = m["id"] as! String
-        }
-        
-        switch input {
-        case let .string(s):
-            self.init(string: s, alternate: alternate, spaceName: spaceName, returnName: returnName)
-        case let .map(m):
-            self.init(map: m, alternate: alternate, spaceName: spaceName, returnName: returnName)
-        }
+    init(input: RawKeyDefinition, alternate: String? = nil, spaceName: String, returnName: String) {
+        type = KeyType(string: input.id, alternate: alternate, spaceName: spaceName, returnName: returnName)
+        size = CGSize(width: input.width, height: input.height)
     }
 }
 
+extension Array where Element == [KeyDefinition] {
+    mutating func platformize(page: KeyboardPage, spaceName: String, returnName: String) {
+        append(SystemKeys.systemKeyRowsForCurrentDevice(spaceName: spaceName, returnName: returnName))
+    }
+
+    func splitAndBalanceSpacebar() -> [[KeyDefinition]] {
+        var copy = self
+        for (i, row) in copy.enumerated() {
+            var splitPoint = row.count / 2
+            var length: CGFloat = 0.0
+            for (keyIndex, key) in row.enumerated() {
+                length += key.size.width
+                if case .spacebar = key.type {
+                    let splitSpace = KeyDefinition(type: key.type, size: CGSize(width: key.size.width / 2.0, height: key.size.height))
+                    copy[i].remove(at: keyIndex)
+
+                    copy[i].insert(splitSpace, at: keyIndex)
+                    copy[i].insert(splitSpace, at: keyIndex)
+                    splitPoint = keyIndex + 1
+                }
+            }
+
+            while splitPoint != (copy[i].count / 2) {
+                if splitPoint > copy[i].count / 2 {
+                    copy[i].append(KeyDefinition(type: .spacer, size: CGSize(width: 0.0, height: 1.0)))
+                } else {
+                    copy[i].insert(KeyDefinition(type: .spacer, size: CGSize(width: 0.0, height: 1.0)), at: 0)
+                }
+            }
+        }
+        return copy
+    }
+}
