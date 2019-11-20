@@ -1,4 +1,5 @@
 PODS:
+  - BrotliKit (1.0.2)
   - libdivvunspell (0.1.5)
   - Sentry (4.4.2):
     - Sentry/Core (= 4.4.2)
@@ -6,12 +7,14 @@ PODS:
   - UIDeviceComplete (2.6.5)
 
 DEPENDENCIES:
+  - BrotliKit
   - libdivvunspell (from `https://github.com/bbqsrc/divvunspell-swift`)
   - Sentry
   - UIDeviceComplete (from `https://github.com/bbqsrc/UIDeviceComplete`)
 
 SPEC REPOS:
   trunk:
+    - BrotliKit
     - Sentry
 
 EXTERNAL SOURCES:
@@ -31,10 +34,11 @@ CHECKOUT OPTIONS:
     :git: https://github.com/bbqsrc/UIDeviceComplete
 
 SPEC CHECKSUMS:
-  libdivvunspell: 038f50be1ef3bd7d4b691f7664c58152315b9758
-  Sentry: bba998b0fb157fdd6596aa73290a9d67ae47be79
+  BrotliKit: 7eb3640b2c206cd4410208696c27ef83e95f43d5
+  libdivvunspell: b137ce97822c55cd43037123a3a9b2c4ff8fff32
+  Sentry: 5d312a04e369154aeac616214f4dfc3cbcc8b296
   UIDeviceComplete: 5654c8f59f25adf3b0ea876c2a0463dc64c49226
 
-PODFILE CHECKSUM: 248306e5d49817d8f1d3a716e8accaa479196329
+PODFILE CHECKSUM: eb6ac5e716887b98a41ef72cdeb16d394561989d
 
 COCOAPODS: 1.8.4

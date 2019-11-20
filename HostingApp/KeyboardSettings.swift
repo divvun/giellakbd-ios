@@ -10,7 +10,31 @@ class KeyboardSettings {
     static var groupId: String = {
         return "group.\(Bundle.top.bundleIdentifier!)"
     }()
-    
+
+    static var currentKeyboard: KeyboardDefinition {
+        get {
+            guard let data = defaults.data(forKey: "currentKeyboard") else {
+                print("No data")
+                return KeyboardDefinition.definitions[0]
+            }
+            
+            do {
+                return try JSONDecoder().decode(KeyboardDefinition.self, from: data)
+            } catch {
+                print(String(describing: error))
+                return KeyboardDefinition.definitions[0]
+            }
+        }
+        set {
+            let data: Data
+            do {
+                data = try JSONEncoder().encode(newValue)
+            } catch {
+                fatalError(String(describing: error))
+            }
+            defaults.set(data, forKey: "currentKeyboard")
+        }
+    }
     static var languageCode: String {
         get { return defaults.string(forKey: "language") ?? Locale.current.languageCode! }
         set { defaults.set(newValue, forKey: "language") }

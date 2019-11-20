@@ -20,6 +20,10 @@ class HomeController: ViewController<HomeView>, HideNavBar {
     @objc private func openTesting() {
         navigationController?.pushViewController(TestingController(), animated: true)
     }
+    
+    @objc private func openScanQRCode() {
+        navigationController?.present(QRViewController(), animated: true)
+    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -39,5 +43,6 @@ class HomeController: ViewController<HomeView>, HideNavBar {
         contentView.helpButton.addTarget(self, action: #selector(openInstructions), for: [.touchUpInside])
         contentView.aboutButton.addTarget(self, action: #selector(openAbout), for: [.touchUpInside])
         contentView.testingButton.addTarget(self, action: #selector(openTesting), for: [.touchUpInside])
+        contentView.scanQRCodeButton.addTarget(self, action: #selector(openScanQRCode), for: [.touchUpInside])
     }
 }

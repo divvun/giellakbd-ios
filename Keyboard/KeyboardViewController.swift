@@ -236,11 +236,11 @@ open class KeyboardViewController: UIInputViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
 
-        guard let kbdIndex = Bundle.main.infoDictionary?["DivvunKeyboardIndex"] as? Int else {
-            fatalError("There was no DivvunKeyboardIndex")
-        }
+//        guard let kbdIndex = Bundle.main.infoDictionary?["DivvunKeyboardIndex"] as? Int else {
+//            fatalError("There was no DivvunKeyboardIndex")
+//        }
         
-        keyboardDefinition = definitions[kbdIndex]
+        keyboardDefinition = KeyboardSettings.currentKeyboard
         deadKeyHandler = DeadKeyHandler(keyboard: keyboardDefinition)
 
         inputView?.allowsSelfSizing = true
@@ -370,6 +370,11 @@ open class KeyboardViewController: UIInputViewController {
 
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        if KeyboardSettings.currentKeyboard.name != self.keyboardDefinition.name {
+            self.keyboardDefinition = KeyboardSettings.currentKeyboard
+            setupKeyboardView()
+        }
         
         self.disablesDelayingGestureRecognizers = true
         checkDarkMode()

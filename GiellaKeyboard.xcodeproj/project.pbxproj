@@ -29,6 +29,17 @@
 		C676AD5B1EC9679000523FF3 /* InstructionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C676AD5A1EC9679000523FF3 /* InstructionsController.swift */; };
 		C676AD5F1EC985EB00523FF3 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C676AD5E1EC985EB00523FF3 /* Strings.swift */; };
 		C67A3F3A1EE7F24900C9015C /* About.txt in Resources */ = {isa = PBXBuildFile; fileRef = C67A3F3C1EE7F24900C9015C /* About.txt */; };
+		C68E9F8623855AFD0083ACF4 /* QRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68E9F8523855AFD0083ACF4 /* QRViewController.swift */; };
+		C68E9F8823855B0C0083ACF4 /* QRView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C68E9F8723855B0C0083ACF4 /* QRView.xib */; };
+		C68E9F8923855B4B0083ACF4 /* KeyboardDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DCFDD51EB0787A00FABC11 /* KeyboardDefinition.swift */; };
+		C68E9F8A23855BB20083ACF4 /* KeyDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAF59A322F9CCE100F7C9FC /* KeyDefinition.swift */; };
+		C68E9F8B23857FAE0083ACF4 /* SystemKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6996B5822FC2CC2007EBC3D /* SystemKeys.swift */; };
+		C68E9F9423858F700083ACF4 /* BinaryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68E9F8F23858F700083ACF4 /* BinaryError.swift */; };
+		C68E9F9523858F700083ACF4 /* FixedWidthIntegerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68E9F9023858F700083ACF4 /* FixedWidthIntegerExtensions.swift */; };
+		C68E9F9623858F700083ACF4 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68E9F9123858F700083ACF4 /* StringExtensions.swift */; };
+		C68E9F9723858F700083ACF4 /* UIntExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68E9F9223858F700083ACF4 /* UIntExtensions.swift */; };
+		C68E9F9823858F700083ACF4 /* Binary.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68E9F9323858F700083ACF4 /* Binary.swift */; };
+		C68E9F9A23858F7B0083ACF4 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = C68E9F9923858F7B0083ACF4 /* LICENSE */; };
 		C691A0E723682C8B00085AC3 /* TestingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C691A0E623682C8B00085AC3 /* TestingController.swift */; };
 		C691A0EA23682C9700085AC3 /* TestingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C691A0E823682C9700085AC3 /* TestingView.xib */; };
 		C691A0EB23682C9700085AC3 /* TestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C691A0E923682C9700085AC3 /* TestingView.swift */; };
@@ -118,7 +129,7 @@
 
 /* Begin PBXFileReference section */
 		154519806E8333A9220756C8 /* Pods-BaseKeyboard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaseKeyboard.release.xcconfig"; path = "Pods/Target Support Files/Pods-BaseKeyboard/Pods-BaseKeyboard.release.xcconfig"; sourceTree = "<group>"; };
-		4E807D9319461D9000D875D1 /* HostingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HostingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E807D9319461D9000D875D1 /* QR Keyboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "QR Keyboard.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E807DB919461DC700D875D1 /* Keyboard.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Keyboard.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E807DBC19461DC700D875D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4EC2A46919DF811E00F789E1 /* KeyboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardViewController.swift; sourceTree = "<group>"; };
@@ -150,6 +161,14 @@
 		C676AD601EC986F000523FF3 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = HostingApp/nb.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C676AD611EC986FA00523FF3 /* se */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = se; path = HostingApp/se.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C67A3F3B1EE7F24900C9015C /* Base */ = {isa = PBXFileReference; lastKnownFileType = text; name = Base; path = Base.lproj/About.txt; sourceTree = "<group>"; };
+		C68E9F8523855AFD0083ACF4 /* QRViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRViewController.swift; sourceTree = "<group>"; };
+		C68E9F8723855B0C0083ACF4 /* QRView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QRView.xib; sourceTree = "<group>"; };
+		C68E9F8F23858F700083ACF4 /* BinaryError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryError.swift; sourceTree = "<group>"; };
+		C68E9F9023858F700083ACF4 /* FixedWidthIntegerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FixedWidthIntegerExtensions.swift; sourceTree = "<group>"; };
+		C68E9F9123858F700083ACF4 /* StringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
+		C68E9F9223858F700083ACF4 /* UIntExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIntExtensions.swift; sourceTree = "<group>"; };
+		C68E9F9323858F700083ACF4 /* Binary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Binary.swift; sourceTree = "<group>"; };
+		C68E9F9923858F7B0083ACF4 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		C691A0E623682C8B00085AC3 /* TestingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestingController.swift; sourceTree = "<group>"; };
 		C691A0E823682C9700085AC3 /* TestingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestingView.xib; sourceTree = "<group>"; };
 		C691A0E923682C9700085AC3 /* TestingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestingView.swift; sourceTree = "<group>"; };
@@ -277,7 +296,7 @@
 		4E807D9419461D9000D875D1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4E807D9319461D9000D875D1 /* HostingApp.app */,
+				4E807D9319461D9000D875D1 /* QR Keyboard.app */,
 				4E807DB919461DC700D875D1 /* Keyboard.appex */,
 				C6F2492F1F736DCE00840F2B /* BaseKeyboard.framework */,
 			);
@@ -355,6 +374,7 @@
 		C676AD621EC98C0F00523FF3 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				C68E9F8523855AFD0083ACF4 /* QRViewController.swift */,
 				C655E8591EC558D000B12BE4 /* HomeController.swift */,
 				C676AD5A1EC9679000523FF3 /* InstructionsController.swift */,
 				C65430B31EC94BF0007FC053 /* LanguagesController.swift */,
@@ -365,9 +385,23 @@
 			name = Controllers;
 			sourceTree = "<group>";
 		};
+		C68E9F8E23858F700083ACF4 /* BinaryKit */ = {
+			isa = PBXGroup;
+			children = (
+				C68E9F9923858F7B0083ACF4 /* LICENSE */,
+				C68E9F8F23858F700083ACF4 /* BinaryError.swift */,
+				C68E9F9023858F700083ACF4 /* FixedWidthIntegerExtensions.swift */,
+				C68E9F9123858F700083ACF4 /* StringExtensions.swift */,
+				C68E9F9223858F700083ACF4 /* UIntExtensions.swift */,
+				C68E9F9323858F700083ACF4 /* Binary.swift */,
+			);
+			path = BinaryKit;
+			sourceTree = "<group>";
+		};
 		C6A969D71EB6126100A1143E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				C68E9F8723855B0C0083ACF4 /* QRView.xib */,
 				C6A2E01E1EDFAAA2006BAB69 /* AboutView.swift */,
 				C6A2E01C1EDFA259006BAB69 /* AboutView.xib */,
 				C655E8551EC5559200B12BE4 /* HomeView.swift */,
@@ -385,6 +419,7 @@
 		C6B638421EDF819300A6ECB2 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				C68E9F8E23858F700083ACF4 /* BinaryKit */,
 				C6B638431EDF81B200A6ECB2 /* SimpleButton.swift */,
 			);
 			path = Dependencies;
@@ -434,7 +469,7 @@
 			);
 			name = HostingApp;
 			productName = HostingApp;
-			productReference = 4E807D9319461D9000D875D1 /* HostingApp.app */;
+			productReference = 4E807D9319461D9000D875D1 /* QR Keyboard.app */;
 			productType = "com.apple.product-type.application";
 		};
 		4E807DB819461DC700D875D1 /* Keyboard */ = {
@@ -541,6 +576,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C68E9F8823855B0C0083ACF4 /* QRView.xib in Resources */,
 				C6EA31C321AF181D0014F3B6 /* KeyboardDefinitions.json in Resources */,
 				C691A0EA23682C9700085AC3 /* TestingView.xib in Resources */,
 				C643BF5B20BD483C00124DDC /* LaunchScreen.storyboard in Resources */,
@@ -550,6 +586,7 @@
 				C655E85D1EC55D0800B12BE4 /* Localizable.strings in Resources */,
 				C6974E611A31557A00D1A0B3 /* Background.jpg in Resources */,
 				C67A3F3A1EE7F24900C9015C /* About.txt in Resources */,
+				C68E9F9A23858F7B0083ACF4 /* LICENSE in Resources */,
 				C64937D2218DC7FA00D0C9DC /* dicts.bundle in Resources */,
 				C65430B21EC94BD1007FC053 /* InstructionsView.xib in Resources */,
 				C63EE1012362F7E500A1E15A /* Settings.bundle in Resources */,
@@ -602,12 +639,14 @@
 				"${PODS_ROOT}/Target Support Files/Pods-HostingApp/Pods-HostingApp-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Sentry/Sentry.framework",
 				"${BUILT_PRODUCTS_DIR}/UIDeviceComplete/UIDeviceComplete.framework",
+				"${BUILT_PRODUCTS_DIR}/BrotliKit/BrotliKit.framework",
 				"${BUILT_PRODUCTS_DIR}/libdivvunspell/libdivvunspell.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sentry.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIDeviceComplete.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BrotliKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/libdivvunspell.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -640,23 +679,32 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C68E9F9623858F700083ACF4 /* StringExtensions.swift in Sources */,
 				C676AD5B1EC9679000523FF3 /* InstructionsController.swift in Sources */,
 				C6B638441EDF81B200A6ECB2 /* SimpleButton.swift in Sources */,
 				C63EE0FF2361D86800A1E15A /* MenuButton.swift in Sources */,
 				C655E8541EC5551100B12BE4 /* Extensions.swift in Sources */,
+				C68E9F8A23855BB20083ACF4 /* KeyDefinition.swift in Sources */,
+				C68E9F9823858F700083ACF4 /* Binary.swift in Sources */,
 				C691A0E723682C8B00085AC3 /* TestingController.swift in Sources */,
+				C68E9F8623855AFD0083ACF4 /* QRViewController.swift in Sources */,
 				C65430B41EC94BF0007FC053 /* LanguagesController.swift in Sources */,
 				C65430B01EC94BC7007FC053 /* InstructionsView.swift in Sources */,
+				C68E9F9423858F700083ACF4 /* BinaryError.swift in Sources */,
 				4EF16F9B19D2550D0076AFCB /* AppDelegate.swift in Sources */,
 				C676AD5F1EC985EB00523FF3 /* Strings.swift in Sources */,
 				C655E85A1EC558D000B12BE4 /* HomeController.swift in Sources */,
+				C68E9F9523858F700083ACF4 /* FixedWidthIntegerExtensions.swift in Sources */,
 				C6A2E01F1EDFAAA2006BAB69 /* AboutView.swift in Sources */,
 				C6996B5722FC2C93007EBC3D /* Utils.swift in Sources */,
+				C68E9F8B23857FAE0083ACF4 /* SystemKeys.swift in Sources */,
 				C655E8561EC5559200B12BE4 /* HomeView.swift in Sources */,
+				C68E9F9723858F700083ACF4 /* UIntExtensions.swift in Sources */,
 				C6A3905B1EB61BF8009378C1 /* KeyboardSettings.swift in Sources */,
 				C65430AA1EC93EB0007FC053 /* LayoutsController.swift in Sources */,
 				C691A0EB23682C9700085AC3 /* TestingView.swift in Sources */,
 				C6B638461EDF94CA00A6ECB2 /* AboutController.swift in Sources */,
+				C68E9F8923855B4B0083ACF4 /* KeyboardDefinition.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -855,6 +903,7 @@
 				);
 				INFOPLIST_FILE = HostingApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 2.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"c++\"",
@@ -866,8 +915,8 @@
 					"-framework",
 					"\"libdivvunspell\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaKeyboard;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaQRExpoKbd;
+				PRODUCT_NAME = "QR Keyboard";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Keyboard/Keyboard-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -894,6 +943,7 @@
 				);
 				INFOPLIST_FILE = HostingApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 2.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"c++\"",
@@ -905,8 +955,8 @@
 					"-framework",
 					"\"libdivvunspell\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaKeyboard;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaQRExpoKbd;
+				PRODUCT_NAME = "QR Keyboard";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Keyboard/Keyboard-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -928,8 +978,9 @@
 				INFOPLIST_FILE = Keyboard/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 2.0;
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
-				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaKeyboard.Keyboard;
+				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaQRExpoKbd.Keyboard;
 				PRODUCT_NAME = Keyboard;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -956,8 +1007,9 @@
 				INFOPLIST_FILE = Keyboard/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 2.0;
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
-				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaKeyboard.Keyboard;
+				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaQRExpoKbd.Keyboard;
 				PRODUCT_NAME = Keyboard;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
