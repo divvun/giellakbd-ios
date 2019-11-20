@@ -462,7 +462,9 @@ open class KeyboardViewController: UIInputViewController {
         
         switch page {
         case .symbols1, .symbols2:
-            keyboardView.page = .normal
+            if lastInput == " " {
+                keyboardView.page = .normal
+            }
             return
         default:
             break
@@ -475,7 +477,7 @@ open class KeyboardViewController: UIInputViewController {
                     keyboardView.page = .shifted
                 }
             case .sentences:
-                if ctx.currentWord == "", ctx.previousWord?.last == Character(".") || ctx.previousWord == nil {
+                if ctx.currentWord == "", ctx.previousWord?.last?.isPunctuation ?? false || ctx.previousWord == nil {
                     keyboardView.page = .shifted
                 } else if case .shifted = page {
                     if !(ctx.previousWord?.last?.isUppercase ?? false) {
