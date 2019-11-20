@@ -6,12 +6,9 @@ private let defaults: UserDefaults = {
     return x
 }()
 
-func wat() {
-}
-
 class KeyboardSettings {
     static var groupId: String = {
-        let schemes = Bundle.main.infoDictionary!["LSApplicationQueriesSchemes"]! as! [String]
+        let schemes = Bundle.top.infoDictionary!["LSApplicationQueriesSchemes"]! as! [String]
         return schemes.first!
     }()
 

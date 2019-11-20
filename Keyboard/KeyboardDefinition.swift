@@ -1,7 +1,7 @@
 import UIKit
 import UIDeviceComplete
 
-public indirect enum TransformTree: Decodable {
+public indirect enum TransformTree: Codable {
     case tree([String: TransformTree])
     case leaf(String)
     
@@ -12,6 +12,17 @@ public indirect enum TransformTree: Decodable {
             self = .tree(try d.decode([String: TransformTree].self))
         } catch {
             self = .leaf(try d.decode(String.self))
+        }
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var c = encoder.singleValueContainer()
+        
+        switch self {
+        case let .tree(value):
+            try c.encode(value)
+        case let .leaf(value):
+            try c.encode(value)
         }
     }
 }
@@ -78,7 +89,7 @@ public struct RawKeyboardMode: Decodable {
         case normal
         case shifted
         case alt
-        case altShift
+        case altShift = "alt+shift"
         case symbols1 = "symbols-1"
         case symbols2 = "symbols-2"
     }
@@ -94,20 +105,19 @@ public struct RawKeyboardMode: Decodable {
     }
 }
 
-public struct KeyboardDefinition: Decodable {
+struct RawKeyboardDefinition: Decodable {
     let name: String
     let locale: String
     let spaceName: String
     let returnName: String
     
-    let deadKeys: [String: [String]]
-    let longPress: [String: [String]]
-    let transforms: [String: TransformTree]
-    
-    private(set) var normal: [[KeyDefinition]] = []
-    private(set) var shifted: [[KeyDefinition]] = []
-    private(set) var symbols1: [[KeyDefinition]] = []
-    private(set) var symbols2: [[KeyDefinition]] = []
+    let deadKeys: [DeviceVariant: [String: [String]]]?
+    let longPress: [String: [String]]?
+    let transforms: [String: TransformTree]?
+
+    let ipad_9in: RawKeyboardMode
+    let ipad_12in: RawKeyboardMode
+    let iphone: RawKeyboardMode
     
     private enum Keys: String, CodingKey {
         case name
@@ -121,17 +131,6 @@ public struct KeyboardDefinition: Decodable {
         case ipad_9in = "ipad-9in"
         case ipad_12in = "ipad-12in"
         case iphone = "iphone"
-        
-        static var deviceKey: Keys {
-            switch DeviceVariant.current {
-            case .ipad_12in:
-                return .ipad_12in
-            case .ipad_9in:
-                return .ipad_9in
-            case .iphone:
-                return .iphone
-            }
-        }
     }
     
     public init(from decoder: Decoder) throws {
@@ -142,22 +141,15 @@ public struct KeyboardDefinition: Decodable {
         spaceName = try d.decode(String.self, forKey: .space)
         returnName = try d.decode(String.self, forKey: .return)
         
-        let deadKeysMap: [DeviceVariant: [String: [String]]]
         do {
             if let value = try d.decodeIfPresent([DeviceVariant: [String: [String]]].self, forKey: .deadKeys) {
-                deadKeysMap = value
+                deadKeys = value
             } else {
-                deadKeysMap = [:]
+                deadKeys = [:]
             }
         } catch {
             print(error)
-            deadKeysMap = [:]
-        }
-        
-        if let deadKeys = deadKeysMap[DeviceVariant.current] {
-            self.deadKeys = deadKeys
-        } else {
-            self.deadKeys = [:]
+            deadKeys = [:]
         }
         
         do {
@@ -182,7 +174,47 @@ public struct KeyboardDefinition: Decodable {
             transforms = [:]
         }
         
-        let mode = try d.decode(RawKeyboardMode.self, forKey: .deviceKey)
+        iphone = try d.decode(RawKeyboardMode.self, forKey: .iphone)
+        ipad_9in = try d.decode(RawKeyboardMode.self, forKey: .ipad_9in)
+        ipad_12in = try d.decode(RawKeyboardMode.self, forKey: .ipad_12in)
+    }
+}
+
+public struct KeyboardDefinition: Codable {
+    let name: String
+    let locale: String
+    let spaceName: String
+    let returnName: String
+    
+    let deadKeys: [String: [String]]
+    let longPress: [String: [String]]
+    let transforms: [String: TransformTree]
+    
+    private(set) var normal: [[KeyDefinition]] = []
+    private(set) var shifted: [[KeyDefinition]] = []
+    private(set) var symbols1: [[KeyDefinition]] = []
+    private(set) var symbols2: [[KeyDefinition]] = []
+    
+    init(fromRaw raw: RawKeyboardDefinition) throws {
+        self.name = raw.name
+        self.locale = raw.locale
+        self.spaceName = raw.spaceName
+        self.returnName = raw.returnName
+        
+        self.deadKeys = raw.deadKeys?[DeviceVariant.current] ?? [:]
+        self.longPress = raw.longPress ?? [:]
+        self.transforms = raw.transforms ?? [:]
+        
+        let mode: RawKeyboardMode
+        switch DeviceVariant.current {
+        case .iphone:
+            mode = raw.iphone
+        case .ipad_9in:
+            mode = raw.ipad_9in
+        case .ipad_12in:
+            mode = raw.ipad_12in
+        }
+        
         switch DeviceVariant.current {
         case .iphone:
             self.normal = mode.normal.map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) } }
@@ -266,7 +298,8 @@ public struct KeyboardDefinition: Decodable {
     static let definitions: [KeyboardDefinition] = {
         let path = Bundle.top.url(forResource: "KeyboardDefinitions", withExtension: "json")!
         let data = try! String(contentsOf: path).data(using: .utf8)!
-        return try! JSONDecoder().decode([KeyboardDefinition].self, from: data)
+        let raws = try! JSONDecoder().decode([RawKeyboardDefinition].self, from: data)
+        return raws.map { try! KeyboardDefinition(fromRaw: $0) }
     }()
 }
 

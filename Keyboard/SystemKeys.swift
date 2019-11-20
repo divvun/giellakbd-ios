@@ -33,3 +33,37 @@ class SystemKeys {
         return keys
     }
 }
+
+extension Array where Element == [KeyDefinition] {
+    mutating func platformize(page: KeyboardPage, spaceName: String, returnName: String) {
+        append(SystemKeys.systemKeyRowsForCurrentDevice(spaceName: spaceName, returnName: returnName))
+    }
+
+    func splitAndBalanceSpacebar() -> [[KeyDefinition]] {
+        var copy = self
+        for (i, row) in copy.enumerated() {
+            var splitPoint = row.count / 2
+            var length: CGFloat = 0.0
+            for (keyIndex, key) in row.enumerated() {
+                length += key.size.width
+                if case .spacebar = key.type {
+                    let splitSpace = KeyDefinition(type: key.type, size: CGSize(width: key.size.width / 2.0, height: key.size.height))
+                    copy[i].remove(at: keyIndex)
+
+                    copy[i].insert(splitSpace, at: keyIndex)
+                    copy[i].insert(splitSpace, at: keyIndex)
+                    splitPoint = keyIndex + 1
+                }
+            }
+
+            while splitPoint != (copy[i].count / 2) {
+                if splitPoint > copy[i].count / 2 {
+                    copy[i].append(KeyDefinition(type: .spacer, size: CGSize(width: 0.0, height: 1.0)))
+                } else {
+                    copy[i].insert(KeyDefinition(type: .spacer, size: CGSize(width: 0.0, height: 1.0)), at: 0)
+                }
+            }
+        }
+        return copy
+    }
+}

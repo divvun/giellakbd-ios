@@ -1,6 +1,12 @@
 import UIKit
 
-public enum KeyType: Hashable {
+struct RawKeyType: Codable {
+    let id: String
+    let name: String?
+    let alternate: String?
+}
+
+public enum KeyType: Codable, Hashable {
     case input(key: String, alternate: String?)
     case spacer
     case shift
@@ -18,6 +24,53 @@ public enum KeyType: Hashable {
     case fullStop
     case tab
     case caps
+    
+    public init(from decoder: Decoder) throws {
+        let d = try decoder.singleValueContainer()
+        let raw = try d.decode(RawKeyType.self)
+        self = Self.init(string: raw.id, alternate: raw.alternate, spaceName: raw.name ?? "", returnName: raw.name ?? "")
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var c = encoder.singleValueContainer()
+        let raw: RawKeyType
+        
+        switch self {
+        case .input(let key, let alternate):
+            raw = RawKeyType(id: key, name: nil, alternate: alternate)
+        case .spacer:
+            raw = RawKeyType(id: "_spacer", name: nil, alternate: nil)
+        case .shift:
+            raw = RawKeyType(id: "_shift", name: nil, alternate: nil)
+        case .backspace:
+            raw = RawKeyType(id: "_backspace", name: nil, alternate: nil)
+        case .spacebar(let name):
+            raw = RawKeyType(id: "_spacebar", name: name, alternate: nil)
+        case .returnkey(let name):
+            raw = RawKeyType(id: "_return", name: name, alternate: nil)
+        case .symbols:
+            raw = RawKeyType(id: "_symbols", name: nil, alternate: nil)
+        case .shiftSymbols:
+            raw = RawKeyType(id: "_shiftSymbols", name: nil, alternate: nil)
+        case .keyboard:
+            raw = RawKeyType(id: "_keyboard", name: nil, alternate: nil)
+        case .comma:
+            raw = RawKeyType(id: "_comma", name: nil, alternate: nil)
+        case .fullStop:
+            raw = RawKeyType(id: "_fullstop", name: nil, alternate: nil)
+        case .tab:
+            raw = RawKeyType(id: "_tab", name: nil, alternate: nil)
+        case .caps:
+            raw = RawKeyType(id: "_caps", name: nil, alternate: nil)
+        case .keyboardMode:
+            raw = RawKeyType(id: "_keyboardMode", name: nil, alternate: nil)
+        default:
+            try c.encodeNil()
+            return
+        }
+        
+        try c.encode(raw)
+    }
     
     init(string: String, alternate: String? = nil, spaceName: String, returnName: String) {
         switch string {
@@ -45,6 +98,8 @@ public enum KeyType: Hashable {
             self = .tab
         case "_caps":
             self = .caps
+        case "_keyboardMode":
+            self = .keyboardMode
         default:
             self = .input(key: string, alternate: alternate)
         }
@@ -91,7 +146,7 @@ public enum KeyType: Hashable {
     }
 }
 
-public struct KeyDefinition {
+public struct KeyDefinition: Codable {
     public let type: KeyType
     public let size: CGSize
     
@@ -101,41 +156,11 @@ public struct KeyDefinition {
     }
     
     init(input: RawKeyDefinition, alternate: String? = nil, spaceName: String, returnName: String) {
-        type = KeyType(string: input.id, alternate: alternate, spaceName: spaceName, returnName: returnName)
-        size = CGSize(width: input.width, height: input.height)
-    }
-}
-
-extension Array where Element == [KeyDefinition] {
-    mutating func platformize(page: KeyboardPage, spaceName: String, returnName: String) {
-        append(SystemKeys.systemKeyRowsForCurrentDevice(spaceName: spaceName, returnName: returnName))
-    }
-
-    func splitAndBalanceSpacebar() -> [[KeyDefinition]] {
-        var copy = self
-        for (i, row) in copy.enumerated() {
-            var splitPoint = row.count / 2
-            var length: CGFloat = 0.0
-            for (keyIndex, key) in row.enumerated() {
-                length += key.size.width
-                if case .spacebar = key.type {
-                    let splitSpace = KeyDefinition(type: key.type, size: CGSize(width: key.size.width / 2.0, height: key.size.height))
-                    copy[i].remove(at: keyIndex)
-
-                    copy[i].insert(splitSpace, at: keyIndex)
-                    copy[i].insert(splitSpace, at: keyIndex)
-                    splitPoint = keyIndex + 1
-                }
-            }
-
-            while splitPoint != (copy[i].count / 2) {
-                if splitPoint > copy[i].count / 2 {
-                    copy[i].append(KeyDefinition(type: .spacer, size: CGSize(width: 0.0, height: 1.0)))
-                } else {
-                    copy[i].insert(KeyDefinition(type: .spacer, size: CGSize(width: 0.0, height: 1.0)), at: 0)
-                }
-            }
+        if input.id == alternate {
+            type = KeyType(string: input.id, alternate: nil, spaceName: spaceName, returnName: returnName)
+        } else {
+            type = KeyType(string: input.id, alternate: alternate, spaceName: spaceName, returnName: returnName)
         }
-        return copy
+        size = CGSize(width: input.width, height: input.height)
     }
 }
