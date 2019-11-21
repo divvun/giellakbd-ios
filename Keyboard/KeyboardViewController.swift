@@ -42,6 +42,7 @@ extension NSLayoutConstraint {
 
 fileprivate let portraitDeviceHeight: CGFloat = {
     let size = UIScreen.main.bounds.size
+    
     return max(size.height, size.width)
 }()
 
@@ -65,28 +66,27 @@ open class KeyboardViewController: UIInputViewController {
     private var landscapeHeight: CGFloat {
         switch UIDevice.current.dc.deviceFamily {
         case .iPad:
-            
-           switch UIDevice.current.dc.deviceModel {
-                case .iPadMini2, .iPadMini3, .iPadMini4, .iPadMini5:
-                    return 405.0
-                case .iPadThirdGen, .iPadFourthGen, .iPadFifthGen, .iPadSixthGen, .iPadAir, .iPadAir2, .iPadPro9_7Inch:
-                    return 405.0
-                case .iPadAir3, .iPadPro10_5Inch:
-                    return 405.0
-                case .iPadPro11Inch:
-                    return 405.0
-                case .iPadPro12_9Inch, .iPadPro12_9Inch_SecondGen, .iPadPro12_9Inch_ThirdGen:
-                    return 405.0
-                case .iPadSevenGen:
-                    return 405.0
-                default:
-                    let sizeInches = UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches
-                    
-                    if sizeInches < 10 {
-                        return landscapeDeviceHeight / 2.0
-                    }
-                    
-                    return landscapeDeviceHeight / 2.0 - 120
+            switch UIDevice.current.dc.deviceModel {
+            case .iPadMini2, .iPadMini3, .iPadMini4, .iPadMini5:
+                return 405.0
+            case .iPadThirdGen, .iPadFourthGen, .iPadFifthGen, .iPadSixthGen, .iPadAir, .iPadAir2, .iPadPro9_7Inch:
+                return 405.0
+            case .iPadAir3, .iPadPro10_5Inch:
+                return 405.0
+            case .iPadPro11Inch:
+                return 405.0
+            case .iPadPro12_9Inch, .iPadPro12_9Inch_SecondGen, .iPadPro12_9Inch_ThirdGen:
+                return 405.0
+            case .iPadSevenGen:
+                return 405.0
+            default:
+                let sizeInches = UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches
+                
+                if sizeInches < 10 {
+                    return landscapeDeviceHeight / 2.0
+                }
+                
+                return landscapeDeviceHeight / 2.0 - 120
             }
         case .iPhone, .iPod:
             switch UIDevice.current.dc.deviceModel {
@@ -116,7 +116,6 @@ open class KeyboardViewController: UIInputViewController {
         
         switch UIDevice.current.dc.deviceFamily {
         case .iPad:
-
             switch UIDevice.current.dc.deviceModel {
             case .iPadMini2, .iPadMini3, .iPadMini4, .iPadMini5:
                 return 320.0
@@ -146,21 +145,6 @@ open class KeyboardViewController: UIInputViewController {
                 return height / 4.0
             }
         case .iPhone, .iPod:
-//            switch UIDevice.current.dc.deviceModel {
-//            case .iPhone5S, .iPhone5C:
-//                return 254.0
-//            case .iPhone6, .iPhone6S, .iPhone6Plus, .iPhone6SPlus, .iPhone7, .iPhone7Plus:
-//                return 260.0
-//            case .iPhone8:
-//                return 260.0
-//            case .iPhone8Plus, .iPhoneX, .iPhoneXR, .iPhoneXS, .iPhoneXSMax, .iPhone11, .iPhone11Pro, .iPhone11ProMax:
-//                return 272.0
-//            default:
-//                break
-//            }
-//            return 254.0
-            
-
             //https://iosref.com/res/
             switch UIDevice.current.dc.deviceModel {
             case .iPhone5S, .iPhone5C, .iPhoneSE, .iPodTouchSeventhGen:
@@ -474,7 +458,10 @@ open class KeyboardViewController: UIInputViewController {
                     keyboardView.page = .shifted
                 }
             case .sentences:
-                if ctx.currentWord == "", ctx.previousWord?.last?.isPunctuation ?? false || ctx.previousWord == nil {
+                let l: Character = ctx.previousWord?.last ?? Character("")
+                
+                if ctx.currentWord == "",
+                    (l.isPunctuation && l != ",") || ctx.previousWord == nil {
                     keyboardView.page = .shifted
                 } else if case .shifted = page {
                     if !(ctx.previousWord?.last?.isUppercase ?? false) {
