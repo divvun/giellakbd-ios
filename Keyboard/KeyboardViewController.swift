@@ -56,7 +56,6 @@ extension UIScreen {
         let s = self.bounds.size
         return s.width > s.height
     }
-    
 }
 
 open class KeyboardViewController: UIInputViewController {
@@ -192,7 +191,7 @@ open class KeyboardViewController: UIInputViewController {
         }
     }
     
-    private func initHeightConstraint() {
+    private var preferredHeight: CGFloat {
         var value: CGFloat
         
         if UIScreen.main.isDeviceLandscape {
@@ -201,11 +200,24 @@ open class KeyboardViewController: UIInputViewController {
             value = portraitHeight
         }
         
+        // Ordinarily a keyboard has 4 rows, iPad 12 inch+ has 5. Some have more. We calculate for that.
+        let rowCount = CGFloat(keyboardDefinition.normal.count)
+        let normalRowCount: CGFloat = (UIDevice.current.dc.screenSize.sizeInches ?? 0.0) >= 12.0
+            ? 5.0
+            : 4.0
+        value = value / normalRowCount * rowCount
+        
         if !bannerVisible {
              value -= theme.bannerHeight
         }
         
-        heightConstraint = view.heightAnchor.constraint(equalToConstant: value).enable(priority: .required)
+        return value
+    }
+    
+    private func initHeightConstraint() {
+        heightConstraint = view.heightAnchor
+            .constraint(equalToConstant: preferredHeight)
+            .enable(priority: .required)
     }
 
     open override func viewDidLoad() {
@@ -325,22 +337,9 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     private func updateHeightConstraint() {
-        guard let _ = self.heightConstraint else { return }
-        
         DispatchQueue.main.async {
-            var value: CGFloat
-            
-            if !UIScreen.main.isDeviceLandscape {
-                value = self.portraitHeight
-            } else {
-                value = self.landscapeHeight
-            }
-            
-            if !self.bannerVisible {
-                value -= self.theme.bannerHeight
-            }
-            
-            self.heightConstraint.constant = value
+            guard let _ = self.heightConstraint else { return }
+            self.heightConstraint.constant = self.preferredHeight
         }
     }
 
