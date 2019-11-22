@@ -139,12 +139,17 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
         }
     }
     
+    private var isLogicallyIPad: Bool {
+        return UIDevice.current.dc.deviceFamily == .iPad &&
+            self.collectionView?.traitCollection.userInterfaceIdiom == .pad
+    }
+    
     private func longPressTouchPoint(at point: CGPoint, cellSize: CGSize, frame: CGRect, view collectionView: UICollectionView) -> CGPoint {
         // Calculate the long press finger position relative to the long press popup
         let halfWidth = cellSize.width / 2.0
         let halfHeight = cellSize.height / 2.0
         let heightOffset: CGFloat
-        if UIDevice.current.dc.deviceFamily == .iPad {
+        if isLogicallyIPad {
             heightOffset = -halfHeight
         } else {
             heightOffset = baselinePoint?.y ?? 0

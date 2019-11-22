@@ -43,6 +43,7 @@ extension NSLayoutConstraint {
 fileprivate let portraitDeviceHeight: CGFloat = {
     let size = UIScreen.main.bounds.size
     
+    print(UIScreen.main.availableModes)
     return max(size.height, size.width)
 }()
 
@@ -62,9 +63,21 @@ open class KeyboardViewController: UIInputViewController {
     @IBOutlet var nextKeyboardButton: UIButton!
     private var keyboardView: KeyboardViewProvider!
     
+    private(set) lazy var definitions: [KeyboardDefinition] = {
+        let path = Bundle.top.url(forResource: "KeyboardDefinitions", withExtension: "json")!
+        let data = try! String(contentsOf: path).data(using: .utf8)!
+        let raws = try! JSONDecoder().decode([RawKeyboardDefinition].self, from: data)
+        return raws.map { try! KeyboardDefinition(fromRaw: $0, traits: self.traitCollection) }
+    }()
+    
     private var landscapeHeight: CGFloat {
         switch UIDevice.current.dc.deviceFamily {
         case .iPad:
+            if self.traitCollection.userInterfaceIdiom == .phone {
+                // Hardcode because the device lies about the height
+                return portraitHeight - 56
+            }
+            
             switch UIDevice.current.dc.deviceModel {
             case .iPadMini2, .iPadMini3, .iPadMini4, .iPadMini5:
                 return 405.0
@@ -111,10 +124,21 @@ open class KeyboardViewController: UIInputViewController {
     
     private var portraitHeight: CGFloat {
         let height = portraitDeviceHeight
+        print("Device height: \(height)")
+        
+        print("Device idiom: \(UIDevice.current.userInterfaceIdiom)")
+        print("Device idiom (trait): \(self.traitCollection.userInterfaceIdiom)")
+        print("Size class (h): \(self.traitCollection.horizontalSizeClass)")
+        print("Size class (v): \(self.traitCollection.verticalSizeClass)")
         let sizeInches = UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches
         
         switch UIDevice.current.dc.deviceFamily {
         case .iPad:
+            if self.traitCollection.userInterfaceIdiom == .phone {
+                // Hardcode because the device lies about the height
+                return 258.0
+            }
+            
             switch UIDevice.current.dc.deviceModel {
             case .iPadMini2, .iPadMini3, .iPadMini4, .iPadMini5:
                 return 320.0
@@ -144,7 +168,7 @@ open class KeyboardViewController: UIInputViewController {
                 return height / 4.0
             }
         case .iPhone, .iPod:
-            //https://iosref.com/res/
+            // https://iosref.com/res/
             switch UIDevice.current.dc.deviceModel {
             case .iPhone5S, .iPhone5C, .iPhoneSE, .iPodTouchSeventhGen:
                 return 258.0
@@ -227,7 +251,7 @@ open class KeyboardViewController: UIInputViewController {
             fatalError("There was no DivvunKeyboardIndex")
         }
         
-        keyboardDefinition = KeyboardDefinition.definitions[kbdIndex]
+        keyboardDefinition = definitions[kbdIndex]
         deadKeyHandler = DeadKeyHandler(keyboard: keyboardDefinition)
 
         inputView?.allowsSelfSizing = true
@@ -235,7 +259,7 @@ open class KeyboardViewController: UIInputViewController {
         setupKeyboardView()
         setupBannerView()
         
-        print("\(KeyboardDefinition.definitions.map { $0.locale })")
+        print("\(definitions.map { $0.locale })")
     }
 
     private func setupKeyboardView() {

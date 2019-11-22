@@ -608,7 +608,7 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! KeyCell
         let key = currentPage[indexPath.section][indexPath.row]
         
-        cell.configure(page: page, key: key, theme: theme)
+        cell.configure(page: page, key: key, theme: theme, traits: self.traitCollection)
 
         if let swipeKeyView = cell.keyView, swipeKeyView.isSwipeKey {
             // FIXME: this is a code smell side effect bad idea.
@@ -642,7 +642,7 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
             contentView.clipsToBounds = false
         }
         
-        func configure(page: KeyboardPage, key: KeyDefinition, theme: ThemeType) {
+        func configure(page: KeyboardPage, key: KeyDefinition, theme: ThemeType, traits: UITraitCollection) {
             _ = contentView.subviews.forEach { view in
                 view.removeFromSuperview()
             }
@@ -655,7 +655,7 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
                 contentView.addSubview(emptyview)
                 emptyview.fill(superview: contentView)
             } else {
-                let keyView = KeyView(page: page, key: key, theme: theme)
+                let keyView = KeyView(page: page, key: key, theme: theme, traits: traits)
                 keyView.translatesAutoresizingMaskIntoConstraints = false
                 contentView.addSubview(keyView)
                 keyView.fill(superview: contentView)

@@ -231,7 +231,7 @@ class KeyView: UIView {
         }
     }
     
-    init(page: KeyboardPage, key: KeyDefinition, theme: ThemeType) {
+    init(page: KeyboardPage, key: KeyDefinition, theme: ThemeType, traits: UITraitCollection) {
         self.key = key
         self.theme = theme
         
@@ -253,7 +253,7 @@ class KeyView: UIView {
             } else if case .symbols2 = page {
                 text("ABC", page: page)
             } else {
-                if UIDevice.current.dc.deviceFamily == .iPad {
+                if traits.userInterfaceIdiom == .pad && UIDevice.current.dc.deviceFamily == .iPad {
                     text(".?123", page: page)
                 } else {
                     text("123", page: page)

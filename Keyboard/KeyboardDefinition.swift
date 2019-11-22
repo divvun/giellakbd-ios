@@ -62,10 +62,10 @@ enum DeviceVariant: String, Decodable {
     case ipad_12in = "ipad-12in"
     case iphone = "iphone"
     
-    static var current: DeviceVariant {
+    static func from(traits: UITraitCollection) -> DeviceVariant {
         let family = UIDevice.current.dc.deviceFamily
-        
-        if family == .iPad {
+    
+        if traits.userInterfaceIdiom == .pad && family == .iPad {
             if (UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches) < 12.0 {
                 return .ipad_9in
             } else {
@@ -195,18 +195,21 @@ public struct KeyboardDefinition: Codable {
     private(set) var symbols1: [[KeyDefinition]] = []
     private(set) var symbols2: [[KeyDefinition]] = []
     
-    init(fromRaw raw: RawKeyboardDefinition) throws {
+    init(fromRaw raw: RawKeyboardDefinition, traits: UITraitCollection) throws {
+        let variant = DeviceVariant.from(traits: traits)
+        
         self.name = raw.name
         self.locale = raw.locale
         self.spaceName = raw.spaceName
         self.returnName = raw.returnName
         
-        self.deadKeys = raw.deadKeys?[DeviceVariant.current] ?? [:]
+        self.deadKeys = raw.deadKeys?[variant] ?? [:]
         self.longPress = raw.longPress ?? [:]
         self.transforms = raw.transforms ?? [:]
         
         let mode: RawKeyboardMode
-        switch DeviceVariant.current {
+        
+        switch variant {
         case .iphone:
             mode = raw.iphone
         case .ipad_9in:
@@ -215,7 +218,7 @@ public struct KeyboardDefinition: Codable {
             mode = raw.ipad_12in
         }
         
-        switch DeviceVariant.current {
+        switch variant {
         case .iphone:
             self.normal = mode.normal.map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) } }
             self.shifted = mode.shifted.map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) } }
@@ -257,10 +260,10 @@ public struct KeyboardDefinition: Codable {
             }
         }
         
-        normal.platformize(page: .normal, spaceName: spaceName, returnName: returnName)
-        shifted.platformize(page: .shifted, spaceName: spaceName, returnName: returnName)
-        symbols1.platformize(page: .symbols1, spaceName: spaceName, returnName: returnName)
-        symbols2.platformize(page: .symbols2, spaceName: spaceName, returnName: returnName)
+        normal.platformize(page: .normal, spaceName: spaceName, returnName: returnName, traits: traits)
+        shifted.platformize(page: .shifted, spaceName: spaceName, returnName: returnName, traits: traits)
+        symbols1.platformize(page: .symbols1, spaceName: spaceName, returnName: returnName, traits: traits)
+        symbols2.platformize(page: .symbols2, spaceName: spaceName, returnName: returnName, traits: traits)
     }
     
     public func copy(
@@ -294,13 +297,6 @@ public struct KeyboardDefinition: Codable {
         self.symbols1 = symbols1
         self.symbols2 = symbols2
     }
-    
-    static let definitions: [KeyboardDefinition] = {
-        let path = Bundle.top.url(forResource: "KeyboardDefinitions", withExtension: "json")!
-        let data = try! String(contentsOf: path).data(using: .utf8)!
-        let raws = try! JSONDecoder().decode([RawKeyboardDefinition].self, from: data)
-        return raws.map { try! KeyboardDefinition(fromRaw: $0) }
-    }()
 }
 
 public enum KeyboardPage {

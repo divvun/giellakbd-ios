@@ -17,6 +17,40 @@ extension UIUserInterfaceStyle: CustomDebugStringConvertible {
     }
 }
 
+extension UIUserInterfaceIdiom: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        switch self {
+        case .phone:
+            return "UIUserInterfaceIdiom.phone"
+        case .unspecified:
+            return "UIUserInterfaceIdiom.unspecified"
+        case .pad:
+            return "UIUserInterfaceIdiom.pad"
+        case .tv:
+            return "UIUserInterfaceIdiom.tv"
+        case .carPlay:
+            return "UIUserInterfaceIdiom.carPlay"
+        @unknown default:
+            return "UIUserInterfaceIdiom.<unknown>"
+        }
+    }
+}
+
+extension UIUserInterfaceSizeClass: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        switch self {
+        case .compact:
+            return "UIUserInterfaceSizeClass.compact"
+        case .regular:
+            return "UIUserInterfaceSizeClass.regular"
+        case .unspecified:
+            return "UIUserInterfaceSizeClass.unspecified"
+        @unknown default:
+            return "UIUserInterfaceSizeClass.<unknown>"
+        }
+    }
+}
+
 extension UIKeyboardAppearance: CustomDebugStringConvertible {
     public var debugDescription: String {
         switch self {
