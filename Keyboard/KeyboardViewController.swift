@@ -139,34 +139,17 @@ open class KeyboardViewController: UIInputViewController {
                 return 258.0
             }
             
-            switch UIDevice.current.dc.deviceModel {
-            case .iPadMini2, .iPadMini3, .iPadMini4, .iPadMini5:
-                return 320.0
-            case .iPadThirdGen, .iPadFourthGen, .iPadFifthGen, .iPadSixthGen, .iPadAir, .iPadAir2, .iPadPro9_7Inch:
-                return 320.0
-            case .iPadAir3, .iPadPro10_5Inch:
-                return 320.0
-            case .iPadPro11Inch:
-                return 320.0
-            case .iPadPro12_9Inch, .iPadPro12_9Inch_SecondGen, .iPadPro12_9Inch_ThirdGen:
-                return 320.0
-            case .iPadSevenGen:
-                return 320.0
-            default:
-                // Fail safe
-                
-                // Smol iPads and 9 inch iPad Pro
-                if sizeInches < 10 {
-                    return 314.0
-                }
-    
-                // iPads from 10 to 13 inches
-                if sizeInches < 13 {
-                    return 384.0
-                }
-                
-                return height / 4.0
+            // Smol iPads and 9 inch iPad Pro
+            if sizeInches < 10 {
+                return 314.0
             }
+
+            // iPads from 10 to 13 inches
+            if sizeInches < 13 {
+                return 384.0
+            }
+            
+            return height / 4.0
         case .iPhone, .iPod:
             // https://iosref.com/res/
             switch UIDevice.current.dc.deviceModel {
