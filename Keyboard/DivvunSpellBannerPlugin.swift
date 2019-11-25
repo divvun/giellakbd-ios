@@ -36,8 +36,6 @@ class SuggestionOp: Operation {
 
 extension DivvunSpellBannerPlugin: BannerViewDelegate {
     public func textInputDidChange(_ banner: BannerView, context: CursorContext) {
-        print(context)
-
         if context.currentWord == "" {
             banner.items = []
             return
