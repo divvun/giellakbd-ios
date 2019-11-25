@@ -60,8 +60,6 @@ class LongPressCursorMovementController: NSObject, LongPressBehaviorProvider {
 class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     class LongpressCollectionView: UICollectionView {}
 
-    static let multirowThreshold = UIDevice.current.dc.isIpad ? 4 : 6
-
     private let deadZone: CGFloat = 20.0
 
     private let key: KeyDefinition
@@ -201,12 +199,14 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
         }
     }
 
+    lazy var multirowThreshold = { isLogicallyIPad ? 4 : 6 }()
+
     func numberOfSections(in _: UICollectionView) -> Int {
-        return longpressValues.count >= LongPressOverlayController.multirowThreshold ? 2 : 1
+        return longpressValues.count >= multirowThreshold ? 2 : 1
     }
 
     func collectionView(_: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if longpressValues.count >= LongPressOverlayController.multirowThreshold {
+        if longpressValues.count >= multirowThreshold {
             return section == 0 ? Int(ceil(Double(longpressValues.count) / 2.0)) : Int(floor(Double(longpressValues.count) / 2.0))
         }
         return longpressValues.count

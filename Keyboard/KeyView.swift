@@ -107,6 +107,11 @@ class KeyView: UIView {
         fontSize = label.font.pointSize
     }
     
+    private var isLogicallyIPad: Bool {
+        return UIDevice.current.dc.deviceFamily == .iPad &&
+            self.traitCollection.userInterfaceIdiom == .pad
+    }
+    
     private func configureAltKeyLabel(_ alternateLabel: UILabel, page: KeyboardPage) {
         alternateLabel.textColor = theme.inactiveTextColor
         
@@ -119,7 +124,7 @@ class KeyView: UIView {
         alternateLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         alternateLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
         
-        if UIDevice.current.dc.isIpad && (UIDevice.current.dc.screenSize.sizeInches ?? 0.0) > 12 {
+        if self.isLogicallyIPad && (UIDevice.current.dc.screenSize.sizeInches ?? 0.0) > 12 {
             switch page {
             case .shifted, .capslock, .symbols1, .symbols2:
                 alternateLabel.font = theme.capitalKeyFont
@@ -285,7 +290,7 @@ class KeyView: UIView {
                 contentView = imageView
             }
         case .comma:
-            if UIDevice.current.dc.isIpad {
+            if UIDevice.current.dc.isIpad && traits.userInterfaceIdiom == .pad {
                 if (UIDevice.current.dc.screenSize.sizeInches ?? 0) < 12.0 {
                     input(string: ",", alt: "!", page: page)
                 } else {
@@ -295,7 +300,7 @@ class KeyView: UIView {
                 input(string: ",", alt: nil, page: page)
             }
         case .fullStop:
-            if UIDevice.current.dc.isIpad {
+            if UIDevice.current.dc.isIpad && traits.userInterfaceIdiom == .pad {
                 if (UIDevice.current.dc.screenSize.sizeInches ?? 0) < 12.0 {
                     input(string: ".", alt: "?", page: page)
                 } else {

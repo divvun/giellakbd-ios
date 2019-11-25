@@ -8,17 +8,22 @@ struct _Theme {
 }
 
 extension _Theme {
-    @available(iOSApplicationExtension 12.0, *)
-    func select(byUIStyle interfaceStyle: UIUserInterfaceStyle) -> ThemeType {
-        switch interfaceStyle {
-        case .light:
-            return self.light
-        case .dark:
-            return self.dark
-        case .unspecified:
-            // This should probably not be possible to get into, so assume light
-            return self.light
-        @unknown default:
+    func select(traits: UITraitCollection) -> ThemeType {
+        if #available(iOSApplicationExtension 12.0, *) {
+            let interfaceStyle = traits.userInterfaceStyle
+            
+            switch interfaceStyle {
+            case .light:
+                return self.light
+            case .dark:
+                return self.dark
+            case .unspecified:
+                // This should probably not be possible to get into, so assume light
+                return self.light
+            @unknown default:
+                return self.light
+            }
+        } else {
             return self.light
         }
     }
@@ -30,11 +35,7 @@ extension _Theme {
         case .light:
             return self.light
         case .default:
-            if #available(iOSApplicationExtension 12.0, *) {
-                return select(byUIStyle: traits.userInterfaceStyle)
-            } else {
-                return self.light
-            }
+            return select(traits: traits)
         @unknown default:
             return self.light
         }
@@ -325,7 +326,11 @@ class DarkThemeIpadImpl: DarkThemeImpl {
     override var altLabelBottomAnchorConstant: CGFloat { return IPadThemeBase.altLabelBottomAnchorConstant }
 }
 
-private let LightTheme = UIDevice.current.dc.isIpad ? LightThemeIpadImpl() : LightThemeImpl()
-private let DarkTheme = UIDevice.current.dc.isIpad ? DarkThemeIpadImpl() : DarkThemeImpl()
-
-let Theme = _Theme(dark: DarkTheme, light: LightTheme)
+func Theme(traits: UITraitCollection) -> _Theme {
+    switch traits.userInterfaceIdiom {
+    case .pad:
+        return _Theme(dark: DarkThemeIpadImpl(), light: LightThemeIpadImpl())
+    default:
+        return _Theme(dark: DarkThemeImpl(), light: LightThemeImpl())
+    }
+}

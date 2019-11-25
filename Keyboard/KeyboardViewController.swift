@@ -180,13 +180,15 @@ open class KeyboardViewController: UIInputViewController {
     public private(set) var keyboardDefinition: KeyboardDefinition!
     private var keyboardMode: KeyboardMode = .normal
     
-    private var isSoundEnabled = KeyboardSettings.isKeySoundEnabled
-    private(set) lazy var theme: ThemeType = {
-        if #available(iOSApplicationExtension 12.0, *) {
-            return Theme.select(byUIStyle: self.traitCollection.userInterfaceStyle)
-        } else {
-            return Theme.light
+    private var isSoundEnabled = KeyboardSettings.isKeySoundEnabled {
+        didSet {
+            print("Is sound enabled? \(isSoundEnabled)")
         }
+    }
+    
+    private lazy var baseTheme: _Theme = { Theme(traits: self.traitCollection) }()
+    private(set) lazy var theme: ThemeType = {
+        baseTheme.select(traits: self.traitCollection)
     }()
     
     open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -510,7 +512,7 @@ open class KeyboardViewController: UIInputViewController {
     private func checkDarkMode(traits: UITraitCollection) {
         guard let appearance = textDocumentProxy.keyboardAppearance else { return }
         
-        let newTheme = Theme.select(byAppearance: appearance, traits: traits)
+        let newTheme = baseTheme.select(byAppearance: appearance, traits: traits)
         
         if theme.appearance != newTheme.appearance {
             theme = newTheme
