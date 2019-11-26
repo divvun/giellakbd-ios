@@ -247,15 +247,19 @@ public struct KeyboardDefinition: Codable {
                 }
             }
             
-            self.symbols1 = zip(symbols1, symbols2).map {
-                zip($0, $1).map {
-                    return KeyDefinition(input: $0, alternate: $1.id, spaceName: spaceName, returnName: returnName)
+            if variant == .ipad_12in {
+                self.symbols1 = symbols1.map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) } }
+            } else {
+                self.symbols1 = zip(symbols1, symbols2).map {
+                    zip($0, $1).map {
+                        return KeyDefinition(input: $0, alternate: $1.id, spaceName: spaceName, returnName: returnName)
+                    }
                 }
-            }
-            
-            self.symbols2 = symbols2.map {
-                return $0.map {
-                    return KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName)
+                
+                self.symbols2 = symbols2.map {
+                    return $0.map {
+                        return KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName)
+                    }
                 }
             }
         }
