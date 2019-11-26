@@ -136,7 +136,11 @@ open class KeyboardViewController: UIInputViewController {
         case .iPad:
             if self.traitCollection.userInterfaceIdiom == .phone {
                 // Hardcode because the device lies about the height
-                return 258.0
+                if sizeInches < 10 {
+                    return 258.0
+                } else {
+                    return 328.0
+                }
             }
             
             // Smol iPads and 9 inch iPad Pro

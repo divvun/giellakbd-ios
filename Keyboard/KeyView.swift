@@ -221,7 +221,9 @@ class KeyView: UIView {
         contentView = labelHoldingView
     }
 
-    private func image(_ image: UIImage) {
+    private func image(named name: String, traits: UITraitCollection) {
+        let image = UIImage(named: name, in: Bundle.top, compatibleWith: traits)!
+        
         imageView = UIImageView()
         if let imageView = self.imageView {
             self.imageView?.translatesAutoresizingMaskIntoConstraints = false
@@ -265,20 +267,20 @@ class KeyView: UIView {
                 }
             }
         case .keyboardMode:
-            image(UIImage(named: "close-keyboard-ipad")!)
+            image(named: "close-keyboard-ipad", traits: traits)
         case .backspace:
-            image(UIImage(named: "backspace")!)
+            image(named: "backspace", traits: traits)
         case .keyboard:
-            image(UIImage(named: "globe")!)
+            image(named: "globe", traits: traits)
         case .shift:
-            image(UIImage(named: "shift")!)
+            image(named: "shift", traits: traits)
         case .shiftSymbols:
             if case .symbols1 = page {
                 text("#+=", page: page)
             } else if case .symbols2 = page {
                 text("123", page: page)
             } else {
-                image(UIImage(named: "shift")!)
+                image(named: "shift", traits: traits)
             }
         case .spacer, .splitKeyboard, .sideKeyboardLeft, .sideKeyboardRight:
             imageView = UIImageView()
@@ -310,7 +312,7 @@ class KeyView: UIView {
                 input(string: ".", alt: nil, page: page)
             }
         case .caps:
-            image(UIImage(named: "caps")!)
+            image(named: "caps", traits: traits)
         case .tab:
             text("tab", page: page)
         }
