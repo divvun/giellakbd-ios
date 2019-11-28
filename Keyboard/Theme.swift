@@ -113,7 +113,7 @@ class LightThemeImpl: ThemeType {
     var solidPopupColor: UIColor { return popupColor }
     var activeColor: UIColor = UIColor(r: 31, g: 126, b: 249)
     var activeTextColor: UIColor = UIColor.white
-    lazy var altKeyTextColor: UIColor = { screenInches > 10
+    lazy var altKeyTextColor: UIColor = { screenInches >= 11
         ? textColor
         : inactiveTextColor
     }()
@@ -277,20 +277,20 @@ private class IPadThemeBase {
     static let modifierKeyFontSize: CGFloat = 17.0
     static let altKeyFontSize: CGFloat = 13.0
     static let altKeyFont: UIFont = UIFont.systemFont(ofSize: altKeyFontSize)
-    static let altLabelTopAnchorConstant: CGFloat = screenInches > 10
+    static let altLabelTopAnchorConstant: CGFloat = screenInches >= 11
         ? 0.0
         : 5.0
-    static let altLabelBottomAnchorConstant: CGFloat = screenInches > 10
+    static let altLabelBottomAnchorConstant: CGFloat = screenInches >= 11
         ? -3.0
         : -4.0
     
     static let bannerHeight: CGFloat = 55.0
     
     static let keyCornerRadius: CGFloat = 5.0
-    static let keyHorizontalMargin: CGFloat = screenInches > 10
+    static let keyHorizontalMargin: CGFloat = screenInches >= 11
         ? 3.0
         : 5.0
-    static let keyVerticalMargin: CGFloat = screenInches > 10
+    static let keyVerticalMargin: CGFloat = screenInches >= 11
         ? 3.0
         : 5.0
     

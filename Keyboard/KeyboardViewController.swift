@@ -94,7 +94,7 @@ open class KeyboardViewController: UIInputViewController {
             default:
                 let sizeInches = UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches
                 
-                if sizeInches < 10 {
+                if sizeInches < 11 {
                     return landscapeDeviceHeight / 2.0
                 }
                 
@@ -131,12 +131,12 @@ open class KeyboardViewController: UIInputViewController {
 //        print("Size class (h): \(self.traitCollection.horizontalSizeClass)")
 //        print("Size class (v): \(self.traitCollection.verticalSizeClass)")
         let sizeInches = UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches
-        
+        print("Size inches: \(sizeInches)")
         switch UIDevice.current.dc.deviceFamily {
         case .iPad:
             if self.traitCollection.userInterfaceIdiom == .phone {
                 // Hardcode because the device lies about the height
-                if sizeInches < 10 {
+                if sizeInches < 11 {
                     return 258.0
                 } else {
                     return 328.0
@@ -144,11 +144,11 @@ open class KeyboardViewController: UIInputViewController {
             }
             
             // Smol iPads and 9 inch iPad Pro
-            if sizeInches < 10 {
+            if sizeInches < 11 {
                 return 314.0
             }
 
-            // iPads from 10 to 13 inches
+            // iPads from 11 to 13 inches
             if sizeInches < 13 {
                 return 384.0
             }

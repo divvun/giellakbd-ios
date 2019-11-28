@@ -111,7 +111,7 @@ struct RawKeyboardDefinition: Decodable {
     let spaceName: String
     let returnName: String
     
-    let deadKeys: [DeviceVariant: [String: [String]]]?
+    let deadKeys: [String: [String: [String]]]?
     let longPress: [String: [String]]?
     let transforms: [String: TransformTree]?
 
@@ -142,7 +142,7 @@ struct RawKeyboardDefinition: Decodable {
         returnName = try d.decode(String.self, forKey: .return)
         
         do {
-            if let value = try d.decodeIfPresent([DeviceVariant: [String: [String]]].self, forKey: .deadKeys) {
+            if let value = try d.decodeIfPresent([String: [String: [String]]].self, forKey: .deadKeys) {
                 deadKeys = value
             } else {
                 deadKeys = [:]
@@ -203,7 +203,7 @@ public struct KeyboardDefinition: Codable {
         self.spaceName = raw.spaceName
         self.returnName = raw.returnName
         
-        self.deadKeys = raw.deadKeys?[variant] ?? [:]
+        self.deadKeys = raw.deadKeys?[variant.rawValue] ?? [:]
         self.longPress = raw.longPress ?? [:]
         self.transforms = raw.transforms ?? [:]
         
@@ -247,7 +247,7 @@ public struct KeyboardDefinition: Codable {
                 }
             }
             
-            if variant == .ipad_12in {
+            if symbols2.isEmpty {
                 self.symbols1 = symbols1.map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) } }
             } else {
                 self.symbols1 = zip(symbols1, symbols2).map {

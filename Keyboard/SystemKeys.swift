@@ -11,7 +11,7 @@ class SystemKeys {
         
         // Left side of space bar
         if !UIDevice.current.dc.deviceModel.hasNotch {
-            if isIPad && (UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches) > 10.0 {
+            if isIPad && (UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches) >= 11.0 {
                 keys.append(KeyDefinition(type: .keyboard, size: CGSize(width: 1.25, height: 1.0)))
                 keys.append(KeyDefinition(type: .symbols, size: CGSize(width: 1.25, height: 1.0)))
             } else {
