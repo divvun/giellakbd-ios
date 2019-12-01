@@ -915,7 +915,7 @@
 					"-framework",
 					"\"libdivvunspell\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaQRExpoKbd;
+				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaQRExpoKbd1;
 				PRODUCT_NAME = "QR Keyboard";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Keyboard/Keyboard-Bridging-Header.h";
@@ -955,7 +955,7 @@
 					"-framework",
 					"\"libdivvunspell\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaQRExpoKbd;
+				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaQRExpoKbd1;
 				PRODUCT_NAME = "QR Keyboard";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Keyboard/Keyboard-Bridging-Header.h";
@@ -980,7 +980,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MARKETING_VERSION = 2.0;
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
-				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaQRExpoKbd.Keyboard;
+				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaQRExpoKbd1.Keyboard;
 				PRODUCT_NAME = Keyboard;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1009,7 +1009,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				MARKETING_VERSION = 2.0;
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
-				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaQRExpoKbd.Keyboard;
+				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaQRExpoKbd1.Keyboard;
 				PRODUCT_NAME = Keyboard;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

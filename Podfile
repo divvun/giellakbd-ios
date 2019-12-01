@@ -8,7 +8,6 @@ target 'BaseKeyboard' do
 end
 
 target 'HostingApp' do
-  pod 'BinaryKit'
   pod 'BrotliKit'
   pod 'Sentry'
   pod 'UIDeviceComplete', :git => "https://github.com/bbqsrc/UIDeviceComplete"

@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 
 private let defaults: UserDefaults = {
     let x = UserDefaults(suiteName: KeyboardSettings.groupId)!
@@ -10,19 +10,26 @@ class KeyboardSettings {
     static var groupId: String = {
         return "group.\(Bundle.top.bundleIdentifier!)"
     }()
-
+    
+    private static var definitions: [KeyboardDefinition] = {
+        let path = Bundle.top.url(forResource: "KeyboardDefinitions", withExtension: "json")!
+        let data = try! String(contentsOf: path).data(using: .utf8)!
+        let raws = try! JSONDecoder().decode([RawKeyboardDefinition].self, from: data)
+        return raws.map { try! KeyboardDefinition(fromRaw: $0, traits: UIScreen.main.traitCollection) }
+    }()
+    
     static var currentKeyboard: KeyboardDefinition {
         get {
             guard let data = defaults.data(forKey: "currentKeyboard") else {
                 print("No data")
-                return KeyboardDefinition.definitions[0]
+                return definitions[0]
             }
             
             do {
                 return try JSONDecoder().decode(KeyboardDefinition.self, from: data)
             } catch {
                 print(String(describing: error))
-                return KeyboardDefinition.definitions[0]
+                return definitions[0]
             }
         }
         set {

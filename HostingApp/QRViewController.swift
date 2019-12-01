@@ -83,8 +83,10 @@ class QRViewController: ViewController<QRView>, HideNavBar, AVCaptureMetadataOut
             return
         }
         
-        let count = garbageData.count - 9
-        var b = Binary(bytes: [UInt8](garbageData))
+        let count = garbageData.count - 5
+        var bytes = [UInt8](garbageData)
+        bytes.append(0)
+        var b = Binary(bytes: bytes)
         let compressedData: Data
         do {
             _ = try b.readBytes(2)
@@ -111,6 +113,7 @@ class QRViewController: ViewController<QRView>, HideNavBar, AVCaptureMetadataOut
         }
         
         guard let data = BrotliCompressor.decompressedData(with: compressedData) else {
+            print(compressedData as NSData)
             print("Failed to decompress")
             isProcessing = false
             return
@@ -121,7 +124,9 @@ class QRViewController: ViewController<QRView>, HideNavBar, AVCaptureMetadataOut
             return
         }
         
-        guard let definition = try? KeyboardDefinition(fromRaw: rawDefinition) else {
+        
+        
+        guard let definition = try? KeyboardDefinition(fromRaw: rawDefinition, traits: self.traitCollection) else {
             isProcessing = false
             return
         }
