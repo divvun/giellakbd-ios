@@ -14,12 +14,15 @@ class KeyOverlayView: UIView {
 
     init(origin: UIView, key: KeyDefinition, theme: ThemeType) {
         originView = origin
+        originView.translatesAutoresizingMaskIntoConstraints = false
         self.key = key
         self.theme = theme
         originFrameView = UIView(frame: origin.bounds)
         originFrameView.clipsToBounds = false
+        originFrameView.translatesAutoresizingMaskIntoConstraints = false
         
         super.init(frame: CGRect(x: 0, y: 0, width: origin.frame.width, height: origin.frame.height * 2))
+        self.translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .clear
         originFrameView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(originFrameView)
@@ -28,6 +31,10 @@ class KeyOverlayView: UIView {
         originFrameView.topAnchor
             .constraint(equalTo: topAnchor, constant: theme.popupCornerRadius)
             .enable(priority: .defaultHigh)
+        
+        originFrameView.bottomAnchor
+            .constraint(greaterThanOrEqualTo: bottomAnchor, constant: -origin.frame.height - theme.popupCornerRadius)
+            .enable(priority: .defaultLow)
 
         leftAnchor
             .constraint(lessThanOrEqualTo: originFrameView.leftAnchor, constant: -theme.popupCornerRadius)

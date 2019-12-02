@@ -148,7 +148,7 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
         }
         
         overlay.heightAnchor
-            .constraint(lessThanOrEqualTo: keyCell.heightAnchor, multiplier: 2.0)
+            .constraint(greaterThanOrEqualTo: keyCell.heightAnchor, multiplier: 1.0)
             .enable(priority: .defaultLow)
 
         overlay.widthAnchor.constraint(
@@ -647,6 +647,8 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
             super.init(frame: frame)
             
             contentView.clipsToBounds = false
+            contentView.translatesAutoresizingMaskIntoConstraints = false
+            contentView.fill(superview: self)
         }
         
         func configure(page: KeyboardPage, key: KeyDefinition, theme: ThemeType, traits: UITraitCollection) {
