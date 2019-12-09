@@ -199,7 +199,7 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
         }
     }
 
-    lazy var multirowThreshold = { isLogicallyIPad ? 4 : 6 }()
+    lazy var multirowThreshold = { Int.max }() // { isLogicallyIPad ? 4 : 6 }()
 
     func numberOfSections(in _: UICollectionView) -> Int {
         return longpressValues.count >= multirowThreshold ? 2 : 1

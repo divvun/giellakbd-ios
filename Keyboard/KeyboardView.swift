@@ -240,7 +240,7 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
             self.traitCollection.userInterfaceIdiom == .pad
     }
     
-    private lazy var multirowThreshold = { isLogicallyIPad ? 4 : 6 }()
+    private lazy var multirowThreshold = { Int.max }() // { isLogicallyIPad ? 4 : 6 }()
     
     func longpress(didCreateOverlayContentView contentView: UIView) {
         if overlays.first?.value.originFrameView == nil {
