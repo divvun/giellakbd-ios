@@ -4,7 +4,7 @@ An open source reimplementation of Apple's native iOS keyboard with a specific f
 
 ## Dependencies
 
-In order to build the hfst-ospell-rs dependency, you will need to install the Rust compiler. See https://rustup.rs for instructions.
+In order to build the `divvunspell` dependency, you will need to install the Rust compiler. See https://rustup.rs for instructions.
 
 Run the following commands:
 
@@ -20,5 +20,10 @@ To enable Sentry, add a `SentryDSN` key to the `HostingApp/Supporting Files/Info
 
 ## License
 
-BSD 3-Clause - see LICENSE
+`giellakbd-ios` is licensed under either of
+
+ * Apache License, Version 2.0, ([LICENSE-APACHE](LICENSE-APACHE) or http://www.apache.org/licenses/LICENSE-2.0)
+ * MIT license ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
+
+at your option.
 
