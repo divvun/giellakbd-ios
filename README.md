@@ -9,10 +9,8 @@ In order to build the `divvunspell` dependency, you will need to install the Rus
 Run the following commands:
 
 ```
-rustup default nightly
 rustup target install {aarch64,armv7,armv7s,x86_64,i386}-apple-ios
 cargo install cargo-lipo
-git submodule update --init
 pod install
 ```
 
