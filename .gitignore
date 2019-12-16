@@ -6,3 +6,4 @@ Static
 dicts.bundle
 DerivedData/
 Pods/
+*.xcworkspace/
