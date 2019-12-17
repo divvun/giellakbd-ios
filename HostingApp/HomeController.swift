@@ -1,10 +1,6 @@
 import UIKit
 
 class HomeController: ViewController<HomeView>, HideNavBar {
-    //    @objc private func openLayouts() {
-    //        self.navigationController?.pushViewController(LayoutsController(), animated: true)
-    //    }
-
     @objc private func openLanguages() {
         navigationController?.pushViewController(LanguagesController(), animated: true)
     }
@@ -33,7 +29,6 @@ class HomeController: ViewController<HomeView>, HideNavBar {
 
         title = Strings.localizedName
 
-        //        contentView.layoutsButton.addTarget(self, action: #selector(openLayouts), for: [.touchUpInside])
         contentView.langButton.addTarget(self, action: #selector(openLanguages), for: [.touchUpInside])
         contentView.langButton2.addTarget(self, action: #selector(openLanguages), for: [.touchUpInside])
         contentView.helpButton.addTarget(self, action: #selector(openInstructions), for: [.touchUpInside])
