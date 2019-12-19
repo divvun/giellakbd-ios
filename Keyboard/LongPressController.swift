@@ -146,12 +146,6 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
         // Calculate the long press finger position relative to the long press popup
         let halfWidth = cellSize.width / 2.0
         let halfHeight = cellSize.height / 2.0
-        let heightOffset: CGFloat
-        if isLogicallyIPad {
-            heightOffset = -halfHeight
-        } else {
-            heightOffset = baselinePoint?.y ?? 0
-        }
         
         let x = min(
             max(
@@ -162,7 +156,7 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
         )
         let y = min(
             max(
-                point.y - heightOffset,
+                point.y - frame.minY,
                 collectionView.bounds.minY + halfHeight
             ),
             collectionView.bounds.maxY - halfHeight
@@ -199,7 +193,7 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
         }
     }
 
-    lazy var multirowThreshold = { Int.max }() // { isLogicallyIPad ? 4 : 6 }()
+    lazy var multirowThreshold = { isLogicallyIPad ? 4 : 6 }()
 
     func numberOfSections(in _: UICollectionView) -> Int {
         return longpressValues.count >= multirowThreshold ? 2 : 1
