@@ -273,7 +273,12 @@ class KeyView: UIView {
         case .keyboard:
             image(named: "globe", traits: traits)
         case .shift:
-            image(named: "shift", traits: traits)
+            switch page {
+            case .shifted:
+                image(named: "shift-filled", traits: traits)
+            default:
+                image(named: "shift", traits: traits)
+            }
         case .shiftSymbols:
             if case .symbols1 = page {
                 text("#+=", page: page)
