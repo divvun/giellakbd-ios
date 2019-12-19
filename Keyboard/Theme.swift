@@ -90,6 +90,8 @@ protocol ThemeType {
     
     var altLabelTopAnchorConstant: CGFloat { get }
     var altLabelBottomAnchorConstant: CGFloat { get }
+    
+    var popupLongpressKeysPerRow: Int { get }
 }
 
 class LightThemeImpl: ThemeType {
@@ -144,6 +146,8 @@ class LightThemeImpl: ThemeType {
     
     var altLabelTopAnchorConstant: CGFloat { return 0.0 }
     var altLabelBottomAnchorConstant: CGFloat { return 0.0 }
+    
+    var popupLongpressKeysPerRow: Int { return IPhoneThemeBase.popupLongpressKeysPerRow }
 
     public init() {}
 }
@@ -200,6 +204,8 @@ class DarkThemeImpl: ThemeType {
     
     var altLabelTopAnchorConstant: CGFloat { return 0.0 }
     var altLabelBottomAnchorConstant: CGFloat { return 0.0 }
+    
+    var popupLongpressKeysPerRow: Int { return IPhoneThemeBase.popupLongpressKeysPerRow }
 
     public init() {}
 }
@@ -267,6 +273,8 @@ private class IPhoneThemeBase {
     static let capitalKeyFont: UIFont = UIFont.systemFont(ofSize: 22.0)
     static let modifierKeyFontSize: CGFloat = 16.0
     
+    static let popupLongpressKeysPerRow: Int = 6
+    
     private init() { fatalError() }
     
 }
@@ -297,6 +305,8 @@ private class IPadThemeBase {
     static let lowerKeyFont: UIFont = UIFont.systemFont(ofSize: 24.0, weight: .light)
     static let capitalKeyFont: UIFont = UIFont.systemFont(ofSize: 22.0)
     
+    static let popupLongpressKeysPerRow: Int = 4
+
     private init() { fatalError() }
 }
 
@@ -311,6 +321,8 @@ class LightThemeIpadImpl: LightThemeImpl {
     override var lowerKeyFont: UIFont { return IPadThemeBase.lowerKeyFont }
     override var altLabelTopAnchorConstant: CGFloat { return IPadThemeBase.altLabelTopAnchorConstant }
     override var altLabelBottomAnchorConstant: CGFloat { return IPadThemeBase.altLabelBottomAnchorConstant }
+    
+    override var popupLongpressKeysPerRow: Int {return IPadThemeBase.popupLongpressKeysPerRow}
 }
 
 class DarkThemeIpadImpl: DarkThemeImpl {
@@ -324,6 +336,8 @@ class DarkThemeIpadImpl: DarkThemeImpl {
     override var lowerKeyFont: UIFont { return IPadThemeBase.lowerKeyFont }
     override var altLabelTopAnchorConstant: CGFloat { return IPadThemeBase.altLabelTopAnchorConstant }
     override var altLabelBottomAnchorConstant: CGFloat { return IPadThemeBase.altLabelBottomAnchorConstant }
+    
+    override var popupLongpressKeysPerRow: Int {return IPadThemeBase.popupLongpressKeysPerRow}
 }
 
 func Theme(traits: UITraitCollection) -> _Theme {
