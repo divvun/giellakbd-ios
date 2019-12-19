@@ -16,6 +16,8 @@ pod install
 
 To enable Sentry, add a `SentryDSN` key to the `HostingApp/Supporting Files/Info.plist` file.
 
+##### Note: the first build will take a while.
+
 ## License
 
 `giellakbd-ios` is licensed under either of
