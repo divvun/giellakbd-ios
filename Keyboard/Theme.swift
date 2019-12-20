@@ -56,6 +56,7 @@ protocol ThemeType {
     var specialKeyBorderColor: UIColor { get }
     var keyShadowColor: UIColor { get }
     var shiftActiveColor: UIColor { get }
+    var shiftTintColor: UIColor { get }
     var solidRegularKeyColor: UIColor { get }
     var solidSpecialKeyColor: UIColor { get }
     var solidPopupColor: UIColor { get }
@@ -110,6 +111,7 @@ class LightThemeImpl: ThemeType {
     var specialKeyBorderColor: UIColor { return .clear }
     var keyShadowColor = UIColor(r: 103, g: 106, b: 110, a: 0.5)
     var shiftActiveColor = UIColor.white
+    var shiftTintColor: UIColor = UIColor.black
     var solidRegularKeyColor: UIColor { return regularKeyColor }
     var solidSpecialKeyColor = UIColor(r: 183, g: 191, b: 202)
     var solidPopupColor: UIColor { return popupColor }
@@ -168,6 +170,7 @@ class DarkThemeImpl: ThemeType {
     var popupBorderColor = UIColor.clear
     var specialKeyBorderColor: UIColor { return .clear }
     var shiftActiveColor = UIColor(r: 214, g: 220, b: 208)
+    var shiftTintColor: UIColor = UIColor.black
     var solidRegularKeyColor = UIColor(r: 83, g: 83, b: 83)
     var solidSpecialKeyColor = UIColor(r: 45, g: 45, b: 45)
     var solidPopupColor: UIColor { return solidRegularKeyColor }

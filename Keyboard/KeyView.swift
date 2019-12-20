@@ -221,7 +221,7 @@ class KeyView: UIView {
         contentView = labelHoldingView
     }
 
-    private func image(named name: String, traits: UITraitCollection) {
+    private func image(named name: String, traits: UITraitCollection, tintColor: UIColor) {
         let image = UIImage(named: name, in: Bundle.top, compatibleWith: traits)!
         
         imageView = UIImageView()
@@ -230,12 +230,16 @@ class KeyView: UIView {
 
             imageView.image = image
             imageView.contentMode = .center
-            imageView.tintColor = theme.textColor
+            imageView.tintColor = tintColor
 
             addSubview(imageView)
 
             contentView = imageView
         }
+    }
+    
+    private func image(named name: String, traits: UITraitCollection) {
+        image(named: name, traits: traits, tintColor: theme.textColor)
     }
     
     init(page: KeyboardPage, key: KeyDefinition, theme: ThemeType, traits: UITraitCollection) {
@@ -275,7 +279,7 @@ class KeyView: UIView {
         case .shift:
             switch page {
             case .shifted, .capslock:
-                image(named: "shift-filled", traits: traits)
+                image(named: "shift-filled", traits: traits, tintColor: theme.shiftTintColor)
             default:
                 image(named: "shift", traits: traits)
             }
@@ -335,7 +339,16 @@ class KeyView: UIView {
         
         contentView.clipsToBounds = false
 
-        contentView.backgroundColor = key.type.isSpecialKeyStyle
+        contentView.backgroundColor = backgroundColor(for: key, page: page)
+    }
+    
+    private func backgroundColor(for key: KeyDefinition, page:KeyboardPage) -> UIColor {
+        if key.type == .shift,
+            (page == .shifted || page == .capslock) {
+            return theme.shiftActiveColor
+        }
+        
+        return key.type.isSpecialKeyStyle
             ? theme.specialKeyColor
             : theme.regularKeyColor
     }
