@@ -601,7 +601,7 @@ extension KeyboardViewController: KeyboardViewDelegate {
         }
     }
     
-    private func handleDeadKey(string: String, endShifted: Bool = true) {
+    private func handleDeadKey(string: String, endShifted: Bool = true, endSymbols: Bool = false) {
         switch deadKeyHandler.handleInput(string, page: keyboardView.page) {
         case .none:
             insertText(string)
@@ -616,6 +616,10 @@ extension KeyboardViewController: KeyboardViewDelegate {
             if keyboardView.page == .shifted {
                 keyboardView.page = .normal
             }
+        }
+        
+        if endSymbols {
+            keyboardView.page = .normal
         }
     }
     
@@ -677,7 +681,9 @@ extension KeyboardViewController: KeyboardViewDelegate {
             break
 //            textDocumentProxy.
         case let .input(string, _):
-            handleDeadKey(string: string)
+            // Go back to normal input after apostrophes
+            let endSymbols = string == "\'"
+            handleDeadKey(string: string, endSymbols: endSymbols)
         case .spacer:
             // TODO: hit most approximate key instead!
             break
