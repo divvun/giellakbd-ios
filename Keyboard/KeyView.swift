@@ -274,7 +274,7 @@ class KeyView: UIView {
             image(named: "globe", traits: traits)
         case .shift:
             switch page {
-            case .shifted:
+            case .shifted, .capslock:
                 image(named: "shift-filled", traits: traits)
             default:
                 image(named: "shift", traits: traits)
