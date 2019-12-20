@@ -18,7 +18,6 @@
 		C64937D2218DC7FA00D0C9DC /* dicts.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C64937D1218DC7FA00D0C9DC /* dicts.bundle */; };
 		C649D3D4234B7C8000EF4273 /* KeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C649D3D2234B7C7A00EF4273 /* KeyView.swift */; };
 		C649D3D5234B7D8400EF4273 /* KeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAF59AB22F9CD0600F7C9FC /* KeyboardView.swift */; };
-		C65430AA1EC93EB0007FC053 /* LayoutsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65430A91EC93EB0007FC053 /* LayoutsController.swift */; };
 		C65430B01EC94BC7007FC053 /* InstructionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65430AF1EC94BC7007FC053 /* InstructionsView.swift */; };
 		C65430B21EC94BD1007FC053 /* InstructionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C65430B11EC94BD1007FC053 /* InstructionsView.xib */; };
 		C65430B41EC94BF0007FC053 /* LanguagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65430B31EC94BF0007FC053 /* LanguagesController.swift */; };
@@ -137,7 +136,6 @@
 		C643BF6E20BEB91600124DDC /* nn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nn; path = HostingApp/nn.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C64937D1218DC7FA00D0C9DC /* dicts.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = dicts.bundle; sourceTree = "<group>"; };
 		C649D3D2234B7C7A00EF4273 /* KeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyView.swift; sourceTree = "<group>"; };
-		C65430A91EC93EB0007FC053 /* LayoutsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutsController.swift; sourceTree = "<group>"; };
 		C65430AF1EC94BC7007FC053 /* InstructionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsView.swift; sourceTree = "<group>"; };
 		C65430B11EC94BD1007FC053 /* InstructionsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InstructionsView.xib; sourceTree = "<group>"; };
 		C65430B31EC94BF0007FC053 /* LanguagesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguagesController.swift; sourceTree = "<group>"; };
@@ -358,7 +356,6 @@
 				C655E8591EC558D000B12BE4 /* HomeController.swift */,
 				C676AD5A1EC9679000523FF3 /* InstructionsController.swift */,
 				C65430B31EC94BF0007FC053 /* LanguagesController.swift */,
-				C65430A91EC93EB0007FC053 /* LayoutsController.swift */,
 				C6B638451EDF94CA00A6ECB2 /* AboutController.swift */,
 				C691A0E623682C8B00085AC3 /* TestingController.swift */,
 			);
@@ -418,6 +415,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4E807DAF19461D9000D875D1 /* Build configuration list for PBXNativeTarget "HostingApp" */;
 			buildPhases = (
+				99C8EC9623AA3F2B00E4EB7D /* Run Script - make dicts.bundle */,
 				A0CDCC621DC572669E9A29A3 /* [CP] Check Pods Manifest.lock */,
 				4E807D8F19461D9000D875D1 /* Sources */,
 				4E807D9019461D9000D875D1 /* Frameworks */,
@@ -575,6 +573,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		99C8EC9623AA3F2B00E4EB7D /* Run Script - make dicts.bundle */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script - make dicts.bundle";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Make the dicts.bundle directory if it doesn't exist so the build succeeds\nmkdir -p dicts.bundle\n";
+		};
 		A0CDCC621DC572669E9A29A3 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -654,7 +670,6 @@
 				C6996B5722FC2C93007EBC3D /* Utils.swift in Sources */,
 				C655E8561EC5559200B12BE4 /* HomeView.swift in Sources */,
 				C6A3905B1EB61BF8009378C1 /* KeyboardSettings.swift in Sources */,
-				C65430AA1EC93EB0007FC053 /* LayoutsController.swift in Sources */,
 				C691A0EB23682C9700085AC3 /* TestingView.swift in Sources */,
 				C6B638461EDF94CA00A6ECB2 /* AboutController.swift in Sources */,
 			);

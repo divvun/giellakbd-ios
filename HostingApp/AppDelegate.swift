@@ -92,10 +92,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard let _ = Bundle.main.bundleIdentifier else {
             return
         }
-        //
-        //        if url.scheme == bundleId && url.host == "settings" {
-        //            nc.pushViewController(LayoutsController(), animated: true)
-        //        }
     }
 
     func application(_: UIApplication, open url: URL, options _: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {

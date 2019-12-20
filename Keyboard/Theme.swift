@@ -56,6 +56,7 @@ protocol ThemeType {
     var specialKeyBorderColor: UIColor { get }
     var keyShadowColor: UIColor { get }
     var shiftActiveColor: UIColor { get }
+    var shiftTintColor: UIColor { get }
     var solidRegularKeyColor: UIColor { get }
     var solidSpecialKeyColor: UIColor { get }
     var solidPopupColor: UIColor { get }
@@ -90,6 +91,8 @@ protocol ThemeType {
     
     var altLabelTopAnchorConstant: CGFloat { get }
     var altLabelBottomAnchorConstant: CGFloat { get }
+    
+    var popupLongpressKeysPerRow: Int { get }
 }
 
 class LightThemeImpl: ThemeType {
@@ -108,6 +111,7 @@ class LightThemeImpl: ThemeType {
     var specialKeyBorderColor: UIColor { return .clear }
     var keyShadowColor = UIColor(r: 103, g: 106, b: 110, a: 0.5)
     var shiftActiveColor = UIColor.white
+    var shiftTintColor: UIColor = UIColor.black
     var solidRegularKeyColor: UIColor { return regularKeyColor }
     var solidSpecialKeyColor = UIColor(r: 183, g: 191, b: 202)
     var solidPopupColor: UIColor { return popupColor }
@@ -144,6 +148,8 @@ class LightThemeImpl: ThemeType {
     
     var altLabelTopAnchorConstant: CGFloat { return 0.0 }
     var altLabelBottomAnchorConstant: CGFloat { return 0.0 }
+    
+    var popupLongpressKeysPerRow: Int { return IPhoneThemeBase.popupLongpressKeysPerRow }
 
     public init() {}
 }
@@ -164,6 +170,7 @@ class DarkThemeImpl: ThemeType {
     var popupBorderColor = UIColor.clear
     var specialKeyBorderColor: UIColor { return .clear }
     var shiftActiveColor = UIColor(r: 214, g: 220, b: 208)
+    var shiftTintColor: UIColor = UIColor.black
     var solidRegularKeyColor = UIColor(r: 83, g: 83, b: 83)
     var solidSpecialKeyColor = UIColor(r: 45, g: 45, b: 45)
     var solidPopupColor: UIColor { return solidRegularKeyColor }
@@ -200,6 +207,8 @@ class DarkThemeImpl: ThemeType {
     
     var altLabelTopAnchorConstant: CGFloat { return 0.0 }
     var altLabelBottomAnchorConstant: CGFloat { return 0.0 }
+    
+    var popupLongpressKeysPerRow: Int { return IPhoneThemeBase.popupLongpressKeysPerRow }
 
     public init() {}
 }
@@ -267,6 +276,8 @@ private class IPhoneThemeBase {
     static let capitalKeyFont: UIFont = UIFont.systemFont(ofSize: 22.0)
     static let modifierKeyFontSize: CGFloat = 16.0
     
+    static let popupLongpressKeysPerRow: Int = 6
+    
     private init() { fatalError() }
     
 }
@@ -297,6 +308,8 @@ private class IPadThemeBase {
     static let lowerKeyFont: UIFont = UIFont.systemFont(ofSize: 24.0, weight: .light)
     static let capitalKeyFont: UIFont = UIFont.systemFont(ofSize: 22.0)
     
+    static let popupLongpressKeysPerRow: Int = 4
+
     private init() { fatalError() }
 }
 
@@ -311,6 +324,8 @@ class LightThemeIpadImpl: LightThemeImpl {
     override var lowerKeyFont: UIFont { return IPadThemeBase.lowerKeyFont }
     override var altLabelTopAnchorConstant: CGFloat { return IPadThemeBase.altLabelTopAnchorConstant }
     override var altLabelBottomAnchorConstant: CGFloat { return IPadThemeBase.altLabelBottomAnchorConstant }
+    
+    override var popupLongpressKeysPerRow: Int {return IPadThemeBase.popupLongpressKeysPerRow}
 }
 
 class DarkThemeIpadImpl: DarkThemeImpl {
@@ -324,6 +339,8 @@ class DarkThemeIpadImpl: DarkThemeImpl {
     override var lowerKeyFont: UIFont { return IPadThemeBase.lowerKeyFont }
     override var altLabelTopAnchorConstant: CGFloat { return IPadThemeBase.altLabelTopAnchorConstant }
     override var altLabelBottomAnchorConstant: CGFloat { return IPadThemeBase.altLabelBottomAnchorConstant }
+    
+    override var popupLongpressKeysPerRow: Int {return IPadThemeBase.popupLongpressKeysPerRow}
 }
 
 func Theme(traits: UITraitCollection) -> _Theme {

@@ -240,8 +240,6 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
             self.traitCollection.userInterfaceIdiom == .pad
     }
     
-    private lazy var multirowThreshold = { Int.max }() // { isLogicallyIPad ? 4 : 6 }()
-    
     func longpress(didCreateOverlayContentView contentView: UIView) {
         if overlays.first?.value.originFrameView == nil {
             if let activeKey = activeKey {
@@ -265,7 +263,7 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
             let count = longpressValues.count
 
             let widthConstant: CGFloat
-            if count >= multirowThreshold {
+            if count >= theme.popupLongpressKeysPerRow {
                 widthConstant = longpressKeySize().width * ceil(CGFloat(count) / 2.0) + theme.keyHorizontalMargin
             } else {
                 widthConstant = longpressKeySize().width * CGFloat(count) + theme.keyHorizontalMargin
@@ -273,7 +271,7 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
 
             let heightConstant: CGFloat
 
-            if count >= multirowThreshold {
+            if count >= theme.popupLongpressKeysPerRow {
                 heightConstant = longpressKeySize().height * 2
             } else {
                 heightConstant = longpressKeySize().height
