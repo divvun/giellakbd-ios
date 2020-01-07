@@ -158,7 +158,12 @@ class DarkThemeImpl: ThemeType {
     var keyShadowColor: UIColor = UIColor(r: 103, g: 106, b: 110, a: 0.5)
     var regularKeyColor = UIColor.lightGray.withAlphaComponent(CGFloat(0.4))
     var specialKeyColor = UIColor.gray.withAlphaComponent(CGFloat(0.3))
-    var popupColor = UIColor(r: 111, g: 103, b: 111, a: 1.0)
+    
+    // Native iOS uses a transparent view for the popup (probably UIVisualEffectsView), so this should technically be dynamic depending on what color view
+    // lies beneath the keyboard (eg. If white, keys are lighter. If black, keys are darker).
+    // For now, use a color that's halfway between both to minimize contrast (against white background, keys are 124, against black, keys are 94)
+    var popupColor = UIColor(r: 109, g: 109, b: 109)
+    
     var textColor = UIColor.white
     var inactiveTextColor: UIColor = UIColor.lightGray
     var borderColor = UIColor.clear
