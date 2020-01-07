@@ -20,15 +20,17 @@ class SuggestionOp: Operation {
         guard let speller = plugin.speller else { return }
 
         
+        let currentWord = BannerItem(title: "\"\(word)\"", value: "currentWord")
+        
         let suggestions = (try? speller
             .suggest(word: word)//, count: 3, maxWeight: 4999.99)
-            .prefix(3)
+            .prefix(2)
             .map { BannerItem(title: $0, value: "suggestion") }) ?? []
 
         if !isCancelled {
             DispatchQueue.main.async {
                 plugin.banner.isHidden = false
-                plugin.banner.items = suggestions
+                plugin.banner.items = [currentWord] + suggestions
             }
         }
     }
