@@ -59,7 +59,6 @@ protocol ThemeType {
     var shiftTintColor: UIColor { get }
     var solidRegularKeyColor: UIColor { get }
     var solidSpecialKeyColor: UIColor { get }
-    var solidPopupColor: UIColor { get }
     var popupBorderColor: UIColor { get }
     var activeColor: UIColor { get }
     var activeTextColor: UIColor { get }
@@ -114,7 +113,6 @@ class LightThemeImpl: ThemeType {
     var shiftTintColor: UIColor = UIColor.black
     var solidRegularKeyColor: UIColor { return regularKeyColor }
     var solidSpecialKeyColor = UIColor(r: 183, g: 191, b: 202)
-    var solidPopupColor: UIColor { return popupColor }
     var activeColor: UIColor = UIColor(r: 31, g: 126, b: 249)
     var activeTextColor: UIColor = UIColor.white
     lazy var altKeyTextColor: UIColor = { screenInches >= 11
@@ -173,7 +171,6 @@ class DarkThemeImpl: ThemeType {
     var shiftTintColor: UIColor = UIColor.black
     var solidRegularKeyColor = UIColor(r: 83, g: 83, b: 83)
     var solidSpecialKeyColor = UIColor(r: 45, g: 45, b: 45)
-    var solidPopupColor: UIColor { return solidRegularKeyColor }
     var activeColor: UIColor = UIColor(r: 31, g: 126, b: 249)
     var activeTextColor: UIColor = UIColor.white
     var altKeyFont: UIFont { return IPadThemeBase.altKeyFont }
