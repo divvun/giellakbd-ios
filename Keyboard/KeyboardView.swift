@@ -525,26 +525,20 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
             let key = currentPage[indexPath.section][indexPath.row]
             switch key.type {
             case let .input(string, _):
-                let x = self.definition
-                    .longPress[string]?
-                    .compactMap({
-                        KeyDefinition(type: .input(key: $0, alternate: nil))
-                    })
-                
-                if let longpressValues = x,
-                    longpressGestureRecognizer.state == .began
-                {
-                    let longpressController = LongPressOverlayController(
-                        key: key,
-                        page: page,
-                        theme: theme,
-                        longpressValues: longpressValues)
-                    longpressController.delegate = self
-
-                    self.longpressController = longpressController
-                    let location = longpressGestureRecognizer.location(in: collectionView)
-                    longpressController.touchesBegan(location)
+                guard let longpressValues = longpressKeys(for: string),
+                    longpressGestureRecognizer.state == .began else {
+                        break;
                 }
+                let longpressController = LongPressOverlayController(
+                    key: key,
+                    page: page,
+                    theme: theme,
+                    longpressValues: longpressValues)
+                longpressController.delegate = self
+                
+                self.longpressController = longpressController
+                let location = longpressGestureRecognizer.location(in: collectionView)
+                longpressController.touchesBegan(location)
             case .keyboardMode:
                 break
                 // TODO: re-enable once tested and icons are enabled
@@ -572,6 +566,32 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
         if let activeKey = activeKey, activeKey.key.type.supportsRepeatTrigger {
             delegate?.didTriggerKey(activeKey.key)
         }
+    }
+    
+    private func longpressKeys(for key: String) -> [KeyDefinition]? {
+        let longpressKeys = self.definition
+        .longPress[key]?
+        .compactMap({
+            KeyDefinition(type: .input(key: $0, alternate: nil))
+        })
+        
+        guard var keys = longpressKeys else {
+            return nil
+        }
+
+        if isLogicallyIPad == false {
+            let originalKey = KeyDefinition(type: .input(key: key, alternate: nil))
+            if keys.contains(where: { (keyDefinition) -> Bool in
+                keyDefinition.type == originalKey.type
+            }) {
+                // Already contains this key. Do nothing.
+            } else {
+                // Add the originally pressed key to the list of long press options.
+                keys = [originalKey] + keys
+            }
+        }
+        
+        return keys
     }
 
     // MARK: - CollectionView
