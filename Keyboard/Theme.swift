@@ -49,7 +49,6 @@ protocol ThemeType {
     var specialKeyColor: UIColor { get }
     var popupColor: UIColor { get }
     var backgroundColor: UIColor { get }
-    var underColor: UIColor { get }
     var textColor: UIColor { get }
     var inactiveTextColor: UIColor { get }
     var borderColor: UIColor { get }
@@ -102,7 +101,6 @@ class LightThemeImpl: ThemeType {
     var specialKeyColor = UIColor(r: 162, g: 167, b: 177)
     var popupColor = UIColor.white
     var backgroundColor = UIColor(r: 208, g: 210, b: 216)
-    var underColor = UIColor(hue: 0.611, saturation: 0.04, brightness: 0.56, alpha: 1)
     var textColor = UIColor.black
     var inactiveTextColor: UIColor = UIColor(white: 0.0, alpha: 0.3)
     var borderColor = UIColor.clear
@@ -161,7 +159,6 @@ class DarkThemeImpl: ThemeType {
     var regularKeyColor = UIColor.lightGray.withAlphaComponent(CGFloat(0.4))
     var specialKeyColor = UIColor.gray.withAlphaComponent(CGFloat(0.3))
     var popupColor = UIColor(r: 111, g: 103, b: 111, a: 1.0)
-    var underColor = UIColor(r: 39, g: 18, b: 39, a: 0.4)
     var textColor = UIColor.white
     var inactiveTextColor: UIColor = UIColor.lightGray
     var borderColor = UIColor.clear
