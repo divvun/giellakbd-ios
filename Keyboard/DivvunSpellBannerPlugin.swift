@@ -48,12 +48,6 @@ extension DivvunSpellBannerPlugin: BannerViewDelegate {
     }
 
     public func didSelectBannerItem(_ banner: BannerView, item: BannerItem) {
-        if let value = item.value as? String, value == "error" {
-            banner.items = []
-            banner.isHidden = true
-            return
-        }
-
         keyboard.replaceSelected(with: item.value)
         // TODO: Sami languages want to autosuggest compounds, so let's not add spaces without configuration
 //        keyboard.insertText(" ")
