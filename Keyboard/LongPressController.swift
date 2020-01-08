@@ -144,6 +144,8 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
     
     private func longPressTouchPoint(at point: CGPoint, cellSize: CGSize, frame: CGRect, view collectionView: UICollectionView) -> CGPoint {
         // Calculate the long press finger position relative to the long press popup
+        // This function returns a point that remains inside the popover. This way a long press key can remain selected even if the
+        // user drags past the popover
         let halfWidth = cellSize.width / 2.0
         let halfHeight = cellSize.height / 2.0
         let heightOffset: CGFloat
@@ -153,20 +155,28 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
             heightOffset = -halfHeight
         }
         
-        let x = min(
-            max(
-                point.x - frame.minX,
-                collectionView.bounds.minX + halfWidth
-            ),
-            collectionView.bounds.maxX - halfWidth
-        )
-        let y = min(
-            max(
-                point.y - frame.minY + heightOffset,
-                collectionView.bounds.minY + halfHeight
-            ),
-            collectionView.bounds.maxY - halfHeight
-        )
+        // Min/max acceptable x positions. If user drags past this point, we return this to keep the key selected.
+        let minX = collectionView.bounds.minX + halfWidth
+        let maxX = collectionView.bounds.maxX - halfWidth
+        
+        var x = point.x - frame.minX
+        
+        if x < minX {
+            x = minX
+        } else if x > maxX {
+            x = maxX
+        }
+        
+        let minY = collectionView.bounds.minY + halfHeight
+        let maxY = collectionView.bounds.maxY - halfHeight
+        
+        var y = point.y - frame.minY + heightOffset
+        
+        if y < minY {
+            y = minY
+        } else if y > maxY {
+            y = maxY
+        }
         
         return CGPoint(x: x, y: y)
     }
