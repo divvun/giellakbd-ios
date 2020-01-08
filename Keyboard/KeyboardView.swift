@@ -291,6 +291,9 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
     func longpressDidCancel() {
         longpressController = nil
         collectionView.alpha = 1.0
+        if isLogicallyIPad, let activeKey = activeKey {
+            delegate?.didTriggerKey(activeKey.key)
+        }
     }
 
     func longpress(didSelectKey key: KeyDefinition) {
