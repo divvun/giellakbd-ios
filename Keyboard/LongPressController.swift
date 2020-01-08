@@ -159,9 +159,9 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
             let minX = bounds.minX
             let maxX = bounds.maxX
             
-            if x < minX {
+            if x <= minX {
                 x = minX + halfWidth
-            } else if x > maxX {
+            } else if x >= maxX {
                 x = maxX - halfWidth
             }
 
@@ -169,9 +169,9 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
             let minY = collectionView.bounds.minY
             let maxY = collectionView.bounds.maxY
             
-            if y < minY {
+            if y <= minY {
                 y = minY + halfHeight
-            } else if y > maxY {
+            } else if y >= maxY {
                 y = maxY - halfHeight
             }
             
