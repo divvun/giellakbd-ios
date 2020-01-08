@@ -179,13 +179,7 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
         }
         
         // Define a box in which touches to cause selection in the long press popup. Touches outside of this box will deselect keys in the popup.
-        let selectionBox: CGRect
-        if isLogicallyIPad {
-            // Make iPad's selection box slightly bigger than the collection view
-            selectionBox = collectionView.frame.insetBy(dx: -40, dy: -40)
-        } else {
-            selectionBox = collectionView.frame
-        }
+        let selectionBox: CGRect = collectionView.frame.insetBy(dx: -cellSize.width, dy: -cellSize.height)
 
         let convertedPoint = parentView.convert(point, to: collectionView)
         if selectionBox.contains(convertedPoint) {
