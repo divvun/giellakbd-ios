@@ -240,6 +240,8 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
             self.traitCollection.userInterfaceIdiom == .pad
     }
     
+    // MARK: - LongPressOverlayDelegate
+    
     func longpress(didCreateOverlayContentView contentView: UIView) {
         if overlays.first?.value.originFrameView == nil {
             if let activeKey = activeKey {
@@ -309,6 +311,8 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
             height: height
         )
     }
+
+    // MARK: - LongPressCursorMovementDelegate
 
     func longpress(movedCursor: Int) {
         delegate?.didMoveCursor(movedCursor)
