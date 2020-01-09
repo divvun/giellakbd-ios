@@ -142,33 +142,53 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
             self.collectionView?.traitCollection.userInterfaceIdiom == .pad
     }
     
-    private func longPressTouchPoint(at point: CGPoint, cellSize: CGSize, frame: CGRect, view collectionView: UICollectionView) -> CGPoint {
+    private func longPressTouchPoint(at point: CGPoint, cellSize: CGSize, view collectionView: UICollectionView, parentView: UIView) -> CGPoint {
         // Calculate the long press finger position relative to the long press popup
-        let halfWidth = cellSize.width / 2.0
-        let halfHeight = cellSize.height / 2.0
-        let heightOffset: CGFloat
-        if isLogicallyIPad {
-            heightOffset = 0
-        } else {
-            heightOffset = -halfHeight
+        // This function returns a point that remains inside the popover. This way a long press key can remain selected even if the
+        // user drags past the popover
+
+        // This function returns a point that lies within the collection view's bounds.
+        // It is used for keeping a letter selected in the popup even after a user's touch point falls outside of the collectionView.
+        func pointInCollectionView(with point: CGPoint) -> CGPoint {
+            let bounds = collectionView.bounds
+            let halfWidth = cellSize.width / 2.0
+            let halfHeight = cellSize.height / 2.0
+            let heightOffset: CGFloat = isLogicallyIPad ? 0 : -halfHeight
+
+            var x = point.x
+            let minX = bounds.minX
+            let maxX = bounds.maxX
+            
+            if x <= minX {
+                x = minX + halfWidth
+            } else if x >= maxX {
+                x = maxX - halfWidth
+            }
+
+            var y = point.y + heightOffset
+            let minY = collectionView.bounds.minY
+            let maxY = collectionView.bounds.maxY
+            
+            if y <= minY {
+                y = minY + halfHeight
+            } else if y >= maxY {
+                y = maxY - halfHeight
+            }
+            
+            return CGPoint(x: x, y: y)
         }
         
-        let x = min(
-            max(
-                point.x - frame.minX,
-                collectionView.bounds.minX + halfWidth
-            ),
-            collectionView.bounds.maxX - halfWidth
-        )
-        let y = min(
-            max(
-                point.y - frame.minY + heightOffset,
-                collectionView.bounds.minY + halfHeight
-            ),
-            collectionView.bounds.maxY - halfHeight
-        )
+        // Define a box in which touches to cause selection in the long press popup. Touches outside of this box will deselect keys in the popup.
+        let selectionBox: CGRect = collectionView.frame.insetBy(dx: -cellSize.width, dy: -cellSize.height)
+
+        let convertedPoint = parentView.convert(point, to: collectionView)
+        if selectionBox.contains(convertedPoint) {
+            // The touch was inside the selection box. Convert it to a point inside the collection view so a key is selected.
+            return pointInCollectionView(with: convertedPoint)
+        }
         
-        return CGPoint(x: x, y: y)
+        // The point is outside the selection allowance box. Return what we got.
+        return point
     }
 
     private func pointUpdated(_ point: CGPoint) {
@@ -183,8 +203,7 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
         guard let wholeView = superView else { return }
         guard let collectionView = self.collectionView else { return }
 
-        let frame = wholeView.convert(collectionView.frame, from: collectionView.superview)
-        let point = longPressTouchPoint(at: point, cellSize: cellSize, frame: frame, view: collectionView)
+        let point = longPressTouchPoint(at: point, cellSize: cellSize, view: collectionView, parentView: wholeView)
         
         // TODO: Logic for multiline popups
         if let indexPath = collectionView.indexPathForItem(at: point) {
