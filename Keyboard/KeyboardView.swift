@@ -183,7 +183,8 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
     }
 
     private func showOverlay(forKeyAtIndexPath indexPath: IndexPath) {
-        guard let keyCell = collectionView.cellForItem(at: indexPath)?.subviews.first else {
+        guard let keyCell = collectionView.cellForItem(at: indexPath) as? KeyCell,
+            let keyView = keyCell.keyView else {
             return
         }
         if !ensureValidKeyView(at: indexPath) {
@@ -193,11 +194,11 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
         // removeOverlay(forKey: key)
         removeAllOverlays()
 
-        let overlay = KeyOverlayView(origin: keyCell, key: key, theme: theme)
+        let overlay = KeyOverlayView(origin: keyView, key: key, theme: theme)
         overlay.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(overlay)
         
-        applyOverlayConstraints(to: overlay, ref: keyCell)
+        applyOverlayConstraints(to: overlay, ref: keyView)
         overlays[key.type] = overlay
         
         overlay.clipsToBounds = false
