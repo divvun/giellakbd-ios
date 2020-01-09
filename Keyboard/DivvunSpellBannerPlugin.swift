@@ -20,15 +20,17 @@ class SuggestionOp: Operation {
         guard let speller = plugin.speller else { return }
 
         
+        let currentWord = BannerItem(title: "\"\(word)\"", value: word)
+        
         let suggestions = (try? speller
             .suggest(word: word)//, count: 3, maxWeight: 4999.99)
-            .prefix(3)
-            .map { BannerItem(title: $0, value: "suggestion") }) ?? []
+            .prefix(2)
+            .map { BannerItem(title: $0, value: $0) }) ?? []
 
         if !isCancelled {
             DispatchQueue.main.async {
                 plugin.banner.isHidden = false
-                plugin.banner.items = suggestions
+                plugin.banner.items = [currentWord] + suggestions
             }
         }
     }
@@ -46,13 +48,7 @@ extension DivvunSpellBannerPlugin: BannerViewDelegate {
     }
 
     public func didSelectBannerItem(_ banner: BannerView, item: BannerItem) {
-        if let value = item.value as? String, value == "error" {
-            banner.items = []
-            banner.isHidden = true
-            return
-        }
-
-        keyboard.replaceSelected(with: item.title)
+        keyboard.replaceSelected(with: item.value)
         // TODO: Sami languages want to autosuggest compounds, so let's not add spaces without configuration
 //        keyboard.insertText(" ")
         opQueue.cancelAllOperations()
