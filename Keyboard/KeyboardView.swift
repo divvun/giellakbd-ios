@@ -141,18 +141,18 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
         return true
     }
     
-    private func applyOverlayConstraints(to overlay: KeyOverlayView, ref keyCell: KeyView) {
+    private func applyOverlayConstraints(to overlay: KeyOverlayView, ref keyView: KeyView) {
         guard let superview = superview else {
             return
 //            fatalError("superview not found for overlay constraints")
         }
         
         overlay.heightAnchor
-            .constraint(greaterThanOrEqualTo: keyCell.heightAnchor, multiplier: 1.0)
+            .constraint(greaterThanOrEqualTo: keyView.heightAnchor, multiplier: 1.0)
             .enable(priority: .defaultLow)
 
         overlay.widthAnchor.constraint(
-            greaterThanOrEqualTo: keyCell.widthAnchor,
+            greaterThanOrEqualTo: keyView.widthAnchor,
             multiplier: 1.0,
             constant: theme.popupCornerRadius * 2)
             .enable(priority: .required)
@@ -161,22 +161,22 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
             .constraint(greaterThanOrEqualTo: superview.topAnchor)
             .enable(priority: .defaultLow)
 
-        let bottomAnchorView = keyCell.contentView ?? keyCell
+        let bottomAnchorView = keyView.contentView ?? keyView
         overlay.bottomAnchor.constraint(equalTo: bottomAnchorView.bottomAnchor)
             .enable(priority: .defaultLow)
             
-        overlay.centerXAnchor.constraint(equalTo: keyCell.centerXAnchor)
+        overlay.centerXAnchor.constraint(equalTo: keyView.centerXAnchor)
             .enable(priority: .defaultHigh)
         
         // Handle the left and right sides not getting crushed on the edges of the screen
         
-        overlay.leftAnchor.constraint(greaterThanOrEqualTo: keyCell.leftAnchor)
+        overlay.leftAnchor.constraint(greaterThanOrEqualTo: keyView.leftAnchor)
             .enable(priority: .defaultHigh)
         overlay.leftAnchor
             .constraint(greaterThanOrEqualTo: superview.leftAnchor)
             .enable(priority: .required)
         
-        overlay.rightAnchor.constraint(lessThanOrEqualTo: keyCell.rightAnchor)
+        overlay.rightAnchor.constraint(lessThanOrEqualTo: keyView.rightAnchor)
             .enable(priority: .defaultHigh)
         overlay.rightAnchor
             .constraint(lessThanOrEqualTo: superview.rightAnchor)
