@@ -49,7 +49,6 @@ protocol ThemeType {
     var specialKeyColor: UIColor { get }
     var popupColor: UIColor { get }
     var backgroundColor: UIColor { get }
-    var underColor: UIColor { get }
     var textColor: UIColor { get }
     var inactiveTextColor: UIColor { get }
     var borderColor: UIColor { get }
@@ -59,7 +58,6 @@ protocol ThemeType {
     var shiftTintColor: UIColor { get }
     var solidRegularKeyColor: UIColor { get }
     var solidSpecialKeyColor: UIColor { get }
-    var solidPopupColor: UIColor { get }
     var popupBorderColor: UIColor { get }
     var activeColor: UIColor { get }
     var activeTextColor: UIColor { get }
@@ -103,7 +101,6 @@ class LightThemeImpl: ThemeType {
     var specialKeyColor = UIColor(r: 162, g: 167, b: 177)
     var popupColor = UIColor.white
     var backgroundColor = UIColor(r: 208, g: 210, b: 216)
-    var underColor = UIColor(hue: 0.611, saturation: 0.04, brightness: 0.56, alpha: 1)
     var textColor = UIColor.black
     var inactiveTextColor: UIColor = UIColor(white: 0.0, alpha: 0.3)
     var borderColor = UIColor.clear
@@ -114,7 +111,6 @@ class LightThemeImpl: ThemeType {
     var shiftTintColor: UIColor = UIColor.black
     var solidRegularKeyColor: UIColor { return regularKeyColor }
     var solidSpecialKeyColor = UIColor(r: 183, g: 191, b: 202)
-    var solidPopupColor: UIColor { return popupColor }
     var activeColor: UIColor = UIColor(r: 31, g: 126, b: 249)
     var activeTextColor: UIColor = UIColor.white
     lazy var altKeyTextColor: UIColor = { screenInches >= 11
@@ -162,8 +158,12 @@ class DarkThemeImpl: ThemeType {
     var keyShadowColor: UIColor = UIColor(r: 103, g: 106, b: 110, a: 0.5)
     var regularKeyColor = UIColor.lightGray.withAlphaComponent(CGFloat(0.4))
     var specialKeyColor = UIColor.gray.withAlphaComponent(CGFloat(0.3))
-    var popupColor = UIColor(r: 111, g: 103, b: 111, a: 1.0)
-    var underColor = UIColor(r: 39, g: 18, b: 39, a: 0.4)
+    
+    // Native iOS uses a transparent view for the popup (probably UIVisualEffectsView), so this should technically be dynamic depending on what color view
+    // lies beneath the keyboard (eg. If white, keys are lighter. If black, keys are darker).
+    // For now, use a color that's halfway between both to minimize contrast (against white background, keys are 124, against black, keys are 94)
+    var popupColor = UIColor(r: 109, g: 109, b: 109)
+    
     var textColor = UIColor.white
     var inactiveTextColor: UIColor = UIColor.lightGray
     var borderColor = UIColor.clear
@@ -173,7 +173,6 @@ class DarkThemeImpl: ThemeType {
     var shiftTintColor: UIColor = UIColor.black
     var solidRegularKeyColor = UIColor(r: 83, g: 83, b: 83)
     var solidSpecialKeyColor = UIColor(r: 45, g: 45, b: 45)
-    var solidPopupColor: UIColor { return solidRegularKeyColor }
     var activeColor: UIColor = UIColor(r: 31, g: 126, b: 249)
     var activeTextColor: UIColor = UIColor.white
     var altKeyFont: UIFont { return IPadThemeBase.altKeyFont }
