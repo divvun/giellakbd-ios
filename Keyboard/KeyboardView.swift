@@ -141,7 +141,7 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
         return true
     }
     
-    private func applyOverlayConstraints(to overlay: KeyOverlayView, ref keyView: KeyView) {
+    private func applyOverlayConstraints(to overlay: KeyOverlayView, keyView: KeyView) {
         guard let superview = superview else {
             return
 //            fatalError("superview not found for overlay constraints")
@@ -199,7 +199,7 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
         overlay.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(overlay)
         
-        applyOverlayConstraints(to: overlay, ref: keyView)
+        applyOverlayConstraints(to: overlay, keyView: keyView)
         overlays[key.type] = overlay
         
         overlay.clipsToBounds = false
