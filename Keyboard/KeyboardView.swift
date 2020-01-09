@@ -141,7 +141,7 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
         return true
     }
     
-    private func applyOverlayConstraints(to overlay: KeyOverlayView, ref keyCell: UIView) {
+    private func applyOverlayConstraints(to overlay: KeyOverlayView, ref keyCell: KeyView) {
         guard let superview = superview else {
             return
 //            fatalError("superview not found for overlay constraints")
@@ -161,7 +161,8 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
             .constraint(greaterThanOrEqualTo: superview.topAnchor)
             .enable(priority: .defaultLow)
 
-        overlay.bottomAnchor.constraint(equalTo: keyCell.bottomAnchor)
+        let bottomAnchorView = keyCell.contentView ?? keyCell
+        overlay.bottomAnchor.constraint(equalTo: bottomAnchorView.bottomAnchor)
             .enable(priority: .defaultLow)
             
         overlay.centerXAnchor.constraint(equalTo: keyCell.centerXAnchor)

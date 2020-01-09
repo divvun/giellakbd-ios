@@ -4,7 +4,7 @@ class KeyView: UIView {
     private let key: KeyDefinition
     private let theme: ThemeType
     
-    private var contentView: UIView!
+    public var contentView: UIView!
 
     var isSwipeKey: Bool {
         if case let .input(_, alt) = key.type, alt != nil {
