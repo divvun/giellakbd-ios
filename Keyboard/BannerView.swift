@@ -2,7 +2,7 @@ import UIKit
 
 public struct BannerItem {
     public let title: String
-    public let value: Any?
+    public let value: String
 }
 
 public protocol BannerViewDelegate {
