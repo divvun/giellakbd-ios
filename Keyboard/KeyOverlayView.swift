@@ -135,7 +135,6 @@ class KeyOverlayView: UIView {
                 CGPoint(x: 0, y: originFrameView.frame.height + theme.popupCornerRadius * 2).withRadius(radius: theme.popupCornerRadius),
                 CGPoint(x: self.frame.width, y: originFrameView.frame.height + theme.popupCornerRadius * 2).withRadius(radius: theme.popupCornerRadius),
                 CGPoint(x: self.frame.width, y: 0.0).withRadius(radius: theme.popupCornerRadius),
-                CGPoint(x: self.bounds.midX, y: 0.0).withRadius(radius: theme.popupCornerRadius),
                 CGPoint(x: self.bounds.midX, y: 0.0).withRadius(radius: theme.popupCornerRadius)
             ]
         } else if originFrameInLocalBounds.maxX + theme.popupCornerRadius * 2 >= bounds.maxX {
@@ -150,7 +149,6 @@ class KeyOverlayView: UIView {
                 CGPoint(x: originFrameInLocalBounds.maxX, y: originFrameView.frame.height + theme.popupCornerRadius * 3).withRadius(radius: theme.popupCornerRadius),
                 CGPoint(x: self.frame.width, y: originFrameView.frame.height + theme.popupCornerRadius * 2).withRadius(radius: theme.popupCornerRadius),
                 CGPoint(x: self.frame.width, y: 0.0).withRadius(radius: theme.popupCornerRadius),
-                CGPoint(x: self.bounds.midX, y: 0.0).withRadius(radius: theme.popupCornerRadius),
                 CGPoint(x: self.bounds.midX, y: 0.0).withRadius(radius: theme.popupCornerRadius)
             ]
         } else {
@@ -165,7 +163,6 @@ class KeyOverlayView: UIView {
                 CGPoint(x: originFrameInLocalBounds.maxX, y: originFrameView.frame.height + theme.popupCornerRadius * 2).withRadius(radius: theme.popupCornerRadius),
                 CGPoint(x: self.frame.width, y: originFrameView.frame.height + theme.popupCornerRadius * 2).withRadius(radius: originFrameInLocalBounds.maxX > self.frame.width - theme.popupCornerRadius ? 0 : theme.popupCornerRadius),
                 CGPoint(x: self.frame.width, y: 0.0).withRadius(radius: theme.popupCornerRadius),
-                CGPoint(x: self.bounds.midX, y: 0.0).withRadius(radius: theme.popupCornerRadius),
                 CGPoint(x: self.bounds.midX, y: 0.0).withRadius(radius: theme.popupCornerRadius)
             ]
         }
