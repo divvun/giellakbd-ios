@@ -119,14 +119,27 @@ class KeyOverlayView: UIView {
     }
 
     func createPath() -> CGPath {
+        let points = getOverlayPoints()
+        let path = CGMutablePath()
+        
+        path.move(to: CGPoint(x: frame.midX, y: 0.0))
+        for (index, point) in points.enumerated() {
+            if index < points.count - 1 {
+                path.addArc(tangent1End: point.point, tangent2End: points[index + 1].point, radius: point.radius)
+            }
+        }
+        path.closeSubpath()
+
+        return path
+    }
+    
+    private func getOverlayPoints() -> [PopupPathPoint] {
         let superview = self.superview!
         let originFrameInSuperview = originView.convert(originView.frame, to: superview)
         let originFrameInLocalBounds = superview
             .convert(originFrameInSuperview, to: self)
             .insetBy(dx: theme.keyHorizontalMargin, dy: theme.keyVerticalMargin)
 
-        var points: [PopupPathPoint]
-        
         let topCenter = CGPoint(x: self.bounds.midX, y: 0.0).withRadius(theme.popupCornerRadius)
         let topLeft = CGPoint.zero.withRadius(theme.popupCornerRadius)
         
@@ -141,7 +154,7 @@ class KeyOverlayView: UIView {
 
         if originFrameInLocalBounds.maxY < bounds.maxY - theme.popupCornerRadius {
             // Only draw a rounded rect
-            points = [
+            return [
                 topCenter,
                 topLeft,
                 letterBottomLeft,
@@ -155,7 +168,7 @@ class KeyOverlayView: UIView {
             let keyTopLeft = CGPoint(x: originFrameInLocalBounds.minX, y: originFrameView.frame.height + theme.popupCornerRadius * 3).withRadius(theme.popupCornerRadius)
             let keyTopRight = CGPoint(x: originFrameInLocalBounds.maxX, y: originFrameView.frame.height + theme.popupCornerRadius * 3).withRadius(theme.popupCornerRadius)
             
-            points = [
+            return [
                 topCenter,
                 topLeft,
                 letterBottomLeft,
@@ -169,7 +182,7 @@ class KeyOverlayView: UIView {
             ]
         } else {
             // Longpress bubble and keys near edge of keyboard
-            points = [
+            return [
                 topCenter,
                 topLeft,
                 CGPoint(x: 0, y: originFrameView.frame.height + theme.popupCornerRadius * 2).withRadius(originFrameInLocalBounds.minX < theme.popupCornerRadius ? 0 : theme.popupCornerRadius),
@@ -182,19 +195,6 @@ class KeyOverlayView: UIView {
                 topCenter
             ]
         }
-
-        let path = CGMutablePath()
-        path.move(to: CGPoint(x: frame.midX, y: 0.0))
-
-        for (index, point) in points.enumerated() {
-            if index < points.count - 1 {
-                path.addArc(tangent1End: point.point, tangent2End: points[index + 1].point, radius: point.radius)
-            }
-        }
-
-        path.closeSubpath()
-
-        return path
     }
 }
 
