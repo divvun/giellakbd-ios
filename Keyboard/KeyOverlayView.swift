@@ -151,9 +151,11 @@ class KeyOverlayView: UIView {
         let bottomRight = CGPoint(x: originFrameInLocalBounds.maxX, y: self.bounds.maxY).withRadius(theme.keyCornerRadius)
         
         let topRight = CGPoint(x: self.frame.width, y: 0.0).withRadius(theme.popupCornerRadius)
+        
+        let shouldShowRoundedRect = originFrameInLocalBounds.maxY < bounds.maxY - theme.popupCornerRadius
+        let shouldShowRegularBubble = originFrameInLocalBounds.maxX + theme.popupCornerRadius * 2 >= bounds.maxX
 
-        if originFrameInLocalBounds.maxY < bounds.maxY - theme.popupCornerRadius {
-            // Only draw a rounded rect
+        if shouldShowRoundedRect {
             return [
                 topCenter,
                 topLeft,
@@ -162,9 +164,7 @@ class KeyOverlayView: UIView {
                 topRight,
                 topCenter
             ]
-        } else if originFrameInLocalBounds.maxX + theme.popupCornerRadius * 2 >= bounds.maxX {
-            // Regular bubble
-            
+        } else if shouldShowRegularBubble {
             let keyTopLeft = CGPoint(x: originFrameInLocalBounds.minX, y: originFrameView.frame.height + theme.popupCornerRadius * 3).withRadius(theme.popupCornerRadius)
             let keyTopRight = CGPoint(x: originFrameInLocalBounds.maxX, y: originFrameView.frame.height + theme.popupCornerRadius * 3).withRadius(theme.popupCornerRadius)
             
