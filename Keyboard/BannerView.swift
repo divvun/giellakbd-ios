@@ -112,10 +112,6 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
     
     func updateTheme(theme: ThemeType) {
         self.theme = theme
-        update()
-    }
-
-    func update() {
         collectionView.backgroundColor = theme.bannerSeparatorColor
         collectionView.reloadData()
     }
