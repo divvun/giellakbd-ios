@@ -119,74 +119,87 @@ class KeyOverlayView: UIView {
     }
 
     func createPath() -> CGPath {
+        let points = getOverlayPoints()
+        let path = CGMutablePath()
+        
+        path.move(to: CGPoint(x: frame.midX, y: 0.0))
+        for (index, point) in points.enumerated() {
+            if index < points.count - 1 {
+                path.addArc(tangent1End: point.point, tangent2End: points[index + 1].point, radius: point.radius)
+            }
+        }
+        path.closeSubpath()
+
+        return path
+    }
+    
+    private func getOverlayPoints() -> [PopupPathPoint] {
         let superview = self.superview!
         let originFrameInSuperview = originView.convert(originView.frame, to: superview)
         let originFrameInLocalBounds = superview
             .convert(originFrameInSuperview, to: self)
             .insetBy(dx: theme.keyHorizontalMargin, dy: theme.keyVerticalMargin)
 
-        var points: [PopupPathPoint]
+        let topCenter = CGPoint(x: self.bounds.midX, y: 0.0).withRadius(theme.popupCornerRadius)
+        let topLeft = CGPoint.zero.withRadius(theme.popupCornerRadius)
+        
+        // These are the bottom left and right points of the box that contain the letter in the popup. This box is usually wider than the key.
+        let letterBottomLeft = CGPoint(x: 0, y: originFrameView.frame.height + theme.popupCornerRadius * 2).withRadius(theme.popupCornerRadius)
+        let letterBottomRight = CGPoint(x: self.frame.width, y: originFrameView.frame.height + theme.popupCornerRadius * 2).withRadius(theme.popupCornerRadius)
+        
+        let bottomLeft = CGPoint(x: originFrameInLocalBounds.minX, y: self.bounds.maxY).withRadius(theme.keyCornerRadius)
+        let bottomRight = CGPoint(x: originFrameInLocalBounds.maxX, y: self.bounds.maxY).withRadius(theme.keyCornerRadius)
+        
+        let topRight = CGPoint(x: self.frame.width, y: 0.0).withRadius(theme.popupCornerRadius)
+        
+        let shouldShowRoundedRect = originFrameInLocalBounds.maxY < bounds.maxY - theme.popupCornerRadius
+        let shouldShowRegularBubble = originFrameInLocalBounds.maxX + theme.popupCornerRadius * 2 >= bounds.maxX
 
-        if originFrameInLocalBounds.maxY < bounds.maxY - theme.popupCornerRadius {
-            // Only draw a rounded rect
-            points = [
-                CGPoint(x: self.frame.midX, y: 0.0).withRadius(radius: theme.popupCornerRadius),
-                CGPoint.zero.withRadius(radius: theme.popupCornerRadius),
-                CGPoint(x: 0, y: originFrameView.frame.height + theme.popupCornerRadius * 2).withRadius(radius: theme.popupCornerRadius),
-                CGPoint(x: self.frame.width, y: originFrameView.frame.height + theme.popupCornerRadius * 2).withRadius(radius: theme.popupCornerRadius),
-                CGPoint(x: self.frame.width, y: 0.0).withRadius(radius: theme.popupCornerRadius),
-                CGPoint(x: self.bounds.midX, y: 0.0).withRadius(radius: theme.popupCornerRadius),
-                CGPoint(x: self.bounds.midX, y: 0.0).withRadius(radius: theme.popupCornerRadius)
+        if shouldShowRoundedRect {
+            return [
+                topCenter,
+                topLeft,
+                letterBottomLeft,
+                letterBottomRight,
+                topRight,
+                topCenter
             ]
-        } else if originFrameInLocalBounds.maxX + theme.popupCornerRadius * 2 >= bounds.maxX {
-            // Regular bubble
-            points = [
-                CGPoint(x: self.frame.midX, y: 0.0).withRadius(radius: theme.popupCornerRadius),
-                CGPoint.zero.withRadius(radius: theme.popupCornerRadius),
-                CGPoint(x: 0, y: originFrameView.frame.height + theme.popupCornerRadius * 2).withRadius(radius: theme.popupCornerRadius),
-                CGPoint(x: originFrameInLocalBounds.minX, y: originFrameView.frame.height + theme.popupCornerRadius * 3).withRadius(radius: theme.popupCornerRadius),
-                CGPoint(x: originFrameInLocalBounds.minX, y: self.bounds.maxY).withRadius(radius: theme.keyCornerRadius),
-                CGPoint(x: originFrameInLocalBounds.maxX, y: self.bounds.maxY).withRadius(radius: theme.keyCornerRadius),
-                CGPoint(x: originFrameInLocalBounds.maxX, y: originFrameView.frame.height + theme.popupCornerRadius * 3).withRadius(radius: theme.popupCornerRadius),
-                CGPoint(x: self.frame.width, y: originFrameView.frame.height + theme.popupCornerRadius * 2).withRadius(radius: theme.popupCornerRadius),
-                CGPoint(x: self.frame.width, y: 0.0).withRadius(radius: theme.popupCornerRadius),
-                CGPoint(x: self.bounds.midX, y: 0.0).withRadius(radius: theme.popupCornerRadius),
-                CGPoint(x: self.bounds.midX, y: 0.0).withRadius(radius: theme.popupCornerRadius)
+        } else if shouldShowRegularBubble {
+            let keyTopLeft = CGPoint(x: originFrameInLocalBounds.minX, y: originFrameView.frame.height + theme.popupCornerRadius * 3).withRadius(theme.popupCornerRadius)
+            let keyTopRight = CGPoint(x: originFrameInLocalBounds.maxX, y: originFrameView.frame.height + theme.popupCornerRadius * 3).withRadius(theme.popupCornerRadius)
+            
+            return [
+                topCenter,
+                topLeft,
+                letterBottomLeft,
+                keyTopLeft,
+                bottomLeft,
+                bottomRight,
+                keyTopRight,
+                letterBottomRight,
+                topRight,
+                topCenter
             ]
         } else {
-            // Longpress bubble
-            points = [
-                CGPoint(x: self.frame.midX, y: 0.0).withRadius(radius: theme.popupCornerRadius),
-                CGPoint.zero.withRadius(radius: theme.popupCornerRadius),
-                CGPoint(x: 0, y: originFrameView.frame.height + theme.popupCornerRadius * 2).withRadius(radius: originFrameInLocalBounds.minX < theme.popupCornerRadius ? 0 : theme.popupCornerRadius),
-                CGPoint(x: originFrameInLocalBounds.minX, y: originFrameView.frame.height + theme.popupCornerRadius * 2).withRadius(radius: theme.popupCornerRadius),
-                CGPoint(x: originFrameInLocalBounds.minX, y: self.bounds.maxY).withRadius(radius: theme.keyCornerRadius),
-                CGPoint(x: originFrameInLocalBounds.maxX, y: self.bounds.maxY).withRadius(radius: theme.keyCornerRadius),
-                CGPoint(x: originFrameInLocalBounds.maxX, y: originFrameView.frame.height + theme.popupCornerRadius * 2).withRadius(radius: theme.popupCornerRadius),
-                CGPoint(x: self.frame.width, y: originFrameView.frame.height + theme.popupCornerRadius * 2).withRadius(radius: originFrameInLocalBounds.maxX > self.frame.width - theme.popupCornerRadius ? 0 : theme.popupCornerRadius),
-                CGPoint(x: self.frame.width, y: 0.0).withRadius(radius: theme.popupCornerRadius),
-                CGPoint(x: self.bounds.midX, y: 0.0).withRadius(radius: theme.popupCornerRadius),
-                CGPoint(x: self.bounds.midX, y: 0.0).withRadius(radius: theme.popupCornerRadius)
+            // Longpress bubble and keys near edge of keyboard
+            return [
+                topCenter,
+                topLeft,
+                CGPoint(x: 0, y: originFrameView.frame.height + theme.popupCornerRadius * 2).withRadius(originFrameInLocalBounds.minX < theme.popupCornerRadius ? 0 : theme.popupCornerRadius),
+                CGPoint(x: originFrameInLocalBounds.minX, y: originFrameView.frame.height + theme.popupCornerRadius * 2).withRadius(theme.popupCornerRadius),
+                bottomLeft,
+                bottomRight,
+                CGPoint(x: originFrameInLocalBounds.maxX, y: originFrameView.frame.height + theme.popupCornerRadius * 2).withRadius(theme.popupCornerRadius),
+                CGPoint(x: self.frame.width, y: originFrameView.frame.height + theme.popupCornerRadius * 2).withRadius(originFrameInLocalBounds.maxX > self.frame.width - theme.popupCornerRadius ? 0 : theme.popupCornerRadius),
+                topRight,
+                topCenter
             ]
         }
-
-        let path = CGMutablePath()
-        path.move(to: CGPoint(x: frame.midX, y: 0.0))
-
-        for (index, point) in points.enumerated() {
-            if index < points.count - 1 {
-                path.addArc(tangent1End: point.point, tangent2End: points[index + 1].point, radius: point.radius)
-            }
-        }
-
-        path.closeSubpath()
-
-        return path
     }
 }
 
 private extension CGPoint {
-    func withRadius(radius: CGFloat) -> KeyOverlayView.PopupPathPoint {
+    func withRadius(_ radius: CGFloat) -> KeyOverlayView.PopupPathPoint {
         return KeyOverlayView.PopupPathPoint(radius: radius, point: self)
     }
 }
