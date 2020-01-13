@@ -219,11 +219,11 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
     }
 
     func numberOfSections(in _: UICollectionView) -> Int {
-        return longpressValues.count >= theme.popupLongpressKeysPerRow ? 2 : 1
+        return longpressValues.count > theme.popupLongpressKeysPerRow ? 2 : 1
     }
 
     func collectionView(_: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if longpressValues.count >= theme.popupLongpressKeysPerRow {
+        if longpressValues.count > theme.popupLongpressKeysPerRow {
             return section == 0 ? Int(ceil(Double(longpressValues.count) / 2.0)) : Int(floor(Double(longpressValues.count) / 2.0))
         }
         return longpressValues.count

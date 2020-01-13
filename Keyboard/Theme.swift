@@ -275,7 +275,7 @@ private class IPhoneThemeBase {
     static let capitalKeyFont: UIFont = UIFont.systemFont(ofSize: 22.0)
     static let modifierKeyFontSize: CGFloat = 16.0
     
-    static let popupLongpressKeysPerRow: Int = 6
+    static let popupLongpressKeysPerRow: Int = 10
     
     private init() { fatalError() }
     
