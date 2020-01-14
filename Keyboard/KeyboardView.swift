@@ -162,7 +162,8 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
             .enable(priority: .defaultLow)
 
         let bottomAnchorView = keyView.contentView ?? keyView
-        overlay.bottomAnchor.constraint(equalTo: bottomAnchorView.bottomAnchor)
+        let offset: CGFloat = 0.5 // Without this small offset, the overlay appears slightly above the key
+        overlay.bottomAnchor.constraint(equalTo: bottomAnchorView.bottomAnchor, constant: offset)
             .enable(priority: .defaultLow)
             
         overlay.centerXAnchor.constraint(equalTo: keyView.centerXAnchor)

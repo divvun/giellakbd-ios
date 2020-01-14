@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1010"
+   LastUpgradeVersion = "1130"
    wasCreatedForAppExtension = "YES"
    version = "2.0">
    <BuildAction
@@ -68,8 +68,8 @@
       launchAutomaticallySubstyle = "2">
       <RemoteRunnable
          runnableDebuggingMode = "1"
-         BundleIdentifier = "com.apple.mobilecal"
-         RemotePath = "/var/containers/Bundle/Application/90BCE8E6-BFA8-4573-AA4C-4605945120CB/MobileCal.app">
+         BundleIdentifier = "com.apple.MobileSMS"
+         RemotePath = "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS.simruntime/Contents/Resources/RuntimeRoot/Applications/MobileSMS.app">
       </RemoteRunnable>
       <MacroExpansion>
          <BuildableReference
