@@ -273,16 +273,6 @@ private class IPhoneThemeBase {
         switch UIDevice.current.dc.deviceModel {
         case .iPhone5S, .iPhone5C, .iPhoneSE, .iPodTouchSeventhGen:
             return 44.0
-        case .iPhone6, .iPhone6S, .iPhone7, .iPhone8:
-            return 48.0
-        case .iPhone6Plus, .iPhone6SPlus, .iPhone7Plus, .iPhone8Plus:
-            return 48.0
-        case .iPhone11, .iPhoneXR:
-            return 48.0
-        case .iPhoneX, .iPhoneXS, .iPhone11Pro:
-            return 48.0
-        case .iPhoneXSMax, .iPhone11ProMax:
-            return 48.0
         default:
             return 48.0
         }
