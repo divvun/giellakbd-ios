@@ -158,19 +158,19 @@ open class KeyboardViewController: UIInputViewController {
             // https://iosref.com/res/
             switch UIDevice.current.dc.deviceModel {
             case .iPhone5S, .iPhone5C, .iPhoneSE, .iPodTouchSeventhGen:
-                return 258.0
+                return 254.0
             case .iPhone6, .iPhone6S, .iPhone7, .iPhone8:
-                return 258.0
+                return 262.0
             case .iPhone6Plus, .iPhone6SPlus, .iPhone7Plus, .iPhone8Plus:
-                return 268.0
+                return 272.0
             case .iPhone11, .iPhoneXR:
-                return 268.0
+                return 272.0
             case .iPhoneX, .iPhoneXS, .iPhone11Pro:
-                return 258.0
+                return 262.0
             case .iPhoneXSMax, .iPhone11ProMax:
-                return 268.0
+                return 272.0
             default:
-                return 258.0
+                return 262.0
             }
         default:
             return height / 3.0

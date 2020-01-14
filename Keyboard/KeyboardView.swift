@@ -267,7 +267,7 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
             let count = longpressValues.count
 
             let widthConstant: CGFloat
-            if count >= theme.popupLongpressKeysPerRow {
+            if count > theme.popupLongpressKeysPerRow {
                 widthConstant = longpressKeySize().width * ceil(CGFloat(count) / 2.0) + theme.keyHorizontalMargin
             } else {
                 widthConstant = longpressKeySize().width * CGFloat(count) + theme.keyHorizontalMargin
@@ -275,7 +275,7 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
 
             let heightConstant: CGFloat
 
-            if count >= theme.popupLongpressKeysPerRow {
+            if count > theme.popupLongpressKeysPerRow {
                 heightConstant = longpressKeySize().height * 2
             } else {
                 heightConstant = longpressKeySize().height
