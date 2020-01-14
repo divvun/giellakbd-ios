@@ -34,6 +34,10 @@ class KeyOverlayView: UIView {
         
         originFrameView.bottomAnchor
             .constraint(greaterThanOrEqualTo: bottomAnchor, constant: -origin.frame.height - theme.popupCornerRadius)
+            .enable(priority: .defaultHigh)
+        
+        bottomAnchor
+            .constraint(greaterThanOrEqualTo: originFrameView.bottomAnchor, constant: theme.popupCornerRadius)
             .enable(priority: .defaultLow)
 
         leftAnchor
@@ -45,7 +49,7 @@ class KeyOverlayView: UIView {
             .enable(priority: .required)
         
         originFrameView.heightAnchor
-            .constraint(lessThanOrEqualToConstant: origin.frame.height - theme.popupCornerRadius * 2)
+            .constraint(equalToConstant: origin.frame.height - theme.popupCornerRadius * 2)
             .enable(priority: .defaultHigh)
         
         originFrameView.widthAnchor
@@ -65,9 +69,12 @@ class KeyOverlayView: UIView {
         shadowView.translatesAutoresizingMaskIntoConstraints = false
         shadowView.backgroundColor = UIColor.black
         superview.insertSubview(shadowView, belowSubview: self)
+        
+        // originFrameView is centered in the popup with `popupCornerRadius` amount of padding on each side.
+        // Stretch our shadow view to fill the entire popup
         shadowView.fill(superview: originFrameView)
         shadowView.layer.shadowColor = UIColor(white: 0.0, alpha: 1.0).cgColor
-        shadowView.layer.shadowOffset = .zero
+        shadowView.layer.shadowOffset = CGSize(width: 0, height: theme.popupCornerRadius / 2.0)
         shadowView.layer.shadowOpacity = 1.0
         shadowView.layer.shadowRadius = 12.0
         shadowView.clipsToBounds = false
