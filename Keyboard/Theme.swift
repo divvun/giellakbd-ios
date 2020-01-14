@@ -269,7 +269,14 @@ private class IPhoneThemeBase {
         }
     }()
     
-    static let bannerHeight: CGFloat = 42.0
+    static let bannerHeight: CGFloat = {
+        switch UIDevice.current.dc.deviceModel {
+        case .iPhone5S, .iPhone5C, .iPhoneSE, .iPodTouchSeventhGen:
+            return 44.0
+        default:
+            return 48.0
+        }
+    }()
     
     static let lowerKeyFont: UIFont = UIFont.systemFont(ofSize: 25.0, weight: .light)
     static let capitalKeyFont: UIFont = UIFont.systemFont(ofSize: 22.0)
