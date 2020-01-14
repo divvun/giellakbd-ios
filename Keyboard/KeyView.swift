@@ -248,8 +248,8 @@ class KeyView: UIView {
         
         super.init(frame: .zero)
 
-        // HACK: UIColor.clear here breaks indexPathForItemAtPoint:
-        backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.0)
+        // HACK: UIColor.clear or alpha value below 0.001 here breaks indexPathForItemAtPoint:
+        backgroundColor = UIColor(white: 0.001, alpha: 0.001)
         
         switch key.type {
         case let .input(string, alt):
