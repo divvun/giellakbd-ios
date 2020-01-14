@@ -63,7 +63,7 @@ class KeyOverlayView: UIView {
         let shadowView = KeyOverlayShadowView()
         self.shadowView = shadowView
         shadowView.translatesAutoresizingMaskIntoConstraints = false
-        shadowView.backgroundColor = UIColor.black.withAlphaComponent(0.001)
+        shadowView.backgroundColor = UIColor.black
         superview.insertSubview(shadowView, belowSubview: self)
         shadowView.fill(superview: originFrameView)
         shadowView.layer.shadowColor = UIColor(white: 0.0, alpha: 1.0).cgColor
