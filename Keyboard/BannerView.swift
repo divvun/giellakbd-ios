@@ -12,6 +12,7 @@ public protocol BannerViewDelegate {
 
 public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     private var theme: ThemeType
+    private let numberOfSuggestions = 3
     
     class BannerCell: UICollectionViewCell {
         private let titleLabel: UILabel
@@ -52,7 +53,11 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
             super.updateConstraints()
         }
 
-        func set(item: BannerItem) {
+        func set(item: BannerItem?) {
+            guard let item = item else {
+                titleLabel.text = ""
+                return
+            }
             titleLabel.text = item.title
         }
 
@@ -63,14 +68,20 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
 
     public var delegate: BannerViewDelegate?
 
-    public var items: [BannerItem] = [BannerItem]() {
-        didSet {
-            collectionView.reloadData()
-        }
-    }
+    private var items: [BannerItem?] = [BannerItem]()
 
     private let collectionView: UICollectionView
     private let reuseIdentifier = "bannercell"
+    
+    public func setBannerItems(_ items: [BannerItem]) {
+        if items.count >= numberOfSuggestions {
+            self.items = Array(items.prefix(numberOfSuggestions))
+        } else {
+            self.items = [BannerItem?].init(repeating: nil, count: numberOfSuggestions)
+            self.items.replaceSubrange(0..<items.count, with: items)
+        }
+        collectionView.reloadData()
+    }
 
     public override func layoutSubviews() {
         // Because just invalidateLayout() seems to keep some weird cache, so we need to reset it fully
@@ -129,7 +140,7 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
     }
 
     public func collectionView(_ collectionView: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let title = items[indexPath.item].title
+        let title = items[indexPath.item]?.title ?? ""
         
         // It is constrained by infinity so it isn't constrained.
         let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: collectionView.frame.height)
@@ -141,7 +152,10 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
 
-        delegate?.didSelectBannerItem(self, item: items[indexPath.item])
+        guard let item = items[indexPath.item] else {
+            return
+        }
+        delegate?.didSelectBannerItem(self, item: item)
     }
 
     required init?(coder _: NSCoder) {
