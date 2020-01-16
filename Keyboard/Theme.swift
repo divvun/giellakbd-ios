@@ -131,13 +131,13 @@ class LightThemeImpl: ThemeType {
     var popupLongpressCapitalKeyFont = IPhoneThemeBase.capitalKeyFont //UIFont.systemFont(ofSize: 36.0)
     var popupLongpressLowerKeyFont = IPhoneThemeBase.lowerKeyFont //UIFont.systemFont(ofSize: 34.0, weight: .light)
 //    var popupLongpressKeyFont = UIFont.systemFont(ofSize: 24.0)
-    var bannerFont = UIFont.systemFont(ofSize: 18.0)
+    var bannerFont: UIFont { return IPhoneThemeBase.bannerFont }
     var altKeyFont: UIFont { return IPadThemeBase.altKeyFont }
     var altKeyFontSize: CGFloat { return IPadThemeBase.altKeyFontSize }
 
     var bannerBackgroundColor: UIColor { return backgroundColor }
     var bannerSeparatorColor: UIColor { return solidSpecialKeyColor }
-    var bannerTextColor: UIColor { return .black }
+    var bannerTextColor: UIColor { return UIColor(r: 21, g: 21, b: 21) }
 
     var bannerHorizontalMargin: CGFloat = 16.0
     var bannerVerticalMargin: CGFloat = 8.0
@@ -195,11 +195,11 @@ class DarkThemeImpl: ThemeType {
     var popupCapitalKeyFont: UIFont { return IPhoneThemeBase.capitalKeyFont.withSize(IPhoneThemeBase.capitalKeyFont.pointSize + 10.0) }
     var popupLongpressCapitalKeyFont = IPhoneThemeBase.capitalKeyFont //UIFont.systemFont(ofSize: 36.0)
     var popupLongpressLowerKeyFont = IPhoneThemeBase.lowerKeyFont //UIFont.systemFont(ofSize: 34.0, weight: .light)
-    var bannerFont = UIFont.systemFont(ofSize: 16.0)
+    var bannerFont: UIFont { return IPhoneThemeBase.bannerFont }
 
-    var bannerBackgroundColor: UIColor { return regularKeyColor }
-    var bannerSeparatorColor: UIColor { return .clear }
-    var bannerTextColor: UIColor { return .white }
+    var bannerBackgroundColor: UIColor { return backgroundColor }
+    var bannerSeparatorColor: UIColor { return UIColor(r: 56, g: 56, b: 57) }
+    var bannerTextColor: UIColor { return UIColor(r: 233, g: 233, b: 233) }
 
     var bannerHorizontalMargin: CGFloat = 16.0
     var bannerVerticalMargin: CGFloat = 8.0
@@ -277,6 +277,7 @@ private class IPhoneThemeBase {
             return 48.0
         }
     }()
+    static let bannerFont = UIFont.systemFont(ofSize: 17.0)
     
     static let lowerKeyFont: UIFont = UIFont.systemFont(ofSize: 25.0, weight: .light)
     static let capitalKeyFont: UIFont = UIFont.systemFont(ofSize: 22.0)

@@ -12,6 +12,7 @@ public protocol BannerViewDelegate {
 
 public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     private var theme: ThemeType
+    private let numberOfSuggestions = 3
     
     class BannerCell: UICollectionViewCell {
         private let titleLabel: UILabel
@@ -52,7 +53,11 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
             super.updateConstraints()
         }
 
-        func set(item: BannerItem) {
+        func set(item: BannerItem?) {
+            guard let item = item else {
+                titleLabel.text = ""
+                return
+            }
             titleLabel.text = item.title
         }
 
@@ -63,14 +68,20 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
 
     public var delegate: BannerViewDelegate?
 
-    public var items: [BannerItem] = [BannerItem]() {
-        didSet {
-            collectionView.reloadData()
-        }
-    }
+    private var items: [BannerItem?] = [BannerItem]()
 
     private let collectionView: UICollectionView
     private let reuseIdentifier = "bannercell"
+    
+    public func setBannerItems(_ items: [BannerItem]) {
+        if items.count >= numberOfSuggestions {
+            self.items = Array(items.prefix(numberOfSuggestions))
+        } else {
+            self.items = [BannerItem?].init(repeating: nil, count: numberOfSuggestions)
+            self.items.replaceSubrange(0..<items.count, with: items)
+        }
+        collectionView.reloadData()
+    }
 
     public override func layoutSubviews() {
         // Because just invalidateLayout() seems to keep some weird cache, so we need to reset it fully
@@ -82,7 +93,7 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
     }
 
     func createCollectionViewLayout() -> UICollectionViewFlowLayout {
-        let flowLayout = UICollectionViewFlowLayout()
+        let flowLayout = BannerCollectionViewFlowLayout()
         flowLayout.estimatedItemSize = CGSize(width: 1, height: 1)
         flowLayout.scrollDirection = .horizontal
         flowLayout.minimumInteritemSpacing = 1
@@ -101,7 +112,7 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
         addSubview(collectionView)
         collectionView.fill(superview: self)
         collectionView.register(BannerCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        collectionView.backgroundColor = theme.bannerSeparatorColor
+        collectionView.backgroundColor = theme.bannerBackgroundColor
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.bounces = false
         collectionView.delegate = self
@@ -112,10 +123,6 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
     
     func updateTheme(theme: ThemeType) {
         self.theme = theme
-        update()
-    }
-
-    func update() {
         collectionView.backgroundColor = theme.bannerSeparatorColor
         collectionView.reloadData()
     }
@@ -133,7 +140,7 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
     }
 
     public func collectionView(_ collectionView: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let title = items[indexPath.item].title
+        let title = items[indexPath.item]?.title ?? ""
         
         // It is constrained by infinity so it isn't constrained.
         let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: collectionView.frame.height)
@@ -145,10 +152,81 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
 
-        delegate?.didSelectBannerItem(self, item: items[indexPath.item])
+        guard let item = items[indexPath.item] else {
+            return
+        }
+        delegate?.didSelectBannerItem(self, item: item)
     }
 
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    class SeparatorView: UICollectionReusableView {
+        // This is dirty. Ideally we'd get this from the theme already created and being passed around,
+        // but since this view is initialized by the system, there seemed no elegant way to do that.
+        private lazy var baseTheme: _Theme = { Theme(traits: self.traitCollection) }()
+        private(set) lazy var theme: ThemeType = {
+            baseTheme.select(traits: self.traitCollection)
+        }()
+        
+        private let separatorLine = UIView()
+        
+        override init(frame: CGRect) {
+            super.init(frame: frame)
+            
+            translatesAutoresizingMaskIntoConstraints = false
+            backgroundColor = theme.bannerBackgroundColor
+            
+            setupSeparatorLine()
+        }
+        
+        private func setupSeparatorLine() {
+            separatorLine.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(separatorLine)
+            let paddingY: CGFloat = 12
+            separatorLine.fill(superview: self, margins: UIEdgeInsets(top: paddingY, left: 0, bottom: paddingY, right: 0))
+            separatorLine.backgroundColor = theme.bannerSeparatorColor
+        }
+        
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+    }
+    
+    class BannerCollectionViewFlowLayout: UICollectionViewFlowLayout {
+        private let separatorKind = "bannerSeparator"
+        
+        override init() {
+            super.init()
+            register(BannerView.SeparatorView.self, forDecorationViewOfKind: separatorKind)
+        }
+        
+        override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+            guard let cellAttributes = super.layoutAttributesForElements(in: rect) else {
+                return nil
+            }
+            
+            var decoratorAttributes = [UICollectionViewLayoutAttributes]()
+            
+            for cellAttribute in cellAttributes {
+                let indexPath = cellAttribute.indexPath
+                let separatorAttributes = UICollectionViewLayoutAttributes.init(forDecorationViewOfKind: separatorKind, with: indexPath)
+                let cellFrame = cellAttribute.frame
+                
+                separatorAttributes.frame = CGRect(x: cellFrame.maxX, y: cellFrame.origin.y, width: minimumLineSpacing, height: cellFrame.height)
+                separatorAttributes.zIndex = 1000
+                
+                decoratorAttributes.append(separatorAttributes)
+            }
+            
+            let newAttributes = cellAttributes + decoratorAttributes
+            return newAttributes
+        }
+        
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+    }
+
 }
