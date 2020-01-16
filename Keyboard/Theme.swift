@@ -199,7 +199,7 @@ class DarkThemeImpl: ThemeType {
 
     var bannerBackgroundColor: UIColor { return regularKeyColor }
     var bannerSeparatorColor: UIColor { return .clear }
-    var bannerTextColor: UIColor { return .white }
+    var bannerTextColor: UIColor { return UIColor(r: 233, g: 233, b: 233) }
 
     var bannerHorizontalMargin: CGFloat = 16.0
     var bannerVerticalMargin: CGFloat = 8.0
