@@ -137,7 +137,7 @@ class LightThemeImpl: ThemeType {
 
     var bannerBackgroundColor: UIColor { return backgroundColor }
     var bannerSeparatorColor: UIColor { return solidSpecialKeyColor }
-    var bannerTextColor: UIColor { return .black }
+    var bannerTextColor: UIColor { return UIColor(r: 21, g: 21, b: 21) }
 
     var bannerHorizontalMargin: CGFloat = 16.0
     var bannerVerticalMargin: CGFloat = 8.0
