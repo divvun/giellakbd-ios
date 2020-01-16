@@ -197,8 +197,8 @@ class DarkThemeImpl: ThemeType {
     var popupLongpressLowerKeyFont = IPhoneThemeBase.lowerKeyFont //UIFont.systemFont(ofSize: 34.0, weight: .light)
     var bannerFont: UIFont { return IPhoneThemeBase.bannerFont }
 
-    var bannerBackgroundColor: UIColor { return regularKeyColor }
-    var bannerSeparatorColor: UIColor { return .clear }
+    var bannerBackgroundColor: UIColor { return backgroundColor }
+    var bannerSeparatorColor: UIColor { return UIColor(r: 56, g: 56, b: 57) }
     var bannerTextColor: UIColor { return UIColor(r: 233, g: 233, b: 233) }
 
     var bannerHorizontalMargin: CGFloat = 16.0

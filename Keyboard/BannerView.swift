@@ -93,7 +93,7 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
     }
 
     func createCollectionViewLayout() -> UICollectionViewFlowLayout {
-        let flowLayout = UICollectionViewFlowLayout()
+        let flowLayout = BannerCollectionViewFlowLayout()
         flowLayout.estimatedItemSize = CGSize(width: 1, height: 1)
         flowLayout.scrollDirection = .horizontal
         flowLayout.minimumInteritemSpacing = 1
@@ -112,7 +112,7 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
         addSubview(collectionView)
         collectionView.fill(superview: self)
         collectionView.register(BannerCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        collectionView.backgroundColor = theme.bannerSeparatorColor
+        collectionView.backgroundColor = theme.bannerBackgroundColor
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.bounces = false
         collectionView.delegate = self
@@ -161,4 +161,72 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    class SeparatorView: UICollectionReusableView {
+        // This is dirty. Ideally we'd get this from the theme already created and being passed around,
+        // but since this view is initialized by the system, there seemed no elegant way to do that.
+        private lazy var baseTheme: _Theme = { Theme(traits: self.traitCollection) }()
+        private(set) lazy var theme: ThemeType = {
+            baseTheme.select(traits: self.traitCollection)
+        }()
+        
+        private let separatorLine = UIView()
+        
+        override init(frame: CGRect) {
+            super.init(frame: frame)
+            
+            translatesAutoresizingMaskIntoConstraints = false
+            backgroundColor = theme.bannerBackgroundColor
+            
+            setupSeparatorLine()
+        }
+        
+        private func setupSeparatorLine() {
+            separatorLine.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(separatorLine)
+            let paddingY: CGFloat = 12
+            separatorLine.fill(superview: self, margins: UIEdgeInsets(top: paddingY, left: 0, bottom: paddingY, right: 0))
+            separatorLine.backgroundColor = theme.bannerSeparatorColor
+        }
+        
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+    }
+    
+    class BannerCollectionViewFlowLayout: UICollectionViewFlowLayout {
+        private let separatorKind = "bannerSeparator"
+        
+        override init() {
+            super.init()
+            register(BannerView.SeparatorView.self, forDecorationViewOfKind: separatorKind)
+        }
+        
+        override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+            guard let cellAttributes = super.layoutAttributesForElements(in: rect) else {
+                return nil
+            }
+            
+            var decoratorAttributes = [UICollectionViewLayoutAttributes]()
+            
+            for cellAttribute in cellAttributes {
+                let indexPath = cellAttribute.indexPath
+                let separatorAttributes = UICollectionViewLayoutAttributes.init(forDecorationViewOfKind: separatorKind, with: indexPath)
+                let cellFrame = cellAttribute.frame
+                
+                separatorAttributes.frame = CGRect(x: cellFrame.maxX, y: cellFrame.origin.y, width: minimumLineSpacing, height: cellFrame.height)
+                separatorAttributes.zIndex = 1000
+                
+                decoratorAttributes.append(separatorAttributes)
+            }
+            
+            let newAttributes = cellAttributes + decoratorAttributes
+            return newAttributes
+        }
+        
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+    }
+
 }
