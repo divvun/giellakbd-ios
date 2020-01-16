@@ -30,7 +30,8 @@ class SuggestionOp: Operation {
         if !isCancelled {
             DispatchQueue.main.async {
                 plugin.banner.isHidden = false
-                plugin.banner.items = [currentWord] + suggestions
+                let items = [currentWord] + suggestions
+                plugin.banner.setBannerItems(items)
             }
         }
     }
@@ -39,7 +40,7 @@ class SuggestionOp: Operation {
 extension DivvunSpellBannerPlugin: BannerViewDelegate {
     public func textInputDidChange(_ banner: BannerView, context: CursorContext) {
         if context.currentWord == "" {
-            banner.items = []
+            banner.setBannerItems([])
             return
         }
 
@@ -53,7 +54,7 @@ extension DivvunSpellBannerPlugin: BannerViewDelegate {
 //        keyboard.insertText(" ")
         opQueue.cancelAllOperations()
 
-        banner.items = []
+        banner.setBannerItems([])
     }
 }
 
