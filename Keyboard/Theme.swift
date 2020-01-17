@@ -136,7 +136,7 @@ class LightThemeImpl: ThemeType {
     var altKeyFontSize: CGFloat { return IPadThemeBase.altKeyFontSize }
 
     var bannerBackgroundColor: UIColor { return backgroundColor }
-    var bannerSeparatorColor: UIColor { return solidSpecialKeyColor }
+    var bannerSeparatorColor: UIColor { return UIColor(r: 188, g: 191, b: 195) }
     var bannerTextColor: UIColor { return UIColor(r: 21, g: 21, b: 21) }
 
     var bannerHorizontalMargin: CGFloat = 16.0
