@@ -39,7 +39,7 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
             titleLabel.font = theme.bannerFont
             titleLabel.textAlignment = .center
 
-            backgroundColor = theme.bannerBackgroundColor
+            backgroundColor = .clear
             titleLabel.textColor = theme.bannerTextColor
 
             heightConstraint = contentView.heightAnchor.constraint(equalToConstant: 0)

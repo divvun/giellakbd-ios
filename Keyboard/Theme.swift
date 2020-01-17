@@ -100,7 +100,7 @@ class LightThemeImpl: ThemeType {
     var regularKeyColor = UIColor.white
     var specialKeyColor = UIColor(r: 162, g: 167, b: 177)
     var popupColor = UIColor.white
-    var backgroundColor = UIColor(r: 208, g: 210, b: 216)
+    var backgroundColor =  UIColor(r: 209, g: 212, b: 217, a: 0.0)
     var textColor = UIColor.black
     var inactiveTextColor: UIColor = UIColor(white: 0.0, alpha: 0.3)
     var borderColor = UIColor.clear
