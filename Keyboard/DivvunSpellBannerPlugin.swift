@@ -22,10 +22,15 @@ class SuggestionOp: Operation {
         
         let currentWord = BannerItem(title: "\"\(word)\"", value: word)
         
-        let suggestions = (try? speller
+        var suggestions = (try? speller
             .suggest(word: word)//, count: 3, maxWeight: 4999.99)
-            .prefix(2)
+            .prefix(3)
             .map { BannerItem(title: $0, value: $0) }) ?? []
+        
+        // No need to show the same thing twice
+        suggestions.removeAll { (bannerItem) -> Bool in
+            bannerItem.value == word
+        }
 
         if !isCancelled {
             DispatchQueue.main.async {
