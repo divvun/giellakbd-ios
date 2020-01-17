@@ -106,7 +106,7 @@ class LightThemeImpl: ThemeType {
     var borderColor = UIColor.clear
     var popupBorderColor = UIColor(hue: 0.595, saturation: 0.04, brightness: 0.65, alpha: 1.0)
     var specialKeyBorderColor: UIColor { return .clear }
-    var keyShadowColor = UIColor(r: 103, g: 106, b: 110, a: 0.5)
+    var keyShadowColor = UIColor(r: 136, g: 138, b: 141)
     var shiftActiveColor = UIColor.white
     var shiftTintColor: UIColor = UIColor.black
     var solidRegularKeyColor: UIColor { return regularKeyColor }
