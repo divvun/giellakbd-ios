@@ -56,8 +56,6 @@ protocol ThemeType {
     var keyShadowColor: UIColor { get }
     var shiftActiveColor: UIColor { get }
     var shiftTintColor: UIColor { get }
-    var solidRegularKeyColor: UIColor { get }
-    var solidSpecialKeyColor: UIColor { get }
     var popupBorderColor: UIColor { get }
     var activeColor: UIColor { get }
     var activeTextColor: UIColor { get }
@@ -98,19 +96,17 @@ class LightThemeImpl: ThemeType {
     var bannerHeight: CGFloat { return IPhoneThemeBase.bannerHeight }
     
     var regularKeyColor = UIColor.white
-    var specialKeyColor = UIColor(r: 162, g: 167, b: 177)
+    var specialKeyColor = UIColor(r: 171, g: 177, b: 186)
     var popupColor = UIColor.white
-    var backgroundColor = UIColor(r: 208, g: 210, b: 216)
+    var backgroundColor =  UIColor(r: 209, g: 212, b: 217, a: 0.0)
     var textColor = UIColor.black
     var inactiveTextColor: UIColor = UIColor(white: 0.0, alpha: 0.3)
     var borderColor = UIColor.clear
     var popupBorderColor = UIColor(hue: 0.595, saturation: 0.04, brightness: 0.65, alpha: 1.0)
     var specialKeyBorderColor: UIColor { return .clear }
-    var keyShadowColor = UIColor(r: 103, g: 106, b: 110, a: 0.5)
+    var keyShadowColor = UIColor(r: 136, g: 138, b: 141)
     var shiftActiveColor = UIColor.white
     var shiftTintColor: UIColor = UIColor.black
-    var solidRegularKeyColor: UIColor { return regularKeyColor }
-    var solidSpecialKeyColor = UIColor(r: 183, g: 191, b: 202)
     var activeColor: UIColor = UIColor(r: 31, g: 126, b: 249)
     var activeTextColor: UIColor = UIColor.white
     lazy var altKeyTextColor: UIColor = { screenInches >= 11
@@ -136,7 +132,7 @@ class LightThemeImpl: ThemeType {
     var altKeyFontSize: CGFloat { return IPadThemeBase.altKeyFontSize }
 
     var bannerBackgroundColor: UIColor { return backgroundColor }
-    var bannerSeparatorColor: UIColor { return solidSpecialKeyColor }
+    var bannerSeparatorColor: UIColor { return UIColor(r: 188, g: 191, b: 195) }
     var bannerTextColor: UIColor { return UIColor(r: 21, g: 21, b: 21) }
 
     var bannerHorizontalMargin: CGFloat = 16.0
@@ -171,8 +167,6 @@ class DarkThemeImpl: ThemeType {
     var specialKeyBorderColor: UIColor { return .clear }
     var shiftActiveColor = UIColor(r: 214, g: 220, b: 208)
     var shiftTintColor: UIColor = UIColor.black
-    var solidRegularKeyColor = UIColor(r: 83, g: 83, b: 83)
-    var solidSpecialKeyColor = UIColor(r: 45, g: 45, b: 45)
     var activeColor: UIColor = UIColor(r: 31, g: 126, b: 249)
     var activeTextColor: UIColor = UIColor.white
     var altKeyFont: UIFont { return IPadThemeBase.altKeyFont }

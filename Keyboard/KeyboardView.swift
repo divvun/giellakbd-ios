@@ -13,7 +13,8 @@ protocol KeyboardViewDelegate {
 }
 
 internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, LongPressOverlayDelegate, LongPressCursorMovementDelegate {
-    private static let keyRepeatTimeInterval: TimeInterval = 0.15
+    private static let pauseBeforeRepeatTimeInterval: TimeInterval = 0.5
+    private static let keyRepeatTimeInterval: TimeInterval = 0.1
     private var theme: ThemeType
     
     private let definition: KeyboardDefinition
@@ -365,12 +366,7 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
 
             // Should repeat trigger?
             if let key = newValue, key.key.type.supportsRepeatTrigger, keyRepeatTimer == nil {
-                keyRepeatTimer = Timer.scheduledTimer(
-                    timeInterval: KeyboardView.keyRepeatTimeInterval,
-                    target: self,
-                    selector: #selector(KeyboardView.keyRepeatTimerDidTrigger),
-                    userInfo: nil,
-                    repeats: true)
+                keyRepeatTimer = makeKeyRepeatTimer(timeInterval: KeyboardView.pauseBeforeRepeatTimeInterval)
             }
         }
         didSet {
@@ -384,6 +380,15 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
                 }
             }
         }
+    }
+    
+    private func makeKeyRepeatTimer(timeInterval: TimeInterval) -> Timer {
+        return Timer.scheduledTimer(
+            timeInterval: timeInterval,
+            target: self,
+            selector: #selector(KeyboardView.keyRepeatTimerDidTrigger),
+            userInfo: nil,
+            repeats: true)
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with _: UIEvent?) {
@@ -575,6 +580,14 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
     @objc func keyRepeatTimerDidTrigger() {
         if let activeKey = activeKey, activeKey.key.type.supportsRepeatTrigger {
             delegate?.didTriggerKey(activeKey.key)
+            increaseKeyRepeatRateIfNeeded()
+        }
+    }
+    
+    private func increaseKeyRepeatRateIfNeeded() {
+        if keyRepeatTimer?.timeInterval == KeyboardView.pauseBeforeRepeatTimeInterval {
+            keyRepeatTimer?.invalidate()
+            keyRepeatTimer = makeKeyRepeatTimer(timeInterval: KeyboardView.keyRepeatTimeInterval)
         }
     }
     
