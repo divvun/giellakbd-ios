@@ -16,10 +16,13 @@ class SuggestionOp: Operation {
             return
         }
 
+        showSpellingSuggestionsInBanner()
+    }
+    
+    private func showSpellingSuggestionsInBanner() {
         guard let plugin = self.plugin else { return }
         guard let speller = plugin.speller else { return }
 
-        
         let currentWord = BannerItem(title: "\"\(word)\"", value: word)
         
         var suggestions = (try? speller
@@ -40,6 +43,7 @@ class SuggestionOp: Operation {
             }
         }
     }
+    
 }
 
 extension DivvunSpellBannerPlugin: BannerViewDelegate {
