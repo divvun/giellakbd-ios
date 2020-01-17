@@ -98,7 +98,7 @@ class LightThemeImpl: ThemeType {
     var bannerHeight: CGFloat { return IPhoneThemeBase.bannerHeight }
     
     var regularKeyColor = UIColor.white
-    var specialKeyColor = UIColor(r: 162, g: 167, b: 177)
+    var specialKeyColor = UIColor(r: 171, g: 177, b: 186)
     var popupColor = UIColor.white
     var backgroundColor =  UIColor(r: 209, g: 212, b: 217, a: 0.0)
     var textColor = UIColor.black
