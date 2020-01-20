@@ -27,19 +27,6 @@ extension _Theme {
             return self.light
         }
     }
-    
-    func select(byAppearance appearance: UIKeyboardAppearance, traits: UITraitCollection) -> ThemeType {
-        switch appearance {
-        case .dark:
-            return self.dark
-        case .light:
-            return self.light
-        case .default:
-            return select(traits: traits)
-        @unknown default:
-            return self.light
-        }
-    }
 }
 
 protocol ThemeType {

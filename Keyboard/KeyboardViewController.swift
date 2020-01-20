@@ -510,11 +510,16 @@ open class KeyboardViewController: UIInputViewController {
         }, completion: nil)
     }
     
+    override open func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if #available(iOSApplicationExtension 12.0, *) {
+            self.checkDarkMode(traits: self.traitCollection)
+        }
+    }
+
     @available(iOSApplicationExtension 12.0, *)
     private func checkDarkMode(traits: UITraitCollection) {
-        guard let appearance = textDocumentProxy.keyboardAppearance else { return }
-        
-        let newTheme = baseTheme.select(byAppearance: appearance, traits: traits)
+        let newTheme = baseTheme.select(traits: traits)
         
         if theme.appearance != newTheme.appearance {
             theme = newTheme
