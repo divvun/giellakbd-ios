@@ -502,19 +502,13 @@ open class KeyboardViewController: UIInputViewController {
     
     open override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
         coordinator.animate(alongsideTransition: { _ in
-            if #available(iOSApplicationExtension 12.0, *) {
-                self.checkDarkMode(traits: newCollection)
-            } else {
-                // Do nothing
-            }
+            self.checkDarkMode()
         }, completion: nil)
     }
     
     override open func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        if #available(iOSApplicationExtension 12.0, *) {
-            self.checkDarkMode(traits: self.traitCollection)
-        }
+        checkDarkMode()
     }
 
     @available(iOSApplicationExtension 12.0, *)
@@ -533,8 +527,6 @@ open class KeyboardViewController: UIInputViewController {
     private func checkDarkMode() {
         if #available(iOSApplicationExtension 12.0, *) {
             self.checkDarkMode(traits: self.traitCollection)
-        } else {
-            // Do nothing
         }
     }
     
