@@ -126,6 +126,7 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
     
     func updateTheme(theme: ThemeType) {
         self.theme = theme
+        collectionView.removeFromSuperview()
         collectionView = makeCollectionView()
     }
 
