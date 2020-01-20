@@ -70,7 +70,7 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
 
     private var items: [BannerItem?] = [BannerItem]()
 
-    private let collectionView: UICollectionView
+    private var collectionView: UICollectionView!
     private let reuseIdentifier = "bannercell"
     
     public func setBannerItems(_ items: [BannerItem]) {
@@ -104,10 +104,13 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
 
     init(theme: ThemeType) {
         self.theme = theme
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         super.init(frame: .zero)
         backgroundColor = .clear
-
+        collectionView = makeCollectionView()
+    }
+    
+    private func makeCollectionView() -> UICollectionView {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(collectionView)
         collectionView.fill(superview: self)
@@ -118,13 +121,12 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
         collectionView.delegate = self
         collectionView.dataSource = self
 
-        collectionView.collectionViewLayout = createCollectionViewLayout()
+        return collectionView
     }
     
     func updateTheme(theme: ThemeType) {
         self.theme = theme
-        collectionView.backgroundColor = theme.bannerSeparatorColor
-        collectionView.reloadData()
+        collectionView = makeCollectionView()
     }
 
     public func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
