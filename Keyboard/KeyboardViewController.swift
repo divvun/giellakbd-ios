@@ -386,10 +386,6 @@ open class KeyboardViewController: UIInputViewController {
         return nil
     }
 
-    func keyboardDidReset() {
-
-    }
-
     open override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
 
