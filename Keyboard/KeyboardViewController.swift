@@ -518,9 +518,9 @@ open class KeyboardViewController: UIInputViewController {
         if theme.appearance != newTheme.appearance {
             theme = newTheme
             
-            self.updateAfterThemeChange()
-            self.bannerView.updateTheme(theme: self.theme)
-            self.keyboardView.updateTheme(theme: self.theme)
+            updateAfterThemeChange()
+            bannerView.updateTheme(theme: theme)
+            keyboardView.updateTheme(theme: theme)
         }
     }
     
