@@ -222,7 +222,12 @@ class KeyView: UIView {
     }
 
     private func image(named name: String, traits: UITraitCollection, tintColor: UIColor) {
-        let image = UIImage(named: name, in: Bundle.top, compatibleWith: traits)!
+        var image = UIImage(named: name, in: Bundle.top, compatibleWith: traits)
+        if image == nil {
+            // If we get here, we're probably being run as an iPhone app on the iPad.
+            // In this scenario for whatever reason we must use an image asset file that contains only one universal image
+            image = UIImage(named: name + "-fallback", in: Bundle.top, compatibleWith: traits)
+        }
         
         imageView = UIImageView()
         if let imageView = self.imageView {

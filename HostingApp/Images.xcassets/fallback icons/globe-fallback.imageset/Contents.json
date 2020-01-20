@@ -1,12 +1,8 @@
 {
   "images" : [
     {
-      "idiom" : "iphone",
+      "idiom" : "universal",
       "filename" : "icon-globe-0.5x.pdf"
-    },
-    {
-      "idiom" : "ipad",
-      "filename" : "icon-globe-ipad-1x.pdf"
     }
   ],
   "info" : {

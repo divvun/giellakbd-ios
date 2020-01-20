@@ -386,10 +386,6 @@ open class KeyboardViewController: UIInputViewController {
         return nil
     }
 
-    func keyboardDidReset() {
-
-    }
-
     open override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
 
@@ -506,34 +502,31 @@ open class KeyboardViewController: UIInputViewController {
     
     open override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
         coordinator.animate(alongsideTransition: { _ in
-            if #available(iOSApplicationExtension 12.0, *) {
-                self.checkDarkMode(traits: newCollection)
-            } else {
-                // Do nothing
-            }
+            self.checkDarkMode()
         }, completion: nil)
     }
     
+    override open func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        checkDarkMode()
+    }
+
     @available(iOSApplicationExtension 12.0, *)
     private func checkDarkMode(traits: UITraitCollection) {
-        guard let appearance = textDocumentProxy.keyboardAppearance else { return }
-        
-        let newTheme = baseTheme.select(byAppearance: appearance, traits: traits)
+        let newTheme = baseTheme.select(traits: traits)
         
         if theme.appearance != newTheme.appearance {
             theme = newTheme
             
-            self.updateAfterThemeChange()
-            self.bannerView.updateTheme(theme: self.theme)
-            self.keyboardView.updateTheme(theme: self.theme)
+            updateAfterThemeChange()
+            bannerView.updateTheme(theme: theme)
+            keyboardView.updateTheme(theme: theme)
         }
     }
     
     private func checkDarkMode() {
         if #available(iOSApplicationExtension 12.0, *) {
             self.checkDarkMode(traits: self.traitCollection)
-        } else {
-            // Do nothing
         }
     }
     

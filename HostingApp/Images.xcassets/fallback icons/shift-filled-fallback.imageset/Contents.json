@@ -1,12 +1,8 @@
 {
   "images" : [
     {
-      "idiom" : "iphone",
+      "idiom" : "universal",
       "filename" : "icon-shift-0.5x.pdf"
-    },
-    {
-      "idiom" : "ipad",
-      "filename" : "icon-shift-ipad-2x.pdf"
     }
   ],
   "info" : {
