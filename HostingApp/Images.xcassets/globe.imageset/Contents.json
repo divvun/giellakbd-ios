@@ -2,28 +2,11 @@
   "images" : [
     {
       "idiom" : "iphone",
-      "filename" : "icon-globe-0.5x.png",
-      "scale" : "1x"
-    },
-    {
-      "idiom" : "iphone",
-      "filename" : "icon-globe-1x.png",
-      "scale" : "2x"
-    },
-    {
-      "idiom" : "iphone",
-      "filename" : "icon-globe-2x.png",
-      "scale" : "3x"
+      "filename" : "icon-globe-0.5x.pdf"
     },
     {
       "idiom" : "ipad",
-      "filename" : "icon-globe-ipad-1x.png",
-      "scale" : "1x"
-    },
-    {
-      "idiom" : "ipad",
-      "filename" : "icon-globe-ipad-2x.png",
-      "scale" : "2x"
+      "filename" : "icon-globe-ipad-1x.pdf"
     }
   ],
   "info" : {

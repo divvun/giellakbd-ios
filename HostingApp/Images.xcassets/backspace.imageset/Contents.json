@@ -2,27 +2,11 @@
   "images" : [
     {
       "idiom" : "iphone",
-      "filename" : "icon-backspace-0.5x.png",
-      "scale" : "1x"
-    },
-    {
-      "idiom" : "iphone",
-      "filename" : "icon-backspace-1x.png",
-      "scale" : "2x"
-    },
-    {
-      "idiom" : "iphone",
-      "filename" : "icon-backspace-2x.png",
-      "scale" : "3x"
+      "filename" : "icon-backspace-0.5x.pdf"
     },
     {
       "idiom" : "ipad",
-      "scale" : "1x"
-    },
-    {
-      "idiom" : "ipad",
-      "filename" : "icon-backspace-ipad-2x.png",
-      "scale" : "2x"
+      "filename" : "icon-backspace-ipad-2x.pdf"
     }
   ],
   "info" : {
