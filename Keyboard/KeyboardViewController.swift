@@ -124,12 +124,6 @@ open class KeyboardViewController: UIInputViewController {
     
     private var portraitHeight: CGFloat {
         let height = portraitDeviceHeight
-//        print("Device height: \(height)")
-//
-//        print("Device idiom: \(UIDevice.current.userInterfaceIdiom)")
-//        print("Device idiom (trait): \(self.traitCollection.userInterfaceIdiom)")
-//        print("Size class (h): \(self.traitCollection.horizontalSizeClass)")
-//        print("Size class (v): \(self.traitCollection.verticalSizeClass)")
         let sizeInches = UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches
         print("Size inches: \(sizeInches)")
         switch UIDevice.current.dc.deviceFamily {
