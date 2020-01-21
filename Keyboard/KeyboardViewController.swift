@@ -123,7 +123,6 @@ open class KeyboardViewController: UIInputViewController {
     }
     
     private var portraitHeight: CGFloat {
-        let height = portraitDeviceHeight
         let sizeInches = UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches
         print("Size inches: \(sizeInches)")
         switch UIDevice.current.dc.deviceFamily {
@@ -147,7 +146,7 @@ open class KeyboardViewController: UIInputViewController {
                 return 384.0
             }
             
-            return height / 4.0
+            return portraitDeviceHeight / 4.0
         case .iPhone, .iPod:
             // https://iosref.com/res/
             switch UIDevice.current.dc.deviceModel {
@@ -167,7 +166,7 @@ open class KeyboardViewController: UIInputViewController {
                 return 262.0
             }
         default:
-            return height / 3.0
+            return portraitDeviceHeight / 3.0
         }
     }
 
