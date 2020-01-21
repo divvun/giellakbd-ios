@@ -223,7 +223,7 @@ open class KeyboardViewController: UIInputViewController {
     private func initHeightConstraint() {
         heightConstraint = view.heightAnchor
             .constraint(equalToConstant: preferredHeight)
-            .enable(priority: .required)
+            .enable(priority: UILayoutPriority(999))
     }
 
     open override func viewDidLoad() {
