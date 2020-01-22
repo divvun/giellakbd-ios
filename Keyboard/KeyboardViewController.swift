@@ -63,6 +63,23 @@ open class KeyboardViewController: UIInputViewController {
     @IBOutlet var nextKeyboardButton: UIButton!
     private var keyboardView: KeyboardViewProvider!
     
+    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        commonInit()
+    }
+
+    public required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        commonInit()
+    }
+    
+    private func commonInit() {
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: preferredHeight)
+        inputView?.allowsSelfSizing = true
+        print(String(describing: inputView))
+    }
+    
     private(set) lazy var definitions: [KeyboardDefinition] = {
         let path = Bundle.top.url(forResource: "KeyboardDefinitions", withExtension: "json")!
         let data = try! String(contentsOf: path).data(using: .utf8)!
@@ -221,9 +238,12 @@ open class KeyboardViewController: UIInputViewController {
     }
     
     private func initHeightConstraint() {
-        heightConstraint = view.heightAnchor
-            .constraint(equalToConstant: preferredHeight)
-            .enable(priority: UILayoutPriority(999))
+        // If this is removed, iPhone 5s glitches before finding the correct height.
+        DispatchQueue.main.async {
+            self.heightConstraint = self.view.heightAnchor
+                .constraint(equalToConstant: self.preferredHeight)
+                .enable(priority: UILayoutPriority(999))
+        }
     }
 
     open override func viewDidLoad() {
