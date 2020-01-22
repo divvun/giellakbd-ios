@@ -95,6 +95,7 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(KeyCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView.isUserInteractionEnabled = false
+        collectionView.isScrollEnabled = false
 
         addSubview(collectionView)
         collectionView.topAnchor.constraint(equalTo: topAnchor).isActive = true
