@@ -660,7 +660,9 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! KeyCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? KeyCell else {
+            fatalError("Unable to cast to KeyCell")
+        }
         let key = currentPage[indexPath.section][indexPath.row]
 
         cell.configure(page: page, key: key, theme: theme, traits: self.traitCollection)
