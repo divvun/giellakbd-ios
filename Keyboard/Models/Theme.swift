@@ -143,9 +143,11 @@ class DarkThemeImpl: ThemeType {
     var regularKeyColor = UIColor.lightGray.withAlphaComponent(CGFloat(0.4))
     var specialKeyColor = UIColor.gray.withAlphaComponent(CGFloat(0.3))
 
-    // Native iOS uses a transparent view for the popup (probably UIVisualEffectsView), so this should technically be dynamic depending on what color view
+    // Native iOS uses a transparent view for the popup (probably UIVisualEffectsView),
+    // so this should technically be dynamic depending on what color view
     // lies beneath the keyboard (eg. If white, keys are lighter. If black, keys are darker).
-    // For now, use a color that's halfway between both to minimize contrast (against white background, keys are 124, against black, keys are 94)
+    // For now, use a color that's halfway between both to minimize contrast (against white background,
+    // keys are 124, against black, keys are 94)
     var popupColor = UIColor(r: 109, g: 109, b: 109)
 
     var textColor = UIColor.white
@@ -244,7 +246,8 @@ private class IPhoneThemeBase {
         switch UIDevice.current.dc.deviceModel {
         case .iPhone5S, .iPhone5C:
             return 4.0
-        case .iPhone6, .iPhone6S, .iPhone6Plus, .iPhone6SPlus, .iPhone7, .iPhone7Plus, .iPhone8, .iPhone8Plus, .iPhoneX, .iPhoneXR, .iPhoneXS, .iPhone11, .iPhone11Pro, .iPhone11ProMax, .iPhoneXSMax:
+        case .iPhone6, .iPhone6S, .iPhone6Plus, .iPhone6SPlus, .iPhone7, .iPhone7Plus, .iPhone8,
+             .iPhone8Plus, .iPhoneX, .iPhoneXR, .iPhoneXS, .iPhone11, .iPhone11Pro, .iPhone11ProMax, .iPhoneXSMax:
             return 5.0
         default:
             return 5.0

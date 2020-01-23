@@ -60,7 +60,8 @@ class KeyView: UIView {
                 let fontSizeDelta = fontSize - theme.modifierKeyFontSize
 
                 if let alternateLabel = alternateLabel {
-                    alternateLabel.textColor = UIColor.interpolate(from: theme.altKeyTextColor, to: theme.textColor, with: percentageAlternative)
+                    alternateLabel.textColor = UIColor.interpolate(from: theme.altKeyTextColor,
+                                                                   to: theme.textColor, with: percentageAlternative)
                     alternateLabel.font = alternateLabel.font.withSize(altFontSize + fontSizeDelta * percentageAlternative)
                 }
 
@@ -172,7 +173,8 @@ class KeyView: UIView {
                 .constraint(equalTo: labelHoldingView.topAnchor, constant: theme.altLabelTopAnchorConstant)
                 .enable()
 
-            label.bottomAnchor.constraint(equalTo: labelHoldingView.bottomAnchor, constant: theme.altLabelBottomAnchorConstant).enable()
+            label.bottomAnchor.constraint(equalTo: labelHoldingView.bottomAnchor,
+                                          constant: theme.altLabelBottomAnchorConstant).enable()
 
             alternateLabel.centerXAnchor
                 .constraint(equalTo: labelHoldingView.centerXAnchor)
@@ -347,7 +349,7 @@ class KeyView: UIView {
         contentView.backgroundColor = backgroundColor(for: key, page: page)
     }
 
-    private func backgroundColor(for key: KeyDefinition, page:KeyboardPage) -> UIColor {
+    private func backgroundColor(for key: KeyDefinition, page: KeyboardPage) -> UIColor {
         if key.type == .shift,
             (page == .shifted || page == .capslock) {
             return theme.shiftActiveColor

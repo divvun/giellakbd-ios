@@ -12,8 +12,17 @@ protocol KeyboardViewDelegate {
     @objc func didTriggerKeyboardButton(sender: UIView, forEvent event: UIEvent)
 }
 
-// swiftlint:disable:next type_body_length
-internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, LongPressOverlayDelegate, LongPressCursorMovementDelegate {
+// FIXME: this could be simplified with a typealias
+// swiftlint:disable all
+internal class KeyboardView: UIView,
+    KeyboardViewProvider,
+    UICollectionViewDataSource,
+    UICollectionViewDelegate,
+    UICollectionViewDelegateFlowLayout,
+    LongPressOverlayDelegate,
+    LongPressCursorMovementDelegate
+{
+// swiftlint:enable all
     private static let pauseBeforeRepeatTimeInterval: TimeInterval = 0.5
     private static let keyRepeatTimeInterval: TimeInterval = 0.1
     private var theme: ThemeType
@@ -71,7 +80,9 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
             }
             if let keyboardButtonExtraButton = keyboardButtonExtraButton {
                 addSubview(keyboardButtonExtraButton)
-                keyboardButtonExtraButton.addTarget(delegate, action: #selector(KeyboardViewKeyboardKeyDelegate.didTriggerKeyboardButton), for: UIControl.Event.allEvents)
+                keyboardButtonExtraButton.addTarget(delegate,
+                                                    action: #selector(KeyboardViewKeyboardKeyDelegate.didTriggerKeyboardButton),
+                                                    for: UIControl.Event.allEvents)
             }
         }
     }
@@ -459,8 +470,7 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
             let cell = collectionView.cellForItem(at: activeKey.indexPath) as? KeyCell,
             let swipeKeyView = cell.keyView,
             swipeKeyView.isSwipeKey,
-            let touchLocation = touches.first?.location(in: cell.superview)
-        {
+            let touchLocation = touches.first?.location(in: cell.superview) {
             let deadZone: CGFloat = 20.0
             let delta: CGFloat = 60.0
             let yOffset = touchLocation.y - cell.center.y
@@ -544,7 +554,8 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
     }
 
     @objc func touchesFoundLongpress(_ longpressGestureRecognizer: UILongPressGestureRecognizer) {
-        if let indexPath = collectionView.indexPathForItem(at: longpressGestureRecognizer.location(in: collectionView)), longpressController == nil {
+        if let indexPath = collectionView.indexPathForItem(at: longpressGestureRecognizer.location(in: collectionView)),
+            longpressController == nil {
             let key = currentPage[indexPath.section][indexPath.row]
             switch key.type {
             case let .input(string, _):
@@ -652,7 +663,9 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
         return currentPage[section].count
     }
 
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView,
+                        willDisplay cell: UICollectionViewCell,
+                        forItemAt indexPath: IndexPath) {
         let key = currentPage[indexPath.section][indexPath.row]
 
         if key.type == .keyboard {
@@ -661,7 +674,8 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? KeyCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
+                                                            for: indexPath) as? KeyCell else {
             fatalError("Unable to cast to KeyCell")
         }
         let key = currentPage[indexPath.section][indexPath.row]
@@ -683,7 +697,8 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
         return CGSize(width: key.size.width * ((bounds.size.width - 1) / rowNumberOfUnits[indexPath.section]), height: bounds.size.height / CGFloat(currentPage.count))
     }
 
-    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, minimumInteritemSpacingForSectionAt _: Int) -> CGFloat {
+    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout,
+                        minimumInteritemSpacingForSectionAt _: Int) -> CGFloat {
         return 0
     }
 

@@ -152,7 +152,8 @@ class KeyOverlayView: UIView {
         let topCenter = CGPoint(x: self.bounds.midX, y: 0.0).withRadius(theme.popupCornerRadius)
         let topLeft = CGPoint.zero.withRadius(theme.popupCornerRadius)
 
-        // These are the bottom left and right points of the bubble that contain the letter in the popup. This box is usually wider than the key.
+        // These are the bottom left and right points of the bubble that contain the letter in the popup.
+        // This box is usually wider than the key.
         let letterBottomLeft = CGPoint(x: 0, y: bubbleHeight).withRadius(theme.popupCornerRadius)
         let letterBottomRight = CGPoint(x: self.frame.width, y: bubbleHeight).withRadius(theme.popupCornerRadius)
 
@@ -174,8 +175,10 @@ class KeyOverlayView: UIView {
                 topCenter
             ]
         } else if shouldShowRegularBubble {
-            let keyTopLeft = CGPoint(x: originFrameInLocalBounds.minX, y: originFrameView.frame.height + theme.popupCornerRadius * 3).withRadius(theme.popupCornerRadius)
-            let keyTopRight = CGPoint(x: originFrameInLocalBounds.maxX, y: originFrameView.frame.height + theme.popupCornerRadius * 3).withRadius(theme.popupCornerRadius)
+            let keyTopLeft = CGPoint(x: originFrameInLocalBounds.minX,
+                                     y: originFrameView.frame.height + theme.popupCornerRadius * 3).withRadius(theme.popupCornerRadius)
+            let keyTopRight = CGPoint(x: originFrameInLocalBounds.maxX,
+                                      y: originFrameView.frame.height + theme.popupCornerRadius * 3).withRadius(theme.popupCornerRadius)
 
             return [
                 topCenter,

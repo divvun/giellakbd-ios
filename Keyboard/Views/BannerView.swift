@@ -5,7 +5,7 @@ public struct BannerItem {
     public let value: String
 }
 
-public protocol BannerViewDelegate {
+public protocol BannerViewDelegate: class {
     func textInputDidChange(_ banner: BannerView, context: CursorContext)
     func didSelectBannerItem(_ banner: BannerView, item: BannerItem)
 }
@@ -34,7 +34,8 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
             contentView.addSubview(titleLabel)
 
             titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: theme.bannerVerticalMargin).isActive = true
-            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -theme.bannerVerticalMargin).isActive = true
+            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,
+                                               constant: -theme.bannerVerticalMargin).isActive = true
             titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
             titleLabel.font = theme.bannerFont
             titleLabel.textAlignment = .center
@@ -135,7 +136,8 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
     }
 
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? BannerCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
+                                                            for: indexPath) as? BannerCell else {
             fatalError("Unable to cast to BannerCell")
         }
         cell.configure(theme: theme)
@@ -144,14 +146,21 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
         return cell
     }
 
-    public func collectionView(_ collectionView: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    public func collectionView(_ collectionView: UICollectionView,
+                               layout _: UICollectionViewLayout,
+                               sizeForItemAt indexPath: IndexPath) -> CGSize {
         let title = items[indexPath.item]?.title ?? ""
 
         // It is constrained by infinity so it isn't constrained.
         let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: collectionView.frame.height)
-        let boundingBox = title.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: theme.bannerFont], context: nil)
+        let boundingBox = title.boundingRect(with: constraintRect,
+                                             options: .usesLineFragmentOrigin,
+                                             attributes: [NSAttributedString.Key.font: theme.bannerFont],
+                                             context: nil)
 
-        return CGSize(width: max(frame.width / 3.0, boundingBox.width + theme.bannerHorizontalMargin * 2), height: collectionView.frame.height)
+        return CGSize(width: max(frame.width / 3.0,
+                                 boundingBox.width + theme.bannerHorizontalMargin * 2),
+                      height: collectionView.frame.height)
     }
 
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -216,10 +225,14 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
 
             for cellAttribute in cellAttributes {
                 let indexPath = cellAttribute.indexPath
-                let separatorAttributes = UICollectionViewLayoutAttributes.init(forDecorationViewOfKind: separatorKind, with: indexPath)
+                let separatorAttributes = UICollectionViewLayoutAttributes.init(forDecorationViewOfKind: separatorKind,
+                                                                                with: indexPath)
                 let cellFrame = cellAttribute.frame
 
-                separatorAttributes.frame = CGRect(x: cellFrame.maxX, y: cellFrame.origin.y, width: minimumLineSpacing, height: cellFrame.height)
+                separatorAttributes.frame = CGRect(x: cellFrame.maxX,
+                                                   y: cellFrame.origin.y,
+                                                   width: minimumLineSpacing,
+                                                   height: cellFrame.height)
                 separatorAttributes.zIndex = 1000
 
                 decoratorAttributes.append(separatorAttributes)

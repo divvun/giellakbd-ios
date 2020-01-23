@@ -1,6 +1,6 @@
 import UIKit
 
-protocol LongPressOverlayDelegate {
+protocol LongPressOverlayDelegate: class {
     func longpress(didCreateOverlayContentView contentView: UIView)
     func longpressDidCancel()
     func longpress(didSelectKey key: KeyDefinition)
@@ -9,7 +9,7 @@ protocol LongPressOverlayDelegate {
     func longpressKeySize() -> CGSize
 }
 
-protocol LongPressCursorMovementDelegate {
+protocol LongPressCursorMovementDelegate: class {
     func longpress(movedCursor: Int)
     func longpressDidCancel()
 }
@@ -57,7 +57,14 @@ class LongPressCursorMovementController: NSObject, LongPressBehaviorProvider {
     }
 }
 
-class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+// swiftlint:disable all
+class LongPressOverlayController: NSObject,
+    LongPressBehaviorProvider,
+    UICollectionViewDelegate,
+    UICollectionViewDataSource,
+    UICollectionViewDelegateFlowLayout
+{
+// swiftlint:enable all
     class LongpressCollectionView: UICollectionView {}
 
     private let deadZone: CGFloat = 20.0
@@ -142,13 +149,18 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
             self.collectionView?.traitCollection.userInterfaceIdiom == .pad
     }
 
-    private func longPressTouchPoint(at point: CGPoint, cellSize: CGSize, view collectionView: UICollectionView, parentView: UIView) -> CGPoint {
+    private func longPressTouchPoint(at point: CGPoint,
+                                     cellSize: CGSize,
+                                     view collectionView: UICollectionView,
+                                     parentView: UIView) -> CGPoint {
         // Calculate the long press finger position relative to the long press popup
-        // This function returns a point that remains inside the popover. This way a long press key can remain selected even if the
+        // This function returns a point that remains inside the popover.
+        // This way a long press key can remain selected even if the
         // user drags past the popover
 
         // This function returns a point that lies within the collection view's bounds.
-        // It is used for keeping a letter selected in the popup even after a user's touch point falls outside of the collectionView.
+        // It is used for keeping a letter selected in the popup even after a user's
+        // touch point falls outside of the collectionView.
         func pointInCollectionView(with point: CGPoint) -> CGPoint {
             let bounds = collectionView.bounds
             let halfWidth = cellSize.width / 2.0
@@ -178,7 +190,8 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
             return CGPoint(x: x, y: y)
         }
 
-        // Define a box in which touches to cause selection in the long press popup. Touches outside of this box will deselect keys in the popup.
+        // Define a box in which touches to cause selection in the long press popup.
+        // Touches outside of this box will deselect keys in the popup.
         let selectionBox: CGRect = collectionView.frame.insetBy(dx: -cellSize.width, dy: -cellSize.height)
 
         let convertedPoint = parentView.convert(point, to: collectionView)
@@ -230,7 +243,8 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? LongpressKeyCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
+                                                            for: indexPath) as? LongpressKeyCell else {
             fatalError("Unable to cast to LongpressKeyCell")
         }
         cell.configure(theme: theme)
@@ -267,7 +281,9 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
         return delegate?.longpressKeySize() ?? CGSize(width: 20, height: 30.0)
     }
 
-    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, minimumInteritemSpacingForSectionAt _: Int) -> CGFloat {
+    func collectionView(_: UICollectionView,
+                        layout _: UICollectionViewLayout,
+                        minimumInteritemSpacingForSectionAt _: Int) -> CGFloat {
         return 0
     }
 
@@ -275,7 +291,9 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
         return 0
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout _: UICollectionViewLayout, insetForSectionAt _: Int) -> UIEdgeInsets {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout _: UICollectionViewLayout,
+                        insetForSectionAt _: Int) -> UIEdgeInsets {
         let cellSize = delegate?.longpressKeySize() ?? CGSize(width: 20.0, height: 30.0)
         let cellWidth = cellSize.width
         let numberOfCells = CGFloat(longpressValues.count)

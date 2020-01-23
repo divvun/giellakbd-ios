@@ -22,7 +22,9 @@ extension CursorContext {
 }
 
 // Grabs the word before, current word, and next word from the proxy
-private func resolveWordContext(before beforeInput: String, after afterInput: String, selectedText: String? = nil) -> CursorContext {
+private func resolveWordContext(before beforeInput: String,
+                                after afterInput: String,
+                                selectedText: String? = nil) -> CursorContext {
     let currentWord: String
     var previousWord: String?
     var nextWord: String?

@@ -49,8 +49,7 @@ extension UserDefaults {
             var defaultsToRegister = [String: AnyObject]()
             for prefSpecification in preferences {
                 if let key = prefSpecification["Key"] as? String,
-                    let value = prefSpecification["DefaultValue"]
-                {
+                    let value = prefSpecification["DefaultValue"] {
                     defaultsToRegister[key] = value as AnyObject
                 }
             }
