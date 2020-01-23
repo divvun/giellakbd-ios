@@ -230,7 +230,9 @@ class LongPressOverlayController: NSObject, LongPressBehaviorProvider, UICollect
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! LongpressKeyCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? LongpressKeyCell else {
+            fatalError("Unable to cast to LongpressKeyCell")
+        }
         cell.configure(theme: theme)
         let key = longpressValues[indexPath.row + Int(ceil(Double(longpressValues.count) / 2.0)) * indexPath.section]
 

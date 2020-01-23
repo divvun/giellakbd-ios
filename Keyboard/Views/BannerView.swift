@@ -135,7 +135,9 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
     }
 
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! BannerCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? BannerCell else {
+            fatalError("Unable to cast to BannerCell")
+        }
         cell.configure(theme: theme)
         cell.set(item: items[indexPath.item])
 
