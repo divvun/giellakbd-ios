@@ -5,10 +5,10 @@ import UIDeviceComplete
 class SystemKeys {
     static func systemKeyRowsForCurrentDevice(spaceName: String, returnName: String, traits: UITraitCollection) -> [KeyDefinition] {
         var keys = [KeyDefinition]()
-        
+
         let isIPad = UIDevice.current.dc.deviceFamily == .iPad &&
             traits.userInterfaceIdiom == .pad
-        
+
         // Left side of space bar
         if !UIDevice.current.dc.deviceModel.hasNotch {
             if isIPad && (UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches) >= 11.0 {
@@ -24,7 +24,7 @@ class SystemKeys {
             keys.append(KeyDefinition(type: .symbols))
         }
         keys.append(KeyDefinition(type: .spacebar(name: spaceName), size: CGSize(width: 5.0, height: 1.0)))
-        
+
         // Right of spacebar
         if isIPad{
             keys.append(KeyDefinition(type: .symbols, size: CGSize(width: 1.25, height: 1.0)))

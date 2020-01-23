@@ -11,7 +11,7 @@ extension _Theme {
     func select(traits: UITraitCollection) -> ThemeType {
         if #available(iOSApplicationExtension 12.0, *) {
             let interfaceStyle = traits.userInterfaceStyle
-            
+
             switch interfaceStyle {
             case .light:
                 return self.light
@@ -31,7 +31,7 @@ extension _Theme {
 
 protocol ThemeType {
     var appearance: UIKeyboardAppearance { get }
-    
+
     var regularKeyColor: UIColor { get }
     var specialKeyColor: UIColor { get }
     var popupColor: UIColor { get }
@@ -71,17 +71,17 @@ protocol ThemeType {
     var bannerHorizontalMargin: CGFloat { get }
     var bannerVerticalMargin: CGFloat { get }
     var bannerHeight: CGFloat { get }
-    
+
     var altLabelTopAnchorConstant: CGFloat { get }
     var altLabelBottomAnchorConstant: CGFloat { get }
-    
+
     var popupLongpressKeysPerRow: Int { get }
 }
 
 class LightThemeImpl: ThemeType {
     var appearance: UIKeyboardAppearance { return .light }
     var bannerHeight: CGFloat { return IPhoneThemeBase.bannerHeight }
-    
+
     var regularKeyColor = UIColor.white
     var specialKeyColor = UIColor(r: 171, g: 177, b: 186)
     var popupColor = UIColor.white
@@ -100,7 +100,7 @@ class LightThemeImpl: ThemeType {
         ? textColor
         : inactiveTextColor
     }()
-    
+
     var keyCornerRadius: CGFloat { return IPhoneThemeBase.keyCornerRadius }
     var popupCornerRadius: CGFloat = 12.0
     var keyHorizontalMargin: CGFloat { return IPhoneThemeBase.keyHorizontalMargin }
@@ -124,10 +124,10 @@ class LightThemeImpl: ThemeType {
 
     var bannerHorizontalMargin: CGFloat = 16.0
     var bannerVerticalMargin: CGFloat = 8.0
-    
+
     var altLabelTopAnchorConstant: CGFloat { return 0.0 }
     var altLabelBottomAnchorConstant: CGFloat { return 0.0 }
-    
+
     var popupLongpressKeysPerRow: Int { return IPhoneThemeBase.popupLongpressKeysPerRow }
 
     public init() {}
@@ -141,12 +141,12 @@ class DarkThemeImpl: ThemeType {
     var keyShadowColor: UIColor = UIColor(r: 103, g: 106, b: 110, a: 0.5)
     var regularKeyColor = UIColor.lightGray.withAlphaComponent(CGFloat(0.4))
     var specialKeyColor = UIColor.gray.withAlphaComponent(CGFloat(0.3))
-    
+
     // Native iOS uses a transparent view for the popup (probably UIVisualEffectsView), so this should technically be dynamic depending on what color view
     // lies beneath the keyboard (eg. If white, keys are lighter. If black, keys are darker).
     // For now, use a color that's halfway between both to minimize contrast (against white background, keys are 124, against black, keys are 94)
     var popupColor = UIColor(r: 109, g: 109, b: 109)
-    
+
     var textColor = UIColor.white
     var inactiveTextColor: UIColor = UIColor.lightGray
     var borderColor = UIColor.clear
@@ -163,7 +163,7 @@ class DarkThemeImpl: ThemeType {
         ? textColor
         : inactiveTextColor
     }()
-    
+
     var keyCornerRadius: CGFloat { return IPhoneThemeBase.keyCornerRadius }
     var popupCornerRadius: CGFloat = 12.0
     var keyHorizontalMargin: CGFloat { return IPhoneThemeBase.keyHorizontalMargin }
@@ -184,10 +184,10 @@ class DarkThemeImpl: ThemeType {
 
     var bannerHorizontalMargin: CGFloat = 16.0
     var bannerVerticalMargin: CGFloat = 8.0
-    
+
     var altLabelTopAnchorConstant: CGFloat { return 0.0 }
     var altLabelBottomAnchorConstant: CGFloat { return 0.0 }
-    
+
     var popupLongpressKeysPerRow: Int { return IPhoneThemeBase.popupLongpressKeysPerRow }
 
     public init() {}
@@ -230,7 +230,7 @@ private class IPhoneThemeBase {
             return 3.5
         }
     }()
-    
+
     static var keyVerticalMargin: CGFloat {
         if UIScreen.main.isDeviceLandscape {
             return landscapeKeyVerticalMargin
@@ -238,7 +238,7 @@ private class IPhoneThemeBase {
             return portraitKeyVerticalMargin
         }
     }
-    
+
     static let keyCornerRadius: CGFloat = {
         switch UIDevice.current.dc.deviceModel {
         case .iPhone5S, .iPhone5C:
@@ -249,7 +249,7 @@ private class IPhoneThemeBase {
             return 5.0
         }
     }()
-    
+
     static let bannerHeight: CGFloat = {
         switch UIDevice.current.dc.deviceModel {
         case .iPhone5S, .iPhone5C, .iPhoneSE, .iPodTouchSeventhGen:
@@ -259,15 +259,15 @@ private class IPhoneThemeBase {
         }
     }()
     static let bannerFont = UIFont.systemFont(ofSize: 17.0)
-    
+
     static let lowerKeyFont: UIFont = UIFont.systemFont(ofSize: 25.0, weight: .light)
     static let capitalKeyFont: UIFont = UIFont.systemFont(ofSize: 22.0)
     static let modifierKeyFontSize: CGFloat = 16.0
-    
+
     static let popupLongpressKeysPerRow: Int = 10
-    
+
     private init() { fatalError() }
-    
+
 }
 
 fileprivate let screenInches = UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches
@@ -282,9 +282,9 @@ private class IPadThemeBase {
     static let altLabelBottomAnchorConstant: CGFloat = screenInches >= 11
         ? -3.0
         : -4.0
-    
+
     static let bannerHeight: CGFloat = 55.0
-    
+
     static let keyCornerRadius: CGFloat = 5.0
     static let keyHorizontalMargin: CGFloat = screenInches >= 11
         ? 3.0
@@ -292,10 +292,10 @@ private class IPadThemeBase {
     static let keyVerticalMargin: CGFloat = screenInches >= 11
         ? 3.0
         : 5.0
-    
+
     static let lowerKeyFont: UIFont = UIFont.systemFont(ofSize: 24.0, weight: .light)
     static let capitalKeyFont: UIFont = UIFont.systemFont(ofSize: 22.0)
-    
+
     static let popupLongpressKeysPerRow: Int = 4
 
     private init() { fatalError() }
@@ -305,14 +305,14 @@ class LightThemeIpadImpl: LightThemeImpl {
     override var keyCornerRadius: CGFloat { return IPadThemeBase.keyCornerRadius }
     override var keyHorizontalMargin: CGFloat { return IPadThemeBase.keyHorizontalMargin }
     override var keyVerticalMargin: CGFloat { return IPadThemeBase.keyVerticalMargin }
-    
+
     override var modifierKeyFontSize: CGFloat { return IPadThemeBase.modifierKeyFontSize }
     override var bannerHeight: CGFloat { return IPadThemeBase.bannerHeight }
     override var capitalKeyFont: UIFont { return IPadThemeBase.capitalKeyFont }
     override var lowerKeyFont: UIFont { return IPadThemeBase.lowerKeyFont }
     override var altLabelTopAnchorConstant: CGFloat { return IPadThemeBase.altLabelTopAnchorConstant }
     override var altLabelBottomAnchorConstant: CGFloat { return IPadThemeBase.altLabelBottomAnchorConstant }
-    
+
     override var popupLongpressKeysPerRow: Int {return IPadThemeBase.popupLongpressKeysPerRow}
 }
 
@@ -327,7 +327,7 @@ class DarkThemeIpadImpl: DarkThemeImpl {
     override var lowerKeyFont: UIFont { return IPadThemeBase.lowerKeyFont }
     override var altLabelTopAnchorConstant: CGFloat { return IPadThemeBase.altLabelTopAnchorConstant }
     override var altLabelBottomAnchorConstant: CGFloat { return IPadThemeBase.altLabelBottomAnchorConstant }
-    
+
     override var popupLongpressKeysPerRow: Int {return IPadThemeBase.popupLongpressKeysPerRow}
 }
 

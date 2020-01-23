@@ -24,17 +24,17 @@ public enum KeyType: Codable, Hashable {
     case fullStop
     case tab
     case caps
-    
+
     public init(from decoder: Decoder) throws {
         let d = try decoder.singleValueContainer()
         let raw = try d.decode(RawKeyType.self)
         self = Self.init(string: raw.id, alternate: raw.alternate, spaceName: raw.name ?? "", returnName: raw.name ?? "")
     }
-    
+
     public func encode(to encoder: Encoder) throws {
         var c = encoder.singleValueContainer()
         let raw: RawKeyType
-        
+
         switch self {
         case .input(let key, let alternate):
             raw = RawKeyType(id: key, name: nil, alternate: alternate)
@@ -68,10 +68,10 @@ public enum KeyType: Codable, Hashable {
             try c.encodeNil()
             return
         }
-        
+
         try c.encode(raw)
     }
-    
+
     init(string: String, alternate: String? = nil, spaceName: String, returnName: String) {
         switch string {
         case "_spacer":
@@ -149,12 +149,12 @@ public enum KeyType: Codable, Hashable {
 public struct KeyDefinition: Codable {
     public let type: KeyType
     public let size: CGSize
-    
+
     init(type: KeyType, size: CGSize = CGSize(width: 1, height: 1)) {
         self.type = type
         self.size = size
     }
-    
+
     init(input: RawKeyDefinition, alternate: String? = nil, spaceName: String, returnName: String) {
         if input.id == alternate {
             type = KeyType(string: input.id, alternate: nil, spaceName: spaceName, returnName: returnName)

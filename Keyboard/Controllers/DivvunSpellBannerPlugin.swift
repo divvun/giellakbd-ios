@@ -18,18 +18,18 @@ class SuggestionOp: Operation {
 
         showSpellingSuggestionsInBanner()
     }
-    
+
     private func showSpellingSuggestionsInBanner() {
         guard let plugin = self.plugin else { return }
         guard let speller = plugin.speller else { return }
 
         let currentWord = BannerItem(title: "\"\(word)\"", value: word)
-        
+
         var suggestions = (try? speller
             .suggest(word: word)//, count: 3, maxWeight: 4999.99)
             .prefix(3)
             .map { BannerItem(title: $0, value: $0) }) ?? []
-        
+
         // No need to show the same thing twice
         suggestions.removeAll { (bannerItem) -> Bool in
             bannerItem.value == word
@@ -43,7 +43,7 @@ class SuggestionOp: Operation {
             }
         }
     }
-    
+
 }
 
 extension DivvunSpellBannerPlugin: BannerViewDelegate {
@@ -134,7 +134,7 @@ public class DivvunSpellBannerPlugin {
 
     public init(keyboard: KeyboardViewController) {
         self.keyboard = keyboard
-        
+
         guard let bannerView = keyboard.bannerView else {
             fatalError("No banner view found in DivvunSpellBannerPlugin init")
         }

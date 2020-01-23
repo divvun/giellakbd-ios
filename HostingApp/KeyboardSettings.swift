@@ -10,7 +10,7 @@ class KeyboardSettings {
     static var groupId: String = {
         return "group.\(Bundle.top.bundleIdentifier!)"
     }()
-    
+
     static var languageCode: String {
         get { return defaults.string(forKey: "language") ?? Locale.current.languageCode! }
         set { defaults.set(newValue, forKey: "language") }
@@ -20,7 +20,7 @@ class KeyboardSettings {
         get { return defaults.object(forKey: "firstLoad") as? Bool ?? true }
         set { defaults.set(newValue, forKey: "firstLoad") }
     }
-    
+
     static var isKeySoundEnabled: Bool {
         get { return defaults.bool(forKey: "isKeySoundEnabled") }
         set { defaults.set(newValue, forKey: "isKeySoundEnabled") }
