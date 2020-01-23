@@ -342,7 +342,7 @@ open class KeyboardViewController: UIInputViewController {
 
     private func setupBannerView() {
         extraSpacingView = UIView(frame: .zero)
-        extraSpacingView.backgroundColor = UIColor.orange
+        extraSpacingView.backgroundColor = .orange
         extraSpacingView.translatesAutoresizingMaskIntoConstraints = false
         view.insertSubview(extraSpacingView, at: 0)
         extraSpacingView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
