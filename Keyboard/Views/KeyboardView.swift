@@ -1,6 +1,6 @@
 import UIKit
 
-protocol KeyboardViewDelegate {
+protocol KeyboardViewDelegate: class {
     func didSwipeKey(_ key: KeyDefinition)
     func didTriggerKey(_ key: KeyDefinition)
     func didTriggerDoubleTap(forKey key: KeyDefinition)
@@ -154,7 +154,7 @@ internal class KeyboardView: UIView,
     }
 
     private func ensureValidKeyView(at indexPath: IndexPath) -> Bool {
-        guard let _ = collectionView.cellForItem(at: indexPath)?.subviews.first?.subviews.first?.subviews.first else {
+        guard collectionView.cellForItem(at: indexPath)?.subviews.first?.subviews.first?.subviews.first != nil else {
             return false
         }
 
@@ -487,7 +487,7 @@ internal class KeyboardView: UIView,
             return
         }
 
-        if let _ = activeKey {
+        if activeKey != nil {
             for touch in touches {
                 if let indexPath = collectionView.indexPathForItem(at: touch.location(in: collectionView)) {
                     let key = currentPage[indexPath.section][indexPath.row]
@@ -694,7 +694,9 @@ internal class KeyboardView: UIView,
         let key = currentPage[indexPath.section][indexPath.row]
 
         // Using self.bounds here, because self.collectionView.frame isnt correctly sized in iOS 10
-        return CGSize(width: key.size.width * ((bounds.size.width - 1) / rowNumberOfUnits[indexPath.section]), height: bounds.size.height / CGFloat(currentPage.count))
+        let width = key.size.width * ((bounds.size.width - 1) / rowNumberOfUnits[indexPath.section])
+        let height = bounds.size.height / CGFloat(currentPage.count)
+        return CGSize(width: width, height: height)
     }
 
     func collectionView(_: UICollectionView, layout _: UICollectionViewLayout,

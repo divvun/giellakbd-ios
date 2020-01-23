@@ -269,25 +269,25 @@ open class KeyboardViewController: UIInputViewController {
         }
         switch keyboardMode {
         case .split:
-            let splitKeyboardView = SplitKeyboardView(definition: keyboardDefinition, theme: theme)
+            let splitKeyboard = SplitKeyboardView(definition: keyboardDefinition, theme: theme)
 
-            view.addSubview(splitKeyboardView.leftKeyboardView)
-            view.addSubview(splitKeyboardView.rightKeyboardView)
+            view.addSubview(splitKeyboard.leftKeyboardView)
+            view.addSubview(splitKeyboard.rightKeyboardView)
 
-            splitKeyboardView.leftKeyboardView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-            splitKeyboardView.leftKeyboardView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-            splitKeyboardView.leftKeyboardView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.25).isActive = true
+            splitKeyboard.leftKeyboardView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+            splitKeyboard.leftKeyboardView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+            splitKeyboard.leftKeyboardView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.25).isActive = true
 
-            splitKeyboardView.rightKeyboardView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-            splitKeyboardView.rightKeyboardView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.25).isActive = true
-            splitKeyboardView.rightKeyboardView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+            splitKeyboard.rightKeyboardView.bottomAnchor.constraint(equalTo: view.bottomAnchor).enable()
+            splitKeyboard.rightKeyboardView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.25).enable()
+            splitKeyboard.rightKeyboardView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
 
-            splitKeyboardView.rightKeyboardView.topAnchor.constraint(equalTo: splitKeyboardView.leftKeyboardView.topAnchor).isActive = true
-            splitKeyboardView.rightKeyboardView.heightAnchor.constraint(equalTo: splitKeyboardView.leftKeyboardView.heightAnchor).isActive = true
+            splitKeyboard.rightKeyboardView.topAnchor.constraint(equalTo: splitKeyboard.leftKeyboardView.topAnchor).enable()
+            splitKeyboard.rightKeyboardView.heightAnchor.constraint(equalTo: splitKeyboard.leftKeyboardView.heightAnchor).enable()
 
-            splitKeyboardView.delegate = self
+            splitKeyboard.delegate = self
 
-            self.keyboardView = splitKeyboardView
+            self.keyboardView = splitKeyboard
 
         case .left:
             let keyboardView = KeyboardView(definition: keyboardDefinition, theme: theme)
@@ -359,8 +359,8 @@ open class KeyboardViewController: UIInputViewController {
 
     private func updateHeightConstraint() {
         DispatchQueue.main.async {
-            guard let _ = self.heightConstraint else { return }
-            self.heightConstraint.constant = self.preferredHeight
+            guard let heightConstraint = self.heightConstraint else { return }
+            heightConstraint.constant = self.preferredHeight
         }
     }
 
@@ -627,10 +627,10 @@ extension KeyboardViewController: KeyboardViewDelegate {
             return
         }
 
-        var sound: SystemSoundID? = nil
+        var sound: SystemSoundID?
 
         switch key.type {
-        case .input(_), .comma, .fullStop, .tab:
+        case .input, .comma, .fullStop, .tab:
             sound = clickSound
         case .caps, .keyboard, .keyboardMode, .shift, .shiftSymbols, .symbols, .spacebar, .returnkey:
             sound = modifierSound
