@@ -345,14 +345,6 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     private func setupBannerView() {
-        extraSpacingView = UIView(frame: .zero)
-        extraSpacingView.backgroundColor = .orange
-        extraSpacingView.translatesAutoresizingMaskIntoConstraints = false
-        view.insertSubview(extraSpacingView, at: 0)
-        extraSpacingView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        extraSpacingView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        extraSpacingView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-
         bannerView = BannerView(theme: theme)
         guard let bannerView = bannerView else { fatalError("No banner view found in setupBannerView") }
         
@@ -365,7 +357,7 @@ open class KeyboardViewController: UIInputViewController {
         bannerView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
 
         bannerView.bottomAnchor.constraint(equalTo: keyboardView.topAnchor).isActive = true
-        bannerView.topAnchor.constraint(equalTo: extraSpacingView.bottomAnchor).isActive = true
+        bannerView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
 
         bannerView.isHidden = false
     }
