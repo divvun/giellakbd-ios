@@ -175,10 +175,9 @@ class KeyOverlayView: UIView {
                 topCenter
             ]
         } else if shouldShowRegularBubble {
-            let keyTopLeft = CGPoint(x: originFrameInLocalBounds.minX,
-                                     y: originFrameView.frame.height + theme.popupCornerRadius * 3).withRadius(theme.popupCornerRadius)
-            let keyTopRight = CGPoint(x: originFrameInLocalBounds.maxX,
-                                      y: originFrameView.frame.height + theme.popupCornerRadius * 3).withRadius(theme.popupCornerRadius)
+            let y = originFrameView.frame.height + theme.popupCornerRadius * 3
+            let keyTopLeft = CGPoint(x: originFrameInLocalBounds.minX, y: y).withRadius(theme.popupCornerRadius)
+            let keyTopRight = CGPoint(x: originFrameInLocalBounds.maxX, y: y).withRadius(theme.popupCornerRadius)
 
             return [
                 topCenter,
