@@ -62,6 +62,12 @@ extension UIScreen {
 open class KeyboardViewController: UIInputViewController {
     @IBOutlet var nextKeyboardButton: UIButton!
     private var keyboardView: KeyboardViewProvider!
+    private var heightConstraint: NSLayoutConstraint!
+    private var extraSpacingView: UIView!
+    private var deadKeyHandler: DeadKeyHandler!
+    public private(set) var keyboardDefinition: KeyboardDefinition!
+    private var keyboardMode: KeyboardMode = .normal
+    
     
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -187,13 +193,7 @@ open class KeyboardViewController: UIInputViewController {
         }
     }
 
-    private var heightConstraint: NSLayoutConstraint!
-    private var extraSpacingView: UIView!
-    private var deadKeyHandler: DeadKeyHandler!
     public private(set) var bannerView: BannerView!
-    public private(set) var keyboardDefinition: KeyboardDefinition!
-    private var keyboardMode: KeyboardMode = .normal
-    
     private var isSoundEnabled = KeyboardSettings.isKeySoundEnabled {
         didSet {
             print("Is sound enabled? \(isSoundEnabled)")
