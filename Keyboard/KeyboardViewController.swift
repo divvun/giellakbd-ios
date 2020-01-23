@@ -353,7 +353,7 @@ open class KeyboardViewController: UIInputViewController {
         extraSpacingView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
 
         bannerView = BannerView(theme: theme)
-        guard let bannerView = bannerView else { fatalError("thank`s") }
+        guard let bannerView = bannerView else { fatalError("No banner view found in setupBannerView") }
         
         bannerView.translatesAutoresizingMaskIntoConstraints = false
 
