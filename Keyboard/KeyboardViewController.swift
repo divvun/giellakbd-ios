@@ -68,13 +68,10 @@ open class KeyboardViewController: UIInputViewController {
     public private(set) var bannerView: BannerView?
     public private(set) var keyboardDefinition: KeyboardDefinition!
     private var keyboardMode: KeyboardMode = .normal
-    
-    private var startsWithBanner: Bool = false
 
     public init(withBanner: Bool) {
         super.init(nibName: nil, bundle: nil)
-        startsWithBanner = withBanner
-        commonInit()
+        commonInit(withBanner: withBanner)
     }
     
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -87,12 +84,12 @@ open class KeyboardViewController: UIInputViewController {
         commonInit()
     }
     
-    private func commonInit() {
+    private func commonInit(withBanner: Bool = false) {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: preferredHeight)
         inputView?.allowsSelfSizing = true
         print(String(describing: inputView))
-        setupKeyboardView(withBanner: startsWithBanner)
+        setupKeyboardView(withBanner: withBanner)
     }
     
     private(set) lazy var definitions: [KeyboardDefinition] = {
