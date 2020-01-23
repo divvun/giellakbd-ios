@@ -105,7 +105,7 @@ extension UIView {
 }
 
 public extension UIColor {
-    var components: (r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat) {
+    private var components: (r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat) {
         let components = cgColor.components!
 
         switch components.count == 2 {
