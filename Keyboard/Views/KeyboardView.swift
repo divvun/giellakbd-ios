@@ -12,6 +12,7 @@ protocol KeyboardViewDelegate {
     @objc func didTriggerKeyboardButton(sender: UIView, forEvent event: UIEvent)
 }
 
+// swiftlint:disable:next type_body_length
 internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, LongPressOverlayDelegate, LongPressCursorMovementDelegate {
     private static let pauseBeforeRepeatTimeInterval: TimeInterval = 0.5
     private static let keyRepeatTimeInterval: TimeInterval = 0.1
