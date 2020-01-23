@@ -70,9 +70,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         if let url = launchOptions?[UIApplication.LaunchOptionsKey.url] {
-            let url = url as! URL
-
-            parseUrl(url)
+            if let url = url as? URL {
+                parseUrl(url)
+            }
         }
 
         return true
