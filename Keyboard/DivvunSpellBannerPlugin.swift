@@ -136,7 +136,7 @@ public class DivvunSpellBannerPlugin {
         self.keyboard = keyboard
         
         guard let bannerView = keyboard.bannerView else {
-            fatalError("†hænx")
+            fatalError("No banner view found in DivvunSpellBannerPlugin init")
         }
         banner = bannerView
 
