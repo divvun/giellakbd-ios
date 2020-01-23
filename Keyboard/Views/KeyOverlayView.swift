@@ -97,7 +97,7 @@ class KeyOverlayView: UIView {
     }
 
     override func draw(_: CGRect) {
-        guard let _ = self.superview else { return }
+        guard self.superview != nil else { return }
 
         path = createPath()
 
@@ -129,10 +129,8 @@ class KeyOverlayView: UIView {
         let path = CGMutablePath()
 
         path.move(to: CGPoint(x: frame.midX, y: 0.0))
-        for (index, point) in points.enumerated() {
-            if index < points.count - 1 {
-                path.addArc(tangent1End: point.point, tangent2End: points[index + 1].point, radius: point.radius)
-            }
+        for (index, point) in points.enumerated() where index < points.count - 1 {
+            path.addArc(tangent1End: point.point, tangent2End: points[index + 1].point, radius: point.radius)
         }
         path.closeSubpath()
 
