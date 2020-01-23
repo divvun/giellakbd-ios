@@ -134,7 +134,11 @@ public class DivvunSpellBannerPlugin {
 
     public init(keyboard: KeyboardViewController) {
         self.keyboard = keyboard
-        banner = keyboard.bannerView
+        
+        guard let bannerView = keyboard.bannerView else {
+            fatalError("No banner view found in DivvunSpellBannerPlugin init")
+        }
+        banner = bannerView
 
         banner.delegate = self
         loadBHFST()

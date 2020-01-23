@@ -44,6 +44,12 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
         }
     }
 
+    override var intrinsicContentSize: CGSize {
+        // This must be implemented, otherwise the keyboard is too small.
+        // It doesn't matter that what's returned is bigger than the keyboard should actually be.
+        return CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+    }
+    
     private let reuseIdentifier = "cell"
     private let collectionView: UICollectionView
     private let layout = UICollectionViewFlowLayout()
@@ -95,6 +101,7 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(KeyCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView.isUserInteractionEnabled = false
+        collectionView.isScrollEnabled = false
 
         addSubview(collectionView)
         collectionView.topAnchor.constraint(equalTo: topAnchor).isActive = true

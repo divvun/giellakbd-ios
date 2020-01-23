@@ -62,6 +62,35 @@ extension UIScreen {
 open class KeyboardViewController: UIInputViewController {
     @IBOutlet var nextKeyboardButton: UIButton!
     private var keyboardView: KeyboardViewProvider!
+    private var heightConstraint: NSLayoutConstraint!
+    private var extraSpacingView: UIView!
+    private var deadKeyHandler: DeadKeyHandler!
+    public private(set) var bannerView: BannerView?
+    public private(set) var keyboardDefinition: KeyboardDefinition!
+    private var keyboardMode: KeyboardMode = .normal
+
+    public init(withBanner: Bool) {
+        super.init(nibName: nil, bundle: nil)
+        commonInit(withBanner: withBanner)
+    }
+    
+    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        commonInit()
+    }
+
+    public required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        commonInit()
+    }
+    
+    private func commonInit(withBanner: Bool = false) {
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: preferredHeight)
+        inputView?.allowsSelfSizing = true
+        print(String(describing: inputView))
+        setupKeyboardView(withBanner: withBanner)
+    }
     
     private(set) lazy var definitions: [KeyboardDefinition] = {
         let path = Bundle.top.url(forResource: "KeyboardDefinitions", withExtension: "json")!
@@ -123,13 +152,6 @@ open class KeyboardViewController: UIInputViewController {
     }
     
     private var portraitHeight: CGFloat {
-        let height = portraitDeviceHeight
-//        print("Device height: \(height)")
-//
-//        print("Device idiom: \(UIDevice.current.userInterfaceIdiom)")
-//        print("Device idiom (trait): \(self.traitCollection.userInterfaceIdiom)")
-//        print("Size class (h): \(self.traitCollection.horizontalSizeClass)")
-//        print("Size class (v): \(self.traitCollection.verticalSizeClass)")
         let sizeInches = UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches
         print("Size inches: \(sizeInches)")
         switch UIDevice.current.dc.deviceFamily {
@@ -153,7 +175,7 @@ open class KeyboardViewController: UIInputViewController {
                 return 384.0
             }
             
-            return height / 4.0
+            return portraitDeviceHeight / 4.0
         case .iPhone, .iPod:
             // https://iosref.com/res/
             switch UIDevice.current.dc.deviceModel {
@@ -173,17 +195,10 @@ open class KeyboardViewController: UIInputViewController {
                 return 262.0
             }
         default:
-            return height / 3.0
+            return portraitDeviceHeight / 3.0
         }
     }
 
-    private var heightConstraint: NSLayoutConstraint!
-    private var extraSpacingView: UIView!
-    private var deadKeyHandler: DeadKeyHandler!
-    public private(set) var bannerView: BannerView!
-    public private(set) var keyboardDefinition: KeyboardDefinition!
-    private var keyboardMode: KeyboardMode = .normal
-    
     private var isSoundEnabled = KeyboardSettings.isKeySoundEnabled {
         didSet {
             print("Is sound enabled? \(isSoundEnabled)")
@@ -228,9 +243,12 @@ open class KeyboardViewController: UIInputViewController {
     }
     
     private func initHeightConstraint() {
-        heightConstraint = view.heightAnchor
-            .constraint(equalToConstant: preferredHeight)
-            .enable(priority: .required)
+        // If this is removed, iPhone 5s glitches before finding the correct height.
+        DispatchQueue.main.async {
+            self.heightConstraint = self.view.heightAnchor
+                .constraint(equalToConstant: self.preferredHeight)
+                .enable(priority: UILayoutPriority(999))
+        }
     }
 
     open override func viewDidLoad() {
@@ -245,15 +263,12 @@ open class KeyboardViewController: UIInputViewController {
 
         inputView?.allowsSelfSizing = true
         
-        setupKeyboardView()
-        setupBannerView()
-        
         isSoundEnabled = KeyboardSettings.isKeySoundEnabled
         
         print("\(definitions.map { $0.locale })")
     }
 
-    private func setupKeyboardView() {
+    private func setupKeyboardView(withBanner: Bool) {
         if keyboardView != nil {
             keyboardView.remove()
             keyboardView = nil
@@ -322,14 +337,15 @@ open class KeyboardViewController: UIInputViewController {
 
             self.keyboardView = keyboardView
         }
-        if bannerView != nil {
-            bannerView.bottomAnchor.constraint(equalTo: keyboardView.topAnchor).isActive = true
+        
+        if withBanner {
+            setupBannerView()
         }
     }
 
     private func setupBannerView() {
         extraSpacingView = UIView(frame: .zero)
-        extraSpacingView.backgroundColor = UIColor.orange
+        extraSpacingView.backgroundColor = .orange
         extraSpacingView.translatesAutoresizingMaskIntoConstraints = false
         view.insertSubview(extraSpacingView, at: 0)
         extraSpacingView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
@@ -337,6 +353,8 @@ open class KeyboardViewController: UIInputViewController {
         extraSpacingView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
 
         bannerView = BannerView(theme: theme)
+        guard let bannerView = bannerView else { fatalError("No banner view found in setupBannerView") }
+        
         bannerView.translatesAutoresizingMaskIntoConstraints = false
 
         view.insertSubview(bannerView, at: 0)
@@ -394,12 +412,15 @@ open class KeyboardViewController: UIInputViewController {
 
     var bannerVisible: Bool {
         set {
-            bannerView.isHidden = !newValue
+            bannerView?.isHidden = !newValue
             updateHeightConstraint()
         }
 
         get {
-            return !bannerView.isHidden
+            guard let bannerView = bannerView else {
+                return false
+            }
+            return bannerView.isHidden == false
         }
     }
 
@@ -519,7 +540,7 @@ open class KeyboardViewController: UIInputViewController {
             theme = newTheme
             
             updateAfterThemeChange()
-            bannerView.updateTheme(theme: theme)
+            bannerView?.updateTheme(theme: theme)
             keyboardView.updateTheme(theme: theme)
         }
     }
