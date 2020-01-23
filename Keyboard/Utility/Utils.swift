@@ -105,6 +105,8 @@ extension UIView {
 }
 
 public extension UIColor {
+    // FIXME: is there a cleaner way to do this?
+    // swiftlint:disable:next large_tuple
     private var components: (r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat) {
         let components = cgColor.components!
 
