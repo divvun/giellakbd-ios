@@ -232,10 +232,10 @@
 				FDAF59AC22F9CD0700F7C9FC /* KeyOverlayView.swift */,
 				C649D3D2234B7C7A00EF4273 /* KeyView.swift */,
 			);
-			name = Views;
+			path = Views;
 			sourceTree = "<group>";
 		};
-		4E6AEE5019D2486900931E8F /* Model */ = {
+		4E6AEE5019D2486900931E8F /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				C6EA31C021AF17CE0014F3B6 /* KeyboardDefinitions.json */,
@@ -245,10 +245,10 @@
 				C6996B5822FC2CC2007EBC3D /* SystemKeys.swift */,
 				C6996B5B22FC2D3E007EBC3D /* CursorContext.swift */,
 			);
-			name = Model;
+			path = Models;
 			sourceTree = "<group>";
 		};
-		4E6AEE5219D2488B00931E8F /* Controller */ = {
+		4E6AEE5219D2488B00931E8F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				4EC2A46919DF811E00F789E1 /* KeyboardViewController.swift */,
@@ -258,7 +258,7 @@
 				C6996B5D22FC3257007EBC3D /* DivvunSpellBannerPlugin.swift */,
 				FDBD09C32333A50E00303152 /* SplitKeyboard.swift */,
 			);
-			name = Controller;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		4E807D8A19461D9000D875D1 = {
@@ -316,8 +316,8 @@
 		4E807DBA19461DC700D875D1 /* Keyboard */ = {
 			isa = PBXGroup;
 			children = (
-				4E6AEE5219D2488B00931E8F /* Controller */,
-				4E6AEE5019D2486900931E8F /* Model */,
+				4E6AEE5219D2488B00931E8F /* Controllers */,
+				4E6AEE5019D2486900931E8F /* Models */,
 				4E6AEE4F19D2484B00931E8F /* Views */,
 				4EE7599519F759F300B4E6ED /* Utility */,
 				4E807DBB19461DC700D875D1 /* Supporting Files */,
@@ -341,7 +341,7 @@
 				C6996B5422FC2C8B007EBC3D /* Utils.swift */,
 				991EE54F23D9AB4700DC3677 /* ViewDebugger.swift */,
 			);
-			name = Utility;
+			path = Utility;
 			sourceTree = "<group>";
 		};
 		64F4D84E0649A1185050129C /* Frameworks */ = {
@@ -362,7 +362,7 @@
 				C6B638451EDF94CA00A6ECB2 /* AboutController.swift */,
 				C691A0E623682C8B00085AC3 /* TestingController.swift */,
 			);
-			name = Controllers;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		C6A969D71EB6126100A1143E /* Views */ = {
