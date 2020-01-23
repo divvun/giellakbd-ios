@@ -27,8 +27,6 @@ enum KeyboardMode {
     case right
 }
 
-private let almostRequiredPriority = UILayoutPriority(rawValue: 1.0)
-
 extension NSLayoutConstraint {
     @discardableResult
     func enable(priority: UILayoutPriority? = nil) -> NSLayoutConstraint {
