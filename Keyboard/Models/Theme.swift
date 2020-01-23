@@ -178,7 +178,9 @@ class DarkThemeImpl: ThemeType {
     var capitalKeyFont: UIFont { return IPhoneThemeBase.capitalKeyFont }
     var modifierKeyFontSize: CGFloat { return IPhoneThemeBase.modifierKeyFontSize }
     var popupLowerKeyFont: UIFont { return IPhoneThemeBase.lowerKeyFont.withSize(IPhoneThemeBase.lowerKeyFont.pointSize + 10.0) }
-    var popupCapitalKeyFont: UIFont { return IPhoneThemeBase.capitalKeyFont.withSize(IPhoneThemeBase.capitalKeyFont.pointSize + 10.0) }
+    var popupCapitalKeyFont: UIFont {
+        return IPhoneThemeBase.capitalKeyFont.withSize(IPhoneThemeBase.capitalKeyFont.pointSize + 10.0)
+    }
     var popupLongpressCapitalKeyFont = IPhoneThemeBase.capitalKeyFont //UIFont.systemFont(ofSize: 36.0)
     var popupLongpressLowerKeyFont = IPhoneThemeBase.lowerKeyFont //UIFont.systemFont(ofSize: 34.0, weight: .light)
     var bannerFont: UIFont { return IPhoneThemeBase.bannerFont }

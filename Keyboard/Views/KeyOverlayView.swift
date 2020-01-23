@@ -208,15 +208,17 @@ class KeyOverlayView: UIView {
                 bubbleConnectionCornerRadius = spaceBetweenBubbleBottomAndKeyBottom - keyRadius
             }
 
+            let leftRadius = originFrameInLocalBounds.minX < theme.popupCornerRadius ? 0 : theme.popupCornerRadius
+            let rightRadius = originFrameInLocalBounds.maxX > self.frame.width - theme.popupCornerRadius ? 0 : theme.popupCornerRadius
             return [
                 topCenter,
                 topLeft,
-                CGPoint(x: 0, y: bubbleHeight).withRadius(originFrameInLocalBounds.minX < theme.popupCornerRadius ? 0 : theme.popupCornerRadius),
+                CGPoint(x: 0, y: bubbleHeight).withRadius(leftRadius),
                 CGPoint(x: originFrameInLocalBounds.minX, y: bubbleHeight).withRadius(bubbleConnectionCornerRadius),
                 CGPoint(x: originFrameInLocalBounds.minX, y: self.bounds.maxY).withRadius(keyRadius),
                 CGPoint(x: originFrameInLocalBounds.maxX, y: self.bounds.maxY).withRadius(keyRadius),
                 CGPoint(x: originFrameInLocalBounds.maxX, y: bubbleHeight).withRadius(bubbleConnectionCornerRadius),
-                CGPoint(x: self.frame.width, y: bubbleHeight).withRadius(originFrameInLocalBounds.maxX > self.frame.width - theme.popupCornerRadius ? 0 : theme.popupCornerRadius),
+                CGPoint(x: self.frame.width, y: bubbleHeight).withRadius(rightRadius),
                 topRight,
                 topCenter
             ]

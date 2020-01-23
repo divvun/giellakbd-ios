@@ -13,7 +13,8 @@ extension Nibbable where Self: UIView {
 
         guard let views = bundle.loadNibNamed(nibName, owner: Self.self, options: nil),
             let view = views.first as? Self else {
-                fatalError("Nib could not be loaded for nibName: \(nibName); check that the XIB owner has been set to the given view: \(self)")
+                fatalError("Nib could not be loaded for nibName: \(nibName);"
+                    + "check that the XIB owner has been set to the given view: \(self)")
         }
 
         return view
