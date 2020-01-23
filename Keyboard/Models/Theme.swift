@@ -2,6 +2,7 @@ import Foundation
 import UIKit
 import UIDeviceComplete
 
+// swiftlint:disable:next type_name
 struct _Theme {
     let dark: ThemeType
     let light: ThemeType
