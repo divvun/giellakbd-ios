@@ -42,8 +42,6 @@ extension NSLayoutConstraint {
 
 fileprivate let portraitDeviceHeight: CGFloat = {
     let size = UIScreen.main.bounds.size
-    
-//    print(UIScreen.main.availableModes)
     return max(size.height, size.width)
 }()
 
@@ -87,7 +85,6 @@ open class KeyboardViewController: UIInputViewController {
     private func commonInit(withBanner: Bool = false) {
         view.translatesAutoresizingMaskIntoConstraints = false
         inputView?.allowsSelfSizing = true
-        print(String(describing: inputView))
         setupKeyboardView(withBanner: withBanner)
     }
     
