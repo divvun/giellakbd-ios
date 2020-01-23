@@ -58,7 +58,10 @@ class InstructionsController: ViewController<InstructionsView> {
 
         contentView.settingsButton.addTarget(self, action: #selector(onSettingsTapped), for: .touchUpInside)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(applicationDidBecomeActive),
+                                               name: UIApplication.didBecomeActiveNotification,
+                                               object: nil)
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: UIImage(named: "language")!.with(width: 24, height: 24),
@@ -67,7 +70,10 @@ class InstructionsController: ViewController<InstructionsView> {
             action: #selector(openLanguages)
         )
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: Strings.skip, style: .plain, target: self, action: #selector(onSkipTapped))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: Strings.skip,
+                                                            style: .plain,
+                                                            target: self,
+                                                            action: #selector(onSkipTapped))
     }
 
     deinit {

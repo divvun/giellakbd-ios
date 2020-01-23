@@ -2,13 +2,18 @@ import Sentry
 import UIKit
 
 class AppNavControllerDelegate: NSObject, UINavigationControllerDelegate {
-    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated _: Bool) {
+    func navigationController(_ navigationController: UINavigationController,
+                              willShow viewController: UIViewController,
+                              animated _: Bool) {
         viewController.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
         navigationController.setNavigationBarHidden(viewController is HideNavBar, animated: true)
     }
 
-    func navigationController(_: UINavigationController, animationControllerFor _: UINavigationController.Operation, from _: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func navigationController(_: UINavigationController,
+                              animationControllerFor _: UINavigationController.Operation,
+                              from _: UIViewController,
+                              to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         toVC.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
         return nil
@@ -43,7 +48,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return x.contains(Bundle.main)
     }
 
-    func application(_: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(_: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         AppDelegate.instance = self
 
         if let sentryDSN = Bundle.main.infoDictionary?["SentryDSN"] as? String {
