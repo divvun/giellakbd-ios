@@ -10,6 +10,8 @@
 
 import UIKit
 
+// swiftlint:disable all
+
 open class SimpleButton: UIButton {
     typealias ControlState = UInt
 
