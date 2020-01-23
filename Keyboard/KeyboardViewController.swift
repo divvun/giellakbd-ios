@@ -257,8 +257,6 @@ open class KeyboardViewController: UIInputViewController {
         keyboardDefinition = definitions[kbdIndex]
         deadKeyHandler = DeadKeyHandler(keyboard: keyboardDefinition)
 
-        inputView?.allowsSelfSizing = true
-        
         isSoundEnabled = KeyboardSettings.isKeySoundEnabled
         
         print("\(definitions.map { $0.locale })")
