@@ -66,7 +66,6 @@ extension UIKeyboardAppearance: CustomDebugStringConvertible {
     }
 }
 
-
 extension String {
     func suffix(after index: String.Index) -> String.SubSequence {
         if index >= endIndex {
