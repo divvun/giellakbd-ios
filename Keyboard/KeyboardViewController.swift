@@ -340,6 +340,8 @@ open class KeyboardViewController: UIInputViewController {
         
         if withBanner {
             setupBannerView()
+        } else {
+            self.keyboardView.topAnchor.constraint(equalTo: view.topAnchor).enable()
         }
     }
 
