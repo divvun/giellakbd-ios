@@ -3,7 +3,7 @@ import UIDeviceComplete
 class KeyView: UIView {
     private let key: KeyDefinition
     private let theme: ThemeType
-    
+
     public var contentView: UIView!
 
     var isSwipeKey: Bool {
@@ -20,7 +20,7 @@ class KeyView: UIView {
 
     private var label: UILabel! = UILabel()
     private var alternateLabel: UILabel?
-    
+
     private var fontSize: CGFloat = 0.0
     private var altFontSize: CGFloat = 0.0
 
@@ -42,7 +42,7 @@ class KeyView: UIView {
                     ? activeColor
                     : regularColor
             }
-            
+
             if !active {
                 percentageAlternative = 0.0
             }
@@ -58,18 +58,18 @@ class KeyView: UIView {
 
             if isSwipeKey {
                 let fontSizeDelta = fontSize - theme.modifierKeyFontSize
-                
+
                 if let alternateLabel = alternateLabel {
                     alternateLabel.textColor = UIColor.interpolate(from: theme.altKeyTextColor, to: theme.textColor, with: percentageAlternative)
                     alternateLabel.font = alternateLabel.font.withSize(altFontSize + fontSizeDelta * percentageAlternative)
                 }
-                
+
                 label.textColor = UIColor.interpolate(from: theme.textColor, to: UIColor.clear, with: percentageAlternative)
                 label.font = label.font.withSize(fontSize - fontSizeDelta * percentageAlternative)
             }
         }
     }
-    
+
     private func configureKeyLabel(_ label: UILabel, page: KeyboardPage, text: String) {
         label.textColor = theme.textColor
         label.numberOfLines = 0
@@ -83,7 +83,7 @@ class KeyView: UIView {
         label.setContentHuggingPriority(.defaultLow, for: .vertical)
         label.adjustsFontSizeToFitWidth = false
         label.text = text
-        
+
         if case .input = key.type {
             switch page {
             case .shifted, .capslock, .symbols1, .symbols2:
@@ -103,18 +103,18 @@ class KeyView: UIView {
             label.adjustsFontSizeToFitWidth = true
             label.sizeToFit()
         }
-        
+
         fontSize = label.font.pointSize
     }
-    
+
     private var isLogicallyIPad: Bool {
         return UIDevice.current.dc.deviceFamily == .iPad &&
             self.traitCollection.userInterfaceIdiom == .pad
     }
-    
+
     private func configureAltKeyLabel(_ alternateLabel: UILabel, page: KeyboardPage) {
         alternateLabel.textColor = theme.inactiveTextColor
-        
+
         alternateLabel.adjustsFontSizeToFitWidth = false
         alternateLabel.numberOfLines = 0
         alternateLabel.textAlignment = .center
@@ -123,7 +123,7 @@ class KeyView: UIView {
         alternateLabel.translatesAutoresizingMaskIntoConstraints = false
         alternateLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         alternateLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
-        
+
         if self.isLogicallyIPad && (UIDevice.current.dc.screenSize.sizeInches ?? 0.0) > 12 {
             switch page {
             case .shifted, .capslock, .symbols1, .symbols2:
@@ -134,10 +134,10 @@ class KeyView: UIView {
         } else {
             alternateLabel.font = theme.altKeyFont
         }
-        
+
         altFontSize = alternateLabel.font.pointSize
     }
-    
+
     private func input(string: String, alt: String?, page: KeyboardPage) {
         let labelHoldingView = UIView(frame: .zero)
         labelHoldingView.translatesAutoresizingMaskIntoConstraints = false
@@ -150,30 +150,30 @@ class KeyView: UIView {
             self.alternateLabel = UILabel(frame: .zero)
             configureAltKeyLabel(self.alternateLabel!, page: page)
             alternateLabel!.text = alternateString
-            
+
             labelHoldingView.addSubview(alternateLabel!)
         }
 
         labelHoldingView.addSubview(label)
         addSubview(labelHoldingView)
-        
+
         label.centerXAnchor.constraint(equalTo: labelHoldingView.centerXAnchor).isActive = true
         label.widthAnchor.constraint(equalTo: labelHoldingView.widthAnchor).isActive = true
-        
+
         let yConstant: CGFloat
         if case .normal = page, case KeyType.input(_) = self.key.type {
             yConstant = -2.0
         } else {
             yConstant = 0.0
         }
-        
+
         if let alternateLabel = self.alternateLabel {
             swipeLayoutConstraint = alternateLabel.topAnchor
                 .constraint(equalTo: labelHoldingView.topAnchor, constant: theme.altLabelTopAnchorConstant)
                 .enable()
-            
+
             label.bottomAnchor.constraint(equalTo: labelHoldingView.bottomAnchor, constant: theme.altLabelBottomAnchorConstant).enable()
-            
+
             alternateLabel.centerXAnchor
                 .constraint(equalTo: labelHoldingView.centerXAnchor)
                 .enable()
@@ -187,7 +187,7 @@ class KeyView: UIView {
 
         contentView = labelHoldingView
     }
-    
+
     private func text(_ string: String, page: KeyboardPage) {
         let labelHoldingView = UIView(frame: .zero)
         labelHoldingView.translatesAutoresizingMaskIntoConstraints = false
@@ -205,7 +205,7 @@ class KeyView: UIView {
         } else {
             yConstant = 0.0
         }
-        
+
         label.centerXAnchor
             .constraint(equalTo: labelHoldingView.centerXAnchor)
             .enable()
@@ -215,7 +215,7 @@ class KeyView: UIView {
         label.widthAnchor
             .constraint(equalTo: labelHoldingView.widthAnchor, multiplier: 1.0, constant: -4.0)
             .enable()
-        
+
         swipeLayoutConstraint = nil
 
         contentView = labelHoldingView
@@ -228,7 +228,7 @@ class KeyView: UIView {
             // In this scenario for whatever reason we must use an image asset file that contains only one universal image
             image = UIImage(named: name + "-fallback", in: Bundle.top, compatibleWith: traits)
         }
-        
+
         imageView = UIImageView()
         if let imageView = self.imageView {
             self.imageView?.translatesAutoresizingMaskIntoConstraints = false
@@ -242,20 +242,20 @@ class KeyView: UIView {
             contentView = imageView
         }
     }
-    
+
     private func image(named name: String, traits: UITraitCollection) {
         image(named: name, traits: traits, tintColor: theme.textColor)
     }
-    
+
     init(page: KeyboardPage, key: KeyDefinition, theme: ThemeType, traits: UITraitCollection) {
         self.key = key
         self.theme = theme
-        
+
         super.init(frame: .zero)
 
         // HACK: UIColor.clear or alpha value below 0.001 here breaks indexPathForItemAtPoint:
         backgroundColor = UIColor(white: 0.001, alpha: 0.001)
-        
+
         switch key.type {
         case let .input(string, alt):
             input(string: string, alt: alt, page: page)
@@ -335,24 +335,24 @@ class KeyView: UIView {
         layer.shadowOffset = CGSize(width: 0, height: 1)
         layer.shadowOpacity = 1.0
         layer.shadowRadius = 0.0
-        
+
         contentView.fill(superview: self, margins: UIEdgeInsets(
             top: theme.keyVerticalMargin,
             left: theme.keyHorizontalMargin,
             bottom: theme.keyVerticalMargin,
             right: theme.keyHorizontalMargin))
-        
+
         contentView.clipsToBounds = false
 
         contentView.backgroundColor = backgroundColor(for: key, page: page)
     }
-    
+
     private func backgroundColor(for key: KeyDefinition, page:KeyboardPage) -> UIColor {
         if key.type == .shift,
             (page == .shifted || page == .capslock) {
             return theme.shiftActiveColor
         }
-        
+
         return key.type.isSpecialKeyStyle
             ? theme.specialKeyColor
             : theme.regularKeyColor

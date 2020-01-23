@@ -98,7 +98,7 @@ extension UIView {
         topAnchor.constraint(equalTo: other.topAnchor, constant: margins.top).isActive = true
         bottomAnchor.constraint(equalTo: other.bottomAnchor, constant: -margins.bottom).isActive = true
     }
-    
+
     func centerIn(superview other: UIView) {
         centerXAnchor.constraint(equalTo: other.centerXAnchor).isActive = true
         centerYAnchor.constraint(equalTo: other.centerYAnchor).isActive = true

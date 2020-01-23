@@ -58,7 +58,7 @@ private func resolveWordContext(before beforeInput: String, after afterInput: St
         let rightFullChunk = afterInput.suffix(after: currentRightIndex)
         let rightIndex = rightFullChunk.firstIndex(where: { $0 == " " || $0 == "\n" }) ?? rightFullChunk.endIndex
         let rightChunk = rightFullChunk.prefix(upTo: rightIndex)
-        
+
         let candidate = rightChunk.trimmingCharacters(in: .whitespacesAndNewlines)
         if !candidate.isEmpty {
             nextWord = candidate
