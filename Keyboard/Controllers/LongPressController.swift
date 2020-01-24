@@ -218,7 +218,6 @@ class LongPressOverlayController: NSObject,
 
         let point = longPressTouchPoint(at: point, cellSize: cellSize, view: collectionView, parentView: wholeView)
 
-        // TODO: Logic for multiline popups
         if let indexPath = collectionView.indexPathForItem(at: point) {
             selectedKey = longpressValues[indexPath.row + Int(ceil(Double(longpressValues.count) / 2.0)) * indexPath.section]
         } else {

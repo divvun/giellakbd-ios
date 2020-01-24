@@ -99,7 +99,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_: UIApplication) {}
 
     func parseUrl(_: URL) {
-        // TODO: what?
         guard Bundle.main.bundleIdentifier != nil else {
             return
         }
