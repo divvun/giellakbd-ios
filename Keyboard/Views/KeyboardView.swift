@@ -94,9 +94,9 @@ internal class KeyboardView: UIView,
     }
 
     private(set) lazy var longpressGestureRecognizer: UILongPressGestureRecognizer = {
-        let x =  UILongPressGestureRecognizer(target: self, action: #selector(KeyboardView.touchesFoundLongpress))
-        x.cancelsTouchesInView = false
-        return x
+        let recognizer =  UILongPressGestureRecognizer(target: self, action: #selector(KeyboardView.touchesFoundLongpress))
+        recognizer.cancelsTouchesInView = false
+        return recognizer
     }()
 
     required init(definition: KeyboardDefinition, theme: ThemeType) {
@@ -330,8 +330,8 @@ internal class KeyboardView: UIView,
 
     func longpressKeySize() -> CGSize {
         let width = bounds.size.width / CGFloat(currentPage.first?.count ?? 10)
-        let h = (bounds.size.height / CGFloat(currentPage.count)) - theme.popupCornerRadius * 2
-        let height = max(32.0, h)
+        var height = (bounds.size.height / CGFloat(currentPage.count)) - theme.popupCornerRadius * 2
+        height = max(32.0, height)
         return CGSize(
             width: width,
             height: height

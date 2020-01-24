@@ -85,6 +85,7 @@ extension Substring {
 }
 
 extension UIColor {
+    //swiftlint:disable:next identifier_name
     convenience init(r: Int, g: Int, b: Int, a: Double = 1) {
         self.init(red: CGFloat(r) / CGFloat(255),
                   green: CGFloat(g) / CGFloat(255),
@@ -123,10 +124,12 @@ public extension UIColor {
         let fromComponents = fromColor.components
         let toComponents = toColor.components
 
+        //swiftlint:disable identifier_name
         let r = (1 - progress) * fromComponents.r + progress * toComponents.r
         let g = (1 - progress) * fromComponents.g + progress * toComponents.g
         let b = (1 - progress) * fromComponents.b + progress * toComponents.b
         let a = (1 - progress) * fromComponents.a + progress * toComponents.a
+        //swiftlint:enable identifier_name
 
         return UIColor(red: r, green: g, blue: b, alpha: a)
     }

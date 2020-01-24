@@ -339,6 +339,7 @@ class DarkThemeIpadImpl: DarkThemeImpl {
     override var popupLongpressKeysPerRow: Int {return IPadThemeBase.popupLongpressKeysPerRow}
 }
 
+//swiftlint:disable:next identifier_name
 func Theme(traits: UITraitCollection) -> _Theme {
     switch traits.userInterfaceIdiom {
     case .pad:

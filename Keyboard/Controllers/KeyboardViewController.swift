@@ -50,8 +50,8 @@ fileprivate let landscapeDeviceHeight: CGFloat = {
 
 extension UIScreen {
     var isDeviceLandscape: Bool {
-        let s = self.bounds.size
-        return s.width > s.height
+        let size = self.bounds.size
+        return size.width > size.height
     }
 }
 

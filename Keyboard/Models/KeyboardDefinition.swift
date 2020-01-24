@@ -95,13 +95,13 @@ public struct RawKeyboardMode: Decodable {
     }
 
     public init(from decoder: Decoder) throws {
-        let d = try decoder.container(keyedBy: Keys.self)
-        normal = try d.decode([[RawKeyDefinition]].self, forKey: .normal)
-        shifted = try d.decode([[RawKeyDefinition]].self, forKey: .shifted)
-        alt = try d.decodeIfPresent([[RawKeyDefinition]].self, forKey: .alt)
-        altShift = try d.decodeIfPresent([[RawKeyDefinition]].self, forKey: .altShift)
-        symbols1 = try d.decodeIfPresent([[RawKeyDefinition]].self, forKey: .symbols1)
-        symbols2 = try d.decodeIfPresent([[RawKeyDefinition]].self, forKey: .symbols2)
+        let container = try decoder.container(keyedBy: Keys.self)
+        normal = try container.decode([[RawKeyDefinition]].self, forKey: .normal)
+        shifted = try container.decode([[RawKeyDefinition]].self, forKey: .shifted)
+        alt = try container.decodeIfPresent([[RawKeyDefinition]].self, forKey: .alt)
+        altShift = try container.decodeIfPresent([[RawKeyDefinition]].self, forKey: .altShift)
+        symbols1 = try container.decodeIfPresent([[RawKeyDefinition]].self, forKey: .symbols1)
+        symbols2 = try container.decodeIfPresent([[RawKeyDefinition]].self, forKey: .symbols2)
     }
 }
 
@@ -134,15 +134,15 @@ struct RawKeyboardDefinition: Decodable {
     }
 
     public init(from decoder: Decoder) throws {
-        let d = try decoder.container(keyedBy: Keys.self)
+        let container = try decoder.container(keyedBy: Keys.self)
 
-        name = try d.decode(String.self, forKey: .name)
-        locale = try d.decode(String.self, forKey: .locale)
-        spaceName = try d.decode(String.self, forKey: .space)
-        returnName = try d.decode(String.self, forKey: .return)
+        name = try container.decode(String.self, forKey: .name)
+        locale = try container.decode(String.self, forKey: .locale)
+        spaceName = try container.decode(String.self, forKey: .space)
+        returnName = try container.decode(String.self, forKey: .return)
 
         do {
-            if let value = try d.decodeIfPresent([String: [String: [String]]].self, forKey: .deadKeys) {
+            if let value = try container.decodeIfPresent([String: [String: [String]]].self, forKey: .deadKeys) {
                 deadKeys = value
             } else {
                 deadKeys = [:]
@@ -153,7 +153,7 @@ struct RawKeyboardDefinition: Decodable {
         }
 
         do {
-            if let value = try d.decodeIfPresent([String: [String]].self, forKey: .longPress) {
+            if let value = try container.decodeIfPresent([String: [String]].self, forKey: .longPress) {
                 longPress = value
             } else {
                 longPress = [:]
@@ -164,7 +164,7 @@ struct RawKeyboardDefinition: Decodable {
         }
 
         do {
-            if let value = try d.decodeIfPresent([String: TransformTree].self, forKey: .transforms) {
+            if let value = try container.decodeIfPresent([String: TransformTree].self, forKey: .transforms) {
                 transforms = value
             } else {
                 transforms = [:]
@@ -174,9 +174,9 @@ struct RawKeyboardDefinition: Decodable {
             transforms = [:]
         }
 
-        iphone = try d.decode(RawKeyboardMode.self, forKey: .iphone)
-        ipad9in = try d.decode(RawKeyboardMode.self, forKey: .ipad9in)
-        ipad12in = try d.decode(RawKeyboardMode.self, forKey: .ipad12in)
+        iphone = try container.decode(RawKeyboardMode.self, forKey: .iphone)
+        ipad9in = try container.decode(RawKeyboardMode.self, forKey: .ipad9in)
+        ipad12in = try container.decode(RawKeyboardMode.self, forKey: .ipad12in)
     }
 }
 
