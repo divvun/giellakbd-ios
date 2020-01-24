@@ -38,12 +38,12 @@ extension NSLayoutConstraint {
     }
 }
 
-fileprivate let portraitDeviceHeight: CGFloat = {
+private let portraitDeviceHeight: CGFloat = {
     let size = UIScreen.main.bounds.size
     return max(size.height, size.width)
 }()
 
-fileprivate let landscapeDeviceHeight: CGFloat = {
+private let landscapeDeviceHeight: CGFloat = {
     let size = UIScreen.main.bounds.size
     return min(size.height, size.width)
 }()
