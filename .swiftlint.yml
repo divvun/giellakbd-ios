@@ -10,3 +10,5 @@ identifier_name:
     - id
     - x
     - y
+
+line_length: 130
