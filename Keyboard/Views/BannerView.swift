@@ -67,7 +67,7 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
         }
     }
 
-    public var delegate: BannerViewDelegate?
+    weak public var delegate: BannerViewDelegate?
 
     private var items: [BannerItem?] = [BannerItem]()
 
