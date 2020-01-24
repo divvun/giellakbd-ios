@@ -1,28 +1,20 @@
 import UIKit
 
 class ViewDebugger {
-    public static func printViewHierarchy(view: UIView, indent: Int) {
-        var emptyString = ""
-        for _ in 0..<indent {
-            emptyString += "    "
-        }
+    public static func printViewHierarchy(view: UIView, indentLevel: Int = 0) {
+        let indent = String(repeating: "    ", count: indentLevel)
 
-        emptyString += String(describing: view.self).split(separator: ";").first! + ">"
-        print(emptyString)
+        let viewDescription = String(describing: view.self)
+        print(indent + viewDescription)
 
         for constraint in view.constraints {
-            var ffs = ""
-            for _ in 0..<indent {
-                ffs += "    "
-            }
-
-            ffs += " - "
-            ffs += String(describing: constraint)
-            print(ffs)
+            let constraintDescription = String(describing: constraint)
+            let constraintPrefix = "  - " // So we can tell views and constraints apart
+            print(indent + constraintPrefix + constraintDescription)
         }
 
         for subview in view.subviews {
-            printViewHierarchy(view: subview, indent: indent + 1)
+            printViewHierarchy(view: subview, indentLevel: indentLevel + 1)
         }
     }
 }
