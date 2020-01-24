@@ -31,6 +31,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var wantsKeyboardList = false
 
     let navController = UINavigationController(rootViewController: HomeController())
+
+    //swiftlint:disable:next weak_delegate
     let ncDelegate = AppNavControllerDelegate()
 
     //swiftlint:disable identifier_name

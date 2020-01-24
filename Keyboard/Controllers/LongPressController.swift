@@ -21,7 +21,7 @@ protocol LongPressBehaviorProvider {
 }
 
 class LongPressCursorMovementController: NSObject, LongPressBehaviorProvider {
-    public var delegate: LongPressCursorMovementDelegate?
+    public weak var delegate: LongPressCursorMovementDelegate?
 
     private var baselinePoint: CGPoint?
     let delta: CGFloat = 20.0
@@ -86,7 +86,7 @@ class LongPressOverlayController: NSObject,
         }
     }
 
-    var delegate: LongPressOverlayDelegate?
+    weak var delegate: LongPressOverlayDelegate?
     private let labelFont: UIFont
 
     init(key: KeyDefinition, page: KeyboardPage, theme: ThemeType, longpressValues: [KeyDefinition]) {
