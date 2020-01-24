@@ -24,7 +24,6 @@ class KeyOverlayView: UIView {
         super.init(frame: CGRect(x: 0, y: 0, width: origin.frame.width, height: origin.frame.height * 2))
         self.translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .clear
-        originFrameView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(originFrameView)
         
         // This one breaks the top of the keyboard when given any chance to do so
