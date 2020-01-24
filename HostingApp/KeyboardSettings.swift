@@ -1,9 +1,9 @@
 import Foundation
 
 private let defaults: UserDefaults = {
-    let x = UserDefaults(suiteName: KeyboardSettings.groupId)!
-    x.registerDefaultsFromSettingsBundle()
-    return x
+    let defaults = UserDefaults(suiteName: KeyboardSettings.groupId)!
+    defaults.registerDefaultsFromSettingsBundle()
+    return defaults
 }()
 
 class KeyboardSettings {
