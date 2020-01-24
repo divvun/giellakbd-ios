@@ -8,3 +8,5 @@ identifier_name:
   excluded:
     - i
     - id
+    - x
+    - y
