@@ -174,7 +174,7 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
         overlay.bottomAnchor.constraint(equalTo: bottomAnchorView.bottomAnchor, constant: offset)
             .enable(priority: .defaultLow)
             
-        overlay.centerXAnchor.constraint(equalTo: keyView.centerXAnchor)
+        overlay.centerXAnchor.constraint(lessThanOrEqualTo: keyView.centerXAnchor)
             .enable(priority: .defaultHigh)
         
         // Handle the left and right sides not getting crushed on the edges of the screen
