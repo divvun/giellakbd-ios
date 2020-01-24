@@ -3,3 +3,8 @@ excluded:
 
 cyclomatic_complexity:
   ignores_case_statements: true
+
+identifier_name:
+  excluded:
+    - i
+    - id
