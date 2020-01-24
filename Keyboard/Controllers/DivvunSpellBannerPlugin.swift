@@ -59,8 +59,6 @@ extension DivvunSpellBannerPlugin: BannerViewDelegate {
 
     public func didSelectBannerItem(_ banner: BannerView, item: BannerItem) {
         keyboard.replaceSelected(with: item.value)
-        // TODO: Sami languages want to autosuggest compounds, so let's not add spaces without configuration
-//        keyboard.insertText(" ")
         opQueue.cancelAllOperations()
 
         banner.setBannerItems([])
