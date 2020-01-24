@@ -130,7 +130,9 @@ extension Strings {
     static var supportedLocales: [Locale] = {
         Bundle.main.localizations
             .filter { loc in
-                guard let bundlePath = Bundle.main.path(forResource: loc, ofType: "lproj"), let bundle = Bundle(path: bundlePath) else {
+                guard let bundlePath = Bundle.main.path(forResource: loc,
+                                                        ofType: "lproj"),
+                    let bundle = Bundle(path: bundlePath) else {
                     return false
                 }
 
@@ -152,7 +154,9 @@ extension Strings {
         }
 
         // Fallback for unsupported OS-level magic
-        guard let bundlePath = Bundle.main.path(forResource: languageCode, ofType: "lproj"), let bundle = Bundle(path: bundlePath) else {
+        guard let bundlePath = Bundle.main.path(forResource: languageCode,
+                                                ofType: "lproj"),
+            let bundle = Bundle(path: bundlePath) else {
             return languageCode
         }
 
