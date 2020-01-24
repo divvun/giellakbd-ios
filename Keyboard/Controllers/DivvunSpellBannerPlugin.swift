@@ -77,15 +77,15 @@ public class DivvunSpellBannerPlugin {
     }
 
     let opQueue: OperationQueue = {
-        let o = OperationQueue()
-        o.underlyingQueue = DispatchQueue.global(qos: .userInteractive)
-        o.maxConcurrentOperationCount = 1
-        return o
+        let opQueue = OperationQueue()
+        opQueue.underlyingQueue = DispatchQueue.global(qos: .userInteractive)
+        opQueue.maxConcurrentOperationCount = 1
+        return opQueue
     }()
 
     private func getPrimaryLanguage() -> String? {
-        if let ex = Bundle.main.infoDictionary!["NSExtension"] as? [String: AnyObject] {
-            if let attrs = ex["NSExtensionAttributes"] as? [String: AnyObject] {
+        if let extensionInfo = Bundle.main.infoDictionary!["NSExtension"] as? [String: AnyObject] {
+            if let attrs = extensionInfo["NSExtensionAttributes"] as? [String: AnyObject] {
                 if let lang = attrs["PrimaryLanguage"] as? String {
                     return String(lang.split(separator: "-")[0])
                 }
@@ -123,8 +123,8 @@ public class DivvunSpellBannerPlugin {
                 self.archive = try ThfstChunkedBoxSpellerArchive.open(path: path.path)
                 print("DivvunSpell loaded!")
             } catch {
-                let e = Sentry.Event(level: .error)
-                Client.shared?.send(event: e, completion: nil)
+                let error = Sentry.Event(level: .error)
+                Client.shared?.send(event: error, completion: nil)
                 print("DivvunSpell **not** loaded.")
                 return
             }

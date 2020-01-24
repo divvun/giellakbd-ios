@@ -54,8 +54,8 @@ class LanguagesController: UITableViewController {
 
         if selectedRow == indexPath { return }
 
-        if let s = selectedRow {
-            tableView.cellForRow(at: s)?.accessoryType = .none
+        if let selectedRow = selectedRow {
+            tableView.cellForRow(at: selectedRow)?.accessoryType = .none
         }
 
         tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark

@@ -6,23 +6,23 @@ public indirect enum TransformTree: Codable {
     case leaf(String)
 
     public init(from decoder: Decoder) throws {
-        let d = try decoder.singleValueContainer()
+        let container = try decoder.singleValueContainer()
 
         do {
-            self = .tree(try d.decode([String: TransformTree].self))
+            self = .tree(try container.decode([String: TransformTree].self))
         } catch {
-            self = .leaf(try d.decode(String.self))
+            self = .leaf(try container.decode(String.self))
         }
     }
 
     public func encode(to encoder: Encoder) throws {
-        var c = encoder.singleValueContainer()
+        var container = encoder.singleValueContainer()
 
         switch self {
         case let .tree(value):
-            try c.encode(value)
+            try container.encode(value)
         case let .leaf(value):
-            try c.encode(value)
+            try container.encode(value)
         }
     }
 }
@@ -39,27 +39,27 @@ struct RawKeyDefinition: Decodable {
     }
 
     public init(from decoder: Decoder) throws {
-        let d: KeyedDecodingContainer<Keys>
+        let container: KeyedDecodingContainer<Keys>
 
         do {
-            d = try decoder.container(keyedBy: Keys.self)
+            container = try decoder.container(keyedBy: Keys.self)
         } catch {
-            let d = try decoder.singleValueContainer()
-            self.id = try d.decode(String.self)
+            let container = try decoder.singleValueContainer()
+            self.id = try container.decode(String.self)
             self.width = 1.0
             self.height = 1.0
             return
         }
 
-        self.id = try d.decode(String.self, forKey: .id)
-        self.width = (try d.decodeIfPresent(Double.self, forKey: .width)) ?? 1.0
-        self.height = (try d.decodeIfPresent(Double.self, forKey: .height)) ?? 1.0
+        self.id = try container.decode(String.self, forKey: .id)
+        self.width = (try container.decodeIfPresent(Double.self, forKey: .width)) ?? 1.0
+        self.height = (try container.decodeIfPresent(Double.self, forKey: .height)) ?? 1.0
     }
 }
 
 enum DeviceVariant: String, Decodable {
-    case ipad_9in = "ipad-9in"
-    case ipad_12in = "ipad-12in"
+    case ipad9in = "ipad-9in"
+    case ipad12in = "ipad-12in"
     case iphone = "iphone"
 
     static func from(traits: UITraitCollection) -> DeviceVariant {
@@ -67,9 +67,9 @@ enum DeviceVariant: String, Decodable {
 
         if traits.userInterfaceIdiom == .pad && family == .iPad {
             if (UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches) < 12.0 {
-                return .ipad_9in
+                return .ipad9in
             } else {
-                return .ipad_12in
+                return .ipad12in
             }
         } else {
             return .iphone
@@ -115,8 +115,8 @@ struct RawKeyboardDefinition: Decodable {
     let longPress: [String: [String]]?
     let transforms: [String: TransformTree]?
 
-    let ipad_9in: RawKeyboardMode
-    let ipad_12in: RawKeyboardMode
+    let ipad9in: RawKeyboardMode
+    let ipad12in: RawKeyboardMode
     let iphone: RawKeyboardMode
 
     private enum Keys: String, CodingKey {
@@ -128,8 +128,8 @@ struct RawKeyboardDefinition: Decodable {
         case longPress
         case transforms
 
-        case ipad_9in = "ipad-9in"
-        case ipad_12in = "ipad-12in"
+        case ipad9in = "ipad-9in"
+        case ipad12in = "ipad-12in"
         case iphone = "iphone"
     }
 
@@ -175,8 +175,8 @@ struct RawKeyboardDefinition: Decodable {
         }
 
         iphone = try d.decode(RawKeyboardMode.self, forKey: .iphone)
-        ipad_9in = try d.decode(RawKeyboardMode.self, forKey: .ipad_9in)
-        ipad_12in = try d.decode(RawKeyboardMode.self, forKey: .ipad_12in)
+        ipad9in = try d.decode(RawKeyboardMode.self, forKey: .ipad9in)
+        ipad12in = try d.decode(RawKeyboardMode.self, forKey: .ipad12in)
     }
 }
 
@@ -213,10 +213,10 @@ public struct KeyboardDefinition: Codable {
         switch variant {
         case .iphone:
             mode = raw.iphone
-        case .ipad_9in:
-            mode = raw.ipad_9in
-        case .ipad_12in:
-            mode = raw.ipad_12in
+        case .ipad9in:
+            mode = raw.ipad9in
+        case .ipad12in:
+            mode = raw.ipad12in
         }
 
         switch variant {
@@ -230,7 +230,7 @@ public struct KeyboardDefinition: Codable {
             if let symbols2 = mode.symbols2 {
                 self.symbols2 = symbols2.map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) }}
             }
-        case .ipad_12in, .ipad_9in:
+        case .ipad12in, .ipad9in:
             let alt = mode.alt ?? []
             let altShift = mode.altShift ?? []
             let symbols1 = mode.symbols1 ?? []

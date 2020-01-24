@@ -130,11 +130,11 @@ extension Strings {
     static var supportedLocales: [Locale] = {
         Bundle.main.localizations
             .filter { loc in
-                guard let bp = Bundle.main.path(forResource: loc, ofType: "lproj"), let b = Bundle(path: bp) else {
+                guard let bundlePath = Bundle.main.path(forResource: loc, ofType: "lproj"), let bundle = Bundle(path: bundlePath) else {
                     return false
                 }
 
-                return b.path(forResource: "Localizable", ofType: "strings") != nil
+                return bundle.path(forResource: "Localizable", ofType: "strings") != nil
         }
         .map { Locale(identifier: $0 == "Base" ? "en" : $0) }
         .sorted(by: {
@@ -143,19 +143,19 @@ extension Strings {
     }()
 
     static func languageName(for locale: Locale) -> String? {
-        guard let lc = locale.languageCode else {
+        guard let languageCode = locale.languageCode else {
             return nil
         }
 
-        if let s = locale.localizedString(forLanguageCode: lc), s != lc {
-            return s
+        if let languageName = locale.localizedString(forLanguageCode: languageCode), languageName != languageCode {
+            return languageName
         }
 
         // Fallback for unsupported OS-level magic
-        guard let bp = Bundle.main.path(forResource: lc, ofType: "lproj"), let b = Bundle(path: bp) else {
-            return lc
+        guard let bundlePath = Bundle.main.path(forResource: languageCode, ofType: "lproj"), let bundle = Bundle(path: bundlePath) else {
+            return languageCode
         }
 
-        return b.localizedString(forKey: "locale_\(lc)", value: nil, table: nil)
+        return bundle.localizedString(forKey: "locale_\(languageCode)", value: nil, table: nil)
     }
 }

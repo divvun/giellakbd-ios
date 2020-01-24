@@ -26,13 +26,13 @@ public enum KeyType: Codable, Hashable {
     case caps
 
     public init(from decoder: Decoder) throws {
-        let d = try decoder.singleValueContainer()
-        let raw = try d.decode(RawKeyType.self)
+        let decoder = try decoder.singleValueContainer()
+        let raw = try decoder.decode(RawKeyType.self)
         self = Self.init(string: raw.id, alternate: raw.alternate, spaceName: raw.name ?? "", returnName: raw.name ?? "")
     }
 
     public func encode(to encoder: Encoder) throws {
-        var c = encoder.singleValueContainer()
+        var encoder = encoder.singleValueContainer()
         let raw: RawKeyType
 
         switch self {
@@ -65,11 +65,11 @@ public enum KeyType: Codable, Hashable {
         case .keyboardMode:
             raw = RawKeyType(id: "_keyboardMode", name: nil, alternate: nil)
         default:
-            try c.encodeNil()
+            try encoder.encodeNil()
             return
         }
 
-        try c.encode(raw)
+        try encoder.encode(raw)
     }
 
     init(string: String, alternate: String? = nil, spaceName: String, returnName: String) {

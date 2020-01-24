@@ -30,9 +30,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var wantsKeyboardList = false
 
-    let nc = UINavigationController(rootViewController: HomeController())
+    let navController = UINavigationController(rootViewController: HomeController())
     let ncDelegate = AppNavControllerDelegate()
 
+    //swiftlint:disable identifier_name
     var isKeyboardEnabled: Bool {
         let x: [Bundle] = UITextInputMode.activeInputModes.compactMap {
             let s = str1 + str2
@@ -47,6 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         return x.contains(Bundle.main)
     }
+    //swiftlint:enable identifier_name
 
     func application(_: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -64,15 +66,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         Strings.languageCode = KeyboardSettings.languageCode
 
-        nc.delegate = ncDelegate
+        navController.delegate = ncDelegate
 
         window = UIWindow(frame: UIScreen.main.bounds)
-        window!.rootViewController = nc
+        window!.rootViewController = navController
         window!.makeKeyAndVisible()
 
         if !isKeyboardEnabled, KeyboardSettings.firstLoad {
             KeyboardSettings.firstLoad = false
-            nc.pushViewController(InstructionsController(), animated: false)
+            navController.pushViewController(InstructionsController(), animated: false)
         }
 
         if let url = launchOptions?[UIApplication.LaunchOptionsKey.url] {

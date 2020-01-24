@@ -477,10 +477,10 @@ open class KeyboardViewController: UIInputViewController {
                     keyboardView.page = .shifted
                 }
             case .sentences:
-                let l: Character? = ctx.previousWord?.last
+                let lastCharacter: Character? = ctx.previousWord?.last
 
                 if ctx.currentWord == "",
-                    ((l?.isPunctuation ?? false) && l != ",") || ctx.previousWord == nil {
+                    ((lastCharacter?.isPunctuation ?? false) && lastCharacter != ",") || ctx.previousWord == nil {
                     keyboardView.page = .shifted
                 } else if case .shifted = page {
                     if !(ctx.previousWord?.last?.isUppercase ?? false) {
@@ -563,16 +563,16 @@ open class KeyboardViewController: UIInputViewController {
             if disablesDelayingGestureRecognizers {
                 if let window = view.window,
                     let recognizers = window.gestureRecognizers {
-                    recognizers.forEach { r in
-                        r.delaysTouchesBegan = false
-                        self.recognizersThatDelayTouches.insert(r.hash)
+                    recognizers.forEach { recognizer in
+                        recognizer.delaysTouchesBegan = false
+                        self.recognizersThatDelayTouches.insert(recognizer.hash)
                     }
                 }
             } else {
                 if let window = view.window,
                     let recognizers = window.gestureRecognizers {
-                    recognizers.filter { self.recognizersThatDelayTouches.contains($0.hash) }.forEach { r in
-                        r.delaysTouchesBegan = true
+                    recognizers.filter { self.recognizersThatDelayTouches.contains($0.hash) }.forEach { recognizer in
+                        recognizer.delaysTouchesBegan = true
                     }
                 }
             }
