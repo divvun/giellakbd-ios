@@ -13,7 +13,7 @@ protocol KeyboardViewDelegate: class {
 }
 
 // FIXME: this could be simplified with a typealias
-// swiftlint:disable all
+// swiftlint:disable opening_brace
 internal class KeyboardView: UIView,
     KeyboardViewProvider,
     UICollectionViewDataSource,
@@ -22,7 +22,7 @@ internal class KeyboardView: UIView,
     LongPressOverlayDelegate,
     LongPressCursorMovementDelegate
 {
-// swiftlint:enable all
+// swiftlint:enable opening_brace
     private static let pauseBeforeRepeatTimeInterval: TimeInterval = 0.5
     private static let keyRepeatTimeInterval: TimeInterval = 0.1
     private var theme: ThemeType
