@@ -195,8 +195,7 @@ public struct KeyboardDefinition: Codable {
     private(set) var symbols1: [[KeyDefinition]] = []
     private(set) var symbols2: [[KeyDefinition]] = []
 
-    init(fromRaw raw: RawKeyboardDefinition,
-         traits: UITraitCollection) throws {
+    init(fromRaw raw: RawKeyboardDefinition, traits: UITraitCollection) throws {
         let variant = DeviceVariant.from(traits: traits)
 
         self.name = raw.name
