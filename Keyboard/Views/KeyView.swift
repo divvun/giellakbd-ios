@@ -258,80 +258,7 @@ class KeyView: UIView {
         // HACK: UIColor.clear or alpha value below 0.001 here breaks indexPathForItemAtPoint:
         backgroundColor = UIColor(white: 0.001, alpha: 0.001)
 
-        switch key.type {
-        case let .input(string, alt):
-            input(string: string, alt: alt, page: page)
-        case let .spacebar(string):
-            text(string, page: page)
-        case let .returnkey(string):
-            text(string, page: page)
-        case .symbols:
-            if case .symbols1 = page {
-                text("ABC", page: page)
-            } else if case .symbols2 = page {
-                text("ABC", page: page)
-            } else {
-                if traits.userInterfaceIdiom == .pad && UIDevice.current.dc.deviceFamily == .iPad {
-                    text(".?123", page: page)
-                } else {
-                    text("123", page: page)
-                }
-            }
-        case .keyboardMode:
-            image(named: "close-keyboard-ipad", traits: traits)
-        case .backspace:
-            image(named: "backspace", traits: traits)
-        case .keyboard:
-            image(named: "globe", traits: traits)
-        case .shift:
-            switch page {
-            case .shifted, .capslock:
-                image(named: "shift-filled", traits: traits, tintColor: theme.shiftTintColor)
-            default:
-                image(named: "shift", traits: traits)
-            }
-        case .shiftSymbols:
-            if case .symbols1 = page {
-                text("#+=", page: page)
-            } else if case .symbols2 = page {
-                text("123", page: page)
-            } else {
-                image(named: "shift", traits: traits)
-            }
-        case .spacer, .splitKeyboard, .sideKeyboardLeft, .sideKeyboardRight:
-            imageView = UIImageView()
-            if let imageView = self.imageView {
-                self.imageView?.translatesAutoresizingMaskIntoConstraints = false
-
-                addSubview(imageView)
-
-                contentView = imageView
-            }
-        case .comma:
-            if UIDevice.current.dc.isIpad && traits.userInterfaceIdiom == .pad {
-                if (UIDevice.current.dc.screenSize.sizeInches ?? 0) < 12.0 {
-                    input(string: ",", alt: "!", page: page)
-                } else {
-                    input(string: ",", alt: ";", page: page)
-                }
-            } else {
-                input(string: ",", alt: nil, page: page)
-            }
-        case .fullStop:
-            if UIDevice.current.dc.isIpad && traits.userInterfaceIdiom == .pad {
-                if (UIDevice.current.dc.screenSize.sizeInches ?? 0) < 12.0 {
-                    input(string: ".", alt: "?", page: page)
-                } else {
-                    input(string: ".", alt: ":", page: page)
-                }
-            } else {
-                input(string: ".", alt: nil, page: page)
-            }
-        case .caps:
-            image(named: "caps", traits: traits)
-        case .tab:
-            text("tab", page: page)
-        }
+        setupContentView(key, page, traits, theme)
 
         layer.shadowColor = theme.keyShadowColor.cgColor
         layer.shadowOffset = CGSize(width: 0, height: 1)
@@ -347,6 +274,104 @@ class KeyView: UIView {
         contentView.clipsToBounds = false
 
         contentView.backgroundColor = backgroundColor(for: key, page: page)
+    }
+
+    private func setupContentView(_ key: KeyDefinition, _ page: KeyboardPage, _ traits: UITraitCollection, _ theme: ThemeType) {
+        switch key.type {
+        case let .input(string, alt):
+            input(string: string, alt: alt, page: page)
+        case let .spacebar(string):
+            text(string, page: page)
+        case let .returnkey(string):
+            text(string, page: page)
+        case .symbols:
+            setupSymbols(page, traits)
+        case .keyboardMode:
+            image(named: "close-keyboard-ipad", traits: traits)
+        case .backspace:
+            image(named: "backspace", traits: traits)
+        case .keyboard:
+            image(named: "globe", traits: traits)
+        case .shift:
+            setupShift(page, traits, theme)
+        case .shiftSymbols:
+            setupShiftSymbols(page, traits)
+        case .spacer, .splitKeyboard, .sideKeyboardLeft, .sideKeyboardRight:
+            // TODO: why is an empty image view being added here?
+            imageView = UIImageView()
+            if let imageView = self.imageView {
+                self.imageView?.translatesAutoresizingMaskIntoConstraints = false
+
+                addSubview(imageView)
+
+                contentView = imageView
+            }
+        case .comma:
+            setupComma(traits, page)
+        case .fullStop:
+            setupFullStop(traits, page)
+        case .caps:
+            image(named: "caps", traits: traits)
+        case .tab:
+            text("tab", page: page)
+        }
+    }
+
+    private func setupSymbols(_ page: KeyboardPage, _ traits: UITraitCollection) {
+        if case .symbols1 = page {
+            text("ABC", page: page)
+        } else if case .symbols2 = page {
+            text("ABC", page: page)
+        } else {
+            if traits.userInterfaceIdiom == .pad && UIDevice.current.dc.deviceFamily == .iPad {
+                text(".?123", page: page)
+            } else {
+                text("123", page: page)
+            }
+        }
+    }
+
+    private func setupShiftSymbols(_ page: KeyboardPage, _ traits: UITraitCollection) {
+        if case .symbols1 = page {
+            text("#+=", page: page)
+        } else if case .symbols2 = page {
+            text("123", page: page)
+        } else {
+            image(named: "shift", traits: traits)
+        }
+    }
+
+    private func setupShift(_ page: KeyboardPage, _ traits: UITraitCollection, _ theme: ThemeType) {
+        switch page {
+        case .shifted, .capslock:
+            image(named: "shift-filled", traits: traits, tintColor: theme.shiftTintColor)
+        default:
+            image(named: "shift", traits: traits)
+        }
+    }
+
+    private func setupComma(_ traits: UITraitCollection, _ page: KeyboardPage) {
+        if UIDevice.current.dc.isIpad && traits.userInterfaceIdiom == .pad {
+            if (UIDevice.current.dc.screenSize.sizeInches ?? 0) < 12.0 {
+                input(string: ",", alt: "!", page: page)
+            } else {
+                input(string: ",", alt: ";", page: page)
+            }
+        } else {
+            input(string: ",", alt: nil, page: page)
+        }
+    }
+
+    private func setupFullStop(_ traits: UITraitCollection, _ page: KeyboardPage) {
+        if UIDevice.current.dc.isIpad && traits.userInterfaceIdiom == .pad {
+            if (UIDevice.current.dc.screenSize.sizeInches ?? 0) < 12.0 {
+                input(string: ".", alt: "?", page: page)
+            } else {
+                input(string: ".", alt: ":", page: page)
+            }
+        } else {
+            input(string: ".", alt: nil, page: page)
+        }
     }
 
     private func backgroundColor(for key: KeyDefinition, page: KeyboardPage) -> UIColor {
