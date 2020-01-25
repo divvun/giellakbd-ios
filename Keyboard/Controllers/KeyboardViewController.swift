@@ -267,69 +267,14 @@ open class KeyboardViewController: UIInputViewController {
             keyboardView.remove()
             keyboardView = nil
         }
+
         switch keyboardMode {
         case .split:
-            let splitKeyboard = SplitKeyboardView(definition: keyboardDefinition, theme: theme)
-
-            view.addSubview(splitKeyboard.leftKeyboardView)
-            view.addSubview(splitKeyboard.rightKeyboardView)
-
-            splitKeyboard.leftKeyboardView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-            splitKeyboard.leftKeyboardView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-            splitKeyboard.leftKeyboardView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.25).isActive = true
-
-            splitKeyboard.rightKeyboardView.bottomAnchor.constraint(equalTo: view.bottomAnchor).enable()
-            splitKeyboard.rightKeyboardView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.25).enable()
-            splitKeyboard.rightKeyboardView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-
-            splitKeyboard.rightKeyboardView.topAnchor.constraint(equalTo: splitKeyboard.leftKeyboardView.topAnchor).enable()
-            splitKeyboard.rightKeyboardView.heightAnchor.constraint(equalTo: splitKeyboard.leftKeyboardView.heightAnchor).enable()
-
-            splitKeyboard.delegate = self
-
-            self.keyboardView = splitKeyboard
-
-        case .left:
-            let keyboardView = KeyboardView(definition: keyboardDefinition, theme: theme)
-            keyboardView.translatesAutoresizingMaskIntoConstraints = false
-
-            view.addSubview(keyboardView)
-
-            keyboardView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-            keyboardView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-            keyboardView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8).isActive = true
-
-            keyboardView.delegate = self
-
-            self.keyboardView = keyboardView
-
-        case .right:
-            let keyboardView = KeyboardView(definition: keyboardDefinition, theme: theme)
-            keyboardView.translatesAutoresizingMaskIntoConstraints = false
-
-            view.addSubview(keyboardView)
-
-            keyboardView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-            keyboardView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-            keyboardView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8).isActive = true
-
-            keyboardView.delegate = self
-
-            self.keyboardView = keyboardView
-
+            setupSplitKeyboard()
+        case .left, .right:
+            setupOneHandedKeyboard(mode: keyboardMode)
         default:
-            let keyboardView = KeyboardView(definition: keyboardDefinition, theme: theme)
-            keyboardView.translatesAutoresizingMaskIntoConstraints = false
-
-            view.addSubview(keyboardView)
-
-            keyboardView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-            keyboardView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-            keyboardView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-
-            keyboardView.delegate = self
-
-            self.keyboardView = keyboardView
+            setupNormalKeyboard()
         }
 
         if withBanner {
@@ -337,6 +282,67 @@ open class KeyboardViewController: UIInputViewController {
         } else {
             self.keyboardView.topAnchor.constraint(equalTo: view.topAnchor).enable()
         }
+    }
+
+    private func setupSplitKeyboard() {
+        let splitKeyboard = SplitKeyboardView(definition: keyboardDefinition, theme: theme)
+
+        view.addSubview(splitKeyboard.leftKeyboardView)
+        view.addSubview(splitKeyboard.rightKeyboardView)
+
+        splitKeyboard.leftKeyboardView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        splitKeyboard.leftKeyboardView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        splitKeyboard.leftKeyboardView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.25).isActive = true
+
+        splitKeyboard.rightKeyboardView.bottomAnchor.constraint(equalTo: view.bottomAnchor).enable()
+        splitKeyboard.rightKeyboardView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.25).enable()
+        splitKeyboard.rightKeyboardView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+
+        splitKeyboard.rightKeyboardView.topAnchor.constraint(equalTo: splitKeyboard.leftKeyboardView.topAnchor).enable()
+        splitKeyboard.rightKeyboardView.heightAnchor.constraint(equalTo: splitKeyboard.leftKeyboardView.heightAnchor).enable()
+
+        splitKeyboard.delegate = self
+
+        self.keyboardView = splitKeyboard
+    }
+
+    private func setupOneHandedKeyboard(mode: KeyboardMode) {
+        guard mode == .left || mode == .right else {
+            fatalError("Attemtping to setup one-handed keyboard with invalid KeyboardMode")
+        }
+
+        let keyboardView = KeyboardView(definition: keyboardDefinition, theme: theme)
+        keyboardView.translatesAutoresizingMaskIntoConstraints = false
+
+        view.addSubview(keyboardView)
+
+        keyboardView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        keyboardView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8).isActive = true
+
+        if mode == .left {
+            keyboardView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        } else if mode == .right {
+            keyboardView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        }
+
+        keyboardView.delegate = self
+
+        self.keyboardView = keyboardView
+    }
+
+    private func setupNormalKeyboard() {
+        let keyboardView = KeyboardView(definition: keyboardDefinition, theme: theme)
+        keyboardView.translatesAutoresizingMaskIntoConstraints = false
+
+        view.addSubview(keyboardView)
+
+        keyboardView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        keyboardView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        keyboardView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+
+        keyboardView.delegate = self
+
+        self.keyboardView = keyboardView
     }
 
     private func setupBannerView() {
