@@ -689,20 +689,11 @@ extension KeyboardViewController: KeyboardViewDelegate {
         case .caps:
             keyboardView.page = (keyboardView.page == .capslock ? .normal : .capslock)
         case .backspace:
-            if let value = deadKeyHandler.finish() {
-                insertText(value)
-            }
-            deleteBackward()
+            handleBackspace()
         case .spacebar:
-            if let page = keyboardView?.page, page == .symbols1 || page == .symbols2 {
-                keyboardView.page = .normal
-            }
-             handleDeadKey(string: " ", endShifted: false)
+            handleSpace()
         case .returnkey:
-            if let value = deadKeyHandler.finish() {
-                insertText(value)
-            }
-            insertText("\n")
+            handleReturn()
         case .symbols:
             keyboardView.page = (keyboardView.page == .symbols1 || keyboardView.page == .symbols2 ? .normal : .symbols1)
         case .shiftSymbols:
@@ -719,6 +710,28 @@ extension KeyboardViewController: KeyboardViewDelegate {
             dismissKeyboard()
         }
     }
+
+    private func handleBackspace() {
+        if let value = deadKeyHandler.finish() {
+            insertText(value)
+        }
+        deleteBackward()
+    }
+
+    fileprivate func handleSpace() {
+        if let page = keyboardView?.page, page == .symbols1 || page == .symbols2 {
+            keyboardView.page = .normal
+        }
+        handleDeadKey(string: " ", endShifted: false)
+    }
+
+    fileprivate func handleReturn() {
+        if let value = deadKeyHandler.finish() {
+            insertText(value)
+        }
+        insertText("\n")
+    }
+
 }
 
 extension KeyboardViewController: KeyboardViewKeyboardKeyDelegate {
