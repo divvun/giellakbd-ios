@@ -196,20 +196,20 @@ public struct KeyboardDefinition: Codable {
     private(set) var symbols2: [[KeyDefinition]] = []
 
     init(fromRaw raw: RawKeyboardDefinition, traits: UITraitCollection) throws {
-        let variant = DeviceVariant.from(traits: traits)
+        let deviceVariant = DeviceVariant.from(traits: traits)
 
         self.name = raw.name
         self.locale = raw.locale
         self.spaceName = raw.spaceName
         self.returnName = raw.returnName
 
-        self.deadKeys = raw.deadKeys?[variant.rawValue] ?? [:]
+        self.deadKeys = raw.deadKeys?[deviceVariant.rawValue] ?? [:]
         self.longPress = raw.longPress ?? [:]
         self.transforms = raw.transforms ?? [:]
 
         let mode: RawKeyboardMode
 
-        switch variant {
+        switch deviceVariant {
         case .iphone:
             mode = raw.iphone
         case .ipad9in:
@@ -218,7 +218,7 @@ public struct KeyboardDefinition: Codable {
             mode = raw.ipad12in
         }
 
-        switch variant {
+        switch deviceVariant {
         case .iphone:
             self.normal = mode.normal.map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) } }
             self.shifted = mode.shifted.map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) } }
