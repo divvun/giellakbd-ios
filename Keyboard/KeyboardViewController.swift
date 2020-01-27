@@ -86,7 +86,6 @@ open class KeyboardViewController: UIInputViewController {
     
     private func commonInit(withBanner: Bool = false) {
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: preferredHeight)
         inputView?.allowsSelfSizing = true
         print(String(describing: inputView))
         setupKeyboardView(withBanner: withBanner)
@@ -340,6 +339,8 @@ open class KeyboardViewController: UIInputViewController {
         
         if withBanner {
             setupBannerView()
+        } else {
+            self.keyboardView.topAnchor.constraint(equalTo: view.topAnchor).enable()
         }
     }
 
