@@ -195,15 +195,6 @@ public struct KeyboardDefinition: Codable {
     private(set) var symbols1: [[KeyDefinition]] = []
     private(set) var symbols2: [[KeyDefinition]] = []
 
-    private var accessibilityStrings: AccessibilityStrings?
-
-    private struct AccessibilityStrings: Codable {
-        let delete: String?
-        let shift: String?
-        let nextKeyboard: String?
-        let more: String?
-    }
-
     init(fromRaw raw: RawKeyboardDefinition, traits: UITraitCollection) throws {
         let deviceVariant = DeviceVariant.from(traits: traits)
 
