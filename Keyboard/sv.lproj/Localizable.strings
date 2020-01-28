@@ -1,8 +1,8 @@
 //* accessibility.* strings contain the text to be spoken by VoiceOver when an element is selected */
-"accessibility.space" = "";
-"accessibility.backspace" = "";
-"accessibility.moreLetters" = "";
-"accessibility.moreNumbers" = "";
-"accessibility.moreSymbols" = "";
-"accessibility.shift" = "";
-"accessibility.nextKeyboard" = "";
+"accessibility.space" = "mellanslag";
+"accessibility.backspace" = "radera";
+"accessibility.moreLetters" = "flera bokstäver";
+"accessibility.moreNumbers" = "flera siffror";
+"accessibility.moreSymbols" = "flera symboler";
+"accessibility.shift" = "skift";
+"accessibility.nextKeyboard" = "nästa tangentbord";
