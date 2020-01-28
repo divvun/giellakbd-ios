@@ -733,6 +733,7 @@ internal class KeyboardView: UIView,
                 emptyview.fill(superview: contentView)
             } else {
                 let keyView = KeyView(page: page, key: key, theme: theme, traits: traits)
+                Accessibility.addAccessibilityLabel(to: keyView, page: page, key: key)
                 keyView.translatesAutoresizingMaskIntoConstraints = false
                 contentView.addSubview(keyView)
                 keyView.fill(superview: contentView)
