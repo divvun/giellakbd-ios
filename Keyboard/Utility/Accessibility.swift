@@ -19,7 +19,12 @@ class Accessibility {
                 label = NSLocalizedString("accessibility.moreNumbers", comment: "")
             }
         case .shiftSymbols:
-            label = NSLocalizedString("accessibility.moreSymbols", comment: "")
+            switch page {
+            case .symbols2:
+                label = NSLocalizedString("accessibility.moreNumbers", comment: "")
+            default:
+                label = NSLocalizedString("accessibility.moreSymbols", comment: "")
+            }
         default:
             return
         }
