@@ -8,18 +8,18 @@ class Accessibility {
         case let .input(keyText, _):
             label = keyText
         case .backspace:
-            label = NSLocalizedString("backspace", comment: "")
+            label = NSLocalizedString("accessibility.backspace", comment: "")
         case .shift:
-            label = NSLocalizedString("shift", comment: "")
+            label = NSLocalizedString("accessibility.shift", comment: "")
         case .symbols:
             switch page {
             case .symbols1, .symbols2:
-                label = NSLocalizedString("more, letters", comment: "")
+                label = NSLocalizedString("accessibility.moreLetters", comment: "")
             default:
-                label = NSLocalizedString("more, numbers", comment: "")
+                label = NSLocalizedString("accessibility.moreNumbers", comment: "")
             }
         case .shiftSymbols:
-            label = NSLocalizedString("more, symbols", comment: "")
+            label = NSLocalizedString("accessibility.moreSymbols", comment: "")
         default:
             return
         }

@@ -78,7 +78,7 @@ internal class KeyboardView: UIView,
                 keyboardButtonExtraButton = UIButton(frame: keyboardButtonFrame)
                 keyboardButtonExtraButton?.backgroundColor = .clear
                 keyboardButtonExtraButton?.isAccessibilityElement = true
-                keyboardButtonExtraButton?.accessibilityLabel = NSLocalizedString("next keyboard", comment: "")
+                keyboardButtonExtraButton?.accessibilityLabel = NSLocalizedString("accessibility.nextKeyboard", comment: "")
             }
             if let keyboardButtonExtraButton = keyboardButtonExtraButton {
                 addSubview(keyboardButtonExtraButton)
