@@ -168,6 +168,8 @@ public struct KeyDefinition: Codable {
         switch self.type {
         case let .input(keyText, _):
             return keyText
+        case .spacebar(name: _):
+            return NSLocalizedString("accessibility.space", comment: "")
         case .backspace:
             return NSLocalizedString("accessibility.backspace", comment: "")
         case .shift:

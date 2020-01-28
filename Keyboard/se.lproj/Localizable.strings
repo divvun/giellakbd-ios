@@ -1,4 +1,5 @@
 //* accessibility.* strings contain the text to be spoken by VoiceOver when an element is selected */
+"accessibility.space" = "";
 "accessibility.backspace" = "";
 "accessibility.moreLetters" = "";
 "accessibility.moreNumbers" = "";
