@@ -77,6 +77,8 @@ internal class KeyboardView: UIView,
             if let keyboardButtonFrame = keyboardButtonFrame {
                 keyboardButtonExtraButton = UIButton(frame: keyboardButtonFrame)
                 keyboardButtonExtraButton?.backgroundColor = .clear
+                keyboardButtonExtraButton?.isAccessibilityElement = true
+                keyboardButtonExtraButton?.accessibilityLabel = NSLocalizedString("accessibility.nextKeyboard", comment: "")
             }
             if let keyboardButtonExtraButton = keyboardButtonExtraButton {
                 addSubview(keyboardButtonExtraButton)
@@ -733,6 +735,10 @@ internal class KeyboardView: UIView,
                 emptyview.fill(superview: contentView)
             } else {
                 let keyView = KeyView(page: page, key: key, theme: theme, traits: traits)
+                if let accessibilityLabel = key.accessibilityLabel(for: page) {
+                    keyView.isAccessibilityElement = true
+                    keyView.accessibilityLabel = accessibilityLabel
+                }
                 keyView.translatesAutoresizingMaskIntoConstraints = false
                 contentView.addSubview(keyView)
                 keyView.fill(superview: contentView)
