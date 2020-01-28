@@ -163,4 +163,31 @@ public struct KeyDefinition: Codable {
         }
         size = CGSize(width: input.width, height: input.height)
     }
+
+    public func accessibilityLabel(for page: KeyboardPage) -> String? {
+        switch self.type {
+        case let .input(keyText, _):
+            return keyText
+        case .backspace:
+            return NSLocalizedString("accessibility.backspace", comment: "")
+        case .shift:
+            return NSLocalizedString("accessibility.shift", comment: "")
+        case .symbols:
+            switch page {
+            case .symbols1, .symbols2:
+                return NSLocalizedString("accessibility.moreLetters", comment: "")
+            default:
+                return NSLocalizedString("accessibility.moreNumbers", comment: "")
+            }
+        case .shiftSymbols:
+            switch page {
+            case .symbols2:
+                return NSLocalizedString("accessibility.moreNumbers", comment: "")
+            default:
+                return NSLocalizedString("accessibility.moreSymbols", comment: "")
+            }
+        default:
+            return nil
+        }
+    }
 }
