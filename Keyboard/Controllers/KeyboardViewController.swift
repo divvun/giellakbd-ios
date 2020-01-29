@@ -66,7 +66,10 @@ open class KeyboardViewController: UIInputViewController {
     public private(set) var keyboardDefinition: KeyboardDefinition!
     private var keyboardMode: KeyboardMode = .normal
 
+    private var showsBanner = true
+
     public init(withBanner: Bool) {
+        showsBanner = withBanner
         super.init(nibName: nil, bundle: nil)
         commonInit(withBanner: withBanner)
     }
@@ -82,9 +85,9 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     private func commonInit(withBanner: Bool = false) {
-        view.translatesAutoresizingMaskIntoConstraints = false
-        inputView?.allowsSelfSizing = true
-        setupKeyboardView(withBanner: withBanner)
+//        view.translatesAutoresizingMaskIntoConstraints = false
+//        inputView?.allowsSelfSizing = true
+//        setupKeyboardView(withBanner: withBanner)
     }
 
     private(set) lazy var definitions: [KeyboardDefinition] = {
@@ -257,6 +260,8 @@ open class KeyboardViewController: UIInputViewController {
 
         keyboardDefinition = definitions[kbdIndex]
         deadKeyHandler = DeadKeyHandler(keyboard: keyboardDefinition)
+
+        setupKeyboardView(withBanner: showsBanner)
 
         isSoundEnabled = KeyboardSettings.isKeySoundEnabled
 
