@@ -245,7 +245,7 @@ open class KeyboardViewController: UIInputViewController {
     private func initHeightConstraint() {
         // If this is removed, iPhone 5s glitches before finding the correct height.
         DispatchQueue.main.async {
-            self.heightConstraint = self.view.heightAnchor
+            self.heightConstraint = self.keyboardContainer.heightAnchor
                 .constraint(equalToConstant: self.preferredHeight)
                 .enable(priority: UILayoutPriority(999))
         }
@@ -277,7 +277,11 @@ open class KeyboardViewController: UIInputViewController {
         keyboardContainer = UIView()
         keyboardContainer.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(keyboardContainer)
-        keyboardContainer.fill(superview: view)
+        keyboardContainer.topAnchor.constraint(equalTo: view.topAnchor).enable(priority: .defaultHigh)
+        keyboardContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor).enable(priority: .required)
+        keyboardContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor).enable(priority: .required)
+        keyboardContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor).enable(priority: .required)
+
         keyboardContainer.backgroundColor = UIColor.green.withAlphaComponent(0.3)
     }
 
@@ -386,8 +390,7 @@ open class KeyboardViewController: UIInputViewController {
 
     private func updateHeightConstraint() {
         DispatchQueue.main.async {
-            guard let heightConstraint = self.heightConstraint else { return }
-            heightConstraint.constant = self.preferredHeight
+            self.heightConstraint?.constant = self.preferredHeight
         }
     }
 
