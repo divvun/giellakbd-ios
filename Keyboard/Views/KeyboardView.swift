@@ -1,6 +1,6 @@
 import UIKit
 
-protocol KeyboardViewDelegate {
+protocol KeyboardViewDelegate: class {
     func didSwipeKey(_ key: KeyDefinition)
     func didTriggerKey(_ key: KeyDefinition)
     func didTriggerDoubleTap(forKey key: KeyDefinition)
@@ -12,13 +12,23 @@ protocol KeyboardViewDelegate {
     @objc func didTriggerKeyboardButton(sender: UIView, forEvent event: UIEvent)
 }
 
-internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, LongPressOverlayDelegate, LongPressCursorMovementDelegate {
+// FIXME: this could be simplified with a typealias
+// swiftlint:disable all
+internal class KeyboardView: UIView,
+    KeyboardViewProvider,
+    UICollectionViewDataSource,
+    UICollectionViewDelegate,
+    UICollectionViewDelegateFlowLayout,
+    LongPressOverlayDelegate,
+    LongPressCursorMovementDelegate
+{
+// swiftlint:enable all
     private static let pauseBeforeRepeatTimeInterval: TimeInterval = 0.5
     private static let keyRepeatTimeInterval: TimeInterval = 0.1
     private var theme: ThemeType
-    
+
     private let definition: KeyboardDefinition
-    
+
     weak var delegate: (KeyboardViewDelegate & KeyboardViewKeyboardKeyDelegate)?
 
     private var currentPage: [[KeyDefinition]] {
@@ -44,12 +54,6 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
         }
     }
 
-    override var intrinsicContentSize: CGSize {
-        // This must be implemented, otherwise the keyboard is too small.
-        // It doesn't matter that what's returned is bigger than the keyboard should actually be.
-        return CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-    }
-    
     private let reuseIdentifier = "cell"
     private let collectionView: UICollectionView
     private let layout = UICollectionViewFlowLayout()
@@ -67,10 +71,14 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
             if let keyboardButtonFrame = keyboardButtonFrame {
                 keyboardButtonExtraButton = UIButton(frame: keyboardButtonFrame)
                 keyboardButtonExtraButton?.backgroundColor = .clear
+                keyboardButtonExtraButton?.isAccessibilityElement = true
+                keyboardButtonExtraButton?.accessibilityLabel = NSLocalizedString("accessibility.nextKeyboard", comment: "")
             }
             if let keyboardButtonExtraButton = keyboardButtonExtraButton {
                 addSubview(keyboardButtonExtraButton)
-                keyboardButtonExtraButton.addTarget(delegate, action: #selector(KeyboardViewKeyboardKeyDelegate.didTriggerKeyboardButton), for: UIControl.Event.allEvents)
+                keyboardButtonExtraButton.addTarget(delegate,
+                                                    action: #selector(KeyboardViewKeyboardKeyDelegate.didTriggerKeyboardButton),
+                                                    for: UIControl.Event.allEvents)
             }
         }
     }
@@ -82,17 +90,17 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
     }
 
     private(set) lazy var longpressGestureRecognizer: UILongPressGestureRecognizer = {
-        let x =  UILongPressGestureRecognizer(target: self, action: #selector(KeyboardView.touchesFoundLongpress))
-        x.cancelsTouchesInView = false
-        return x
+        let recognizer =  UILongPressGestureRecognizer(target: self, action: #selector(KeyboardView.touchesFoundLongpress))
+        recognizer.cancelsTouchesInView = false
+        return recognizer
     }()
-    
+
     required init(definition: KeyboardDefinition, theme: ThemeType) {
         self.definition = definition
         self.theme = theme
 
         collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
-        
+
         super.init(frame: CGRect.zero)
         update()
 
@@ -114,7 +122,7 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
 
         isMultipleTouchEnabled = true
     }
-    
+
     func updateTheme(theme: ThemeType) {
         self.theme = theme
         update()
@@ -142,19 +150,19 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
     }
 
     private func ensureValidKeyView(at indexPath: IndexPath) -> Bool {
-        guard let _ = collectionView.cellForItem(at: indexPath)?.subviews.first?.subviews.first?.subviews.first else {
+        guard collectionView.cellForItem(at: indexPath)?.subviews.first?.subviews.first?.subviews.first != nil else {
             return false
         }
 
         return true
     }
-    
+
     private func applyOverlayConstraints(to overlay: KeyOverlayView, keyView: KeyView) {
         guard let superview = superview else {
             return
 //            fatalError("superview not found for overlay constraints")
         }
-        
+
         overlay.heightAnchor
             .constraint(greaterThanOrEqualTo: keyView.heightAnchor, multiplier: 1.0)
             .enable(priority: .defaultLow)
@@ -164,7 +172,7 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
             multiplier: 1.0,
             constant: theme.popupCornerRadius * 2)
             .enable(priority: .required)
-        
+
         overlay.topAnchor
             .constraint(greaterThanOrEqualTo: superview.topAnchor)
             .enable(priority: .defaultLow)
@@ -173,18 +181,18 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
         let offset: CGFloat = 0.5 // Without this small offset, the overlay appears slightly above the key
         overlay.bottomAnchor.constraint(equalTo: bottomAnchorView.bottomAnchor, constant: offset)
             .enable(priority: .defaultLow)
-            
+
         overlay.centerXAnchor.constraint(lessThanOrEqualTo: keyView.centerXAnchor)
             .enable(priority: .defaultHigh)
-        
+
         // Handle the left and right sides not getting crushed on the edges of the screen
-        
+
         overlay.leftAnchor.constraint(greaterThanOrEqualTo: keyView.leftAnchor)
             .enable(priority: .defaultHigh)
         overlay.leftAnchor
             .constraint(greaterThanOrEqualTo: superview.leftAnchor)
             .enable(priority: .required)
-        
+
         overlay.rightAnchor.constraint(lessThanOrEqualTo: keyView.rightAnchor)
             .enable(priority: .defaultHigh)
         overlay.rightAnchor
@@ -207,19 +215,19 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
         let overlay = KeyOverlayView(origin: keyView, key: key, theme: theme)
         overlay.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(overlay)
-        
+
         applyOverlayConstraints(to: overlay, keyView: keyView)
         overlays[key.type] = overlay
-        
+
         overlay.clipsToBounds = false
-        
+
         let keyLabel = UILabel(frame: .zero)
         keyLabel.clipsToBounds = false
         if case let .input(title, _) = key.type {
             keyLabel.text = title
         }
         keyLabel.textColor = theme.textColor
-        
+
         switch page {
         case .normal:
             keyLabel.font = theme.popupLowerKeyFont
@@ -230,7 +238,7 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
         keyLabel.translatesAutoresizingMaskIntoConstraints = false
         overlay.originFrameView.addSubview(keyLabel)
         keyLabel.centerIn(superview: overlay.originFrameView)
-        
+
         superview?.setNeedsLayout()
     }
 
@@ -245,14 +253,14 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
         }
         overlays = [:]
     }
-    
+
     private var isLogicallyIPad: Bool {
         return UIDevice.current.dc.deviceFamily == .iPad &&
             self.traitCollection.userInterfaceIdiom == .pad
     }
-    
+
     // MARK: - LongPressOverlayDelegate
-    
+
     func longpress(didCreateOverlayContentView contentView: UIView) {
         if overlays.first?.value.originFrameView == nil {
             if let activeKey = activeKey {
@@ -318,8 +326,8 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
 
     func longpressKeySize() -> CGSize {
         let width = bounds.size.width / CGFloat(currentPage.first?.count ?? 10)
-        let h = (bounds.size.height / CGFloat(currentPage.count)) - theme.popupCornerRadius * 2
-        let height = max(32.0, h)
+        var height = (bounds.size.height / CGFloat(currentPage.count)) - theme.popupCornerRadius * 2
+        height = max(32.0, height)
         return CGSize(
             width: width,
             height: height
@@ -388,7 +396,7 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
             }
         }
     }
-    
+
     private func makeKeyRepeatTimer(timeInterval: TimeInterval) -> Timer {
         return Timer.scheduledTimer(
             timeInterval: timeInterval,
@@ -458,8 +466,7 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
             let cell = collectionView.cellForItem(at: activeKey.indexPath) as? KeyCell,
             let swipeKeyView = cell.keyView,
             swipeKeyView.isSwipeKey,
-            let touchLocation = touches.first?.location(in: cell.superview)
-        {
+            let touchLocation = touches.first?.location(in: cell.superview) {
             let deadZone: CGFloat = 20.0
             let delta: CGFloat = 60.0
             let yOffset = touchLocation.y - cell.center.y
@@ -476,7 +483,7 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
             return
         }
 
-        if let _ = activeKey {
+        if activeKey != nil {
             for touch in touches {
                 if let indexPath = collectionView.indexPathForItem(at: touch.location(in: collectionView)) {
                     let key = currentPage[indexPath.section][indexPath.row]
@@ -528,7 +535,7 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
         //            }
         //        }
     }
-    
+
     private func showKeyboardModeOverlay(_ longpressGestureRecognizer: UILongPressGestureRecognizer, key: KeyDefinition) {
         let longpressController = LongPressOverlayController(key: key, page: page, theme: theme, longpressValues: [
             KeyDefinition(type: .sideKeyboardLeft),
@@ -543,13 +550,14 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
     }
 
     @objc func touchesFoundLongpress(_ longpressGestureRecognizer: UILongPressGestureRecognizer) {
-        if let indexPath = collectionView.indexPathForItem(at: longpressGestureRecognizer.location(in: collectionView)), longpressController == nil {
+        if let indexPath = collectionView.indexPathForItem(at: longpressGestureRecognizer.location(in: collectionView)),
+            longpressController == nil {
             let key = currentPage[indexPath.section][indexPath.row]
             switch key.type {
             case let .input(string, _):
                 guard let longpressValues = longpressKeys(for: string),
                     longpressGestureRecognizer.state == .began else {
-                        break;
+                        break
                 }
                 let longpressController = LongPressOverlayController(
                     key: key,
@@ -557,7 +565,7 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
                     theme: theme,
                     longpressValues: longpressValues)
                 longpressController.delegate = self
-                
+
                 self.longpressController = longpressController
                 let location = longpressGestureRecognizer.location(in: collectionView)
                 longpressController.touchesBegan(location)
@@ -590,21 +598,21 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
             increaseKeyRepeatRateIfNeeded()
         }
     }
-    
+
     private func increaseKeyRepeatRateIfNeeded() {
         if keyRepeatTimer?.timeInterval == KeyboardView.pauseBeforeRepeatTimeInterval {
             keyRepeatTimer?.invalidate()
             keyRepeatTimer = makeKeyRepeatTimer(timeInterval: KeyboardView.keyRepeatTimeInterval)
         }
     }
-    
+
     private func longpressKeys(for key: String) -> [KeyDefinition]? {
         let longpressKeys = self.definition
         .longPress[key]?
         .compactMap({
             KeyDefinition(type: .input(key: $0, alternate: nil))
         })
-        
+
         guard var keys = longpressKeys else {
             return nil
         }
@@ -620,7 +628,7 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
                 keys = [originalKey] + keys
             }
         }
-        
+
         return keys
     }
 
@@ -651,7 +659,9 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
         return currentPage[section].count
     }
 
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView,
+                        willDisplay cell: UICollectionViewCell,
+                        forItemAt indexPath: IndexPath) {
         let key = currentPage[indexPath.section][indexPath.row]
 
         if key.type == .keyboard {
@@ -660,9 +670,12 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! KeyCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
+                                                            for: indexPath) as? KeyCell else {
+            fatalError("Unable to cast to KeyCell")
+        }
         let key = currentPage[indexPath.section][indexPath.row]
-        
+
         cell.configure(page: page, key: key, theme: theme, traits: self.traitCollection)
 
         if let swipeKeyView = cell.keyView, swipeKeyView.isSwipeKey {
@@ -677,10 +690,13 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
         let key = currentPage[indexPath.section][indexPath.row]
 
         // Using self.bounds here, because self.collectionView.frame isnt correctly sized in iOS 10
-        return CGSize(width: key.size.width * ((bounds.size.width - 1) / rowNumberOfUnits[indexPath.section]), height: bounds.size.height / CGFloat(currentPage.count))
+        let width = key.size.width * ((bounds.size.width - 1) / rowNumberOfUnits[indexPath.section])
+        let height = bounds.size.height / CGFloat(currentPage.count)
+        return CGSize(width: width, height: height)
     }
 
-    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, minimumInteritemSpacingForSectionAt _: Int) -> CGFloat {
+    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout,
+                        minimumInteritemSpacingForSectionAt _: Int) -> CGFloat {
         return 0
     }
 
@@ -693,12 +709,12 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
 
         override init(frame: CGRect) {
             super.init(frame: frame)
-            
+
             contentView.clipsToBounds = false
             contentView.translatesAutoresizingMaskIntoConstraints = false
             contentView.fill(superview: self)
         }
-        
+
         func configure(page: KeyboardPage, key: KeyDefinition, theme: ThemeType, traits: UITraitCollection) {
             _ = contentView.subviews.forEach { view in
                 view.removeFromSuperview()
@@ -713,6 +729,10 @@ internal class KeyboardView: UIView, KeyboardViewProvider, UICollectionViewDataS
                 emptyview.fill(superview: contentView)
             } else {
                 let keyView = KeyView(page: page, key: key, theme: theme, traits: traits)
+                if let accessibilityLabel = key.accessibilityLabel(for: page) {
+                    keyView.isAccessibilityElement = true
+                    keyView.accessibilityLabel = accessibilityLabel
+                }
                 keyView.translatesAutoresizingMaskIntoConstraints = false
                 contentView.addSubview(keyView)
                 keyView.fill(superview: contentView)

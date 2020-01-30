@@ -66,7 +66,6 @@ extension UIKeyboardAppearance: CustomDebugStringConvertible {
     }
 }
 
-
 extension String {
     func suffix(after index: String.Index) -> String.SubSequence {
         if index >= endIndex {
@@ -86,8 +85,12 @@ extension Substring {
 }
 
 extension UIColor {
+    //swiftlint:disable:next identifier_name
     convenience init(r: Int, g: Int, b: Int, a: Double = 1) {
-        self.init(red: CGFloat(r) / CGFloat(255), green: CGFloat(g) / CGFloat(255), blue: CGFloat(b) / CGFloat(255), alpha: CGFloat(a))
+        self.init(red: CGFloat(r) / CGFloat(255),
+                  green: CGFloat(g) / CGFloat(255),
+                  blue: CGFloat(b) / CGFloat(255),
+                  alpha: CGFloat(a))
     }
 }
 
@@ -98,7 +101,7 @@ extension UIView {
         topAnchor.constraint(equalTo: other.topAnchor, constant: margins.top).isActive = true
         bottomAnchor.constraint(equalTo: other.bottomAnchor, constant: -margins.bottom).isActive = true
     }
-    
+
     func centerIn(superview other: UIView) {
         centerXAnchor.constraint(equalTo: other.centerXAnchor).isActive = true
         centerYAnchor.constraint(equalTo: other.centerYAnchor).isActive = true
@@ -106,7 +109,9 @@ extension UIView {
 }
 
 public extension UIColor {
-    var components: (r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat) {
+    // FIXME: is there a cleaner way to do this?
+    // swiftlint:disable:next large_tuple
+    private var components: (r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat) {
         let components = cgColor.components!
 
         switch components.count == 2 {
@@ -119,10 +124,12 @@ public extension UIColor {
         let fromComponents = fromColor.components
         let toComponents = toColor.components
 
+        //swiftlint:disable identifier_name
         let r = (1 - progress) * fromComponents.r + progress * toComponents.r
         let g = (1 - progress) * fromComponents.g + progress * toComponents.g
         let b = (1 - progress) * fromComponents.b + progress * toComponents.b
         let a = (1 - progress) * fromComponents.a + progress * toComponents.a
+        //swiftlint:enable identifier_name
 
         return UIColor(red: r, green: g, blue: b, alpha: a)
     }

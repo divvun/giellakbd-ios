@@ -77,6 +77,7 @@ class Strings {
     }
 
     /** Kildin Sami */
+    //swiftlint:disable:next identifier_name
     static var locale_sjd: String {
         return string(for: "locale_sjd")
     }

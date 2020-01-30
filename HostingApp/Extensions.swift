@@ -13,7 +13,8 @@ extension Nibbable where Self: UIView {
 
         guard let views = bundle.loadNibNamed(nibName, owner: Self.self, options: nil),
             let view = views.first as? Self else {
-                fatalError("Nib could not be loaded for nibName: \(nibName); check that the XIB owner has been set to the given view: \(self)")
+                fatalError("Nib could not be loaded for nibName: \(nibName);"
+                    + "check that the XIB owner has been set to the given view: \(self)")
         }
 
         return view
@@ -68,8 +69,14 @@ extension Strings {
         let attr = NSMutableAttributedString(string: plain)
 
         attr.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: size), range: nsplain.range(of: plain))
-        attr.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: size, weight: UIFont.Weight(rawValue: 0.3)), range: nsplain.range(of: Strings.localizedName))
-        attr.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: size, weight: UIFont.Weight(rawValue: 0.3)), range: nsplain.range(of: Strings.allowFullAccess))
+        attr.addAttribute(NSAttributedString.Key.font,
+                          value: UIFont.systemFont(ofSize: size,
+                                                   weight: UIFont.Weight(rawValue: 0.3)),
+                          range: nsplain.range(of: Strings.localizedName))
+        attr.addAttribute(NSAttributedString.Key.font,
+                          value: UIFont.systemFont(ofSize: size,
+                                                   weight: UIFont.Weight(rawValue: 0.3)),
+                          range: nsplain.range(of: Strings.allowFullAccess))
 
         return attr
     }
@@ -79,7 +86,10 @@ extension Strings {
         let attr = NSMutableAttributedString(string: string)
 
         attr.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: size), range: nsstring.range(of: string))
-        attr.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: size, weight: UIFont.Weight(rawValue: 0.3)), range: nsstring.range(of: item))
+        attr.addAttribute(NSAttributedString.Key.font,
+                          value: UIFont.systemFont(ofSize: size,
+                                                   weight: UIFont.Weight(rawValue: 0.3)),
+                          range: nsstring.range(of: item))
 
         return attr
     }
@@ -100,7 +110,9 @@ extension Strings {
         attrString.addAttribute(NSAttributedString.Key.link, value: simpleUrl, range: range1)
         attrString.addAttribute(NSAttributedString.Key.link, value: tapUrl, range: range2)
         attrString.addAttribute(NSAttributedString.Key.link, value: languageUrl, range: range3)
-        attrString.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: 15), range: string.range(of: string as String))
+        attrString.addAttribute(NSAttributedString.Key.font,
+                                value: UIFont.systemFont(ofSize: 15),
+                                range: string.range(of: string as String))
 
         return attrString
     }
@@ -118,11 +130,13 @@ extension Strings {
     static var supportedLocales: [Locale] = {
         Bundle.main.localizations
             .filter { loc in
-                guard let bp = Bundle.main.path(forResource: loc, ofType: "lproj"), let b = Bundle(path: bp) else {
+                guard let bundlePath = Bundle.main.path(forResource: loc,
+                                                        ofType: "lproj"),
+                    let bundle = Bundle(path: bundlePath) else {
                     return false
                 }
 
-                return b.path(forResource: "Localizable", ofType: "strings") != nil
+                return bundle.path(forResource: "Localizable", ofType: "strings") != nil
         }
         .map { Locale(identifier: $0 == "Base" ? "en" : $0) }
         .sorted(by: {
@@ -131,19 +145,21 @@ extension Strings {
     }()
 
     static func languageName(for locale: Locale) -> String? {
-        guard let lc = locale.languageCode else {
+        guard let languageCode = locale.languageCode else {
             return nil
         }
 
-        if let s = locale.localizedString(forLanguageCode: lc), s != lc {
-            return s
+        if let languageName = locale.localizedString(forLanguageCode: languageCode), languageName != languageCode {
+            return languageName
         }
 
         // Fallback for unsupported OS-level magic
-        guard let bp = Bundle.main.path(forResource: lc, ofType: "lproj"), let b = Bundle(path: bp) else {
-            return lc
+        guard let bundlePath = Bundle.main.path(forResource: languageCode,
+                                                ofType: "lproj"),
+            let bundle = Bundle(path: bundlePath) else {
+            return languageCode
         }
 
-        return b.localizedString(forKey: "locale_\(lc)", value: nil, table: nil)
+        return bundle.localizedString(forKey: "locale_\(languageCode)", value: nil, table: nil)
     }
 }

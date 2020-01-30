@@ -3,12 +3,14 @@ import UIKit
 import UIDeviceComplete
 
 class SystemKeys {
-    static func systemKeyRowsForCurrentDevice(spaceName: String, returnName: String, traits: UITraitCollection) -> [KeyDefinition] {
+    static func systemKeyRowsForCurrentDevice(spaceName: String,
+                                              returnName: String,
+                                              traits: UITraitCollection) -> [KeyDefinition] {
         var keys = [KeyDefinition]()
-        
+
         let isIPad = UIDevice.current.dc.deviceFamily == .iPad &&
             traits.userInterfaceIdiom == .pad
-        
+
         // Left side of space bar
         if !UIDevice.current.dc.deviceModel.hasNotch {
             if isIPad && (UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches) >= 11.0 {
@@ -24,9 +26,9 @@ class SystemKeys {
             keys.append(KeyDefinition(type: .symbols))
         }
         keys.append(KeyDefinition(type: .spacebar(name: spaceName), size: CGSize(width: 5.0, height: 1.0)))
-        
+
         // Right of spacebar
-        if isIPad{
+        if isIPad {
             keys.append(KeyDefinition(type: .symbols, size: CGSize(width: 1.25, height: 1.0)))
             keys.append(KeyDefinition(type: .keyboardMode, size: CGSize(width: 1.25, height: 1.0)))
         } else {
@@ -50,7 +52,9 @@ extension Array where Element == [KeyDefinition] {
             for (keyIndex, key) in row.enumerated() {
                 length += key.size.width
                 if case .spacebar = key.type {
-                    let splitSpace = KeyDefinition(type: key.type, size: CGSize(width: key.size.width / 2.0, height: key.size.height))
+                    let splitSpace = KeyDefinition(type: key.type,
+                                                   size: CGSize(width: key.size.width / 2.0,
+                                                                height: key.size.height))
                     copy[i].remove(at: keyIndex)
 
                     copy[i].insert(splitSpace, at: keyIndex)
