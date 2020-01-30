@@ -242,6 +242,12 @@ open class KeyboardViewController: UIInputViewController {
         }
     }
 
+    private func updateHeightConstraint() {
+        DispatchQueue.main.async {
+            self.heightConstraint?.constant = self.preferredHeight
+        }
+    }
+
     open override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -375,12 +381,6 @@ open class KeyboardViewController: UIInputViewController {
         bannerView.topAnchor.constraint(equalTo: keyboardContainer.topAnchor).isActive = true
 
         bannerView.isHidden = false
-    }
-
-    private func updateHeightConstraint() {
-        DispatchQueue.main.async {
-            self.heightConstraint?.constant = self.preferredHeight
-        }
     }
 
     private var isFirstRun = true
