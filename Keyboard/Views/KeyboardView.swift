@@ -54,12 +54,6 @@ internal class KeyboardView: UIView,
         }
     }
 
-    override var intrinsicContentSize: CGSize {
-        // This must be implemented, otherwise the keyboard is too small.
-        // It doesn't matter that what's returned is bigger than the keyboard should actually be.
-        return CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-    }
-
     private let reuseIdentifier = "cell"
     private let collectionView: UICollectionView
     private let layout = UICollectionViewFlowLayout()
