@@ -13,6 +13,7 @@
 		6949B7BA8FCEAD7A27EDFFE0 /* Pods_BaseKeyboard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9024FCA6C422ADE3CBC979B9 /* Pods_BaseKeyboard.framework */; };
 		991EE55023D9AB4700DC3677 /* ViewDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991EE54F23D9AB4700DC3677 /* ViewDebugger.swift */; };
 		99B94C6323E0501F0076A786 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 99B94C6523E0501F0076A786 /* Localizable.strings */; };
+		99DD30F623E307430065E8D8 /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DD30F423E3059C0065E8D8 /* Audio.swift */; };
 		C4F4C9ADC86DC61F1F96D961 /* Pods_HostingApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8902A09E56DB03DDF4926837 /* Pods_HostingApp.framework */; };
 		C63EE0FF2361D86800A1E15A /* MenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63EE0FE2361D86800A1E15A /* MenuButton.swift */; };
 		C63EE1012362F7E500A1E15A /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C63EE1002362F7E500A1E15A /* Settings.bundle */; };
@@ -137,6 +138,7 @@
 		99B94C6823E0502C0076A786 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Localizable.strings; sourceTree = "<group>"; };
 		99B94C6923E0502D0076A786 /* nn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nn; path = nn.lproj/Localizable.strings; sourceTree = "<group>"; };
 		99B94C6A23E0502E0076A786 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
+		99DD30F423E3059C0065E8D8 /* Audio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
 		C610DA4720D3E40E00C84945 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = HostingApp/fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C61CC29120C8A5C000B213B8 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = HostingApp/sv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C63EE0FE2361D86800A1E15A /* MenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButton.swift; sourceTree = "<group>"; };
@@ -264,6 +266,7 @@
 				C6996B5122FB0055007EBC3D /* DeadKeyHandler.swift */,
 				C6996B5D22FC3257007EBC3D /* DivvunSpellBannerPlugin.swift */,
 				FDBD09C32333A50E00303152 /* SplitKeyboard.swift */,
+				99DD30F423E3059C0065E8D8 /* Audio.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -718,6 +721,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99DD30F623E307430065E8D8 /* Audio.swift in Sources */,
 				C6996B5322FB06FA007EBC3D /* DeadKeyHandler.swift in Sources */,
 				C6996B5E22FC3257007EBC3D /* DivvunSpellBannerPlugin.swift in Sources */,
 				C6996B5C22FC2D3E007EBC3D /* CursorContext.swift in Sources */,

@@ -1,7 +1,6 @@
 import Sentry
 import UIKit
 import UIDeviceComplete
-import AVFoundation
 
 protocol KeyboardViewProvider {
     var delegate: (KeyboardViewDelegate & KeyboardViewKeyboardKeyDelegate)? { get set }
@@ -190,12 +189,6 @@ open class KeyboardViewController: UIInputViewController {
         }
     }
 
-    private var isSoundEnabled = KeyboardSettings.isKeySoundEnabled {
-        didSet {
-            print("Is sound enabled? \(isSoundEnabled)")
-        }
-    }
-
     private lazy var baseTheme: _Theme = { Theme(traits: self.traitCollection) }()
     private(set) lazy var theme: ThemeType = {
         baseTheme.select(traits: self.traitCollection)
@@ -203,7 +196,7 @@ open class KeyboardViewController: UIInputViewController {
 
     open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         // This could have changed, so we hook here.
-        isSoundEnabled = KeyboardSettings.isKeySoundEnabled
+        Audio.checkIfSoundEnabled()
 
         DispatchQueue.main.async {
             self.updateHeightConstraint()
@@ -259,8 +252,6 @@ open class KeyboardViewController: UIInputViewController {
         deadKeyHandler = DeadKeyHandler(keyboard: keyboardDefinition)
 
         setupKeyboardView(withBanner: showsBanner)
-
-        isSoundEnabled = KeyboardSettings.isKeySoundEnabled
 
         print("\(definitions.map { $0.locale })")
     }
@@ -600,11 +591,6 @@ open class KeyboardViewController: UIInputViewController {
     }
 }
 
-private let clickSound: SystemSoundID = 1123
-private let deleteSound: SystemSoundID = 1155
-private let modifierSound: SystemSoundID = 1156
-private let fallbackSound: SystemSoundID = 1104
-
 extension KeyboardViewController: KeyboardViewDelegate {
     func didMoveCursor(_ movement: Int) {
         textDocumentProxy.adjustTextPosition(byCharacterOffset: movement)
@@ -643,33 +629,15 @@ extension KeyboardViewController: KeyboardViewDelegate {
     }
 
     private func playSound(_ key: KeyDefinition) {
-        if !isSoundEnabled {
-            return
-        }
-
-        var sound: SystemSoundID?
-
         switch key.type {
         case .input, .comma, .fullStop, .tab:
-            sound = clickSound
+            Audio.playClickSound()
         case .caps, .keyboard, .keyboardMode, .shift, .shiftSymbols, .symbols, .spacebar, .returnkey:
-            sound = modifierSound
+            Audio.playModifierSound()
         case .backspace:
-            sound = deleteSound
+            Audio.playDeleteSound()
         default:
             return
-        }
-
-        if #available(iOS 10.0, *) {
-            // Nothing
-        } else if sound != nil {
-            sound = fallbackSound
-        }
-
-        DispatchQueue.global().async {
-            if let sound = sound {
-                AudioServicesPlaySystemSound(sound)
-            }
         }
     }
 
