@@ -538,6 +538,7 @@ open class KeyboardViewController: UIInputViewController {
 
     open override func willTransition(to newCollection: UITraitCollection,
                                       with coordinator: UIViewControllerTransitionCoordinator) {
+        super.willTransition(to: newCollection, with: coordinator)
         coordinator.animate(alongsideTransition: { _ in
             self.checkDarkMode()
         }, completion: nil)
