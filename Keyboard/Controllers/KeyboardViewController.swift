@@ -71,23 +71,14 @@ open class KeyboardViewController: UIInputViewController {
     public init(withBanner: Bool) {
         showsBanner = withBanner
         super.init(nibName: nil, bundle: nil)
-        commonInit(withBanner: withBanner)
     }
 
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        commonInit()
     }
 
     public required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        commonInit()
-    }
-
-    private func commonInit(withBanner: Bool = false) {
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        inputView?.allowsSelfSizing = true
-//        setupKeyboardView(withBanner: withBanner)
+        fatalError("init(coder:) has not been implemented")
     }
 
     private(set) lazy var definitions: [KeyboardDefinition] = {
