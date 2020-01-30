@@ -58,6 +58,7 @@ extension DivvunSpellBannerPlugin: BannerViewDelegate {
     }
 
     public func didSelectBannerItem(_ banner: BannerView, item: BannerItem) {
+        Audio.playClickSound()
         keyboard.replaceSelected(with: item.value)
         opQueue.cancelAllOperations()
 
