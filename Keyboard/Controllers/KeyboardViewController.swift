@@ -281,8 +281,6 @@ open class KeyboardViewController: UIInputViewController {
         keyboardContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor).enable(priority: .required)
         keyboardContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor).enable(priority: .required)
         keyboardContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor).enable(priority: .required)
-
-        keyboardContainer.backgroundColor = UIColor.green.withAlphaComponent(0.3)
     }
 
     private func setupKeyboardView(withBanner: Bool) {
