@@ -189,12 +189,6 @@ open class KeyboardViewController: UIInputViewController {
         }
     }
 
-    private var isSoundEnabled = KeyboardSettings.isKeySoundEnabled {
-        didSet {
-            print("Is sound enabled? \(isSoundEnabled)")
-        }
-    }
-
     private lazy var baseTheme: _Theme = { Theme(traits: self.traitCollection) }()
     private(set) lazy var theme: ThemeType = {
         baseTheme.select(traits: self.traitCollection)
@@ -202,7 +196,7 @@ open class KeyboardViewController: UIInputViewController {
 
     open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         // This could have changed, so we hook here.
-        isSoundEnabled = KeyboardSettings.isKeySoundEnabled
+        Audio.checkIfSoundEnabled()
 
         DispatchQueue.main.async {
             self.updateHeightConstraint()
@@ -258,8 +252,6 @@ open class KeyboardViewController: UIInputViewController {
         deadKeyHandler = DeadKeyHandler(keyboard: keyboardDefinition)
 
         setupKeyboardView(withBanner: showsBanner)
-
-        isSoundEnabled = KeyboardSettings.isKeySoundEnabled
 
         print("\(definitions.map { $0.locale })")
     }
@@ -637,10 +629,6 @@ extension KeyboardViewController: KeyboardViewDelegate {
     }
 
     private func playSound(_ key: KeyDefinition) {
-        if !isSoundEnabled {
-            return
-        }
-
         switch key.type {
         case .input, .comma, .fullStop, .tab:
             Audio.playClickSound()

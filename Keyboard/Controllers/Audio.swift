@@ -2,10 +2,15 @@ import Foundation
 import AVFoundation
 
 public class Audio {
+    private static var isSoundEnabled: Bool = KeyboardSettings.isKeySoundEnabled
     private static let clickSound: SystemSoundID = 1123
     private static let deleteSound: SystemSoundID = 1155
     private static let modifierSound: SystemSoundID = 1156
     private static let fallbackSound: SystemSoundID = 1104
+
+    public static func checkIfSoundEnabled() {
+        isSoundEnabled = KeyboardSettings.isKeySoundEnabled
+    }
 
     public static func playClickSound() {
         play(systemSound: clickSound)
@@ -20,6 +25,9 @@ public class Audio {
     }
 
     private static func play(systemSound: SystemSoundID) {
+        guard isSoundEnabled else {
+            return
+        }
 
         var sound = systemSound
 
