@@ -247,6 +247,10 @@ open class KeyboardViewController: UIInputViewController {
             fatalError("There was no DivvunKeyboardIndex")
         }
 
+        if kbdIndex < 0 || kbdIndex >= definitions.count {
+            fatalError("Invalid kbdIndex: \(kbdIndex); count: \(definitions.count)")
+        }
+
         keyboardDefinition = definitions[kbdIndex]
         deadKeyHandler = DeadKeyHandler(keyboard: keyboardDefinition)
 
