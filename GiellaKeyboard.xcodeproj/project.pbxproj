@@ -49,13 +49,12 @@
 		C6B638461EDF94CA00A6ECB2 /* AboutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B638451EDF94CA00A6ECB2 /* AboutController.swift */; };
 		C6EA31C321AF181D0014F3B6 /* KeyboardDefinitions.json in Resources */ = {isa = PBXBuildFile; fileRef = C6EA31C021AF17CE0014F3B6 /* KeyboardDefinitions.json */; };
 		C6F249331F736DCE00840F2B /* BaseKeyboard.h in Headers */ = {isa = PBXBuildFile; fileRef = C6F249311F736DCE00840F2B /* BaseKeyboard.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C6F249361F736DCE00840F2B /* BaseKeyboard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6F2492F1F736DCE00840F2B /* BaseKeyboard.framework */; };
-		C6F249371F736DCE00840F2B /* BaseKeyboard.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C6F2492F1F736DCE00840F2B /* BaseKeyboard.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C6F249461F736E1400840F2B /* KeyboardDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DCFDD51EB0787A00FABC11 /* KeyboardDefinition.swift */; };
 		C6F249471F736E1A00840F2B /* KeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC2A46919DF811E00F789E1 /* KeyboardViewController.swift */; };
 		C6F2494E1F736E3100840F2B /* BaseKeyboard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6F2492F1F736DCE00840F2B /* BaseKeyboard.framework */; };
 		C6F2494F1F736E3E00840F2B /* KeyboardSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A3905A1EB61BF8009378C1 /* KeyboardSettings.swift */; };
 		C6F249681F736FEE00840F2B /* EntryPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F249671F736FEE00840F2B /* EntryPoint.swift */; };
+		C6F9564823E4520D009C469C /* init.m in Sources */ = {isa = PBXBuildFile; fileRef = C6F9564723E4520D009C469C /* init.m */; };
 		FD1387D7234CB95400C5B916 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4EF16F9319D255030076AFCB /* Images.xcassets */; };
 		FD1387DD234CBF2B00C5B916 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4EF16F9319D255030076AFCB /* Images.xcassets */; };
 		FD294BA12191ADA700A5BD02 /* Keyboard-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = C6D304A61BFD73750023EC5F /* Keyboard-Bridging-Header.h */; };
@@ -75,27 +74,9 @@
 			remoteGlobalIDString = 4E807DB819461DC700D875D1;
 			remoteInfo = Keyboard;
 		};
-		C6F249341F736DCE00840F2B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4E807D8B19461D9000D875D1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C6F2492E1F736DCE00840F2B;
-			remoteInfo = BaseKeyboard;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		4E5B67C4196E07B300114361 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				C6F249371F736DCE00840F2B /* BaseKeyboard.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		4E807DC719461DC700D875D1 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -183,6 +164,7 @@
 		C6F249311F736DCE00840F2B /* BaseKeyboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseKeyboard.h; sourceTree = "<group>"; };
 		C6F249321F736DCE00840F2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C6F249671F736FEE00840F2B /* EntryPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryPoint.swift; sourceTree = "<group>"; };
+		C6F9564723E4520D009C469C /* init.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = init.m; sourceTree = "<group>"; };
 		F7107A1CD9C582CEEC37528B /* Pods-HostingApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HostingApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-HostingApp/Pods-HostingApp.release.xcconfig"; sourceTree = "<group>"; };
 		FDAF59A222F9CCE000F7C9FC /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		FDAF59A322F9CCE100F7C9FC /* KeyDefinition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyDefinition.swift; sourceTree = "<group>"; };
@@ -198,7 +180,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C6F249361F736DCE00840F2B /* BaseKeyboard.framework in Frameworks */,
 				C4F4C9ADC86DC61F1F96D961 /* Pods_HostingApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -351,6 +332,7 @@
 			children = (
 				C6996B5422FC2C8B007EBC3D /* Utils.swift */,
 				991EE54F23D9AB4700DC3677 /* ViewDebugger.swift */,
+				C6F9564723E4520D009C469C /* init.m */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -435,7 +417,6 @@
 				4E807D9019461D9000D875D1 /* Frameworks */,
 				4E807D9119461D9000D875D1 /* Resources */,
 				4E807DC719461DC700D875D1 /* Embed App Extensions */,
-				4E5B67C4196E07B300114361 /* Embed Frameworks */,
 				EA11D23D43CB51A4089BBCFE /* [CP] Embed Pods Frameworks */,
 				9949AAE423D9EA8F00456D61 /* Run Script - SwiftLint */,
 			);
@@ -443,7 +424,6 @@
 			);
 			dependencies = (
 				4E807DC019461DC700D875D1 /* PBXTargetDependency */,
-				C6F249351F736DCE00840F2B /* PBXTargetDependency */,
 			);
 			name = HostingApp;
 			productName = HostingApp;
@@ -519,7 +499,7 @@
 					};
 					C6F2492E1F736DCE00840F2B = {
 						CreatedOnToolsVersion = 8.3.3;
-						LastSwiftMigration = 1110;
+						LastSwiftMigration = 1130;
 						ProvisioningStyle = Manual;
 					};
 				};
@@ -737,6 +717,7 @@
 				FDBD09C52333A56800303152 /* SplitKeyboard.swift in Sources */,
 				FDAF59AD22F9CD0700F7C9FC /* BannerView.swift in Sources */,
 				FDAF59A922F9CCF200F7C9FC /* LongPressController.swift in Sources */,
+				C6F9564823E4520D009C469C /* init.m in Sources */,
 				C649D3D5234B7D8400EF4273 /* KeyboardView.swift in Sources */,
 				C6F2494F1F736E3E00840F2B /* KeyboardSettings.swift in Sources */,
 			);
@@ -749,11 +730,6 @@
 			isa = PBXTargetDependency;
 			target = 4E807DB819461DC700D875D1 /* Keyboard */;
 			targetProxy = 4E807DBF19461DC700D875D1 /* PBXContainerItemProxy */;
-		};
-		C6F249351F736DCE00840F2B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C6F2492E1F736DCE00840F2B /* BaseKeyboard */;
-			targetProxy = C6F249341F736DCE00840F2B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1038,6 +1014,7 @@
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
@@ -1066,6 +1043,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1080,6 +1058,7 @@
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
