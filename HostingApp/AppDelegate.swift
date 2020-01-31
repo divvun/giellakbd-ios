@@ -56,16 +56,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         AppDelegate.instance = self
 
-        if let sentryDSN = Bundle.main.infoDictionary?["SentryDSN"] as? String {
-            do {
-                Client.shared = try Client(dsn: sentryDSN)
-                try Client.shared?.startCrashHandler()
-            } catch {
-                print("\(error)")
-                // Wrong DSN or KSCrash not installed
-            }
-        }
-
         Strings.languageCode = KeyboardSettings.languageCode
 
         navController.delegate = ncDelegate
