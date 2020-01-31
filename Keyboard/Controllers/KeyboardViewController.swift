@@ -1,4 +1,3 @@
-import Sentry
 import UIKit
 import UIDeviceComplete
 
@@ -243,16 +242,6 @@ open class KeyboardViewController: UIInputViewController {
 
     open override func viewDidLoad() {
         super.viewDidLoad()
-
-        if let sentryDSN = Bundle.main.infoDictionary?["SentryDSN"] as? String {
-            do {
-                Client.shared = try Client(dsn: sentryDSN)
-                try Client.shared?.startCrashHandler()
-            } catch {
-                print("\(error)")
-                // Wrong DSN or KSCrash not installed
-            }
-        }
 
         guard let kbdIndex = Bundle.main.infoDictionary?["DivvunKeyboardIndex"] as? Int else {
             fatalError("There was no DivvunKeyboardIndex")
