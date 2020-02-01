@@ -18,18 +18,18 @@ class SuggestionOp: Operation {
 
         showSpellingSuggestionsInBanner()
     }
-    
+
     private func showSpellingSuggestionsInBanner() {
         guard let plugin = self.plugin else { return }
         guard let speller = plugin.speller else { return }
 
         let currentWord = BannerItem(title: "\"\(word)\"", value: word)
-        
+
         var suggestions = (try? speller
             .suggest(word: word)//, count: 3, maxWeight: 4999.99)
             .prefix(3)
             .map { BannerItem(title: $0, value: $0) }) ?? []
-        
+
         // No need to show the same thing twice
         suggestions.removeAll { (bannerItem) -> Bool in
             bannerItem.value == word
@@ -43,7 +43,7 @@ class SuggestionOp: Operation {
             }
         }
     }
-    
+
 }
 
 extension DivvunSpellBannerPlugin: BannerViewDelegate {
@@ -58,9 +58,8 @@ extension DivvunSpellBannerPlugin: BannerViewDelegate {
     }
 
     public func didSelectBannerItem(_ banner: BannerView, item: BannerItem) {
+        Audio.playClickSound()
         keyboard.replaceSelected(with: item.value)
-        // TODO: Sami languages want to autosuggest compounds, so let's not add spaces without configuration
-//        keyboard.insertText(" ")
         opQueue.cancelAllOperations()
 
         banner.setBannerItems([])
@@ -77,15 +76,15 @@ public class DivvunSpellBannerPlugin {
     }
 
     let opQueue: OperationQueue = {
-        let o = OperationQueue()
-        o.underlyingQueue = DispatchQueue.global(qos: .userInteractive)
-        o.maxConcurrentOperationCount = 1
-        return o
+        let opQueue = OperationQueue()
+        opQueue.underlyingQueue = DispatchQueue.global(qos: .userInteractive)
+        opQueue.maxConcurrentOperationCount = 1
+        return opQueue
     }()
 
     private func getPrimaryLanguage() -> String? {
-        if let ex = Bundle.main.infoDictionary!["NSExtension"] as? [String: AnyObject] {
-            if let attrs = ex["NSExtensionAttributes"] as? [String: AnyObject] {
+        if let extensionInfo = Bundle.main.infoDictionary!["NSExtension"] as? [String: AnyObject] {
+            if let attrs = extensionInfo["NSExtensionAttributes"] as? [String: AnyObject] {
                 if let lang = attrs["PrimaryLanguage"] as? String {
                     return String(lang.split(separator: "-")[0])
                 }
@@ -123,8 +122,8 @@ public class DivvunSpellBannerPlugin {
                 self.archive = try ThfstChunkedBoxSpellerArchive.open(path: path.path)
                 print("DivvunSpell loaded!")
             } catch {
-                let e = Sentry.Event(level: .error)
-                Client.shared?.send(event: e, completion: nil)
+                let error = Sentry.Event(level: .error)
+                Client.shared?.send(event: error, completion: nil)
                 print("DivvunSpell **not** loaded.")
                 return
             }
@@ -134,7 +133,7 @@ public class DivvunSpellBannerPlugin {
 
     public init(keyboard: KeyboardViewController) {
         self.keyboard = keyboard
-        
+
         guard let bannerView = keyboard.bannerView else {
             fatalError("No banner view found in DivvunSpellBannerPlugin init")
         }

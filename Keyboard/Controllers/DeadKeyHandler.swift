@@ -28,9 +28,9 @@ struct DeadKeyHandler {
         }
 
         if current != nil {
-            let t = transform(input)
+            let transformTree = transform(input)
 
-            switch t {
+            switch transformTree {
             case let .leaf(value):
                 current = nil
                 return .output(value)
@@ -85,8 +85,8 @@ struct DeadKeyHandler {
         if let result = current[input] {
             return result
         } else {
-            if case let .some(.leaf(v)) = current[" "] {
-                return .leaf("\(v)\(input)")
+            if case let .some(.leaf(value)) = current[" "] {
+                return .leaf("\(value)\(input)")
             }
 
             return .leaf(input)

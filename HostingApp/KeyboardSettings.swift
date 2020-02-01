@@ -1,16 +1,16 @@
 import Foundation
 
 private let defaults: UserDefaults = {
-    let x = UserDefaults(suiteName: KeyboardSettings.groupId)!
-    x.registerDefaultsFromSettingsBundle()
-    return x
+    let defaults = UserDefaults(suiteName: KeyboardSettings.groupId)!
+    defaults.registerDefaultsFromSettingsBundle()
+    return defaults
 }()
 
 class KeyboardSettings {
     static var groupId: String = {
         return "group.\(Bundle.top.bundleIdentifier!)"
     }()
-    
+
     static var languageCode: String {
         get { return defaults.string(forKey: "language") ?? Locale.current.languageCode! }
         set { defaults.set(newValue, forKey: "language") }
@@ -20,7 +20,7 @@ class KeyboardSettings {
         get { return defaults.object(forKey: "firstLoad") as? Bool ?? true }
         set { defaults.set(newValue, forKey: "firstLoad") }
     }
-    
+
     static var isKeySoundEnabled: Bool {
         get { return defaults.bool(forKey: "isKeySoundEnabled") }
         set { defaults.set(newValue, forKey: "isKeySoundEnabled") }
@@ -49,8 +49,7 @@ extension UserDefaults {
             var defaultsToRegister = [String: AnyObject]()
             for prefSpecification in preferences {
                 if let key = prefSpecification["Key"] as? String,
-                    let value = prefSpecification["DefaultValue"]
-                {
+                    let value = prefSpecification["DefaultValue"] {
                     defaultsToRegister[key] = value as AnyObject
                 }
             }

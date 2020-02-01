@@ -12,7 +12,7 @@ class HomeController: ViewController<HomeView>, HideNavBar {
     @objc private func openAbout() {
         navigationController?.pushViewController(AboutController(), animated: true)
     }
-    
+
     @objc private func openTesting() {
         navigationController?.pushViewController(TestingController(), animated: true)
     }

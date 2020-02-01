@@ -1,0 +1,17 @@
+excluded:
+  - Pods
+
+disabled_rules:
+  - todo
+
+cyclomatic_complexity:
+  ignores_case_statements: true
+
+identifier_name:
+  excluded:
+    - i
+    - id
+    - x
+    - y
+
+line_length: 130

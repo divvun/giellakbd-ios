@@ -24,17 +24,17 @@ public enum KeyType: Codable, Hashable {
     case fullStop
     case tab
     case caps
-    
+
     public init(from decoder: Decoder) throws {
-        let d = try decoder.singleValueContainer()
-        let raw = try d.decode(RawKeyType.self)
+        let decoder = try decoder.singleValueContainer()
+        let raw = try decoder.decode(RawKeyType.self)
         self = Self.init(string: raw.id, alternate: raw.alternate, spaceName: raw.name ?? "", returnName: raw.name ?? "")
     }
-    
+
     public func encode(to encoder: Encoder) throws {
-        var c = encoder.singleValueContainer()
+        var encoder = encoder.singleValueContainer()
         let raw: RawKeyType
-        
+
         switch self {
         case .input(let key, let alternate):
             raw = RawKeyType(id: key, name: nil, alternate: alternate)
@@ -65,13 +65,13 @@ public enum KeyType: Codable, Hashable {
         case .keyboardMode:
             raw = RawKeyType(id: "_keyboardMode", name: nil, alternate: nil)
         default:
-            try c.encodeNil()
+            try encoder.encodeNil()
             return
         }
-        
-        try c.encode(raw)
+
+        try encoder.encode(raw)
     }
-    
+
     init(string: String, alternate: String? = nil, spaceName: String, returnName: String) {
         switch string {
         case "_spacer":
@@ -149,12 +149,12 @@ public enum KeyType: Codable, Hashable {
 public struct KeyDefinition: Codable {
     public let type: KeyType
     public let size: CGSize
-    
+
     init(type: KeyType, size: CGSize = CGSize(width: 1, height: 1)) {
         self.type = type
         self.size = size
     }
-    
+
     init(input: RawKeyDefinition, alternate: String? = nil, spaceName: String, returnName: String) {
         if input.id == alternate {
             type = KeyType(string: input.id, alternate: nil, spaceName: spaceName, returnName: returnName)
@@ -162,5 +162,34 @@ public struct KeyDefinition: Codable {
             type = KeyType(string: input.id, alternate: alternate, spaceName: spaceName, returnName: returnName)
         }
         size = CGSize(width: input.width, height: input.height)
+    }
+
+    public func accessibilityLabel(for page: KeyboardPage) -> String? {
+        switch self.type {
+        case let .input(keyText, _):
+            return keyText
+        case .spacebar(name: _):
+            return NSLocalizedString("accessibility.space", comment: "")
+        case .backspace:
+            return NSLocalizedString("accessibility.backspace", comment: "")
+        case .shift:
+            return NSLocalizedString("accessibility.shift", comment: "")
+        case .symbols:
+            switch page {
+            case .symbols1, .symbols2:
+                return NSLocalizedString("accessibility.moreLetters", comment: "")
+            default:
+                return NSLocalizedString("accessibility.moreNumbers", comment: "")
+            }
+        case .shiftSymbols:
+            switch page {
+            case .symbols2:
+                return NSLocalizedString("accessibility.moreNumbers", comment: "")
+            default:
+                return NSLocalizedString("accessibility.moreSymbols", comment: "")
+            }
+        default:
+            return nil
+        }
     }
 }

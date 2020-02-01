@@ -12,14 +12,13 @@ class InstructionsController: ViewController<InstructionsView> {
     @objc private func onSkipTapped() {
         navigationController?.popViewController(animated: true)
     }
-    
+
     private let prefsUrlIOS10 = "QXBwLVByZWZzOnJvb3Q9R2VuZXJhbCZwYXRoPUtleWJvYXJkL0tFWUJPQVJEUwo="
     private let prefsUrlIOS9 = "cHJlZnM6cm9vdD1HZW5lcmFsJnBhdGg9S2V5Ym9hcmQvS0VZQk9BUkRTCg=="
-    
-    
+
     @objc private func onSettingsTapped() {
         let application = UIApplication.shared
-        
+
         if #available(iOS 11.0, *) {
             application.openURL(URL(string: UIApplication.openSettingsURLString)!)
         } else if #available(iOS 10.0, *) {
@@ -56,10 +55,13 @@ class InstructionsController: ViewController<InstructionsView> {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         contentView.settingsButton.addTarget(self, action: #selector(onSettingsTapped), for: .touchUpInside)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(applicationDidBecomeActive),
+                                               name: UIApplication.didBecomeActiveNotification,
+                                               object: nil)
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: UIImage(named: "language")!.with(width: 24, height: 24),
@@ -68,7 +70,10 @@ class InstructionsController: ViewController<InstructionsView> {
             action: #selector(openLanguages)
         )
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: Strings.skip, style: .plain, target: self, action: #selector(onSkipTapped))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: Strings.skip,
+                                                            style: .plain,
+                                                            target: self,
+                                                            action: #selector(onSkipTapped))
     }
 
     deinit {
