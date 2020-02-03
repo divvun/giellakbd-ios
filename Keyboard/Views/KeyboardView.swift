@@ -164,12 +164,11 @@ internal class KeyboardView: UIView,
         }
 
         overlay.heightAnchor
-            .constraint(greaterThanOrEqualTo: keyView.heightAnchor, multiplier: 1.0)
+            .constraint(greaterThanOrEqualTo: keyView.heightAnchor)
             .enable(priority: .defaultLow)
 
         overlay.widthAnchor.constraint(
             greaterThanOrEqualTo: keyView.widthAnchor,
-            multiplier: 1.0,
             constant: theme.popupCornerRadius * 2)
             .enable(priority: .required)
 
