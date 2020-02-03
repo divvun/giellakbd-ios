@@ -35,10 +35,6 @@ class KeyOverlayView: UIView {
             .constraint(greaterThanOrEqualTo: bottomAnchor, constant: -origin.frame.height - theme.popupCornerRadius)
             .enable(priority: .defaultHigh)
 
-        bottomAnchor
-            .constraint(greaterThanOrEqualTo: originFrameView.bottomAnchor, constant: theme.popupCornerRadius)
-            .enable(priority: .defaultLow)
-
         leftAnchor
             .constraint(lessThanOrEqualTo: originFrameView.leftAnchor, constant: -theme.popupCornerRadius)
             .enable(priority: .required)
@@ -208,8 +204,12 @@ class KeyOverlayView: UIView {
                 bubbleConnectionCornerRadius = spaceBetweenBubbleBottomAndKeyBottom - keyRadius
             }
 
-            let leftRadius = originFrameInLocalBounds.minX < theme.popupCornerRadius ? 0 : theme.popupCornerRadius
-            let rightRadius = originFrameInLocalBounds.maxX > self.frame.width - theme.popupCornerRadius ? 0 : theme.popupCornerRadius
+            let leftRadius = originFrameInLocalBounds.minX < theme.popupCornerRadius
+                ? 0
+                : theme.popupCornerRadius
+            let rightRadius = originFrameInLocalBounds.maxX > self.frame.width - theme.popupCornerRadius
+                ? 0
+                : theme.popupCornerRadius
             return [
                 topCenter,
                 topLeft,

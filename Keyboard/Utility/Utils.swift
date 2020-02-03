@@ -1,6 +1,17 @@
 import Foundation
 import UIKit
 
+extension UIDevice {
+    public var systemMajorVersion: Int {
+        let systemVersion = UIDevice.current.systemVersion
+        guard let majorVersionSubstring = systemVersion.split(separator: ".").first,
+            let majorVersion = Int(majorVersionSubstring) else {
+            return -1
+        }
+        return majorVersion
+    }
+}
+
 @available(iOS 12.0, iOSApplicationExtension 12.0, *)
 extension UIUserInterfaceStyle: CustomDebugStringConvertible {
     public var debugDescription: String {
