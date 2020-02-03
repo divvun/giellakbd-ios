@@ -35,12 +35,6 @@ internal class KeyboardView: UIView,
         return keyDefinitionsForPage(page)
     }
 
-    private lazy var isIOS11: Bool = {
-        let systemVersion = UIDevice.current.systemVersion
-        let majorVersion = systemVersion.split(separator: ".").first
-        return majorVersion == "11"
-    }()
-
     private func keyDefinitionsForPage(_ page: KeyboardPage) -> [[KeyDefinition]] {
         switch page {
         case .symbols1:
@@ -173,7 +167,7 @@ internal class KeyboardView: UIView,
             .constraint(greaterThanOrEqualTo: keyView.heightAnchor)
             .enable(priority: .defaultHigh)
 
-        if isIOS11 {
+        if UIDevice.current.systemMajorVersion == 11 {
             // For whatever reason, iOS 11, and only iOS 11, requires a large height constraint or the overlay appears shorter
             // than expected. Note that the large value doesn't matter: the other constraints will
             // (somehow) resolve to the correct height.
