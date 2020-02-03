@@ -164,12 +164,19 @@ internal class KeyboardView: UIView,
         }
 
         overlay.heightAnchor
-            .constraint(greaterThanOrEqualTo: keyView.heightAnchor, multiplier: 1.0)
-            .enable(priority: .defaultLow)
+            .constraint(greaterThanOrEqualTo: keyView.heightAnchor)
+            .enable(priority: .defaultHigh)
+
+        if UIDevice.current.systemMajorVersion == 11 {
+            // For whatever reason, iOS 11, and only iOS 11, requires a large height constraint or the overlay appears shorter
+            // than expected. Note that the large value doesn't matter: the other constraints will
+            // (somehow) resolve to the correct height.
+            overlay.heightAnchor.constraint(equalTo: keyView.heightAnchor, constant: 999)
+                .enable(priority: .defaultLow)
+        }
 
         overlay.widthAnchor.constraint(
             greaterThanOrEqualTo: keyView.widthAnchor,
-            multiplier: 1.0,
             constant: theme.popupCornerRadius * 2)
             .enable(priority: .required)
 
@@ -180,7 +187,7 @@ internal class KeyboardView: UIView,
         let bottomAnchorView = keyView.contentView ?? keyView
         let offset: CGFloat = 0.5 // Without this small offset, the overlay appears slightly above the key
         overlay.bottomAnchor.constraint(equalTo: bottomAnchorView.bottomAnchor, constant: offset)
-            .enable(priority: .defaultLow)
+            .enable(priority: .defaultHigh)
 
         overlay.centerXAnchor.constraint(lessThanOrEqualTo: keyView.centerXAnchor)
             .enable(priority: .defaultHigh)
