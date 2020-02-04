@@ -195,8 +195,7 @@ public struct KeyDefinition: Codable {
     }
 
     private func accessibilityLabel(keyText: String) -> String {
-        let lowercaseText = keyText.lowercased()
-        let localizedText = NSLocalizedString(lowercaseText, comment: "")
+        let localizedText = NSLocalizedString(keyText, comment: "")
         if localizedText.isEmpty {
             return keyText
         }
