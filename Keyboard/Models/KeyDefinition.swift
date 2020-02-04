@@ -168,7 +168,7 @@ public struct KeyDefinition: Codable {
     public func accessibilityLabel(for page: KeyboardPage) -> String? {
         switch self.type {
         case let .input(keyText, _):
-            return keyText
+            return accessibilityLabel(keyText: keyText)
         case .spacebar(name: _):
             return NSLocalizedString("accessibility.space", comment: "")
         case .backspace:
@@ -192,5 +192,14 @@ public struct KeyDefinition: Codable {
         default:
             return nil
         }
+    }
+
+    private func accessibilityLabel(keyText: String) -> String {
+        let lowercaseText = keyText.lowercased()
+        let localizedText = NSLocalizedString(lowercaseText, comment: "")
+        if localizedText.isEmpty {
+            return keyText
+        }
+        return localizedText
     }
 }
