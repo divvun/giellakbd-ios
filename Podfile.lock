@@ -3,18 +3,23 @@ PODS:
   - Sentry (4.4.3):
     - Sentry/Core (= 4.4.3)
   - Sentry/Core (4.4.3)
+  - SQLite.swift (0.12.2):
+    - SQLite.swift/standard (= 0.12.2)
+  - SQLite.swift/standard (0.12.2)
   - SwiftLint (0.39.1)
   - UIDeviceComplete (2.6.5)
 
 DEPENDENCIES:
   - DivvunSpell (from `https://github.com/divvun/divvunspell-swift`)
   - Sentry
+  - SQLite.swift (~> 0.12.0)
   - SwiftLint
   - UIDeviceComplete (from `https://github.com/bbqsrc/UIDeviceComplete`)
 
 SPEC REPOS:
   trunk:
     - Sentry
+    - SQLite.swift
     - SwiftLint
 
 EXTERNAL SOURCES:
@@ -36,9 +41,10 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   DivvunSpell: 0bfcaee6ab4c45ec6c0e827fd09523faf3c283bc
   Sentry: 14bdd673870e8cf64932b149fad5bbbf39a9b390
+  SQLite.swift: d2b4642190917051ce6bd1d49aab565fe794eea3
   SwiftLint: 55e96a4a4d537d4a3156859fc1c54bd24851a046
   UIDeviceComplete: 5654c8f59f25adf3b0ea876c2a0463dc64c49226
 
-PODFILE CHECKSUM: 641fa0b7a65f9778e1aad733b98abcf9fc20c4df
+PODFILE CHECKSUM: 15721fcdb53374d361e1f1a1bac26f92ab3b8780
 
 COCOAPODS: 1.8.4
