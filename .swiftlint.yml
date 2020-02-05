@@ -13,5 +13,6 @@ identifier_name:
     - id
     - x
     - y
+    - db
 
 line_length: 130
