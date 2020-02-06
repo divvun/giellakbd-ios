@@ -12,6 +12,8 @@
 		4EF16F9B19D2550D0076AFCB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF16F9A19D2550D0076AFCB /* AppDelegate.swift */; };
 		6949B7BA8FCEAD7A27EDFFE0 /* Pods_BaseKeyboard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9024FCA6C422ADE3CBC979B9 /* Pods_BaseKeyboard.framework */; };
 		991EE55023D9AB4700DC3677 /* ViewDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991EE54F23D9AB4700DC3677 /* ViewDebugger.swift */; };
+		997550B623EAC631004ED6A5 /* UserDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997550B523EAC631004ED6A5 /* UserDictionary.swift */; };
+		997550B723EAC631004ED6A5 /* UserDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997550B523EAC631004ED6A5 /* UserDictionary.swift */; };
 		99B94C6323E0501F0076A786 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 99B94C6523E0501F0076A786 /* Localizable.strings */; };
 		99DD30F623E307430065E8D8 /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DD30F423E3059C0065E8D8 /* Audio.swift */; };
 		C4F4C9ADC86DC61F1F96D961 /* Pods_HostingApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8902A09E56DB03DDF4926837 /* Pods_HostingApp.framework */; };
@@ -133,6 +135,7 @@
 		9024FCA6C422ADE3CBC979B9 /* Pods_BaseKeyboard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BaseKeyboard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		922C1403563939C906F94AD3 /* Pods-BaseKeyboard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaseKeyboard.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BaseKeyboard/Pods-BaseKeyboard.debug.xcconfig"; sourceTree = "<group>"; };
 		991EE54F23D9AB4700DC3677 /* ViewDebugger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewDebugger.swift; sourceTree = "<group>"; };
+		997550B523EAC631004ED6A5 /* UserDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionary.swift; sourceTree = "<group>"; };
 		99B94C6423E0501F0076A786 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		99B94C6623E050280076A786 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		99B94C6723E0502C0076A786 /* se */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = se; path = se.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -255,6 +258,7 @@
 				FDAF59A222F9CCE000F7C9FC /* Theme.swift */,
 				C6996B5822FC2CC2007EBC3D /* SystemKeys.swift */,
 				C6996B5B22FC2D3E007EBC3D /* CursorContext.swift */,
+				997550B523EAC631004ED6A5 /* UserDictionary.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -698,6 +702,7 @@
 				C676AD5B1EC9679000523FF3 /* InstructionsController.swift in Sources */,
 				C6B638441EDF81B200A6ECB2 /* SimpleButton.swift in Sources */,
 				C63EE0FF2361D86800A1E15A /* MenuButton.swift in Sources */,
+				997550B623EAC631004ED6A5 /* UserDictionary.swift in Sources */,
 				C655E8541EC5551100B12BE4 /* Extensions.swift in Sources */,
 				C691A0E723682C8B00085AC3 /* TestingController.swift in Sources */,
 				C65430B41EC94BF0007FC053 /* LanguagesController.swift in Sources */,
@@ -726,6 +731,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				997550B723EAC631004ED6A5 /* UserDictionary.swift in Sources */,
 				99DD30F623E307430065E8D8 /* Audio.swift in Sources */,
 				C6996B5322FB06FA007EBC3D /* DeadKeyHandler.swift in Sources */,
 				C6996B5E22FC3257007EBC3D /* DivvunSpellBannerPlugin.swift in Sources */,
