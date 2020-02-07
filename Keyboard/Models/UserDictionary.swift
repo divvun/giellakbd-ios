@@ -1,13 +1,17 @@
 import Foundation
 import SQLite
 
+private let tableName = "user_dictionary"
+
 public class UserDictionary {
-    private let userDictionary = Table("UserDictionary")
+    private let userDictionary = Table(tableName)
     private let id = Expression<Int64>("id")
     private let word0Col = Expression<String>("word0")
     private let word1Col = Expression<String?>("word1")
     private let word2Col = Expression<String?>("word2")
     private let userWordIndexCol = Expression<Int64>("user_word_index")
+
+    private let minOccurrencesToBeConsideredUserWord = 2
 
     private lazy var dbFilePath: String = {
         let groupId = "group.no.divvun.GiellaKeyboardDylan"
@@ -87,5 +91,32 @@ public class UserDictionary {
         } catch {
             print("Error printing database: \(error)")
         }
+    }
+
+    public func getUserWords() -> [String] {
+        var userWords: [String] = []
+        let query = """
+                    SELECT user_word,
+                           Count(user_word) AS COUNT
+                    FROM
+                      (SELECT CASE
+                                  WHEN \(userWordIndexCol.template) = 0 THEN \(word0Col.template)
+                                  WHEN \(userWordIndexCol.template) = 1 THEN \(word1Col.template)
+                                  WHEN \(userWordIndexCol.template) = 2 THEN \(word2Col.template)
+                              END user_word
+                       FROM \(tableName)) GROUP  BY user_word
+                    HAVING COUNT >= \(minOccurrencesToBeConsideredUserWord);
+                    """
+        do {
+            let words = try database.prepare(query)
+            for row in words {
+                if let word = row[0] as? String {
+                    userWords.append(word)
+                }
+            }
+        } catch {
+            print("Error getting user words: \(error)")
+        }
+        return userWords
     }
 }
