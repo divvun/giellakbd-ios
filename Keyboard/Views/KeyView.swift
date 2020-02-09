@@ -158,8 +158,8 @@ class KeyView: UIView {
         labelHoldingView.addSubview(label)
         addSubview(labelHoldingView)
 
-        label.centerXAnchor.constraint(equalTo: labelHoldingView.centerXAnchor).isActive = true
-        label.widthAnchor.constraint(equalTo: labelHoldingView.widthAnchor).isActive = true
+        label.centerXAnchor.constraint(equalTo: labelHoldingView.centerXAnchor).enable()
+        label.widthAnchor.constraint(equalTo: labelHoldingView.widthAnchor).enable()
 
         let yConstant: CGFloat
         if case .normal = page, case KeyType.input(_) = self.key.type {
@@ -183,7 +183,7 @@ class KeyView: UIView {
                 .constraint(equalTo: labelHoldingView.widthAnchor, multiplier: 1.0, constant: -4.0)
                 .enable()
         } else {
-            label.centerYAnchor.constraint(equalTo: labelHoldingView.centerYAnchor, constant: yConstant).isActive = true
+            label.centerYAnchor.constraint(equalTo: labelHoldingView.centerYAnchor, constant: yConstant).enable()
             swipeLayoutConstraint = nil
         }
 

@@ -112,10 +112,10 @@ internal class KeyboardView: UIView,
         collectionView.isScrollEnabled = false
 
         addSubview(collectionView)
-        collectionView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        collectionView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        collectionView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        collectionView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+        collectionView.topAnchor.constraint(equalTo: topAnchor).enable()
+        collectionView.bottomAnchor.constraint(equalTo: bottomAnchor).enable()
+        collectionView.leftAnchor.constraint(equalTo: leftAnchor).enable()
+        collectionView.rightAnchor.constraint(equalTo: rightAnchor).enable()
         collectionView.backgroundColor = .clear
 
         addGestureRecognizer(longpressGestureRecognizer)

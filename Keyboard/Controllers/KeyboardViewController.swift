@@ -304,13 +304,13 @@ open class KeyboardViewController: UIInputViewController {
         keyboardContainer.addSubview(splitKeyboard.leftKeyboardView)
         keyboardContainer.addSubview(splitKeyboard.rightKeyboardView)
 
-        splitKeyboard.leftKeyboardView.bottomAnchor.constraint(equalTo: keyboardContainer.bottomAnchor).isActive = true
-        splitKeyboard.leftKeyboardView.leftAnchor.constraint(equalTo: keyboardContainer.leftAnchor).isActive = true
-        splitKeyboard.leftKeyboardView.widthAnchor.constraint(equalTo: keyboardContainer.widthAnchor, multiplier: 0.25).isActive = true
+        splitKeyboard.leftKeyboardView.bottomAnchor.constraint(equalTo: keyboardContainer.bottomAnchor).enable()
+        splitKeyboard.leftKeyboardView.leftAnchor.constraint(equalTo: keyboardContainer.leftAnchor).enable()
+        splitKeyboard.leftKeyboardView.widthAnchor.constraint(equalTo: keyboardContainer.widthAnchor, multiplier: 0.25).enable()
 
         splitKeyboard.rightKeyboardView.bottomAnchor.constraint(equalTo: keyboardContainer.bottomAnchor).enable()
         splitKeyboard.rightKeyboardView.widthAnchor.constraint(equalTo: keyboardContainer.widthAnchor, multiplier: 0.25).enable()
-        splitKeyboard.rightKeyboardView.rightAnchor.constraint(equalTo: keyboardContainer.rightAnchor).isActive = true
+        splitKeyboard.rightKeyboardView.rightAnchor.constraint(equalTo: keyboardContainer.rightAnchor).enable()
 
         splitKeyboard.rightKeyboardView.topAnchor.constraint(equalTo: splitKeyboard.leftKeyboardView.topAnchor).enable()
         splitKeyboard.rightKeyboardView.heightAnchor.constraint(equalTo: splitKeyboard.leftKeyboardView.heightAnchor).enable()
@@ -330,13 +330,13 @@ open class KeyboardViewController: UIInputViewController {
 
         keyboardContainer.addSubview(keyboardView)
 
-        keyboardView.bottomAnchor.constraint(equalTo: keyboardContainer.bottomAnchor).isActive = true
-        keyboardView.widthAnchor.constraint(equalTo: keyboardContainer.widthAnchor, multiplier: 0.8).isActive = true
+        keyboardView.bottomAnchor.constraint(equalTo: keyboardContainer.bottomAnchor).enable()
+        keyboardView.widthAnchor.constraint(equalTo: keyboardContainer.widthAnchor, multiplier: 0.8).enable()
 
         if mode == .left {
-            keyboardView.leftAnchor.constraint(equalTo: keyboardContainer.leftAnchor).isActive = true
+            keyboardView.leftAnchor.constraint(equalTo: keyboardContainer.leftAnchor).enable()
         } else if mode == .right {
-            keyboardView.rightAnchor.constraint(equalTo: keyboardContainer.rightAnchor).isActive = true
+            keyboardView.rightAnchor.constraint(equalTo: keyboardContainer.rightAnchor).enable()
         }
 
         keyboardView.delegate = self
@@ -350,9 +350,9 @@ open class KeyboardViewController: UIInputViewController {
 
         keyboardContainer.addSubview(keyboardView)
 
-        keyboardView.bottomAnchor.constraint(equalTo: keyboardContainer.bottomAnchor).isActive = true
-        keyboardView.leftAnchor.constraint(equalTo: keyboardContainer.leftAnchor).isActive = true
-        keyboardView.rightAnchor.constraint(equalTo: keyboardContainer.rightAnchor).isActive = true
+        keyboardView.bottomAnchor.constraint(equalTo: keyboardContainer.bottomAnchor).enable()
+        keyboardView.leftAnchor.constraint(equalTo: keyboardContainer.leftAnchor).enable()
+        keyboardView.rightAnchor.constraint(equalTo: keyboardContainer.rightAnchor).enable()
 
         keyboardView.delegate = self
 
@@ -367,12 +367,12 @@ open class KeyboardViewController: UIInputViewController {
 
         keyboardContainer.insertSubview(bannerView, at: 0)
 
-        bannerView.heightAnchor.constraint(equalToConstant: theme.bannerHeight).isActive = true
-        bannerView.leftAnchor.constraint(equalTo: keyboardContainer.leftAnchor).isActive = true
-        bannerView.rightAnchor.constraint(equalTo: keyboardContainer.rightAnchor).isActive = true
+        bannerView.heightAnchor.constraint(equalToConstant: theme.bannerHeight).enable()
+        bannerView.leftAnchor.constraint(equalTo: keyboardContainer.leftAnchor).enable()
+        bannerView.rightAnchor.constraint(equalTo: keyboardContainer.rightAnchor).enable()
 
-        bannerView.bottomAnchor.constraint(equalTo: keyboardView.topAnchor).isActive = true
-        bannerView.topAnchor.constraint(equalTo: keyboardContainer.topAnchor).isActive = true
+        bannerView.bottomAnchor.constraint(equalTo: keyboardView.topAnchor).enable()
+        bannerView.topAnchor.constraint(equalTo: keyboardContainer.topAnchor).enable()
 
         bannerView.isHidden = false
     }
