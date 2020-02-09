@@ -170,12 +170,8 @@ class KeyView: UIView {
             label.bottomAnchor.constraint(equalTo: labelHoldingView.bottomAnchor,
                                           constant: theme.altLabelBottomAnchorConstant).enable()
 
-            alternateLabel.centerXAnchor
-                .constraint(equalTo: labelHoldingView.centerXAnchor)
-                .enable()
-            alternateLabel.widthAnchor
-                .constraint(equalTo: labelHoldingView.widthAnchor, multiplier: 1.0, constant: -4.0)
-                .enable()
+            alternateLabel.centerXAnchor.constraint(equalTo: labelHoldingView.centerXAnchor).enable()
+            alternateLabel.widthAnchor.constraint(equalTo: labelHoldingView.widthAnchor, multiplier: 1.0, constant: -4.0).enable()
         } else {
             label.centerYAnchor.constraint(equalTo: labelHoldingView.centerYAnchor, constant: yConstant).enable()
             swipeLayoutConstraint = nil
@@ -202,15 +198,9 @@ class KeyView: UIView {
             yConstant = 0.0
         }
 
-        label.centerXAnchor
-            .constraint(equalTo: labelHoldingView.centerXAnchor)
-            .enable()
-        label.centerYAnchor
-            .constraint(equalTo: labelHoldingView.centerYAnchor, constant: yConstant)
-            .enable()
-        label.widthAnchor
-            .constraint(equalTo: labelHoldingView.widthAnchor, multiplier: 1.0, constant: -4.0)
-            .enable()
+        label.centerXAnchor.constraint(equalTo: labelHoldingView.centerXAnchor).enable()
+        label.centerYAnchor.constraint(equalTo: labelHoldingView.centerYAnchor, constant: yConstant).enable()
+        label.widthAnchor.constraint(equalTo: labelHoldingView.widthAnchor, multiplier: 1.0, constant: -4.0).enable()
 
         swipeLayoutConstraint = nil
 
