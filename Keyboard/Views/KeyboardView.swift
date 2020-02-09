@@ -430,6 +430,10 @@ internal class KeyboardView: UIView,
             activeKey = nil
         }
 
+        handleTouches(touches)
+    }
+
+    private func handleTouches(_ touches: Set<UITouch>) {
         for touch in touches {
             if let indexPath = collectionView.indexPathForItem(at: touch.location(in: collectionView)) {
                 let key = currentPage[indexPath.section][indexPath.row]
