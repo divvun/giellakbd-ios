@@ -115,7 +115,6 @@ class KeyView: UIView {
 
     private func configureAltKeyLabel(_ alternateLabel: UILabel, page: KeyboardPage) {
         alternateLabel.textColor = theme.inactiveTextColor
-
         alternateLabel.adjustsFontSizeToFitWidth = false
         alternateLabel.numberOfLines = 0
         alternateLabel.textAlignment = .center
@@ -272,7 +271,6 @@ class KeyView: UIView {
             right: theme.keyHorizontalMargin))
 
         contentView.clipsToBounds = false
-
         contentView.backgroundColor = backgroundColor(for: key, page: page)
     }
 
