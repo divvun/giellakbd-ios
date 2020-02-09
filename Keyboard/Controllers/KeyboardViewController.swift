@@ -25,17 +25,6 @@ enum KeyboardMode {
     case right
 }
 
-extension NSLayoutConstraint {
-    @discardableResult
-    func enable(priority: UILayoutPriority? = nil) -> NSLayoutConstraint {
-        if let priority = priority {
-            self.priority = priority
-        }
-        self.isActive = true
-        return self
-    }
-}
-
 private let portraitDeviceHeight: CGFloat = {
     let size = UIScreen.main.bounds.size
     return max(size.height, size.width)
@@ -45,13 +34,6 @@ private let landscapeDeviceHeight: CGFloat = {
     let size = UIScreen.main.bounds.size
     return min(size.height, size.width)
 }()
-
-extension UIScreen {
-    var isDeviceLandscape: Bool {
-        let size = self.bounds.size
-        return size.width > size.height
-    }
-}
 
 open class KeyboardViewController: UIInputViewController {
     @IBOutlet var nextKeyboardButton: UIButton!

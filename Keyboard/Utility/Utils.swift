@@ -151,3 +151,21 @@ public extension UIColor {
         return UIColor(red: r, green: g, blue: b, alpha: a)
     }
 }
+
+extension NSLayoutConstraint {
+    @discardableResult
+    func enable(priority: UILayoutPriority? = nil) -> NSLayoutConstraint {
+        if let priority = priority {
+            self.priority = priority
+        }
+        self.isActive = true
+        return self
+    }
+}
+
+extension UIScreen {
+    var isDeviceLandscape: Bool {
+        let size = self.bounds.size
+        return size.width > size.height
+    }
+}
