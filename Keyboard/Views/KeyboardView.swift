@@ -261,11 +261,6 @@ internal class KeyboardView: UIView,
         overlays = [:]
     }
 
-    private var isLogicallyIPad: Bool {
-        return UIDevice.current.dc.deviceFamily == .iPad &&
-            self.traitCollection.userInterfaceIdiom == .pad
-    }
-
     // MARK: - LongPressOverlayDelegate
 
     func longpress(didCreateOverlayContentView contentView: UIView) {

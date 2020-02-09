@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import UIDeviceComplete
 
 extension UIDevice {
     public var systemMajorVersion: Int {
@@ -116,6 +117,11 @@ extension UIView {
     func centerIn(superview other: UIView) {
         centerXAnchor.constraint(equalTo: other.centerXAnchor).isActive = true
         centerYAnchor.constraint(equalTo: other.centerYAnchor).isActive = true
+    }
+
+    var isLogicallyIPad: Bool {
+        return UIDevice.current.dc.deviceFamily == .iPad &&
+            self.traitCollection.userInterfaceIdiom == .pad
     }
 }
 

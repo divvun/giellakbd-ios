@@ -108,11 +108,6 @@ class KeyView: UIView {
         fontSize = label.font.pointSize
     }
 
-    private var isLogicallyIPad: Bool {
-        return UIDevice.current.dc.deviceFamily == .iPad &&
-            self.traitCollection.userInterfaceIdiom == .pad
-    }
-
     private func configureAltKeyLabel(_ alternateLabel: UILabel, page: KeyboardPage) {
         alternateLabel.textColor = theme.inactiveTextColor
         alternateLabel.adjustsFontSizeToFitWidth = false
