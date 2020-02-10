@@ -517,7 +517,6 @@ open class KeyboardViewController: UIInputViewController {
         checkDarkMode()
     }
 
-    @available(iOSApplicationExtension 12.0, *)
     private func checkDarkMode(traits: UITraitCollection) {
         let newTheme = baseTheme.select(traits: traits)
 
@@ -531,9 +530,7 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     private func checkDarkMode() {
-        if #available(iOSApplicationExtension 12.0, *) {
-            self.checkDarkMode(traits: self.traitCollection)
-        }
+        self.checkDarkMode(traits: self.traitCollection)
     }
 
     private func updateAfterThemeChange() {
@@ -709,10 +706,6 @@ extension KeyboardViewController: KeyboardViewDelegate {
 
 extension KeyboardViewController: KeyboardViewKeyboardKeyDelegate {
     func didTriggerKeyboardButton(sender: UIView, forEvent event: UIEvent) {
-        if #available(iOSApplicationExtension 10.0, *) {
-            self.handleInputModeList(from: sender, with: event)
-        } else {
-            advanceToNextInputMode()
-        }
+        self.handleInputModeList(from: sender, with: event)
     }
 }
