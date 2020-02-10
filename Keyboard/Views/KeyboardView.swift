@@ -112,10 +112,10 @@ internal class KeyboardView: UIView,
         collectionView.isScrollEnabled = false
 
         addSubview(collectionView)
-        collectionView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        collectionView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        collectionView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        collectionView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+        collectionView.topAnchor.constraint(equalTo: topAnchor).enable()
+        collectionView.bottomAnchor.constraint(equalTo: bottomAnchor).enable()
+        collectionView.leftAnchor.constraint(equalTo: leftAnchor).enable()
+        collectionView.rightAnchor.constraint(equalTo: rightAnchor).enable()
         collectionView.backgroundColor = .clear
 
         addGestureRecognizer(longpressGestureRecognizer)
@@ -259,11 +259,6 @@ internal class KeyboardView: UIView,
             overlay.removeFromSuperview()
         }
         overlays = [:]
-    }
-
-    private var isLogicallyIPad: Bool {
-        return UIDevice.current.dc.deviceFamily == .iPad &&
-            self.traitCollection.userInterfaceIdiom == .pad
     }
 
     // MARK: - LongPressOverlayDelegate
@@ -430,6 +425,10 @@ internal class KeyboardView: UIView,
             activeKey = nil
         }
 
+        handleTouches(touches)
+    }
+
+    private func handleTouches(_ touches: Set<UITouch>) {
         for touch in touches {
             if let indexPath = collectionView.indexPathForItem(at: touch.location(in: collectionView)) {
                 let key = currentPage[indexPath.section][indexPath.row]

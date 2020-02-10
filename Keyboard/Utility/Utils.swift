@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import UIDeviceComplete
 
 extension UIDevice {
     public var systemMajorVersion: Int {
@@ -117,6 +118,11 @@ extension UIView {
         centerXAnchor.constraint(equalTo: other.centerXAnchor).isActive = true
         centerYAnchor.constraint(equalTo: other.centerYAnchor).isActive = true
     }
+
+    var isLogicallyIPad: Bool {
+        return UIDevice.current.dc.deviceFamily == .iPad &&
+            self.traitCollection.userInterfaceIdiom == .pad
+    }
 }
 
 public extension UIColor {
@@ -143,5 +149,23 @@ public extension UIColor {
         //swiftlint:enable identifier_name
 
         return UIColor(red: r, green: g, blue: b, alpha: a)
+    }
+}
+
+extension NSLayoutConstraint {
+    @discardableResult
+    func enable(priority: UILayoutPriority? = nil) -> NSLayoutConstraint {
+        if let priority = priority {
+            self.priority = priority
+        }
+        self.isActive = true
+        return self
+    }
+}
+
+extension UIScreen {
+    var isDeviceLandscape: Bool {
+        let size = self.bounds.size
+        return size.width > size.height
     }
 }
