@@ -13,21 +13,8 @@ class InstructionsController: ViewController<InstructionsView> {
         navigationController?.popViewController(animated: true)
     }
 
-    private let prefsUrlIOS10 = "QXBwLVByZWZzOnJvb3Q9R2VuZXJhbCZwYXRoPUtleWJvYXJkL0tFWUJPQVJEUwo="
-    private let prefsUrlIOS9 = "cHJlZnM6cm9vdD1HZW5lcmFsJnBhdGg9S2V5Ym9hcmQvS0VZQk9BUkRTCg=="
-
     @objc private func onSettingsTapped() {
-        let application = UIApplication.shared
-
-        if #available(iOS 11.0, *) {
-            application.openURL(URL(string: UIApplication.openSettingsURLString)!)
-        } else if #available(iOS 10.0, *) {
-            let url = String(data: Data(base64Encoded: prefsUrlIOS10)!, encoding: .utf8)!
-            application.openURL(URL(string: url.trimmingCharacters(in: .whitespacesAndNewlines))!)
-        } else {
-            let url = String(data: Data(base64Encoded: prefsUrlIOS9)!, encoding: .utf8)!
-            application.openURL(URL(string: url.trimmingCharacters(in: .whitespacesAndNewlines))!)
-        }
+        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
     }
 
     func checkCurrentStep() {
