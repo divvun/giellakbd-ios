@@ -144,11 +144,6 @@ class LongPressOverlayController: NSObject,
         }
     }
 
-    private var isLogicallyIPad: Bool {
-        return UIDevice.current.dc.deviceFamily == .iPad &&
-            self.collectionView?.traitCollection.userInterfaceIdiom == .pad
-    }
-
     private func longPressTouchPoint(at point: CGPoint,
                                      cellSize: CGSize,
                                      view collectionView: UICollectionView,
@@ -165,7 +160,7 @@ class LongPressOverlayController: NSObject,
             let bounds = collectionView.bounds
             let halfWidth = cellSize.width / 2.0
             let halfHeight = cellSize.height / 2.0
-            let heightOffset: CGFloat = isLogicallyIPad ? 0 : -halfHeight
+            let heightOffset: CGFloat = collectionView.isLogicallyIPad ? 0 : -halfHeight
 
             var x = point.x
             let minX = bounds.minX

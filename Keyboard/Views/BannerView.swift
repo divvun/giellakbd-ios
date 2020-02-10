@@ -33,10 +33,10 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
             contentView.fill(superview: self)
             contentView.addSubview(titleLabel)
 
-            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: theme.bannerVerticalMargin).isActive = true
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: theme.bannerVerticalMargin).enable()
             titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,
-                                               constant: -theme.bannerVerticalMargin).isActive = true
-            titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+                                               constant: -theme.bannerVerticalMargin).enable()
+            titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).enable()
             titleLabel.font = theme.bannerFont
             titleLabel.textAlignment = .center
 

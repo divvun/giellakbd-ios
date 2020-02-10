@@ -220,14 +220,14 @@ public struct KeyboardDefinition: Codable {
 
         switch deviceVariant {
         case .iphone:
-            self.normal = mode.normal.map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) } }
-            self.shifted = mode.shifted.map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) } }
+            self.normal = keyDefinitionsFromRaw(mode.normal)
+            self.shifted = keyDefinitionsFromRaw(mode.shifted)
 
             if let symbols1 = mode.symbols1 {
-                self.symbols1 = symbols1.map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) }}
+                self.symbols1 = keyDefinitionsFromRaw(symbols1)
             }
             if let symbols2 = mode.symbols2 {
-                self.symbols2 = symbols2.map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) }}
+                self.symbols2 = keyDefinitionsFromRaw(symbols2)
             }
         case .ipad12in, .ipad9in:
             let alt = mode.alt ?? []
@@ -235,32 +235,14 @@ public struct KeyboardDefinition: Codable {
             let symbols1 = mode.symbols1 ?? []
             let symbols2 = mode.symbols2 ?? []
 
-            self.normal = zip(mode.normal, alt).map {
-                zip($0, $1).map {
-                    KeyDefinition(input: $0, alternate: $1.id, spaceName: spaceName, returnName: returnName)
-                }
-            }
-
-            self.shifted = zip(mode.shifted, altShift).map {
-                zip($0, $1).map {
-                    KeyDefinition(input: $0, alternate: $1.id, spaceName: spaceName, returnName: returnName)
-                }
-            }
+            self.normal = keyDefinitionsFromRaw(mode.normal, alternates: alt)
+            self.shifted = keyDefinitionsFromRaw(mode.shifted, alternates: altShift)
 
             if symbols2.isEmpty {
-                self.symbols1 = symbols1.map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) } }
+                self.symbols1 = keyDefinitionsFromRaw(symbols1)
             } else {
-                self.symbols1 = zip(symbols1, symbols2).map {
-                    zip($0, $1).map {
-                        return KeyDefinition(input: $0, alternate: $1.id, spaceName: spaceName, returnName: returnName)
-                    }
-                }
-
-                self.symbols2 = symbols2.map {
-                    return $0.map {
-                        return KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName)
-                    }
-                }
+                self.symbols1 = keyDefinitionsFromRaw(symbols1, alternates: symbols2)
+                self.symbols2 = keyDefinitionsFromRaw(symbols2)
             }
         }
 
@@ -268,6 +250,19 @@ public struct KeyboardDefinition: Codable {
         shifted.platformize(page: .shifted, spaceName: spaceName, returnName: returnName, traits: traits)
         symbols1.platformize(page: .symbols1, spaceName: spaceName, returnName: returnName, traits: traits)
         symbols2.platformize(page: .symbols2, spaceName: spaceName, returnName: returnName, traits: traits)
+    }
+
+    private func keyDefinitionsFromRaw(_ rawKeyDefinitions: [[RawKeyDefinition]]) -> [[KeyDefinition]] {
+        return rawKeyDefinitions.map { $0.map { KeyDefinition(input: $0, spaceName: spaceName, returnName: returnName) } }
+    }
+
+    private func keyDefinitionsFromRaw(_ rawKeyDefinitions: [[RawKeyDefinition]],
+                                       alternates: [[RawKeyDefinition]]) -> [[KeyDefinition]] {
+        return zip(rawKeyDefinitions, alternates).map {
+            zip($0, $1).map {
+                KeyDefinition(input: $0, alternate: $1.id, spaceName: spaceName, returnName: returnName)
+            }
+        }
     }
 
     public func copy(

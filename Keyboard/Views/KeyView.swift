@@ -108,14 +108,8 @@ class KeyView: UIView {
         fontSize = label.font.pointSize
     }
 
-    private var isLogicallyIPad: Bool {
-        return UIDevice.current.dc.deviceFamily == .iPad &&
-            self.traitCollection.userInterfaceIdiom == .pad
-    }
-
     private func configureAltKeyLabel(_ alternateLabel: UILabel, page: KeyboardPage) {
         alternateLabel.textColor = theme.inactiveTextColor
-
         alternateLabel.adjustsFontSizeToFitWidth = false
         alternateLabel.numberOfLines = 0
         alternateLabel.textAlignment = .center
@@ -158,8 +152,8 @@ class KeyView: UIView {
         labelHoldingView.addSubview(label)
         addSubview(labelHoldingView)
 
-        label.centerXAnchor.constraint(equalTo: labelHoldingView.centerXAnchor).isActive = true
-        label.widthAnchor.constraint(equalTo: labelHoldingView.widthAnchor).isActive = true
+        label.centerXAnchor.constraint(equalTo: labelHoldingView.centerXAnchor).enable()
+        label.widthAnchor.constraint(equalTo: labelHoldingView.widthAnchor).enable()
 
         let yConstant: CGFloat
         if case .normal = page, case KeyType.input(_) = self.key.type {
@@ -176,14 +170,10 @@ class KeyView: UIView {
             label.bottomAnchor.constraint(equalTo: labelHoldingView.bottomAnchor,
                                           constant: theme.altLabelBottomAnchorConstant).enable()
 
-            alternateLabel.centerXAnchor
-                .constraint(equalTo: labelHoldingView.centerXAnchor)
-                .enable()
-            alternateLabel.widthAnchor
-                .constraint(equalTo: labelHoldingView.widthAnchor, multiplier: 1.0, constant: -4.0)
-                .enable()
+            alternateLabel.centerXAnchor.constraint(equalTo: labelHoldingView.centerXAnchor).enable()
+            alternateLabel.widthAnchor.constraint(equalTo: labelHoldingView.widthAnchor, multiplier: 1.0, constant: -4.0).enable()
         } else {
-            label.centerYAnchor.constraint(equalTo: labelHoldingView.centerYAnchor, constant: yConstant).isActive = true
+            label.centerYAnchor.constraint(equalTo: labelHoldingView.centerYAnchor, constant: yConstant).enable()
             swipeLayoutConstraint = nil
         }
 
@@ -208,15 +198,9 @@ class KeyView: UIView {
             yConstant = 0.0
         }
 
-        label.centerXAnchor
-            .constraint(equalTo: labelHoldingView.centerXAnchor)
-            .enable()
-        label.centerYAnchor
-            .constraint(equalTo: labelHoldingView.centerYAnchor, constant: yConstant)
-            .enable()
-        label.widthAnchor
-            .constraint(equalTo: labelHoldingView.widthAnchor, multiplier: 1.0, constant: -4.0)
-            .enable()
+        label.centerXAnchor.constraint(equalTo: labelHoldingView.centerXAnchor).enable()
+        label.centerYAnchor.constraint(equalTo: labelHoldingView.centerYAnchor, constant: yConstant).enable()
+        label.widthAnchor.constraint(equalTo: labelHoldingView.widthAnchor, multiplier: 1.0, constant: -4.0).enable()
 
         swipeLayoutConstraint = nil
 
@@ -272,7 +256,6 @@ class KeyView: UIView {
             right: theme.keyHorizontalMargin))
 
         contentView.clipsToBounds = false
-
         contentView.backgroundColor = backgroundColor(for: key, page: page)
     }
 
