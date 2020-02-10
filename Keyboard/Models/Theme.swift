@@ -10,21 +10,17 @@ struct _Theme {
 
 extension _Theme {
     func select(traits: UITraitCollection) -> ThemeType {
-        if #available(iOSApplicationExtension 12.0, *) {
-            let interfaceStyle = traits.userInterfaceStyle
+        let interfaceStyle = traits.userInterfaceStyle
 
-            switch interfaceStyle {
-            case .light:
-                return self.light
-            case .dark:
-                return self.dark
-            case .unspecified:
-                // This should probably not be possible to get into, so assume light
-                return self.light
-            @unknown default:
-                return self.light
-            }
-        } else {
+        switch interfaceStyle {
+        case .light:
+            return self.light
+        case .dark:
+            return self.dark
+        case .unspecified:
+            // This should probably not be possible to get into, so assume light
+            return self.light
+        @unknown default:
             return self.light
         }
     }
