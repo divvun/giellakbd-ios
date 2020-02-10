@@ -6,7 +6,6 @@ public class Audio {
     private static let clickSound: SystemSoundID = 1123
     private static let deleteSound: SystemSoundID = 1155
     private static let modifierSound: SystemSoundID = 1156
-    private static let fallbackSound: SystemSoundID = 1104
 
     public static func checkIfSoundEnabled() {
         isSoundEnabled = KeyboardSettings.isKeySoundEnabled
@@ -29,16 +28,8 @@ public class Audio {
             return
         }
 
-        var sound = systemSound
-
-        if #available(iOS 10.0, *) {
-            // Nothing
-        } else {
-            sound = fallbackSound
-        }
-
         DispatchQueue.global().async {
-            AudioServicesPlaySystemSound(sound)
+            AudioServicesPlaySystemSound(systemSound)
         }
     }
 
