@@ -13,10 +13,12 @@ class UserDictionaryViewController: ViewController<UserDictionaryView>, UITableV
     }
 
     private func setupTableView() {
-        contentView.tableView.register(UserDictionaryWordCell.self,
+        let tableView = contentView.tableView!
+        tableView.register(UserDictionaryWordCell.self,
                                        forCellReuseIdentifier: UserDictionaryWordCell.reuseIdentifier)
-        contentView.tableView.dataSource = self
-        contentView.tableView.delegate = self
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.tableFooterView = UIView()
     }
 
     // MARK: UITableViewDataSource
