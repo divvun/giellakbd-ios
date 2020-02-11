@@ -2,14 +2,19 @@ import UIKit
 
 class UserDictionaryViewController: ViewController<UserDictionaryView>, UITableViewDataSource, UITableViewDelegate {
 
-    private let userDictionary = UserDictionary()
-    private var userWords: [String] = []
+    private lazy var userWords: [String] = {
+        let userDictionary = UserDictionary()
+        return userDictionary.getUserWords()
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupTableView()
+    }
 
-        userWords = userDictionary.getUserWords()
-
+    private func setupTableView() {
+        contentView.tableView.register(UserDictionaryWordCell.self,
+                                       forCellReuseIdentifier: UserDictionaryWordCell.reuseIdentifier)
         contentView.tableView.dataSource = self
         contentView.tableView.delegate = self
     }
@@ -21,8 +26,24 @@ class UserDictionaryViewController: ViewController<UserDictionaryView>, UITableV
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: UserDictionaryWordCell.reuseIdentifier) else {
+            fatalError("Couldn't dequeue User Dictionary Word Cell")
+        }
         cell.textLabel?.text = userWords[indexPath.item]
         return cell
     }
+}
+
+class UserDictionaryWordCell: UITableViewCell {
+    static let reuseIdentifier = String(describing: self)
+
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        accessoryType = .disclosureIndicator
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
 }
