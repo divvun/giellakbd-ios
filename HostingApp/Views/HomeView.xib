@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,10 +17,13 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                 </imageView>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="9Ne-rM-V7i">
-                    <rect key="frame" x="59.5" y="252" width="256" height="163"/>
+                    <rect key="frame" x="59.5" y="219" width="256" height="229"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Template Keyboard" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2eI-bM-tyI">
                             <rect key="frame" x="0.0" y="0.0" width="256" height="23"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="23" id="Ba5-w4-TDP"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -36,8 +39,13 @@
                                 </button>
                             </subviews>
                         </stackView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hdS-2z-RlR" customClass="MenuButton" customModule="HostingApp" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="125" width="256" height="34"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <state key="normal" title="User Dictionary"/>
+                        </button>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="5Ej-CW-Ost">
-                            <rect key="frame" x="0.0" y="125" width="256" height="38"/>
+                            <rect key="frame" x="0.0" y="191" width="256" height="38"/>
                             <subviews>
                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bA9-vt-xCz" customClass="MenuButton" customModule="HostingApp" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="256" height="0.0"/>
@@ -110,6 +118,7 @@
                 <outlet property="layoutsButton" destination="bA9-vt-xCz" id="1Gd-TH-grp"/>
                 <outlet property="testingButton" destination="NQY-9A-SWq" id="hon-8d-3VN"/>
                 <outlet property="titleLabel" destination="2eI-bM-tyI" id="cBJ-Rp-SQH"/>
+                <outlet property="userDictionaryButton" destination="hdS-2z-RlR" id="LZv-BX-4Ri"/>
             </connections>
             <point key="canvasLocation" x="33.5" y="53.5"/>
         </view>

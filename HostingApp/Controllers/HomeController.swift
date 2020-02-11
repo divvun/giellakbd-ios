@@ -17,6 +17,10 @@ class HomeController: ViewController<HomeView>, HideNavBar {
         navigationController?.pushViewController(TestingController(), animated: true)
     }
 
+    @objc private func openUserDictionary() {
+        navigationController?.pushViewController(UserDictionaryViewController(), animated: true)
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
@@ -43,6 +47,7 @@ class HomeController: ViewController<HomeView>, HideNavBar {
         contentView.helpButton.addTarget(self, action: #selector(openInstructions), for: [.touchUpInside])
         contentView.aboutButton.addTarget(self, action: #selector(openAbout), for: [.touchUpInside])
         contentView.testingButton.addTarget(self, action: #selector(openTesting), for: [.touchUpInside])
+        contentView.userDictionaryButton.addTarget(self, action: #selector(openUserDictionary), for: [.touchUpInside])
     }
 
     deinit {
