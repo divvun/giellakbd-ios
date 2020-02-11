@@ -1,6 +1,6 @@
 import UIKit
 
-class UserDictionaryViewController: ViewController<UserDictionaryView>, UITableViewDataSource, UITableViewDelegate {
+class UserDictionaryViewController: ViewController<UserDictionaryView> {
 
     private lazy var userWords: [String] = {
         let userDictionary = UserDictionary()
@@ -9,6 +9,7 @@ class UserDictionaryViewController: ViewController<UserDictionaryView>, UITableV
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "User Dictionary" // LOCALIZE ME
         setupTableView()
     }
 
@@ -20,9 +21,9 @@ class UserDictionaryViewController: ViewController<UserDictionaryView>, UITableV
         tableView.delegate = self
         tableView.tableFooterView = UIView()
     }
+}
 
-    // MARK: UITableViewDataSource
-
+extension UserDictionaryViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return userWords.count
     }
@@ -33,6 +34,13 @@ class UserDictionaryViewController: ViewController<UserDictionaryView>, UITableV
         }
         cell.textLabel?.text = userWords[indexPath.item]
         return cell
+    }
+}
+
+extension UserDictionaryViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let word = userWords[indexPath.row]
+        navigationController?.pushViewController(WordContextViewController(word: word), animated: true)
     }
 }
 
