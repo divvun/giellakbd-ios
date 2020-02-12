@@ -1,4 +1,5 @@
 import UIKit
+import DivvunSpell
 
 public struct BannerItem {
     public let title: String

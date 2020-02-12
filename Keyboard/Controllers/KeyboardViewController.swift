@@ -1,5 +1,6 @@
 import UIKit
 import UIDeviceComplete
+import DivvunSpell
 
 protocol KeyboardViewProvider {
     var delegate: (KeyboardViewDelegate & KeyboardViewKeyboardKeyDelegate)? { get set }
@@ -409,19 +410,24 @@ open class KeyboardViewController: UIInputViewController {
 
     private func propagateTextInputUpdateToBanner() {
         let proxy = textDocumentProxy
-        if let bannerView = bannerView {
-            bannerView.delegate?.textInputDidChange(bannerView, context: CursorContext.from(proxy: proxy))
+        if let bannerView = bannerView, let context = try? CursorContext.from(proxy: proxy) {
+            bannerView.delegate?.textInputDidChange(bannerView, context: context)
         }
     }
 
     func replaceSelected(with input: String) {
-        let ctx = CursorContext.from(proxy: textDocumentProxy)
-        textDocumentProxy.adjustTextPosition(byCharacterOffset: ctx.currentWord.count - ctx.currentOffset)
+        do {
+            let ctx = try CursorContext.from(proxy: textDocumentProxy)
+            textDocumentProxy.adjustTextPosition(byCharacterOffset: ctx.current.1.count - Int(ctx.current.0))
 
-        for _ in 0 ..< ctx.currentWord.count {
-            deleteBackward()
+            for _ in 0 ..< ctx.current.1.count {
+                deleteBackward()
+            }
+            insertText(input)
+        } catch let error {
+            // Log and run
+            print(error)
         }
-        insertText(input)
     }
 
     private var lastInput: String = ""
@@ -452,7 +458,9 @@ open class KeyboardViewController: UIInputViewController {
 
     private func updateCapitalization() {
         let proxy = textDocumentProxy
-        let ctx = CursorContext.from(proxy: textDocumentProxy)
+        guard let ctx = try? CursorContext.from(proxy: textDocumentProxy) else {
+            return
+        }
 
         guard let page = keyboardView?.page else {
             return
@@ -468,17 +476,17 @@ open class KeyboardViewController: UIInputViewController {
         if let autoCapitalizationType = proxy.autocapitalizationType {
             switch autoCapitalizationType {
             case .words:
-                if ctx.currentWord == "" {
+                if ctx.current.1 == "" {
                     keyboardView.page = .shifted
                 }
             case .sentences:
-                let lastCharacter: Character? = ctx.previousWord?.last
+                let lastCharacter: Character? = ctx.firstBefore?.1.last
 
-                if ctx.currentWord == "",
-                    ((lastCharacter?.isPunctuation ?? false) && lastCharacter != ",") || ctx.previousWord == nil {
+                if ctx.current.1 == "",
+                    ((lastCharacter?.isPunctuation ?? false) && lastCharacter != ",") || ctx.firstBefore?.1 == nil {
                     keyboardView.page = .shifted
                 } else if case .shifted = page {
-                    if !(ctx.previousWord?.last?.isUppercase ?? false) {
+                    if !(ctx.firstBefore?.1.last?.isUppercase ?? false) {
                         keyboardView.page = .normal
                     }
                 }

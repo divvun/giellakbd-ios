@@ -1,6 +1,6 @@
 import Foundation
 import Sentry
-import libdivvunspell
+import DivvunSpell
 
 class SuggestionOp: Operation {
     weak var plugin: DivvunSpellBannerPlugin?
@@ -48,13 +48,13 @@ class SuggestionOp: Operation {
 
 extension DivvunSpellBannerPlugin: BannerViewDelegate {
     public func textInputDidChange(_ banner: BannerView, context: CursorContext) {
-        if context.currentWord == "" {
+        if context.current.1 == "" {
             banner.setBannerItems([])
             return
         }
 
         opQueue.cancelAllOperations()
-        opQueue.addOperation(SuggestionOp(plugin: self, word: context.currentWord))
+        opQueue.addOperation(SuggestionOp(plugin: self, word: context.current.1))
     }
 
     public func didSelectBannerItem(_ banner: BannerView, item: BannerItem) {
