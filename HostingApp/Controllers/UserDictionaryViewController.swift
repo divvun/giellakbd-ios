@@ -16,8 +16,7 @@ class UserDictionaryViewController: ViewController<UserDictionaryView> {
 
     private func setupTableView() {
         let tableView = contentView.tableView!
-        tableView.register(UserDictionaryWordCell.self,
-                                       forCellReuseIdentifier: UserDictionaryWordCell.reuseIdentifier)
+        tableView.register(UserDictionaryWordCell.self)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.tableFooterView = UIView()
@@ -30,9 +29,7 @@ extension UserDictionaryViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: UserDictionaryWordCell.reuseIdentifier) else {
-            fatalError("Couldn't dequeue User Dictionary Word Cell")
-        }
+        let cell = tableView.dequeueReusableCell(UserDictionaryWordCell.self)
         cell.textLabel?.text = userWords[indexPath.item]
         return cell
     }
@@ -47,8 +44,6 @@ extension UserDictionaryViewController: UITableViewDelegate {
 }
 
 class UserDictionaryWordCell: UITableViewCell {
-    static let reuseIdentifier = String(describing: self)
-
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         accessoryType = .disclosureIndicator
@@ -57,5 +52,4 @@ class UserDictionaryWordCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }
