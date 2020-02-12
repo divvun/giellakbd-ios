@@ -1,12 +1,15 @@
 import UIKit
 
 class UserDictionaryViewController: ViewController<UserDictionaryView> {
-
     private let userDictionary = UserDictionary()
 
     private lazy var userWords: [String] = {
         return userDictionary.getUserWords()
     }()
+
+    private var tableView: UITableView {
+        contentView.tableView!
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -14,12 +17,22 @@ class UserDictionaryViewController: ViewController<UserDictionaryView> {
         setupTableView()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        deselectSelectedRow()
+    }
+
     private func setupTableView() {
-        let tableView = contentView.tableView!
         tableView.register(UserDictionaryWordCell.self)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.tableFooterView = UIView()
+    }
+
+    private func deselectSelectedRow() {
+        if let selectedRowPath = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: selectedRowPath, animated: true)
+        }
     }
 }
 
