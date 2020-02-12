@@ -1,3 +1,5 @@
+import Foundation
+
 public struct WordContext {
     let word0: String
     let word1: String?
@@ -17,7 +19,7 @@ public struct WordContext {
         return true
     }
 
-    public func contextString() -> String {
+    public func contextAttributedString() -> NSAttributedString {
         var contextString = word0
         if let word1 = word1 {
             contextString += " \(word1)"
@@ -36,6 +38,6 @@ public struct WordContext {
             contextString += " ..."
         }
 
-        return contextString
+        return contextString.bolden(substring: userWord)
     }
 }

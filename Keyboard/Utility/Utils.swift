@@ -77,6 +77,20 @@ extension UIKeyboardAppearance: CustomDebugStringConvertible {
     }
 }
 
+extension String {
+    func bolden(substring: String, size: CGFloat = UIFont.labelFontSize) -> NSAttributedString {
+        let nsstring = self as NSString
+        let attr = NSMutableAttributedString(string: self)
+
+        attr.addAttribute(NSAttributedString.Key.font,
+                          value: UIFont.systemFont(ofSize: size,
+                                                   weight: UIFont.Weight(rawValue: 0.3)),
+                          range: nsstring.range(of: substring))
+
+        return attr
+    }
+}
+
 extension Substring {
     func lastIndex(after character: Character) -> String.Index? {
         guard let index = self.lastIndex(of: character) else { return nil }

@@ -31,7 +31,7 @@ extension WordContextViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         let context = contexts[indexPath.item]
-        cell.textLabel?.text = context.contextString()
+        cell.textLabel?.attributedText = context.contextAttributedString()
         return cell
     }
 }
