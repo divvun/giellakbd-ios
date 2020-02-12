@@ -120,8 +120,8 @@ public class UserDictionary {
         return userWords
     }
 
-    public func getContexts(for word: String) -> [[String]] {
-        var contexts: [[String]] = []
+    public func getContexts(for word: String) -> [WordContext] {
+        var contexts: [WordContext] = []
 
         let word0 = word0Col.template
         let word1 = word1Col.template
@@ -147,13 +147,17 @@ public class UserDictionary {
         do {
             let rows = try database.prepare(query)
             for row in rows {
-                var contextWords: [String] = []
-                for word in row {
-                    if let word = word as? String {
-                        contextWords.append(word)
-                    }
+                guard let word0 = row[0] as? String else {
+                    fatalError("UserDictionary: Unexpectedly found nil in word0 column.")
                 }
-                contexts.append(contextWords)
+                let word1 = row[1] as? String ?? nil
+                let word2 = row[2] as? String ?? nil
+
+                let context = WordContext(word0: word0,
+                                          word1: word1,
+                                          word2: word2,
+                                          userWord: word)
+                contexts.append(context)
             }
         } catch {
             print("Error getting user word contexts: \(error)")

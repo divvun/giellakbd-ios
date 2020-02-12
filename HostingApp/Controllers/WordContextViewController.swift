@@ -1,10 +1,10 @@
 import UIKit
 
 class WordContextViewController: ViewController<WordContextView> {
-    private let word: String
+    private let contexts: [WordContext]
 
-    init(word: String) {
-        self.word = word
+    init(dictionary: UserDictionary, word: String) {
+        contexts = dictionary.getContexts(for: word)
         super.init()
     }
 
@@ -25,12 +25,13 @@ class WordContextViewController: ViewController<WordContextView> {
 
 extension WordContextViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return contexts.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        cell.textLabel?.text = "word: \(word) \(String(describing: indexPath.item))"
+        let context = contexts[indexPath.item]
+        cell.textLabel?.text = context.contextString()
         return cell
     }
 }

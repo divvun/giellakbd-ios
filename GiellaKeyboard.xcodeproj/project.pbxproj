@@ -20,6 +20,8 @@
 		999790B223F2F484003F7885 /* WordContextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999790B123F2F484003F7885 /* WordContextViewController.swift */; };
 		999790B623F2F536003F7885 /* WordContextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999790B523F2F536003F7885 /* WordContextView.swift */; };
 		999790B823F2F548003F7885 /* WordContextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 999790B723F2F548003F7885 /* WordContextView.xib */; };
+		999790BA23F40E4F003F7885 /* WordContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999790B923F40E4F003F7885 /* WordContext.swift */; };
+		999790BB23F40E4F003F7885 /* WordContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999790B923F40E4F003F7885 /* WordContext.swift */; };
 		99B94C6323E0501F0076A786 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 99B94C6523E0501F0076A786 /* Localizable.strings */; };
 		99DD30F623E307430065E8D8 /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DD30F423E3059C0065E8D8 /* Audio.swift */; };
 		C4F4C9ADC86DC61F1F96D961 /* Pods_HostingApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8902A09E56DB03DDF4926837 /* Pods_HostingApp.framework */; };
@@ -148,6 +150,7 @@
 		999790B123F2F484003F7885 /* WordContextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordContextViewController.swift; sourceTree = "<group>"; };
 		999790B523F2F536003F7885 /* WordContextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordContextView.swift; sourceTree = "<group>"; };
 		999790B723F2F548003F7885 /* WordContextView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordContextView.xib; sourceTree = "<group>"; };
+		999790B923F40E4F003F7885 /* WordContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordContext.swift; sourceTree = "<group>"; };
 		99B94C6423E0501F0076A786 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		99B94C6623E050280076A786 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		99B94C6723E0502C0076A786 /* se */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = se; path = se.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -271,6 +274,7 @@
 				C6996B5822FC2CC2007EBC3D /* SystemKeys.swift */,
 				C6996B5B22FC2D3E007EBC3D /* CursorContext.swift */,
 				997550B523EAC631004ED6A5 /* UserDictionary.swift */,
+				999790B923F40E4F003F7885 /* WordContext.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -728,6 +732,7 @@
 				C691A0E723682C8B00085AC3 /* TestingController.swift in Sources */,
 				C65430B41EC94BF0007FC053 /* LanguagesController.swift in Sources */,
 				999790AC23F2B4E8003F7885 /* UserDictionaryViewController.swift in Sources */,
+				999790BA23F40E4F003F7885 /* WordContext.swift in Sources */,
 				999790B623F2F536003F7885 /* WordContextView.swift in Sources */,
 				C65430B01EC94BC7007FC053 /* InstructionsView.swift in Sources */,
 				4EF16F9B19D2550D0076AFCB /* AppDelegate.swift in Sources */,
@@ -759,6 +764,7 @@
 				99DD30F623E307430065E8D8 /* Audio.swift in Sources */,
 				C6996B5322FB06FA007EBC3D /* DeadKeyHandler.swift in Sources */,
 				C6996B5E22FC3257007EBC3D /* DivvunSpellBannerPlugin.swift in Sources */,
+				999790BB23F40E4F003F7885 /* WordContext.swift in Sources */,
 				C6996B5C22FC2D3E007EBC3D /* CursorContext.swift in Sources */,
 				C6996B5A22FC2CC7007EBC3D /* SystemKeys.swift in Sources */,
 				C6F249461F736E1400840F2B /* KeyboardDefinition.swift in Sources */,

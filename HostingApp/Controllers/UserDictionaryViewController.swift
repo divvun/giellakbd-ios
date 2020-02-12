@@ -2,8 +2,9 @@ import UIKit
 
 class UserDictionaryViewController: ViewController<UserDictionaryView> {
 
+    private let userDictionary = UserDictionary()
+
     private lazy var userWords: [String] = {
-        let userDictionary = UserDictionary()
         return userDictionary.getUserWords()
     }()
 
@@ -40,7 +41,7 @@ extension UserDictionaryViewController: UITableViewDataSource {
 extension UserDictionaryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let word = userWords[indexPath.row]
-        navigationController?.pushViewController(WordContextViewController(word: word), animated: true)
+        navigationController?.pushViewController(WordContextViewController(dictionary: userDictionary, word: word), animated: true)
     }
 }
 
