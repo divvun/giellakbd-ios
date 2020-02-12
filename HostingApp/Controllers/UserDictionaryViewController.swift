@@ -41,7 +41,8 @@ extension UserDictionaryViewController: UITableViewDataSource {
 extension UserDictionaryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let word = userWords[indexPath.row]
-        navigationController?.pushViewController(WordContextViewController(dictionary: userDictionary, word: word), animated: true)
+        let wordController = WordContextViewController(dictionary: userDictionary, word: word)
+        navigationController?.pushViewController(wordController, animated: true)
     }
 }
 
