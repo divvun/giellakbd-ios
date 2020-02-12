@@ -119,4 +119,46 @@ public class UserDictionary {
         }
         return userWords
     }
+
+    public func getContexts(for word: String) -> [[String]] {
+        var contexts: [[String]] = []
+
+        let word0 = word0Col.template
+        let word1 = word1Col.template
+        let word2 = word2Col.template
+
+        let query = """
+        SELECT \(word0),
+               \(word1),
+               \(word2)
+        FROM
+            (SELECT \(word0),
+                    \(word1),
+                    \(word2),
+            CASE \(userWordIndexCol.template)
+                WHEN 0 THEN \(word0)
+                WHEN 1 THEN \(word1)
+                WHEN 2 THEN \(word2)
+            END user_word
+            FROM \(tableName)
+            WHERE user_word = '\(word)')
+        """
+
+        do {
+            let rows = try database.prepare(query)
+            for row in rows {
+                var contextWords: [String] = []
+                for word in row {
+                    if let word = word as? String {
+                        contextWords.append(word)
+                    }
+                }
+                contexts.append(contextWords)
+            }
+        } catch {
+            print("Error getting user word contexts: \(error)")
+        }
+
+        return contexts
+    }
 }
