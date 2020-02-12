@@ -14,7 +14,7 @@ public struct WordContext {
         } else if let word1 = word1 {
             return word1 == word1
         }
-        return false
+        return true
     }
 
     public func contextString() -> String {
