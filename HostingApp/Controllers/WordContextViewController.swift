@@ -16,6 +16,7 @@ class WordContextViewController: ViewController<WordContextView> {
     private func setupTableView() {
         let tableView = contentView.tableView!
         tableView.dataSource = self
+        tableView.tableFooterView = UIView()
     }
 
     required init?(coder _: NSCoder) {
