@@ -81,19 +81,6 @@ extension Strings {
         return attr
     }
 
-    private static func bolden(string: String, item: String, size: CGFloat) -> NSAttributedString {
-        let nsstring = string as NSString
-        let attr = NSMutableAttributedString(string: string)
-
-        attr.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: size), range: nsstring.range(of: string))
-        attr.addAttribute(NSAttributedString.Key.font,
-                          value: UIFont.systemFont(ofSize: size,
-                                                   weight: UIFont.Weight(rawValue: 0.3)),
-                          range: nsstring.range(of: item))
-
-        return attr
-    }
-
     static func creditWithUrls() -> NSAttributedString {
         let string: NSString = "SimpleButton © Andreas Tinoco Lobo\nTap icon © Icons8\nLanguage icon © Icons8"
 
@@ -119,12 +106,12 @@ extension Strings {
 
     static func openApp(item: String, size: CGFloat = 15) -> NSAttributedString {
         let plain = Strings.openAppPlain(item: item)
-        return bolden(string: plain, item: item, size: size)
+        return plain.bolden(substring: item, size: size)
     }
 
     static func tap(item: String, size: CGFloat = 15) -> NSAttributedString {
         let plain = Strings.tapPlain(item: item)
-        return bolden(string: plain, item: item, size: size)
+        return plain.bolden(substring: item, size: size)
     }
 
     static var supportedLocales: [Locale] = {

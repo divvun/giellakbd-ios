@@ -82,6 +82,7 @@ extension String {
         let nsstring = self as NSString
         let attr = NSMutableAttributedString(string: self)
 
+        attr.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: size), range: nsstring.range(of: self))
         attr.addAttribute(NSAttributedString.Key.font,
                           value: UIFont.systemFont(ofSize: size,
                                                    weight: UIFont.Weight(rawValue: 0.3)),
