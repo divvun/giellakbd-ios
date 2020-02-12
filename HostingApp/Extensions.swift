@@ -3,6 +3,32 @@ import UIKit
 protocol Nibbable {}
 protocol HideNavBar {}
 
+protocol ReusableView: AnyObject {
+    static var reuseIdentifier: String { get }
+}
+
+extension ReusableView where Self: UIView {
+    static var reuseIdentifier: String {
+        return String(describing: self)
+    }
+}
+
+extension UITableViewCell: ReusableView {}
+
+extension UITableView {
+    func register<T: UITableViewCell>(_: T.Type) {
+        register(T.self, forCellReuseIdentifier: T.reuseIdentifier)
+    }
+
+    func dequeueReusableCell<T: UITableViewCell>(_: T.Type) -> UITableViewCell {
+        guard let cell = dequeueReusableCell(withIdentifier: T.reuseIdentifier) as? T else {
+            fatalError("Could not dequeue cell with identifier '\(T.reuseIdentifier)'")
+        }
+
+        return cell
+    }
+}
+
 extension Nibbable where Self: UIView {
     static var nibName: String {
         return String(describing: self)

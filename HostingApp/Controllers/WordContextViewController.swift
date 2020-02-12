@@ -16,6 +16,7 @@ class WordContextViewController: ViewController<WordContextView> {
     private func setupTableView() {
         let tableView = contentView.tableView!
         tableView.dataSource = self
+        tableView.register(WordContextCell.self)
         tableView.tableFooterView = UIView()
     }
 
@@ -30,9 +31,11 @@ extension WordContextViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+        let cell = tableView.dequeueReusableCell(WordContextCell.self)
         let context = contexts[indexPath.item]
         cell.textLabel?.attributedText = context.contextAttributedString()
         return cell
     }
 }
+
+class WordContextCell: UITableViewCell { }
