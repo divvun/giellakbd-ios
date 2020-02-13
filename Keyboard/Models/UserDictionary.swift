@@ -99,10 +99,10 @@ public class UserDictionary {
                     SELECT user_word,
                            Count(user_word) AS COUNT
                     FROM
-                      (SELECT CASE
-                                  WHEN \(userWordIndexCol.template) = 0 THEN \(word0Col.template)
-                                  WHEN \(userWordIndexCol.template) = 1 THEN \(word1Col.template)
-                                  WHEN \(userWordIndexCol.template) = 2 THEN \(word2Col.template)
+                      (SELECT CASE \(userWordIndexCol.template)
+                                  WHEN 0 THEN \(word0Col.template)
+                                  WHEN 1 THEN \(word1Col.template)
+                                  WHEN 2 THEN \(word2Col.template)
                               END user_word
                        FROM \(tableName)) GROUP  BY user_word
                     HAVING COUNT >= \(minOccurrencesToBeConsideredUserWord);
