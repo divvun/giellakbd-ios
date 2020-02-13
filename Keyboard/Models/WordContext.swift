@@ -38,6 +38,6 @@ public struct WordContext {
             contextString += " ..."
         }
 
-        return contextString.bolden(substring: userWord)
+        return contextString.bolden(substring: userWord, caseInsensitive: true)
     }
 }

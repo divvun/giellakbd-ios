@@ -96,7 +96,7 @@ public class UserDictionary {
     public func getUserWords() -> [String] {
         var userWords: [String] = []
         let query = """
-                    SELECT user_word,
+                    SELECT LOWER(user_word),
                            Count(user_word) AS COUNT
                     FROM
                       (SELECT CASE \(userWordIndexCol.template)
@@ -105,7 +105,7 @@ public class UserDictionary {
                                   WHEN 2 THEN \(word2Col.template)
                               END user_word
                        FROM \(tableName))
-                    GROUP BY user_word
+                    GROUP BY user_word COLLATE NOCASE
                     HAVING COUNT >= \(minOccurrencesToBeConsideredUserWord);
                     """
         do {
@@ -142,7 +142,7 @@ public class UserDictionary {
                 WHEN 2 THEN \(word2)
             END user_word
             FROM \(tableName)
-            WHERE user_word = '\(word)')
+            WHERE user_word = '\(word)' COLLATE NOCASE)
         """
 
         do {

@@ -78,15 +78,22 @@ extension UIKeyboardAppearance: CustomDebugStringConvertible {
 }
 
 extension String {
-    func bolden(substring: String, size: CGFloat = UIFont.labelFontSize) -> NSAttributedString {
+    func bolden(substring: String, size: CGFloat = UIFont.labelFontSize, caseInsensitive: Bool = false) -> NSAttributedString {
         let nsstring = self as NSString
         let attr = NSMutableAttributedString(string: self)
+
+        let boldRange: NSRange
+        if caseInsensitive {
+            boldRange = (nsstring.lowercased as NSString).range(of: substring.lowercased())
+        } else {
+            boldRange = nsstring.range(of: substring)
+        }
 
         attr.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: size), range: nsstring.range(of: self))
         attr.addAttribute(NSAttributedString.Key.font,
                           value: UIFont.systemFont(ofSize: size,
                                                    weight: UIFont.Weight(rawValue: 0.3)),
-                          range: nsstring.range(of: substring))
+                          range: boldRange)
 
         return attr
     }
