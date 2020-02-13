@@ -104,7 +104,8 @@ public class UserDictionary {
                                   WHEN 1 THEN \(word1Col.template)
                                   WHEN 2 THEN \(word2Col.template)
                               END user_word
-                       FROM \(tableName)) GROUP  BY user_word
+                       FROM \(tableName))
+                    GROUP BY user_word
                     HAVING COUNT >= \(minOccurrencesToBeConsideredUserWord);
                     """
         do {
