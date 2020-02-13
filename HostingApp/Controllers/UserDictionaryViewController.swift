@@ -2,10 +2,7 @@ import UIKit
 
 class UserDictionaryViewController: ViewController<UserDictionaryView> {
     private let userDictionary = UserDictionary()
-
-    private lazy var userWords: [String] = {
-        return userDictionary.getUserWords()
-    }()
+    private lazy var userWords: [String] = userDictionary.getUserWords()
 
     private var tableView: UITableView {
         contentView.tableView!
