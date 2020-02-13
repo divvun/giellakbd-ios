@@ -14,6 +14,52 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Beg-AU-DQc">
+                    <rect key="frame" x="0.0" y="20" width="414" height="856"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M1B-on-W8e">
+                            <rect key="frame" x="132" y="189" width="150" height="150"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dictionary" translatesAutoresizingMaskIntoConstraints="NO" id="W7Y-n2-ulU">
+                                    <rect key="frame" x="24" y="24" width="102" height="102"/>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" red="0.8903616437669627" green="0.9010888924870466" blue="0.9010888924870466" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstItem="W7Y-n2-ulU" firstAttribute="leading" secondItem="M1B-on-W8e" secondAttribute="leading" constant="24" id="10p-OB-CsP"/>
+                                <constraint firstAttribute="height" constant="150" id="5NZ-vB-4li"/>
+                                <constraint firstItem="W7Y-n2-ulU" firstAttribute="top" secondItem="M1B-on-W8e" secondAttribute="top" constant="24" id="HQn-3Z-I2a"/>
+                                <constraint firstAttribute="width" constant="150" id="Nmi-r9-KgK"/>
+                                <constraint firstAttribute="bottom" secondItem="W7Y-n2-ulU" secondAttribute="bottom" constant="24" id="mtJ-DF-h1J"/>
+                                <constraint firstAttribute="trailing" secondItem="W7Y-n2-ulU" secondAttribute="trailing" constant="24" id="x6k-v0-mZb"/>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No user-created words yet." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hWc-Gb-ixs">
+                            <rect key="frame" x="32" y="371" width="350" height="20.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Words that are left uncorrected and are not in the built-in dictionary will appear here." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bEa-ca-KBb">
+                            <rect key="frame" x="32" y="399.5" width="350" height="41"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <constraints>
+                        <constraint firstItem="hWc-Gb-ixs" firstAttribute="leading" secondItem="n3q-Dj-KCE" secondAttribute="leading" constant="32" id="77U-iM-K49"/>
+                        <constraint firstItem="n3q-Dj-KCE" firstAttribute="trailing" secondItem="hWc-Gb-ixs" secondAttribute="trailing" constant="32" id="9Sv-qr-SiS"/>
+                        <constraint firstAttribute="trailing" secondItem="bEa-ca-KBb" secondAttribute="trailing" constant="32" id="CER-Gx-zFw"/>
+                        <constraint firstItem="M1B-on-W8e" firstAttribute="centerY" secondItem="n3q-Dj-KCE" secondAttribute="centerY" multiplier="0.61" id="CRg-ez-Eym"/>
+                        <constraint firstItem="M1B-on-W8e" firstAttribute="centerX" secondItem="n3q-Dj-KCE" secondAttribute="centerX" id="JrL-YB-BCy"/>
+                        <constraint firstItem="hWc-Gb-ixs" firstAttribute="top" secondItem="M1B-on-W8e" secondAttribute="bottom" constant="32" id="Z0G-9C-WBz"/>
+                        <constraint firstItem="bEa-ca-KBb" firstAttribute="leading" secondItem="Beg-AU-DQc" secondAttribute="leading" constant="32" id="uKh-Wf-xG8"/>
+                        <constraint firstItem="bEa-ca-KBb" firstAttribute="top" secondItem="hWc-Gb-ixs" secondAttribute="bottom" constant="8" id="zGW-zD-AT7"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="n3q-Dj-KCE"/>
+                </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="luW-AL-biC">
                     <rect key="frame" x="0.0" y="20" width="414" height="856"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -22,15 +68,26 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="luW-AL-biC" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="3Ys-hN-ldv"/>
+                <constraint firstItem="Beg-AU-DQc" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" symbolic="YES" id="4nV-Ry-SUf"/>
                 <constraint firstAttribute="bottom" secondItem="luW-AL-biC" secondAttribute="bottom" constant="20" symbolic="YES" id="Amn-qp-cFV"/>
                 <constraint firstItem="luW-AL-biC" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="E7O-8s-Zy1"/>
                 <constraint firstItem="luW-AL-biC" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" symbolic="YES" id="MAR-Bk-8ZL"/>
+                <constraint firstItem="Beg-AU-DQc" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="bCm-2A-ibM"/>
+                <constraint firstItem="Beg-AU-DQc" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="pUk-OE-pUX"/>
+                <constraint firstAttribute="bottom" secondItem="Beg-AU-DQc" secondAttribute="bottom" constant="20" symbolic="YES" id="xzu-rN-JGh"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
+                <outlet property="detailLabel" destination="bEa-ca-KBb" id="Zx4-xg-1LI"/>
+                <outlet property="dictionaryIconContainer" destination="M1B-on-W8e" id="b5R-EE-M2w"/>
+                <outlet property="emptyState" destination="Beg-AU-DQc" id="Fic-I4-QhT"/>
+                <outlet property="noWordsLabel" destination="hWc-Gb-ixs" id="yMw-hr-VgR"/>
                 <outlet property="tableView" destination="luW-AL-biC" id="J08-jj-R7c"/>
             </connections>
-            <point key="canvasLocation" x="141" y="154"/>
+            <point key="canvasLocation" x="140.57971014492756" y="153.34821428571428"/>
         </view>
     </objects>
+    <resources>
+        <image name="dictionary" width="182" height="151"/>
+    </resources>
 </document>

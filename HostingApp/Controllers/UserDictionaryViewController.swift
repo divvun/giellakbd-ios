@@ -3,6 +3,7 @@ import UIKit
 class UserDictionaryViewController: ViewController<UserDictionaryView> {
     private let userDictionary = UserDictionary()
     private lazy var userWords: [String] = userDictionary.getUserWords()
+    private var isEmpty: Bool { userWords.count == 0 }
 
     private var tableView: UITableView {
         contentView.tableView!
@@ -11,7 +12,7 @@ class UserDictionaryViewController: ViewController<UserDictionaryView> {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "User Dictionary" // LOCALIZE ME
-        setupTableView()
+        setupView()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -19,7 +20,20 @@ class UserDictionaryViewController: ViewController<UserDictionaryView> {
         deselectSelectedRow()
     }
 
+    private func setupView() {
+        if isEmpty {
+            showEmptyState()
+        } else {
+            setupTableView()
+        }
+    }
+
+    private func showEmptyState() {
+        tableView.isHidden = true
+    }
+
     private func setupTableView() {
+        tableView.isHidden = false
         tableView.register(UserDictionaryWordCell.self)
         tableView.dataSource = self
         tableView.delegate = self
