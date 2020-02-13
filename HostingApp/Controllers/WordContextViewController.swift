@@ -12,7 +12,7 @@ class WordContextViewController: ViewController<WordContextView> {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Contexts for \"\(word)\"" // LOCALIZE ME
+        title = Strings.contextsFor(word: word)
         setupTableView()
     }
 

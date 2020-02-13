@@ -14,7 +14,7 @@ class UserDictionaryView: UIView, Nibbable {
 
     private func setupEmptyState() {
         dictionaryIconContainer.layer.cornerRadius = dictionaryIconContainer.frame.height / 2.0
-//        noWordsLabel.text = // LOCALIZE ME
-//        detailLabel.text = // LOCALIZE ME
+        noWordsLabel.text = Strings.noUserWords
+        detailLabel.text = Strings.noUserWordsDescription
     }
 }

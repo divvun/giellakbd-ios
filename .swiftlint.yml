@@ -1,5 +1,7 @@
 excluded:
   - Pods
+  - HostingApp/Strings.swift
+
 
 disabled_rules:
   - todo

@@ -1,26 +1,56 @@
+// Generated. Do not edit.
 import Foundation
 
+fileprivate extension UserDefaults {
+    var appleLanguages: [String] {
+        return self.array(forKey: "AppleLanguages") as? [String] ??
+            [Locale.autoupdatingCurrent.languageCode ?? "en"]
+    }
+}
+
+fileprivate func derivedLocales(_ languageCode: String) -> [String] {
+  let x = Locale(identifier: languageCode)
+  var opts: [String] = []
+  
+  if let lang = x.languageCode {
+      if let script = x.scriptCode, let region = x.regionCode {
+          opts.append("\(lang)-\(script)-\(region)")
+      }
+      
+      if let script = x.scriptCode {
+          opts.append("\(lang)-\(script)")
+      }
+      
+      if let region = x.regionCode {
+          opts.append("\(lang)-\(region)")
+      }
+      
+      opts.append(lang)
+  }
+  
+  return opts
+}
+
 class Strings {
-    static var languageCode: String? {
+    static var languageCode: String = UserDefaults.standard.appleLanguages[0] {
         didSet {
             if let dir = Bundle.main.path(forResource: languageCode, ofType: "lproj"), let bundle = Bundle(path: dir) {
                 self.bundle = bundle
-            } else if let dir = Bundle.main.path(forResource: "Base", ofType: "lproj"), let bundle = Bundle(path: dir) {
-                self.bundle = bundle
             } else {
-                bundle = Bundle.main
+                print("No bundle found for \(languageCode))")
+                self.bundle = Bundle.main
             }
         }
     }
 
     static var bundle: Bundle = Bundle.main
 
-    fileprivate static func string(for key: String) -> String {
+    internal static func string(for key: String) -> String {
         return bundle.localizedString(forKey: key, value: nil, table: nil)
     }
 
-    fileprivate static func stringArray(for key: String, length: Int) -> [String] {
-        return (0 ..< length).map {
+    internal static func stringArray(for key: String, length: Int) -> [String] {
+        return (0..<length).map {
             bundle.localizedString(forKey: "\(key)_\($0)", value: nil, table: nil)
         }
     }
@@ -43,6 +73,12 @@ class Strings {
     /** Attributions */
     static var attributions: String {
         return string(for: "attributions")
+    }
+
+    /** Contexts for "{word}" */
+    static func contextsFor(word: String) -> String {
+        let format = string(for: "contextsFor")
+        return String(format: format, word)
     }
 
     /** If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}. */
@@ -77,9 +113,18 @@ class Strings {
     }
 
     /** Kildin Sami */
-    //swiftlint:disable:next identifier_name
     static var locale_sjd: String {
         return string(for: "locale_sjd")
+    }
+
+    /** No user-created words yet. */
+    static var noUserWords: String {
+        return string(for: "noUserWords")
+    }
+
+    /** Words that are left uncorrected and are not in the built-in dictionary will appear here. */
+    static var noUserWordsDescription: String {
+        return string(for: "noUserWordsDescription")
     }
 
     /** Open the {item} app */
@@ -125,6 +170,11 @@ class Strings {
         return String(format: format, item)
     }
 
+    /** User Dictionary */
+    static var userDictionary: String {
+        return string(for: "userDictionary")
+    }
+
     /** When you have finished, return to this app to continue. */
     static var whenYouHaveFinished: String {
         return string(for: "whenYouHaveFinished")
@@ -132,3 +182,7 @@ class Strings {
 
     private init() {}
 }
+
+fileprivate let localeTree = [
+    "en": ["en"]
+]

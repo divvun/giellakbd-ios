@@ -10,6 +10,8 @@ allowFullAccess: Allow Full Access
 # Original: Attributions
 attributions: Attributions
 
+contextsFor: 'Contexts for "{word}"'
+
 # Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
 enableTapSoundsPlain: >-
   If you wish to enable key tap sounds, you must then tap {keyboard} and toggle
@@ -32,6 +34,10 @@ layouts: Layouts
 
 # Original: Kildin Sami
 locale_sjd: Kildin Sami
+
+noUserWords: No user-created words yet.
+
+noUserWordsDescription: Words that are left uncorrected and are not in the built-in dictionary will appear here.
 
 # Original: Open the {item} app
 openAppPlain: 'Open the {item} app'
@@ -56,6 +62,8 @@ skip: Skip
 
 # Original: Tap {item}
 tapPlain: 'Tap {item}'
+
+userDictionary: User Dictionary
 
 # Original: When you have finished, return to this app to continue.
 whenYouHaveFinished: 'When you have finished, return to this app to continue.'

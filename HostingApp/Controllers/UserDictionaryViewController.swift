@@ -11,7 +11,7 @@ class UserDictionaryViewController: ViewController<UserDictionaryView> {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "User Dictionary" // LOCALIZE ME
+        title = Strings.userDictionary
         setupView()
     }
 
