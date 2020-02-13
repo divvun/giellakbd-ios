@@ -14,7 +14,7 @@ public struct WordContext {
         if let word2 = word2 {
             return word2 == userWord
         } else if let word1 = word1 {
-            return word1 == word1
+            return word1 == userWord
         }
         return true
     }
