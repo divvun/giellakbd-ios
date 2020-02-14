@@ -113,8 +113,8 @@ class Strings {
     }
 
     /** Kildin Sami */
-    static var locale_sjd: String {
-        return string(for: "locale_sjd")
+    static var localeSjd: String {
+        return string(for: "localeSjd")
     }
 
     /** No user-created words yet. */
@@ -184,5 +184,7 @@ class Strings {
 }
 
 fileprivate let localeTree = [
-    "en": ["en"]
+    "en": ["en"],
+    "nb": ["nb"],
+    "se": ["se"]
 ]

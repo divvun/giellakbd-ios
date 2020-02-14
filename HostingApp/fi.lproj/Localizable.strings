@@ -8,7 +8,7 @@
 "keyboards" = "Näppäimistöjä";
 "language" = "Kieli";
 "layouts" = "Näppäimistöasettelu";
-"locale_sjd" = "Kiltinän Saame";
+"localeSjd" = "Kiltinän Saame";
 "openAppPlain" = "Avaa %1$@-sovellus";
 "openSettings" = "Avaa Asetukset";
 "save" = "Tallenna";

@@ -9,7 +9,7 @@
 "keyboards" = "Keyboards";
 "language" = "Language";
 "layouts" = "Layouts";
-"locale_sjd" = "Kildin Sami";
+"localeSjd" = "Kildin Sami";
 "noUserWords" = "No user-created words yet.";
 "noUserWordsDescription" = "Words that are left uncorrected and are not in the built-in dictionary will appear here.";
 "openAppPlain" = "Open the %1$@ app";
