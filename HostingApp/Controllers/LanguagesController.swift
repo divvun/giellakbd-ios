@@ -5,7 +5,7 @@ class LanguagesController: UITableViewController {
 
     var selectedRow: IndexPath?
 
-    @objc private func onDoneTapped() {
+    @objc private func onSaveTapped() {
         if let row = selectedRow?.row {
             KeyboardSettings.languageCode = rows[row].languageCode!
             Strings.languageCode = KeyboardSettings.languageCode
@@ -31,7 +31,7 @@ class LanguagesController: UITableViewController {
             title: Strings.save,
             style: .done,
             target: self,
-            action: #selector(onDoneTapped)
+            action: #selector(onSaveTapped)
         )
 
         title = Strings.language
