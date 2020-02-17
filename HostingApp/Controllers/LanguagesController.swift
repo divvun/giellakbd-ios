@@ -45,6 +45,15 @@ class LanguagesController: UITableViewController {
         return rows.count
     }
 
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+
+        cell.textLabel?.text = Strings.languageName(for: rows[indexPath.row])!
+        cell.accessoryType = selectedRow == indexPath ? .checkmark : .none
+
+        return cell
+    }
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
@@ -57,14 +66,5 @@ class LanguagesController: UITableViewController {
         tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
 
         selectedRow = indexPath
-    }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-
-        cell.textLabel?.text = Strings.languageName(for: rows[indexPath.row])!
-        cell.accessoryType = selectedRow == indexPath ? .checkmark : .none
-
-        return cell
     }
 }
