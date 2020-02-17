@@ -2,14 +2,26 @@ import UIKit
 
 class LanguagesController: UITableViewController {
     let rows = Strings.supportedLocales
-
     var selectedRow: IndexPath?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = Strings.language
+        setupNavBar()
+        setupTableView()
+    }
 
+    private func setupNavBar() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: Strings.save,
+            style: .done,
+            target: self,
+            action: #selector(onSaveTapped)
+        )
+    }
+
+    private func setupTableView() {
         let selectedLocale = Locale(identifier: KeyboardSettings.languageCode)
-
         if let i = rows.firstIndex(where: { $0.languageCode == selectedLocale.languageCode }) {
             selectedRow = IndexPath(item: i, section: 0)
             tableView.reloadData()
@@ -17,19 +29,8 @@ class LanguagesController: UITableViewController {
 
         tableView.allowsSelection = true
         tableView.allowsMultipleSelection = false
-
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: Strings.save,
-            style: .done,
-            target: self,
-            action: #selector(onSaveTapped)
-        )
-
-        title = Strings.language
-
-        tableView.tableFooterView = UIView()
-
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.tableFooterView = UIView()
     }
 
     @objc private func onSaveTapped() {
