@@ -23,12 +23,17 @@ class SettingsViewController: UITableViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tableView.register(DisclosureCell.self)
+    }
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return rows.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+        let cell = tableView.dequeueReusableCell(DisclosureCell.self)
         cell.textLabel?.text = rows[indexPath.item].title
         return cell
     }

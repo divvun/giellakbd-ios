@@ -12,6 +12,7 @@
 		4EF16F9B19D2550D0076AFCB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF16F9A19D2550D0076AFCB /* AppDelegate.swift */; };
 		6949B7BA8FCEAD7A27EDFFE0 /* Pods_BaseKeyboard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9024FCA6C422ADE3CBC979B9 /* Pods_BaseKeyboard.framework */; };
 		9904409223F84BDC0063064E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9904409123F84BDC0063064E /* SettingsViewController.swift */; };
+		9904409523FAC0C50063064E /* DisclosureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9904409423FAC0C50063064E /* DisclosureCell.swift */; };
 		991EE55023D9AB4700DC3677 /* ViewDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991EE54F23D9AB4700DC3677 /* ViewDebugger.swift */; };
 		997550B623EAC631004ED6A5 /* UserDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997550B523EAC631004ED6A5 /* UserDictionary.swift */; };
 		997550B723EAC631004ED6A5 /* UserDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997550B523EAC631004ED6A5 /* UserDictionary.swift */; };
@@ -144,6 +145,7 @@
 		9024FCA6C422ADE3CBC979B9 /* Pods_BaseKeyboard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BaseKeyboard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		922C1403563939C906F94AD3 /* Pods-BaseKeyboard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaseKeyboard.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BaseKeyboard/Pods-BaseKeyboard.debug.xcconfig"; sourceTree = "<group>"; };
 		9904409123F84BDC0063064E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		9904409423FAC0C50063064E /* DisclosureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclosureCell.swift; sourceTree = "<group>"; };
 		991EE54F23D9AB4700DC3677 /* ViewDebugger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewDebugger.swift; sourceTree = "<group>"; };
 		997550B523EAC631004ED6A5 /* UserDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionary.swift; sourceTree = "<group>"; };
 		999790AB23F2B4E8003F7885 /* UserDictionaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionaryViewController.swift; sourceTree = "<group>"; };
@@ -389,6 +391,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		9904409323FAC0A60063064E /* Table Cells */ = {
+			isa = PBXGroup;
+			children = (
+				9904409423FAC0C50063064E /* DisclosureCell.swift */,
+			);
+			path = "Table Cells";
+			sourceTree = "<group>";
+		};
 		C676AD621EC98C0F00523FF3 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -407,6 +417,7 @@
 		C6A969D71EB6126100A1143E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9904409323FAC0A60063064E /* Table Cells */,
 				C6A2E01E1EDFAAA2006BAB69 /* AboutView.swift */,
 				C6A2E01C1EDFA259006BAB69 /* AboutView.xib */,
 				C655E8551EC5559200B12BE4 /* HomeView.swift */,
@@ -726,6 +737,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9904409523FAC0C50063064E /* DisclosureCell.swift in Sources */,
 				C676AD5B1EC9679000523FF3 /* InstructionsController.swift in Sources */,
 				C6B638441EDF81B200A6ECB2 /* SimpleButton.swift in Sources */,
 				C63EE0FF2361D86800A1E15A /* MenuButton.swift in Sources */,
