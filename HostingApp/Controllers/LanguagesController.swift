@@ -5,15 +5,6 @@ class LanguagesController: UITableViewController {
 
     var selectedRow: IndexPath?
 
-    @objc private func onSaveTapped() {
-        if let row = selectedRow?.row {
-            KeyboardSettings.languageCode = rows[row].languageCode!
-            Strings.languageCode = KeyboardSettings.languageCode
-        }
-
-        navigationController?.popViewController(animated: true)
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -39,6 +30,15 @@ class LanguagesController: UITableViewController {
         tableView.tableFooterView = UIView()
 
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+    }
+
+    @objc private func onSaveTapped() {
+        if let row = selectedRow?.row {
+            KeyboardSettings.languageCode = rows[row].languageCode!
+            Strings.languageCode = KeyboardSettings.languageCode
+        }
+
+        navigationController?.popViewController(animated: true)
     }
 
     override func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
