@@ -20,7 +20,7 @@ class HomeView: UIView, Nibbable {
     @IBOutlet var layoutsButton: MenuButton!
     @IBOutlet var aboutButton: MenuButton!
     @IBOutlet var testingButton: MenuButton!
-    @IBOutlet var userDictionaryButton: MenuButton!
+    @IBOutlet var settingsButton: MenuButton!
 
     @IBOutlet var configStack: UIStackView?
 
@@ -30,5 +30,6 @@ class HomeView: UIView, Nibbable {
         helpButton.setTitle(Strings.setUp(keyboard: Strings.localizedName), for: [])
         layoutsButton.setTitle(Strings.layouts, for: [])
         aboutButton.setTitle(Strings.about, for: [])
+        settingsButton.setTitle(Strings.settings, for: [])
     }
 }
