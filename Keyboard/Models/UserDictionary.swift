@@ -46,13 +46,6 @@ public class UserDictionary {
         }
     }
 
-    public func addTestRows() {
-        let names = ["Captain", "Wishbone", "Salad", "Dirk"]
-        for personName in names {
-            add(word0: personName, word1: "other", word2: "other2", userWordIndex: 0)
-        }
-    }
-
     public func deleteAllWords() {
         do {
             try database.run(userDictionary.delete())
