@@ -15,6 +15,7 @@
 		9904409523FAC0C50063064E /* DisclosureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9904409423FAC0C50063064E /* DisclosureCell.swift */; };
 		9904409B23FBDC200063064E /* KeyboardLocales.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9904409A23FBDC200063064E /* KeyboardLocales.swift */; };
 		9904409D23FBE63F0063064E /* KeyboardLocalesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9904409C23FBE63F0063064E /* KeyboardLocalesViewController.swift */; };
+		990440A523FC14A30063064E /* HostingAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990440A423FC14A30063064E /* HostingAppTests.swift */; };
 		991EE55023D9AB4700DC3677 /* ViewDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991EE54F23D9AB4700DC3677 /* ViewDebugger.swift */; };
 		997550B623EAC631004ED6A5 /* UserDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997550B523EAC631004ED6A5 /* UserDictionary.swift */; };
 		997550B723EAC631004ED6A5 /* UserDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997550B523EAC631004ED6A5 /* UserDictionary.swift */; };
@@ -90,6 +91,13 @@
 			remoteGlobalIDString = 4E807DB819461DC700D875D1;
 			remoteInfo = Keyboard;
 		};
+		990440A723FC14A30063064E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4E807D8B19461D9000D875D1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4E807D9219461D9000D875D1;
+			remoteInfo = HostingApp;
+		};
 		C6F249341F736DCE00840F2B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4E807D8B19461D9000D875D1 /* Project object */;
@@ -150,6 +158,9 @@
 		9904409423FAC0C50063064E /* DisclosureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclosureCell.swift; sourceTree = "<group>"; };
 		9904409A23FBDC200063064E /* KeyboardLocales.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardLocales.swift; sourceTree = "<group>"; };
 		9904409C23FBE63F0063064E /* KeyboardLocalesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardLocalesViewController.swift; sourceTree = "<group>"; };
+		990440A223FC14A30063064E /* HostingAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HostingAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		990440A423FC14A30063064E /* HostingAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostingAppTests.swift; sourceTree = "<group>"; };
+		990440A623FC14A30063064E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		991EE54F23D9AB4700DC3677 /* ViewDebugger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewDebugger.swift; sourceTree = "<group>"; };
 		997550B523EAC631004ED6A5 /* UserDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionary.swift; sourceTree = "<group>"; };
 		999790AB23F2B4E8003F7885 /* UserDictionaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionaryViewController.swift; sourceTree = "<group>"; };
@@ -239,6 +250,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9904409F23FC14A30063064E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C6F2492B1F736DCE00840F2B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -308,6 +326,7 @@
 				4E807D9519461D9000D875D1 /* HostingApp */,
 				4E807DBA19461DC700D875D1 /* Keyboard */,
 				C6F249301F736DCE00840F2B /* BaseKeyboard */,
+				990440A323FC14A30063064E /* HostingAppTests */,
 				4E807D9419461D9000D875D1 /* Products */,
 				42328B685FE6712A732EAD6B /* Pods */,
 				64F4D84E0649A1185050129C /* Frameworks */,
@@ -320,6 +339,7 @@
 				4E807D9319461D9000D875D1 /* HostingApp.app */,
 				4E807DB919461DC700D875D1 /* Keyboard.appex */,
 				C6F2492F1F736DCE00840F2B /* BaseKeyboard.framework */,
+				990440A223FC14A30063064E /* HostingAppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -410,6 +430,15 @@
 				9904409A23FBDC200063064E /* KeyboardLocales.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		990440A323FC14A30063064E /* HostingAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				990440A423FC14A30063064E /* HostingAppTests.swift */,
+				990440A623FC14A30063064E /* Info.plist */,
+			);
+			path = HostingAppTests;
 			sourceTree = "<group>";
 		};
 		C676AD621EC98C0F00523FF3 /* Controllers */ = {
@@ -525,6 +554,24 @@
 			productReference = 4E807DB919461DC700D875D1 /* Keyboard.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		990440A123FC14A30063064E /* HostingAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 990440A923FC14A30063064E /* Build configuration list for PBXNativeTarget "HostingAppTests" */;
+			buildPhases = (
+				9904409E23FC14A30063064E /* Sources */,
+				9904409F23FC14A30063064E /* Frameworks */,
+				990440A023FC14A30063064E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				990440A823FC14A30063064E /* PBXTargetDependency */,
+			);
+			name = HostingAppTests;
+			productName = HostingAppTests;
+			productReference = 990440A223FC14A30063064E /* HostingAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		C6F2492E1F736DCE00840F2B /* BaseKeyboard */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C6F2493A1F736DCE00840F2B /* Build configuration list for PBXNativeTarget "BaseKeyboard" */;
@@ -550,7 +597,7 @@
 		4E807D8B19461D9000D875D1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0830;
+				LastSwiftUpdateCheck = 1130;
 				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = Apple;
 				TargetAttributes = {
@@ -573,6 +620,11 @@
 								enabled = 1;
 							};
 						};
+					};
+					990440A123FC14A30063064E = {
+						CreatedOnToolsVersion = 11.3.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 4E807D9219461D9000D875D1;
 					};
 					C6F2492E1F736DCE00840F2B = {
 						CreatedOnToolsVersion = 8.3.3;
@@ -602,6 +654,7 @@
 				4E807D9219461D9000D875D1 /* HostingApp */,
 				4E807DB819461DC700D875D1 /* Keyboard */,
 				C6F2492E1F736DCE00840F2B /* BaseKeyboard */,
+				990440A123FC14A30063064E /* HostingAppTests */,
 			);
 		};
 /* End PBXProject section */
@@ -625,6 +678,13 @@
 				C65430B21EC94BD1007FC053 /* InstructionsView.xib in Resources */,
 				999790AE23F2B545003F7885 /* UserDictionaryView.xib in Resources */,
 				C63EE1012362F7E500A1E15A /* Settings.bundle in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		990440A023FC14A30063064E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -788,6 +848,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9904409E23FC14A30063064E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				990440A523FC14A30063064E /* HostingAppTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C6F2492A1F736DCE00840F2B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -823,6 +891,11 @@
 			isa = PBXTargetDependency;
 			target = 4E807DB819461DC700D875D1 /* Keyboard */;
 			targetProxy = 4E807DBF19461DC700D875D1 /* PBXContainerItemProxy */;
+		};
+		990440A823FC14A30063064E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4E807D9219461D9000D875D1 /* HostingApp */;
+			targetProxy = 990440A723FC14A30063064E /* PBXContainerItemProxy */;
 		};
 		C6F249351F736DCE00840F2B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1115,6 +1188,61 @@
 			};
 			name = Release;
 		};
+		990440AA23FC14A30063064E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = HostingAppTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaKeyboardDylan.HostingAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HostingApp.app/HostingApp";
+			};
+			name = Debug;
+		};
+		990440AB23FC14A30063064E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = HostingAppTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaKeyboardDylan.HostingAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HostingApp.app/HostingApp";
+			};
+			name = Release;
+		};
 		C6F249381F736DCE00840F2B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 922C1403563939C906F94AD3 /* Pods-BaseKeyboard.debug.xcconfig */;
@@ -1231,6 +1359,15 @@
 			buildConfigurations = (
 				4E807DC519461DC700D875D1 /* Debug */,
 				4E807DC619461DC700D875D1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		990440A923FC14A30063064E /* Build configuration list for PBXNativeTarget "HostingAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				990440AA23FC14A30063064E /* Debug */,
+				990440AB23FC14A30063064E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

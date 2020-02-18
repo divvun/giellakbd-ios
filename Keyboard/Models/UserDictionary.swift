@@ -53,6 +53,14 @@ public class UserDictionary {
         }
     }
 
+    public func deleteAllWords() {
+        do {
+            try database.run(userDictionary.delete())
+        } catch {
+            fatalError("Error deleting all words from database: \(error)")
+        }
+    }
+
     public func add(word0: String, word1: String? = nil, word2: String? = nil, userWordIndex: Int = 0) {
         guard userWordIndex >= 0 else {
             fatalError("Attempted to add word to UserDictionary with below-zero index")
