@@ -48,14 +48,6 @@ public class UserDictionary {
         }
     }
 
-    public func deleteAllWords() {
-        do {
-            try database.run(userDictionary.delete())
-        } catch {
-            fatalError("Error deleting all words from database: \(error)")
-        }
-    }
-
     public func dropTables() {
         do {
             try database.run(userDictionary.drop())

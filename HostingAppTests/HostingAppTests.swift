@@ -12,20 +12,6 @@ class UserDictionaryTests: XCTestCase {
         userDictionary = UserDictionary()
     }
 
-    func test_delete_database_removes_all_words() {
-        let sut = userDictionary
-
-        for _ in 0...5 {
-            // add multple times to be sure it becomes a "user word"
-            // if the word only exists once in the db, it won't be returned as a word
-            sut.add(word0: "test", locale: defaultLocale)
-        }
-        sut.deleteAllWords()
-
-        let rows = sut.getUserWords(locale: defaultLocale)
-        XCTAssertEqual(0, rows.count)
-    }
-
     func test_user_words_are_case_insensitive() {
         let sut = userDictionary
 
