@@ -56,6 +56,14 @@ public class UserDictionary {
         }
     }
 
+    public func dropTables() {
+        do {
+            try database.run(userDictionary.drop())
+        } catch {
+            fatalError("Error deleting all words from database: \(error)")
+        }
+    }
+
     public func add(word0: String, word1: String? = nil, word2: String? = nil, userWordIndex: Int = 0, locale: KeyboardLocale) {
         guard userWordIndex >= 0 else {
             fatalError("Attempted to add word to UserDictionary with below-zero index")
@@ -70,10 +78,14 @@ public class UserDictionary {
             fatalError("Attempted to add word to UserDictionary with invalid word index. userWordIndex: \(userWordIndex)")
         }
 
-        let insert = userDictionary.insert(word0Col <- word0,
-                                           word1Col <- word1,
-                                           word2Col <- word2,
-                                           userWordIndexCol <- Int64(userWordIndex))
+        let insert = userDictionary.insert(
+            word0Col <- word0,
+            word1Col <- word1,
+            word2Col <- word2,
+            userWordIndexCol <- Int64(userWordIndex),
+            localeCol <- locale.identifier
+        )
+
         do {
             try database.run(insert)
         } catch {
@@ -103,7 +115,7 @@ public class UserDictionary {
         }
     }
 
-    public func getUserWords(locale: KeyboardLocale? = nil) -> [String] {
+    public func getUserWords(locale: KeyboardLocale) -> [String] {
         var userWords: [String] = []
         let query = """
                     SELECT LOWER(user_word),
@@ -114,7 +126,8 @@ public class UserDictionary {
                                   WHEN 1 THEN \(word1Col.template)
                                   WHEN 2 THEN \(word2Col.template)
                               END user_word
-                       FROM \(tableName))
+                       FROM \(tableName)
+                       WHERE \(localeCol.template) = "\(locale.identifier)")
                     GROUP BY user_word COLLATE NOCASE
                     HAVING COUNT >= \(minOccurrencesToBeConsideredUserWord);
                     """

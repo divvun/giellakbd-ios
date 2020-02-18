@@ -2,11 +2,14 @@
 import XCTest
 
 class UserDictionaryTests: XCTestCase {
-    let userDictionary = UserDictionary()
+    var userDictionary = UserDictionary()
     let defaultLocale = KeyboardLocale(identifier: "en", langaugeName: "English")
 
     override func setUp() {
-        userDictionary.deleteAllWords()
+        userDictionary.dropTables()
+
+        // Create new connection so tables are re-created
+        userDictionary = UserDictionary()
     }
 
     func test_delete_database_removes_all_words() {
@@ -15,22 +18,22 @@ class UserDictionaryTests: XCTestCase {
         for _ in 0...5 {
             // add multple times to be sure it becomes a "user word"
             // if the word only exists once in the db, it won't be returned as a word
-            sut.add(word0: "test")
+            sut.add(word0: "test", locale: defaultLocale)
         }
         sut.deleteAllWords()
 
-        let rows = sut.getUserWords()
+        let rows = sut.getUserWords(locale: defaultLocale)
         XCTAssertEqual(0, rows.count)
     }
 
     func test_user_words_are_case_insensitive() {
         let sut = userDictionary
 
-        sut.add(word0: "test")
-        sut.add(word0: "TEST")
-        sut.add(word0: "Test")
+        sut.add(word0: "test", locale: defaultLocale)
+        sut.add(word0: "TEST", locale: defaultLocale)
+        sut.add(word0: "Test", locale: defaultLocale)
 
-        let words = sut.getUserWords()
+        let words = sut.getUserWords(locale: defaultLocale)
         XCTAssertEqual(1, words.count)
         XCTAssertEqual("test", words.first)
     }
@@ -38,9 +41,9 @@ class UserDictionaryTests: XCTestCase {
     func test_word_added_once_does_not_count_as_user_word() {
         let sut = userDictionary
 
-        sut.add(word0: "test")
+        sut.add(word0: "test", locale: defaultLocale)
 
-        let words = sut.getUserWords()
+        let words = sut.getUserWords(locale: defaultLocale)
         XCTAssertEqual(0, words.count)
     }
 
@@ -48,10 +51,10 @@ class UserDictionaryTests: XCTestCase {
         let sut = userDictionary
         let word = "test"
 
-        sut.add(word0: word)
-        sut.add(word0: word)
+        sut.add(word0: word, locale: defaultLocale)
+        sut.add(word0: word, locale: defaultLocale)
 
-        let words = sut.getUserWords()
+        let words = sut.getUserWords(locale: defaultLocale)
         XCTAssertEqual(1, words.count)
         XCTAssertEqual(word, words.first)
     }
@@ -62,7 +65,7 @@ class UserDictionaryTests: XCTestCase {
 
         sut.addUserWord(word, locale: defaultLocale)
 
-        let words = sut.getUserWords()
+        let words = sut.getUserWords(locale: defaultLocale)
         XCTAssertEqual(1, words.count)
         XCTAssertEqual(word, words.first)
     }
@@ -78,11 +81,5 @@ class UserDictionaryTests: XCTestCase {
         let englishWords = sut.getUserWords(locale: englishLocale)
         XCTAssertEqual(1, englishWords.count)
         XCTAssertEqual("test1", englishWords.first)
-    }
-}
-
-private extension UserDictionary {
-    func add(word0: String) {
-        add(word0: word0, locale: KeyboardLocale(identifier: "en", langaugeName: "English"))
     }
 }
