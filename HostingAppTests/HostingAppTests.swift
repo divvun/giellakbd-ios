@@ -3,6 +3,7 @@ import XCTest
 
 class UserDictionaryTests: XCTestCase {
     let userDictionary = UserDictionary()
+    let defaultLocale = KeyboardLocale(identifier: "en", langaugeName: "English")
 
     override func setUp() {
         userDictionary.deleteAllWords()
@@ -64,5 +65,24 @@ class UserDictionaryTests: XCTestCase {
         let words = sut.getUserWords()
         XCTAssertEqual(1, words.count)
         XCTAssertEqual(word, words.first)
+    }
+
+    func test_should_return_only_words_from_given_locale() {
+        let sut = userDictionary
+        let englishLocale = KeyboardLocale(identifier: "en", langaugeName: "English")
+        let spanishLocale = KeyboardLocale(identifier: "es", langaugeName: "Spanish")
+
+        sut.addUserWord("test1", locale: englishLocale)
+        sut.addUserWord("test2", locale: spanishLocale)
+
+        let englishWords = sut.getUserWords(locale: englishLocale)
+        XCTAssertEqual(1, englishWords.count)
+        XCTAssertEqual("test1", englishWords.first)
+    }
+}
+
+private extension UserDictionary {
+    func add(word0: String) {
+        add(word0: word0, locale: KeyboardLocale(identifier: "en", langaugeName: "English"))
     }
 }

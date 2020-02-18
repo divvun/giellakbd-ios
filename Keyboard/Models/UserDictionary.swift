@@ -10,6 +10,7 @@ public class UserDictionary {
     private let word1Col = Expression<String?>("word1")
     private let word2Col = Expression<String?>("word2")
     private let userWordIndexCol = Expression<Int64>("user_word_index")
+    private let localeCol = Expression<String>("locale")
 
     private let minOccurrencesToBeConsideredUserWord = 2
 
@@ -40,6 +41,7 @@ public class UserDictionary {
                 table.column(word1Col)
                 table.column(word2Col)
                 table.column(userWordIndexCol)
+                table.column(localeCol)
             })
         } catch {
             fatalError("Error creating database table: \(error)")
@@ -54,7 +56,7 @@ public class UserDictionary {
         }
     }
 
-    public func add(word0: String, word1: String? = nil, word2: String? = nil, userWordIndex: Int = 0) {
+    public func add(word0: String, word1: String? = nil, word2: String? = nil, userWordIndex: Int = 0, locale: KeyboardLocale) {
         guard userWordIndex >= 0 else {
             fatalError("Attempted to add word to UserDictionary with below-zero index")
         }
@@ -92,7 +94,8 @@ public class UserDictionary {
                     + "word0: \(String(describing: row[word0Col])), "
                     + "word1: \(String(describing: row[word1Col])), "
                     + "word2: \(String(describing: row[word2Col])), "
-                    + "index: \(row[userWordIndexCol])"
+                    + "index: \(row[userWordIndexCol]), "
+                    + "locale: \(row[localeCol])"
                 print(rowData)
             }
         } catch {
@@ -100,7 +103,7 @@ public class UserDictionary {
         }
     }
 
-    public func getUserWords() -> [String] {
+    public func getUserWords(locale: KeyboardLocale? = nil) -> [String] {
         var userWords: [String] = []
         let query = """
                     SELECT LOWER(user_word),
