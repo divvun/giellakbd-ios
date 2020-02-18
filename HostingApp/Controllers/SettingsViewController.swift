@@ -1,19 +1,21 @@
 import UIKit
 
+typealias ViewControllerMaker = (() -> UIViewController)?
+
+struct Row {
+    let title: String
+    let destinationViewController: ViewControllerMaker
+}
+
 class SettingsViewController: UITableViewController {
 
-    typealias ViewControllerMaker = (() -> UIViewController)?
-
-    struct Row {
-        let title: String
-        let destinationViewController: ViewControllerMaker
+    var rows: [Row] {
+        [
+            Row(title: Strings.userDictionary, destinationViewController: {
+                KeyboardLocalesViewController()
+            })
+        ]
     }
-
-    let rows = [
-        Row(title: Strings.userDictionary, destinationViewController: {
-            UserDictionaryViewController()
-        })
-    ]
 
     init() {
         super.init(style: .grouped)

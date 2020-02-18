@@ -14,6 +14,7 @@
 		9904409223F84BDC0063064E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9904409123F84BDC0063064E /* SettingsViewController.swift */; };
 		9904409523FAC0C50063064E /* DisclosureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9904409423FAC0C50063064E /* DisclosureCell.swift */; };
 		9904409B23FBDC200063064E /* KeyboardLocales.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9904409A23FBDC200063064E /* KeyboardLocales.swift */; };
+		9904409D23FBE63F0063064E /* KeyboardLocalesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9904409C23FBE63F0063064E /* KeyboardLocalesViewController.swift */; };
 		991EE55023D9AB4700DC3677 /* ViewDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991EE54F23D9AB4700DC3677 /* ViewDebugger.swift */; };
 		997550B623EAC631004ED6A5 /* UserDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997550B523EAC631004ED6A5 /* UserDictionary.swift */; };
 		997550B723EAC631004ED6A5 /* UserDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997550B523EAC631004ED6A5 /* UserDictionary.swift */; };
@@ -148,6 +149,7 @@
 		9904409123F84BDC0063064E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		9904409423FAC0C50063064E /* DisclosureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclosureCell.swift; sourceTree = "<group>"; };
 		9904409A23FBDC200063064E /* KeyboardLocales.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardLocales.swift; sourceTree = "<group>"; };
+		9904409C23FBE63F0063064E /* KeyboardLocalesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardLocalesViewController.swift; sourceTree = "<group>"; };
 		991EE54F23D9AB4700DC3677 /* ViewDebugger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewDebugger.swift; sourceTree = "<group>"; };
 		997550B523EAC631004ED6A5 /* UserDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionary.swift; sourceTree = "<group>"; };
 		999790AB23F2B4E8003F7885 /* UserDictionaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionaryViewController.swift; sourceTree = "<group>"; };
@@ -421,6 +423,7 @@
 				C6B638451EDF94CA00A6ECB2 /* AboutController.swift */,
 				C691A0E623682C8B00085AC3 /* TestingController.swift */,
 				9904409123F84BDC0063064E /* SettingsViewController.swift */,
+				9904409C23FBE63F0063064E /* KeyboardLocalesViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -772,6 +775,7 @@
 				C6A3905B1EB61BF8009378C1 /* KeyboardSettings.swift in Sources */,
 				C691A0EB23682C9700085AC3 /* TestingView.swift in Sources */,
 				C6B638461EDF94CA00A6ECB2 /* AboutController.swift in Sources */,
+				9904409D23FBE63F0063064E /* KeyboardLocalesViewController.swift in Sources */,
 				999790B023F2B55F003F7885 /* UserDictionaryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
