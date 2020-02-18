@@ -4,9 +4,19 @@ class UserDictionaryViewController: ViewController<UserDictionaryView> {
     private let userDictionary = UserDictionary()
     private lazy var userWords: [String] = userDictionary.getUserWords()
     private var isEmpty: Bool { userWords.count == 0 }
+    private let keyboardLocale: KeyboardLocale
 
     private var tableView: UITableView {
         contentView.tableView!
+    }
+
+    init(keyboardLocale: KeyboardLocale) {
+        self.keyboardLocale = keyboardLocale
+        super.init()
+    }
+
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func viewDidLoad() {

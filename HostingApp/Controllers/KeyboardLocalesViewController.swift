@@ -7,11 +7,11 @@ class KeyboardLocalesViewController: SettingsViewController {
 
         for locale in KeyboardLocales.allLocales {
             let row = Row(title: locale.langaugeName) { () -> UIViewController in
-                UserDictionaryViewController() // TODO: input language code
+                UserDictionaryViewController(keyboardLocale: locale) // TODO: input language code
             }
             rows.append(row)
         }
-        
+
         return rows
     }
 
