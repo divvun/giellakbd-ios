@@ -16,6 +16,7 @@
 		9904409B23FBDC200063064E /* KeyboardLocales.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9904409A23FBDC200063064E /* KeyboardLocales.swift */; };
 		9904409D23FBE63F0063064E /* KeyboardLocalesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9904409C23FBE63F0063064E /* KeyboardLocalesViewController.swift */; };
 		990440A523FC14A30063064E /* HostingAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990440A423FC14A30063064E /* HostingAppTests.swift */; };
+		990440AC23FC245D0063064E /* KeyboardLocales.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9904409A23FBDC200063064E /* KeyboardLocales.swift */; };
 		991EE55023D9AB4700DC3677 /* ViewDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991EE54F23D9AB4700DC3677 /* ViewDebugger.swift */; };
 		997550B623EAC631004ED6A5 /* UserDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997550B523EAC631004ED6A5 /* UserDictionary.swift */; };
 		997550B723EAC631004ED6A5 /* UserDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997550B523EAC631004ED6A5 /* UserDictionary.swift */; };
@@ -301,6 +302,7 @@
 				C6996B5B22FC2D3E007EBC3D /* CursorContext.swift */,
 				997550B523EAC631004ED6A5 /* UserDictionary.swift */,
 				999790B923F40E4F003F7885 /* WordContext.swift */,
+				9904409A23FBDC200063064E /* KeyboardLocales.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -353,7 +355,6 @@
 				C655E8531EC5551100B12BE4 /* Extensions.swift */,
 				C6A3905A1EB61BF8009378C1 /* KeyboardSettings.swift */,
 				C676AD5E1EC985EB00523FF3 /* Strings.swift */,
-				9904409923FBDBE10063064E /* Models */,
 				4E807D9619461D9000D875D1 /* Supporting Files */,
 				C63EE1002362F7E500A1E15A /* Settings.bundle */,
 			);
@@ -422,14 +423,6 @@
 				9904409423FAC0C50063064E /* DisclosureCell.swift */,
 			);
 			path = "Table Cells";
-			sourceTree = "<group>";
-		};
-		9904409923FBDBE10063064E /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				9904409A23FBDC200063064E /* KeyboardLocales.swift */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		990440A323FC14A30063064E /* HostingAppTests */ = {
@@ -878,6 +871,7 @@
 				FDBD09C52333A56800303152 /* SplitKeyboard.swift in Sources */,
 				FDAF59AD22F9CD0700F7C9FC /* BannerView.swift in Sources */,
 				FDAF59A922F9CCF200F7C9FC /* LongPressController.swift in Sources */,
+				990440AC23FC245D0063064E /* KeyboardLocales.swift in Sources */,
 				C6F9564823E4520D009C469C /* init.m in Sources */,
 				C649D3D5234B7D8400EF4273 /* KeyboardView.swift in Sources */,
 				C6F2494F1F736E3E00840F2B /* KeyboardSettings.swift in Sources */,

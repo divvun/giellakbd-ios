@@ -1,11 +1,11 @@
 import Foundation
 
-struct KeyboardLocale {
+public struct KeyboardLocale {
     let identifier: String
     let langaugeName: String
 }
 
-class KeyboardLocales {
+final class KeyboardLocales {
     static var allLocales: [KeyboardLocale] {
         var locales: [KeyboardLocale] = []
         let appexBundles = Bundle.allBundles.filter({ (bundle) -> Bool in
