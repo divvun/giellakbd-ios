@@ -86,6 +86,12 @@ public class UserDictionary {
         }
     }
 
+    public func addUserWord(_ word: String, locale: KeyboardLocale) {
+        for _ in 0 ..< minOccurrencesToBeConsideredUserWord {
+            add(word0: word, locale: locale)
+        }
+    }
+
     public func printDatabaseRows() {
         do {
             for row in try database.prepare(userDictionary) {

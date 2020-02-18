@@ -54,4 +54,15 @@ class UserDictionaryTests: XCTestCase {
         XCTAssertEqual(1, words.count)
         XCTAssertEqual(word, words.first)
     }
+
+    func test_add_user_word_should_add_user_word() {
+        let sut = userDictionary
+        let word = "test"
+
+        sut.addUserWord(word, locale: defaultLocale)
+
+        let words = sut.getUserWords()
+        XCTAssertEqual(1, words.count)
+        XCTAssertEqual(word, words.first)
+    }
 }
