@@ -48,14 +48,6 @@ public class UserDictionary {
         }
     }
 
-    public func dropTables() {
-        do {
-            try database.run(userDictionary.drop())
-        } catch {
-            fatalError("Error deleting all words from database: \(error)")
-        }
-    }
-
     public func add(word0: String, word1: String? = nil, word2: String? = nil, userWordIndex: Int = 0, locale: KeyboardLocale) {
         guard userWordIndex >= 0 else {
             fatalError("Attempted to add word to UserDictionary with below-zero index")
@@ -88,6 +80,14 @@ public class UserDictionary {
     public func addUserWord(_ word: String, locale: KeyboardLocale) {
         for _ in 0 ..< minOccurrencesToBeConsideredUserWord {
             add(word0: word, locale: locale)
+        }
+    }
+
+    public func dropTables() {
+        do {
+            try database.run(userDictionary.drop())
+        } catch {
+            fatalError("Error dropping database tables: \(error)")
         }
     }
 
