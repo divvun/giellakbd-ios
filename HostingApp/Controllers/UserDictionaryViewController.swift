@@ -2,7 +2,9 @@ import UIKit
 
 class UserDictionaryViewController: ViewController<UserDictionaryView> {
     private let userDictionary = UserDictionary()
-    private lazy var userWords: [String] = userDictionary.getUserWords(locale: keyboardLocale)
+    private var userWords: [String] {
+        userDictionary.getUserWords(locale: keyboardLocale)
+    }
     private var isEmpty: Bool { userWords.count == 0 }
     private let keyboardLocale: KeyboardLocale
 
@@ -21,7 +23,6 @@ class UserDictionaryViewController: ViewController<UserDictionaryView> {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = Strings.userDictionary
         setupView()
     }
 
@@ -31,11 +32,42 @@ class UserDictionaryViewController: ViewController<UserDictionaryView> {
     }
 
     private func setupView() {
+        setupNavBar()
+
         if isEmpty {
             showEmptyState()
         } else {
             setupTableView()
         }
+    }
+
+    private func setupNavBar() {
+        title = Strings.userDictionary
+        let plusButton = UIBarButtonItem.init(barButtonSystemItem: .add, target: self, action: #selector(showAddWordAlert))
+        navigationItem.rightBarButtonItem = plusButton
+    }
+
+    @objc private func showAddWordAlert() {
+        let title = "Add Word" // LOCALIZE ME
+        let message = "This word will be suggested in the spelling banner for similar input." // LOCALIZE ME
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addTextField { (textField) in
+            textField.placeholder = "Word"
+        }
+
+        // LOCALIZE
+        let addAction = UIAlertAction(title: "Add", style: .default) { _ in
+            guard let word = alert.textFields?.first?.text else {
+                return
+            }
+            self.userDictionary.addUserWord(word, locale: self.keyboardLocale)
+            self.tableView.reloadData()
+        }
+
+        alert.addAction(addAction)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+
+        self.present(alert, animated: true)
     }
 
     private func showEmptyState() {
