@@ -124,11 +124,15 @@ public class UserDictionary {
         return insertWord(word: word, locale: locale, state: .candidate)
     }
 
-    @discardableResult
-    public func addWordManually(_ word: String, locale: KeyboardLocale) -> Int64 {
-        return insertWord(word: word, locale: locale, state: .manuallyAdded)
+    public func addWordManually(_ word: String, locale: KeyboardLocale) {
+        if let existingWord = fetchExistingWord(word: word, locale: locale) {
+            updateWordState(id: existingWord[wordIdCol], state: .manuallyAdded)
+        } else {
+            insertWord(word: word, locale: locale, state: .manuallyAdded)
+        }
     }
 
+    @discardableResult
     private func insertWord(word: String, locale: KeyboardLocale, state: WordState) -> Int64 {
         let insert = userWords.insert(
             wordCol <- word.lowercased(),

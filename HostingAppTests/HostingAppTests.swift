@@ -81,4 +81,19 @@ class UserDictionaryTests: XCTestCase {
         XCTAssertEqual(1, englishWords.count)
         XCTAssertEqual("test1", englishWords.first)
     }
+
+    func test_add_word_manually_should_update_existing_word_if_already_in_dictionary() {
+        let sut = userDictionary
+        let word = "test"
+
+        // First add the word normally
+        sut.add(word: word, locale: defaultLocale) // candidate
+        sut.add(word: word, locale: defaultLocale) // promoted to user word
+
+        sut.addWordManually(word, locale: defaultLocale)
+
+        let words = sut.getUserWords(locale: defaultLocale)
+        XCTAssertEqual(1, words.count)
+        XCTAssertEqual(word, words.first)
+    }
 }
