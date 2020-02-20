@@ -86,9 +86,9 @@ public class UserDictionary {
 
         let wordId: Int64
 
-        if let existingWord = fetchExistingWord(word: word, locale: locale) {
-            promoteExistingWordIfNeeded(row: existingWord)
-            wordId = existingWord[wordIdCol]
+        if let candidateId = candidateFor(word: word, locale: locale) {
+            wordId = candidateId
+            updateWordState(id: candidateId, state: .userWord)
         } else {
             wordId = insertWordCandidate(word: word, locale: locale)
         }
@@ -96,6 +96,18 @@ public class UserDictionary {
         if let context = context {
             insertContext(context, for: wordId)
         }
+    }
+
+    private func candidateFor(word: String, locale: KeyboardLocale) -> Int64? {
+        guard let existingWord = fetchExistingWord(word: word, locale: locale) else {
+            return nil
+        }
+        let id = existingWord[wordIdCol]
+        let wordState = WordState(rawValue: existingWord[stateCol])
+        if wordState == .candidate {
+            return id
+        }
+        return nil
     }
 
     private func fetchExistingWord(word: String, locale: KeyboardLocale) -> SQLite.Row? {
@@ -107,16 +119,6 @@ public class UserDictionary {
             fatalError("Error finding existsing word: \(error)")
         }
         return row
-    }
-
-    private func promoteExistingWordIfNeeded(row: SQLite.Row) {
-        let id = row[wordIdCol]
-        switch WordState(rawValue: row[stateCol]) {
-        case .candidate:
-            updateWordState(id: id, state: .userWord)
-        default:
-            break
-        }
     }
 
     @discardableResult
