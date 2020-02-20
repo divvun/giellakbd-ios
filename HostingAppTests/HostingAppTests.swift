@@ -57,7 +57,7 @@ class UserDictionaryTests: XCTestCase {
         XCTAssertEqual(word, words.first)
     }
 
-    func test_add_user_word_should_add_user_word() {
+    func test_add_word_manually_should_add_word() {
         let sut = userDictionary
         let word = "test"
 
