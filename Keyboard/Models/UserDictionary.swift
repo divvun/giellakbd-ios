@@ -133,7 +133,7 @@ public class UserDictionary {
         let insert = userWords.insert(
             wordCol <- word.lowercased(),
             localeCol <- locale.identifier,
-            stateCol <- WordState.candidate.rawValue
+            stateCol <- state.rawValue
         )
 
         do {
