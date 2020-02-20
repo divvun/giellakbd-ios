@@ -12,6 +12,18 @@ class UserDictionaryTests: XCTestCase {
         userDictionary = UserDictionary()
     }
 
+    func test_drop_tables_should_remove_tables() {
+        let sut = userDictionary
+
+        sut.addWordManually("test", locale: defaultLocale)
+        sut.addWordManually("hello", locale: defaultLocale)
+        sut.dropTables()
+        userDictionary = UserDictionary() // re-create tables
+
+        let words = sut.getUserWords(locale: defaultLocale)
+        XCTAssertEqual(0, words.count)
+    }
+
     func test_user_words_are_case_insensitive() {
         let sut = userDictionary
 
