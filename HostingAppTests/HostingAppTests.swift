@@ -15,9 +15,9 @@ class UserDictionaryTests: XCTestCase {
     func test_user_words_are_case_insensitive() {
         let sut = userDictionary
 
-        sut.add(word0: "test", locale: defaultLocale)
-        sut.add(word0: "TEST", locale: defaultLocale)
-        sut.add(word0: "Test", locale: defaultLocale)
+        sut.add(word: "test", locale: defaultLocale)
+        sut.add(word: "TEST", locale: defaultLocale)
+        sut.add(word: "Test", locale: defaultLocale)
 
         let words = sut.getUserWords(locale: defaultLocale)
         XCTAssertEqual(1, words.count)
@@ -27,7 +27,7 @@ class UserDictionaryTests: XCTestCase {
     func test_word_added_once_does_not_count_as_user_word() {
         let sut = userDictionary
 
-        sut.add(word0: "test", locale: defaultLocale)
+        sut.add(word: "test", locale: defaultLocale)
 
         let words = sut.getUserWords(locale: defaultLocale)
         XCTAssertEqual(0, words.count)
@@ -37,8 +37,8 @@ class UserDictionaryTests: XCTestCase {
         let sut = userDictionary
         let word = "test"
 
-        sut.add(word0: word, locale: defaultLocale)
-        sut.add(word0: word, locale: defaultLocale)
+        sut.add(word: word, locale: defaultLocale)
+        sut.add(word: word, locale: defaultLocale)
 
         let words = sut.getUserWords(locale: defaultLocale)
         XCTAssertEqual(1, words.count)
@@ -49,7 +49,7 @@ class UserDictionaryTests: XCTestCase {
         let sut = userDictionary
         let word = "test"
 
-        sut.addUserWord(word, locale: defaultLocale)
+        sut.addWordManuallyAdded(word, locale: defaultLocale)
 
         let words = sut.getUserWords(locale: defaultLocale)
         XCTAssertEqual(1, words.count)
@@ -61,8 +61,8 @@ class UserDictionaryTests: XCTestCase {
         let englishLocale = KeyboardLocale(identifier: "en", langaugeName: "English")
         let spanishLocale = KeyboardLocale(identifier: "es", langaugeName: "Spanish")
 
-        sut.addUserWord("test1", locale: englishLocale)
-        sut.addUserWord("test2", locale: spanishLocale)
+        sut.addWordManuallyAdded("test1", locale: englishLocale)
+        sut.addWordManuallyAdded("test2", locale: spanishLocale)
 
         let englishWords = sut.getUserWords(locale: englishLocale)
         XCTAssertEqual(1, englishWords.count)
