@@ -131,7 +131,7 @@ public class UserDictionary {
 
     private func insertWord(word: String, locale: KeyboardLocale, state: WordState) -> Int64 {
         let insert = userWords.insert(
-            wordCol <- word,
+            wordCol <- word.lowercased(),
             localeCol <- locale.identifier,
             stateCol <- WordState.candidate.rawValue
         )
