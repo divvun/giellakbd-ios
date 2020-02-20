@@ -30,6 +30,7 @@ class UserDictionaryTests: XCTestCase {
         sut.add(word: "test", locale: defaultLocale)
         sut.add(word: "TEST", locale: defaultLocale)
         sut.add(word: "Test", locale: defaultLocale)
+        sut.add(word: "tEsT", locale: defaultLocale)
 
         let words = sut.getUserWords(locale: defaultLocale)
         XCTAssertEqual(1, words.count)
