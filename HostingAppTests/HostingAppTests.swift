@@ -49,7 +49,7 @@ class UserDictionaryTests: XCTestCase {
         let sut = userDictionary
         let word = "test"
 
-        sut.addWordManuallyAdded(word, locale: defaultLocale)
+        sut.addWordManually(word, locale: defaultLocale)
 
         let words = sut.getUserWords(locale: defaultLocale)
         XCTAssertEqual(1, words.count)
@@ -61,8 +61,8 @@ class UserDictionaryTests: XCTestCase {
         let englishLocale = KeyboardLocale(identifier: "en", langaugeName: "English")
         let spanishLocale = KeyboardLocale(identifier: "es", langaugeName: "Spanish")
 
-        sut.addWordManuallyAdded("test1", locale: englishLocale)
-        sut.addWordManuallyAdded("test2", locale: spanishLocale)
+        sut.addWordManually("test1", locale: englishLocale)
+        sut.addWordManually("test2", locale: spanishLocale)
 
         let englishWords = sut.getUserWords(locale: englishLocale)
         XCTAssertEqual(1, englishWords.count)

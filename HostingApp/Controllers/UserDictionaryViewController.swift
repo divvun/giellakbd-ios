@@ -60,7 +60,7 @@ class UserDictionaryViewController: ViewController<UserDictionaryView> {
             guard let word = alert.textFields?.first?.text else {
                 return
             }
-            self.userDictionary.addWordManuallyAdded(word, locale: self.keyboardLocale)
+            self.userDictionary.addWordManually(word, locale: self.keyboardLocale)
             self.tableView.reloadData()
         }
 

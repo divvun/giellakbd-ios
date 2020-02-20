@@ -125,7 +125,7 @@ public class UserDictionary {
     }
 
     @discardableResult
-    public func addWordManuallyAdded(_ word: String, locale: KeyboardLocale) -> Int64 {
+    public func addWordManually(_ word: String, locale: KeyboardLocale) -> Int64 {
         return insertWord(word: word, locale: locale, state: .manuallyAdded)
     }
 
