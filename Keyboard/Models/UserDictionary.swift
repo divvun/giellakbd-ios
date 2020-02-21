@@ -264,3 +264,20 @@ public class UserDictionary {
         }
     }
 }
+
+extension UserDictionary {
+    public func addTestRows(locale: KeyboardLocale) {
+        let contexts = [
+            WordContext(secondBefore: "I", firstBefore: "said", word: "hello"),
+            WordContext(firstBefore: "well", word: "hello", firstAfter: "there"),
+            WordContext(word: "hello", firstAfter: "to", secondAfter: "you"),
+            WordContext(secondBefore: "I", firstBefore: "said", word: "hi"),
+            WordContext(firstBefore: "say", word: "hi", firstAfter: "to"),
+            WordContext(word: "hi", firstAfter: "there", secondAfter: "Frank")
+        ]
+
+        for context in contexts {
+            add(context: context, locale: locale)
+        }
+    }
+}
