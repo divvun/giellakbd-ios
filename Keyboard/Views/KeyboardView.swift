@@ -167,14 +167,6 @@ internal class KeyboardView: UIView,
             .constraint(greaterThanOrEqualTo: keyView.heightAnchor)
             .enable(priority: .defaultHigh)
 
-        if UIDevice.current.systemMajorVersion == 11 {
-            // For whatever reason, iOS 11, and only iOS 11, requires a large height constraint or the overlay appears shorter
-            // than expected. Note that the large value doesn't matter: the other constraints will
-            // (somehow) resolve to the correct height.
-            overlay.heightAnchor.constraint(equalTo: keyView.heightAnchor, constant: 999)
-                .enable(priority: .defaultLow)
-        }
-
         overlay.widthAnchor.constraint(
             greaterThanOrEqualTo: keyView.widthAnchor,
             constant: theme.popupCornerRadius * 2)

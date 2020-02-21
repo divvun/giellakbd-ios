@@ -1,4 +1,4 @@
-platform :ios, '9.0'
+platform :ios, '12.4'
 use_frameworks!
 
 target 'BaseKeyboard' do

@@ -13,7 +13,6 @@ extension UIDevice {
     }
 }
 
-@available(iOS 12.0, iOSApplicationExtension 12.0, *)
 extension UIUserInterfaceStyle: CustomDebugStringConvertible {
     public var debugDescription: String {
         switch self {

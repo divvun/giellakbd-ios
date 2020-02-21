@@ -10,14 +10,9 @@ public struct CursorContext {
 
 extension CursorContext {
     static func from(proxy: UITextDocumentProxy) -> CursorContext {
-        var selectedText: String?
-        if #available(iOSApplicationExtension 11.0, *) {
-            selectedText = proxy.selectedText
-        }
-
         return resolveWordContext(before: proxy.documentContextBeforeInput ?? "",
                                   after: proxy.documentContextAfterInput ?? "",
-                                  selectedText: selectedText)
+                                  selectedText: proxy.selectedText)
     }
 }
 
