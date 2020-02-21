@@ -102,8 +102,8 @@ class UserDictionaryTests: XCTestCase {
         let sut = userDictionary
         let word = "test"
 
-        let context = WordContext(firstBefore: "before", firstAfter: "after")
-        sut.add(word: word, locale: defaultLocale, context: context)
+        let context = WordContext(firstBefore: "before", word: word, firstAfter: "after")
+        sut.add(context: context, locale: defaultLocale)
 
         let contexts = userDictionary.getContexts(for: word, locale: defaultLocale)
         XCTAssertEqual(context, contexts.first)
@@ -125,12 +125,12 @@ class UserDictionaryTests: XCTestCase {
         let sut = userDictionary
         let word = "test"
 
-        let context1 = WordContext(firstBefore: "before", firstAfter: "after")
-        let context2 = WordContext(secondBefore: "secondbefore", firstBefore: "firstBefore")
-        let context3 = WordContext(firstAfter: "firstAfter", secondAfter: "secondAfter")
-        sut.add(word: word, locale: defaultLocale, context: context1)
-        sut.add(word: word, locale: defaultLocale, context: context2)
-        sut.add(word: word, locale: defaultLocale, context: context3)
+        let context1 = WordContext(firstBefore: "before", word: word, firstAfter: "after")
+        let context2 = WordContext(secondBefore: "secondbefore", firstBefore: "firstBefore", word: word)
+        let context3 = WordContext(word: word, firstAfter: "firstAfter", secondAfter: "secondAfter")
+        sut.add(context: context1, locale: defaultLocale)
+        sut.add(context: context2, locale: defaultLocale)
+        sut.add(context: context3, locale: defaultLocale)
 
         let contexts = userDictionary.getContexts(for: word, locale: defaultLocale)
         XCTAssertEqual(3, contexts.count)

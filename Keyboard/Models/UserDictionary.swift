@@ -74,11 +74,14 @@ public class UserDictionary {
         })
     }
 
-    public func add(word: String, locale: KeyboardLocale, context: WordContext? = nil) {
-        if let context = context {
-            validateContext(context)
-        }
+    public func add(word: String, locale: KeyboardLocale) {
+        add(context: WordContext(word: word), locale: locale)
+    }
 
+    public func add(context: WordContext, locale: KeyboardLocale) {
+        validateContext(context)
+
+        let word = context.word
         let wordId: Int64
 
         if let existingWord = fetchWord(word, locale: locale) {
@@ -90,9 +93,7 @@ public class UserDictionary {
             wordId = insertWordCandidate(word: word, locale: locale)
         }
 
-        if let context = context {
-            insertContext(context, for: wordId)
-        }
+        insertContext(context, for: wordId)
     }
 
     private func validateContext(_ context: WordContext) {
@@ -254,6 +255,7 @@ public class UserDictionary {
             return rows.map({
                 WordContext(secondBefore: $0[secondBefore],
                             firstBefore: $0[firstBefore],
+                            word: word,
                             firstAfter: $0[firstAfter],
                             secondAfter: $0[secondAfter])
             })
