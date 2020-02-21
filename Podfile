@@ -3,7 +3,7 @@ use_frameworks!
 
 target 'BaseKeyboard' do
   pod 'Sentry'
-  pod 'libdivvunspell', :git => "https://github.com/bbqsrc/divvunspell-swift", :submodules => true
+  pod 'DivvunSpell', :git => "https://github.com/divvun/divvunspell-swift", :submodules => true
   pod 'UIDeviceComplete', :git => "https://github.com/bbqsrc/UIDeviceComplete"
   pod 'SwiftLint'
 end
