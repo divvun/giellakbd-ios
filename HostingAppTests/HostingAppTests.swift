@@ -7,10 +7,11 @@ class UserDictionaryTests: XCTestCase {
     let defaultLocale = KeyboardLocale(identifier: "en", langaugeName: "English")
 
     override func setUp() {
-        userDictionary.dropTables()
-
-        // Create new connection so tables are re-created
         userDictionary = UserDictionary()
+    }
+
+    override func tearDown() {
+        userDictionary.dropTables()
     }
 
     func test_drop_tables_should_remove_tables() {
@@ -105,7 +106,7 @@ class UserDictionaryTests: XCTestCase {
         let context = WordContext(firstBefore: "before", word: word, firstAfter: "after")
         sut.add(context: context, locale: defaultLocale)
 
-        let contexts = userDictionary.getContexts(for: word, locale: defaultLocale)
+        let contexts = sut.getContexts(for: word, locale: defaultLocale)
         XCTAssertEqual(context, contexts.first)
     }
 
@@ -117,7 +118,7 @@ class UserDictionaryTests: XCTestCase {
         sut.add(word: word, locale: defaultLocale) // user word
         sut.add(word: word, locale: defaultLocale) // should have no effect
 
-        let rows = userDictionary.getWordDatabaseRows()
+        let rows = sut.getWordDatabaseRows()
         XCTAssertEqual(1, rows.count)
     }
 
@@ -132,7 +133,7 @@ class UserDictionaryTests: XCTestCase {
         sut.add(context: context2, locale: defaultLocale)
         sut.add(context: context3, locale: defaultLocale)
 
-        let contexts = userDictionary.getContexts(for: word, locale: defaultLocale)
+        let contexts = sut.getContexts(for: word, locale: defaultLocale)
         XCTAssertEqual(3, contexts.count)
     }
 
