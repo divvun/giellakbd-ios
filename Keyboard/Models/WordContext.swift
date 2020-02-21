@@ -18,8 +18,22 @@ public struct WordContext: Equatable {
         self.firstAfter = firstAfter
         self.secondAfter = secondAfter
     }
+
     public func contextAttributedString() -> NSAttributedString {
-        // IMPLEMENT ME
-        return NSAttributedString()
+        var contextString = word
+        if let firstBefore = firstBefore {
+            contextString = firstBefore + " " + contextString
+        }
+        if let secondBefore = secondBefore {
+            contextString = secondBefore + " " + contextString
+        }
+        if let firstAfter = firstAfter {
+            contextString += " " + firstAfter
+        }
+        if let secondAfter = secondAfter {
+            contextString += " " + secondAfter
+        }
+
+        return contextString.bolden(substring: word)
     }
 }
