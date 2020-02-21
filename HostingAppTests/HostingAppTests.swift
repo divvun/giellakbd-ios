@@ -135,4 +135,23 @@ class UserDictionaryTests: XCTestCase {
         let contexts = userDictionary.getContexts(for: word, locale: defaultLocale)
         XCTAssertEqual(3, contexts.count)
     }
+
+    func test_word_contexts_should_come_out_of_database_in_same_form_they_went_in() {
+        let sut = userDictionary
+        let word1 = "test"
+        let word2 = "hello"
+        let word3 = "hi"
+
+        let context1 = WordContext(firstBefore: "before", word: word1, firstAfter: "after")
+        sut.add(context: context1, locale: defaultLocale)
+        XCTAssertEqual(context1, sut.getContexts(for: word1, locale: defaultLocale).first)
+
+        let context2 = WordContext(secondBefore: "secondBefore", firstBefore: "before", word: word2)
+        sut.add(context: context2, locale: defaultLocale)
+        XCTAssertEqual(context2, sut.getContexts(for: word2, locale: defaultLocale).first)
+
+        let context3 = WordContext(word: word3, firstAfter: "after", secondAfter: "secondAfter")
+        sut.add(context: context3, locale: defaultLocale)
+        XCTAssertEqual(context3, sut.getContexts(for: word3, locale: defaultLocale).first)
+    }
 }
