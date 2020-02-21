@@ -4,9 +4,9 @@ class WordContextViewController: ViewController<WordContextView> {
     private let word: String
     private let contexts: [WordContext]
 
-    init(dictionary: UserDictionary, word: String) {
+    init(dictionary: UserDictionary, word: String, locale: KeyboardLocale) {
         self.word = word
-        contexts = dictionary.getContexts(for: word)
+        contexts = dictionary.getContexts(for: word, locale: locale)
         super.init()
     }
 

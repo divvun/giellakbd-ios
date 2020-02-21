@@ -1,5 +1,6 @@
 @testable import HostingApp
 import XCTest
+import SQLite
 
 class UserDictionaryTests: XCTestCase {
     var userDictionary = UserDictionary()
@@ -95,5 +96,43 @@ class UserDictionaryTests: XCTestCase {
         let words = sut.getUserWords(locale: defaultLocale)
         XCTAssertEqual(1, words.count)
         XCTAssertEqual(word, words.first)
+    }
+
+    func test_add_word_with_context_should_save_context() {
+        let sut = userDictionary
+        let word = "test"
+
+        let context = WordContext(firstBefore: "before", firstAfter: "after")
+        sut.add(word: word, locale: defaultLocale, context: context)
+
+        let contexts = userDictionary.getContexts(for: word, locale: defaultLocale)
+        XCTAssertEqual(context, contexts.first)
+    }
+
+    func test_add_word_that_already_exists_as_user_word_should_not_add_new_word() {
+        let sut = userDictionary
+        let word = "test"
+
+        sut.add(word: word, locale: defaultLocale) // candidate
+        sut.add(word: word, locale: defaultLocale) // user word
+        sut.add(word: word, locale: defaultLocale) // should have no effect
+
+        let rows = userDictionary.getWordDatabaseRows()
+        XCTAssertEqual(1, rows.count)
+    }
+
+    func test_can_add_multiple_contexts_to_word() {
+        let sut = userDictionary
+        let word = "test"
+
+        let context1 = WordContext(firstBefore: "before", firstAfter: "after")
+        let context2 = WordContext(secondBefore: "secondbefore", firstBefore: "firstBefore")
+        let context3 = WordContext(firstAfter: "firstAfter", secondAfter: "secondAfter")
+        sut.add(word: word, locale: defaultLocale, context: context1)
+        sut.add(word: word, locale: defaultLocale, context: context2)
+        sut.add(word: word, locale: defaultLocale, context: context3)
+
+        let contexts = userDictionary.getContexts(for: word, locale: defaultLocale)
+        XCTAssertEqual(3, contexts.count)
     }
 }

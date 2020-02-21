@@ -16,6 +16,10 @@ target 'HostingApp' do
   pod 'SQLite.swift', '~> 0.12.0'
 end
 
+target 'HostingAppTests' do
+  pod 'SQLite.swift', '~> 0.12.0'
+end
+
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|

@@ -1,13 +1,6 @@
 import Foundation
 import SQLite
 
-public struct UserWordContext {
-    let secondBefore: String?
-    let firstBefore: String?
-    let firstAfter: String?
-    let secondAfter: String?
-}
-
 private let userWordsTableName = "user_word"
 private let wordContextTableName = "word_context"
 
@@ -27,6 +20,7 @@ public class UserDictionary {
 
     private let wordContext = Table(wordContextTableName)
     private let contextId = Expression<Int64>("id")
+    private let wordIdForeignKey = Expression<Int64>("word_id")
     private let secondBefore = Expression<String?>("second_before")
     private let firstBefore = Expression<String?>("first_before")
     private let firstAfter = Expression<String?>("first_after")
@@ -72,6 +66,7 @@ public class UserDictionary {
     private func createWordContextTable(database: Connection) throws {
         try database.run(wordContext.create(ifNotExists: true) { table in
             table.column(contextId, primaryKey: true)
+            table.column(wordIdForeignKey, references: userWords, wordIdCol)
             table.column(secondBefore)
             table.column(firstBefore)
             table.column(firstAfter)
@@ -79,16 +74,18 @@ public class UserDictionary {
         })
     }
 
-    public func add(word: String, locale: KeyboardLocale, context: UserWordContext? = nil) {
+    public func add(word: String, locale: KeyboardLocale, context: WordContext? = nil) {
         if let context = context {
             validateContext(context)
         }
 
         let wordId: Int64
 
-        if let candidateId = candidateFor(word: word, locale: locale) {
-            wordId = candidateId
-            updateWordState(id: candidateId, state: .userWord)
+        if let existingWord = fetchWord(word, locale: locale) {
+            wordId = existingWord[wordIdCol]
+            if wordIsCandidate(existingWord) {
+                updateWordState(id: wordId, state: .userWord)
+            }
         } else {
             wordId = insertWordCandidate(word: word, locale: locale)
         }
@@ -98,19 +95,21 @@ public class UserDictionary {
         }
     }
 
-    private func candidateFor(word: String, locale: KeyboardLocale) -> Int64? {
-        guard let existingWord = fetchExistingWord(word: word, locale: locale) else {
-            return nil
+    private func validateContext(_ context: WordContext) {
+        if context.secondBefore != nil && context.firstBefore == nil {
+            fatalError("Attempted to add word to UserDictionary with secondBefore word but no firstBefore word.")
         }
-        let id = existingWord[wordIdCol]
-        let wordState = WordState(rawValue: existingWord[stateCol])
-        if wordState == .candidate {
-            return id
+        if context.secondAfter != nil && context.firstAfter == nil {
+            fatalError("Attempted to add word to UserDictionary with secondAfter word but no firstAfter word.")
         }
-        return nil
     }
 
-    private func fetchExistingWord(word: String, locale: KeyboardLocale) -> SQLite.Row? {
+    private func wordIsCandidate(_ row: SQLite.Row) -> Bool {
+        let wordState = WordState(rawValue: row[stateCol])
+        return wordState == .candidate
+    }
+
+    private func fetchWord(_ word: String, locale: KeyboardLocale) -> SQLite.Row? {
         var row: SQLite.Row?
         do {
             let query = userWords.filter(wordCol == word)
@@ -121,13 +120,22 @@ public class UserDictionary {
         return row
     }
 
+    private func updateWordState(id: Int64, state: WordState) {
+        do {
+            let word = userWords.filter(wordIdCol == id)
+            try database.run(word.update(stateCol <- state.rawValue))
+        } catch {
+            fatalError("Error updating word state \(error)")
+        }
+    }
+
     @discardableResult
     private func insertWordCandidate(word: String, locale: KeyboardLocale) -> Int64 {
         return insertWord(word: word, locale: locale, state: .candidate)
     }
 
     public func addWordManually(_ word: String, locale: KeyboardLocale) {
-        if let existingWord = fetchExistingWord(word: word, locale: locale) {
+        if let existingWord = fetchWord(word, locale: locale) {
             updateWordState(id: existingWord[wordIdCol], state: .manuallyAdded)
         } else {
             insertWord(word: word, locale: locale, state: .manuallyAdded)
@@ -149,26 +157,9 @@ public class UserDictionary {
         }
     }
 
-    private func updateWordState(id: Int64, state: WordState) {
-        do {
-            let word = userWords.filter(wordIdCol == id)
-            try database.run(word.update(stateCol <- state.rawValue))
-        } catch {
-            fatalError("Error updating word state \(error)")
-        }
-    }
-
-    private func validateContext(_ context: UserWordContext) {
-        if context.secondBefore != nil && context.firstBefore == nil {
-            fatalError("Attempted to add word to UserDictionary with secondBefore word but no firstBefore word.")
-        }
-        if context.secondAfter != nil && context.firstAfter == nil {
-            fatalError("Attempted to add word to UserDictionary with secondAfter word but no firstAfter word.")
-        }
-    }
-
-    private func insertContext(_ context: UserWordContext, for wordId: Int64) {
+    private func insertContext(_ context: WordContext, for wordId: Int64) {
         let insert = wordContext.insert(
+            wordIdForeignKey <- wordId,
             secondBefore <- context.secondBefore,
             firstBefore <- context.firstBefore,
             firstAfter <- context.firstAfter,
@@ -192,6 +183,7 @@ public class UserDictionary {
 
     public func printDatabaseRows() {
         do {
+            print("WORDS TABLE:")
             for row in try database.prepare(userWords) {
                 let rowData = "id: \(row[wordIdCol]), "
                     + "word: \(String(describing: row[wordCol])), "
@@ -199,8 +191,37 @@ public class UserDictionary {
                     + "state: \(String(describing: row[stateCol])), "
                 print(rowData)
             }
+
+            print("\n")
+            print("CONTEXT TABLE:")
+            for row in try database.prepare(wordContext) {
+                let rowData = "id: \(row[contextId]), "
+                    + "wordId: \(row[wordIdForeignKey]), "
+                    + "secondBefore: \(String(describing: row[secondBefore])), "
+                    + "firstBefore: \(String(describing: row[firstBefore])), "
+                    + "firstAfter: \(String(describing: row[firstAfter])), "
+                    + "secondAfter: \(String(describing: row[secondAfter]))"
+                print(rowData)
+            }
+
         } catch {
             print("Error printing database: \(error)")
+        }
+    }
+
+    public func getWordDatabaseRows() -> [SQLite.Row] {
+        return getDatabaseRows(for: userWords)
+    }
+
+    public func getContextDatabaseRows() -> [SQLite.Row] {
+        return getDatabaseRows(for: wordContext)
+    }
+
+    private func getDatabaseRows(for table: Table) -> [SQLite.Row] {
+        do {
+            return try Array(database.prepare(table))
+        } catch {
+            fatalError("Error getting word database Rows")
         }
     }
 
@@ -221,51 +242,23 @@ public class UserDictionary {
         return words
     }
 
-    public func getContexts(for word: String) -> [WordContext] {
-        var contexts: [WordContext] = []
-
-    /*
-        let word0 = word0Col.template
-        let word1 = word1Col.template
-        let word2 = word2Col.template
-
-        let query = """
-        SELECT \(word0),
-               \(word1),
-               \(word2)
-        FROM
-            (SELECT \(word0),
-                    \(word1),
-                    \(word2),
-            CASE \(userWordIndexCol.template)
-                WHEN 0 THEN \(word0)
-                WHEN 1 THEN \(word1)
-                WHEN 2 THEN \(word2)
-            END user_word
-            FROM \(userWordsTableName)
-            WHERE user_word = '\(word)' COLLATE NOCASE)
-        """
-
-        do {
-            let rows = try database.prepare(query)
-            for row in rows {
-                guard let word0 = row[0] as? String else {
-                    fatalError("UserDictionary: Unexpectedly found nil in word0 column.")
-                }
-                let word1 = row[1] as? String ?? nil
-                let word2 = row[2] as? String ?? nil
-
-                let context = WordContext(word0: word0,
-                                          word1: word1,
-                                          word2: word2,
-                                          userWord: word)
-                contexts.append(context)
-            }
-        } catch {
-            print("Error getting user word contexts: \(error)")
+    public func getContexts(for word: String, locale: KeyboardLocale) -> [WordContext] {
+        guard let wordRow = fetchWord(word, locale: locale) else {
+            return []
         }
 
-         */
-        return contexts
+        let wordId = wordRow[wordIdCol]
+        let query = wordContext.filter(wordIdForeignKey == wordId)
+        do {
+            let rows = try database.prepare(query)
+            return rows.map({
+                WordContext(secondBefore: $0[secondBefore],
+                            firstBefore: $0[firstBefore],
+                            firstAfter: $0[firstAfter],
+                            secondAfter: $0[secondAfter])
+            })
+        } catch {
+            fatalError("Error getting user dictionary word contexts: \(error)")
+        }
     }
 }
