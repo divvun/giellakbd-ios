@@ -100,6 +100,14 @@ extension UserDictionaryViewController: UITableViewDataSource {
         cell.textLabel?.text = userWords[indexPath.item]
         return cell
     }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let word = userWords[indexPath.row]
+            userDictionary.removeWord(word, locale: keyboardLocale)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
 }
 
 extension UserDictionaryViewController: UITableViewDelegate {

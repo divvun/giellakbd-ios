@@ -66,11 +66,12 @@ public class UserDictionary {
     private func createWordContextTable(database: Connection) throws {
         try database.run(wordContext.create(ifNotExists: true) { table in
             table.column(contextId, primaryKey: true)
-            table.column(wordIdForeignKey, references: userWords, wordIdCol)
+            table.column(wordIdForeignKey)
             table.column(secondBefore)
             table.column(firstBefore)
             table.column(firstAfter)
             table.column(secondAfter)
+            table.foreignKey(wordIdForeignKey, references: userWords, wordIdCol, delete: .cascade)
         })
     }
 
@@ -94,6 +95,15 @@ public class UserDictionary {
         }
 
         insertContext(context, for: wordId)
+    }
+
+    public func removeWord(_ word: String, locale: KeyboardLocale) {
+        do {
+            let query = userWords.filter(wordCol == word)
+            try database.run(query.delete())
+        } catch {
+            fatalError("Error deleting word from UserDictionary \(error)")
+        }
     }
 
     private func validateContext(_ context: WordContext) {

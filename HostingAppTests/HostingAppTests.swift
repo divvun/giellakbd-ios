@@ -155,4 +155,22 @@ class UserDictionaryTests: XCTestCase {
         sut.add(context: context3, locale: defaultLocale)
         XCTAssertEqual(context3, sut.getContexts(for: word3, locale: defaultLocale).first)
     }
+
+    func test_delete_word_should_delete_word_and_associated_contexts() {
+        let sut = userDictionary
+        let word = "test"
+        let context1 = WordContext(firstBefore: "before", word: word, firstAfter: "after")
+        let context2 = WordContext(secondBefore: "secondBefore", firstBefore: "before", word: word)
+
+        sut.add(context: context1, locale: defaultLocale)
+        sut.add(context: context2, locale: defaultLocale)
+        sut.removeWord(word, locale: defaultLocale)
+
+        let words = sut.getUserWords(locale: defaultLocale)
+        let contexts = sut.getContexts(for: word, locale: defaultLocale)
+
+        XCTAssertEqual(0, words.count)
+        XCTAssertEqual(0, contexts.count)
+    }
+
 }
