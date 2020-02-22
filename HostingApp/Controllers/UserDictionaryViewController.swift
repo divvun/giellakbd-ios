@@ -33,18 +33,37 @@ class UserDictionaryViewController: ViewController<UserDictionaryView> {
 
     private func setupView() {
         setupNavBar()
-
-        if isEmpty {
-            showEmptyState()
-        } else {
-            setupTableView()
-        }
+        setupTableView()
+        updateEmptyStateView()
     }
 
     private func setupNavBar() {
         title = Strings.userDictionary
         let plusButton = UIBarButtonItem.init(barButtonSystemItem: .add, target: self, action: #selector(showAddWordAlert))
         navigationItem.rightBarButtonItem = plusButton
+    }
+
+    private func setupTableView() {
+        tableView.isHidden = false
+        tableView.register(DisclosureCell.self)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.tableFooterView = UIView()
+    }
+
+    private func updateView() {
+        tableView.reloadData()
+        updateEmptyStateView()
+    }
+
+    private func updateEmptyStateView() {
+        tableView.isHidden = isEmpty
+    }
+
+    private func deselectSelectedRow() {
+        if let selectedRowPath = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: selectedRowPath, animated: true)
+        }
     }
 
     @objc private func showAddWordAlert() {
@@ -61,31 +80,13 @@ class UserDictionaryViewController: ViewController<UserDictionaryView> {
                 return
             }
             self.userDictionary.addWordManually(word, locale: self.keyboardLocale)
-            self.tableView.reloadData()
+            self.updateView()
         }
 
         alert.addAction(addAction)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
 
         self.present(alert, animated: true)
-    }
-
-    private func showEmptyState() {
-        tableView.isHidden = true
-    }
-
-    private func setupTableView() {
-        tableView.isHidden = false
-        tableView.register(DisclosureCell.self)
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.tableFooterView = UIView()
-    }
-
-    private func deselectSelectedRow() {
-        if let selectedRowPath = tableView.indexPathForSelectedRow {
-            tableView.deselectRow(at: selectedRowPath, animated: true)
-        }
     }
 }
 
