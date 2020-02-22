@@ -51,11 +51,6 @@ class UserDictionaryViewController: ViewController<UserDictionaryView> {
         tableView.tableFooterView = UIView()
     }
 
-    private func updateView() {
-        tableView.reloadData()
-        updateEmptyStateView()
-    }
-
     private func updateEmptyStateView() {
         tableView.isHidden = isEmpty
     }
@@ -79,14 +74,28 @@ class UserDictionaryViewController: ViewController<UserDictionaryView> {
             guard let word = alert.textFields?.first?.text else {
                 return
             }
-            self.userDictionary.addWordManually(word, locale: self.keyboardLocale)
-            self.updateView()
+            self.insertWordAndUpdateView(word)
         }
 
         alert.addAction(addAction)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
 
         self.present(alert, animated: true)
+    }
+
+    private func insertWordAndUpdateView(_ word: String) {
+        userDictionary.addWordManually(word, locale: keyboardLocale)
+        let insertIndexPath = indexPathForNewWord(word: word)
+        tableView.insertRows(at: [insertIndexPath], with: .automatic)
+        updateEmptyStateView()
+    }
+
+    private func indexPathForNewWord(word: String) -> IndexPath {
+        if let index = userWords.firstIndex(where: { word < $0 }) {
+            return IndexPath(row: index - 1, section: 0)
+        } else {
+            return IndexPath(row: userWords.count - 1, section: 0)
+        }
     }
 }
 
