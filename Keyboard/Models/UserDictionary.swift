@@ -241,6 +241,7 @@ public class UserDictionary {
         let query = userWords.select(wordCol)
             .filter(localeCol == locale.identifier)
             .filter(stateCol == WordState.userWord.rawValue || stateCol == WordState.manuallyAdded.rawValue)
+            .order(wordCol)
         do {
             let rows = try database.prepare(query)
             for row in rows {

@@ -99,6 +99,19 @@ class UserDictionaryTests: XCTestCase {
         XCTAssertEqual(word, words.first)
     }
 
+    func test_get_words_should_return_words_alphabetically() {
+        let sut = userDictionary
+
+        sut.addWordManually("banana", locale: defaultLocale)
+        sut.addWordManually("cantelope", locale: defaultLocale)
+        sut.addWordManually("apple", locale: defaultLocale)
+
+        let words = sut.getUserWords(locale: defaultLocale)
+        XCTAssertEqual("apple", words[0])
+        XCTAssertEqual("banana", words[1])
+        XCTAssertEqual("cantelope", words[2])
+    }
+
     func test_add_word_with_context_should_save_context() {
         let sut = userDictionary
         let word = "test"
@@ -172,5 +185,4 @@ class UserDictionaryTests: XCTestCase {
         XCTAssertEqual(0, words.count)
         XCTAssertEqual(0, contexts.count)
     }
-
 }
