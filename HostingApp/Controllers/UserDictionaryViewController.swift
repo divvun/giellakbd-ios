@@ -108,6 +108,10 @@ extension UserDictionaryViewController: UITableViewDataSource {
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
+
+    func tableView(_ tableView: UITableView, didEndEditingRowAt indexPath: IndexPath?) {
+        updateEmptyStateView()
+    }
 }
 
 extension UserDictionaryViewController: UITableViewDelegate {
