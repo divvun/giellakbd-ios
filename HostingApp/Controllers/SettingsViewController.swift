@@ -10,10 +10,20 @@ struct Row {
 class SettingsViewController: UITableViewController {
 
     var rows: [Row] {
-        [
-            Row(title: Strings.userDictionary, destinationViewController: {
+        let destinationViewController: ViewControllerMaker
+        let locales = KeyboardLocales.allLocales
+        if locales.count == 1 {
+            destinationViewController = {
+                UserDictionaryViewController(keyboardLocale: locales.first!)
+            }
+        } else {
+            destinationViewController = {
                 KeyboardLocalesViewController()
-            })
+            }
+        }
+
+        return [
+            Row(title: Strings.userDictionary, destinationViewController: destinationViewController)
         ]
     }
 
