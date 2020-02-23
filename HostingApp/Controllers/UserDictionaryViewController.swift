@@ -67,11 +67,15 @@ class UserDictionaryViewController: ViewController<UserDictionaryView> {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addTextField { (textField) in
             textField.placeholder = "Word"
+            textField.autocapitalizationType = .none
+            textField.autocorrectionType = .no
+            textField.delegate = self
         }
 
         // LOCALIZE
         let addAction = UIAlertAction(title: "Add", style: .default) { _ in
-            guard let word = alert.textFields?.first?.text else {
+            guard let word = alert.textFields?.first?.text,
+                word.isEmpty == false else {
                 return
             }
             self.insertWordAndUpdateView(word)
@@ -128,5 +132,14 @@ extension UserDictionaryViewController: UITableViewDelegate {
         let word = userWords[indexPath.row]
         let wordController = WordContextViewController(dictionary: userDictionary, word: word, locale: keyboardLocale)
         navigationController?.pushViewController(wordController, animated: true)
+    }
+}
+
+extension UserDictionaryViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if string.contains(" ") {
+            return false
+        }
+        return true
     }
 }
