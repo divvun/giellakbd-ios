@@ -185,4 +185,14 @@ class UserDictionaryTests: XCTestCase {
         XCTAssertEqual(0, words.count)
         XCTAssertEqual(0, contexts.count)
     }
+
+    func test_insert_word_manually_should_insert_word_context() {
+        let sut = userDictionary
+        let word = "test"
+
+        sut.addWordManually(word, locale: defaultLocale)
+
+        let contexts = sut.getContexts(for: word, locale: defaultLocale)
+        XCTAssertEqual(1, contexts.count)
+    }
 }

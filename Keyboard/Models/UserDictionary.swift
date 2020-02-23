@@ -149,7 +149,8 @@ public class UserDictionary {
         if let existingWord = fetchWord(word, locale: locale) {
             updateWordState(id: existingWord[wordIdCol], state: .manuallyAdded)
         } else {
-            insertWord(word: word, locale: locale, state: .manuallyAdded)
+            let wordId = insertWord(word: word, locale: locale, state: .manuallyAdded)
+            insertContext(WordContext(word: word), for: wordId)
         }
     }
 
