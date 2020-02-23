@@ -179,11 +179,11 @@ class UserDictionaryTests: XCTestCase {
         sut.add(context: context2, locale: defaultLocale)
         sut.removeWord(word, locale: defaultLocale)
 
-        let words = sut.getUserWords(locale: defaultLocale)
-        let contexts = sut.getContexts(for: word, locale: defaultLocale)
+        let wordRows = sut.getWordDatabaseRows()
+        let contextRows = sut.getContextDatabaseRows()
 
-        XCTAssertEqual(0, words.count)
-        XCTAssertEqual(0, contexts.count)
+        XCTAssertEqual(0, wordRows.count)
+        XCTAssertEqual(0, contextRows.count)
     }
 
     func test_insert_word_manually_should_insert_word_context() {
