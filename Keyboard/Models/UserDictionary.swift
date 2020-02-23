@@ -41,6 +41,7 @@ public class UserDictionary {
         guard let database = try? Connection(dbFilePath) else {
             fatalError("Unable to create or open user dictionary database")
         }
+        try? database.execute("PRAGMA foreign_keys = ON;")
         createTablesIfNeeded(database: database)
         return database
     }()
