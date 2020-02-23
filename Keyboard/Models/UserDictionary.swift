@@ -185,12 +185,69 @@ public class UserDictionary {
         }
     }
 
+    public func getUserWords(locale: KeyboardLocale) -> [String] {
+        var words: [String] = []
+        let query = userWords.select(wordCol)
+            .filter(localeCol == locale.identifier)
+            .filter(stateCol == WordState.userWord.rawValue || stateCol == WordState.manuallyAdded.rawValue)
+            .order(wordCol)
+        do {
+            let rows = try database.prepare(query)
+            for row in rows {
+                let word = row[wordCol]
+                words.append(word)
+            }
+        } catch {
+            print("Error getting user words: \(error)")
+        }
+        return words
+    }
+
+    public func getContexts(for word: String, locale: KeyboardLocale) -> [WordContext] {
+        guard let wordRow = fetchWord(word, locale: locale) else {
+            return []
+        }
+
+        let wordId = wordRow[wordIdCol]
+        let query = wordContext.filter(wordIdForeignKey == wordId)
+        do {
+            let rows = try database.prepare(query)
+            return rows.map({
+                WordContext(secondBefore: $0[secondBefore],
+                            firstBefore: $0[firstBefore],
+                            word: word,
+                            firstAfter: $0[firstAfter],
+                            secondAfter: $0[secondAfter])
+            })
+        } catch {
+            fatalError("Error getting user dictionary word contexts: \(error)")
+        }
+    }
+}
+
+// Methods used for testing only
+extension UserDictionary {
     public func dropTables() {
         do {
             try database.run(userWords.drop())
             try database.run(wordContext.drop())
         } catch {
             fatalError("Error dropping database tables: \(error)")
+        }
+    }
+
+    public func addTestRows(locale: KeyboardLocale) {
+        let contexts = [
+            WordContext(secondBefore: "I", firstBefore: "said", word: "hello"),
+            WordContext(firstBefore: "well", word: "hello", firstAfter: "there"),
+            WordContext(word: "hello", firstAfter: "to", secondAfter: "you"),
+            WordContext(secondBefore: "I", firstBefore: "said", word: "hi"),
+            WordContext(firstBefore: "say", word: "hi", firstAfter: "to"),
+            WordContext(word: "hi", firstAfter: "there", secondAfter: "Frank")
+        ]
+
+        for context in contexts {
+            add(context: context, locale: locale)
         }
     }
 
@@ -235,62 +292,6 @@ public class UserDictionary {
             return try Array(database.prepare(table))
         } catch {
             fatalError("Error getting word database Rows")
-        }
-    }
-
-    public func getUserWords(locale: KeyboardLocale) -> [String] {
-        var words: [String] = []
-        let query = userWords.select(wordCol)
-            .filter(localeCol == locale.identifier)
-            .filter(stateCol == WordState.userWord.rawValue || stateCol == WordState.manuallyAdded.rawValue)
-            .order(wordCol)
-        do {
-            let rows = try database.prepare(query)
-            for row in rows {
-                let word = row[wordCol]
-                words.append(word)
-            }
-        } catch {
-            print("Error getting user words: \(error)")
-        }
-        return words
-    }
-
-    public func getContexts(for word: String, locale: KeyboardLocale) -> [WordContext] {
-        guard let wordRow = fetchWord(word, locale: locale) else {
-            return []
-        }
-
-        let wordId = wordRow[wordIdCol]
-        let query = wordContext.filter(wordIdForeignKey == wordId)
-        do {
-            let rows = try database.prepare(query)
-            return rows.map({
-                WordContext(secondBefore: $0[secondBefore],
-                            firstBefore: $0[firstBefore],
-                            word: word,
-                            firstAfter: $0[firstAfter],
-                            secondAfter: $0[secondAfter])
-            })
-        } catch {
-            fatalError("Error getting user dictionary word contexts: \(error)")
-        }
-    }
-}
-
-extension UserDictionary {
-    public func addTestRows(locale: KeyboardLocale) {
-        let contexts = [
-            WordContext(secondBefore: "I", firstBefore: "said", word: "hello"),
-            WordContext(firstBefore: "well", word: "hello", firstAfter: "there"),
-            WordContext(word: "hello", firstAfter: "to", secondAfter: "you"),
-            WordContext(secondBefore: "I", firstBefore: "said", word: "hi"),
-            WordContext(firstBefore: "say", word: "hi", firstAfter: "to"),
-            WordContext(word: "hi", firstAfter: "there", secondAfter: "Frank")
-        ]
-
-        for context in contexts {
-            add(context: context, locale: locale)
         }
     }
 }
