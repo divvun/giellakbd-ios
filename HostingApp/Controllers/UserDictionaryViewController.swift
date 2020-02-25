@@ -94,6 +94,12 @@ class UserDictionaryViewController: ViewController<UserDictionaryView> {
         updateEmptyStateView()
     }
 
+    private func deleteWord(at indexPath: IndexPath) {
+        let word = userWords[indexPath.row]
+        userDictionary.removeWord(word, locale: keyboardLocale)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+    }
+
     private func indexPathForNewWord(word: String) -> IndexPath {
         if let index = userWords.firstIndex(where: { word < $0 }) {
             return IndexPath(row: index - 1, section: 0)
@@ -112,14 +118,6 @@ extension UserDictionaryViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(DisclosureCell.self)
         cell.textLabel?.text = userWords[indexPath.item]
         return cell
-    }
-
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            let word = userWords[indexPath.row]
-            userDictionary.removeWord(word, locale: keyboardLocale)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-        }
     }
 
     func tableView(_ tableView: UITableView, didEndEditingRowAt indexPath: IndexPath?) {
@@ -141,5 +139,31 @@ extension UserDictionaryViewController: UITextFieldDelegate {
             return false
         }
         return true
+    }
+
+    func tableView(_ tableView: UITableView,
+                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let title = "Blacklist"
+
+        let blacklist = UIContextualAction(style: .normal, title: title,
+                                        handler: { (_, _, completionHandler) in
+                                            // IMPLEMENT ME
+                                            let alert = UIAlertController(title: "HI",
+                                                                          message: "blacklist",
+                                                                          preferredStyle: .alert)
+                                            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+                                            self.present(alert, animated: true)
+                                            completionHandler(true)
+        })
+
+        let delete = UIContextualAction(style: .destructive, title: "Delete") { (_, _, completionHandler) in
+            self.deleteWord(at: indexPath)
+            completionHandler(true)
+        }
+
+        blacklist.backgroundColor = .gray
+        delete.backgroundColor = .red
+        let configuration = UISwipeActionsConfiguration(actions: [delete, blacklist])
+        return configuration
     }
 }
