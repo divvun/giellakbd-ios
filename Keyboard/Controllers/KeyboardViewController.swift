@@ -418,7 +418,7 @@ open class KeyboardViewController: UIInputViewController {
     func replaceSelected(with input: String) {
         do {
             let ctx = try CursorContext.from(proxy: textDocumentProxy)
-            textDocumentProxy.adjustTextPosition(byCharacterOffset: ctx.current.1.count - Int(ctx.current.0))
+            textDocumentProxy.adjustTextPosition(byCharacterOffset: Int(ctx.current.0) - ctx.current.1.count)
 
             for _ in 0 ..< ctx.current.1.count {
                 deleteBackward()
