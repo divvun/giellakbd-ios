@@ -77,16 +77,6 @@ extension UIKeyboardAppearance: CustomDebugStringConvertible {
     }
 }
 
-extension String {
-    func suffix(after index: String.Index) -> String.SubSequence {
-        if index >= endIndex {
-            return suffix(from: endIndex)
-        }
-
-        return suffix(from: self.index(after: index))
-    }
-}
-
 extension Substring {
     func lastIndex(after character: Character) -> String.Index? {
         guard let index = self.lastIndex(of: character) else { return nil }
