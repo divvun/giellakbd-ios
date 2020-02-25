@@ -1,5 +1,5 @@
 PODS:
-  - DivvunSpell (0.2.2)
+  - DivvunSpell (0.2.3)
   - Sentry (4.4.3):
     - Sentry/Core (= 4.4.3)
   - Sentry/Core (4.4.3)
@@ -26,7 +26,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   DivvunSpell:
-    :commit: 9befb730aa9a37d0da61418b4e9e126f68fda15f
+    :commit: cdf852a9bae5ee9e6b63efce858f1f3990d86d2c
     :git: https://github.com/divvun/divvunspell-swift
     :submodules: true
   UIDeviceComplete:
@@ -34,7 +34,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/bbqsrc/UIDeviceComplete
 
 SPEC CHECKSUMS:
-  DivvunSpell: 39af7861c30c36b389fd10f523d61e7d99e0df4e
+  DivvunSpell: 0bfcaee6ab4c45ec6c0e827fd09523faf3c283bc
   Sentry: 14bdd673870e8cf64932b149fad5bbbf39a9b390
   SwiftLint: 55e96a4a4d537d4a3156859fc1c54bd24851a046
   UIDeviceComplete: 5654c8f59f25adf3b0ea876c2a0463dc64c49226
