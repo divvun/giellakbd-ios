@@ -15,7 +15,7 @@
 		9904409523FAC0C50063064E /* DisclosureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9904409423FAC0C50063064E /* DisclosureCell.swift */; };
 		9904409B23FBDC200063064E /* KeyboardLocales.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9904409A23FBDC200063064E /* KeyboardLocales.swift */; };
 		9904409D23FBE63F0063064E /* KeyboardLocalesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9904409C23FBE63F0063064E /* KeyboardLocalesViewController.swift */; };
-		990440A523FC14A30063064E /* HostingAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990440A423FC14A30063064E /* HostingAppTests.swift */; };
+		990440A523FC14A30063064E /* UserDictionaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990440A423FC14A30063064E /* UserDictionaryTests.swift */; };
 		990440AC23FC245D0063064E /* KeyboardLocales.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9904409A23FBDC200063064E /* KeyboardLocales.swift */; };
 		991EE55023D9AB4700DC3677 /* ViewDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991EE54F23D9AB4700DC3677 /* ViewDebugger.swift */; };
 		997550B623EAC631004ED6A5 /* UserDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997550B523EAC631004ED6A5 /* UserDictionary.swift */; };
@@ -162,7 +162,7 @@
 		9904409A23FBDC200063064E /* KeyboardLocales.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardLocales.swift; sourceTree = "<group>"; };
 		9904409C23FBE63F0063064E /* KeyboardLocalesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardLocalesViewController.swift; sourceTree = "<group>"; };
 		990440A223FC14A30063064E /* HostingAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HostingAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		990440A423FC14A30063064E /* HostingAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostingAppTests.swift; sourceTree = "<group>"; };
+		990440A423FC14A30063064E /* UserDictionaryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionaryTests.swift; sourceTree = "<group>"; };
 		990440A623FC14A30063064E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		991EE54F23D9AB4700DC3677 /* ViewDebugger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewDebugger.swift; sourceTree = "<group>"; };
 		997550B523EAC631004ED6A5 /* UserDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionary.swift; sourceTree = "<group>"; };
@@ -436,7 +436,7 @@
 		990440A323FC14A30063064E /* HostingAppTests */ = {
 			isa = PBXGroup;
 			children = (
-				990440A423FC14A30063064E /* HostingAppTests.swift */,
+				990440A423FC14A30063064E /* UserDictionaryTests.swift */,
 				990440A623FC14A30063064E /* Info.plist */,
 			);
 			path = HostingAppTests;
@@ -895,7 +895,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				990440A523FC14A30063064E /* HostingAppTests.swift in Sources */,
+				990440A523FC14A30063064E /* UserDictionaryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
