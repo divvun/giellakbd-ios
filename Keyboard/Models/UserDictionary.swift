@@ -204,6 +204,10 @@ public class UserDictionary {
         return words
     }
 
+    public func containsWord(_ word: String, locale: KeyboardLocale) -> Bool {
+        return fetchWord(word, locale: locale) != nil
+    }
+
     public func getContexts(for word: String, locale: KeyboardLocale) -> [WordContext] {
         guard let wordRow = fetchWord(word, locale: locale) else {
             return []

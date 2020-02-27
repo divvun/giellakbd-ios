@@ -195,4 +195,23 @@ class UserDictionaryTests: XCTestCase {
         let contexts = sut.getContexts(for: word, locale: defaultLocale)
         XCTAssertEqual(1, contexts.count)
     }
+
+    func test_contains_word_should_return_false_if_word_not_in_dicitonary() {
+        let sut = userDictionary
+        let word = "test"
+
+        let containsWord = sut.containsWord(word, locale: defaultLocale)
+
+        XCTAssertFalse(containsWord)
+    }
+
+    func test_contains_word_should_return_true_if_word_exists_in_dictionary() {
+        let sut = userDictionary
+        let word = "test"
+
+        sut.addWordManually(word, locale: defaultLocale)
+        let containsWord = sut.containsWord(word, locale: defaultLocale)
+
+        XCTAssertTrue(containsWord)
+    }
 }
