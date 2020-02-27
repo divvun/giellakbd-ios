@@ -10,8 +10,6 @@ class KeyOverlayView: UIView {
     let keyBoundsView: UIView
     private var shadowView: KeyOverlayShadowView?
 
-    private var path: CGPath!
-
     private lazy var keyFrameInLocalBounds: CGRect = {
         let superview = self.superview!
         let keyFrameInSuperview = keyView.convert(keyView.frame, to: superview)
@@ -104,8 +102,7 @@ class KeyOverlayView: UIView {
     override func draw(_: CGRect) {
         guard self.superview != nil else { return }
 
-        path = createPath()
-
+        let path = createPath()
         let bezier = UIBezierPath(cgPath: path)
 
         theme.popupColor.setFill()
