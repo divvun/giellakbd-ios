@@ -82,6 +82,18 @@ public class DivvunSpellBannerPlugin {
         return opQueue
     }()
 
+    public init(keyboard: KeyboardViewController) {
+        self.keyboard = keyboard
+
+        guard let bannerView = keyboard.bannerView else {
+            fatalError("No banner view found in DivvunSpellBannerPlugin init")
+        }
+        banner = bannerView
+
+        banner.delegate = self
+        loadBHFST()
+    }
+
     private func getPrimaryLanguage() -> String? {
         if let extensionInfo = Bundle.main.infoDictionary!["NSExtension"] as? [String: AnyObject] {
             if let attrs = extensionInfo["NSExtensionAttributes"] as? [String: AnyObject] {
@@ -129,17 +141,5 @@ public class DivvunSpellBannerPlugin {
             }
 
         }
-    }
-
-    public init(keyboard: KeyboardViewController) {
-        self.keyboard = keyboard
-
-        guard let bannerView = keyboard.bannerView else {
-            fatalError("No banner view found in DivvunSpellBannerPlugin init")
-        }
-        banner = bannerView
-
-        banner.delegate = self
-        loadBHFST()
     }
 }
