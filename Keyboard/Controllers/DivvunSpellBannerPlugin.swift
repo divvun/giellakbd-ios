@@ -23,8 +23,18 @@ class SuggestionOp: Operation {
         guard let plugin = self.plugin else { return }
         guard let speller = plugin.speller else { return }
 
-        let currentWord = BannerItem(title: "\"\(word)\"", value: word)
+        let suggestionItems = getSuggestionItems(for: word, from: speller)
 
+        if !isCancelled {
+            DispatchQueue.main.async {
+                plugin.banner.isHidden = false
+                plugin.banner.setBannerItems(suggestionItems)
+            }
+        }
+    }
+
+    private func getSuggestionItems(for word: String, from speller: Speller) -> [BannerItem] {
+        let currentWord = BannerItem(title: "\"\(word)\"", value: word)
         var suggestions = (try? speller
             .suggest(word: word)//, count: 3, maxWeight: 4999.99)
             .prefix(3)
@@ -34,14 +44,7 @@ class SuggestionOp: Operation {
         suggestions.removeAll { (bannerItem) -> Bool in
             bannerItem.value == word
         }
-
-        if !isCancelled {
-            DispatchQueue.main.async {
-                plugin.banner.isHidden = false
-                let items = [currentWord] + suggestions
-                plugin.banner.setBannerItems(items)
-            }
-        }
+        return [currentWord] + suggestions
     }
 
 }
