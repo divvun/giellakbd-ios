@@ -51,6 +51,8 @@ class SuggestionOp: Operation {
 
 extension DivvunSpellBannerPlugin: BannerViewDelegate {
     public func textInputDidChange(_ banner: BannerView, context: CursorContext) {
+        dictionaryDaemon?.updateContext(WordContext(cursorContext: context))
+
         if context.current.1 == "" {
             banner.setBannerItems([])
             return
@@ -73,6 +75,7 @@ public class DivvunSpellBannerPlugin {
     unowned let banner: BannerView
     unowned let keyboard: KeyboardViewController
 
+    private var dictionaryDaemon: UserDictionaryDaemon?
     fileprivate var archive: ThfstChunkedBoxSpellerArchive?
     fileprivate var speller: ThfstChunkedBoxSpeller? {
         return try? archive?.speller()
@@ -143,6 +146,16 @@ public class DivvunSpellBannerPlugin {
                 return
             }
 
+            do {
+                if let speller = try self.archive?.speller() {
+                    self.dictionaryDaemon = UserDictionaryDaemon(speller: speller)
+                }
+            } catch {
+                let error = Sentry.Event(level: .error)
+                Client.shared?.send(event: error, completion: nil)
+                print("DivvunSpell UserDictionaryDaemon **not** loaded.")
+                return
+            }
         }
     }
 }
