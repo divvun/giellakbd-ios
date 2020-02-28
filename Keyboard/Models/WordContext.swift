@@ -19,6 +19,19 @@ public struct WordContext: Equatable {
         self.secondAfter = secondAfter
     }
 
+    public func isContinuation(of context: WordContext) -> Bool {
+        guard context.secondBefore == self.secondBefore,
+            context.firstBefore == self.firstBefore,
+            context.firstAfter == self.firstAfter,
+            context.secondAfter == self.secondAfter else {
+                return false
+        }
+
+        let didAddSingleCharacter = self.word.dropLast() == context.word
+        let didDeleteSingleCharacter = context.word.dropLast() == self.word
+        return didAddSingleCharacter || didDeleteSingleCharacter
+    }
+
     public func contextAttributedString() -> NSAttributedString {
         var contextString = word
         if let firstBefore = firstBefore {
