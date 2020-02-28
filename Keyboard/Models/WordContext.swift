@@ -1,4 +1,5 @@
 import Foundation
+import DivvunSpell
 
 public struct WordContext: Equatable {
     let secondBefore: String?
@@ -17,6 +18,16 @@ public struct WordContext: Equatable {
         self.word = word
         self.firstAfter = firstAfter
         self.secondAfter = secondAfter
+    }
+
+    init(cursorContext: CursorContext) {
+        self.init(
+            secondBefore: cursorContext.secondBefore?.1,
+            firstBefore: cursorContext.firstBefore?.1,
+            word: cursorContext.current.1,
+            firstAfter: cursorContext.firstAfter?.1,
+            secondAfter: cursorContext.secondAfter?.1
+        )
     }
 
     public func isContinuation(of context: WordContext) -> Bool {
