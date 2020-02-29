@@ -45,11 +45,16 @@ public struct WordContext: Equatable {
 
     public func contextAttributedString() -> NSAttributedString {
         var contextString = word
+        var boldOffset = 0
         if let firstBefore = firstBefore {
-            contextString = firstBefore + " " + contextString
+            let prefix = firstBefore + " "
+            contextString = prefix + contextString
+            boldOffset += prefix.count
         }
         if let secondBefore = secondBefore {
-            contextString = secondBefore + " " + contextString
+            let prefix = secondBefore + " "
+            contextString = prefix + contextString
+            boldOffset += prefix.count
         }
         if let firstAfter = firstAfter {
             contextString += " " + firstAfter
@@ -58,6 +63,11 @@ public struct WordContext: Equatable {
             contextString += " " + secondAfter
         }
 
-        return contextString.bolden(substring: word)
+        let attr = NSMutableAttributedString(string: contextString)
+        let boldRange = NSRange(location: boldOffset, length: word.count)
+        attr.addAttribute(NSAttributedString.Key.font,
+                          value: UIFont.boldSystemFont(ofSize: UIFont.labelFontSize),
+                          range: boldRange)
+        return attr
     }
 }
