@@ -71,6 +71,88 @@ class UserDictionaryDaemonTests: XCTestCase {
         XCTAssertEqual("hi", contexts.first?.word)
     }
 
+    func test_word_before_and_after_context_should_replace_secondBefore_and_firstBefore_context() {
+        let sut = makeSUT()
+        let context1 = WordContext(secondBefore: "de", firstBefore: "ge", word: "hi")
+        let context2 = WordContext(secondBefore: "ge", firstBefore: "hi", word: "")
+        let context3 = WordContext(secondBefore: "ge", firstBefore: "hi", word: "ba")
+        let context4 = WordContext(secondBefore: "hi", firstBefore: "ba", word: "")
+
+        sut.updateContext(context1)
+        sut.updateContext(context2)
+        sut.updateContext(context3)
+        sut.updateContext(context4)
+
+        let contexts = userDictionary.getContexts(for: "hi", locale: defaultLocale)
+        XCTAssertEqual(1, contexts.count)
+        XCTAssertNil(contexts.first?.secondBefore)
+        XCTAssertEqual("ge", contexts.first?.firstBefore)
+        XCTAssertEqual("hi", contexts.first?.word)
+        XCTAssertEqual("ba", contexts.first?.firstAfter)
+        XCTAssertNil(contexts.first?.secondAfter)
+    }
+
+    func test_word_after_should_be_saved_when_typed_after_new_word() {
+        let sut = makeSUT()
+        let context1 = WordContext(word: "hi")
+        let context2 = WordContext(firstBefore: "hi", word: "ba")
+        let context3 = WordContext(secondBefore: "hi", firstBefore: "ba", word: "")
+
+        sut.updateContext(context1)
+        sut.updateContext(context2)
+        sut.updateContext(context3)
+
+        let contexts = userDictionary.getContexts(for: "hi", locale: defaultLocale)
+        XCTAssertEqual(1, contexts.count)
+        XCTAssertNil(contexts.first?.secondBefore)
+        XCTAssertNil(contexts.first?.firstBefore)
+        XCTAssertEqual("hi", contexts.first?.word)
+        XCTAssertEqual("ba", contexts.first?.firstAfter)
+        XCTAssertNil(contexts.first?.secondAfter)
+    }
+
+    func test_both_words_after_should_be_saved_when_typed_after_new_word() {
+        let sut = makeSUT()
+        let context1 = WordContext(word: "hi")
+        let context2 = WordContext(firstBefore: "hi", word: "ba")
+        let context3 = WordContext(secondBefore: "hi", firstBefore: "ba", word: "de")
+        let context4 = WordContext(secondBefore: "ba", firstBefore: "de", word: "")
+
+        sut.updateContext(context1)
+        sut.updateContext(context2)
+        sut.updateContext(context3)
+        sut.updateContext(context4)
+
+        let contexts = userDictionary.getContexts(for: "hi", locale: defaultLocale)
+        XCTAssertEqual(1, contexts.count)
+        XCTAssertNil(contexts.first?.secondBefore)
+        XCTAssertNil(contexts.first?.firstBefore)
+        XCTAssertEqual("hi", contexts.first?.word)
+        XCTAssertEqual("ba", contexts.first?.firstAfter)
+        XCTAssertEqual("de", contexts.first?.secondAfter)
+    }
+
+    func test_word_before_and_after_should_remain_after_entering_second_after_word() {
+        let sut = makeSUT()
+        let context1 = WordContext(firstBefore: "ge", word: "hi")
+        let context2 = WordContext(secondBefore: "ge", firstBefore: "hi", word: "ba")
+        let context3 = WordContext(secondBefore: "hi", firstBefore: "ba", word: "de")
+        let context4 = WordContext(secondBefore: "ba", firstBefore: "de", word: "")
+
+        sut.updateContext(context1)
+        sut.updateContext(context2)
+        sut.updateContext(context3)
+        sut.updateContext(context4)
+
+        let contexts = userDictionary.getContexts(for: "hi", locale: defaultLocale)
+        XCTAssertEqual(1, contexts.count)
+        XCTAssertNil(contexts.first?.secondBefore)
+        XCTAssertEqual("ge", contexts.first?.firstBefore)
+        XCTAssertEqual("hi", contexts.first?.word)
+        XCTAssertEqual("ba", contexts.first?.firstAfter)
+        XCTAssertNil(contexts.first?.secondAfter)
+    }
+
     private func makeSUT() -> UserDictionaryDaemon {
         let archive: ThfstChunkedBoxSpellerArchive
         guard let bundle = Bundle.top.url(forResource: "dicts", withExtension: "bundle") else {
