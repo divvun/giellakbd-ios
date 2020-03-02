@@ -31,6 +31,8 @@
 		99B94C6323E0501F0076A786 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 99B94C6523E0501F0076A786 /* Localizable.strings */; };
 		99DA18412408294A003E7353 /* WordContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA18402408294A003E7353 /* WordContextTests.swift */; };
 		99DA184424095AF0003E7353 /* UserDictionaryDaemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA184224095AD0003E7353 /* UserDictionaryDaemon.swift */; };
+		99DA1846240D09B5003E7353 /* UserDictionaryDaemonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA1845240D09B5003E7353 /* UserDictionaryDaemonTests.swift */; };
+		99DA1847240D1010003E7353 /* UserDictionaryDaemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA184224095AD0003E7353 /* UserDictionaryDaemon.swift */; };
 		99DD30F623E307430065E8D8 /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DD30F423E3059C0065E8D8 /* Audio.swift */; };
 		C4F4C9ADC86DC61F1F96D961 /* Pods_HostingApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8902A09E56DB03DDF4926837 /* Pods_HostingApp.framework */; };
 		C63EE0FF2361D86800A1E15A /* MenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63EE0FE2361D86800A1E15A /* MenuButton.swift */; };
@@ -183,6 +185,7 @@
 		99B94C6A23E0502E0076A786 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		99DA18402408294A003E7353 /* WordContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordContextTests.swift; sourceTree = "<group>"; };
 		99DA184224095AD0003E7353 /* UserDictionaryDaemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionaryDaemon.swift; sourceTree = "<group>"; };
+		99DA1845240D09B5003E7353 /* UserDictionaryDaemonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionaryDaemonTests.swift; sourceTree = "<group>"; };
 		99DD30F423E3059C0065E8D8 /* Audio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
 		B864D3FAC77DCC6C6E7798FF /* Pods-HostingAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HostingAppTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HostingAppTests/Pods-HostingAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		BDEC2FC4A98B67D1C339DCB0 /* Pods_HostingAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HostingAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -442,6 +445,7 @@
 			isa = PBXGroup;
 			children = (
 				990440A423FC14A30063064E /* UserDictionaryTests.swift */,
+				99DA1845240D09B5003E7353 /* UserDictionaryDaemonTests.swift */,
 				99DA18402408294A003E7353 /* WordContextTests.swift */,
 				990440A623FC14A30063064E /* Info.plist */,
 			);
@@ -724,10 +728,12 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-HostingAppTests/Pods-HostingAppTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/DivvunSpell/DivvunSpell.framework",
 				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DivvunSpell.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -876,6 +882,7 @@
 				4EF16F9B19D2550D0076AFCB /* AppDelegate.swift in Sources */,
 				C676AD5F1EC985EB00523FF3 /* Strings.swift in Sources */,
 				C655E85A1EC558D000B12BE4 /* HomeController.swift in Sources */,
+				99DA1847240D1010003E7353 /* UserDictionaryDaemon.swift in Sources */,
 				9904409223F84BDC0063064E /* SettingsViewController.swift in Sources */,
 				C6A2E01F1EDFAAA2006BAB69 /* AboutView.swift in Sources */,
 				9904409B23FBDC200063064E /* KeyboardLocales.swift in Sources */,
@@ -902,6 +909,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				990440A523FC14A30063064E /* UserDictionaryTests.swift in Sources */,
+				99DA1846240D09B5003E7353 /* UserDictionaryDaemonTests.swift in Sources */,
 				99DA18412408294A003E7353 /* WordContextTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

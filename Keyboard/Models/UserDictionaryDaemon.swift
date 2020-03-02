@@ -5,9 +5,11 @@ class UserDictionaryDaemon {
     private var previousContext: WordContext?
     private var currentContext: WordContext?
     private let userDictionary = UserDictionary()
+    private let locale: KeyboardLocale
 
-    init(speller: Speller) {
+    init(speller: Speller, locale: KeyboardLocale) {
         self.speller = speller
+        self.locale = locale
     }
 
     public func updateContext(_ context: WordContext) {
@@ -24,7 +26,7 @@ class UserDictionaryDaemon {
 
         if context.isContinuation(of: previous) == false,
             speller.contains(word: previous.word) == false {
-            userDictionary.add(context: previous, locale: KeyboardLocales.current)
+            userDictionary.add(context: previous, locale: locale)
             print("adding word: \(previous.word)")
         }
     }

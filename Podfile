@@ -18,6 +18,7 @@ end
 
 target 'HostingAppTests' do
   pod 'SQLite.swift', '~> 0.12.0'
+  pod 'DivvunSpell', :git => "https://github.com/divvun/divvunspell-swift", :submodules => true
 end
 
 post_install do |installer|

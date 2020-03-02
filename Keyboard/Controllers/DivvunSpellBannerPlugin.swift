@@ -148,7 +148,7 @@ public class DivvunSpellBannerPlugin {
 
             do {
                 if let speller = try self.archive?.speller() {
-                    self.dictionaryDaemon = UserDictionaryDaemon(speller: speller)
+                    self.dictionaryDaemon = UserDictionaryDaemon(speller: speller, locale: KeyboardLocales.current)
                 }
             } catch {
                 let error = Sentry.Event(level: .error)
