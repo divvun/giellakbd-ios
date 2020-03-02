@@ -43,6 +43,27 @@ class UserDictionaryDaemonTests: XCTestCase {
         XCTAssertEqual(1, contexts.count)
         XCTAssertEqual("hi", contexts.first?.word)
     }
+
+    func test_word_before_new_word_is_saved_in_context() {
+        let sut = makeSUT()
+        // "de" is a known word. It exists in the speller.
+        let initialContext = tryMakingWordContext(leftPart: "de hi", rightPart: "")
+        let finalContext = tryMakingWordContext(leftPart: "de hi ", rightPart: "")
+
+        sut.updateContext(initialContext)
+        sut.updateContext(finalContext)
+
+        let contexts = userDictionary.getContexts(for: "hi", locale: defaultLocale)
+        XCTAssertEqual("de", contexts.first?.firstBefore)
+    }
+
+    private func tryMakingWordContext(leftPart: String, rightPart: String) -> HostingApp.WordContext {
+        do {
+            let cursorContext = try CursorContext.from(leftPart: leftPart, rightPart: rightPart)
+            return WordContext(cursorContext: cursorContext)
+        } catch {
+            fatalError("Error creating cursor context from leftPart: \(leftPart), rightPart: \(rightPart). Error: \(error)")
+        }
     }
 
     private func makeSUT() -> UserDictionaryDaemon {
