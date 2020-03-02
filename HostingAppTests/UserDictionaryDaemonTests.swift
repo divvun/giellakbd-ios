@@ -22,11 +22,27 @@ class UserDictionaryDaemonTests: XCTestCase {
 
         sut.updateContext(WordContext(word: "hi"))
         sut.updateContext(WordContext(firstBefore: "hi", word: ""))
-        
+
         let words = userDictionary.getUserWords(locale: defaultLocale)
+        let contexts = userDictionary.getContexts(for: "hi", locale: defaultLocale)
 
         XCTAssertEqual(1, words.count)
         XCTAssertEqual("hi", words.first)
+        XCTAssertEqual(2, contexts.count)
+        XCTAssertEqual("hi", contexts.first?.word)
+    }
+
+    func test_adding_space_after_new_word_should_save_context_to_dictionary() {
+        let sut = makeSUT()
+
+        sut.updateContext(WordContext(word: "hi"))
+        sut.updateContext(WordContext(firstBefore: "hi", word: ""))
+
+        let contexts = userDictionary.getContexts(for: "hi", locale: defaultLocale)
+
+        XCTAssertEqual(1, contexts.count)
+        XCTAssertEqual("hi", contexts.first?.word)
+    }
     }
 
     private func makeSUT() -> UserDictionaryDaemon {
