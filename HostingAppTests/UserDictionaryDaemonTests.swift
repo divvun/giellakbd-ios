@@ -44,7 +44,7 @@ class UserDictionaryDaemonTests: XCTestCase {
         XCTAssertEqual("hi", contexts.first?.word)
     }
 
-    func test_word_before_new_word_is_saved_in_context() {
+    func test_word_before_new_word_should_be_saved_in_context() {
         let sut = makeSUT()
         let initialContext = WordContext(firstBefore: "de", word: "hi")
         let finalContext = WordContext(secondBefore: "de", firstBefore: "hi", word: "")
@@ -54,6 +54,21 @@ class UserDictionaryDaemonTests: XCTestCase {
 
         let contexts = userDictionary.getContexts(for: "hi", locale: defaultLocale)
         XCTAssertEqual("de", contexts.first?.firstBefore)
+        XCTAssertEqual("hi", contexts.first?.word)
+    }
+
+    func test_both_words_before_new_word_should_be_saved_in_context() {
+        let sut = makeSUT()
+        let initialContext = WordContext(secondBefore: "de", firstBefore: "ge", word: "hi")
+        let finalContext = WordContext(secondBefore: "ge", firstBefore: "hi", word: "")
+
+        sut.updateContext(initialContext)
+        sut.updateContext(finalContext)
+
+        let contexts = userDictionary.getContexts(for: "hi", locale: defaultLocale)
+        XCTAssertEqual("de", contexts.first?.secondBefore)
+        XCTAssertEqual("ge", contexts.first?.firstBefore)
+        XCTAssertEqual("hi", contexts.first?.word)
     }
 
     private func makeSUT() -> UserDictionaryDaemon {
