@@ -26,7 +26,6 @@ class UserDictionaryDaemon {
     }
 
     private func saveOrUpdateContextIfNeeded() {
-
         guard let saveCandidateContext = previousContext,
             let context = currentContext else {
             return
@@ -36,18 +35,32 @@ class UserDictionaryDaemon {
             return
         }
 
-        if let lastSavedContext = lastSavedContext,
-            saveCandidateContext.isLeftShiftedVariationOf(lastSavedContext),
-            let combinedContext = lastSavedContext.adding(context: saveCandidateContext),
-            combinedContext.isMoreDesirableThan(lastSavedContext),
-            let lastSavedContextId = lastSavedContextId {
-            userDictionary.updateContext(contextId: lastSavedContextId, newContext: combinedContext, locale: locale)
-            self.lastSavedContext = combinedContext
-        } else if speller.contains(word: saveCandidateContext.word) == false {
+        let didUpdateLastContext = updateLastContextIfNeeded(with: saveCandidateContext)
+        guard didUpdateLastContext == false else {
+            return
+        }
+
+        if speller.contains(word: saveCandidateContext.word) == false {
             lastSavedContextId = userDictionary.add(context: saveCandidateContext, locale: locale)
             lastSavedContext = saveCandidateContext
         }
     }
+
+    private func updateLastContextIfNeeded(with saveCandidate: WordContext) -> Bool {
+        guard let lastSavedContext = lastSavedContext,
+            saveCandidate.isLeftShiftedVariationOf(lastSavedContext),
+            let combinedContext = lastSavedContext.adding(context: saveCandidate),
+            combinedContext.isMoreDesirableThan(lastSavedContext),
+            let lastSavedContextId = lastSavedContextId else {
+                return false
+        }
+
+        userDictionary.updateContext(contextId: lastSavedContextId, newContext: combinedContext, locale: locale)
+        self.lastSavedContext = combinedContext
+
+        return true
+    }
+
 }
 
 extension Speller {
