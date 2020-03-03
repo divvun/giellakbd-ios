@@ -81,7 +81,8 @@ public class UserDictionary {
         add(context: WordContext(word: word), locale: locale)
     }
 
-    public func add(context: WordContext, locale: KeyboardLocale) {
+    @discardableResult
+    public func add(context: WordContext, locale: KeyboardLocale) -> Int64 {
         validateContext(context)
 
         let word = context.word
@@ -96,7 +97,7 @@ public class UserDictionary {
             wordId = insertWordCandidate(word: word, locale: locale)
         }
 
-        insertContext(context, for: wordId)
+        return insertContext(context, for: wordId)
     }
 
     public func removeWord(_ word: String, locale: KeyboardLocale) {
@@ -176,7 +177,8 @@ public class UserDictionary {
         }
     }
 
-    private func insertContext(_ context: WordContext, for wordId: Int64) {
+    @discardableResult
+    private func insertContext(_ context: WordContext, for wordId: Int64) -> Int64 {
         let insert = ContextTable.table.insert(
             ContextTable.wordId <- wordId,
             ContextTable.secondBefore <- context.secondBefore,
@@ -185,7 +187,7 @@ public class UserDictionary {
             ContextTable.secondAfter <- context.secondAfter
         )
         do {
-            try database.run(insert)
+            return try database.run(insert)
         } catch {
             fatalError("Error inserting context into database: \(error)")
         }

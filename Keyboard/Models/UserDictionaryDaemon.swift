@@ -4,6 +4,8 @@ class UserDictionaryDaemon {
     private let speller: Speller
     private var previousContext: WordContext?
     private var currentContext: WordContext?
+    private var lastSavedContext: WordContext?
+    private var lastSavedContextId: Int64?
     private let userDictionary = UserDictionary()
     private let locale: KeyboardLocale
 
@@ -20,14 +22,30 @@ class UserDictionaryDaemon {
         previousContext = currentContext
         currentContext = context
 
-        guard let previous = previousContext else {
+        saveOrUpdateContextIfNeeded()
+    }
+
+    private func saveOrUpdateContextIfNeeded() {
+
+        guard let saveCandidateContext = previousContext,
+            let context = currentContext else {
             return
         }
 
-        if context.isContinuation(of: previous) == false,
-            speller.contains(word: previous.word) == false {
-            userDictionary.add(context: previous, locale: locale)
-            print("adding word: \(previous.word)")
+        guard context.isContinuation(of: saveCandidateContext) == false else {
+            return
+        }
+
+        if let lastSavedContext = lastSavedContext,
+            saveCandidateContext.isLeftShiftedVariationOf(lastSavedContext),
+            let combinedContext = lastSavedContext.adding(context: saveCandidateContext),
+            combinedContext.isMoreDesirableThan(lastSavedContext),
+            let lastSavedContextId = lastSavedContextId {
+            userDictionary.updateContext(contextId: lastSavedContextId, newContext: combinedContext, locale: locale)
+            self.lastSavedContext = combinedContext
+        } else if speller.contains(word: saveCandidateContext.word) == false {
+            lastSavedContextId = userDictionary.add(context: saveCandidateContext, locale: locale)
+            lastSavedContext = saveCandidateContext
         }
     }
 }

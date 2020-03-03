@@ -8,6 +8,19 @@ public struct WordContext: Equatable {
     let firstAfter: String?
     let secondAfter: String?
 
+    private var desirabilityScore: UInt {
+        if firstBefore != nil && firstAfter != nil {
+            return 3
+        } else if firstBefore != nil && secondBefore != nil
+            || firstAfter != nil && secondAfter != nil {
+            return 2
+        } else if firstBefore != nil || firstAfter != nil {
+            return 1
+        } else {
+            return 0
+        }
+    }
+
     init(secondBefore: String? = nil,
          firstBefore: String? = nil,
          word: String,
@@ -45,6 +58,23 @@ public struct WordContext: Equatable {
 
     func isLeftShiftedVariationOf(_ context: WordContext) -> Bool {
         return self.secondBefore == context.firstBefore && self.firstBefore == context.word
+    }
+
+    public func isMoreDesirableThan(_ context: WordContext) -> Bool {
+        return self.desirabilityScore > context.desirabilityScore
+    }
+
+    public func adding(context: WordContext) -> WordContext? {
+        // Currently only support left-shifted contexts
+        if context.isLeftShiftedVariationOf(self) {
+            return WordContext(secondBefore: self.secondBefore,
+                               firstBefore: self.firstBefore,
+                               word: self.word,
+                               firstAfter: context.word,
+                               secondAfter: context.firstAfter)
+        }
+
+        return nil
     }
 
     public func contextAttributedString() -> NSAttributedString {
