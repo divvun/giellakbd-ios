@@ -85,7 +85,7 @@ class UserDictionaryDaemonTests: XCTestCase {
 
         let contexts = userDictionary.getContexts(for: "hi", locale: defaultLocale)
         XCTAssertEqual(1, contexts.count)
-        XCTAssertNil(contexts.first?.secondBefore)
+        XCTAssertEqual("de", contexts.first?.secondBefore) // this could arguably be nil
         XCTAssertEqual("ge", contexts.first?.firstBefore)
         XCTAssertEqual("hi", contexts.first?.word)
         XCTAssertEqual("ba", contexts.first?.firstAfter)

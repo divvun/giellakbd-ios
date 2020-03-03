@@ -70,11 +70,18 @@ public struct WordContext: Equatable {
             return WordContext(secondBefore: self.secondBefore,
                                firstBefore: self.firstBefore,
                                word: self.word,
-                               firstAfter: context.word,
-                               secondAfter: context.firstAfter)
+                               firstAfter: nonEmptyStringOrNil(context.word),
+                               secondAfter: nonEmptyStringOrNil(context.firstAfter))
         }
 
         return nil
+    }
+
+    private func nonEmptyStringOrNil(_ string: String?) -> String? {
+        guard let string = string else {
+            return nil
+        }
+        return string.isEmpty ? nil : string
     }
 
     public func contextAttributedString() -> NSAttributedString {
