@@ -133,6 +133,11 @@ public class UserDictionary {
         return row
     }
 
+    private func fetchContext(contextId: Int64) -> SQLite.Row? {
+        let query = ContextTable.table.filter(ContextTable.id == contextId)
+        return try? database.pluck(query)
+    }
+
     private func updateWordState(id: Int64, state: WordState) {
         do {
             let word = WordTable.table.filter(WordTable.id == id)
@@ -183,6 +188,28 @@ public class UserDictionary {
             try database.run(insert)
         } catch {
             fatalError("Error inserting context into database: \(error)")
+        }
+    }
+
+    @discardableResult
+    public func updateContext(contextId: Int64, newContext: WordContext, locale: KeyboardLocale) -> Bool {
+        guard let wordRow = fetchWord(newContext.word, locale: locale),
+            let contextRow = fetchContext(contextId: contextId),
+            contextRow[ContextTable.wordId] == wordRow[WordTable.id] else {
+                return false
+        }
+        
+        do {
+            let oldContext = ContextTable.table.filter(ContextTable.id == contextId)
+            let update = oldContext.update(
+                ContextTable.secondBefore <- newContext.secondBefore,
+                ContextTable.firstBefore <- newContext.firstBefore,
+                ContextTable.firstAfter <- newContext.firstAfter,
+                ContextTable.secondAfter <- newContext.secondAfter
+            )
+            return try database.run(update) > 0
+        } catch {
+            fatalError("Error updating context: \(error)")
         }
     }
 

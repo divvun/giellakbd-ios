@@ -214,4 +214,32 @@ class UserDictionaryTests: XCTestCase {
 
         XCTAssertTrue(containsWord)
     }
+
+    func test_update_context_should_update_context() {
+        let sut = userDictionary
+
+        let context1 = WordContext(secondBefore: "hi", firstBefore: "hello", word: "test")
+        let context2 = WordContext(word: "test", firstAfter: "foo", secondAfter: "bar")
+        let contextId = sut.add(context: context1, locale: defaultLocale)
+        let success = sut.updateContext(contextId: contextId, newContext: context2, locale: defaultLocale)
+
+        let contexts = sut.getContexts(for: "test", locale: defaultLocale)
+        XCTAssertTrue(success)
+        XCTAssertEqual(1, contexts.count)
+        XCTAssertEqual(context2, contexts.first)
+    }
+
+    func test_upate_context_should_do_nothing_if_user_words_do_not_match() {
+        let sut = userDictionary
+
+        let context1 = WordContext(secondBefore: "hi", firstBefore: "hello", word: "test")
+        let context2 = WordContext(word: "OTHERWORD", firstAfter: "foo", secondAfter: "bar")
+        let contextId = sut.add(context: context1, locale: defaultLocale)
+        let success = sut.updateContext(contextId: contextId, newContext: context2, locale: defaultLocale)
+
+        let contexts = sut.getContexts(for: "test", locale: defaultLocale)
+        XCTAssertFalse(success)
+        XCTAssertEqual(1, contexts.count)
+        XCTAssertEqual(context1, contexts.first)
+    }
 }
