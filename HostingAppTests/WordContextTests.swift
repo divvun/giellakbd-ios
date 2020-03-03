@@ -36,4 +36,12 @@ class WordContextTests: XCTestCase {
         XCTAssertTrue(WordContext(secondBefore: "hi", firstBefore: "test", word: "foo")
             .isLeftShiftedVariationOf(WordContext(secondBefore: "hey", firstBefore: "hi", word: "test")))
     }
+
+    func test_combining_contexts_should_work() {
+        let context1 = WordContext(secondBefore: "hi", firstBefore: "hello", word: "test")
+        let context2 = WordContext(secondBefore: "hello", firstBefore: "test", word: "new")
+        let expected = WordContext(secondBefore: "hi", firstBefore: "hello", word: "test", firstAfter: "new")
+        XCTAssertEqual(expected, context1.adding(context: context2))
+    }
+
 }
