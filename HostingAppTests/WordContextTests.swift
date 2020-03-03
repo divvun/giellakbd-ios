@@ -27,4 +27,13 @@ class WordContextTests: XCTestCase {
         continuation = WordContext(word: "testing")
         XCTAssertFalse(continuation.isContinuation(of: initial))
     }
+
+    func test_is_left_shifted_variation_of_should_return_true_when_context_is_equal_but_shifted() {
+        XCTAssertTrue(WordContext(firstBefore: "hi", word: "test")
+            .isLeftShiftedVariationOf(WordContext(word: "hi")))
+        XCTAssertTrue(WordContext(secondBefore: "hey", firstBefore: "hi", word: "test")
+            .isLeftShiftedVariationOf(WordContext(firstBefore: "hey", word: "hi")))
+        XCTAssertTrue(WordContext(secondBefore: "hi", firstBefore: "test", word: "foo")
+            .isLeftShiftedVariationOf(WordContext(secondBefore: "hey", firstBefore: "hi", word: "test")))
+    }
 }

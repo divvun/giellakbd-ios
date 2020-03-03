@@ -43,6 +43,10 @@ public struct WordContext: Equatable {
         return didAddSingleCharacter || didDeleteSingleCharacter
     }
 
+    func isLeftShiftedVariationOf(_ context: WordContext) -> Bool {
+        return self.secondBefore == context.firstBefore && self.firstBefore == context.word
+    }
+
     public func contextAttributedString() -> NSAttributedString {
         var contextString = word
         var boldOffset = 0
