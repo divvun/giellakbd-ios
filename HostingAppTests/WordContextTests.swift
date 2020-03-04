@@ -32,11 +32,20 @@ class WordContextTests: XCTestCase {
         let context1 = WordContext(word: "hi")
         let context1Shifted = WordContext(firstBefore: "hi", word: "test")
 
+        XCTAssertTrue(context1.isVariationOf(context1Shifted))
+        XCTAssertTrue(context1Shifted.isVariationOf(context1))
+
         let context2 = WordContext(word: "hi", firstAfter: "ba")
         let context2Shifted = WordContext(secondBefore: "hi", firstBefore: "ba", word: "de")
 
+        XCTAssertTrue(context2.isVariationOf(context2Shifted))
+        XCTAssertTrue(context2Shifted.isVariationOf(context2))
+
         let context3 = WordContext(word: "hi", firstAfter: "ba", secondAfter: "de")
         let context3Shifted = WordContext(secondBefore: "hi", firstBefore: "ba", word: "de")
+
+        XCTAssertTrue(context3.isVariationOf(context3Shifted))
+        XCTAssertTrue(context3Shifted.isVariationOf(context3))
     }
 
     func test_is_left_shifted_variation_of_should_return_true_when_context_is_equal_but_shifted() {

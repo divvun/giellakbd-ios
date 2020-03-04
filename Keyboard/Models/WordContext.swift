@@ -10,6 +10,10 @@ public struct WordContext: Equatable {
 
     private var words: [String?]
 
+    private var nonNilWords: [String] {
+        words.compactMap { $0 }
+    }
+
     private var desirabilityScore: UInt {
         if firstBefore != nil && firstAfter != nil {
             return 3
@@ -61,23 +65,25 @@ public struct WordContext: Equatable {
     }
 
     func isVariationOf(_ other: WordContext) -> Bool {
-        let numWordsDifference = abs(self.words.count - other.words.count)
+        let words = self.nonNilWords
+        let otherWords = other.nonNilWords
+        let numWordsDifference = abs(words.count - otherWords.count)
         guard numWordsDifference <= 1 else {
             return false
         }
 
-        let loopLength = min(self.words.count, other.words.count)
+        let loopLength = min(words.count, otherWords.count)
         var offset = 0
         var otherOffset = 0
-        if words[0] == other.words[1] {
-            offset = 1
-        } else if words[1] == other.words[0] {
+        if otherWords.count > 1, words[0] == otherWords[1] {
             otherOffset = 1
+        } else if words.count > 1, words[1] == otherWords[0] {
+            offset = 1
         }
 
-        for i in 0..<loopLength {
+        for i in 0 ..< loopLength {
             // swiftlint:disable:next for_where
-            if words[i + offset] != other.words[i + otherOffset] {
+            if words[i + offset] != otherWords[i + otherOffset] {
                 return false
             }
         }
