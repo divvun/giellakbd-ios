@@ -28,7 +28,7 @@ public class UserDictionary {
     }
 
     private lazy var dbFilePath: String = {
-        let groupId = "group.no.divvun.GiellaKeyboardDylan"
+        let groupId = KeyboardSettings.groupId
         let dbFileName = "userDictionary.sqlite3"
 
         guard let groupUrl = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupId) else {
