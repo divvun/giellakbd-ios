@@ -47,16 +47,16 @@ public struct WordContext: Equatable {
         )
     }
 
-    public func isContinuation(of context: WordContext) -> Bool {
-        guard context.secondBefore == self.secondBefore,
-            context.firstBefore == self.firstBefore,
-            context.firstAfter == self.firstAfter,
-            context.secondAfter == self.secondAfter else {
+    public func isContinuation(of other: WordContext) -> Bool {
+        guard other.secondBefore == self.secondBefore,
+            other.firstBefore == self.firstBefore,
+            other.firstAfter == self.firstAfter,
+            other.secondAfter == self.secondAfter else {
                 return false
         }
 
-        let didAddSingleCharacter = self.word.dropLast() == context.word
-        let didDeleteSingleCharacter = context.word.dropLast() == self.word
+        let didAddSingleCharacter = self.word.dropLast() == other.word
+        let didDeleteSingleCharacter = other.word.dropLast() == self.word
         return didAddSingleCharacter || didDeleteSingleCharacter
     }
 
@@ -85,12 +85,12 @@ public struct WordContext: Equatable {
         return true
     }
 
-    func isLeftShiftedVariationOf(_ context: WordContext) -> Bool {
-        return self.secondBefore == context.firstBefore && self.firstBefore == context.word
+    func isLeftShiftedVariationOf(_ other: WordContext) -> Bool {
+        return self.secondBefore == other.firstBefore && self.firstBefore == other.word
     }
 
-    public func isMoreDesirableThan(_ context: WordContext) -> Bool {
-        return self.desirabilityScore > context.desirabilityScore
+    public func isMoreDesirableThan(_ other: WordContext) -> Bool {
+        return self.desirabilityScore > other.desirabilityScore
     }
 
     public func adding(context: WordContext) -> WordContext? {
