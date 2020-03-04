@@ -48,10 +48,12 @@ class UserDictionaryDaemon {
 
     private func updateLastContextIfNeeded(with saveCandidate: WordContext) -> Bool {
         guard let lastSavedContext = lastSavedContext,
-            saveCandidate.isLeftShiftedVariationOf(lastSavedContext),
-            let combinedContext = lastSavedContext.adding(context: saveCandidate),
-            combinedContext.isMoreDesirableThan(lastSavedContext),
             let lastSavedContextId = lastSavedContextId else {
+                return false
+        }
+
+        guard let combinedContext = lastSavedContext.adding(context: saveCandidate),
+            combinedContext.isMoreDesirableThan(lastSavedContext) else {
                 return false
         }
 

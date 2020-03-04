@@ -64,6 +64,8 @@ public struct WordContext: Equatable {
         return didAddSingleCharacter || didDeleteSingleCharacter
     }
 
+    // This method is not currently used.
+    // Leaving because it will be useful if we find that variation determination needs to be more dynamic.
     func isVariationOf(_ other: WordContext) -> Bool {
         let words = self.nonNilWords
         let otherWords = other.nonNilWords
@@ -95,18 +97,27 @@ public struct WordContext: Equatable {
         return self.secondBefore == other.firstBefore && self.firstBefore == other.word
     }
 
+    func isTwiceLeftShiftedVariationOf(_ other: WordContext) -> Bool {
+        return self.secondBefore == other.word && self.firstBefore == other.firstAfter
+    }
+
     public func isMoreDesirableThan(_ other: WordContext) -> Bool {
         return self.desirabilityScore > other.desirabilityScore
     }
 
     public func adding(context: WordContext) -> WordContext? {
-        // Currently only support left-shifted contexts
         if context.isLeftShiftedVariationOf(self) {
             return WordContext(secondBefore: self.secondBefore,
                                firstBefore: self.firstBefore,
                                word: self.word,
                                firstAfter: nonEmptyStringOrNil(context.word),
                                secondAfter: nonEmptyStringOrNil(context.firstAfter))
+        } else if context.isTwiceLeftShiftedVariationOf(self) {
+            return WordContext(secondBefore: self.secondBefore,
+                               firstBefore: self.firstBefore,
+                               word: self.word,
+                               firstAfter: nonEmptyStringOrNil(context.firstBefore),
+                               secondAfter: nonEmptyStringOrNil(context.word))
         }
 
         return nil
