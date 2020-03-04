@@ -2,11 +2,13 @@ import Foundation
 import DivvunSpell
 
 public struct WordContext: Equatable {
-    let secondBefore: String?
-    let firstBefore: String?
-    let word: String
-    let firstAfter: String?
-    let secondAfter: String?
+    var secondBefore: String? { words[0] }
+    var firstBefore: String? { words[1]}
+    var word: String { words[2]! }
+    var firstAfter: String? { words[3] }
+    var secondAfter: String? {words[4] }
+
+    private var words: [String?]
 
     private var desirabilityScore: UInt {
         if firstBefore != nil && firstAfter != nil {
@@ -21,37 +23,18 @@ public struct WordContext: Equatable {
         }
     }
 
-    private var wordsArray: [String] {
-        var words: [String] = []
-        if let secondBefore = secondBefore {
-            words.append(secondBefore)
-        }
-        if let firstBefore = firstBefore {
-            words.append(firstBefore)
-        }
-
-        words.append(word)
-
-        if let firstAfter = firstAfter {
-            words.append(firstAfter)
-        }
-        if let secondAfter = secondAfter {
-            words.append(secondAfter)
-        }
-
-        return words
-    }
-
     init(secondBefore: String? = nil,
          firstBefore: String? = nil,
          word: String,
          firstAfter: String? = nil,
          secondAfter: String? = nil) {
-        self.secondBefore = secondBefore
-        self.firstBefore = firstBefore
-        self.word = word
-        self.firstAfter = firstAfter
-        self.secondAfter = secondAfter
+        words = [
+            secondBefore,
+            firstBefore,
+            word,
+            firstAfter,
+            secondAfter
+        ]
     }
 
     init(cursorContext: CursorContext) {
@@ -77,26 +60,24 @@ public struct WordContext: Equatable {
         return didAddSingleCharacter || didDeleteSingleCharacter
     }
 
-    func isVariationOf(_ context: WordContext) -> Bool {
-        let words = wordsArray
-        let otherWords = context.wordsArray
-        let numWordsDifference = abs(words.count - otherWords.count)
+    func isVariationOf(_ other: WordContext) -> Bool {
+        let numWordsDifference = abs(self.words.count - other.words.count)
         guard numWordsDifference <= 1 else {
             return false
         }
 
-        let loopLength = min(words.count, otherWords.count)
+        let loopLength = min(self.words.count, other.words.count)
         var offset = 0
         var otherOffset = 0
-        if words[0] == otherWords[1] {
+        if words[0] == other.words[1] {
             offset = 1
-        } else if words[1] == otherWords[0] {
+        } else if words[1] == other.words[0] {
             otherOffset = 1
         }
 
         for i in 0..<loopLength {
             // swiftlint:disable:next for_where
-            if words[i + offset] != otherWords[i + otherOffset] {
+            if words[i + offset] != other.words[i + otherOffset] {
                 return false
             }
         }
