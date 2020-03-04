@@ -21,6 +21,27 @@ public struct WordContext: Equatable {
         }
     }
 
+    private var wordsArray: [String] {
+        var words: [String] = []
+        if let secondBefore = secondBefore {
+            words.append(secondBefore)
+        }
+        if let firstBefore = firstBefore {
+            words.append(firstBefore)
+        }
+
+        words.append(word)
+
+        if let firstAfter = firstAfter {
+            words.append(firstAfter)
+        }
+        if let secondAfter = secondAfter {
+            words.append(secondAfter)
+        }
+
+        return words
+    }
+
     init(secondBefore: String? = nil,
          firstBefore: String? = nil,
          word: String,
@@ -54,6 +75,33 @@ public struct WordContext: Equatable {
         let didAddSingleCharacter = self.word.dropLast() == context.word
         let didDeleteSingleCharacter = context.word.dropLast() == self.word
         return didAddSingleCharacter || didDeleteSingleCharacter
+    }
+
+    func isVariationOf(_ context: WordContext) -> Bool {
+        let words = wordsArray
+        let otherWords = context.wordsArray
+        let numWordsDifference = abs(words.count - otherWords.count)
+        guard numWordsDifference <= 1 else {
+            return false
+        }
+
+        let loopLength = min(words.count, otherWords.count)
+        var offset = 0
+        var otherOffset = 0
+        if words[0] == otherWords[1] {
+            offset = 1
+        } else if words[1] == otherWords[0] {
+            otherOffset = 1
+        }
+
+        for i in 0..<loopLength {
+            // swiftlint:disable:next for_where
+            if words[i + offset] != otherWords[i + otherOffset] {
+                return false
+            }
+        }
+
+        return true
     }
 
     func isLeftShiftedVariationOf(_ context: WordContext) -> Bool {

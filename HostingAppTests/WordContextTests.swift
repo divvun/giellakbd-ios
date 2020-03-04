@@ -28,6 +28,17 @@ class WordContextTests: XCTestCase {
         XCTAssertFalse(continuation.isContinuation(of: initial))
     }
 
+    func test_is_variation_of_should_return_true_when_contexts_are_same_but_shifted_plus_or_minus_word() {
+        let context1 = WordContext(word: "hi")
+        let context1Shifted = WordContext(firstBefore: "hi", word: "test")
+
+        let context2 = WordContext(word: "hi", firstAfter: "ba")
+        let context2Shifted = WordContext(secondBefore: "hi", firstBefore: "ba", word: "de")
+
+        let context3 = WordContext(word: "hi", firstAfter: "ba", secondAfter: "de")
+        let context3Shifted = WordContext(secondBefore: "hi", firstBefore: "ba", word: "de")
+    }
+
     func test_is_left_shifted_variation_of_should_return_true_when_context_is_equal_but_shifted() {
         let context1 = WordContext(word: "hi")
         let context1Shifted = WordContext(firstBefore: "hi", word: "test")
