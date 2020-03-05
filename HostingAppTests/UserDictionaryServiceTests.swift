@@ -153,7 +153,7 @@ class UserDictionaryDaemonTests: XCTestCase {
         XCTAssertNil(contexts.first?.secondAfter)
     }
 
-    private func makeSUT() -> UserDictionaryDaemon {
+    private func makeSUT() -> UserDictionaryService {
         let archive: ThfstChunkedBoxSpellerArchive
         guard let bundle = Bundle.top.url(forResource: "dicts", withExtension: "bundle") else {
             fatalError("No dict bundle found; BHFST not loaded.")
@@ -177,7 +177,7 @@ class UserDictionaryDaemonTests: XCTestCase {
 
         do {
             let speller = try archive.speller()
-            return UserDictionaryDaemon(speller: speller, locale: defaultLocale)
+            return UserDictionaryService(speller: speller, locale: defaultLocale)
         } catch {
             fatalError("DivvunSpell UserDictionaryDaemon **not** loaded.")
         }

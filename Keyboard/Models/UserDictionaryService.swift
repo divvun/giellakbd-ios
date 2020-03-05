@@ -1,6 +1,6 @@
 import DivvunSpell
 
-class UserDictionaryDaemon {
+class UserDictionaryService {
     private let speller: Speller
     private var previousContext: WordContext?
     private var currentContext: WordContext?

@@ -75,7 +75,7 @@ public class DivvunSpellBannerPlugin {
     unowned let banner: BannerView
     unowned let keyboard: KeyboardViewController
 
-    private var dictionaryDaemon: UserDictionaryDaemon?
+    private var dictionaryDaemon: UserDictionaryService?
     fileprivate var archive: ThfstChunkedBoxSpellerArchive?
     fileprivate var speller: ThfstChunkedBoxSpeller? {
         return try? archive?.speller()
@@ -148,7 +148,7 @@ public class DivvunSpellBannerPlugin {
 
             do {
                 if let speller = try self.archive?.speller() {
-                    self.dictionaryDaemon = UserDictionaryDaemon(speller: speller, locale: KeyboardLocales.current)
+                    self.dictionaryDaemon = UserDictionaryService(speller: speller, locale: KeyboardLocales.current)
                 }
             } catch {
                 let error = Sentry.Event(level: .error)
