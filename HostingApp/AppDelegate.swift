@@ -78,18 +78,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    func applicationWillResignActive(_: UIApplication) {}
-
-    func applicationDidEnterBackground(_: UIApplication) {}
-
     func applicationWillEnterForeground(_: UIApplication) {
         // I'd gladly use .NSExtensionHostWillEnterForeground but it doesn't work
         NotificationCenter.default.post(Notification(name: .HostingAppEnteredForeground))
     }
-
-    func applicationDidBecomeActive(_: UIApplication) {}
-
-    func applicationWillTerminate(_: UIApplication) {}
 
     func parseUrl(_: URL) {
         guard Bundle.main.bundleIdentifier != nil else {
