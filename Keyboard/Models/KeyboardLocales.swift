@@ -6,13 +6,23 @@ public struct KeyboardLocale {
 }
 
 final class KeyboardLocales {
+    private static var plugInBundles: [Bundle] = {
+        do {
+            guard let pluginsPath = Bundle.main.resourceURL?.appendingPathComponent("PlugIns") else {
+                return []
+            }
+            return try FileManager.default.contentsOfDirectory(at: pluginsPath, includingPropertiesForKeys: .none, options: [])
+                .compactMap {
+                    Bundle(url: $0)
+                }
+        } catch {
+            fatalError("Error getting plugin bundles: \(error)")
+        }
+    }()
+
     static var allLocales: [KeyboardLocale] {
         var locales: [KeyboardLocale] = []
-        let appexBundles = Bundle.allBundles.filter({ (bundle) -> Bool in
-            bundle.bundleURL.pathExtension == "appex"
-        })
-
-        for bundle in appexBundles {
+        for bundle in plugInBundles {
             if let locale = localeFromBundle(bundle) {
                 locales.append(locale)
             }
