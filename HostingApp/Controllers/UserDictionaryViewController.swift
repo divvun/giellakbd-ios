@@ -21,9 +21,21 @@ class UserDictionaryViewController: ViewController<UserDictionaryView> {
         fatalError("init(coder:) has not been implemented")
     }
 
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(willEnterForeground),
+                                               name: .HostingAppEnteredForeground, object: nil)
+    }
+
+    @objc private func willEnterForeground() {
+        self.tableView.reloadData()
+        updateEmptyStateView()
     }
 
     override func viewWillAppear(_ animated: Bool) {

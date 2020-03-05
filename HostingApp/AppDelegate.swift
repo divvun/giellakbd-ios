@@ -82,7 +82,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidEnterBackground(_: UIApplication) {}
 
-    func applicationWillEnterForeground(_: UIApplication) {}
+    func applicationWillEnterForeground(_: UIApplication) {
+        // I'd gladly use .NSExtensionHostWillEnterForeground but it doesn't work
+        NotificationCenter.default.post(Notification(name: .HostingAppEnteredForeground))
+    }
 
     func applicationDidBecomeActive(_: UIApplication) {}
 

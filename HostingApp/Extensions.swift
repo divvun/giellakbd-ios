@@ -176,3 +176,7 @@ extension Strings {
         return bundle.localizedString(forKey: "locale_\(languageCode)", value: nil, table: nil)
     }
 }
+
+extension Notification.Name {
+    static let HostingAppEnteredForeground = Notification.Name(rawValue: "hostingAppEnteredForeground")
+}
