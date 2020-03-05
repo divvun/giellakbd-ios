@@ -4,7 +4,7 @@ import XCTest
 
 class UserDictionaryDaemonTests: XCTestCase {
     var userDictionary = UserDictionary()
-    let defaultLocale = KeyboardLocale(identifier: "en", langaugeName: "English")
+    let defaultLocale = KeyboardLocale(identifier: "en", languageName: "English")
 
     override func setUp() {
         userDictionary = UserDictionary()

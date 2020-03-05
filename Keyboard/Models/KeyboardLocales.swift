@@ -2,7 +2,7 @@ import Foundation
 
 public struct KeyboardLocale {
     let identifier: String
-    let langaugeName: String
+    let languageName: String
 }
 
 final class KeyboardLocales {
@@ -41,5 +41,5 @@ private func localeFromBundle(_ bundle: Bundle) -> KeyboardLocale? {
         let languageIdentifier = attributes["PrimaryLanguage"] as? String else {
             return nil
     }
-    return KeyboardLocale(identifier: languageIdentifier, langaugeName: languageName)
+    return KeyboardLocale(identifier: languageIdentifier, languageName: languageName)
 }

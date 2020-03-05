@@ -4,7 +4,7 @@ import SQLite
 
 class UserDictionaryTests: XCTestCase {
     var userDictionary = UserDictionary()
-    let defaultLocale = KeyboardLocale(identifier: "en", langaugeName: "English")
+    let defaultLocale = KeyboardLocale(identifier: "en", languageName: "English")
 
     override func setUp() {
         userDictionary = UserDictionary()
@@ -73,8 +73,8 @@ class UserDictionaryTests: XCTestCase {
 
     func test_should_return_only_words_from_given_locale() {
         let sut = userDictionary
-        let englishLocale = KeyboardLocale(identifier: "en", langaugeName: "English")
-        let spanishLocale = KeyboardLocale(identifier: "es", langaugeName: "Spanish")
+        let englishLocale = KeyboardLocale(identifier: "en", languageName: "English")
+        let spanishLocale = KeyboardLocale(identifier: "es", languageName: "Spanish")
 
         sut.addWordManually("test1", locale: englishLocale)
         sut.addWordManually("test2", locale: spanishLocale)

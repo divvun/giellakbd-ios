@@ -6,7 +6,7 @@ class KeyboardLocalesViewController: SettingsViewController {
         var rows: [Row] = []
 
         for locale in KeyboardLocales.allLocales {
-            let row = Row(title: locale.langaugeName) { () -> UIViewController in
+            let row = Row(title: locale.languageName) { () -> UIViewController in
                 UserDictionaryViewController(keyboardLocale: locale)
             }
             rows.append(row)
