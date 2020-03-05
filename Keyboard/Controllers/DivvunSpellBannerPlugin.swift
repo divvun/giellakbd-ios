@@ -51,7 +51,9 @@ class SuggestionOp: Operation {
 
 extension DivvunSpellBannerPlugin: BannerViewDelegate {
     public func textInputDidChange(_ banner: BannerView, context: CursorContext) {
-        dictionaryDaemon?.updateContext(WordContext(cursorContext: context))
+        if self.keyboard.hasFullAccess {
+            dictionaryDaemon?.updateContext(WordContext(cursorContext: context))
+        }
 
         if context.current.1 == "" {
             banner.setBannerItems([])
