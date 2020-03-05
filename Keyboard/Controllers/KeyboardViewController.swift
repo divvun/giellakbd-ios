@@ -64,11 +64,13 @@ open class KeyboardViewController: UIInputViewController {
 
     private(set) lazy var definitions: [KeyboardDefinition] = {
         let path = Bundle.top.url(forResource: "KeyboardDefinitions", withExtension: "json")!
-        // swiftlint:disable force_try
-        let data = try! String(contentsOf: path).data(using: .utf8)!
-        let raws = try! JSONDecoder().decode([RawKeyboardDefinition].self, from: data)
-        return raws.map { try! KeyboardDefinition(fromRaw: $0, traits: self.traitCollection) }
-        // swiftlint:enable force_try
+        do {
+            let data = try String(contentsOf: path).data(using: .utf8)!
+            let raws = try JSONDecoder().decode([RawKeyboardDefinition].self, from: data)
+            return try raws.map { try KeyboardDefinition(fromRaw: $0, traits: self.traitCollection) }
+        } catch {
+            fatalError("Error getting keyboard definitions from json file: \(error)")
+        }
     }()
 
     private var landscapeHeight: CGFloat {
