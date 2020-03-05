@@ -21,13 +21,7 @@ final class KeyboardLocales {
     }()
 
     static var allLocales: [KeyboardLocale] {
-        var locales: [KeyboardLocale] = []
-        for bundle in plugInBundles {
-            if let locale = localeFromBundle(bundle) {
-                locales.append(locale)
-            }
-        }
-        return locales
+        plugInBundles.compactMap { localeFromBundle($0) }
     }
 
     static var current: KeyboardLocale {
