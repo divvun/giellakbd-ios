@@ -33,6 +33,18 @@ class SuggestionOp: Operation {
     }
 
     private func getSuggestionItems(for word: String) -> [BannerItem] {
+        var suggestions = getSuggestions(for: word)
+
+        // Don't show the current word twice; it will always be shown in the banner item created below
+        suggestions.removeAll { $0 == word }
+        let suggestionItems = suggestions.map { BannerItem(title: $0, value: $0) }
+
+        let currentWord = BannerItem(title: "\"\(word)\"", value: word)
+
+        return [currentWord] + suggestionItems
+    }
+
+    private func getSuggestions(for word: String) -> [String] {
         var suggestions: [String] = []
 
         if let dictionary = self.plugin?.dictionaryService?.dictionary {
@@ -47,13 +59,7 @@ class SuggestionOp: Operation {
             suggestions.append(contentsOf: spellerSuggestions)
         }
 
-        // Don't show the current word twice; it will always be shown in the banner item created below
-        suggestions.removeAll { $0 == word }
-        let suggestionItems = suggestions.map { BannerItem(title: $0, value: $0) }
-
-        let currentWord = BannerItem(title: "\"\(word)\"", value: word)
-
-        return [currentWord] + suggestionItems
+        return suggestions
     }
 
 }
