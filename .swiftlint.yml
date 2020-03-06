@@ -12,6 +12,7 @@ cyclomatic_complexity:
 identifier_name:
   excluded:
     - i
+    - j
     - id
     - x
     - y

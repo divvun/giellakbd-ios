@@ -21,9 +21,8 @@ class SuggestionOp: Operation {
 
     private func showSpellingSuggestionsInBanner() {
         guard let plugin = self.plugin else { return }
-        guard let speller = plugin.speller else { return }
 
-        let suggestionItems = getSuggestionItems(for: word, from: speller)
+        let suggestionItems = getSuggestionItems(for: word)
 
         if !isCancelled {
             DispatchQueue.main.async {
@@ -33,18 +32,28 @@ class SuggestionOp: Operation {
         }
     }
 
-    private func getSuggestionItems(for word: String, from speller: Speller) -> [BannerItem] {
-        let currentWord = BannerItem(title: "\"\(word)\"", value: word)
-        var suggestions = (try? speller
-            .suggest(word: word)//, count: 3, maxWeight: 4999.99)
-            .prefix(3)
-            .map { BannerItem(title: $0, value: $0) }) ?? []
+    private func getSuggestionItems(for word: String) -> [BannerItem] {
+        var suggestions: [String] = []
 
-        // No need to show the same thing twice
-        suggestions.removeAll { (bannerItem) -> Bool in
-            bannerItem.value == word
+        if let dictionary = self.plugin?.dictionaryService?.dictionary {
+            let userSuggestions = dictionary.getSuggestions(for: word, locale: KeyboardLocales.current)
+            suggestions.append(contentsOf: userSuggestions)
         }
-        return [currentWord] + suggestions
+
+        if let speller = self.plugin?.speller {
+            let spellerSuggestions = (try? speller
+                .suggest(word: word)
+                .prefix(3)) ?? []
+            suggestions.append(contentsOf: spellerSuggestions)
+        }
+
+        // Don't show the current word twice; it will always be shown in the banner item created below
+        suggestions.removeAll { $0 == word }
+        let suggestionItems = suggestions.map { BannerItem(title: $0, value: $0) }
+
+        let currentWord = BannerItem(title: "\"\(word)\"", value: word)
+
+        return [currentWord] + suggestionItems
     }
 
 }
@@ -77,7 +86,7 @@ public class DivvunSpellBannerPlugin {
     unowned let banner: BannerView
     unowned let keyboard: KeyboardViewController
 
-    private var dictionaryService: UserDictionaryService?
+    fileprivate var dictionaryService: UserDictionaryService?
     fileprivate var archive: ThfstChunkedBoxSpellerArchive?
     fileprivate var speller: ThfstChunkedBoxSpeller? {
         return try? archive?.speller()

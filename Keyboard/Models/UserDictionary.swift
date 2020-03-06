@@ -109,6 +109,14 @@ public class UserDictionary {
         }
     }
 
+    public func getSuggestions(for input: String, locale: KeyboardLocale) -> [String] {
+        return getUserWords(locale: locale)
+            .map { (word: $0, score: $0.levenshtein(input) ) }
+            .filter { $0.score < 4 }
+            .sorted { $0.score < $1.score }
+            .map { $0.word }
+    }
+
     private func validateContext(_ context: WordContext) {
         if context.secondBefore != nil && context.firstBefore == nil {
             fatalError("Attempted to add word to UserDictionary with secondBefore word but no firstBefore word.")
