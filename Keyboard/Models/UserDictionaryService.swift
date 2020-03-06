@@ -35,10 +35,7 @@ class UserDictionaryService {
             return
         }
 
-        let didUpdateLastContext = updateLastContextIfNeeded(with: saveCandidateContext)
-        guard didUpdateLastContext == false else {
-            return
-        }
+        updateLastContextIfNeeded(with: saveCandidateContext)
 
         if speller.contains(word: saveCandidateContext.word) == false {
             lastSavedContextId = userDictionary.add(context: saveCandidateContext, locale: locale)
@@ -46,21 +43,20 @@ class UserDictionaryService {
         }
     }
 
-    private func updateLastContextIfNeeded(with saveCandidate: WordContext) -> Bool {
+    private func updateLastContextIfNeeded(with saveCandidate: WordContext) {
         guard let lastSavedContext = lastSavedContext,
             let lastSavedContextId = lastSavedContextId else {
-                return false
+                return
         }
 
         guard let combinedContext = lastSavedContext.adding(context: saveCandidate),
             combinedContext.isMoreDesirableThan(lastSavedContext) else {
-                return false
+                return
         }
 
         userDictionary.updateContext(contextId: lastSavedContextId, newContext: combinedContext, locale: locale)
         self.lastSavedContext = combinedContext
 
-        return true
     }
 
 }

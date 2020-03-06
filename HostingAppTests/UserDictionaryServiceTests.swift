@@ -174,6 +174,34 @@ class UserDictionaryDaemonTests: XCTestCase {
         XCTAssertNil(contexts.first?.secondAfter)
     }
 
+    func test_two_consecutive_unknown_words_should_both_be_saved() {
+        let sut = makeSUT()
+
+        let context1 = WordContext(word: "xxx")
+        let context2 = WordContext(firstBefore: "xxx", word: "yyy")
+        let context3 = WordContext(secondBefore: "xxx", firstBefore: "yyy", word: "") //zzz
+
+        sut.updateContext(context1)
+        sut.updateContext(context2)
+        sut.updateContext(context3)
+
+        var contexts = userDictionary.getContexts(for: "xxx", locale: defaultLocale)
+        XCTAssertEqual(1, contexts.count)
+        XCTAssertNil(contexts.first?.secondBefore)
+        XCTAssertNil(contexts.first?.firstBefore)
+        XCTAssertEqual("xxx", contexts.first?.word)
+        XCTAssertEqual("yyy", contexts.first?.firstAfter)
+        XCTAssertNil(contexts.first?.secondAfter)
+
+        contexts = userDictionary.getContexts(for: "yyy", locale: defaultLocale)
+        XCTAssertEqual(1, contexts.count)
+        XCTAssertNil(contexts.first?.secondBefore)
+        XCTAssertEqual("xxx", contexts.first?.firstBefore)
+        XCTAssertEqual("yyy", contexts.first?.word)
+        XCTAssertNil(contexts.first?.firstAfter)
+        XCTAssertNil(contexts.first?.secondAfter)
+    }
+
     private func makeSUT() -> UserDictionaryService {
         let archive: ThfstChunkedBoxSpellerArchive
         guard let bundle = Bundle.top.url(forResource: "dicts", withExtension: "bundle") else {
