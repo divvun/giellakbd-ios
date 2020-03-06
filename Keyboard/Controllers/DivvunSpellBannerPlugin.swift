@@ -52,7 +52,7 @@ class SuggestionOp: Operation {
 extension DivvunSpellBannerPlugin: BannerViewDelegate {
     public func textInputDidChange(_ banner: BannerView, context: CursorContext) {
         if self.keyboard.hasFullAccess {
-            dictionaryDaemon?.updateContext(WordContext(cursorContext: context))
+            dictionaryService?.updateContext(WordContext(cursorContext: context))
         }
 
         if context.current.1 == "" {
@@ -77,7 +77,7 @@ public class DivvunSpellBannerPlugin {
     unowned let banner: BannerView
     unowned let keyboard: KeyboardViewController
 
-    private var dictionaryDaemon: UserDictionaryService?
+    private var dictionaryService: UserDictionaryService?
     fileprivate var archive: ThfstChunkedBoxSpellerArchive?
     fileprivate var speller: ThfstChunkedBoxSpeller? {
         return try? archive?.speller()
@@ -150,7 +150,7 @@ public class DivvunSpellBannerPlugin {
 
             do {
                 if let speller = try self.archive?.speller() {
-                    self.dictionaryDaemon = UserDictionaryService(speller: speller, locale: KeyboardLocales.current)
+                    self.dictionaryService = UserDictionaryService(speller: speller, locale: KeyboardLocales.current)
                 }
             } catch {
                 let error = Sentry.Event(level: .error)
