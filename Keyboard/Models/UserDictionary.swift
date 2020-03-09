@@ -2,6 +2,8 @@ import Foundation
 import SQLite
 
 public class UserDictionary {
+    public let locale: KeyboardLocale
+
     private enum WordState: String {
         case candidate
         case userWord = "user_word"
@@ -47,6 +49,10 @@ public class UserDictionary {
         return database
     }()
 
+    init(locale: KeyboardLocale) {
+        self.locale = locale
+    }
+
     private func createTablesIfNeeded(database: Connection) {
         do {
             try createUserWordTable(database: database)
@@ -77,40 +83,42 @@ public class UserDictionary {
         })
     }
 
-    public func add(word: String, locale: KeyboardLocale) {
-        add(context: WordContext(word: word), locale: locale)
+    public func add(word: String) {
+        add(context: WordContext(word: word))
     }
 
     @discardableResult
-    public func add(context: WordContext, locale: KeyboardLocale) -> Int64 {
+    public func add(context: WordContext) -> Int64 {
         validateContext(context)
 
         let word = context.word
         let wordId: Int64
 
-        if let existingWord = fetchWord(word, locale: locale) {
+        if let existingWord = fetchWord(word) {
             wordId = existingWord[WordTable.id]
             if wordIsCandidate(existingWord) {
                 updateWordState(id: wordId, state: .userWord)
             }
         } else {
-            wordId = insertWordCandidate(word: word, locale: locale)
+            wordId = insertWordCandidate(word: word)
         }
 
         return insertContext(context, for: wordId)
     }
 
-    public func removeWord(_ word: String, locale: KeyboardLocale) {
+    public func removeWord(_ word: String) {
         do {
-            let query = WordTable.table.filter(WordTable.word == word)
+            let query = WordTable.table
+                .filter(WordTable.word == word)
+                .filter(WordTable.locale == locale.identifier)
             try database.run(query.delete())
         } catch {
             fatalError("Error deleting word from UserDictionary \(error)")
         }
     }
 
-    public func getSuggestions(for input: String, locale: KeyboardLocale) -> [String] {
-        return getUserWords(locale: locale)
+    public func getSuggestions(for input: String) -> [String] {
+        return getUserWords()
             .map { (word: $0, score: $0.levenshtein(input) ) }
             .filter { $0.score < 4 }
             .sorted { $0.score < $1.score }
@@ -131,10 +139,12 @@ public class UserDictionary {
         return wordState == .candidate
     }
 
-    private func fetchWord(_ word: String, locale: KeyboardLocale) -> SQLite.Row? {
+    private func fetchWord(_ word: String) -> SQLite.Row? {
         var row: SQLite.Row?
         do {
-            let query = WordTable.table.filter(WordTable.word == word)
+            let query = WordTable.table
+                .filter(WordTable.word == word)
+                .filter(WordTable.locale == locale.identifier)
             row = try database.pluck(query)
         } catch {
             fatalError("Error finding existsing word: \(error)")
@@ -157,21 +167,21 @@ public class UserDictionary {
     }
 
     @discardableResult
-    private func insertWordCandidate(word: String, locale: KeyboardLocale) -> Int64 {
-        return insertWord(word: word, locale: locale, state: .candidate)
+    private func insertWordCandidate(word: String) -> Int64 {
+        return insertWord(word: word, state: .candidate)
     }
 
-    public func addWordManually(_ word: String, locale: KeyboardLocale) {
-        if let existingWord = fetchWord(word, locale: locale) {
+    public func addWordManually(_ word: String) {
+        if let existingWord = fetchWord(word) {
             updateWordState(id: existingWord[WordTable.id], state: .manuallyAdded)
         } else {
-            let wordId = insertWord(word: word, locale: locale, state: .manuallyAdded)
+            let wordId = insertWord(word: word, state: .manuallyAdded)
             insertContext(WordContext(word: word), for: wordId)
         }
     }
 
     @discardableResult
-    private func insertWord(word: String, locale: KeyboardLocale, state: WordState) -> Int64 {
+    private func insertWord(word: String, state: WordState) -> Int64 {
         let insert = WordTable.table.insert(
             WordTable.word <- word.lowercased(),
             WordTable.locale <- locale.identifier,
@@ -202,8 +212,8 @@ public class UserDictionary {
     }
 
     @discardableResult
-    public func updateContext(contextId: Int64, newContext: WordContext, locale: KeyboardLocale) -> Bool {
-        guard let wordRow = fetchWord(newContext.word, locale: locale),
+    public func updateContext(contextId: Int64, newContext: WordContext) -> Bool {
+        guard let wordRow = fetchWord(newContext.word),
             let contextRow = fetchContext(contextId: contextId),
             contextRow[ContextTable.wordId] == wordRow[WordTable.id] else {
                 return false
@@ -223,7 +233,7 @@ public class UserDictionary {
         }
     }
 
-    public func getUserWords(locale: KeyboardLocale) -> [String] {
+    public func getUserWords() -> [String] {
         var words: [String] = []
         let query = WordTable.table.select(WordTable.word)
             .filter(WordTable.locale == locale.identifier)
@@ -241,12 +251,12 @@ public class UserDictionary {
         return words
     }
 
-    public func containsWord(_ word: String, locale: KeyboardLocale) -> Bool {
-        return fetchWord(word, locale: locale) != nil
+    public func containsWord(_ word: String) -> Bool {
+        return fetchWord(word) != nil
     }
 
-    public func getContexts(for word: String, locale: KeyboardLocale) -> [WordContext] {
-        guard let wordRow = fetchWord(word, locale: locale) else {
+    public func getContexts(for word: String) -> [WordContext] {
+        guard let wordRow = fetchWord(word) else {
             return []
         }
 
@@ -289,7 +299,7 @@ extension UserDictionary {
         ]
 
         for context in contexts {
-            add(context: context, locale: locale)
+            add(context: context)
         }
     }
 

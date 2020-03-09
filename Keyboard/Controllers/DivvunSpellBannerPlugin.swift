@@ -48,7 +48,7 @@ class SuggestionOp: Operation {
         var suggestions: [String] = []
 
         if let dictionary = self.plugin?.dictionaryService?.dictionary {
-            let userSuggestions = dictionary.getSuggestions(for: word, locale: KeyboardLocales.current)
+            let userSuggestions = dictionary.getSuggestions(for: word)
             suggestions.append(contentsOf: userSuggestions)
         }
 

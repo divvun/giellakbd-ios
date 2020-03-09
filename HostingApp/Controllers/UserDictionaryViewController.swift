@@ -1,19 +1,18 @@
 import UIKit
 
 class UserDictionaryViewController: ViewController<UserDictionaryView> {
-    private let userDictionary = UserDictionary()
+    private let userDictionary: UserDictionary
     private var userWords: [String] {
-        userDictionary.getUserWords(locale: keyboardLocale)
+        userDictionary.getUserWords()
     }
     private var isEmpty: Bool { userWords.count == 0 }
-    private let keyboardLocale: KeyboardLocale
 
     private var tableView: UITableView {
         contentView.tableView!
     }
 
     init(keyboardLocale: KeyboardLocale) {
-        self.keyboardLocale = keyboardLocale
+        self.userDictionary = UserDictionary(locale: keyboardLocale)
         super.init()
     }
 
@@ -100,7 +99,7 @@ class UserDictionaryViewController: ViewController<UserDictionaryView> {
     }
 
     private func insertWordAndUpdateView(_ word: String) {
-        userDictionary.addWordManually(word, locale: keyboardLocale)
+        userDictionary.addWordManually(word)
         let insertIndexPath = indexPathForNewWord(word: word)
         tableView.insertRows(at: [insertIndexPath], with: .automatic)
         updateEmptyStateView()
@@ -108,7 +107,7 @@ class UserDictionaryViewController: ViewController<UserDictionaryView> {
 
     private func deleteWord(at indexPath: IndexPath) {
         let word = userWords[indexPath.row]
-        userDictionary.removeWord(word, locale: keyboardLocale)
+        userDictionary.removeWord(word)
         tableView.deleteRows(at: [indexPath], with: .automatic)
     }
 
@@ -140,7 +139,7 @@ extension UserDictionaryViewController: UITableViewDataSource {
 extension UserDictionaryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let word = userWords[indexPath.row]
-        let wordController = WordContextViewController(dictionary: userDictionary, word: word, locale: keyboardLocale)
+        let wordController = WordContextViewController(dictionary: userDictionary, word: word)
         navigationController?.pushViewController(wordController, animated: true)
     }
 }

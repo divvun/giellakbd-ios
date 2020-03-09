@@ -2,12 +2,16 @@
 import DivvunSpell
 import XCTest
 
-class UserDictionaryDaemonTests: XCTestCase {
-    var userDictionary = UserDictionary()
-    let defaultLocale = KeyboardLocale(identifier: "en", languageName: "English")
+private let defaultLocale = KeyboardLocale(identifier: "en", languageName: "English")
+private func makeDict() -> UserDictionary {
+    return UserDictionary(locale: defaultLocale)
+}
+
+class UserDictionaryServiceTests: XCTestCase {
+    var userDictionary = makeDict()
 
     override func setUp() {
-        userDictionary = UserDictionary()
+        userDictionary = makeDict()
     }
 
     override func tearDown() {
@@ -23,8 +27,8 @@ class UserDictionaryDaemonTests: XCTestCase {
         sut.updateContext(WordContext(word: "hi"))
         sut.updateContext(WordContext(firstBefore: "hi", word: ""))
 
-        let words = userDictionary.getUserWords(locale: defaultLocale)
-        let contexts = userDictionary.getContexts(for: "hi", locale: defaultLocale)
+        let words = userDictionary.getUserWords()
+        let contexts = userDictionary.getContexts(for: "hi")
 
         XCTAssertEqual(1, words.count)
         XCTAssertEqual("hi", words.first)
@@ -38,7 +42,7 @@ class UserDictionaryDaemonTests: XCTestCase {
         sut.updateContext(WordContext(word: "hi"))
         sut.updateContext(WordContext(firstBefore: "hi", word: ""))
 
-        let contexts = userDictionary.getContexts(for: "hi", locale: defaultLocale)
+        let contexts = userDictionary.getContexts(for: "hi")
 
         XCTAssertEqual(1, contexts.count)
         XCTAssertEqual("hi", contexts.first?.word)
@@ -52,7 +56,7 @@ class UserDictionaryDaemonTests: XCTestCase {
         sut.updateContext(initialContext)
         sut.updateContext(finalContext)
 
-        let contexts = userDictionary.getContexts(for: "hi", locale: defaultLocale)
+        let contexts = userDictionary.getContexts(for: "hi")
         XCTAssertEqual("de", contexts.first?.firstBefore)
         XCTAssertEqual("hi", contexts.first?.word)
     }
@@ -65,7 +69,7 @@ class UserDictionaryDaemonTests: XCTestCase {
         sut.updateContext(initialContext)
         sut.updateContext(finalContext)
 
-        let contexts = userDictionary.getContexts(for: "hi", locale: defaultLocale)
+        let contexts = userDictionary.getContexts(for: "hi")
         XCTAssertEqual("de", contexts.first?.secondBefore)
         XCTAssertEqual("ge", contexts.first?.firstBefore)
         XCTAssertEqual("hi", contexts.first?.word)
@@ -83,7 +87,7 @@ class UserDictionaryDaemonTests: XCTestCase {
         sut.updateContext(context3)
         sut.updateContext(context4)
 
-        let contexts = userDictionary.getContexts(for: "hi", locale: defaultLocale)
+        let contexts = userDictionary.getContexts(for: "hi")
         XCTAssertEqual(1, contexts.count)
         XCTAssertEqual("de", contexts.first?.secondBefore) // this could arguably be nil
         XCTAssertEqual("ge", contexts.first?.firstBefore)
@@ -102,7 +106,7 @@ class UserDictionaryDaemonTests: XCTestCase {
         sut.updateContext(context2)
         sut.updateContext(context3)
 
-        let contexts = userDictionary.getContexts(for: "hi", locale: defaultLocale)
+        let contexts = userDictionary.getContexts(for: "hi")
         XCTAssertEqual(1, contexts.count)
         XCTAssertNil(contexts.first?.secondBefore)
         XCTAssertNil(contexts.first?.firstBefore)
@@ -123,7 +127,7 @@ class UserDictionaryDaemonTests: XCTestCase {
         sut.updateContext(context3)
         sut.updateContext(context4)
 
-        let contexts = userDictionary.getContexts(for: "hi", locale: defaultLocale)
+        let contexts = userDictionary.getContexts(for: "hi")
         XCTAssertEqual(1, contexts.count)
         XCTAssertNil(contexts.first?.secondBefore)
         XCTAssertNil(contexts.first?.firstBefore)
@@ -144,7 +148,7 @@ class UserDictionaryDaemonTests: XCTestCase {
         sut.updateContext(context3)
         sut.updateContext(context4)
 
-        let contexts = userDictionary.getContexts(for: "j", locale: defaultLocale)
+        let contexts = userDictionary.getContexts(for: "j")
         XCTAssertEqual(1, contexts.count)
         XCTAssertNil(contexts.first?.secondBefore)
         XCTAssertNil(contexts.first?.firstBefore)
@@ -165,7 +169,7 @@ class UserDictionaryDaemonTests: XCTestCase {
         sut.updateContext(context3)
         sut.updateContext(context4)
 
-        let contexts = userDictionary.getContexts(for: "hi", locale: defaultLocale)
+        let contexts = userDictionary.getContexts(for: "hi")
         XCTAssertEqual(1, contexts.count)
         XCTAssertNil(contexts.first?.secondBefore)
         XCTAssertEqual("ge", contexts.first?.firstBefore)
@@ -185,7 +189,7 @@ class UserDictionaryDaemonTests: XCTestCase {
         sut.updateContext(context2)
         sut.updateContext(context3)
 
-        var contexts = userDictionary.getContexts(for: "xxx", locale: defaultLocale)
+        var contexts = userDictionary.getContexts(for: "xxx")
         XCTAssertEqual(1, contexts.count)
         XCTAssertNil(contexts.first?.secondBefore)
         XCTAssertNil(contexts.first?.firstBefore)
@@ -193,7 +197,7 @@ class UserDictionaryDaemonTests: XCTestCase {
         XCTAssertEqual("yyy", contexts.first?.firstAfter)
         XCTAssertNil(contexts.first?.secondAfter)
 
-        contexts = userDictionary.getContexts(for: "yyy", locale: defaultLocale)
+        contexts = userDictionary.getContexts(for: "yyy")
         XCTAssertEqual(1, contexts.count)
         XCTAssertNil(contexts.first?.secondBefore)
         XCTAssertEqual("xxx", contexts.first?.firstBefore)

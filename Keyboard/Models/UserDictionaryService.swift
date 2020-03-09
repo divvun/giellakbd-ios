@@ -1,17 +1,16 @@
 import DivvunSpell
 
 class UserDictionaryService {
-    public let dictionary = UserDictionary()
+    public let dictionary: UserDictionary
     private let speller: Speller
     private var previousContext: WordContext?
     private var currentContext: WordContext?
     private var lastSavedContext: WordContext?
     private var lastSavedContextId: Int64?
-    private let locale: KeyboardLocale
 
     init(speller: Speller, locale: KeyboardLocale) {
+        self.dictionary = UserDictionary(locale: locale)
         self.speller = speller
-        self.locale = locale
     }
 
     public func updateContext(_ context: WordContext) {
@@ -38,7 +37,7 @@ class UserDictionaryService {
         updateLastContextIfNeeded(with: saveCandidateContext)
 
         if speller.contains(word: saveCandidateContext.word) == false {
-            lastSavedContextId = dictionary.add(context: saveCandidateContext, locale: locale)
+            lastSavedContextId = dictionary.add(context: saveCandidateContext)
             lastSavedContext = saveCandidateContext
         }
     }
@@ -54,7 +53,7 @@ class UserDictionaryService {
                 return
         }
 
-        dictionary.updateContext(contextId: lastSavedContextId, newContext: combinedContext, locale: locale)
+        dictionary.updateContext(contextId: lastSavedContextId, newContext: combinedContext)
         self.lastSavedContext = combinedContext
 
     }
