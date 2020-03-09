@@ -170,7 +170,7 @@ public class DivvunSpellBannerPlugin {
             } catch {
                 let error = Sentry.Event(level: .error)
                 Client.shared?.send(event: error, completion: nil)
-                print("DivvunSpell UserDictionaryDaemon **not** loaded.")
+                print("DivvunSpell UserDictionaryService **not** loaded.")
                 return
             }
         }

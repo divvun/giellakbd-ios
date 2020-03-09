@@ -232,7 +232,7 @@ class UserDictionaryServiceTests: XCTestCase {
             let speller = try archive.speller()
             return UserDictionaryService(speller: speller, locale: defaultLocale)
         } catch {
-            fatalError("DivvunSpell UserDictionaryDaemon **not** loaded.")
+            fatalError("DivvunSpell UserDictionaryService **not** loaded.")
         }
     }
 
