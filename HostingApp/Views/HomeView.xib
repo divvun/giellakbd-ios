@@ -42,7 +42,7 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hdS-2z-RlR" customClass="MenuButton" customModule="HostingApp" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="125" width="256" height="34"/>
                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                            <state key="normal" title="USER DICTIONARY"/>
+                            <state key="normal" title="SETTINGS"/>
                         </button>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="5Ej-CW-Ost">
                             <rect key="frame" x="0.0" y="191" width="256" height="38"/>
