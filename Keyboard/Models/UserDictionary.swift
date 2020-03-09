@@ -218,7 +218,7 @@ public class UserDictionary {
             contextRow[ContextTable.wordId] == wordRow[WordTable.id] else {
                 return false
         }
-        
+
         do {
             let oldContext = ContextTable.table.filter(ContextTable.id == contextId)
             let update = oldContext.update(
