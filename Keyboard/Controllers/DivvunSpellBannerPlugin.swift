@@ -166,7 +166,7 @@ public class DivvunSpellBannerPlugin {
             #if ENABLE_USER_DICTIONARY
             do {
                 if let speller = try self.archive?.speller() {
-                    self.dictionaryService = UserDictionaryService(speller: speller, locale: KeyboardLocales.current)
+                    self.dictionaryService = UserDictionaryService(speller: speller, locale: KeyboardLocale.current)
                 }
             } catch {
                 let error = Sentry.Event(level: .error)

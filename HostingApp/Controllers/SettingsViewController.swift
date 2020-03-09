@@ -11,7 +11,7 @@ class SettingsViewController: UITableViewController {
 
     var rows: [Row] {
         let destinationViewController: ViewControllerMaker
-        let locales = KeyboardLocales.allLocales
+        let locales = KeyboardLocale.allLocales
         if locales.count == 1 {
             destinationViewController = {
                 UserDictionaryViewController(keyboardLocale: locales.first!)

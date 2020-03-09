@@ -5,7 +5,7 @@ class KeyboardLocalesViewController: SettingsViewController {
     override var rows: [Row] {
         var rows: [Row] = []
 
-        for locale in KeyboardLocales.allLocales {
+        for locale in KeyboardLocale.allLocales {
             let row = Row(title: locale.languageName) { () -> UIViewController in
                 UserDictionaryViewController(keyboardLocale: locale)
             }
