@@ -48,6 +48,11 @@ class HomeController: ViewController<HomeView>, HideNavBar {
         contentView.aboutButton.addTarget(self, action: #selector(openAbout), for: [.touchUpInside])
         contentView.testingButton.addTarget(self, action: #selector(openTesting), for: [.touchUpInside])
         contentView.settingsButton.addTarget(self, action: #selector(openSettings), for: [.touchUpInside])
+
+        #if ENABLE_USER_DICTIONARY
+        #else
+        contentView.settingsButton.isHidden = true
+        #endif
     }
 
     deinit {

@@ -163,6 +163,7 @@ public class DivvunSpellBannerPlugin {
                 return
             }
 
+            #if ENABLE_USER_DICTIONARY
             do {
                 if let speller = try self.archive?.speller() {
                     self.dictionaryService = UserDictionaryService(speller: speller, locale: KeyboardLocales.current)
@@ -173,6 +174,7 @@ public class DivvunSpellBannerPlugin {
                 print("DivvunSpell UserDictionaryService **not** loaded.")
                 return
             }
+            #endif
         }
     }
 }
