@@ -196,6 +196,33 @@ class UserDictionaryTests: XCTestCase {
         XCTAssertEqual(0, contextRows.count)
     }
 
+    func test_delete_word_should_delete_only_for_current_context() {
+        let englishLocale = KeyboardLocale(identifier: "en", languageName: "English")
+        let spanishLocale = KeyboardLocale(identifier: "es", languageName: "Spanish")
+
+        let englishDict = UserDictionary(locale: englishLocale)
+        let spanishDict = UserDictionary(locale: spanishLocale)
+
+        englishDict.addWordManually("test")
+        spanishDict.addWordManually("test")
+
+        let englishWords = englishDict.getUserWords()
+        XCTAssertEqual(1, englishWords.count)
+        XCTAssertEqual("test", englishWords.first)
+
+        let spanishWords = spanishDict.getUserWords()
+        XCTAssertEqual(1, spanishWords.count)
+        XCTAssertEqual("test", spanishWords.first)
+
+        englishDict.removeWord("test")
+        XCTAssertEqual(0, englishDict.getUserWords().count)
+        XCTAssertEqual(1, spanishDict.getUserWords().count)
+
+        spanishDict.removeWord("test")
+        XCTAssertEqual(0, englishDict.getUserWords().count)
+        XCTAssertEqual(0, spanishDict.getUserWords().count)
+    }
+
     func test_insert_word_manually_should_insert_word_context() {
         let sut = userDictionary
         let word = "test"
