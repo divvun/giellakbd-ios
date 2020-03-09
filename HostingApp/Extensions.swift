@@ -178,5 +178,5 @@ extension Strings {
 }
 
 extension Notification.Name {
-    static let HostingAppEnteredForeground = Notification.Name(rawValue: "hostingAppEnteredForeground")
+    static let HostingAppWillEnterForeground = Notification.Name(rawValue: "HostingAppWillEnterForeground")
 }

@@ -29,7 +29,7 @@ class UserDictionaryViewController: ViewController<UserDictionaryView> {
         setupView()
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(willEnterForeground),
-                                               name: .HostingAppEnteredForeground, object: nil)
+                                               name: .HostingAppWillEnterForeground, object: nil)
     }
 
     @objc private func willEnterForeground() {

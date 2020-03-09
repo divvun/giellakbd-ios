@@ -80,7 +80,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(_: UIApplication) {
         // I'd gladly use .NSExtensionHostWillEnterForeground but it doesn't work
-        NotificationCenter.default.post(Notification(name: .HostingAppEnteredForeground))
+        NotificationCenter.default.post(Notification(name: .HostingAppWillEnterForeground))
     }
 
     func parseUrl(_: URL) {
