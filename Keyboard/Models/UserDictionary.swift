@@ -139,7 +139,7 @@ public class UserDictionary {
     // MARK: - Adding/removing/updating Dictionary
 
     @discardableResult
-    public func add(context: WordContext) -> Int64 {
+    public func addCandidate(context: WordContext) -> Int64 {
         validateContext(context)
 
         let word = context.word

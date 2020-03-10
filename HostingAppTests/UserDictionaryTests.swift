@@ -33,10 +33,10 @@ class UserDictionaryTests: XCTestCase {
     func test_user_words_are_case_insensitive() {
         let sut = userDictionary
 
-        sut.add(word: "test")
-        sut.add(word: "TEST")
-        sut.add(word: "Test")
-        sut.add(word: "tEsT")
+        sut.addCandidate(word: "test")
+        sut.addCandidate(word: "TEST")
+        sut.addCandidate(word: "Test")
+        sut.addCandidate(word: "tEsT")
 
         let words = sut.getUserWords()
         XCTAssertEqual(1, words.count)
@@ -46,7 +46,7 @@ class UserDictionaryTests: XCTestCase {
     func test_word_added_once_does_not_count_as_user_word() {
         let sut = userDictionary
 
-        sut.add(word: "test")
+        sut.addCandidate(word: "test")
 
         let words = sut.getUserWords()
         XCTAssertEqual(0, words.count)
@@ -56,8 +56,8 @@ class UserDictionaryTests: XCTestCase {
         let sut = userDictionary
         let word = "test"
 
-        sut.add(word: word)
-        sut.add(word: word)
+        sut.addCandidate(word: word)
+        sut.addCandidate(word: word)
 
         let words = sut.getUserWords()
         XCTAssertEqual(1, words.count)
@@ -99,8 +99,8 @@ class UserDictionaryTests: XCTestCase {
         let word = "test"
 
         // First add the word normally
-        sut.add(word: word) // candidate
-        sut.add(word: word) // promoted to user word
+        sut.addCandidate(word: word) // candidate
+        sut.addCandidate(word: word) // promoted to user word
 
         sut.addWordManually(word)
 
@@ -127,7 +127,7 @@ class UserDictionaryTests: XCTestCase {
         let word = "test"
 
         let context = WordContext(firstBefore: "before", word: word, firstAfter: "after")
-        sut.add(context: context)
+        sut.addCandidate(context: context)
 
         let contexts = sut.getContexts(for: word)
         XCTAssertEqual(context, contexts.first)
@@ -137,9 +137,9 @@ class UserDictionaryTests: XCTestCase {
         let sut = userDictionary
         let word = "test"
 
-        sut.add(word: word) // candidate
-        sut.add(word: word) // user word
-        sut.add(word: word) // should have no effect
+        sut.addCandidate(word: word) // candidate
+        sut.addCandidate(word: word) // user word
+        sut.addCandidate(word: word) // should have no effect
 
         let rows = sut.getWordDatabaseRows()
         XCTAssertEqual(1, rows.count)
@@ -152,9 +152,9 @@ class UserDictionaryTests: XCTestCase {
         let context1 = WordContext(firstBefore: "before", word: word, firstAfter: "after")
         let context2 = WordContext(secondBefore: "secondbefore", firstBefore: "firstBefore", word: word)
         let context3 = WordContext(word: word, firstAfter: "firstAfter", secondAfter: "secondAfter")
-        sut.add(context: context1)
-        sut.add(context: context2)
-        sut.add(context: context3)
+        sut.addCandidate(context: context1)
+        sut.addCandidate(context: context2)
+        sut.addCandidate(context: context3)
 
         let contexts = sut.getContexts(for: word)
         XCTAssertEqual(3, contexts.count)
@@ -167,15 +167,15 @@ class UserDictionaryTests: XCTestCase {
         let word3 = "hi"
 
         let context1 = WordContext(firstBefore: "before", word: word1, firstAfter: "after")
-        sut.add(context: context1)
+        sut.addCandidate(context: context1)
         XCTAssertEqual(context1, sut.getContexts(for: word1).first)
 
         let context2 = WordContext(secondBefore: "secondBefore", firstBefore: "before", word: word2)
-        sut.add(context: context2)
+        sut.addCandidate(context: context2)
         XCTAssertEqual(context2, sut.getContexts(for: word2).first)
 
         let context3 = WordContext(word: word3, firstAfter: "after", secondAfter: "secondAfter")
-        sut.add(context: context3)
+        sut.addCandidate(context: context3)
         XCTAssertEqual(context3, sut.getContexts(for: word3).first)
     }
 
@@ -185,8 +185,8 @@ class UserDictionaryTests: XCTestCase {
         let context1 = WordContext(firstBefore: "before", word: word, firstAfter: "after")
         let context2 = WordContext(secondBefore: "secondBefore", firstBefore: "before", word: word)
 
-        sut.add(context: context1)
-        sut.add(context: context2)
+        sut.addCandidate(context: context1)
+        sut.addCandidate(context: context2)
         sut.removeWord(word)
 
         let wordRows = sut.getWordDatabaseRows()
@@ -257,7 +257,7 @@ class UserDictionaryTests: XCTestCase {
 
         let context1 = WordContext(secondBefore: "hi", firstBefore: "hello", word: "test")
         let context2 = WordContext(word: "test", firstAfter: "foo", secondAfter: "bar")
-        let contextId = sut.add(context: context1)
+        let contextId = sut.addCandidate(context: context1)
         let success = sut.updateContext(contextId: contextId, newContext: context2)
 
         let contexts = sut.getContexts(for: "test")
@@ -271,7 +271,7 @@ class UserDictionaryTests: XCTestCase {
 
         let context1 = WordContext(secondBefore: "hi", firstBefore: "hello", word: "test")
         let context2 = WordContext(word: "OTHERWORD", firstAfter: "foo", secondAfter: "bar")
-        let contextId = sut.add(context: context1)
+        let contextId = sut.addCandidate(context: context1)
         let success = sut.updateContext(contextId: contextId, newContext: context2)
 
         let contexts = sut.getContexts(for: "test")

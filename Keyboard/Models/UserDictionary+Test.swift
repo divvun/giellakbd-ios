@@ -11,8 +11,8 @@ extension UserDictionary {
         }
     }
 
-    public func add(word: String) {
-        add(context: WordContext(word: word))
+    public func addCandidate(word: String) {
+        addCandidate(context: WordContext(word: word))
     }
 
     public func addTestRows(locale: KeyboardLocale) {
@@ -26,7 +26,7 @@ extension UserDictionary {
         ]
 
         for context in contexts {
-            add(context: context)
+            addCandidate(context: context)
         }
     }
 

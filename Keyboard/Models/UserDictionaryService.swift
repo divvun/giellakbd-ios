@@ -37,7 +37,7 @@ class UserDictionaryService {
         updateLastContextIfNeeded(with: saveCandidateContext)
 
         if speller.contains(word: saveCandidateContext.word) == false {
-            lastSavedContextId = dictionary.add(context: saveCandidateContext)
+            lastSavedContextId = dictionary.addCandidate(context: saveCandidateContext)
             lastSavedContext = saveCandidateContext
         }
     }
