@@ -11,6 +11,10 @@ extension UserDictionary {
         }
     }
 
+    public func add(word: String) {
+        add(context: WordContext(word: word))
+    }
+
     public func addTestRows(locale: KeyboardLocale) {
         let contexts = [
             WordContext(secondBefore: "I", firstBefore: "said", word: "hello"),

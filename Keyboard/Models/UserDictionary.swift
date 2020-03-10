@@ -83,9 +83,60 @@ public class UserDictionary {
         })
     }
 
-    public func add(word: String) {
-        add(context: WordContext(word: word))
+    // MARK: - Querying Dictionary
+
+    public func getSuggestions(for input: String) -> [String] {
+        return getUserWords()
+            .map { (word: $0, score: $0.levenshtein(input) ) }
+            .filter { $0.score < 4 }
+            .sorted { $0.score < $1.score }
+            .map { $0.word }
     }
+
+    public func getUserWords() -> [String] {
+        var words: [String] = []
+        let query = WordTable.table.select(WordTable.word)
+            .filter(WordTable.locale == locale.identifier)
+            .filter(WordTable.state == WordState.userWord.rawValue || WordTable.state == WordState.manuallyAdded.rawValue)
+            .order(WordTable.word)
+        do {
+            let rows = try database.prepare(query)
+            for row in rows {
+                let word = row[WordTable.word]
+                words.append(word)
+            }
+        } catch {
+            print("Error getting user words: \(error)")
+        }
+        return words
+    }
+
+    public func containsWord(_ word: String) -> Bool {
+        return fetchWord(word) != nil
+    }
+
+    public func getContexts(for word: String) -> [WordContext] {
+        guard let wordRow = fetchWord(word) else {
+            return []
+        }
+
+        let wordId = wordRow[WordTable.id]
+        let query = ContextTable.table.filter(ContextTable.wordId == wordId)
+        do {
+            let rows = try database.prepare(query)
+            return rows.map({
+                WordContext(secondBefore: $0[ContextTable.secondBefore],
+                            firstBefore: $0[ContextTable.firstBefore],
+                            word: word,
+                            firstAfter: $0[ContextTable.firstAfter],
+                            secondAfter: $0[ContextTable.secondAfter])
+            })
+        } catch {
+            fatalError("Error getting user dictionary word contexts: \(error)")
+        }
+    }
+
+    // MARK: - Adding/removing/updating Dictionary
 
     @discardableResult
     public func add(context: WordContext) -> Int64 {
@@ -106,6 +157,15 @@ public class UserDictionary {
         return insertContext(context, for: wordId)
     }
 
+    public func addWordManually(_ word: String) {
+        if let existingWord = fetchWord(word) {
+            updateWordState(id: existingWord[WordTable.id], state: .manuallyAdded)
+        } else {
+            let wordId = insertWord(word: word, state: .manuallyAdded)
+            insertContext(WordContext(word: word), for: wordId)
+        }
+    }
+
     public func removeWord(_ word: String) {
         do {
             let query = WordTable.table
@@ -117,13 +177,29 @@ public class UserDictionary {
         }
     }
 
-    public func getSuggestions(for input: String) -> [String] {
-        return getUserWords()
-            .map { (word: $0, score: $0.levenshtein(input) ) }
-            .filter { $0.score < 4 }
-            .sorted { $0.score < $1.score }
-            .map { $0.word }
+    @discardableResult
+    public func updateContext(contextId: Int64, newContext: WordContext) -> Bool {
+        guard let wordRow = fetchWord(newContext.word),
+            let contextRow = fetchContext(contextId: contextId),
+            contextRow[ContextTable.wordId] == wordRow[WordTable.id] else {
+                return false
+        }
+
+        do {
+            let oldContext = ContextTable.table.filter(ContextTable.id == contextId)
+            let update = oldContext.update(
+                ContextTable.secondBefore <- newContext.secondBefore,
+                ContextTable.firstBefore <- newContext.firstBefore,
+                ContextTable.firstAfter <- newContext.firstAfter,
+                ContextTable.secondAfter <- newContext.secondAfter
+            )
+            return try database.run(update) > 0
+        } catch {
+            fatalError("Error updating context: \(error)")
+        }
     }
+
+    // MARK: - Private methods
 
     private func validateContext(_ context: WordContext) {
         if context.secondBefore != nil && context.firstBefore == nil {
@@ -171,15 +247,6 @@ public class UserDictionary {
         return insertWord(word: word, state: .candidate)
     }
 
-    public func addWordManually(_ word: String) {
-        if let existingWord = fetchWord(word) {
-            updateWordState(id: existingWord[WordTable.id], state: .manuallyAdded)
-        } else {
-            let wordId = insertWord(word: word, state: .manuallyAdded)
-            insertContext(WordContext(word: word), for: wordId)
-        }
-    }
-
     @discardableResult
     private func insertWord(word: String, state: WordState) -> Int64 {
         let insert = WordTable.table.insert(
@@ -208,71 +275,6 @@ public class UserDictionary {
             return try database.run(insert)
         } catch {
             fatalError("Error inserting context into database: \(error)")
-        }
-    }
-
-    @discardableResult
-    public func updateContext(contextId: Int64, newContext: WordContext) -> Bool {
-        guard let wordRow = fetchWord(newContext.word),
-            let contextRow = fetchContext(contextId: contextId),
-            contextRow[ContextTable.wordId] == wordRow[WordTable.id] else {
-                return false
-        }
-
-        do {
-            let oldContext = ContextTable.table.filter(ContextTable.id == contextId)
-            let update = oldContext.update(
-                ContextTable.secondBefore <- newContext.secondBefore,
-                ContextTable.firstBefore <- newContext.firstBefore,
-                ContextTable.firstAfter <- newContext.firstAfter,
-                ContextTable.secondAfter <- newContext.secondAfter
-            )
-            return try database.run(update) > 0
-        } catch {
-            fatalError("Error updating context: \(error)")
-        }
-    }
-
-    public func getUserWords() -> [String] {
-        var words: [String] = []
-        let query = WordTable.table.select(WordTable.word)
-            .filter(WordTable.locale == locale.identifier)
-            .filter(WordTable.state == WordState.userWord.rawValue || WordTable.state == WordState.manuallyAdded.rawValue)
-            .order(WordTable.word)
-        do {
-            let rows = try database.prepare(query)
-            for row in rows {
-                let word = row[WordTable.word]
-                words.append(word)
-            }
-        } catch {
-            print("Error getting user words: \(error)")
-        }
-        return words
-    }
-
-    public func containsWord(_ word: String) -> Bool {
-        return fetchWord(word) != nil
-    }
-
-    public func getContexts(for word: String) -> [WordContext] {
-        guard let wordRow = fetchWord(word) else {
-            return []
-        }
-
-        let wordId = wordRow[WordTable.id]
-        let query = ContextTable.table.filter(ContextTable.wordId == wordId)
-        do {
-            let rows = try database.prepare(query)
-            return rows.map({
-                WordContext(secondBefore: $0[ContextTable.secondBefore],
-                            firstBefore: $0[ContextTable.firstBefore],
-                            word: word,
-                            firstAfter: $0[ContextTable.firstAfter],
-                            secondAfter: $0[ContextTable.secondAfter])
-            })
-        } catch {
-            fatalError("Error getting user dictionary word contexts: \(error)")
         }
     }
 }
