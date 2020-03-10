@@ -7,11 +7,13 @@ struct Row {
     let destinationViewController: ViewControllerMaker
 }
 
+protocol SettingsController: BaseSettingsViewController {
+    func rows() -> [Row]
+}
+
 class BaseSettingsViewController: UITableViewController {
 
-    var rows: [Row] {
-        []
-    }
+    private lazy var _rows: [Row] = rows()
 
     init() {
         super.init(style: .grouped)
@@ -21,8 +23,8 @@ class BaseSettingsViewController: UITableViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func getInt() -> Int {
-        return 1
+    func rows() -> [Row] {
+        [Row(title: "Override the rows() method to customize", destinationViewController: nil)]
     }
 
     override func viewDidLoad() {
@@ -31,17 +33,17 @@ class BaseSettingsViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return rows.count
+        return _rows.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(DisclosureCell.self)
-        cell.textLabel?.text = rows[indexPath.item].title
+        cell.textLabel?.text = _rows[indexPath.item].title
         return cell
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let row = rows[indexPath.row]
+        let row = _rows[indexPath.row]
         guard let viewController = row.destinationViewController?() else {
             return
         }

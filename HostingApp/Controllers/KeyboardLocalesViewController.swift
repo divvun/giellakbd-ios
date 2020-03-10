@@ -1,9 +1,8 @@
 import UIKit
 
-class KeyboardLocalesViewController: BaseSettingsViewController {
+class KeyboardLocalesViewController: BaseSettingsViewController, SettingsController {
 
-    //swiftlint:disable:next identifier_name
-    var _rows: [Row] = {
+    override func rows() -> [Row] {
         var rows: [Row] = []
 
         for locale in KeyboardLocale.allLocales {
@@ -14,10 +13,6 @@ class KeyboardLocalesViewController: BaseSettingsViewController {
         }
 
         return rows
-    }()
-
-    override var rows: [Row] {
-        _rows
     }
 
 }
