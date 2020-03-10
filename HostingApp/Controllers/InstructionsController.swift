@@ -1,6 +1,6 @@
 import UIKit
 
-class InstructionsController: ViewController<InstructionsView> {
+final class InstructionsController: ViewController<InstructionsView> {
     @objc private func openLanguages() {
         navigationController?.pushViewController(LanguagesController(), animated: true)
     }

@@ -16,7 +16,7 @@ private func rightHalf(_ pageOfKeys: [[KeyDefinition]]) -> [[KeyDefinition]] {
     }
 }
 
-class SplitKeyboardView: KeyboardViewProvider {
+final class SplitKeyboardView: KeyboardViewProvider {
 
     var delegate: (KeyboardViewDelegate & KeyboardViewKeyboardKeyDelegate)? {
         get {

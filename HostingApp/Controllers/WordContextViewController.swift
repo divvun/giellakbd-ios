@@ -1,6 +1,6 @@
 import UIKit
 
-class WordContextViewController: ViewController<WordContextView> {
+final class WordContextViewController: ViewController<WordContextView> {
     private let word: String
     private let contexts: [WordContext]
 

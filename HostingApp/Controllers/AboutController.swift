@@ -1,6 +1,6 @@
 import UIKit
 
-class AboutController: ViewController<AboutView> {
+final class AboutController: ViewController<AboutView> {
     override func viewDidLoad() {
         super.viewDidLoad()
 

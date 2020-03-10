@@ -1,7 +1,7 @@
 import Sentry
 import UIKit
 
-class AppNavControllerDelegate: NSObject, UINavigationControllerDelegate {
+final class AppNavControllerDelegate: NSObject, UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController,
                               willShow viewController: UIViewController,
                               animated _: Bool) {
@@ -24,7 +24,7 @@ let str1 = "containing"
 let str2 = "Bundle"
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+final class AppDelegate: UIResponder, UIApplicationDelegate {
     weak static var instance: AppDelegate!
 
     var window: UIWindow?

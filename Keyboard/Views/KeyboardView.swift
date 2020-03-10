@@ -211,7 +211,7 @@ internal class KeyboardView: UIView,
         // removeOverlay(forKey: key)
         removeAllOverlays()
 
-        let overlay = KeyOverlayView(origin: keyView, key: key, theme: theme)
+        let overlay = KeyOverlayView(keyView, key: key, theme: theme)
         overlay.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(overlay)
 
@@ -235,8 +235,8 @@ internal class KeyboardView: UIView,
         }
         keyLabel.textAlignment = .center
         keyLabel.translatesAutoresizingMaskIntoConstraints = false
-        overlay.originFrameView.addSubview(keyLabel)
-        keyLabel.centerIn(superview: overlay.originFrameView)
+        overlay.keyBoundsView.addSubview(keyLabel)
+        keyLabel.centerIn(superview: overlay.keyBoundsView)
 
         superview?.setNeedsLayout()
     }
@@ -256,13 +256,13 @@ internal class KeyboardView: UIView,
     // MARK: - LongPressOverlayDelegate
 
     func longpress(didCreateOverlayContentView contentView: UIView) {
-        if overlays.first?.value.originFrameView == nil {
+        if overlays.first?.value.keyBoundsView == nil {
             if let activeKey = activeKey {
                 showOverlay(forKeyAtIndexPath: activeKey.indexPath)
             }
         }
 
-        guard let overlayContentView = self.overlays.first?.value.originFrameView else {
+        guard let overlayContentView = self.overlays.first?.value.keyBoundsView else {
             return
         }
 

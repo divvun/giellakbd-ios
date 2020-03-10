@@ -1,6 +1,6 @@
 import UIKit
 
-class UserDictionaryViewController: ViewController<UserDictionaryView> {
+final class UserDictionaryViewController: ViewController<UserDictionaryView> {
     private let userDictionary: UserDictionary
     private var userWords: [String] {
         userDictionary.getUserWords()

@@ -1,6 +1,6 @@
 import BaseKeyboard
 
-class EntryKeyboard: KeyboardViewController {
+final class EntryKeyboard: KeyboardViewController {
     private var bannerPlugin: DivvunSpellBannerPlugin?
     private var showsBanner = true
 

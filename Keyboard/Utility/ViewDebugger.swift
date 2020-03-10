@@ -1,6 +1,6 @@
 import UIKit
 
-class ViewDebugger {
+final class ViewDebugger {
     public static func printViewHierarchy(view: UIView, indentLevel: Int = 0, depth: Int) {
         guard depth > 0 else {
             return

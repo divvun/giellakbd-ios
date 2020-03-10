@@ -1,7 +1,7 @@
 import Foundation
 import SQLite
 
-public class UserDictionary {
+public final class UserDictionary {
     public let locale: KeyboardLocale
 
     private enum WordState: String {
