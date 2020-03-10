@@ -29,6 +29,7 @@
 		999790B823F2F548003F7885 /* WordContextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 999790B723F2F548003F7885 /* WordContextView.xib */; };
 		999790BA23F40E4F003F7885 /* WordContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999790B923F40E4F003F7885 /* WordContext.swift */; };
 		999790BB23F40E4F003F7885 /* WordContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999790B923F40E4F003F7885 /* WordContext.swift */; };
+		99989FB72417990E00EF8CD3 /* UserDictionary+Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99989FB52417970400EF8CD3 /* UserDictionary+Test.swift */; };
 		99B94C6323E0501F0076A786 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 99B94C6523E0501F0076A786 /* Localizable.strings */; };
 		99DA18412408294A003E7353 /* WordContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA18402408294A003E7353 /* WordContextTests.swift */; };
 		99DA184424095AF0003E7353 /* UserDictionaryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA184224095AD0003E7353 /* UserDictionaryService.swift */; };
@@ -179,6 +180,7 @@
 		999790B523F2F536003F7885 /* WordContextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordContextView.swift; sourceTree = "<group>"; };
 		999790B723F2F548003F7885 /* WordContextView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordContextView.xib; sourceTree = "<group>"; };
 		999790B923F40E4F003F7885 /* WordContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordContext.swift; sourceTree = "<group>"; };
+		99989FB52417970400EF8CD3 /* UserDictionary+Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDictionary+Test.swift"; sourceTree = "<group>"; };
 		99B94C6423E0501F0076A786 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		99B94C6623E050280076A786 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		99B94C6723E0502C0076A786 /* se */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = se; path = se.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -317,6 +319,7 @@
 				C6996B5822FC2CC2007EBC3D /* SystemKeys.swift */,
 				C6996B5B22FC2D3E007EBC3D /* CursorContext.swift */,
 				997550B523EAC631004ED6A5 /* UserDictionary.swift */,
+				99989FB52417970400EF8CD3 /* UserDictionary+Test.swift */,
 				99DA184224095AD0003E7353 /* UserDictionaryService.swift */,
 				999790B923F40E4F003F7885 /* WordContext.swift */,
 				9904409A23FBDC200063064E /* KeyboardLocale.swift */,
@@ -871,6 +874,7 @@
 			files = (
 				9904409523FAC0C50063064E /* DisclosureCell.swift in Sources */,
 				C676AD5B1EC9679000523FF3 /* InstructionsController.swift in Sources */,
+				99989FB72417990E00EF8CD3 /* UserDictionary+Test.swift in Sources */,
 				C6B638441EDF81B200A6ECB2 /* SimpleButton.swift in Sources */,
 				C63EE0FF2361D86800A1E15A /* MenuButton.swift in Sources */,
 				997550B623EAC631004ED6A5 /* UserDictionary.swift in Sources */,

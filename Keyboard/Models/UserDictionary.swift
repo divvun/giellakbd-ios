@@ -11,7 +11,7 @@ public class UserDictionary {
         case blacklisted
     }
 
-    private struct WordTable {
+    internal struct WordTable {
         static let table = Table("user_word")
         static let id = Expression<Int64>("id")
         static let word = Expression<String>("word")
@@ -19,7 +19,7 @@ public class UserDictionary {
         static let state = Expression<String>("state")
     }
 
-    private struct ContextTable {
+    internal struct ContextTable {
         static let table = Table("word_context")
         static let id = Expression<Int64>("id")
         static let wordId = Expression<Int64>("word_id")
@@ -40,7 +40,7 @@ public class UserDictionary {
         return "\(groupUrl)\(dbFileName)"
     }()
 
-    private lazy var database: Connection = {
+    internal lazy var database: Connection = {
         guard let database = try? Connection(dbFilePath) else {
             fatalError("Unable to create or open user dictionary database")
         }
@@ -273,77 +273,6 @@ public class UserDictionary {
             })
         } catch {
             fatalError("Error getting user dictionary word contexts: \(error)")
-        }
-    }
-}
-
-// Methods used for testing only
-extension UserDictionary {
-    public func dropTables() {
-        do {
-            try database.run(WordTable.table.drop())
-            try database.run(ContextTable.table.drop())
-        } catch {
-            fatalError("Error dropping database tables: \(error)")
-        }
-    }
-
-    public func addTestRows(locale: KeyboardLocale) {
-        let contexts = [
-            WordContext(secondBefore: "I", firstBefore: "said", word: "hello"),
-            WordContext(firstBefore: "well", word: "hello", firstAfter: "there"),
-            WordContext(word: "hello", firstAfter: "to", secondAfter: "you"),
-            WordContext(secondBefore: "I", firstBefore: "said", word: "hi"),
-            WordContext(firstBefore: "say", word: "hi", firstAfter: "to"),
-            WordContext(word: "hi", firstAfter: "there", secondAfter: "Frank")
-        ]
-
-        for context in contexts {
-            add(context: context)
-        }
-    }
-
-    public func printDatabaseRows() {
-        do {
-            print("WORDS TABLE:")
-            for row in try database.prepare(WordTable.table) {
-                let rowData = "id: \(row[WordTable.id]), "
-                    + "word: \(String(describing: row[WordTable.word])), "
-                    + "locale: \(row[WordTable.locale]), "
-                    + "state: \(String(describing: row[WordTable.state])), "
-                print(rowData)
-            }
-
-            print("\n")
-            print("CONTEXT TABLE:")
-            for row in try database.prepare(ContextTable.table) {
-                let rowData = "id: \(row[ContextTable.id]), "
-                    + "wordId: \(row[ContextTable.wordId]), "
-                    + "Contexts.secondBefore: \(String(describing: row[ContextTable.secondBefore])), "
-                    + "Contexts.firstBefore: \(String(describing: row[ContextTable.firstBefore])), "
-                    + "Contexts.firstAfter: \(String(describing: row[ContextTable.firstAfter])), "
-                    + "Contexts.secondAfter: \(String(describing: row[ContextTable.secondAfter]))"
-                print(rowData)
-            }
-
-        } catch {
-            print("Error printing database: \(error)")
-        }
-    }
-
-    public func getWordDatabaseRows() -> [SQLite.Row] {
-        return getDatabaseRows(for: WordTable.table)
-    }
-
-    public func getContextDatabaseRows() -> [SQLite.Row] {
-        return getDatabaseRows(for: ContextTable.table)
-    }
-
-    private func getDatabaseRows(for table: Table) -> [SQLite.Row] {
-        do {
-            return try Array(database.prepare(table))
-        } catch {
-            fatalError("Error getting word database Rows")
         }
     }
 }
