@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 import UIDeviceComplete
 
-class SystemKeys {
+final class SystemKeys {
     static func systemKeyRowsForCurrentDevice(spaceName: String,
                                               returnName: String,
                                               traits: UITraitCollection) -> [KeyDefinition] {

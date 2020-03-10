@@ -1,6 +1,6 @@
 import UIKit
 
-class SettingsViewController: BaseSettingsViewController, SettingsController {
+final class SettingsViewController: BaseSettingsViewController, SettingsController {
 
     override func rows() -> [Row] {
         let destinationViewController: ViewControllerMaker

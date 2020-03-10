@@ -6,7 +6,7 @@ private let defaults: UserDefaults = {
     return defaults
 }()
 
-class KeyboardSettings {
+final class KeyboardSettings {
     static var groupId: String = {
         return "group.\(Bundle.top.bundleIdentifier!)"
     }()

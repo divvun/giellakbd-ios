@@ -1,7 +1,7 @@
 import Foundation
 import AVFoundation
 
-public class Audio {
+public final class Audio {
     private static var isSoundEnabled: Bool = KeyboardSettings.isKeySoundEnabled
     private static let clickSound: SystemSoundID = 1123
     private static let deleteSound: SystemSoundID = 1155

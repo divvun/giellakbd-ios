@@ -1,6 +1,6 @@
 import UIKit
 
-class KeyboardLocalesViewController: BaseSettingsViewController, SettingsController {
+final class KeyboardLocalesViewController: BaseSettingsViewController, SettingsController {
 
     override func rows() -> [Row] {
         var rows: [Row] = []

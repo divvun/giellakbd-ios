@@ -20,7 +20,7 @@ protocol LongPressBehaviorProvider {
     func touchesEnded(_ point: CGPoint)
 }
 
-class LongPressCursorMovementController: NSObject, LongPressBehaviorProvider {
+final class LongPressCursorMovementController: NSObject, LongPressBehaviorProvider {
     public weak var delegate: LongPressCursorMovementDelegate?
 
     private var baselinePoint: CGPoint?

@@ -1,6 +1,6 @@
 import UIKit
 
-class LanguagesController: UITableViewController {
+final class LanguagesController: UITableViewController {
     let rows = Strings.supportedLocales
     var selectedRow: IndexPath?
 
