@@ -1,6 +1,6 @@
 import UIKit
 
-class HomeController: ViewController<HomeView>, HideNavBar {
+final class HomeController: ViewController<HomeView>, HideNavBar {
     @objc private func openLanguages() {
         navigationController?.pushViewController(LanguagesController(), animated: true)
     }

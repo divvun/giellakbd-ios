@@ -30,6 +30,7 @@
 		999790BA23F40E4F003F7885 /* WordContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999790B923F40E4F003F7885 /* WordContext.swift */; };
 		999790BB23F40E4F003F7885 /* WordContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999790B923F40E4F003F7885 /* WordContext.swift */; };
 		99989FB72417990E00EF8CD3 /* UserDictionary+Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99989FB52417970400EF8CD3 /* UserDictionary+Test.swift */; };
+		99989FBA2417CFBA00EF8CD3 /* BaseSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99989FB92417CFBA00EF8CD3 /* BaseSettingsViewController.swift */; };
 		99B94C6323E0501F0076A786 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 99B94C6523E0501F0076A786 /* Localizable.strings */; };
 		99DA18412408294A003E7353 /* WordContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA18402408294A003E7353 /* WordContextTests.swift */; };
 		99DA184424095AF0003E7353 /* UserDictionaryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA184224095AD0003E7353 /* UserDictionaryService.swift */; };
@@ -181,6 +182,7 @@
 		999790B723F2F548003F7885 /* WordContextView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordContextView.xib; sourceTree = "<group>"; };
 		999790B923F40E4F003F7885 /* WordContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordContext.swift; sourceTree = "<group>"; };
 		99989FB52417970400EF8CD3 /* UserDictionary+Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDictionary+Test.swift"; sourceTree = "<group>"; };
+		99989FB92417CFBA00EF8CD3 /* BaseSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsViewController.swift; sourceTree = "<group>"; };
 		99B94C6423E0501F0076A786 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		99B94C6623E050280076A786 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		99B94C6723E0502C0076A786 /* se */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = se; path = se.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -469,6 +471,7 @@
 				C6B638451EDF94CA00A6ECB2 /* AboutController.swift */,
 				C691A0E623682C8B00085AC3 /* TestingController.swift */,
 				9904409123F84BDC0063064E /* SettingsViewController.swift */,
+				99989FB92417CFBA00EF8CD3 /* BaseSettingsViewController.swift */,
 				9904409C23FBE63F0063064E /* KeyboardLocalesViewController.swift */,
 			);
 			path = Controllers;
@@ -872,6 +875,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99989FBA2417CFBA00EF8CD3 /* BaseSettingsViewController.swift in Sources */,
 				9904409523FAC0C50063064E /* DisclosureCell.swift in Sources */,
 				C676AD5B1EC9679000523FF3 /* InstructionsController.swift in Sources */,
 				99989FB72417990E00EF8CD3 /* UserDictionary+Test.swift in Sources */,

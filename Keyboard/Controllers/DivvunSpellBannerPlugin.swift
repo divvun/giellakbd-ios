@@ -2,7 +2,7 @@ import Foundation
 import Sentry
 import DivvunSpell
 
-class SuggestionOp: Operation {
+final class SuggestionOp: Operation {
     weak var plugin: DivvunSpellBannerPlugin?
     let word: String
 
@@ -88,7 +88,7 @@ extension DivvunSpellBannerPlugin: BannerViewDelegate {
     }
 }
 
-public class DivvunSpellBannerPlugin {
+public final class DivvunSpellBannerPlugin {
     unowned let banner: BannerView
     unowned let keyboard: KeyboardViewController
 

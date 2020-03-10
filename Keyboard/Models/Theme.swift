@@ -305,7 +305,7 @@ private class IPadThemeBase {
     private init() { fatalError() }
 }
 
-class LightThemeIpadImpl: LightThemeImpl {
+final class LightThemeIpadImpl: LightThemeImpl {
     override var keyCornerRadius: CGFloat { return IPadThemeBase.keyCornerRadius }
     override var keyHorizontalMargin: CGFloat { return IPadThemeBase.keyHorizontalMargin }
     override var keyVerticalMargin: CGFloat { return IPadThemeBase.keyVerticalMargin }
@@ -320,7 +320,7 @@ class LightThemeIpadImpl: LightThemeImpl {
     override var popupLongpressKeysPerRow: Int {return IPadThemeBase.popupLongpressKeysPerRow}
 }
 
-class DarkThemeIpadImpl: DarkThemeImpl {
+final class DarkThemeIpadImpl: DarkThemeImpl {
     override var keyCornerRadius: CGFloat { return IPadThemeBase.keyCornerRadius }
     override var keyHorizontalMargin: CGFloat { return IPadThemeBase.keyHorizontalMargin }
     override var keyVerticalMargin: CGFloat { return IPadThemeBase.keyVerticalMargin }
