@@ -1,5 +1,7 @@
 excluded:
   - Pods
+  - HostingApp/Strings.swift
+
 
 disabled_rules:
   - todo
@@ -10,8 +12,10 @@ cyclomatic_complexity:
 identifier_name:
   excluded:
     - i
+    - j
     - id
     - x
     - y
+    - db
 
 line_length: 130

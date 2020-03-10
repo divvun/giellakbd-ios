@@ -5,13 +5,16 @@ about: Om
 addNewKeyboard: Legg til nytt tastatur…
 
 # Original: Allow Full Access
-#allowFullAccess: UNTRANSLATED
+allowFullAccess: Gi full tilgang
 
 # Original: Attributions
-#attributions: UNTRANSLATED
+attributions: Andre kilder
+
+# Original: Contexts for "{word}"
+#contextsFor: UNTRANSLATED
 
 # Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
-#enableTapSoundsPlain: UNTRANSLATED
+enableTapSoundsPlain: Om du vil slå på tastaturklikkelyder må du trykke {keyboard} og slå på {allowFullAccess}.
 
 # Original: General
 general: Generelt
@@ -29,7 +32,13 @@ language: Språk
 layouts: Tastatur
 
 # Original: Kildin Sami
-locale_sjd: Kildinsamisk
+localeSjd: Kildinsamisk
+
+# Original: No user-created words yet.
+#noUserWords: UNTRANSLATED
+
+# Original: Words that are left uncorrected and are not in the built-in dictionary will appear here.
+#noUserWordsDescription: UNTRANSLATED
 
 # Original: Open the {item} app
 openAppPlain: 'Åpne {item}-appen'
@@ -55,5 +64,8 @@ skip: Hopp over
 # Original: Tap {item}
 tapPlain: 'Berør {item}'
 
+# Original: User Dictionary
+#userDictionary: UNTRANSLATED
+
 # Original: When you have finished, return to this app to continue.
-#whenYouHaveFinished: UNTRANSLATED
+whenYouHaveFinished: Når du er ferdig – gå tilbake til denne appen for å fortsette.

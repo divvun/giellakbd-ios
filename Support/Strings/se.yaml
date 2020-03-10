@@ -1,59 +1,71 @@
 # Original: About
-#about: UNTRANSLATED
+about: Boallobeavddeprográmma birra
 
 # Original: Add New Keyboard…
-#addNewKeyboard: UNTRANSLATED
+addNewKeyboard: Lasit ođđa boallobeavddi …
 
 # Original: Allow Full Access
-#allowFullAccess: UNTRANSLATED
+allowFullAccess: Atte dievaslaš beassan dán áppii
 
 # Original: Attributions
-#attributions: UNTRANSLATED
+attributions: Eará gáldut
+
+# Original: Contexts for "{word}"
+#contextsFor: UNTRANSLATED
 
 # Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
-#enableTapSoundsPlain: UNTRANSLATED
+enableTapSoundsPlain: Jus háliidat gullat jienaid go coahkkalat boallobeavddi, de coahkkal {keyboard} ja bija johtui {allowFullAccess}.
 
 # Original: General
-#general: UNTRANSLATED
+general: Oppalaš
 
 # Original: Keyboard
 keyboard: Boallobeavddi
 
 # Original: Keyboards
-#keyboards: UNTRANSLATED
+keyboards: Boallobeavddit
 
 # Original: Language
 language: Giella
 
 # Original: Layouts
-#layouts: UNTRANSLATED
+layouts: Hámuhusat
 
 # Original: Kildin Sami
-#locale_sjd: UNTRANSLATED
+localeSjd: Gielddasámegiella
+
+# Original: No user-created words yet.
+#noUserWords: UNTRANSLATED
+
+# Original: Words that are left uncorrected and are not in the built-in dictionary will appear here.
+#noUserWordsDescription: UNTRANSLATED
 
 # Original: Open the {item} app
-#openAppPlain: UNTRANSLATED
+openAppPlain: Raba {item}-áppa
 
 # Original: Open Settings
-#openSettings: UNTRANSLATED
+openSettings: Raba heivehusaid
 
 # Original: Save
-#save: UNTRANSLATED
+save: Vurke
 
 # Original: Set Up {keyboard}
-#setUp: UNTRANSLATED
+setUp: Heivet {keyboard}
 
 # Original: Setting Up
-#settingUp: UNTRANSLATED
+settingUp: Heiveheamen
 
 # Original: Settings
-#settings: UNTRANSLATED
+settings: Heivehusat
 
 # Original: Skip
-#skip: UNTRANSLATED
+skip: Njuike badjel
 
 # Original: Tap {item}
-#tapPlain: UNTRANSLATED
+tapPlain: Coahkkal {item}
+
+# Original: User Dictionary
+#userDictionary: UNTRANSLATED
 
 # Original: When you have finished, return to this app to continue.
-#whenYouHaveFinished: UNTRANSLATED
+whenYouHaveFinished: Go leat geargan, máhcat dán áppii ja joatkke barggu.

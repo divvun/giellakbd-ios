@@ -8,7 +8,7 @@
 "keyboards" = "Tangentbord";
 "language" = "Språk";
 "layouts" = "Tangentbord";
-"locale_sjd" = "Kildinsamisk";
+"localeSjd" = "Kildinsamisk";
 "openAppPlain" = "Öppna %1$@-appen";
 "openSettings" = "Öppna Inställningar";
 "save" = "Spara";

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,10 +17,13 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                 </imageView>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="9Ne-rM-V7i">
-                    <rect key="frame" x="59.5" y="252" width="256" height="163"/>
+                    <rect key="frame" x="59.5" y="219" width="256" height="229"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Template Keyboard" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2eI-bM-tyI">
                             <rect key="frame" x="0.0" y="0.0" width="256" height="23"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="23" id="Ba5-w4-TDP"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -32,12 +35,17 @@
                                     <rect key="frame" x="0.0" y="0.0" width="256" height="38"/>
                                     <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
-                                    <state key="normal" title="Set Up Template Keyboard"/>
+                                    <state key="normal" title="SET UP KEYBOARD"/>
                                 </button>
                             </subviews>
                         </stackView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hdS-2z-RlR" customClass="MenuButton" customModule="HostingApp" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="125" width="256" height="34"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <state key="normal" title="SETTINGS"/>
+                        </button>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="5Ej-CW-Ost">
-                            <rect key="frame" x="0.0" y="125" width="256" height="38"/>
+                            <rect key="frame" x="0.0" y="191" width="256" height="38"/>
                             <subviews>
                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bA9-vt-xCz" customClass="MenuButton" customModule="HostingApp" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="256" height="0.0"/>
@@ -49,7 +57,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="256" height="38"/>
                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
-                                    <state key="normal" title="About"/>
+                                    <state key="normal" title="ABOUT"/>
                                 </button>
                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NQY-9A-SWq" customClass="MenuButton" customModule="HostingApp" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="256" height="0.0"/>
@@ -65,7 +73,7 @@
                     </constraints>
                 </stackView>
                 <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="FzJ-FA-ZXf">
-                    <rect key="frame" x="12" y="8" width="106" height="32"/>
+                    <rect key="frame" x="12" y="8" width="118" height="32"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sCp-CJ-ReN">
                             <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
@@ -77,9 +85,9 @@
                             <state key="normal" image="language"/>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lrn-yX-PE1">
-                            <rect key="frame" x="38" y="0.0" width="68" height="32"/>
+                            <rect key="frame" x="38" y="0.0" width="80" height="32"/>
                             <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="2"/>
-                            <state key="normal" title="Language"/>
+                            <state key="normal" title="LANGUAGE"/>
                         </button>
                     </subviews>
                     <constraints>
@@ -108,6 +116,7 @@
                 <outlet property="langButton" destination="sCp-CJ-ReN" id="PFg-dk-Kxp"/>
                 <outlet property="langButton2" destination="lrn-yX-PE1" id="Vk3-nf-LA1"/>
                 <outlet property="layoutsButton" destination="bA9-vt-xCz" id="1Gd-TH-grp"/>
+                <outlet property="settingsButton" destination="hdS-2z-RlR" id="LZv-BX-4Ri"/>
                 <outlet property="testingButton" destination="NQY-9A-SWq" id="hon-8d-3VN"/>
                 <outlet property="titleLabel" destination="2eI-bM-tyI" id="cBJ-Rp-SQH"/>
             </connections>

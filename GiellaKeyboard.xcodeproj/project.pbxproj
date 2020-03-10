@@ -11,8 +11,30 @@
 		4EF16F9619D255030076AFCB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4EF16F9319D255030076AFCB /* Images.xcassets */; };
 		4EF16F9B19D2550D0076AFCB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF16F9A19D2550D0076AFCB /* AppDelegate.swift */; };
 		6949B7BA8FCEAD7A27EDFFE0 /* Pods_BaseKeyboard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9024FCA6C422ADE3CBC979B9 /* Pods_BaseKeyboard.framework */; };
+		9904409223F84BDC0063064E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9904409123F84BDC0063064E /* SettingsViewController.swift */; };
+		9904409523FAC0C50063064E /* DisclosureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9904409423FAC0C50063064E /* DisclosureCell.swift */; };
+		9904409B23FBDC200063064E /* KeyboardLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9904409A23FBDC200063064E /* KeyboardLocale.swift */; };
+		9904409D23FBE63F0063064E /* KeyboardLocalesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9904409C23FBE63F0063064E /* KeyboardLocalesViewController.swift */; };
+		990440A523FC14A30063064E /* UserDictionaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990440A423FC14A30063064E /* UserDictionaryTests.swift */; };
+		990440AC23FC245D0063064E /* KeyboardLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9904409A23FBDC200063064E /* KeyboardLocale.swift */; };
 		991EE55023D9AB4700DC3677 /* ViewDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991EE54F23D9AB4700DC3677 /* ViewDebugger.swift */; };
+		997021052416DF8C00A81A27 /* KeyboardLocale+AllLocales.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997021042416DF8C00A81A27 /* KeyboardLocale+AllLocales.swift */; };
+		997550B623EAC631004ED6A5 /* UserDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997550B523EAC631004ED6A5 /* UserDictionary.swift */; };
+		997550B723EAC631004ED6A5 /* UserDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997550B523EAC631004ED6A5 /* UserDictionary.swift */; };
+		999790AC23F2B4E8003F7885 /* UserDictionaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999790AB23F2B4E8003F7885 /* UserDictionaryViewController.swift */; };
+		999790AE23F2B545003F7885 /* UserDictionaryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 999790AD23F2B545003F7885 /* UserDictionaryView.xib */; };
+		999790B023F2B55F003F7885 /* UserDictionaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999790AF23F2B55F003F7885 /* UserDictionaryView.swift */; };
+		999790B223F2F484003F7885 /* WordContextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999790B123F2F484003F7885 /* WordContextViewController.swift */; };
+		999790B623F2F536003F7885 /* WordContextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999790B523F2F536003F7885 /* WordContextView.swift */; };
+		999790B823F2F548003F7885 /* WordContextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 999790B723F2F548003F7885 /* WordContextView.xib */; };
+		999790BA23F40E4F003F7885 /* WordContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999790B923F40E4F003F7885 /* WordContext.swift */; };
+		999790BB23F40E4F003F7885 /* WordContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999790B923F40E4F003F7885 /* WordContext.swift */; };
+		99989FB72417990E00EF8CD3 /* UserDictionary+Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99989FB52417970400EF8CD3 /* UserDictionary+Test.swift */; };
 		99B94C6323E0501F0076A786 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 99B94C6523E0501F0076A786 /* Localizable.strings */; };
+		99DA18412408294A003E7353 /* WordContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA18402408294A003E7353 /* WordContextTests.swift */; };
+		99DA184424095AF0003E7353 /* UserDictionaryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA184224095AD0003E7353 /* UserDictionaryService.swift */; };
+		99DA1846240D09B5003E7353 /* UserDictionaryServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA1845240D09B5003E7353 /* UserDictionaryServiceTests.swift */; };
+		99DA1847240D1010003E7353 /* UserDictionaryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA184224095AD0003E7353 /* UserDictionaryService.swift */; };
 		99DD30F623E307430065E8D8 /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DD30F423E3059C0065E8D8 /* Audio.swift */; };
 		C4F4C9ADC86DC61F1F96D961 /* Pods_HostingApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8902A09E56DB03DDF4926837 /* Pods_HostingApp.framework */; };
 		C63EE0FF2361D86800A1E15A /* MenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63EE0FE2361D86800A1E15A /* MenuButton.swift */; };
@@ -57,6 +79,7 @@
 		C6F2494F1F736E3E00840F2B /* KeyboardSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A3905A1EB61BF8009378C1 /* KeyboardSettings.swift */; };
 		C6F249681F736FEE00840F2B /* EntryPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F249671F736FEE00840F2B /* EntryPoint.swift */; };
 		C6F9564823E4520D009C469C /* init.m in Sources */ = {isa = PBXBuildFile; fileRef = C6F9564723E4520D009C469C /* init.m */; };
+		E2AC7B206193FC6F17606A9F /* Pods_HostingAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDEC2FC4A98B67D1C339DCB0 /* Pods_HostingAppTests.framework */; };
 		FD1387D7234CB95400C5B916 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4EF16F9319D255030076AFCB /* Images.xcassets */; };
 		FD1387DD234CBF2B00C5B916 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4EF16F9319D255030076AFCB /* Images.xcassets */; };
 		FD294BA12191ADA700A5BD02 /* Keyboard-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = C6D304A61BFD73750023EC5F /* Keyboard-Bridging-Header.h */; };
@@ -75,6 +98,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 4E807DB819461DC700D875D1;
 			remoteInfo = Keyboard;
+		};
+		990440A723FC14A30063064E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4E807D8B19461D9000D875D1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4E807D9219461D9000D875D1;
+			remoteInfo = HostingApp;
 		};
 		C6F249341F736DCE00840F2B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -121,6 +151,7 @@
 
 /* Begin PBXFileReference section */
 		154519806E8333A9220756C8 /* Pods-BaseKeyboard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaseKeyboard.release.xcconfig"; path = "Pods/Target Support Files/Pods-BaseKeyboard/Pods-BaseKeyboard.release.xcconfig"; sourceTree = "<group>"; };
+		310C67763D5195FB885AEFB5 /* Pods-HostingAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HostingAppTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-HostingAppTests/Pods-HostingAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		4E807D9319461D9000D875D1 /* HostingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HostingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E807DB919461DC700D875D1 /* Keyboard.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Keyboard.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E807DBC19461DC700D875D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -132,14 +163,36 @@
 		8902A09E56DB03DDF4926837 /* Pods_HostingApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HostingApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9024FCA6C422ADE3CBC979B9 /* Pods_BaseKeyboard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BaseKeyboard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		922C1403563939C906F94AD3 /* Pods-BaseKeyboard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaseKeyboard.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BaseKeyboard/Pods-BaseKeyboard.debug.xcconfig"; sourceTree = "<group>"; };
+		9904409123F84BDC0063064E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		9904409423FAC0C50063064E /* DisclosureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclosureCell.swift; sourceTree = "<group>"; };
+		9904409A23FBDC200063064E /* KeyboardLocale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardLocale.swift; sourceTree = "<group>"; };
+		9904409C23FBE63F0063064E /* KeyboardLocalesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardLocalesViewController.swift; sourceTree = "<group>"; };
+		990440A223FC14A30063064E /* HostingAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HostingAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		990440A423FC14A30063064E /* UserDictionaryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionaryTests.swift; sourceTree = "<group>"; };
+		990440A623FC14A30063064E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		991EE54F23D9AB4700DC3677 /* ViewDebugger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewDebugger.swift; sourceTree = "<group>"; };
+		997021042416DF8C00A81A27 /* KeyboardLocale+AllLocales.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyboardLocale+AllLocales.swift"; sourceTree = "<group>"; };
+		997550B523EAC631004ED6A5 /* UserDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionary.swift; sourceTree = "<group>"; };
+		999790AB23F2B4E8003F7885 /* UserDictionaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionaryViewController.swift; sourceTree = "<group>"; };
+		999790AD23F2B545003F7885 /* UserDictionaryView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserDictionaryView.xib; sourceTree = "<group>"; };
+		999790AF23F2B55F003F7885 /* UserDictionaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionaryView.swift; sourceTree = "<group>"; };
+		999790B123F2F484003F7885 /* WordContextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordContextViewController.swift; sourceTree = "<group>"; };
+		999790B523F2F536003F7885 /* WordContextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordContextView.swift; sourceTree = "<group>"; };
+		999790B723F2F548003F7885 /* WordContextView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordContextView.xib; sourceTree = "<group>"; };
+		999790B923F40E4F003F7885 /* WordContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordContext.swift; sourceTree = "<group>"; };
+		99989FB52417970400EF8CD3 /* UserDictionary+Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDictionary+Test.swift"; sourceTree = "<group>"; };
 		99B94C6423E0501F0076A786 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		99B94C6623E050280076A786 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		99B94C6723E0502C0076A786 /* se */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = se; path = se.lproj/Localizable.strings; sourceTree = "<group>"; };
 		99B94C6823E0502C0076A786 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Localizable.strings; sourceTree = "<group>"; };
 		99B94C6923E0502D0076A786 /* nn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nn; path = nn.lproj/Localizable.strings; sourceTree = "<group>"; };
 		99B94C6A23E0502E0076A786 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
+		99DA18402408294A003E7353 /* WordContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordContextTests.swift; sourceTree = "<group>"; };
+		99DA184224095AD0003E7353 /* UserDictionaryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionaryService.swift; sourceTree = "<group>"; };
+		99DA1845240D09B5003E7353 /* UserDictionaryServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionaryServiceTests.swift; sourceTree = "<group>"; };
 		99DD30F423E3059C0065E8D8 /* Audio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
+		B864D3FAC77DCC6C6E7798FF /* Pods-HostingAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HostingAppTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HostingAppTests/Pods-HostingAppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		BDEC2FC4A98B67D1C339DCB0 /* Pods_HostingAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HostingAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C610DA4720D3E40E00C84945 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = HostingApp/fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C61CC29120C8A5C000B213B8 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = HostingApp/sv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C63EE0FE2361D86800A1E15A /* MenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButton.swift; sourceTree = "<group>"; };
@@ -213,6 +266,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9904409F23FC14A30063064E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E2AC7B206193FC6F17606A9F /* Pods_HostingAppTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C6F2492B1F736DCE00840F2B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -231,6 +292,8 @@
 				154519806E8333A9220756C8 /* Pods-BaseKeyboard.release.xcconfig */,
 				5D234E0493C2EF5B06DD50C3 /* Pods-HostingApp.debug.xcconfig */,
 				F7107A1CD9C582CEEC37528B /* Pods-HostingApp.release.xcconfig */,
+				B864D3FAC77DCC6C6E7798FF /* Pods-HostingAppTests.debug.xcconfig */,
+				310C67763D5195FB885AEFB5 /* Pods-HostingAppTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -255,6 +318,12 @@
 				FDAF59A222F9CCE000F7C9FC /* Theme.swift */,
 				C6996B5822FC2CC2007EBC3D /* SystemKeys.swift */,
 				C6996B5B22FC2D3E007EBC3D /* CursorContext.swift */,
+				997550B523EAC631004ED6A5 /* UserDictionary.swift */,
+				99989FB52417970400EF8CD3 /* UserDictionary+Test.swift */,
+				99DA184224095AD0003E7353 /* UserDictionaryService.swift */,
+				999790B923F40E4F003F7885 /* WordContext.swift */,
+				9904409A23FBDC200063064E /* KeyboardLocale.swift */,
+				997021042416DF8C00A81A27 /* KeyboardLocale+AllLocales.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -280,6 +349,7 @@
 				4E807D9519461D9000D875D1 /* HostingApp */,
 				4E807DBA19461DC700D875D1 /* Keyboard */,
 				C6F249301F736DCE00840F2B /* BaseKeyboard */,
+				990440A323FC14A30063064E /* HostingAppTests */,
 				4E807D9419461D9000D875D1 /* Products */,
 				42328B685FE6712A732EAD6B /* Pods */,
 				64F4D84E0649A1185050129C /* Frameworks */,
@@ -292,6 +362,7 @@
 				4E807D9319461D9000D875D1 /* HostingApp.app */,
 				4E807DB919461DC700D875D1 /* Keyboard.appex */,
 				C6F2492F1F736DCE00840F2B /* BaseKeyboard.framework */,
+				990440A223FC14A30063064E /* HostingAppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -363,18 +434,42 @@
 			children = (
 				9024FCA6C422ADE3CBC979B9 /* Pods_BaseKeyboard.framework */,
 				8902A09E56DB03DDF4926837 /* Pods_HostingApp.framework */,
+				BDEC2FC4A98B67D1C339DCB0 /* Pods_HostingAppTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9904409323FAC0A60063064E /* Table Cells */ = {
+			isa = PBXGroup;
+			children = (
+				9904409423FAC0C50063064E /* DisclosureCell.swift */,
+			);
+			path = "Table Cells";
+			sourceTree = "<group>";
+		};
+		990440A323FC14A30063064E /* HostingAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				990440A423FC14A30063064E /* UserDictionaryTests.swift */,
+				99DA1845240D09B5003E7353 /* UserDictionaryServiceTests.swift */,
+				99DA18402408294A003E7353 /* WordContextTests.swift */,
+				990440A623FC14A30063064E /* Info.plist */,
+			);
+			path = HostingAppTests;
 			sourceTree = "<group>";
 		};
 		C676AD621EC98C0F00523FF3 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				C655E8591EC558D000B12BE4 /* HomeController.swift */,
+				999790AB23F2B4E8003F7885 /* UserDictionaryViewController.swift */,
+				999790B123F2F484003F7885 /* WordContextViewController.swift */,
 				C676AD5A1EC9679000523FF3 /* InstructionsController.swift */,
 				C65430B31EC94BF0007FC053 /* LanguagesController.swift */,
 				C6B638451EDF94CA00A6ECB2 /* AboutController.swift */,
 				C691A0E623682C8B00085AC3 /* TestingController.swift */,
+				9904409123F84BDC0063064E /* SettingsViewController.swift */,
+				9904409C23FBE63F0063064E /* KeyboardLocalesViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -382,6 +477,7 @@
 		C6A969D71EB6126100A1143E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9904409323FAC0A60063064E /* Table Cells */,
 				C6A2E01E1EDFAAA2006BAB69 /* AboutView.swift */,
 				C6A2E01C1EDFA259006BAB69 /* AboutView.xib */,
 				C655E8551EC5559200B12BE4 /* HomeView.swift */,
@@ -391,6 +487,10 @@
 				C643BF5A20BD483C00124DDC /* LaunchScreen.storyboard */,
 				C691A0E923682C9700085AC3 /* TestingView.swift */,
 				C691A0E823682C9700085AC3 /* TestingView.xib */,
+				999790AF23F2B55F003F7885 /* UserDictionaryView.swift */,
+				999790AD23F2B545003F7885 /* UserDictionaryView.xib */,
+				999790B523F2F536003F7885 /* WordContextView.swift */,
+				999790B723F2F548003F7885 /* WordContextView.xib */,
 				C63EE0FE2361D86800A1E15A /* MenuButton.swift */,
 			);
 			path = Views;
@@ -471,6 +571,26 @@
 			productReference = 4E807DB919461DC700D875D1 /* Keyboard.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		990440A123FC14A30063064E /* HostingAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 990440A923FC14A30063064E /* Build configuration list for PBXNativeTarget "HostingAppTests" */;
+			buildPhases = (
+				237DB54F734E73280EC83E98 /* [CP] Check Pods Manifest.lock */,
+				9904409E23FC14A30063064E /* Sources */,
+				9904409F23FC14A30063064E /* Frameworks */,
+				990440A023FC14A30063064E /* Resources */,
+				190D68A4AC511AEDD140CF31 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				990440A823FC14A30063064E /* PBXTargetDependency */,
+			);
+			name = HostingAppTests;
+			productName = HostingAppTests;
+			productReference = 990440A223FC14A30063064E /* HostingAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		C6F2492E1F736DCE00840F2B /* BaseKeyboard */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C6F2493A1F736DCE00840F2B /* Build configuration list for PBXNativeTarget "BaseKeyboard" */;
@@ -496,7 +616,7 @@
 		4E807D8B19461D9000D875D1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0830;
+				LastSwiftUpdateCheck = 1130;
 				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = Apple;
 				TargetAttributes = {
@@ -519,6 +639,11 @@
 								enabled = 1;
 							};
 						};
+					};
+					990440A123FC14A30063064E = {
+						CreatedOnToolsVersion = 11.3.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 4E807D9219461D9000D875D1;
 					};
 					C6F2492E1F736DCE00840F2B = {
 						CreatedOnToolsVersion = 8.3.3;
@@ -548,6 +673,7 @@
 				4E807D9219461D9000D875D1 /* HostingApp */,
 				4E807DB819461DC700D875D1 /* Keyboard */,
 				C6F2492E1F736DCE00840F2B /* BaseKeyboard */,
+				990440A123FC14A30063064E /* HostingAppTests */,
 			);
 		};
 /* End PBXProject section */
@@ -559,6 +685,7 @@
 			files = (
 				C6EA31C321AF181D0014F3B6 /* KeyboardDefinitions.json in Resources */,
 				C691A0EA23682C9700085AC3 /* TestingView.xib in Resources */,
+				999790B823F2F548003F7885 /* WordContextView.xib in Resources */,
 				C643BF5B20BD483C00124DDC /* LaunchScreen.storyboard in Resources */,
 				4EF16F9619D255030076AFCB /* Images.xcassets in Resources */,
 				C6A2E01D1EDFA259006BAB69 /* AboutView.xib in Resources */,
@@ -568,7 +695,15 @@
 				C67A3F3A1EE7F24900C9015C /* About.txt in Resources */,
 				C64937D2218DC7FA00D0C9DC /* dicts.bundle in Resources */,
 				C65430B21EC94BD1007FC053 /* InstructionsView.xib in Resources */,
+				999790AE23F2B545003F7885 /* UserDictionaryView.xib in Resources */,
 				C63EE1012362F7E500A1E15A /* Settings.bundle in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		990440A023FC14A30063064E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -592,6 +727,48 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		190D68A4AC511AEDD140CF31 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HostingAppTests/Pods-HostingAppTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/DivvunSpell/DivvunSpell.framework",
+				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DivvunSpell.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HostingAppTests/Pods-HostingAppTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		237DB54F734E73280EC83E98 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-HostingAppTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		9949AAE423D9EA8F00456D61 /* Run Script - SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -653,12 +830,14 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-HostingApp/Pods-HostingApp-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
 				"${BUILT_PRODUCTS_DIR}/Sentry/Sentry.framework",
 				"${BUILT_PRODUCTS_DIR}/UIDeviceComplete/UIDeviceComplete.framework",
 				"${BUILT_PRODUCTS_DIR}/DivvunSpell/DivvunSpell.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sentry.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIDeviceComplete.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DivvunSpell.framework",
@@ -693,22 +872,35 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9904409523FAC0C50063064E /* DisclosureCell.swift in Sources */,
 				C676AD5B1EC9679000523FF3 /* InstructionsController.swift in Sources */,
+				99989FB72417990E00EF8CD3 /* UserDictionary+Test.swift in Sources */,
 				C6B638441EDF81B200A6ECB2 /* SimpleButton.swift in Sources */,
 				C63EE0FF2361D86800A1E15A /* MenuButton.swift in Sources */,
+				997550B623EAC631004ED6A5 /* UserDictionary.swift in Sources */,
+				999790B223F2F484003F7885 /* WordContextViewController.swift in Sources */,
 				C655E8541EC5551100B12BE4 /* Extensions.swift in Sources */,
 				C691A0E723682C8B00085AC3 /* TestingController.swift in Sources */,
 				C65430B41EC94BF0007FC053 /* LanguagesController.swift in Sources */,
+				999790AC23F2B4E8003F7885 /* UserDictionaryViewController.swift in Sources */,
+				999790BA23F40E4F003F7885 /* WordContext.swift in Sources */,
+				999790B623F2F536003F7885 /* WordContextView.swift in Sources */,
 				C65430B01EC94BC7007FC053 /* InstructionsView.swift in Sources */,
 				4EF16F9B19D2550D0076AFCB /* AppDelegate.swift in Sources */,
+				997021052416DF8C00A81A27 /* KeyboardLocale+AllLocales.swift in Sources */,
 				C676AD5F1EC985EB00523FF3 /* Strings.swift in Sources */,
 				C655E85A1EC558D000B12BE4 /* HomeController.swift in Sources */,
+				99DA1847240D1010003E7353 /* UserDictionaryService.swift in Sources */,
+				9904409223F84BDC0063064E /* SettingsViewController.swift in Sources */,
 				C6A2E01F1EDFAAA2006BAB69 /* AboutView.swift in Sources */,
+				9904409B23FBDC200063064E /* KeyboardLocale.swift in Sources */,
 				C6996B5722FC2C93007EBC3D /* Utils.swift in Sources */,
 				C655E8561EC5559200B12BE4 /* HomeView.swift in Sources */,
 				C6A3905B1EB61BF8009378C1 /* KeyboardSettings.swift in Sources */,
 				C691A0EB23682C9700085AC3 /* TestingView.swift in Sources */,
 				C6B638461EDF94CA00A6ECB2 /* AboutController.swift in Sources */,
+				9904409D23FBE63F0063064E /* KeyboardLocalesViewController.swift in Sources */,
+				999790B023F2B55F003F7885 /* UserDictionaryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -720,17 +912,30 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9904409E23FC14A30063064E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				990440A523FC14A30063064E /* UserDictionaryTests.swift in Sources */,
+				99DA1846240D09B5003E7353 /* UserDictionaryServiceTests.swift in Sources */,
+				99DA18412408294A003E7353 /* WordContextTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C6F2492A1F736DCE00840F2B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				997550B723EAC631004ED6A5 /* UserDictionary.swift in Sources */,
 				99DD30F623E307430065E8D8 /* Audio.swift in Sources */,
 				C6996B5322FB06FA007EBC3D /* DeadKeyHandler.swift in Sources */,
 				C6996B5E22FC3257007EBC3D /* DivvunSpellBannerPlugin.swift in Sources */,
+				999790BB23F40E4F003F7885 /* WordContext.swift in Sources */,
 				C6996B5C22FC2D3E007EBC3D /* CursorContext.swift in Sources */,
 				C6996B5A22FC2CC7007EBC3D /* SystemKeys.swift in Sources */,
 				C6F249461F736E1400840F2B /* KeyboardDefinition.swift in Sources */,
 				C6F249471F736E1A00840F2B /* KeyboardViewController.swift in Sources */,
+				99DA184424095AF0003E7353 /* UserDictionaryService.swift in Sources */,
 				C649D3D4234B7C8000EF4273 /* KeyView.swift in Sources */,
 				991EE55023D9AB4700DC3677 /* ViewDebugger.swift in Sources */,
 				FDAF59AF22F9CD0700F7C9FC /* KeyOverlayView.swift in Sources */,
@@ -740,6 +945,7 @@
 				FDBD09C52333A56800303152 /* SplitKeyboard.swift in Sources */,
 				FDAF59AD22F9CD0700F7C9FC /* BannerView.swift in Sources */,
 				FDAF59A922F9CCF200F7C9FC /* LongPressController.swift in Sources */,
+				990440AC23FC245D0063064E /* KeyboardLocale.swift in Sources */,
 				C6F9564823E4520D009C469C /* init.m in Sources */,
 				C649D3D5234B7D8400EF4273 /* KeyboardView.swift in Sources */,
 				C6F2494F1F736E3E00840F2B /* KeyboardSettings.swift in Sources */,
@@ -753,6 +959,11 @@
 			isa = PBXTargetDependency;
 			target = 4E807DB819461DC700D875D1 /* Keyboard */;
 			targetProxy = 4E807DBF19461DC700D875D1 /* PBXContainerItemProxy */;
+		};
+		990440A823FC14A30063064E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4E807D9219461D9000D875D1 /* HostingApp */;
+			targetProxy = 990440A723FC14A30063064E /* PBXContainerItemProxy */;
 		};
 		C6F249351F736DCE00840F2B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -849,6 +1060,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				METAL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "-D ENABLE_USER_DICTIONARY";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -898,6 +1110,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				METAL_ENABLE_DEBUG_INFO = NO;
+				OTHER_SWIFT_FLAGS = "-D ENABLE_USER_DICTIONARY";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -936,7 +1149,7 @@
 					"-framework",
 					"\"DivvunSpell\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaKeyboard;
+				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaKeyboardTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Keyboard/Keyboard-Bridging-Header.h";
@@ -976,7 +1189,7 @@
 					"-framework",
 					"\"DivvunSpell\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaKeyboard;
+				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaKeyboardTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Keyboard/Keyboard-Bridging-Header.h";
@@ -1002,7 +1215,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
-				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaKeyboard.Keyboard;
+				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaKeyboardTest.Keyboard;
 				PRODUCT_NAME = Keyboard;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1032,7 +1245,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
-				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaKeyboard.Keyboard;
+				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaKeyboardTest.Keyboard;
 				PRODUCT_NAME = Keyboard;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1042,6 +1255,63 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "$(VALID_ARCHS)";
+			};
+			name = Release;
+		};
+		990440AA23FC14A30063064E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B864D3FAC77DCC6C6E7798FF /* Pods-HostingAppTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = HostingAppTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaKeyboardTest.HostingAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HostingApp.app/HostingApp";
+			};
+			name = Debug;
+		};
+		990440AB23FC14A30063064E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 310C67763D5195FB885AEFB5 /* Pods-HostingAppTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = HostingAppTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaKeyboardTest.HostingAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HostingApp.app/HostingApp";
 			};
 			name = Release;
 		};
@@ -1161,6 +1431,15 @@
 			buildConfigurations = (
 				4E807DC519461DC700D875D1 /* Debug */,
 				4E807DC619461DC700D875D1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		990440A923FC14A30063064E /* Build configuration list for PBXNativeTarget "HostingAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				990440AA23FC14A30063064E /* Debug */,
+				990440AB23FC14A30063064E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
