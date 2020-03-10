@@ -2,13 +2,16 @@
 "addNewKeyboard" = "Lasit ođđa boallobeavddi …";
 "allowFullAccess" = "Atte dievaslaš beassan dán áppii";
 "attributions" = "Eará gáldut";
+"contextsFor" = "Contexts for \"%1$@\"";
 "enableTapSoundsPlain" = "Jus háliidat gullat jienaid go coahkkalat boallobeavddi, de coahkkal %1$@ ja bija johtui %2$@.";
 "general" = "Oppalaš";
 "keyboard" = "Boallobeavddi";
 "keyboards" = "Boallobeavddit";
 "language" = "Giella";
 "layouts" = "Hámuhusat";
-"locale_sjd" = "Gielddasámegiella";
+"localeSjd" = "Gielddasámegiella";
+"noUserWords" = "No user-created words yet.";
+"noUserWordsDescription" = "Words that are left uncorrected and are not in the built-in dictionary will appear here.";
 "openAppPlain" = "Raba %1$@-áppa";
 "openSettings" = "Raba heivehusaid";
 "save" = "Vurke";
@@ -17,4 +20,5 @@
 "settings" = "Heivehusat";
 "skip" = "Njuike badjel";
 "tapPlain" = "Coahkkal %1$@";
+"userDictionary" = "User Dictionary";
 "whenYouHaveFinished" = "Go leat geargan, máhcat dán áppii ja joatkke barggu.";

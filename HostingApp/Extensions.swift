@@ -3,6 +3,32 @@ import UIKit
 protocol Nibbable {}
 protocol HideNavBar {}
 
+protocol ReusableView: AnyObject {
+    static var reuseIdentifier: String { get }
+}
+
+extension ReusableView where Self: UIView {
+    static var reuseIdentifier: String {
+        return String(describing: self)
+    }
+}
+
+extension UITableViewCell: ReusableView {}
+
+extension UITableView {
+    func register<T: UITableViewCell>(_: T.Type) {
+        register(T.self, forCellReuseIdentifier: T.reuseIdentifier)
+    }
+
+    func dequeueReusableCell<T: UITableViewCell>(_: T.Type) -> UITableViewCell {
+        guard let cell = dequeueReusableCell(withIdentifier: T.reuseIdentifier) as? T else {
+            fatalError("Could not dequeue cell with identifier '\(T.reuseIdentifier)'")
+        }
+
+        return cell
+    }
+}
+
 extension Nibbable where Self: UIView {
     static var nibName: String {
         return String(describing: self)
@@ -81,19 +107,6 @@ extension Strings {
         return attr
     }
 
-    private static func bolden(string: String, item: String, size: CGFloat) -> NSAttributedString {
-        let nsstring = string as NSString
-        let attr = NSMutableAttributedString(string: string)
-
-        attr.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: size), range: nsstring.range(of: string))
-        attr.addAttribute(NSAttributedString.Key.font,
-                          value: UIFont.systemFont(ofSize: size,
-                                                   weight: UIFont.Weight(rawValue: 0.3)),
-                          range: nsstring.range(of: item))
-
-        return attr
-    }
-
     static func creditWithUrls() -> NSAttributedString {
         let string: NSString = "SimpleButton © Andreas Tinoco Lobo\nTap icon © Icons8\nLanguage icon © Icons8"
 
@@ -119,12 +132,12 @@ extension Strings {
 
     static func openApp(item: String, size: CGFloat = 15) -> NSAttributedString {
         let plain = Strings.openAppPlain(item: item)
-        return bolden(string: plain, item: item, size: size)
+        return plain.bolden(substring: item, size: size)
     }
 
     static func tap(item: String, size: CGFloat = 15) -> NSAttributedString {
         let plain = Strings.tapPlain(item: item)
-        return bolden(string: plain, item: item, size: size)
+        return plain.bolden(substring: item, size: size)
     }
 
     static var supportedLocales: [Locale] = {
@@ -162,4 +175,8 @@ extension Strings {
 
         return bundle.localizedString(forKey: "locale_\(languageCode)", value: nil, table: nil)
     }
+}
+
+extension Notification.Name {
+    static let HostingAppWillEnterForeground = Notification.Name(rawValue: "HostingAppWillEnterForeground")
 }

@@ -8,7 +8,7 @@
 "keyboards" = "Tastaturer";
 "language" = "Språk";
 "layouts" = "Samiske tastatur";
-"locale_sjd" = "Kildinsamisk";
+"localeSjd" = "Kildinsamisk";
 "openAppPlain" = "Opna %1$@-appen";
 "openSettings" = "Opna Innstillinger";
 "save" = "Lagra";

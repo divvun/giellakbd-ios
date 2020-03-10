@@ -1,14 +1,17 @@
-"about" = "About the keyboard app";
+"about" = "About";
 "addNewKeyboard" = "Add New Keyboard…";
 "allowFullAccess" = "Allow Full Access";
 "attributions" = "Attributions";
+"contextsFor" = "Contexts for \"%1$@\"";
 "enableTapSoundsPlain" = "If you wish to enable key tap sounds, you must then tap %1$@ and toggle %2$@.";
 "general" = "General";
 "keyboard" = "Keyboard";
 "keyboards" = "Keyboards";
 "language" = "Language";
 "layouts" = "Layouts";
-"locale_sjd" = "Kildin Sami";
+"localeSjd" = "Kildin Sami";
+"noUserWords" = "No user-created words yet.";
+"noUserWordsDescription" = "Words that are left uncorrected and are not in the built-in dictionary will appear here.";
 "openAppPlain" = "Open the %1$@ app";
 "openSettings" = "Open Settings";
 "save" = "Save";
@@ -17,4 +20,5 @@
 "settings" = "Settings";
 "skip" = "Skip";
 "tapPlain" = "Tap %1$@";
+"userDictionary" = "User Dictionary";
 "whenYouHaveFinished" = "When you have finished, return to this app to continue.";

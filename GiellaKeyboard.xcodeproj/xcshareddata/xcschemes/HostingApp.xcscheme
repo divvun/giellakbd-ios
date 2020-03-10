@@ -37,6 +37,16 @@
          </BuildableReference>
       </MacroExpansion>
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "990440A123FC14A30063064E"
+               BuildableName = "HostingAppTests.xctest"
+               BlueprintName = "HostingAppTests"
+               ReferencedContainer = "container:GiellaKeyboard.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
