@@ -11,7 +11,7 @@ public protocol DivvunSpellBannerDelegate: class {
     func didSelectBannerItem(_ banner: DivvunSpellBannerView, item: BannerItem)
 }
 
-public class DivvunSpellBannerView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+public class DivvunSpellBannerView: UIView {
     private var theme: ThemeType
     private let numberOfSuggestions = 3
 
@@ -42,7 +42,7 @@ public class DivvunSpellBannerView: UIView, UICollectionViewDataSource, UICollec
     }
 
     func createCollectionViewLayout() -> UICollectionViewFlowLayout {
-        let flowLayout = BannerCollectionViewFlowLayout()
+        let flowLayout = DivvunSpellBannerLayout()
         flowLayout.estimatedItemSize = CGSize(width: 1, height: 1)
         flowLayout.scrollDirection = .horizontal
         flowLayout.minimumInteritemSpacing = 1
@@ -79,6 +79,12 @@ public class DivvunSpellBannerView: UIView, UICollectionViewDataSource, UICollec
         collectionView = makeCollectionView()
     }
 
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension DivvunSpellBannerView: UICollectionViewDataSource {
     public func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         return items.count
     }
@@ -86,7 +92,7 @@ public class DivvunSpellBannerView: UIView, UICollectionViewDataSource, UICollec
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
                                                             for: indexPath) as? DivvunSpellBannerCell else {
-            fatalError("Unable to cast to BannerCell")
+                                                                fatalError("Unable to cast to BannerCell")
         }
         cell.configure(theme: theme)
         cell.set(item: items[indexPath.item])
@@ -94,6 +100,20 @@ public class DivvunSpellBannerView: UIView, UICollectionViewDataSource, UICollec
         return cell
     }
 
+}
+
+extension DivvunSpellBannerView: UICollectionViewDelegate {
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+
+        guard let item = items[indexPath.item] else {
+            return
+        }
+        delegate?.didSelectBannerItem(self, item: item)
+    }
+}
+
+extension DivvunSpellBannerView: UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView,
                                layout _: UICollectionViewLayout,
                                sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -110,89 +130,76 @@ public class DivvunSpellBannerView: UIView, UICollectionViewDataSource, UICollec
                                  boundingBox.width + theme.bannerHorizontalMargin * 2),
                       height: collectionView.frame.height)
     }
+}
 
-    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        collectionView.deselectItem(at: indexPath, animated: true)
+class DivvunSpellBannerLayout: UICollectionViewFlowLayout {
+    private let separatorKind = "bannerSeparator"
 
-        guard let item = items[indexPath.item] else {
-            return
-        }
-        delegate?.didSelectBannerItem(self, item: item)
+    override init() {
+        super.init()
+        register(DivvunSpellBannerSeparatorView.self, forDecorationViewOfKind: separatorKind)
     }
 
-    required init?(coder _: NSCoder) {
+    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        guard let cellAttributes = super.layoutAttributesForElements(in: rect) else {
+            return nil
+        }
+
+        var decoratorAttributes = [UICollectionViewLayoutAttributes]()
+
+        for cellAttribute in cellAttributes {
+            let indexPath = cellAttribute.indexPath
+            let separatorAttributes = UICollectionViewLayoutAttributes.init(forDecorationViewOfKind: separatorKind,
+                                                                            with: indexPath)
+            let cellFrame = cellAttribute.frame
+
+            separatorAttributes.frame = CGRect(x: cellFrame.maxX,
+                                               y: cellFrame.origin.y,
+                                               width: minimumLineSpacing,
+                                               height: cellFrame.height)
+            separatorAttributes.zIndex = 1000
+
+            decoratorAttributes.append(separatorAttributes)
+        }
+
+        let newAttributes = cellAttributes + decoratorAttributes
+        return newAttributes
+    }
+
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    class SeparatorView: UICollectionReusableView {
-        // This is dirty. Ideally we'd get this from the theme already created and being passed around,
-        // but since this view is initialized by the system, there seemed no elegant way to do that.
-        private lazy var baseTheme: _Theme = { Theme(traits: self.traitCollection) }()
-        private(set) lazy var theme: ThemeType = {
-            baseTheme.select(traits: self.traitCollection)
-        }()
-
-        private let separatorLine = UIView()
-
-        override init(frame: CGRect) {
-            super.init(frame: frame)
-
-            translatesAutoresizingMaskIntoConstraints = false
-            backgroundColor = theme.bannerBackgroundColor
-
-            setupSeparatorLine()
-        }
-
-        private func setupSeparatorLine() {
-            separatorLine.translatesAutoresizingMaskIntoConstraints = false
-            addSubview(separatorLine)
-            let paddingY: CGFloat = 12
-            separatorLine.fill(superview: self, margins: UIEdgeInsets(top: paddingY, left: 0, bottom: paddingY, right: 0))
-            separatorLine.backgroundColor = theme.bannerSeparatorColor
-        }
-
-        required init?(coder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
-        }
-    }
-
-    class BannerCollectionViewFlowLayout: UICollectionViewFlowLayout {
-        private let separatorKind = "bannerSeparator"
-
-        override init() {
-            super.init()
-            register(DivvunSpellBannerView.SeparatorView.self, forDecorationViewOfKind: separatorKind)
-        }
-
-        override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-            guard let cellAttributes = super.layoutAttributesForElements(in: rect) else {
-                return nil
-            }
-
-            var decoratorAttributes = [UICollectionViewLayoutAttributes]()
-
-            for cellAttribute in cellAttributes {
-                let indexPath = cellAttribute.indexPath
-                let separatorAttributes = UICollectionViewLayoutAttributes.init(forDecorationViewOfKind: separatorKind,
-                                                                                with: indexPath)
-                let cellFrame = cellAttribute.frame
-
-                separatorAttributes.frame = CGRect(x: cellFrame.maxX,
-                                                   y: cellFrame.origin.y,
-                                                   width: minimumLineSpacing,
-                                                   height: cellFrame.height)
-                separatorAttributes.zIndex = 1000
-
-                decoratorAttributes.append(separatorAttributes)
-            }
-
-            let newAttributes = cellAttributes + decoratorAttributes
-            return newAttributes
-        }
-
-        required init?(coder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
-        }
-    }
-
 }
+
+class DivvunSpellBannerSeparatorView: UICollectionReusableView {
+    // This is dirty. Ideally we'd get this from the theme already created and being passed around,
+    // but since this view is initialized by the system, there seemed no elegant way to do that.
+    private lazy var baseTheme: _Theme = { Theme(traits: self.traitCollection) }()
+    private(set) lazy var theme: ThemeType = {
+        baseTheme.select(traits: self.traitCollection)
+    }()
+
+    private let separatorLine = UIView()
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+
+        translatesAutoresizingMaskIntoConstraints = false
+        backgroundColor = theme.bannerBackgroundColor
+
+        setupSeparatorLine()
+    }
+
+    private func setupSeparatorLine() {
+        separatorLine.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(separatorLine)
+        let paddingY: CGFloat = 12
+        separatorLine.fill(superview: self, margins: UIEdgeInsets(top: paddingY, left: 0, bottom: paddingY, right: 0))
+        separatorLine.backgroundColor = theme.bannerSeparatorColor
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
