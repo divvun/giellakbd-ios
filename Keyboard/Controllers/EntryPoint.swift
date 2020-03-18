@@ -1,7 +1,7 @@
 import BaseKeyboard
 
 final class EntryKeyboard: KeyboardViewController {
-    private var bannerPlugin: DivvunSpellBannerPlugin?
+    private var bannerPlugin: DivvunSpellBanner?
     private var showsBanner = true
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -15,7 +15,7 @@ final class EntryKeyboard: KeyboardViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if showsBanner {
-            bannerPlugin = DivvunSpellBannerPlugin(keyboard: self)
+            bannerPlugin = DivvunSpellBanner(keyboard: self)
         }
     }
 }

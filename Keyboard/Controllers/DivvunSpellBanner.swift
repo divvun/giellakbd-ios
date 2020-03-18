@@ -3,10 +3,10 @@ import Sentry
 import DivvunSpell
 
 final class SuggestionOp: Operation {
-    weak var plugin: DivvunSpellBannerPlugin?
+    weak var plugin: DivvunSpellBanner?
     let word: String
 
-    init(plugin: DivvunSpellBannerPlugin, word: String) {
+    init(plugin: DivvunSpellBanner, word: String) {
         self.plugin = plugin
         self.word = word
     }
@@ -64,7 +64,7 @@ final class SuggestionOp: Operation {
 
 }
 
-extension DivvunSpellBannerPlugin: BannerViewDelegate {
+extension DivvunSpellBanner: BannerViewDelegate {
     public func textInputDidChange(_ banner: BannerView, context: CursorContext) {
         if self.keyboard.hasFullAccess {
             dictionaryService?.updateContext(WordContext(cursorContext: context))
@@ -88,7 +88,7 @@ extension DivvunSpellBannerPlugin: BannerViewDelegate {
     }
 }
 
-public final class DivvunSpellBannerPlugin {
+public final class DivvunSpellBanner {
     unowned let banner: BannerView
     unowned let keyboard: KeyboardViewController
 
