@@ -342,7 +342,6 @@
 				FDAF59A822F9CCF200F7C9FC /* LongPressController.swift */,
 				C6F249671F736FEE00840F2B /* EntryPoint.swift */,
 				C6996B5122FB0055007EBC3D /* DeadKeyHandler.swift */,
-				C6996B5D22FC3257007EBC3D /* DivvunSpellBanner.swift */,
 				FDBD09C32333A50E00303152 /* SplitKeyboard.swift */,
 				99DD30F423E3059C0065E8D8 /* Audio.swift */,
 			);
@@ -477,6 +476,7 @@
 		99074EE6242237DE00075480 /* DivvunSpellBanner */ = {
 			isa = PBXGroup;
 			children = (
+				C6996B5D22FC3257007EBC3D /* DivvunSpellBanner.swift */,
 				FDAF59AA22F9CD0600F7C9FC /* DivvunSpellBannerView.swift */,
 				99074EE3242230F000075480 /* DivvunSpellBannerCell.swift */,
 				99074EE72422383700075480 /* DivuunSpellBannerCollectionViewFlowLayout.swift */,
