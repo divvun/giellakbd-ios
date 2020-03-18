@@ -64,8 +64,8 @@ final class SuggestionOp: Operation {
 
 }
 
-extension DivvunSpellBanner: BannerViewDelegate {
-    public func textInputDidChange(_ banner: BannerView, context: CursorContext) {
+extension DivvunSpellBanner: DivvunSpellBannerDelegate {
+    public func textInputDidChange(_ banner: DivvunSpellBannerView, context: CursorContext) {
         if self.keyboard.hasFullAccess {
             dictionaryService?.updateContext(WordContext(cursorContext: context))
         }
@@ -79,7 +79,7 @@ extension DivvunSpellBanner: BannerViewDelegate {
         opQueue.addOperation(SuggestionOp(plugin: self, word: context.current.1))
     }
 
-    public func didSelectBannerItem(_ banner: BannerView, item: BannerItem) {
+    public func didSelectBannerItem(_ banner: DivvunSpellBannerView, item: BannerItem) {
         Audio.playClickSound()
         keyboard.replaceSelected(with: item.value)
         opQueue.cancelAllOperations()
@@ -89,7 +89,7 @@ extension DivvunSpellBanner: BannerViewDelegate {
 }
 
 public final class DivvunSpellBanner {
-    unowned let banner: BannerView
+    unowned let banner: DivvunSpellBannerView
     unowned let keyboard: KeyboardViewController
 
     fileprivate var dictionaryService: UserDictionaryService?

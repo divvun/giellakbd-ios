@@ -43,7 +43,7 @@ open class KeyboardViewController: UIInputViewController {
     private var heightConstraint: NSLayoutConstraint!
     private var extraSpacingView: UIView!
     private var deadKeyHandler: DeadKeyHandler!
-    public private(set) var bannerView: BannerView?
+    public private(set) var bannerView: DivvunSpellBannerView?
     public private(set) var keyboardDefinition: KeyboardDefinition!
     private var keyboardMode: KeyboardMode = .normal
 
@@ -345,7 +345,7 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     private func setupBannerView() {
-        bannerView = BannerView(theme: theme)
+        bannerView = DivvunSpellBannerView(theme: theme)
         guard let bannerView = bannerView else { fatalError("No banner view found in setupBannerView") }
 
         bannerView.translatesAutoresizingMaskIntoConstraints = false

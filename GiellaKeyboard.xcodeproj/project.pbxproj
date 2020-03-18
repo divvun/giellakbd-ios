@@ -87,7 +87,7 @@
 		FDAF59A522F9CCE100F7C9FC /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAF59A222F9CCE000F7C9FC /* Theme.swift */; };
 		FDAF59A722F9CCE100F7C9FC /* KeyDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAF59A322F9CCE100F7C9FC /* KeyDefinition.swift */; };
 		FDAF59A922F9CCF200F7C9FC /* LongPressController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAF59A822F9CCF200F7C9FC /* LongPressController.swift */; };
-		FDAF59AD22F9CD0700F7C9FC /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAF59AA22F9CD0600F7C9FC /* BannerView.swift */; };
+		FDAF59AD22F9CD0700F7C9FC /* DivvunSpellBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAF59AA22F9CD0600F7C9FC /* DivvunSpellBannerView.swift */; };
 		FDAF59AF22F9CD0700F7C9FC /* KeyOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAF59AC22F9CD0700F7C9FC /* KeyOverlayView.swift */; };
 		FDBD09C52333A56800303152 /* SplitKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDBD09C32333A50E00303152 /* SplitKeyboard.swift */; };
 /* End PBXBuildFile section */
@@ -244,7 +244,7 @@
 		FDAF59A222F9CCE000F7C9FC /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		FDAF59A322F9CCE100F7C9FC /* KeyDefinition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyDefinition.swift; sourceTree = "<group>"; };
 		FDAF59A822F9CCF200F7C9FC /* LongPressController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LongPressController.swift; sourceTree = "<group>"; };
-		FDAF59AA22F9CD0600F7C9FC /* BannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
+		FDAF59AA22F9CD0600F7C9FC /* DivvunSpellBannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DivvunSpellBannerView.swift; sourceTree = "<group>"; };
 		FDAF59AB22F9CD0600F7C9FC /* KeyboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardView.swift; sourceTree = "<group>"; };
 		FDAF59AC22F9CD0700F7C9FC /* KeyOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyOverlayView.swift; sourceTree = "<group>"; };
 		FDBD09C32333A50E00303152 /* SplitKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitKeyboard.swift; sourceTree = "<group>"; };
@@ -303,7 +303,7 @@
 		4E6AEE4F19D2484B00931E8F /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				FDAF59AA22F9CD0600F7C9FC /* BannerView.swift */,
+				FDAF59AA22F9CD0600F7C9FC /* DivvunSpellBannerView.swift */,
 				FDAF59AB22F9CD0600F7C9FC /* KeyboardView.swift */,
 				FDAF59AC22F9CD0700F7C9FC /* KeyOverlayView.swift */,
 				C649D3D2234B7C7A00EF4273 /* KeyView.swift */,
@@ -947,7 +947,7 @@
 				FDAF59A722F9CCE100F7C9FC /* KeyDefinition.swift in Sources */,
 				FDAF59A522F9CCE100F7C9FC /* Theme.swift in Sources */,
 				FDBD09C52333A56800303152 /* SplitKeyboard.swift in Sources */,
-				FDAF59AD22F9CD0700F7C9FC /* BannerView.swift in Sources */,
+				FDAF59AD22F9CD0700F7C9FC /* DivvunSpellBannerView.swift in Sources */,
 				FDAF59A922F9CCF200F7C9FC /* LongPressController.swift in Sources */,
 				990440AC23FC245D0063064E /* KeyboardLocale.swift in Sources */,
 				C6F9564823E4520D009C469C /* init.m in Sources */,

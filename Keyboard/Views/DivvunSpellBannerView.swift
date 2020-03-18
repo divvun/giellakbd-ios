@@ -6,12 +6,12 @@ public struct BannerItem {
     public let value: String
 }
 
-public protocol BannerViewDelegate: class {
-    func textInputDidChange(_ banner: BannerView, context: CursorContext)
-    func didSelectBannerItem(_ banner: BannerView, item: BannerItem)
+public protocol DivvunSpellBannerDelegate: class {
+    func textInputDidChange(_ banner: DivvunSpellBannerView, context: CursorContext)
+    func didSelectBannerItem(_ banner: DivvunSpellBannerView, item: BannerItem)
 }
 
-public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+public class DivvunSpellBannerView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     private var theme: ThemeType
     private let numberOfSuggestions = 3
 
@@ -68,7 +68,7 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
         }
     }
 
-    weak public var delegate: BannerViewDelegate?
+    weak public var delegate: DivvunSpellBannerDelegate?
 
     private var items: [BannerItem?] = [BannerItem]()
 
@@ -214,7 +214,7 @@ public class BannerView: UIView, UICollectionViewDataSource, UICollectionViewDel
 
         override init() {
             super.init()
-            register(BannerView.SeparatorView.self, forDecorationViewOfKind: separatorKind)
+            register(DivvunSpellBannerView.SeparatorView.self, forDecorationViewOfKind: separatorKind)
         }
 
         override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
