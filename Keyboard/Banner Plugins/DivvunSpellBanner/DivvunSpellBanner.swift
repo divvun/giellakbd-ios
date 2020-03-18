@@ -2,92 +2,6 @@ import Foundation
 import Sentry
 import DivvunSpell
 
-final class SuggestionOp: Operation {
-    weak var plugin: DivvunSpellBanner?
-    let word: String
-
-    init(plugin: DivvunSpellBanner, word: String) {
-        self.plugin = plugin
-        self.word = word
-    }
-
-    override func main() {
-        if isCancelled {
-            return
-        }
-
-        showSpellingSuggestionsInBanner()
-    }
-
-    private func showSpellingSuggestionsInBanner() {
-        guard let plugin = self.plugin else { return }
-
-        let suggestionItems = getSuggestionItems(for: word)
-
-        if !isCancelled {
-            DispatchQueue.main.async {
-                plugin.banner.isHidden = false
-                plugin.banner.setBannerItems(suggestionItems)
-            }
-        }
-    }
-
-    private func getSuggestionItems(for word: String) -> [BannerItem] {
-        var suggestions = getSuggestions(for: word)
-
-        // Don't show the current word twice; it will always be shown in the banner item created below
-        suggestions.removeAll { $0 == word }
-        let suggestionItems = suggestions.map { BannerItem(title: $0, value: $0) }
-
-        let currentWord = BannerItem(title: "\"\(word)\"", value: word)
-
-        return [currentWord] + suggestionItems
-    }
-
-    private func getSuggestions(for word: String) -> [String] {
-        var suggestions: [String] = []
-
-        if let dictionary = self.plugin?.dictionaryService?.dictionary {
-            let userSuggestions = dictionary.getSuggestions(for: word)
-            suggestions.append(contentsOf: userSuggestions)
-        }
-
-        if let speller = self.plugin?.speller {
-            let spellerSuggestions = (try? speller
-                .suggest(word: word)
-                .prefix(3)) ?? []
-            suggestions.append(contentsOf: spellerSuggestions)
-        }
-
-        return suggestions
-    }
-
-}
-
-extension DivvunSpellBanner: DivvunSpellBannerDelegate {
-    public func textInputDidChange(_ banner: DivvunSpellBannerView, context: CursorContext) {
-        if self.keyboard.hasFullAccess {
-            dictionaryService?.updateContext(WordContext(cursorContext: context))
-        }
-
-        if context.current.1 == "" {
-            banner.setBannerItems([])
-            return
-        }
-
-        opQueue.cancelAllOperations()
-        opQueue.addOperation(SuggestionOp(plugin: self, word: context.current.1))
-    }
-
-    public func didSelectBannerItem(_ banner: DivvunSpellBannerView, item: BannerItem) {
-        Audio.playClickSound()
-        keyboard.replaceSelected(with: item.value)
-        opQueue.cancelAllOperations()
-
-        banner.setBannerItems([])
-    }
-}
-
 public final class DivvunSpellBanner {
     unowned let banner: DivvunSpellBannerView
     unowned let keyboard: KeyboardViewController
@@ -176,5 +90,90 @@ public final class DivvunSpellBanner {
             }
             #endif
         }
+    }
+}
+
+extension DivvunSpellBanner: DivvunSpellBannerDelegate {
+    public func textInputDidChange(_ banner: DivvunSpellBannerView, context: CursorContext) {
+        if self.keyboard.hasFullAccess {
+            dictionaryService?.updateContext(WordContext(cursorContext: context))
+        }
+
+        if context.current.1 == "" {
+            banner.setBannerItems([])
+            return
+        }
+
+        opQueue.cancelAllOperations()
+        opQueue.addOperation(SuggestionOperation(plugin: self, word: context.current.1))
+    }
+
+    public func didSelectBannerItem(_ banner: DivvunSpellBannerView, item: BannerItem) {
+        Audio.playClickSound()
+        keyboard.replaceSelected(with: item.value)
+        opQueue.cancelAllOperations()
+
+        banner.setBannerItems([])
+    }
+}
+
+final class SuggestionOperation: Operation {
+    weak var plugin: DivvunSpellBanner?
+    let word: String
+
+    init(plugin: DivvunSpellBanner, word: String) {
+        self.plugin = plugin
+        self.word = word
+    }
+
+    override func main() {
+        if isCancelled {
+            return
+        }
+
+        showSpellingSuggestionsInBanner()
+    }
+
+    private func showSpellingSuggestionsInBanner() {
+        guard let plugin = self.plugin else { return }
+
+        let suggestionItems = getSuggestionItems(for: word)
+
+        if !isCancelled {
+            DispatchQueue.main.async {
+                plugin.banner.isHidden = false
+                plugin.banner.setBannerItems(suggestionItems)
+            }
+        }
+    }
+
+    private func getSuggestionItems(for word: String) -> [BannerItem] {
+        var suggestions = getSuggestions(for: word)
+
+        // Don't show the current word twice; it will always be shown in the banner item created below
+        suggestions.removeAll { $0 == word }
+        let suggestionItems = suggestions.map { BannerItem(title: $0, value: $0) }
+
+        let currentWord = BannerItem(title: "\"\(word)\"", value: word)
+
+        return [currentWord] + suggestionItems
+    }
+
+    private func getSuggestions(for word: String) -> [String] {
+        var suggestions: [String] = []
+
+        if let dictionary = self.plugin?.dictionaryService?.dictionary {
+            let userSuggestions = dictionary.getSuggestions(for: word)
+            suggestions.append(contentsOf: userSuggestions)
+        }
+
+        if let speller = self.plugin?.speller {
+            let spellerSuggestions = (try? speller
+                .suggest(word: word)
+                .prefix(3)) ?? []
+            suggestions.append(contentsOf: spellerSuggestions)
+        }
+
+        return suggestions
     }
 }
