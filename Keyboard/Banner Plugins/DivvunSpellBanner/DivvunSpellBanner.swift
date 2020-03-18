@@ -93,7 +93,7 @@ public final class DivvunSpellBanner {
     }
 }
 
-extension DivvunSpellBanner: DivvunSpellBannerDelegate {
+extension DivvunSpellBanner: DivvunSpellBannerViewDelegate {
     public func textInputDidChange(_ banner: DivvunSpellBannerView, context: CursorContext) {
         if self.keyboard.hasFullAccess {
             dictionaryService?.updateContext(WordContext(cursorContext: context))

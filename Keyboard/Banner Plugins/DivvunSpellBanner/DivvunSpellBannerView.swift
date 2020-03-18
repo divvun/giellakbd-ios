@@ -6,7 +6,7 @@ public struct BannerItem {
     public let value: String
 }
 
-public protocol DivvunSpellBannerDelegate: class {
+public protocol DivvunSpellBannerViewDelegate: class {
     func textInputDidChange(_ banner: DivvunSpellBannerView, context: CursorContext)
     func didSelectBannerItem(_ banner: DivvunSpellBannerView, item: BannerItem)
 }
@@ -15,7 +15,7 @@ public class DivvunSpellBannerView: UIView {
     private var theme: ThemeType
     private let numberOfSuggestions = 3
 
-    weak public var delegate: DivvunSpellBannerDelegate?
+    weak public var delegate: DivvunSpellBannerViewDelegate?
 
     private var items: [BannerItem?] = [BannerItem]()
 
