@@ -52,8 +52,7 @@ public final class SpellBanner: Banner {
     }
 
     func updateTheme(_ theme: ThemeType) {
-        // TODO: implement me
-        // probably self.bannerView.updateTheme(theme)
+        bannerView.updateTheme(theme: theme)
     }
 
     private func getPrimaryLanguage() -> String? {

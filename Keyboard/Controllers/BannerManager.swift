@@ -32,7 +32,7 @@ final class BannerManager {
     }
 
     public func updateTheme(_ theme: ThemeType) {
-
+        divvunSpell.updateTheme(theme)
     }
 }
 
