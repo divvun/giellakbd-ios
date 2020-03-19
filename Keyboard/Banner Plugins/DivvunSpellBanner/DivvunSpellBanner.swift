@@ -2,6 +2,11 @@ import Foundation
 import Sentry
 import DivvunSpell
 
+protocol DivvunSpellBannerDelegate: class {
+    var hasFullAccess: Bool { get }
+    func didSelectSuggestion(banner: DivvunSpellBanner, text: String)
+}
+
 public final class DivvunSpellBanner: Banner {
     let bannerView: DivvunSpellBannerView
 
