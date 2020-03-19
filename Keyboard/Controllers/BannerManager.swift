@@ -11,13 +11,13 @@ final class BannerManager {
 
     weak var delegate: BannerManagerDelegate?
 
-    private let divvunSpell: DivvunSpellBanner
+    private let divvunSpell: SpellBanner
 
     init(view: UIView, theme: ThemeType, delegate: BannerManagerDelegate?) {
         self.view = view
         self.delegate = delegate
 
-        divvunSpell = DivvunSpellBanner(theme: theme)
+        divvunSpell = SpellBanner(theme: theme)
         divvunSpell.delegate = self
         presentBanner(divvunSpell)
     }
@@ -36,7 +36,7 @@ final class BannerManager {
     }
 }
 
-extension BannerManager: DivvunSpellBannerDelegate {
+extension BannerManager: SpellBannerDelegate {
     var hasFullAccess: Bool {
         if let delegate = delegate {
             return delegate.hasFullAccess
@@ -44,7 +44,7 @@ extension BannerManager: DivvunSpellBannerDelegate {
         return false
     }
 
-    func didSelectSuggestion(banner: DivvunSpellBanner, text: String) {
+    func didSelectSuggestion(banner: SpellBanner, text: String) {
         delegate?.bannerDidProvideInput(banner: banner, inputText: text)
     }
 }

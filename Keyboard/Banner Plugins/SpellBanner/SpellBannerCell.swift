@@ -1,6 +1,6 @@
 import UIKit
 
-class DivvunSpellBannerCell: UICollectionViewCell {
+class SpellBannerCell: UICollectionViewCell {
     private let titleLabel: UILabel
 
     private var heightConstraint: NSLayoutConstraint?
@@ -40,7 +40,7 @@ class DivvunSpellBannerCell: UICollectionViewCell {
         super.updateConstraints()
     }
 
-    func set(item: BannerItem?) {
+    func set(item: SpellBannerItem?) {
         guard let item = item else {
             titleLabel.text = ""
             return

@@ -1,31 +1,31 @@
 import UIKit
 import DivvunSpell
 
-public struct BannerItem {
+public struct SpellBannerItem {
     public let title: String
     public let value: String
 }
 
-public protocol DivvunSpellBannerViewDelegate: class {
-    func didSelectBannerItem(_ banner: DivvunSpellBannerView, item: BannerItem)
+public protocol SpellBannerViewDelegate: class {
+    func didSelectBannerItem(_ banner: SpellBannerView, item: SpellBannerItem)
 }
 
-public class DivvunSpellBannerView: UIView {
+public class SpellBannerView: UIView {
     private var theme: ThemeType
     private let numberOfSuggestions = 3
 
-    weak public var delegate: DivvunSpellBannerViewDelegate?
+    weak public var delegate: SpellBannerViewDelegate?
 
-    private var items: [BannerItem?] = [BannerItem]()
+    private var items: [SpellBannerItem?] = [SpellBannerItem]()
 
     private var collectionView: UICollectionView!
     private let reuseIdentifier = "bannercell"
 
-    public func setBannerItems(_ items: [BannerItem]) {
+    public func setBannerItems(_ items: [SpellBannerItem]) {
         if items.count >= numberOfSuggestions {
             self.items = Array(items.prefix(numberOfSuggestions))
         } else {
-            self.items = [BannerItem?].init(repeating: nil, count: numberOfSuggestions)
+            self.items = [SpellBannerItem?].init(repeating: nil, count: numberOfSuggestions)
             self.items.replaceSubrange(0..<items.count, with: items)
         }
         collectionView.reloadData()
@@ -41,7 +41,7 @@ public class DivvunSpellBannerView: UIView {
     }
 
     func createCollectionViewLayout() -> UICollectionViewFlowLayout {
-        let flowLayout = DivvunSpellBannerLayout()
+        let flowLayout = SpellBannerFlowLayout()
         flowLayout.estimatedItemSize = CGSize(width: 1, height: 1)
         flowLayout.scrollDirection = .horizontal
         flowLayout.minimumInteritemSpacing = 1
@@ -63,7 +63,7 @@ public class DivvunSpellBannerView: UIView {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(collectionView)
         collectionView.fill(superview: self)
-        collectionView.register(DivvunSpellBannerCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.register(SpellBannerCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView.backgroundColor = theme.bannerBackgroundColor
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.bounces = false
@@ -84,14 +84,14 @@ public class DivvunSpellBannerView: UIView {
     }
 }
 
-extension DivvunSpellBannerView: UICollectionViewDataSource {
+extension SpellBannerView: UICollectionViewDataSource {
     public func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         return items.count
     }
 
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
-                                                            for: indexPath) as? DivvunSpellBannerCell else {
+                                                            for: indexPath) as? SpellBannerCell else {
                                                                 fatalError("Unable to cast to BannerCell")
         }
         cell.configure(theme: theme)
@@ -102,7 +102,7 @@ extension DivvunSpellBannerView: UICollectionViewDataSource {
 
 }
 
-extension DivvunSpellBannerView: UICollectionViewDelegate {
+extension SpellBannerView: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
 
@@ -113,7 +113,7 @@ extension DivvunSpellBannerView: UICollectionViewDelegate {
     }
 }
 
-extension DivvunSpellBannerView: UICollectionViewDelegateFlowLayout {
+extension SpellBannerView: UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView,
                                layout _: UICollectionViewLayout,
                                sizeForItemAt indexPath: IndexPath) -> CGSize {

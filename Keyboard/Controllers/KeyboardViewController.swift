@@ -725,7 +725,7 @@ extension KeyboardViewController: KeyboardViewKeyboardKeyDelegate {
 
 extension KeyboardViewController: BannerManagerDelegate {
     func bannerDidProvideInput(banner: Banner, inputText: String) {
-        if banner is DivvunSpellBanner {
+        if banner is SpellBanner {
             Audio.playClickSound()
             replaceSelected(with: inputText)
         }

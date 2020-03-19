@@ -2,15 +2,15 @@ import Foundation
 import Sentry
 import DivvunSpell
 
-protocol DivvunSpellBannerDelegate: class {
+protocol SpellBannerDelegate: class {
     var hasFullAccess: Bool { get }
-    func didSelectSuggestion(banner: DivvunSpellBanner, text: String)
+    func didSelectSuggestion(banner: SpellBanner, text: String)
 }
 
-public final class DivvunSpellBanner: Banner {
-    let bannerView: DivvunSpellBannerView
+public final class SpellBanner: Banner {
+    let bannerView: SpellBannerView
 
-    weak var delegate: DivvunSpellBannerDelegate?
+    weak var delegate: SpellBannerDelegate?
 
     var view: UIView {
         bannerView
@@ -30,7 +30,7 @@ public final class DivvunSpellBanner: Banner {
     }()
 
     init(theme: ThemeType) {
-        self.bannerView = DivvunSpellBannerView(theme: theme)
+        self.bannerView = SpellBannerView(theme: theme)
         bannerView.delegate = self
 
         loadBHFST()
@@ -118,8 +118,8 @@ public final class DivvunSpellBanner: Banner {
     }
 }
 
-extension DivvunSpellBanner: DivvunSpellBannerViewDelegate {
-    public func didSelectBannerItem(_ banner: DivvunSpellBannerView, item: BannerItem) {
+extension SpellBanner: SpellBannerViewDelegate {
+    public func didSelectBannerItem(_ banner: SpellBannerView, item: SpellBannerItem) {
         delegate?.didSelectSuggestion(banner: self, text: item.value)
         opQueue.cancelAllOperations()
 
@@ -128,10 +128,10 @@ extension DivvunSpellBanner: DivvunSpellBannerViewDelegate {
 }
 
 final class SuggestionOperation: Operation {
-    weak var plugin: DivvunSpellBanner?
+    weak var plugin: SpellBanner?
     let word: String
 
-    init(plugin: DivvunSpellBanner, word: String) {
+    init(plugin: SpellBanner, word: String) {
         self.plugin = plugin
         self.word = word
     }
@@ -157,14 +157,14 @@ final class SuggestionOperation: Operation {
         }
     }
 
-    private func getSuggestionItems(for word: String) -> [BannerItem] {
+    private func getSuggestionItems(for word: String) -> [SpellBannerItem] {
         var suggestions = getSuggestions(for: word)
 
         // Don't show the current word twice; it will always be shown in the banner item created below
         suggestions.removeAll { $0 == word }
-        let suggestionItems = suggestions.map { BannerItem(title: $0, value: $0) }
+        let suggestionItems = suggestions.map { SpellBannerItem(title: $0, value: $0) }
 
-        let currentWord = BannerItem(title: "\"\(word)\"", value: word)
+        let currentWord = SpellBannerItem(title: "\"\(word)\"", value: word)
 
         return [currentWord] + suggestionItems
     }

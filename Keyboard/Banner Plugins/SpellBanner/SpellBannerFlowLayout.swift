@@ -1,11 +1,11 @@
 import UIKit
 
-class DivvunSpellBannerLayout: UICollectionViewFlowLayout {
+class SpellBannerFlowLayout: UICollectionViewFlowLayout {
     private let separatorKind = "bannerSeparator"
 
     override init() {
         super.init()
-        register(DivvunSpellBannerSeparatorView.self, forDecorationViewOfKind: separatorKind)
+        register(SpellBannerSeparatorView.self, forDecorationViewOfKind: separatorKind)
     }
 
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
