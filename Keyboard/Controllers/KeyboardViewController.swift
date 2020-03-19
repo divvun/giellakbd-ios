@@ -558,7 +558,6 @@ open class KeyboardViewController: UIInputViewController {
 
     open override func textDidChange(_: UITextInput?) {
         // The app has just changed the document's contents, the document context has been updated.
-
         updateInputState()
     }
 
