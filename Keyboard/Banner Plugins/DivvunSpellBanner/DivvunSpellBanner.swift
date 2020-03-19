@@ -5,6 +5,8 @@ import DivvunSpell
 public final class DivvunSpellBanner: Banner {
     let bannerView: DivvunSpellBannerView
 
+    weak var delegate: DivvunSpellBannerDelegate?
+
     var view: UIView {
         bannerView
     }
@@ -25,6 +27,7 @@ public final class DivvunSpellBanner: Banner {
     init(theme: ThemeType) {
         self.bannerView = DivvunSpellBannerView(theme: theme)
         bannerView.delegate = self
+
         loadBHFST()
     }
 
@@ -113,13 +116,8 @@ public final class DivvunSpellBanner: Banner {
 }
 
 extension DivvunSpellBanner: DivvunSpellBannerViewDelegate {
-    public func textInputDidChange(_ banner: DivvunSpellBannerView, context: CursorContext) {
-    }
-
     public func didSelectBannerItem(_ banner: DivvunSpellBannerView, item: BannerItem) {
-        Audio.playClickSound()
-        // FIXME: i don't think you can handle it
-//        keyboard.replaceSelected(with: item.value)
+        delegate?.didSelectSuggestion(banner: self, text: item.value)
         opQueue.cancelAllOperations()
 
         banner.setBannerItems([])

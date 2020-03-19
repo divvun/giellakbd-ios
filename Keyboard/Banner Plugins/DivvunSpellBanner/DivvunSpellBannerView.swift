@@ -7,7 +7,6 @@ public struct BannerItem {
 }
 
 public protocol DivvunSpellBannerViewDelegate: class {
-    func textInputDidChange(_ banner: DivvunSpellBannerView, context: CursorContext)
     func didSelectBannerItem(_ banner: DivvunSpellBannerView, item: BannerItem)
 }
 

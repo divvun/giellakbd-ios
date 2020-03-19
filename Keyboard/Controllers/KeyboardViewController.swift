@@ -280,7 +280,7 @@ open class KeyboardViewController: UIInputViewController {
 
         if withBanner {
             bannerContainerView = makeBannerContainerView()
-            bannerManager = BannerManager(view: bannerContainerView!, theme: theme)
+            bannerManager = BannerManager(view: bannerContainerView!, theme: theme, delegate: self)
         } else {
             self.keyboardView.topAnchor.constraint(equalTo: keyboardContainer.topAnchor).enable()
         }
@@ -720,5 +720,14 @@ extension KeyboardViewController: KeyboardViewDelegate {
 extension KeyboardViewController: KeyboardViewKeyboardKeyDelegate {
     func didTriggerKeyboardButton(sender: UIView, forEvent event: UIEvent) {
         self.handleInputModeList(from: sender, with: event)
+    }
+}
+
+extension KeyboardViewController: BannerManagerDelegate {
+    func bannerDidProvideInput(banner: Banner, inputText: String) {
+        if banner is DivvunSpellBanner {
+            Audio.playClickSound()
+            replaceSelected(with: inputText)
+        }
     }
 }
