@@ -55,6 +55,7 @@ public class DivvunSpellBannerView: UIView {
         self.theme = theme
         super.init(frame: .zero)
         backgroundColor = .clear
+        translatesAutoresizingMaskIntoConstraints = false
         collectionView = makeCollectionView()
     }
 

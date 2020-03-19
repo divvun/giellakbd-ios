@@ -1,5 +1,6 @@
 import Foundation
 
 protocol Banner: class {
-    func updateTheme(theme: ThemeType)
+    var view: UIView { get }
+    func updateTheme(_ theme: ThemeType)
 }

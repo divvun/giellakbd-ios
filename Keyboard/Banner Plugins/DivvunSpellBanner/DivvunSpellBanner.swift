@@ -2,9 +2,12 @@ import Foundation
 import Sentry
 import DivvunSpell
 
-public final class DivvunSpellBanner {
-    unowned let banner: DivvunSpellBannerView
-    unowned let keyboard: KeyboardViewController
+public final class DivvunSpellBanner: Banner {
+    let bannerView: DivvunSpellBannerView
+
+    var view: UIView {
+        bannerView
+    }
 
     fileprivate var dictionaryService: UserDictionaryService?
     fileprivate var archive: ThfstChunkedBoxSpellerArchive?
@@ -19,16 +22,32 @@ public final class DivvunSpellBanner {
         return opQueue
     }()
 
-    public init(keyboard: KeyboardViewController) {
-        self.keyboard = keyboard
-
-        guard let bannerView = keyboard.bannerView else {
-            fatalError("No banner view found in DivvunSpellBannerPlugin init")
-        }
-        banner = bannerView
-
-        banner.delegate = self
+    init(theme: ThemeType) {
+        self.bannerView = DivvunSpellBannerView(theme: theme)
+        bannerView.delegate = self
         loadBHFST()
+    }
+
+    public func setContext(_ context: CursorContext) {
+        // FIXME: can you handle it?
+        /*
+         if self.keyboard.hasFullAccess {
+         dictionaryService?.updateContext(WordContext(cursorContext: context))
+         }
+         */
+
+        if context.current.1 == "" {
+            bannerView.setBannerItems([])
+            return
+        }
+
+        opQueue.cancelAllOperations()
+        opQueue.addOperation(SuggestionOperation(plugin: self, word: context.current.1))
+    }
+
+    func updateTheme(_ theme: ThemeType) {
+        // TODO: implement me
+        // probably self.bannerView.updateTheme(theme)
     }
 
     private func getPrimaryLanguage() -> String? {
@@ -95,22 +114,12 @@ public final class DivvunSpellBanner {
 
 extension DivvunSpellBanner: DivvunSpellBannerViewDelegate {
     public func textInputDidChange(_ banner: DivvunSpellBannerView, context: CursorContext) {
-        if self.keyboard.hasFullAccess {
-            dictionaryService?.updateContext(WordContext(cursorContext: context))
-        }
-
-        if context.current.1 == "" {
-            banner.setBannerItems([])
-            return
-        }
-
-        opQueue.cancelAllOperations()
-        opQueue.addOperation(SuggestionOperation(plugin: self, word: context.current.1))
     }
 
     public func didSelectBannerItem(_ banner: DivvunSpellBannerView, item: BannerItem) {
         Audio.playClickSound()
-        keyboard.replaceSelected(with: item.value)
+        // FIXME: i don't think you can handle it
+//        keyboard.replaceSelected(with: item.value)
         opQueue.cancelAllOperations()
 
         banner.setBannerItems([])
@@ -141,8 +150,8 @@ final class SuggestionOperation: Operation {
 
         if !isCancelled {
             DispatchQueue.main.async {
-                plugin.banner.isHidden = false
-                plugin.banner.setBannerItems(suggestionItems)
+                plugin.bannerView.isHidden = false
+                plugin.bannerView.setBannerItems(suggestionItems)
             }
         }
     }
