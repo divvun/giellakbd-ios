@@ -9,6 +9,7 @@ protocol SpellBannerDelegate: class {
 
 public final class SpellBanner: Banner {
     let bannerView: SpellBannerView
+    lazy var suggestionService = SuggestionService(banner: self)
 
     weak var delegate: SpellBannerDelegate?
 
@@ -21,13 +22,6 @@ public final class SpellBanner: Banner {
     fileprivate var speller: ThfstChunkedBoxSpeller? {
         return try? archive?.speller()
     }
-
-    let opQueue: OperationQueue = {
-        let opQueue = OperationQueue()
-        opQueue.underlyingQueue = DispatchQueue.global(qos: .userInteractive)
-        opQueue.maxConcurrentOperationCount = 1
-        return opQueue
-    }()
 
     init(theme: ThemeType) {
         self.bannerView = SpellBannerView(theme: theme)
@@ -42,13 +36,29 @@ public final class SpellBanner: Banner {
             dictionaryService?.updateContext(WordContext(cursorContext: context))
         }
 
-        if context.current.1 == "" {
+        let currentWord = context.current.1
+
+        if currentWord.isEmpty {
             bannerView.setBannerItems([])
             return
         }
 
-        opQueue.cancelAllOperations()
-        opQueue.addOperation(SuggestionOperation(plugin: self, word: context.current.1))
+        suggestionService.getSuggestionsFor(currentWord) { (suggestions) in
+            let suggestionItems = self.makeSuggestionBannerItems(currentWord: currentWord, suggestions: suggestions)
+            self.bannerView.isHidden = false
+            self.bannerView.setBannerItems(suggestionItems)
+        }
+    }
+
+    private func makeSuggestionBannerItems(currentWord: String, suggestions: [String]) -> [SpellBannerItem] {
+        var suggestions = suggestions
+        // Don't show the current word twice; it will always be shown in the banner item created below
+        suggestions.removeAll { $0 == currentWord }
+        let suggestionItems = suggestions.map { SpellBannerItem(title: $0, value: $0) }
+
+        let currentWordItem = SpellBannerItem(title: "\"\(currentWord)\"", value: currentWord)
+
+        return [currentWordItem] + suggestionItems
     }
 
     func updateTheme(_ theme: ThemeType) {
@@ -120,19 +130,47 @@ public final class SpellBanner: Banner {
 extension SpellBanner: SpellBannerViewDelegate {
     public func didSelectBannerItem(_ banner: SpellBannerView, item: SpellBannerItem) {
         delegate?.didSelectSuggestion(banner: self, text: item.value)
-        opQueue.cancelAllOperations()
+        suggestionService.cancelAllOperations()
 
         banner.setBannerItems([])
     }
 }
 
-final class SuggestionOperation: Operation {
-    weak var plugin: SpellBanner?
-    let word: String
+typealias SuggestionCompletion = ([String]) -> Void
 
-    init(plugin: SpellBanner, word: String) {
-        self.plugin = plugin
+final class SuggestionService {
+    let banner: SpellBanner
+    let opQueue: OperationQueue = {
+        let opQueue = OperationQueue()
+        opQueue.underlyingQueue = DispatchQueue.global(qos: .userInteractive)
+        opQueue.maxConcurrentOperationCount = 1
+        return opQueue
+    }()
+
+    init(banner: SpellBanner) {
+        self.banner = banner
+    }
+
+    public func getSuggestionsFor(_ word: String, completion: @escaping SuggestionCompletion) {
+        cancelAllOperations()
+        let suggestionOp = SuggestionOperation(banner: banner, word: word, completion: completion)
+        opQueue.addOperation(suggestionOp)
+    }
+
+    public func cancelAllOperations() {
+        opQueue.cancelAllOperations()
+    }
+}
+
+final class SuggestionOperation: Operation {
+    weak var banner: SpellBanner?
+    let word: String
+    let completion: SuggestionCompletion
+
+    init(banner: SpellBanner, word: String, completion: @escaping SuggestionCompletion) {
+        self.banner = banner
         self.word = word
+        self.completion = completion
     }
 
     override func main() {
@@ -140,43 +178,23 @@ final class SuggestionOperation: Operation {
             return
         }
 
-        showSpellingSuggestionsInBanner()
-    }
-
-    private func showSpellingSuggestionsInBanner() {
-        guard let plugin = self.plugin else { return }
-
-        let suggestionItems = getSuggestionItems(for: word)
-
+        let suggestions = getSuggestions(for: word)
         if !isCancelled {
             DispatchQueue.main.async {
-                plugin.bannerView.isHidden = false
-                plugin.bannerView.setBannerItems(suggestionItems)
+                self.completion(suggestions)
             }
         }
-    }
-
-    private func getSuggestionItems(for word: String) -> [SpellBannerItem] {
-        var suggestions = getSuggestions(for: word)
-
-        // Don't show the current word twice; it will always be shown in the banner item created below
-        suggestions.removeAll { $0 == word }
-        let suggestionItems = suggestions.map { SpellBannerItem(title: $0, value: $0) }
-
-        let currentWord = SpellBannerItem(title: "\"\(word)\"", value: word)
-
-        return [currentWord] + suggestionItems
     }
 
     private func getSuggestions(for word: String) -> [String] {
         var suggestions: [String] = []
 
-        if let dictionary = self.plugin?.dictionaryService?.dictionary {
+        if let dictionary = self.banner?.dictionaryService?.dictionary {
             let userSuggestions = dictionary.getSuggestions(for: word)
             suggestions.append(contentsOf: userSuggestions)
         }
 
-        if let speller = self.plugin?.speller {
+        if let speller = self.banner?.speller {
             let spellerSuggestions = (try? speller
                 .suggest(word: word)
                 .prefix(3)) ?? []
