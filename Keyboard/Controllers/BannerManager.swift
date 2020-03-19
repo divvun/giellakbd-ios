@@ -2,6 +2,7 @@ import Foundation
 import DivvunSpell // TODO: possible to remove this dependency except for inside DivvunSpellBanner?
 
 protocol BannerManagerDelegate: class {
+    var hasFullAccess: Bool { get }
     func bannerDidProvideInput(banner: Banner, inputText: String)
 }
 
@@ -36,6 +37,13 @@ final class BannerManager {
 }
 
 extension BannerManager: DivvunSpellBannerDelegate {
+    var hasFullAccess: Bool {
+        if let delegate = delegate {
+            return delegate.hasFullAccess
+        }
+        return false
+    }
+
     func didSelectSuggestion(banner: DivvunSpellBanner, text: String) {
         delegate?.bannerDidProvideInput(banner: banner, inputText: text)
     }

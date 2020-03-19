@@ -32,12 +32,10 @@ public final class DivvunSpellBanner: Banner {
     }
 
     public func setContext(_ context: CursorContext) {
-        // FIXME: can you handle it?
-        /*
-         if self.keyboard.hasFullAccess {
-         dictionaryService?.updateContext(WordContext(cursorContext: context))
-         }
-         */
+        if let delegate = delegate,
+            delegate.hasFullAccess {
+            dictionaryService?.updateContext(WordContext(cursorContext: context))
+        }
 
         if context.current.1 == "" {
             bannerView.setBannerItems([])
