@@ -2,6 +2,8 @@ import Foundation
 import Sentry
 import DivvunSpell
 
+typealias SuggestionCompletion = ([String]) -> Void
+
 protocol SpellBannerDelegate: class {
     var hasFullAccess: Bool { get }
     func didSelectSuggestion(banner: SpellBanner, text: String)
@@ -9,7 +11,12 @@ protocol SpellBannerDelegate: class {
 
 public final class SpellBanner: Banner {
     let bannerView: SpellBannerView
-    lazy var suggestionService = SuggestionService(banner: self)
+    let opQueue: OperationQueue = {
+        let opQueue = OperationQueue()
+        opQueue.underlyingQueue = DispatchQueue.global(qos: .userInteractive)
+        opQueue.maxConcurrentOperationCount = 1
+        return opQueue
+    }()
 
     weak var delegate: SpellBannerDelegate?
 
@@ -39,11 +46,17 @@ public final class SpellBanner: Banner {
             return
         }
 
-        suggestionService.getSuggestionsFor(currentWord) { (suggestions) in
+        getSuggestionsFor(currentWord) { (suggestions) in
             let suggestionItems = self.makeSuggestionBannerItems(currentWord: currentWord, suggestions: suggestions)
             self.bannerView.isHidden = false
             self.bannerView.setBannerItems(suggestionItems)
         }
+    }
+
+    private func getSuggestionsFor(_ word: String, completion: @escaping SuggestionCompletion) {
+        opQueue.cancelAllOperations()
+        let suggestionOp = SuggestionOperation(banner: self, word: word, completion: completion)
+        opQueue.addOperation(suggestionOp)
     }
 
     private func makeSuggestionBannerItems(currentWord: String, suggestions: [String]) -> [SpellBannerItem] {
@@ -120,35 +133,8 @@ public final class SpellBanner: Banner {
 extension SpellBanner: SpellBannerViewDelegate {
     public func didSelectBannerItem(_ banner: SpellBannerView, item: SpellBannerItem) {
         delegate?.didSelectSuggestion(banner: self, text: item.value)
-        suggestionService.cancelAllOperations()
-
-        banner.setBannerItems([])
-    }
-}
-
-typealias SuggestionCompletion = ([String]) -> Void
-
-final class SuggestionService {
-    let banner: SpellBanner
-    let opQueue: OperationQueue = {
-        let opQueue = OperationQueue()
-        opQueue.underlyingQueue = DispatchQueue.global(qos: .userInteractive)
-        opQueue.maxConcurrentOperationCount = 1
-        return opQueue
-    }()
-
-    init(banner: SpellBanner) {
-        self.banner = banner
-    }
-
-    public func getSuggestionsFor(_ word: String, completion: @escaping SuggestionCompletion) {
-        cancelAllOperations()
-        let suggestionOp = SuggestionOperation(banner: banner, word: word, completion: completion)
-        opQueue.addOperation(suggestionOp)
-    }
-
-    public func cancelAllOperations() {
         opQueue.cancelAllOperations()
+        banner.setBannerItems([])
     }
 }
 
