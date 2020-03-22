@@ -10,22 +10,20 @@ protocol SpellBannerDelegate: class {
 }
 
 public final class SpellBanner: Banner {
-    let bannerView: SpellBannerView
-    let opQueue: OperationQueue = {
+    weak var delegate: SpellBannerDelegate?
+    private var dictionaryService: UserDictionaryService?
+    private var speller: ThfstChunkedBoxSpeller?
+    private let bannerView: SpellBannerView
+    private let opQueue: OperationQueue = {
         let opQueue = OperationQueue()
         opQueue.underlyingQueue = DispatchQueue.global(qos: .userInteractive)
         opQueue.maxConcurrentOperationCount = 1
         return opQueue
     }()
 
-    weak var delegate: SpellBannerDelegate?
-
     var view: UIView {
         bannerView
     }
-
-    fileprivate var dictionaryService: UserDictionaryService?
-    fileprivate var speller: ThfstChunkedBoxSpeller?
 
     init(theme: ThemeType) {
         self.bannerView = SpellBannerView(theme: theme)
