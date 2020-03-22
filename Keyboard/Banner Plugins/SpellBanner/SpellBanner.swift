@@ -55,7 +55,9 @@ public final class SpellBanner: Banner {
 
     private func getSuggestionsFor(_ word: String, completion: @escaping SuggestionCompletion) {
         opQueue.cancelAllOperations()
-        let suggestionOp = SuggestionOperation(banner: self, word: word, completion: completion)
+        let dictionary = self.dictionaryService?.dictionary
+        let speller = self.speller
+        let suggestionOp = SuggestionOperation(userDictionary: dictionary, speller: speller, word: word, completion: completion)
         opQueue.addOperation(suggestionOp)
     }
 
@@ -139,12 +141,17 @@ extension SpellBanner: SpellBannerViewDelegate {
 }
 
 final class SuggestionOperation: Operation {
-    weak var banner: SpellBanner?
+    weak var userDictionary: UserDictionary?
+    weak var speller: ThfstChunkedBoxSpeller?
     let word: String
     let completion: SuggestionCompletion
 
-    init(banner: SpellBanner, word: String, completion: @escaping SuggestionCompletion) {
-        self.banner = banner
+    init(userDictionary: UserDictionary?,
+         speller: ThfstChunkedBoxSpeller?,
+         word: String,
+         completion: @escaping SuggestionCompletion) {
+        self.userDictionary = userDictionary
+        self.speller = speller
         self.word = word
         self.completion = completion
     }
@@ -165,12 +172,12 @@ final class SuggestionOperation: Operation {
     private func getSuggestions(for word: String) -> [String] {
         var suggestions: [String] = []
 
-        if let dictionary = self.banner?.dictionaryService?.dictionary {
+        if let dictionary = userDictionary {
             let userSuggestions = dictionary.getSuggestions(for: word)
             suggestions.append(contentsOf: userSuggestions)
         }
 
-        if let speller = self.banner?.speller {
+        if let speller = speller {
             let spellerSuggestions = (try? speller
                 .suggest(word: word)
                 .prefix(3)) ?? []
