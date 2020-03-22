@@ -18,16 +18,12 @@ public final class SpellBanner: Banner {
     }
 
     fileprivate var dictionaryService: UserDictionaryService?
-    fileprivate var archive: ThfstChunkedBoxSpellerArchive?
-    fileprivate var speller: ThfstChunkedBoxSpeller? {
-        return try? archive?.speller()
-    }
+    fileprivate var speller: ThfstChunkedBoxSpeller?
 
     init(theme: ThemeType) {
         self.bannerView = SpellBannerView(theme: theme)
         bannerView.delegate = self
-
-        loadBHFST()
+        loadSpeller()
     }
 
     public func setContext(_ context: CursorContext) {
@@ -77,7 +73,7 @@ public final class SpellBanner: Banner {
         return nil
     }
 
-    private func loadBHFST() {
+    private func loadSpeller() {
         print("Loading speller…")
 
         DispatchQueue.global(qos: .background).async {
@@ -101,8 +97,11 @@ public final class SpellBanner: Banner {
                 return
             }
 
+            let speller: ThfstChunkedBoxSpeller
             do {
-                self.archive = try ThfstChunkedBoxSpellerArchive.open(path: path.path)
+                let archive = try ThfstChunkedBoxSpellerArchive.open(path: path.path)
+                speller = try archive.speller()
+                self.speller = speller
                 print("DivvunSpell loaded!")
             } catch {
                 let error = Sentry.Event(level: .error)
@@ -112,16 +111,7 @@ public final class SpellBanner: Banner {
             }
 
             #if ENABLE_USER_DICTIONARY
-            do {
-                if let speller = try self.archive?.speller() {
-                    self.dictionaryService = UserDictionaryService(speller: speller, locale: KeyboardLocale.current)
-                }
-            } catch {
-                let error = Sentry.Event(level: .error)
-                Client.shared?.send(event: error, completion: nil)
-                print("DivvunSpell UserDictionaryService **not** loaded.")
-                return
-            }
+            self.dictionaryService = UserDictionaryService(speller: speller, locale: KeyboardLocale.current)
             #endif
         }
     }
