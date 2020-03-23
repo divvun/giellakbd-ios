@@ -2,7 +2,7 @@ import UIKit
 
 private let blue = UIColor(r: 92, g: 133, b: 224)
 
-class HomePrimaryButton: MenuButton {
+final class HomePrimaryButton: MenuButton {
     override func configureButtonStyles() {
         super.configureButtonStyles()
 
@@ -11,7 +11,7 @@ class HomePrimaryButton: MenuButton {
     }
 }
 
-class HomeView: UIView, Nibbable {
+final class HomeView: UIView, Nibbable {
     @IBOutlet var bgImage: UIImageView!
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var langButton: UIButton!

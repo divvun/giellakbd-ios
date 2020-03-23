@@ -1,4 +1,4 @@
 import UIKit
 
-class TestingView: UIView, Nibbable {
+final class TestingView: UIView, Nibbable {
 }

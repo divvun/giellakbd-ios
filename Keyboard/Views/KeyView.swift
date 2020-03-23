@@ -1,6 +1,6 @@
 import UIDeviceComplete
 
-class KeyView: UIView {
+final class KeyView: UIView {
     private let key: KeyDefinition
     private let theme: ThemeType
 

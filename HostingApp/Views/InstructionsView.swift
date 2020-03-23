@@ -1,6 +1,6 @@
 import UIKit
 
-class InstructionsView: UIView, Nibbable {
+final class InstructionsView: UIView, Nibbable {
     @IBOutlet var step1Label: UILabel!
     @IBOutlet var step2Label: UILabel!
     @IBOutlet var step3Label: UILabel!

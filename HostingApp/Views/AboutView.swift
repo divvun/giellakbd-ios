@@ -1,6 +1,6 @@
 import UIKit
 
-class AboutView: UIView, Nibbable {
+final class AboutView: UIView, Nibbable {
     @IBOutlet var aboutLabel: UITextView!
     @IBOutlet var attributionLabel: UILabel!
     @IBOutlet var creditsLabel: UITextView!

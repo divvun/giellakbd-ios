@@ -14,7 +14,7 @@ protocol KeyboardViewDelegate: class {
 
 // FIXME: this could be simplified with a typealias
 // swiftlint:disable all
-internal class KeyboardView: UIView,
+final internal class KeyboardView: UIView,
     KeyboardViewProvider,
     UICollectionViewDataSource,
     UICollectionViewDelegate,
@@ -702,7 +702,7 @@ internal class KeyboardView: UIView,
         return 0
     }
 
-    class KeyCell: UICollectionViewCell {
+    final class KeyCell: UICollectionViewCell {
         var keyView: KeyView?
 
         override init(frame: CGRect) {

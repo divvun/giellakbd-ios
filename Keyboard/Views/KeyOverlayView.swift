@@ -1,6 +1,6 @@
 import UIKit
 
-class KeyOverlayView: UIView {
+final class KeyOverlayView: UIView {
     private class KeyOverlayShadowView: UIView {}
 
     private let keyView: UIView
