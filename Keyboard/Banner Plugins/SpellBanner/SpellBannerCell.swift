@@ -1,6 +1,6 @@
 import UIKit
 
-class SpellBannerCell: UICollectionViewCell {
+final class SpellBannerCell: UICollectionViewCell {
     private let titleLabel: UILabel
 
     private var heightConstraint: NSLayoutConstraint?
@@ -8,7 +8,6 @@ class SpellBannerCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         titleLabel = UILabel(frame: frame)
-
         super.init(frame: frame)
     }
 

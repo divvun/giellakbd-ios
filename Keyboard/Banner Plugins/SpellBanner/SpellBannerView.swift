@@ -10,7 +10,7 @@ public protocol SpellBannerViewDelegate: class {
     func didSelectBannerItem(_ banner: SpellBannerView, item: SpellBannerItem)
 }
 
-public class SpellBannerView: UIView {
+public final class SpellBannerView: UIView {
     private var theme: ThemeType
     private let numberOfSuggestions = 3
 

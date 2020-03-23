@@ -1,6 +1,6 @@
 import UIKit
 
-class SpellBannerFlowLayout: UICollectionViewFlowLayout {
+final class SpellBannerFlowLayout: UICollectionViewFlowLayout {
     private let separatorKind = "bannerSeparator"
 
     override init() {
