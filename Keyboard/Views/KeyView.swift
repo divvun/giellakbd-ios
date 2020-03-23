@@ -134,10 +134,10 @@ final class KeyView: UIView {
     }
 
     private func input(string: String, alt: String?, page: KeyboardPage) {
-        let labelHoldingView = UIView(frame: .zero)
-        labelHoldingView.translatesAutoresizingMaskIntoConstraints = false
-        labelHoldingView.backgroundColor = .clear
-        labelHoldingView.clipsToBounds = false
+        let labelContainer = UIView(frame: .zero)
+        labelContainer.translatesAutoresizingMaskIntoConstraints = false
+        labelContainer.backgroundColor = .clear
+        labelContainer.clipsToBounds = false
 
         configureKeyLabel(label, page: page, text: string)
 
@@ -146,14 +146,14 @@ final class KeyView: UIView {
             configureAltKeyLabel(self.alternateLabel!, page: page)
             alternateLabel!.text = alternateString
 
-            labelHoldingView.addSubview(alternateLabel!)
+            labelContainer.addSubview(alternateLabel!)
         }
 
-        labelHoldingView.addSubview(label)
-        addSubview(labelHoldingView)
+        labelContainer.addSubview(label)
+        addSubview(labelContainer)
 
-        label.centerXAnchor.constraint(equalTo: labelHoldingView.centerXAnchor).enable()
-        label.widthAnchor.constraint(equalTo: labelHoldingView.widthAnchor).enable()
+        label.centerXAnchor.constraint(equalTo: labelContainer.centerXAnchor).enable()
+        label.widthAnchor.constraint(equalTo: labelContainer.widthAnchor).enable()
 
         let yConstant: CGFloat
         if case .normal = page, case KeyType.input(_) = self.key.type {
@@ -164,32 +164,32 @@ final class KeyView: UIView {
 
         if let alternateLabel = self.alternateLabel {
             swipeLayoutConstraint = alternateLabel.topAnchor
-                .constraint(equalTo: labelHoldingView.topAnchor, constant: theme.altLabelTopAnchorConstant)
+                .constraint(equalTo: labelContainer.topAnchor, constant: theme.altLabelTopAnchorConstant)
                 .enable()
 
-            label.bottomAnchor.constraint(equalTo: labelHoldingView.bottomAnchor,
+            label.bottomAnchor.constraint(equalTo: labelContainer.bottomAnchor,
                                           constant: theme.altLabelBottomAnchorConstant).enable()
 
-            alternateLabel.centerXAnchor.constraint(equalTo: labelHoldingView.centerXAnchor).enable()
-            alternateLabel.widthAnchor.constraint(equalTo: labelHoldingView.widthAnchor, multiplier: 1.0, constant: -4.0).enable()
+            alternateLabel.centerXAnchor.constraint(equalTo: labelContainer.centerXAnchor).enable()
+            alternateLabel.widthAnchor.constraint(equalTo: labelContainer.widthAnchor, multiplier: 1.0, constant: -4.0).enable()
         } else {
-            label.centerYAnchor.constraint(equalTo: labelHoldingView.centerYAnchor, constant: yConstant).enable()
+            label.centerYAnchor.constraint(equalTo: labelContainer.centerYAnchor, constant: yConstant).enable()
             swipeLayoutConstraint = nil
         }
 
-        contentView = labelHoldingView
+        contentView = labelContainer
     }
 
     private func text(_ string: String, page: KeyboardPage) {
-        let labelHoldingView = UIView(frame: .zero)
-        labelHoldingView.translatesAutoresizingMaskIntoConstraints = false
-        labelHoldingView.backgroundColor = .clear
-        labelHoldingView.clipsToBounds = false
+        let labelContainer = UIView(frame: .zero)
+        labelContainer.translatesAutoresizingMaskIntoConstraints = false
+        labelContainer.backgroundColor = .clear
+        labelContainer.clipsToBounds = false
 
         configureKeyLabel(label, page: page, text: string)
 
-        labelHoldingView.addSubview(label)
-        addSubview(labelHoldingView)
+        labelContainer.addSubview(label)
+        addSubview(labelContainer)
 
         let yConstant: CGFloat
         if case .normal = page, case KeyType.input(_) = self.key.type {
@@ -198,13 +198,13 @@ final class KeyView: UIView {
             yConstant = 0.0
         }
 
-        label.centerXAnchor.constraint(equalTo: labelHoldingView.centerXAnchor).enable()
-        label.centerYAnchor.constraint(equalTo: labelHoldingView.centerYAnchor, constant: yConstant).enable()
-        label.widthAnchor.constraint(equalTo: labelHoldingView.widthAnchor, multiplier: 1.0, constant: -4.0).enable()
+        label.centerXAnchor.constraint(equalTo: labelContainer.centerXAnchor).enable()
+        label.centerYAnchor.constraint(equalTo: labelContainer.centerYAnchor, constant: yConstant).enable()
+        label.widthAnchor.constraint(equalTo: labelContainer.widthAnchor, multiplier: 1.0, constant: -4.0).enable()
 
         swipeLayoutConstraint = nil
 
-        contentView = labelHoldingView
+        contentView = labelContainer
     }
 
     private func image(named name: String, traits: UITraitCollection, tintColor: UIColor) {
