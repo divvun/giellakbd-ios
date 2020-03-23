@@ -38,10 +38,7 @@ final class BannerManager {
 
 extension BannerManager: SpellBannerDelegate {
     var hasFullAccess: Bool {
-        if let delegate = delegate {
-            return delegate.hasFullAccess
-        }
-        return false
+        return delegate?.hasFullAccess ?? false
     }
 
     func didSelectSuggestion(banner: SpellBanner, text: String) {
