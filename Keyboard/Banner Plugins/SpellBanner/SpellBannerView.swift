@@ -11,11 +11,10 @@ public protocol SpellBannerViewDelegate: class {
 }
 
 public final class SpellBannerView: UIView {
-    private var theme: ThemeType
-    private let numberOfSuggestions = 3
-
     weak public var delegate: SpellBannerViewDelegate?
 
+    private var theme: ThemeType
+    private let numberOfSuggestions = 3
     private var items: [SpellBannerItem?] = [SpellBannerItem]()
 
     private var collectionView: UICollectionView!
@@ -38,9 +37,7 @@ public final class SpellBannerView: UIView {
     public override func layoutSubviews() {
         // Because just invalidateLayout() seems to keep some weird cache, so we need to reset it fully
         collectionView.collectionViewLayout = createCollectionViewLayout()
-
         super.layoutSubviews()
-
         collectionView.collectionViewLayout.invalidateLayout()
     }
 
@@ -103,7 +100,6 @@ extension SpellBannerView: UICollectionViewDataSource {
 
         return cell
     }
-
 }
 
 extension SpellBannerView: UICollectionViewDelegate {
