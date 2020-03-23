@@ -74,15 +74,12 @@ public final class SpellBanner: Banner {
     }
 
     private func getPrimaryLanguage() -> String? {
-        if let extensionInfo = Bundle.main.infoDictionary!["NSExtension"] as? [String: AnyObject] {
-            if let attrs = extensionInfo["NSExtensionAttributes"] as? [String: AnyObject] {
-                if let lang = attrs["PrimaryLanguage"] as? String {
-                    return String(lang.split(separator: "-")[0])
-                }
-            }
+        guard let extensionInfo = Bundle.main.infoDictionary!["NSExtension"] as? [String: AnyObject],
+            let attrs = extensionInfo["NSExtensionAttributes"] as? [String: AnyObject],
+            let lang = attrs["PrimaryLanguage"] as? String else {
+                return nil
         }
-
-        return nil
+        return String(lang.split(separator: "-")[0])
     }
 
     private func loadSpeller() {
