@@ -39,6 +39,9 @@
 		999790BB23F40E4F003F7885 /* WordContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999790B923F40E4F003F7885 /* WordContext.swift */; };
 		99989FB72417990E00EF8CD3 /* UserDictionary+Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99989FB52417970400EF8CD3 /* UserDictionary+Test.swift */; };
 		99989FBA2417CFBA00EF8CD3 /* BaseSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99989FB92417CFBA00EF8CD3 /* BaseSettingsViewController.swift */; };
+		999C30132428E6C000E127A6 /* UpdateBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999C30122428E6C000E127A6 /* UpdateBanner.swift */; };
+		999C30152428E70600E127A6 /* UpdateBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999C30142428E70600E127A6 /* UpdateBannerView.swift */; };
+		999C30172428E91000E127A6 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999C30162428E91000E127A6 /* BannerView.swift */; };
 		99B94C6323E0501F0076A786 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 99B94C6523E0501F0076A786 /* Localizable.strings */; };
 		99DA18412408294A003E7353 /* WordContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA18402408294A003E7353 /* WordContextTests.swift */; };
 		99DA184424095AF0003E7353 /* UserDictionaryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA184224095AD0003E7353 /* UserDictionaryService.swift */; };
@@ -199,6 +202,9 @@
 		999790B923F40E4F003F7885 /* WordContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordContext.swift; sourceTree = "<group>"; };
 		99989FB52417970400EF8CD3 /* UserDictionary+Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDictionary+Test.swift"; sourceTree = "<group>"; };
 		99989FB92417CFBA00EF8CD3 /* BaseSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsViewController.swift; sourceTree = "<group>"; };
+		999C30122428E6C000E127A6 /* UpdateBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateBanner.swift; sourceTree = "<group>"; };
+		999C30142428E70600E127A6 /* UpdateBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateBannerView.swift; sourceTree = "<group>"; };
+		999C30162428E91000E127A6 /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
 		99B94C6423E0501F0076A786 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		99B94C6623E050280076A786 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		99B94C6723E0502C0076A786 /* se */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = se; path = se.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -486,6 +492,7 @@
 			isa = PBXGroup;
 			children = (
 				99074EF024224B2E00075480 /* Protocols */,
+				998F873A2428D025003D5AB6 /* Update Banner */,
 				99074EE6242237DE00075480 /* SpellBanner */,
 			);
 			path = "Banner Plugins";
@@ -507,8 +514,18 @@
 			isa = PBXGroup;
 			children = (
 				99074EF124224B4400075480 /* Banner.swift */,
+				999C30162428E91000E127A6 /* BannerView.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		998F873A2428D025003D5AB6 /* Update Banner */ = {
+			isa = PBXGroup;
+			children = (
+				999C30122428E6C000E127A6 /* UpdateBanner.swift */,
+				999C30142428E70600E127A6 /* UpdateBannerView.swift */,
+			);
+			path = "Update Banner";
 			sourceTree = "<group>";
 		};
 		C676AD621EC98C0F00523FF3 /* Controllers */ = {
@@ -993,6 +1010,7 @@
 				99460238243B27140027C1CC /* InputContext.swift in Sources */,
 				99074EE82422383700075480 /* SpellBannerFlowLayout.swift in Sources */,
 				C6F249471F736E1A00840F2B /* KeyboardViewController.swift in Sources */,
+				999C30172428E91000E127A6 /* BannerView.swift in Sources */,
 				99DA184424095AF0003E7353 /* UserDictionaryService.swift in Sources */,
 				C649D3D4234B7C8000EF4273 /* KeyView.swift in Sources */,
 				991EE55023D9AB4700DC3677 /* ViewDebugger.swift in Sources */,
@@ -1000,9 +1018,11 @@
 				C6996B5622FC2C92007EBC3D /* Utils.swift in Sources */,
 				FDAF59A722F9CCE100F7C9FC /* KeyDefinition.swift in Sources */,
 				FDAF59A522F9CCE100F7C9FC /* Theme.swift in Sources */,
+				999C30132428E6C000E127A6 /* UpdateBanner.swift in Sources */,
 				99074EEB2422387A00075480 /* SpellBannerSeparatorView.swift in Sources */,
 				99074EE4242230F000075480 /* SpellBannerCell.swift in Sources */,
 				99074EF324224BFA00075480 /* BannerManager.swift in Sources */,
+				999C30152428E70600E127A6 /* UpdateBannerView.swift in Sources */,
 				FDBD09C52333A56800303152 /* SplitKeyboard.swift in Sources */,
 				99074EF62423AAA300075480 /* SpellBannerView.swift in Sources */,
 				99074EF224224B4400075480 /* Banner.swift in Sources */,

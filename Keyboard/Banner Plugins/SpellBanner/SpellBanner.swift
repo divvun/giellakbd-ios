@@ -70,7 +70,7 @@ public final class SpellBanner: Banner {
     }
 
     func updateTheme(_ theme: ThemeType) {
-        bannerView.updateTheme(theme: theme)
+        bannerView.updateTheme(theme)
     }
 
     private func getPrimaryLanguage() -> String? {

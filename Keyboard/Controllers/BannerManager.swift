@@ -10,19 +10,27 @@ final class BannerManager {
     weak var delegate: BannerManagerDelegate?
     private let view: UIView
     private let spellBanner: SpellBanner
+    private let updateBanner: UpdateBanner
+    private var currentBanner: Banner?
 
     init(view: UIView, theme: ThemeType, delegate: BannerManagerDelegate?) {
         self.view = view
         self.delegate = delegate
 
         spellBanner = SpellBanner(theme: theme)
+        updateBanner = UpdateBanner(theme: theme)
+
         spellBanner.delegate = self
-        presentBanner(spellBanner)
+        updateBanner.delegate = self
+
+        presentBanner(updateBanner)
     }
 
     private func presentBanner(_ banner: Banner) {
+        currentBanner?.view.removeFromSuperview()
         view.addSubview(banner.view)
         banner.view.fill(superview: self.view)
+        currentBanner = banner
     }
 
     public func propagateTextInputUpdateToBanners(newContext: CursorContext) {
@@ -41,5 +49,15 @@ extension BannerManager: SpellBannerDelegate {
 
     func didSelectSuggestion(banner: SpellBanner, suggestion: String) {
         delegate?.bannerDidProvideInput(banner: banner, inputText: suggestion)
+    }
+}
+
+extension BannerManager: UpdateBannerDelegate {
+    func willBeginupdates(banner: UpdateBanner) {
+        presentBanner(banner)
+    }
+
+    func didFinishUpdates(banner: UpdateBanner) {
+        presentBanner(spellBanner)
     }
 }
