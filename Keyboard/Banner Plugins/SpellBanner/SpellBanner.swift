@@ -6,7 +6,7 @@ typealias SuggestionCompletion = ([String]) -> Void
 
 protocol SpellBannerDelegate: class {
     var hasFullAccess: Bool { get }
-    func didSelectSuggestion(banner: SpellBanner, text: String)
+    func didSelectSuggestion(banner: SpellBanner, suggestion: String)
 }
 
 public final class SpellBanner: Banner {
@@ -31,7 +31,7 @@ public final class SpellBanner: Banner {
         loadSpeller()
     }
 
-    public func setContext(_ context: CursorContext) {
+    public func updateSuggestions(_ context: CursorContext) {
         if let delegate = delegate,
             delegate.hasFullAccess {
             dictionaryService?.updateContext(WordContext(cursorContext: context))
@@ -132,7 +132,7 @@ public final class SpellBanner: Banner {
 
 extension SpellBanner: SpellBannerViewDelegate {
     public func didSelectBannerItem(_ banner: SpellBannerView, item: SpellBannerItem) {
-        delegate?.didSelectSuggestion(banner: self, text: item.value)
+        delegate?.didSelectSuggestion(banner: self, suggestion: item.value)
         opQueue.cancelAllOperations()
         banner.setBannerItems([])
     }

@@ -17,9 +17,9 @@ final class BannerManager {
         self.view = view
         self.delegate = delegate
 
-        divvunSpell = SpellBanner(theme: theme)
-        divvunSpell.delegate = self
-        presentBanner(divvunSpell)
+        spellBanner = SpellBanner(theme: theme)
+        spellBanner.delegate = self
+        presentBanner(spellBanner)
     }
 
     private func presentBanner(_ banner: Banner) {
@@ -28,11 +28,11 @@ final class BannerManager {
     }
 
     public func propagateTextInputUpdateToBanners(newContext: CursorContext) {
-        divvunSpell.setContext(newContext)
+        spellBanner.updateSuggestions(newContext)
     }
 
     public func updateTheme(_ theme: ThemeType) {
-        divvunSpell.updateTheme(theme)
+        spellBanner.updateTheme(theme)
     }
 }
 
@@ -41,7 +41,7 @@ extension BannerManager: SpellBannerDelegate {
         return delegate?.hasFullAccess ?? false
     }
 
-    func didSelectSuggestion(banner: SpellBanner, text: String) {
-        delegate?.bannerDidProvideInput(banner: banner, inputText: text)
+    func didSelectSuggestion(banner: SpellBanner, suggestion: String) {
+        delegate?.bannerDidProvideInput(banner: banner, inputText: suggestion)
     }
 }
