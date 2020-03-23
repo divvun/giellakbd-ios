@@ -40,7 +40,7 @@ public final class SpellBanner: Banner {
         let currentWord = context.current.1
 
         if currentWord.isEmpty {
-            bannerView.setBannerItems([])
+            bannerView.clearSuggestions()
             return
         }
 
@@ -60,12 +60,11 @@ public final class SpellBanner: Banner {
     }
 
     private func makeSuggestionBannerItems(currentWord: String, suggestions: [String]) -> [SpellBannerItem] {
-        var suggestions = suggestions
-        // Don't show the current word twice; it will always be shown in the banner item created below
-        suggestions.removeAll { $0 == currentWord }
-        let suggestionItems = suggestions.map { SpellBannerItem(title: $0, value: $0) }
-
         let currentWordItem = SpellBannerItem(title: "\"\(currentWord)\"", value: currentWord)
+
+        var suggestions = suggestions
+        suggestions.removeAll { $0 == currentWord } // don't show current word twice
+        let suggestionItems = suggestions.map { SpellBannerItem(title: $0, value: $0) }
 
         return [currentWordItem] + suggestionItems
     }
@@ -134,7 +133,7 @@ extension SpellBanner: SpellBannerViewDelegate {
     public func didSelectBannerItem(_ banner: SpellBannerView, item: SpellBannerItem) {
         delegate?.didSelectSuggestion(banner: self, suggestion: item.value)
         opQueue.cancelAllOperations()
-        banner.setBannerItems([])
+        banner.clearSuggestions()
     }
 }
 

@@ -31,6 +31,10 @@ public class SpellBannerView: UIView {
         collectionView.reloadData()
     }
 
+    public func clearSuggestions() {
+        setBannerItems([])
+    }
+
     public override func layoutSubviews() {
         // Because just invalidateLayout() seems to keep some weird cache, so we need to reset it fully
         collectionView.collectionViewLayout = createCollectionViewLayout()
