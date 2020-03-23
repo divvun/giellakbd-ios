@@ -1,5 +1,5 @@
 import Foundation
-import DivvunSpell // TODO: possible to remove this dependency except for inside DivvunSpellBanner?
+import DivvunSpell
 
 protocol BannerManagerDelegate: class {
     var hasFullAccess: Bool { get }

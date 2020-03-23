@@ -1,11 +1,3 @@
-//
-//  MenuButton.swift
-//  HostingApp
-//
-//  Created by Brendan Molloy on 2019-10-24.
-//  Copyright © 2019 Apple. All rights reserved.
-//
-
 import UIKit
 
 private let blue = UIColor(r: 92, g: 133, b: 224)
