@@ -10,7 +10,7 @@ public protocol SpellBannerViewDelegate: class {
     func didSelectBannerItem(_ banner: SpellBannerView, item: SpellBannerItem)
 }
 
-public final class SpellBannerView: UIView {
+public final class SpellBannerView: UIView, BannerView {
     weak public var delegate: SpellBannerViewDelegate?
 
     private var theme: ThemeType
@@ -41,7 +41,7 @@ public final class SpellBannerView: UIView {
         collectionView.collectionViewLayout.invalidateLayout()
     }
 
-    func makeCollectionViewLayout() -> UICollectionViewFlowLayout {
+    private func makeCollectionViewLayout() -> UICollectionViewFlowLayout {
         let flowLayout = SpellBannerFlowLayout()
         flowLayout.estimatedItemSize = CGSize(width: 1, height: 1)
         flowLayout.scrollDirection = .horizontal
@@ -74,8 +74,7 @@ public final class SpellBannerView: UIView {
         return collectionView
     }
 
-    func updateTheme(theme: ThemeType) {
-        self.theme = theme
+    func updateTheme(_ theme: ThemeType) {
         collectionView.removeFromSuperview()
         collectionView = makeCollectionView()
     }
