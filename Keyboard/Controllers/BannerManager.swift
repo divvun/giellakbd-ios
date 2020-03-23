@@ -7,11 +7,9 @@ protocol BannerManagerDelegate: class {
 }
 
 final class BannerManager {
-    private let view: UIView
-
     weak var delegate: BannerManagerDelegate?
-
-    private let divvunSpell: SpellBanner
+    private let view: UIView
+    private let spellBanner: SpellBanner
 
     init(view: UIView, theme: ThemeType, delegate: BannerManagerDelegate?) {
         self.view = view
