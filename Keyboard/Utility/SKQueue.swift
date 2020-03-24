@@ -28,19 +28,19 @@ import Foundation
 
 struct SystemError: Error {
     let code: Int32
-        
+
     public static func fromErrno() -> SystemError {
         return SystemError(code: errno)
     }
 }
 
-public protocol SKQueueDelegate {
+public protocol SKQueueDelegate: class {
     func receivedNotification(_ notification: SKQueueNotification, path: String, queue: SKQueue)
 }
 
 public enum SKQueueNotification: OptionSet, RawRepresentable {
     public typealias RawValue = Int32
-    
+
     case none
     case rename
     case write
@@ -52,7 +52,7 @@ public enum SKQueueNotification: OptionSet, RawRepresentable {
     case unlock
     case dataAvailable
     case `default`
-    
+
     public init(rawValue: Self.RawValue) {
         switch rawValue {
         case 0: self = .none
@@ -68,7 +68,7 @@ public enum SKQueueNotification: OptionSet, RawRepresentable {
         default: self = .default
         }
     }
-    
+
     public var rawValue: Int32 {
         switch self {
         case .none: return 0
@@ -90,15 +90,15 @@ public class SKQueue {
     private let kqueueId: Int32
     private var watchedPaths = [String: Int32]()
     private var keepWatcherThreadRunning = false
-    public var delegate: SKQueueDelegate?
+    public weak var delegate: SKQueueDelegate?
 
     public init(delegate: SKQueueDelegate? = nil) throws {
         kqueueId = kqueue()
-        
+
         if kqueueId == -1 {
             throw SystemError.fromErrno()
         }
-        
+
         self.delegate = delegate
     }
 
@@ -110,14 +110,14 @@ public class SKQueue {
 
     public func addPath(_ path: String, notifyingAbout notification: SKQueueNotification = .default) {
         var fileDescriptor: Int32! = watchedPaths[path]
-        
+
         if fileDescriptor == nil {
             fileDescriptor = open(FileManager.default.fileSystemRepresentation(withPath: path), O_EVTONLY)
-            
+
             guard fileDescriptor >= 0 else {
                 return
             }
-            
+
             watchedPaths[path] = fileDescriptor
         }
 
@@ -129,7 +129,7 @@ public class SKQueue {
             data: 0,
             udata: nil
         )
-        
+
         kevent(kqueueId, &edit, 1, nil, 0, nil)
 
         if !keepWatcherThreadRunning {
@@ -141,15 +141,15 @@ public class SKQueue {
     private func watcherThread() {
         var event = kevent()
         var timeout = timespec(tv_sec: 1, tv_nsec: 0)
-        
+
         while keepWatcherThreadRunning {
             if kevent(kqueueId, nil, 0, &event, 1, &timeout) > 0 && event.filter == EVFILT_VNODE && event.fflags > 0 {
                 guard let (path, _) = watchedPaths.first(where: { $1 == event.ident }) else {
                     continue
                 }
-                
+
                 let notification = SKQueueNotification(rawValue: Int32(event.fflags))
-                
+
                 DispatchQueue.global().async {
                     self.delegate?.receivedNotification(notification, path: path, queue: self)
                 }
