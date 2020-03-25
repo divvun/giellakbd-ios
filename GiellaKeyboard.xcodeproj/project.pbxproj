@@ -42,6 +42,7 @@
 		999C30132428E6C000E127A6 /* UpdateBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999C30122428E6C000E127A6 /* UpdateBanner.swift */; };
 		999C30152428E70600E127A6 /* UpdateBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999C30142428E70600E127A6 /* UpdateBannerView.swift */; };
 		999C30172428E91000E127A6 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999C30162428E91000E127A6 /* BannerView.swift */; };
+		999C3019242A3FCF00E127A6 /* DownloadSimulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999C3018242A3FCF00E127A6 /* DownloadSimulator.swift */; };
 		99B94C6323E0501F0076A786 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 99B94C6523E0501F0076A786 /* Localizable.strings */; };
 		99DA18412408294A003E7353 /* WordContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA18402408294A003E7353 /* WordContextTests.swift */; };
 		99DA184424095AF0003E7353 /* UserDictionaryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA184224095AD0003E7353 /* UserDictionaryService.swift */; };
@@ -207,6 +208,7 @@
 		999C30122428E6C000E127A6 /* UpdateBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateBanner.swift; sourceTree = "<group>"; };
 		999C30142428E70600E127A6 /* UpdateBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateBannerView.swift; sourceTree = "<group>"; };
 		999C30162428E91000E127A6 /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
+		999C3018242A3FCF00E127A6 /* DownloadSimulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadSimulator.swift; sourceTree = "<group>"; };
 		99B94C6423E0501F0076A786 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		99B94C6623E050280076A786 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		99B94C6723E0502C0076A786 /* se */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = se; path = se.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -458,6 +460,7 @@
 				991EE54F23D9AB4700DC3677 /* ViewDebugger.swift */,
 				C6F9564723E4520D009C469C /* init.m */,
 				C67D6EFB23EAE928001F8DCA /* SKQueue.swift */,
+				999C3018242A3FCF00E127A6 /* DownloadSimulator.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -1022,6 +1025,7 @@
 				FDAF59AF22F9CD0700F7C9FC /* KeyOverlayView.swift in Sources */,
 				C6996B5622FC2C92007EBC3D /* Utils.swift in Sources */,
 				FDAF59A722F9CCE100F7C9FC /* KeyDefinition.swift in Sources */,
+				999C3019242A3FCF00E127A6 /* DownloadSimulator.swift in Sources */,
 				FDAF59A522F9CCE100F7C9FC /* Theme.swift in Sources */,
 				999C30132428E6C000E127A6 /* UpdateBanner.swift in Sources */,
 				99074EEB2422387A00075480 /* SpellBannerSeparatorView.swift in Sources */,
