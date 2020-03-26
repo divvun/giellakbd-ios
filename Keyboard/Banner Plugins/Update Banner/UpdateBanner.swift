@@ -48,8 +48,7 @@ final class UpdateBanner: Banner {
             fileWatcher = try SKQueue(delegate: self)
             let dir = downloadFileURL.deletingLastPathComponent().path
             fileWatcher?.addPath(dir) // kqueue requires adding the containing directory before adding the file of interest
-            print("File exists: \(FileManager.default.fileExists(atPath: downloadFileURL.path))")
-            fileWatcher?.addPath(downloadFileURL.path) //, notifyingAbout: .sizeIncrease)
+            fileWatcher?.addPath(downloadFileURL.path)
         } catch {
             fatalError("Error creating SKQueue: \(error)")
         }
