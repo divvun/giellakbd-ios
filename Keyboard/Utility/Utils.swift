@@ -13,7 +13,7 @@ extension UIDevice {
     }
 }
 
-extension UIUserInterfaceStyle: CustomDebugStringConvertible {
+extension UIUserInterfaceStyle {
     public var debugDescription: String {
         switch self {
         case .dark:
@@ -28,7 +28,7 @@ extension UIUserInterfaceStyle: CustomDebugStringConvertible {
     }
 }
 
-extension UIUserInterfaceIdiom: CustomDebugStringConvertible {
+extension UIUserInterfaceIdiom {
     public var debugDescription: String {
         switch self {
         case .phone:
@@ -47,7 +47,7 @@ extension UIUserInterfaceIdiom: CustomDebugStringConvertible {
     }
 }
 
-extension UIUserInterfaceSizeClass: CustomDebugStringConvertible {
+extension UIUserInterfaceSizeClass {
     public var debugDescription: String {
         switch self {
         case .compact:
@@ -62,7 +62,7 @@ extension UIUserInterfaceSizeClass: CustomDebugStringConvertible {
     }
 }
 
-extension UIKeyboardAppearance: CustomDebugStringConvertible {
+extension UIKeyboardAppearance {
     public var debugDescription: String {
         switch self {
         case .dark:
