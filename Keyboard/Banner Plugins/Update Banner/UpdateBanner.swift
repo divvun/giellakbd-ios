@@ -10,24 +10,32 @@ final class UpdateBanner: Banner {
     private let bannerView: UpdateBannerView
     private let downloadSimulator = DownloadSimulator()
     private var fileWatcher: SKQueue?
-
-    private let testDownloadFileName = "simulatedDownload.txt"
+    private let networkDownloader = NetworkDownloader()
 
     var view: UIView {
         bannerView
     }
 
-    private lazy var downloadFileURL: URL = {
+    private lazy var sharedGroupURL: URL = {
         let groupId = KeyboardSettings.groupId
         guard let groupUrl = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupId) else {
             fatalError("Error opening app group for group id: \(groupId)")
         }
-        return groupUrl.appendingPathComponent(testDownloadFileName)
+        return groupUrl
+    }()
+
+    private lazy var downloadFileURL: URL = {
+        return sharedGroupURL.appendingPathComponent("simulatedDownload.txt")
+    }()
+
+    private lazy var progressFileURL: URL = {
+        return sharedGroupURL.appendingPathComponent("downloadProgress.txt")
     }()
 
     init(theme: ThemeType) {
         bannerView = UpdateBannerView(theme: theme)
         checkForUpdates() // TODO: we may not want to check for updates on init
+//        networkDownloader.downloadFile()
     }
 
     func updateTheme(_ theme: ThemeType) {
@@ -39,16 +47,23 @@ final class UpdateBanner: Banner {
     }
 
     private func checkForUpdates() {
-        downloadSimulator.simulateDownload(url: downloadFileURL)
+//        downloadSimulator.simulateDownload(url: downloadFileURL)
         tryToSetupFileWatcher()
     }
 
     private func tryToSetupFileWatcher() {
         do {
             fileWatcher = try SKQueue(delegate: self)
-            let dir = downloadFileURL.deletingLastPathComponent().path
-            fileWatcher?.addPath(dir) // kqueue requires adding the containing directory before adding the file of interest
-            fileWatcher?.addPath(downloadFileURL.path)
+//            fileWatcher?.addPath(sharedGroupURL.path) // kqueue requires adding the containing directory before adding the file of interest
+//            fileWatcher?.addPath(progressFileURL.path)
+
+            let downloadsURL = sharedGroupURL
+                .appendingPathComponent("Library")
+                .appendingPathComponent("Caches")
+                .appendingPathComponent("com.apple.nsurlsessiond")
+                .appendingPathComponent("Downloads")
+                .appendingPathComponent("no.divvun.GiellaKeyboardTest") // TODO: if we use this method, make this dynamic
+            fileWatcher?.addPath(downloadsURL.path)
         } catch {
             fatalError("Error creating SKQueue: \(error)")
         }
@@ -61,14 +76,27 @@ final class UpdateBanner: Banner {
 
 extension UpdateBanner: SKQueueDelegate {
     func receivedNotification(_ notification: SKQueueNotification, path: String, queue: SKQueue) {
+        print(notification)
+        print(path)
         switch notification {
         case .sizeIncrease, .write:
-            let fileSize = tryToGetSizeOfFileAt(path: path)
+//            let fileSize = tryToGetSizeOfFileAt(path: path)
+            let progress = tryToGetProgressFromFile()
             DispatchQueue.main.async {
-                self.updateProgressBar(fileSize)
+//                self.updateProgressBar(fileSize)
+                self.bannerView.progress = progress
             }
         default:
             break
+        }
+    }
+
+    private func tryToGetProgressFromFile() -> Float {
+        do {
+            let progress = try String(contentsOf: progressFileURL, encoding: .utf8) as NSString
+            return progress.floatValue
+        } catch {
+            fatalError("Error reading data in progress file: \(error)")
         }
     }
 

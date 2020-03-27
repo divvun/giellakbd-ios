@@ -35,6 +35,8 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     //swiftlint:disable:next weak_delegate
     let ncDelegate = AppNavControllerDelegate()
 
+    let downloader = NetworkDownloader()
+
     //swiftlint:disable identifier_name
     var isKeyboardEnabled: Bool {
         let x: [Bundle] = UITextInputMode.activeInputModes.compactMap {
@@ -56,6 +58,8 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         AppDelegate.instance = self
 
+        UIApplication.shared.setMinimumBackgroundFetchInterval(20)
+
         Strings.languageCode = KeyboardSettings.languageCode
 
         navController.delegate = ncDelegate
@@ -76,6 +80,12 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         return true
+    }
+
+    func application(_ application: UIApplication,
+                     performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        downloader.downloadFile()
+        completionHandler(.newData)
     }
 
     func applicationWillEnterForeground(_: UIApplication) {
