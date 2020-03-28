@@ -251,7 +251,7 @@ class LongPressOverlayController: NSObject,
             cell.imageView.image = nil
         } else if case .splitKeyboard = key.type {
             cell.label.text = nil
-            cell.imageView.image = #imageLiteral(resourceName: "language")
+            cell.imageView.image = UIImage(named: "keyboard-mode-split")
         } else if case .sideKeyboardLeft = key.type {
             cell.label.text = nil
             cell.imageView.image = UIImage(named: "keyboard-mode-left")
