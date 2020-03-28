@@ -254,10 +254,10 @@ class LongPressOverlayController: NSObject,
             cell.imageView.image = #imageLiteral(resourceName: "language")
         } else if case .sideKeyboardLeft = key.type {
             cell.label.text = nil
-            cell.imageView.image = #imageLiteral(resourceName: "tap")
+            cell.imageView.image = UIImage(named: "keyboard-mode-left")
         } else if case .sideKeyboardRight = key.type {
             cell.label.text = nil
-            cell.imageView.image = #imageLiteral(resourceName: "gear")
+            cell.imageView.image = UIImage(named: "keyboard-mode-right")
         } else {
             print("ERROR: Invalid key type in longpress")
         }
