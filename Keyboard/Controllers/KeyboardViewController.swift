@@ -265,7 +265,9 @@ open class KeyboardViewController: UIInputViewController {
 
         if withBanner {
             bannerContainerView = makeBannerContainerView()
-            bannerManager = BannerManager(view: bannerContainerView!, theme: theme, delegate: self)
+            if bannerManager == nil {
+                bannerManager = BannerManager(view: bannerContainerView!, theme: theme, delegate: self)
+            }
         } else {
             self.keyboardView.topAnchor.constraint(equalTo: keyboardContainer.topAnchor).enable()
         }
