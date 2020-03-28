@@ -246,21 +246,26 @@ class LongPressOverlayController: NSObject,
 
         cell.label.font = labelFont
 
+        func setupKeyboardModeCell(imageName: String) {
+            cell.label.text = nil
+            var imageName = imageName
+            if UIDevice.current.dc.deviceFamily == .iPad {
+                imageName.append("-ipad")
+            }
+            cell.imageView.image = UIImage(named: imageName)
+        }
+
         if case let .input(string, _) = key.type {
             cell.label.text = string
             cell.imageView.image = nil
         } else if case .normalKeyboard = key.type {
-            cell.label.text = nil
-            cell.imageView.image = UIImage(named: "keyboard-mode-normal")
+            setupKeyboardModeCell(imageName: "keyboard-mode-normal")
         } else if case .splitKeyboard = key.type {
-            cell.label.text = nil
-            cell.imageView.image = UIImage(named: "keyboard-mode-split")
+            setupKeyboardModeCell(imageName: "keyboard-mode-split")
         } else if case .sideKeyboardLeft = key.type {
-            cell.label.text = nil
-            cell.imageView.image = UIImage(named: "keyboard-mode-left")
+            setupKeyboardModeCell(imageName: "keyboard-mode-left")
         } else if case .sideKeyboardRight = key.type {
-            cell.label.text = nil
-            cell.imageView.image = UIImage(named: "keyboard-mode-right")
+            setupKeyboardModeCell(imageName: "keyboard-mode-right")
         } else {
             print("ERROR: Invalid key type in longpress")
         }
