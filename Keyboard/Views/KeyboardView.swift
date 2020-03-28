@@ -535,16 +535,28 @@ final internal class KeyboardView: UIView,
     }
 
     private func showKeyboardModeOverlay(_ longpressGestureRecognizer: UILongPressGestureRecognizer, key: KeyDefinition) {
-        let longpressController = LongPressOverlayController(key: key, page: page, theme: theme, longpressValues: [
-            KeyDefinition(type: .sideKeyboardLeft),
-            KeyDefinition(type: .splitKeyboard),
-            KeyDefinition(type: .sideKeyboardRight)
-        ])
+        let longpressValues = keyboardModeDefinitions()
+        let longpressController = LongPressOverlayController(key: key, page: page, theme: theme, longpressValues: longpressValues)
         longpressController.delegate = self
 
         self.longpressController = longpressController
         longpressController.touchesBegan(
             longpressGestureRecognizer.location(in: collectionView))
+    }
+
+    private func keyboardModeDefinitions() -> [KeyDefinition] {
+        if isLogicallyIPad {
+            return [
+                KeyDefinition(type: .sideKeyboardLeft),
+                KeyDefinition(type: .splitKeyboard),
+                KeyDefinition(type: .sideKeyboardRight)
+            ]
+        } else {
+            return [
+                KeyDefinition(type: .sideKeyboardLeft),
+                KeyDefinition(type: .sideKeyboardRight)
+            ]
+        }
     }
 
     @objc func touchesFoundLongpress(_ longpressGestureRecognizer: UILongPressGestureRecognizer) {
@@ -582,6 +594,10 @@ final internal class KeyboardView: UIView,
             case .backspace:
                 // Cancel, the repeat trigger timing deals with this
                 break
+            case .returnkey(name: _):
+                if longpressGestureRecognizer.state == .began {
+                    showKeyboardModeOverlay(longpressGestureRecognizer, key: key)
+                }
             default:
                 delegate?.didTriggerHoldKey(key)
             }
