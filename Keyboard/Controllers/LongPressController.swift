@@ -313,12 +313,14 @@ class LongPressOverlayController: NSObject,
         func select(theme: ThemeType) {
             label.textColor = theme.activeTextColor
             label.backgroundColor = theme.activeColor
+            imageView.tintColor = theme.activeTextColor
             isSelectedKey = true
         }
 
         func deselect(theme: ThemeType) {
             label.textColor = theme.textColor
             label.backgroundColor = theme.popupColor
+            imageView.tintColor = theme.textColor
             isSelectedKey = false
         }
 
