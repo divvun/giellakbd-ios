@@ -681,6 +681,8 @@ extension KeyboardViewController: KeyboardViewDelegate {
             keyboardView.page = (keyboardView.page == .symbols1 ? .symbols2 : .symbols1)
         case .keyboard:
             break
+        case .normalKeyboard:
+            updateKeyboardMode(.normal)
         case .splitKeyboard:
             updateKeyboardMode(.split)
         case .sideKeyboardLeft:
@@ -693,12 +695,7 @@ extension KeyboardViewController: KeyboardViewDelegate {
     }
 
     private func updateKeyboardMode(_ keyboardMode: KeyboardMode) {
-        if self.keyboardMode == keyboardMode {
-            self.keyboardMode = .normal
-        } else {
-            self.keyboardMode = keyboardMode
-        }
-
+        self.keyboardMode = keyboardMode
         setupKeyboardView(withBanner: showsBanner)
     }
 

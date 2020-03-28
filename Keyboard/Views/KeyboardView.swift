@@ -562,12 +562,14 @@ final internal class KeyboardView: UIView,
         if isLogicallyIPad {
             return [
                 KeyDefinition(type: .sideKeyboardLeft),
-                KeyDefinition(type: .splitKeyboard),
-                KeyDefinition(type: .sideKeyboardRight)
+                KeyDefinition(type: .normalKeyboard),
+                KeyDefinition(type: .sideKeyboardRight),
+                KeyDefinition(type: .splitKeyboard)
             ]
         } else {
             return [
                 KeyDefinition(type: .sideKeyboardLeft),
+                KeyDefinition(type: .normalKeyboard),
                 KeyDefinition(type: .sideKeyboardRight)
             ]
         }

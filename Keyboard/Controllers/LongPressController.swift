@@ -249,6 +249,9 @@ class LongPressOverlayController: NSObject,
         if case let .input(string, _) = key.type {
             cell.label.text = string
             cell.imageView.image = nil
+        } else if case .normalKeyboard = key.type {
+            cell.label.text = nil
+            cell.imageView.image = UIImage(named: "keyboard-mode-normal")
         } else if case .splitKeyboard = key.type {
             cell.label.text = nil
             cell.imageView.image = UIImage(named: "keyboard-mode-split")
