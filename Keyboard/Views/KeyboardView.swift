@@ -59,6 +59,7 @@ final internal class KeyboardView: UIView,
     private let layout = UICollectionViewFlowLayout()
 
     private var longpressController: LongPressBehaviorProvider?
+    private var currentlyLongpressedKey: KeyDefinition?
 
     // Sorry. The globe button is the greatest lie of them all. This is the only known way to have a UIEvent we can trigger the
     // keyboard switcher popup with. I don't like it either.
@@ -303,6 +304,7 @@ final internal class KeyboardView: UIView,
 
     func longpressDidCancel() {
         longpressController = nil
+        currentlyLongpressedKey = nil
         collectionView.alpha = 1.0
         if isLogicallyIPad, let activeKey = activeKey {
             delegate?.didTriggerKey(activeKey.key)
@@ -312,6 +314,7 @@ final internal class KeyboardView: UIView,
     func longpress(didSelectKey key: KeyDefinition) {
         delegate?.didTriggerKey(key)
         longpressController = nil
+        currentlyLongpressedKey = nil
     }
 
     func longpressFrameOfReference() -> CGRect {
@@ -319,6 +322,17 @@ final internal class KeyboardView: UIView,
     }
 
     func longpressKeySize() -> CGSize {
+        switch currentlyLongpressedKey?.type {
+        case .returnkey(name: _):
+            // iPhone keyboard mode overlay
+            return CGSize(width: 60, height: 60)
+        case .keyboardMode:
+            // iPad keyboard mode overlay
+            return CGSize(width: 75, height: 75)
+        default:
+            break
+        }
+
         let width = bounds.size.width / CGFloat(currentPage.first?.count ?? 10)
         var height = (bounds.size.height / CGFloat(currentPage.count)) - theme.popupCornerRadius * 2
         height = max(32.0, height)
@@ -563,6 +577,7 @@ final internal class KeyboardView: UIView,
         if let indexPath = collectionView.indexPathForItem(at: longpressGestureRecognizer.location(in: collectionView)),
             longpressController == nil {
             let key = currentPage[indexPath.section][indexPath.row]
+            currentlyLongpressedKey = key
             switch key.type {
             case let .input(string, _):
                 guard let longpressValues = longpressKeys(for: string),
