@@ -272,9 +272,8 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     private func setupKeyboardContainer() {
-        if keyboardContainer != nil {
-            keyboardContainer.removeFromSuperview()
-            keyboardContainer = nil
+        guard keyboardContainer == nil else {
+            return
         }
 
         keyboardContainer = UIView()
@@ -683,14 +682,24 @@ extension KeyboardViewController: KeyboardViewDelegate {
         case .keyboard:
             break
         case .splitKeyboard:
-            keyboardMode = keyboardMode == .split ? .normal : .split
+            updateKeyboardMode(.split)
         case .sideKeyboardLeft:
-            keyboardMode = keyboardMode == .left ? .normal : .left
+            updateKeyboardMode(.left)
         case .sideKeyboardRight:
-            keyboardMode = keyboardMode == .right ? .normal : .right
+            updateKeyboardMode(.right)
         case .keyboardMode:
             dismissKeyboard()
         }
+    }
+
+    private func updateKeyboardMode(_ keyboardMode: KeyboardMode) {
+        if self.keyboardMode == keyboardMode {
+            self.keyboardMode = .normal
+        } else {
+            self.keyboardMode = keyboardMode
+        }
+
+        setupKeyboardView(withBanner: showsBanner)
     }
 
     private func handleBackspace() {

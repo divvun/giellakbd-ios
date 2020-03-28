@@ -568,11 +568,9 @@ final internal class KeyboardView: UIView,
                 let location = longpressGestureRecognizer.location(in: collectionView)
                 longpressController.touchesBegan(location)
             case .keyboardMode:
-                break
-                // TODO: re-enable once tested and icons are enabled
-//                if longpressGestureRecognizer.state == .began {
-//                    showKeyboardModeOverlay(longpressGestureRecognizer, key: key)
-//                }
+                if longpressGestureRecognizer.state == .began {
+                    showKeyboardModeOverlay(longpressGestureRecognizer, key: key)
+                }
 
             case .spacebar:
                 if longpressGestureRecognizer.state == .began {
