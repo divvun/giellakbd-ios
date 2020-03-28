@@ -325,10 +325,10 @@ final internal class KeyboardView: UIView,
         switch currentlyLongpressedKey?.type {
         case .returnkey(name: _):
             // iPhone keyboard mode overlay
-            return CGSize(width: 60, height: 60)
+            return CGSize(width: 50, height: 35)
         case .keyboardMode:
             // iPad keyboard mode overlay
-            return CGSize(width: 75, height: 75)
+            return CGSize(width: 75, height: 53)
         default:
             break
         }
