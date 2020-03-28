@@ -246,18 +246,26 @@ class LongPressOverlayController: NSObject,
 
         cell.label.font = labelFont
 
+        func setupKeyboardModeCell(imageName: String) {
+            cell.label.text = nil
+            var imageName = imageName
+            if UIDevice.current.dc.deviceFamily == .iPad {
+                imageName.append("-ipad")
+            }
+            cell.imageView.image = UIImage(named: imageName)
+        }
+
         if case let .input(string, _) = key.type {
             cell.label.text = string
             cell.imageView.image = nil
+        } else if case .normalKeyboard = key.type {
+            setupKeyboardModeCell(imageName: "keyboard-mode-normal")
         } else if case .splitKeyboard = key.type {
-            cell.label.text = nil
-            cell.imageView.image = #imageLiteral(resourceName: "language")
+            setupKeyboardModeCell(imageName: "keyboard-mode-split")
         } else if case .sideKeyboardLeft = key.type {
-            cell.label.text = nil
-            cell.imageView.image = #imageLiteral(resourceName: "tap")
+            setupKeyboardModeCell(imageName: "keyboard-mode-left")
         } else if case .sideKeyboardRight = key.type {
-            cell.label.text = nil
-            cell.imageView.image = #imageLiteral(resourceName: "gear")
+            setupKeyboardModeCell(imageName: "keyboard-mode-right")
         } else {
             print("ERROR: Invalid key type in longpress")
         }
@@ -313,12 +321,14 @@ class LongPressOverlayController: NSObject,
         func select(theme: ThemeType) {
             label.textColor = theme.activeTextColor
             label.backgroundColor = theme.activeColor
+            imageView.tintColor = theme.activeTextColor
             isSelectedKey = true
         }
 
         func deselect(theme: ThemeType) {
             label.textColor = theme.textColor
             label.backgroundColor = theme.popupColor
+            imageView.tintColor = theme.textColor
             isSelectedKey = false
         }
 

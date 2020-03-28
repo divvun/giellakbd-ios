@@ -18,6 +18,7 @@ public enum KeyType: Codable, Hashable {
     case keyboard
     case keyboardMode
     case splitKeyboard
+    case normalKeyboard
     case sideKeyboardLeft
     case sideKeyboardRight
     case comma

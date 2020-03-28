@@ -246,21 +246,6 @@ open class KeyboardViewController: UIInputViewController {
         print("\(definitions.map { $0.locale })")
     }
 
-    private func setupKeyboardContainer() {
-        if keyboardContainer != nil {
-            keyboardContainer.removeFromSuperview()
-            keyboardContainer = nil
-        }
-
-        keyboardContainer = UIView()
-        keyboardContainer.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(keyboardContainer)
-        keyboardContainer.topAnchor.constraint(equalTo: view.topAnchor).enable(priority: .defaultHigh)
-        keyboardContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor).enable(priority: .required)
-        keyboardContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor).enable(priority: .required)
-        keyboardContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor).enable(priority: .required)
-    }
-
     private func setupKeyboardView(withBanner: Bool) {
         if keyboardView != nil {
             keyboardView.remove()
@@ -284,6 +269,20 @@ open class KeyboardViewController: UIInputViewController {
         } else {
             self.keyboardView.topAnchor.constraint(equalTo: keyboardContainer.topAnchor).enable()
         }
+    }
+
+    private func setupKeyboardContainer() {
+        guard keyboardContainer == nil else {
+            return
+        }
+
+        keyboardContainer = UIView()
+        keyboardContainer.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(keyboardContainer)
+        keyboardContainer.topAnchor.constraint(equalTo: view.topAnchor).enable(priority: .defaultHigh)
+        keyboardContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor).enable(priority: .required)
+        keyboardContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor).enable(priority: .required)
+        keyboardContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor).enable(priority: .required)
     }
 
     private func setupSplitKeyboard() {
@@ -682,15 +681,22 @@ extension KeyboardViewController: KeyboardViewDelegate {
             keyboardView.page = (keyboardView.page == .symbols1 ? .symbols2 : .symbols1)
         case .keyboard:
             break
+        case .normalKeyboard:
+            updateKeyboardMode(.normal)
         case .splitKeyboard:
-            keyboardMode = keyboardMode == .split ? .normal : .split
+            updateKeyboardMode(.split)
         case .sideKeyboardLeft:
-            keyboardMode = keyboardMode == .left ? .normal : .left
+            updateKeyboardMode(.left)
         case .sideKeyboardRight:
-            keyboardMode = keyboardMode == .right ? .normal : .right
+            updateKeyboardMode(.right)
         case .keyboardMode:
             dismissKeyboard()
         }
+    }
+
+    private func updateKeyboardMode(_ keyboardMode: KeyboardMode) {
+        self.keyboardMode = keyboardMode
+        setupKeyboardView(withBanner: showsBanner)
     }
 
     private func handleBackspace() {
