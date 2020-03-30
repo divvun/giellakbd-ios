@@ -77,22 +77,8 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        testIpc()
 
         return true
-    }
-
-    func testIpc() {
-        ipc = IPC(delegate: self)
-
-        ipc?.isDownloading = true
-        print(ipc?.isDownloading)
-        ipc?.isDownloading = false
-        print(ipc?.isDownloading)
-        ipc?.isDownloading = true
-        print(ipc?.isDownloading)
-        ipc?.isDownloading = false
-        print(ipc?.isDownloading)
     }
 
     func applicationWillEnterForeground(_: UIApplication) {
