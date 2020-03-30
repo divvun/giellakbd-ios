@@ -18,11 +18,7 @@ final class UpdateBanner: Banner {
     }
 
     private lazy var downloadFileURL: URL = {
-        let groupId = KeyboardSettings.groupId
-        guard let groupUrl = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupId) else {
-            fatalError("Error opening app group for group id: \(groupId)")
-        }
-        return groupUrl.appendingPathComponent(testDownloadFileName)
+        return KeyboardSettings.groupContainerURL.appendingPathComponent(testDownloadFileName)
     }()
 
     init(theme: ThemeType) {
