@@ -6,10 +6,18 @@ protocol IPCDelegate: class {
 }
 
 final class IPC {
+    enum DelegateCall {
+        case none
+        case didBeginDownloadingUpdate
+        case didFinishDownloadingUpdate
+    }
+
     weak var delegate: IPCDelegate?
     private var fileWatcher: SKQueue?
     private let ipcDirectory = KeyboardSettings.groupContainerURL.appendingPathComponent("ipc", isDirectory: true)
     private lazy var isDownloadingFile = ipcDirectory.appendingPathComponent("isDownloading")
+
+    private var lastDelegateCall = DelegateCall.none
 
     public var isDownloading: Bool {
         set {
@@ -76,9 +84,15 @@ extension IPC: SKQueueDelegate {
         print(notification)
         print(path)
         if fileExists(atUrl: isDownloadingFile) {
-            delegate?.didBeginDownloadingUpdate()
+            if lastDelegateCall != .didBeginDownloadingUpdate {
+                delegate?.didBeginDownloadingUpdate()
+                lastDelegateCall = .didBeginDownloadingUpdate
+            }
         } else {
-            delegate?.didFinishDownloadingUpdate()
+            if lastDelegateCall != .didFinishDownloadingUpdate {
+                delegate?.didFinishDownloadingUpdate()
+                lastDelegateCall = .didFinishDownloadingUpdate
+            }
         }
     }
 }
