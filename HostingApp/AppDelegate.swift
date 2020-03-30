@@ -35,6 +35,8 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     //swiftlint:disable:next weak_delegate
     let ncDelegate = AppNavControllerDelegate()
 
+    private var ipc: IPC?
+
     //swiftlint:disable identifier_name
     var isKeyboardEnabled: Bool {
         let x: [Bundle] = UITextInputMode.activeInputModes.compactMap {
@@ -75,7 +77,22 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
+        testIpc()
+
         return true
+    }
+
+    func testIpc() {
+        ipc = IPC(delegate: self)
+
+        ipc?.isDownloading = true
+        print(ipc?.isDownloading)
+        ipc?.isDownloading = false
+        print(ipc?.isDownloading)
+        ipc?.isDownloading = true
+        print(ipc?.isDownloading)
+        ipc?.isDownloading = false
+        print(ipc?.isDownloading)
     }
 
     func applicationWillEnterForeground(_: UIApplication) {
@@ -93,4 +110,15 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         parseUrl(url)
         return true
     }
+}
+
+extension AppDelegate: IPCDelegate {
+    func didBeginDownloadingUpdate() {
+        print(#function)
+    }
+
+    func didFinishDownloadingUpdate() {
+        print(#function)
+    }
+
 }
