@@ -44,6 +44,8 @@
 		999C30172428E91000E127A6 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999C30162428E91000E127A6 /* BannerView.swift */; };
 		999C3019242A3FCF00E127A6 /* DownloadSimulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999C3018242A3FCF00E127A6 /* DownloadSimulator.swift */; };
 		99B94C6323E0501F0076A786 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 99B94C6523E0501F0076A786 /* Localizable.strings */; };
+		99C4E56724320F49005F8C8A /* IPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C4E56524320CF0005F8C8A /* IPC.swift */; };
+		99C4E56824321740005F8C8A /* IPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C4E56524320CF0005F8C8A /* IPC.swift */; };
 		99DA18412408294A003E7353 /* WordContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA18402408294A003E7353 /* WordContextTests.swift */; };
 		99DA184424095AF0003E7353 /* UserDictionaryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA184224095AD0003E7353 /* UserDictionaryService.swift */; };
 		99DA1846240D09B5003E7353 /* UserDictionaryServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA1845240D09B5003E7353 /* UserDictionaryServiceTests.swift */; };
@@ -215,6 +217,7 @@
 		99B94C6823E0502C0076A786 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Localizable.strings; sourceTree = "<group>"; };
 		99B94C6923E0502D0076A786 /* nn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nn; path = nn.lproj/Localizable.strings; sourceTree = "<group>"; };
 		99B94C6A23E0502E0076A786 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
+		99C4E56524320CF0005F8C8A /* IPC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPC.swift; sourceTree = "<group>"; };
 		99DA18402408294A003E7353 /* WordContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordContextTests.swift; sourceTree = "<group>"; };
 		99DA184224095AD0003E7353 /* UserDictionaryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionaryService.swift; sourceTree = "<group>"; };
 		99DA1845240D09B5003E7353 /* UserDictionaryServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionaryServiceTests.swift; sourceTree = "<group>"; };
@@ -461,6 +464,7 @@
 				C6F9564723E4520D009C469C /* init.m */,
 				C67D6EFB23EAE928001F8DCA /* SKQueue.swift */,
 				999C3018242A3FCF00E127A6 /* DownloadSimulator.swift */,
+				99C4E56524320CF0005F8C8A /* IPC.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -980,6 +984,7 @@
 				C691A0EB23682C9700085AC3 /* TestingView.swift in Sources */,
 				C6B638461EDF94CA00A6ECB2 /* AboutController.swift in Sources */,
 				9904409D23FBE63F0063064E /* KeyboardLocalesViewController.swift in Sources */,
+				99C4E56824321740005F8C8A /* IPC.swift in Sources */,
 				999790B023F2B55F003F7885 /* UserDictionaryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1030,6 +1035,7 @@
 				999C30132428E6C000E127A6 /* UpdateBanner.swift in Sources */,
 				99074EEB2422387A00075480 /* SpellBannerSeparatorView.swift in Sources */,
 				99074EE4242230F000075480 /* SpellBannerCell.swift in Sources */,
+				99C4E56724320F49005F8C8A /* IPC.swift in Sources */,
 				99074EF324224BFA00075480 /* BannerManager.swift in Sources */,
 				999C30152428E70600E127A6 /* UpdateBannerView.swift in Sources */,
 				FDBD09C52333A56800303152 /* SplitKeyboard.swift in Sources */,
