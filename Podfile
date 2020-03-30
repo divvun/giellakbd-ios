@@ -14,6 +14,7 @@ target 'HostingApp' do
   pod 'UIDeviceComplete', :git => "https://github.com/bbqsrc/UIDeviceComplete"
   pod 'SwiftLint'
   pod 'SQLite.swift', '~> 0.12.0'
+  pod 'PahkatClient', :git => "https://github.com/divvun/pahkat-client-sdk-swift/", :submodules => true
 end
 
 target 'HostingAppTests' do
