@@ -44,6 +44,7 @@
 		999C30172428E91000E127A6 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999C30162428E91000E127A6 /* BannerView.swift */; };
 		999C3019242A3FCF00E127A6 /* DownloadSimulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999C3018242A3FCF00E127A6 /* DownloadSimulator.swift */; };
 		99B94C6323E0501F0076A786 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 99B94C6523E0501F0076A786 /* Localizable.strings */; };
+		99C4E5642431E89A005F8C8A /* PahkatWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C4E5632431E89A005F8C8A /* PahkatWrapper.swift */; };
 		99C4E56724320F49005F8C8A /* IPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C4E56524320CF0005F8C8A /* IPC.swift */; };
 		99C4E56824321740005F8C8A /* IPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C4E56524320CF0005F8C8A /* IPC.swift */; };
 		99DA18412408294A003E7353 /* WordContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA18402408294A003E7353 /* WordContextTests.swift */; };
@@ -217,6 +218,7 @@
 		99B94C6823E0502C0076A786 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Localizable.strings; sourceTree = "<group>"; };
 		99B94C6923E0502D0076A786 /* nn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nn; path = nn.lproj/Localizable.strings; sourceTree = "<group>"; };
 		99B94C6A23E0502E0076A786 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
+		99C4E5632431E89A005F8C8A /* PahkatWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PahkatWrapper.swift; sourceTree = "<group>"; };
 		99C4E56524320CF0005F8C8A /* IPC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPC.swift; sourceTree = "<group>"; };
 		99DA18402408294A003E7353 /* WordContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordContextTests.swift; sourceTree = "<group>"; };
 		99DA184224095AD0003E7353 /* UserDictionaryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionaryService.swift; sourceTree = "<group>"; };
@@ -406,6 +408,7 @@
 		4E807D9519461D9000D875D1 /* HostingApp */ = {
 			isa = PBXGroup;
 			children = (
+				99C4E5622431E888005F8C8A /* Models */,
 				C676AD621EC98C0F00523FF3 /* Controllers */,
 				C6A969D71EB6126100A1143E /* Views */,
 				4EF16F9A19D2550D0076AFCB /* AppDelegate.swift */,
@@ -537,6 +540,14 @@
 				999C30142428E70600E127A6 /* UpdateBannerView.swift */,
 			);
 			path = "Update Banner";
+			sourceTree = "<group>";
+		};
+		99C4E5622431E888005F8C8A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				99C4E5632431E89A005F8C8A /* PahkatWrapper.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		C676AD621EC98C0F00523FF3 /* Controllers */ = {
@@ -962,6 +973,7 @@
 				C63EE0FF2361D86800A1E15A /* MenuButton.swift in Sources */,
 				997550B623EAC631004ED6A5 /* UserDictionary.swift in Sources */,
 				999790B223F2F484003F7885 /* WordContextViewController.swift in Sources */,
+				99C4E5642431E89A005F8C8A /* PahkatWrapper.swift in Sources */,
 				C655E8541EC5551100B12BE4 /* Extensions.swift in Sources */,
 				C691A0E723682C8B00085AC3 /* TestingController.swift in Sources */,
 				C65430B41EC94BF0007FC053 /* LanguagesController.swift in Sources */,

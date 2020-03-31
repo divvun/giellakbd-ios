@@ -35,6 +35,8 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     //swiftlint:disable:next weak_delegate
     let ncDelegate = AppNavControllerDelegate()
 
+    private let pahkat = PahkatWrapper()
+
     private var ipc: IPC?
 
     //swiftlint:disable identifier_name
@@ -77,6 +79,8 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
+        pahkat?.forceRefreshRepos()
+        pahkat?.downloadPackage()
 
         return true
     }
