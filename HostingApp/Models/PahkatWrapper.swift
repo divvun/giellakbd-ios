@@ -6,6 +6,7 @@ final class PahkatWrapper {
     private let storePath = KeyboardSettings.pahkatStoreURL.path
     private let repoURL = "https://x.brendan.so/divvun-pahkat-repo"
     private var downloadTask: URLSessionDownloadTask?
+    private let ipc = IPC()
 
     init?() {
         do {
@@ -29,6 +30,8 @@ final class PahkatWrapper {
     }
 
     func downloadPackage() {
+        ipc.isDownloading = true
+
         let path = "/packages/speller-sme?platform=ios"
         let pkgKey = PackageKey(from: URL(string: repoURL + path)!)
 
@@ -51,9 +54,11 @@ final class PahkatWrapper {
                 } catch {
                     print(error)
                 }
+                self.ipc.isDownloading = false
                 print("Done!")
             }
         } catch {
+            ipc.isDownloading = false
             print(error)
         }
     }
