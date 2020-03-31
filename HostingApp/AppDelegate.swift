@@ -76,6 +76,9 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         window!.rootViewController = navController
         window!.makeKeyAndVisible()
 
+        let oneDay: Double = 60 * 60 * 24
+        UIApplication.shared.setMinimumBackgroundFetchInterval(oneDay)
+
         if !isKeyboardEnabled, KeyboardSettings.firstLoad {
             KeyboardSettings.firstLoad = false
             navController.pushViewController(InstructionsController(), animated: false)
@@ -91,6 +94,14 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         pahkat?.downloadPackage()
 
         return true
+    }
+
+    func application(_ application: UIApplication,
+                     performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        // TODO: check for actual updates and install those instead
+        pahkat?.forceRefreshRepos()
+        pahkat?.downloadPackage()
+        completionHandler(.newData)
     }
 
     func applicationWillEnterForeground(_: UIApplication) {
