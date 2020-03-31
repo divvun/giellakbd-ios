@@ -3,7 +3,7 @@ import PahkatClient
 
 final class PahkatWrapper {
     private let store: PrefixPackageStore
-    private let storePath = KeyboardSettings.groupContainerURL.appendingPathComponent("pahkat").path
+    private let storePath = KeyboardSettings.pahkatStoreURL.path
     private let repoURL = "https://x.brendan.so/divvun-pahkat-repo"
     private var downloadTask: URLSessionDownloadTask?
 

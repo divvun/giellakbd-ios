@@ -18,6 +18,10 @@ final class KeyboardSettings {
         return url
     }()
 
+    static var pahkatStoreURL: URL = {
+        return groupContainerURL.appendingPathComponent("pahkat")
+    }()
+
     static var languageCode: String {
         get { return defaults.string(forKey: "language") ?? Locale.current.languageCode! }
         set { defaults.set(newValue, forKey: "language") }

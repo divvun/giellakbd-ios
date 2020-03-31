@@ -25,6 +25,22 @@ public final class SpellBanner: Banner {
         bannerView
     }
 
+    var spellerURL: URL? {
+        let spellerPackagesDir = KeyboardSettings.pahkatStoreURL
+            .appendingPathComponent("pkg") // TODO: get this dynamically if possible
+        let spellerDir = "speller-sme" // TODO: get this dynamically
+
+
+        guard let lang = self.getPrimaryLanguage() else {
+            print("No primary language found for keyboard; BHFST not loaded.")
+            return nil
+        }
+
+        return spellerPackagesDir
+            .appendingPathComponent(spellerDir)
+            .appendingPathComponent("\(lang).bhfst")
+    }
+
     init(theme: ThemeType) {
         self.bannerView = SpellBannerView(theme: theme)
         bannerView.delegate = self
@@ -88,27 +104,20 @@ public final class SpellBanner: Banner {
         DispatchQueue.global(qos: .background).async {
             print("Dispatching request to load speller…")
 
-            guard let bundle = Bundle.top.url(forResource: "dicts", withExtension: "bundle") else {
-                print("No dict bundle found; BHFST not loaded.")
+            guard let spellerPath = self.spellerURL?.path else {
+                print("Unable to get spellerURL; BHFST not loaded")
                 return
             }
 
-            guard let lang = self.getPrimaryLanguage() else {
-                print("No primary language found for keyboard; BHFST not loaded.")
-                return
-            }
-
-            let path = bundle.appendingPathComponent("\(lang).bhfst")
-
-            if !FileManager.default.fileExists(atPath: path.path) {
-                print("No speller at: \(path)")
+            if !FileManager.default.fileExists(atPath: spellerPath) {
+                print("No speller at: \(spellerPath)")
                 print("DivvunSpell **not** loaded.")
                 return
             }
 
             let speller: ThfstChunkedBoxSpeller
             do {
-                let archive = try ThfstChunkedBoxSpellerArchive.open(path: path.path)
+                let archive = try ThfstChunkedBoxSpellerArchive.open(path: spellerPath)
                 speller = try archive.speller()
                 self.speller = speller
                 print("DivvunSpell loaded!")
