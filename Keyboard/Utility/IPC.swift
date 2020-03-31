@@ -12,7 +12,11 @@ final class IPC {
         case didFinishDownloadingUpdate
     }
 
-    weak var delegate: IPCDelegate?
+    weak var delegate: IPCDelegate? {
+        didSet {
+            tryToSetupFileWatcher()
+        }
+    }
     private var fileWatcher: SKQueue?
     private let ipcDirectory = KeyboardSettings.groupContainerURL.appendingPathComponent("ipc", isDirectory: true)
     private lazy var isDownloadingFile = ipcDirectory.appendingPathComponent("isDownloading")
@@ -32,19 +36,14 @@ final class IPC {
         }
     }
 
-    init(delegate: IPCDelegate?) {
+    init() {
         createIsDownloadingFile()
-        if let delegate = delegate {
-            self.delegate = delegate
-            tryToSetupFileWatcher()
-        }
     }
 
     func tryToSetupFileWatcher() {
         do {
             fileWatcher = try SKQueue(delegate: self)
-            fileWatcher?.addPath(ipcDirectory.path) // kqueue requires adding the containing directory before adding the file of interest
-//            fileWatcher?.addPath(isDownloadingFile.path)
+            fileWatcher?.addPath(ipcDirectory.path) // kqueue requires adding the containing directory before the file of interest
         } catch {
             fatalError("Error creating SKQueue: \(error)")
         }
