@@ -36,10 +36,6 @@ final class IPC {
         }
     }
 
-    init() {
-        createIsDownloadingFile()
-    }
-
     func tryToSetupFileWatcher() {
         do {
             fileWatcher = try SKQueue(delegate: self)
