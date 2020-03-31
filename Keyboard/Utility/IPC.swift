@@ -84,12 +84,16 @@ extension IPC: SKQueueDelegate {
         print(path)
         if fileExists(atUrl: isDownloadingFile) {
             if lastDelegateCall != .didBeginDownloadingUpdate {
-                delegate?.didBeginDownloadingUpdate()
+                DispatchQueue.main.async {
+                    self.delegate?.didBeginDownloadingUpdate()
+                }
                 lastDelegateCall = .didBeginDownloadingUpdate
             }
         } else {
             if lastDelegateCall != .didFinishDownloadingUpdate {
-                delegate?.didFinishDownloadingUpdate()
+                DispatchQueue.main.async {
+                    self.delegate?.didFinishDownloadingUpdate()
+                }
                 lastDelegateCall = .didFinishDownloadingUpdate
             }
         }
