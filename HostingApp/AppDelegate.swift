@@ -109,14 +109,3 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 }
-
-extension AppDelegate: IPCDelegate {
-    func didBeginDownloadingUpdate() {
-        print(#function)
-    }
-
-    func didFinishDownloadingUpdate() {
-        print(#function)
-    }
-
-}
