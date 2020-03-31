@@ -40,21 +40,29 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     private var ipc: IPC?
 
     //swiftlint:disable identifier_name
-    var isKeyboardEnabled: Bool {
-        let x: [Bundle] = UITextInputMode.activeInputModes.compactMap {
+    var enabledGiellaInputModes: [UITextInputMode] {
+        UITextInputMode.activeInputModes.compactMap {
             let s = str1 + str2
-
             let v = $0.perform(Selector(s))
-            if let x = v?.takeUnretainedValue() as? Bundle {
-                return x
+            if let x = v?.takeUnretainedValue() as? Bundle,
+                let bunId = x.bundleIdentifier,
+                let mainId = Bundle.main.bundleIdentifier {
+                if bunId.contains(mainId) {
+                    return $0
+                }
             }
-
             return nil
         }
-
-        return x.contains(Bundle.main)
     }
     //swiftlint:enable identifier_name
+
+    var enabledGiellaKeyboardLanguages: [String] {
+        return enabledGiellaInputModes.compactMap { $0.primaryLanguage }
+    }
+
+    var isKeyboardEnabled: Bool {
+        return !enabledGiellaInputModes.isEmpty
+    }
 
     func application(_: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
