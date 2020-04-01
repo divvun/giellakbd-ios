@@ -67,7 +67,7 @@ final class PahkatWrapper {
 
     func installSpellersForNewlyEnabledKeyboards() {
         let enabledKeyboards = Bundle.enabledKeyboardBundles
-        let packageIds = enabledKeyboards.compactMap { $0.divvunPackageId }
+        let packageIds = Set(enabledKeyboards.compactMap { $0.divvunPackageId })
         let packageKeys = packageIds.map { packageKey(from: $0) }
         let notInstalled = packageKeys.filter { tryToGetStatus(for: $0) == .notInstalled }
 
