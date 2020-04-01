@@ -26,6 +26,7 @@
 		991EE55023D9AB4700DC3677 /* ViewDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991EE54F23D9AB4700DC3677 /* ViewDebugger.swift */; };
 		99460238243B27140027C1CC /* InputContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99460237243B27140027C1CC /* InputContext.swift */; };
 		9946023A243B2BF80027C1CC /* KeyboardViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99460239243B2BF80027C1CC /* KeyboardViewControllerTests.swift */; };
+		9960A25A24349C8A00A5C117 /* KeyboardBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9960A25924349C8A00A5C117 /* KeyboardBundle.swift */; };
 		997021052416DF8C00A81A27 /* KeyboardLocale+AllLocales.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997021042416DF8C00A81A27 /* KeyboardLocale+AllLocales.swift */; };
 		997550B623EAC631004ED6A5 /* UserDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997550B523EAC631004ED6A5 /* UserDictionary.swift */; };
 		997550B723EAC631004ED6A5 /* UserDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997550B523EAC631004ED6A5 /* UserDictionary.swift */; };
@@ -197,6 +198,7 @@
 		991EE54F23D9AB4700DC3677 /* ViewDebugger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewDebugger.swift; sourceTree = "<group>"; };
 		99460237243B27140027C1CC /* InputContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputContext.swift; sourceTree = "<group>"; };
 		99460239243B2BF80027C1CC /* KeyboardViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardViewControllerTests.swift; sourceTree = "<group>"; };
+		9960A25924349C8A00A5C117 /* KeyboardBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardBundle.swift; sourceTree = "<group>"; };
 		997021042416DF8C00A81A27 /* KeyboardLocale+AllLocales.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyboardLocale+AllLocales.swift"; sourceTree = "<group>"; };
 		997550B523EAC631004ED6A5 /* UserDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionary.swift; sourceTree = "<group>"; };
 		999790AB23F2B4E8003F7885 /* UserDictionaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionaryViewController.swift; sourceTree = "<group>"; };
@@ -360,6 +362,7 @@
 				99989FB52417970400EF8CD3 /* UserDictionary+Test.swift */,
 				99DA184224095AD0003E7353 /* UserDictionaryService.swift */,
 				999790B923F40E4F003F7885 /* WordContext.swift */,
+				9960A25924349C8A00A5C117 /* KeyboardBundle.swift */,
 				9904409A23FBDC200063064E /* KeyboardLocale.swift */,
 				997021042416DF8C00A81A27 /* KeyboardLocale+AllLocales.swift */,
 			);
@@ -993,6 +996,7 @@
 				C655E8561EC5559200B12BE4 /* HomeView.swift in Sources */,
 				C6A3905B1EB61BF8009378C1 /* KeyboardSettings.swift in Sources */,
 				C67D6EFC23EAE928001F8DCA /* SKQueue.swift in Sources */,
+				9960A25A24349C8A00A5C117 /* KeyboardBundle.swift in Sources */,
 				C691A0EB23682C9700085AC3 /* TestingView.swift in Sources */,
 				C6B638461EDF94CA00A6ECB2 /* AboutController.swift in Sources */,
 				9904409D23FBE63F0063064E /* KeyboardLocalesViewController.swift in Sources */,
