@@ -223,6 +223,9 @@ extension UIScreen {
     }
 }
 
+let str1 = "containing"
+let str2 = "Bundle"
+
 extension Bundle {
     static var allKeyboardBundles: [Bundle] = {
         do {
@@ -237,6 +240,12 @@ extension Bundle {
         } catch {
             fatalError("Error getting plugin bundles: \(error)")
         }
+    }()
+
+    // Returns the keyboard bundles for keyboards the user has enabled in iOS Keyboard Settings
+    static var enabledKeyboardBundles: [Bundle] = {
+        let enabledLanguages = enabledGiellaKeyboardLanguages
+        return allKeyboardBundles.filter { enabledLanguages.contains($0.primaryLanguage ?? "") }
     }()
 
     var divvunPackageId: String? {
@@ -254,8 +263,30 @@ extension Bundle {
             let lang = attrs["PrimaryLanguage"] as? String else {
                 return nil
         }
-        return String(lang.split(separator: "-")[0])
+        return lang
     }
+
+    //swiftlint:disable identifier_name
+    private static var enabledGiellaInputModes: [UITextInputMode] {
+        UITextInputMode.activeInputModes.compactMap {
+            let s = str1 + str2
+            let v = $0.perform(Selector(s))
+            if let x = v?.takeUnretainedValue() as? Bundle,
+                let bunId = x.bundleIdentifier,
+                let mainId = Bundle.main.bundleIdentifier {
+                if bunId.contains(mainId) {
+                    return $0
+                }
+            }
+            return nil
+        }
+    }
+    //swiftlint:enable identifier_name
+
+    private static var enabledGiellaKeyboardLanguages: [String] {
+        return enabledGiellaInputModes.compactMap { $0.primaryLanguage }
+    }
+
 }
 
 func isBeingRunFromTests() -> Bool {

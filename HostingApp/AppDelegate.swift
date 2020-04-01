@@ -20,9 +20,6 @@ final class AppNavControllerDelegate: NSObject, UINavigationControllerDelegate {
     }
 }
 
-let str1 = "containing"
-let str2 = "Bundle"
-
 @UIApplicationMain
 final class AppDelegate: UIResponder, UIApplicationDelegate {
     weak static var instance: AppDelegate!
@@ -39,29 +36,8 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private var ipc: IPC?
 
-    //swiftlint:disable identifier_name
-    var enabledGiellaInputModes: [UITextInputMode] {
-        UITextInputMode.activeInputModes.compactMap {
-            let s = str1 + str2
-            let v = $0.perform(Selector(s))
-            if let x = v?.takeUnretainedValue() as? Bundle,
-                let bunId = x.bundleIdentifier,
-                let mainId = Bundle.main.bundleIdentifier {
-                if bunId.contains(mainId) {
-                    return $0
-                }
-            }
-            return nil
-        }
-    }
-    //swiftlint:enable identifier_name
-
-    var enabledGiellaKeyboardLanguages: [String] {
-        return enabledGiellaInputModes.compactMap { $0.primaryLanguage }
-    }
-
     var isKeyboardEnabled: Bool {
-        return !enabledGiellaInputModes.isEmpty
+        return !Bundle.enabledKeyboardBundles.isEmpty
     }
 
     func application(_: UIApplication,

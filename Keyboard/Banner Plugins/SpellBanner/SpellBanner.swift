@@ -41,9 +41,11 @@ public final class SpellBanner: Banner {
             return nil
         }
 
+        let languageShortened = String(lang.split(separator: "-")[0])
+
         return spellerPackagesDir
             .appendingPathComponent(spellerDir)
-            .appendingPathComponent("\(lang).bhfst")
+            .appendingPathComponent("\(languageShortened).bhfst")
     }
 
     init(theme: ThemeType) {
