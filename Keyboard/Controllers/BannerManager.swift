@@ -23,7 +23,8 @@ final class BannerManager {
         spellBanner.delegate = self
         updateBanner.delegate = self
 
-        presentBanner(updateBanner)
+//        presentBanner(updateBanner)
+        presentBanner(spellBanner)
     }
 
     private func presentBanner(_ banner: Banner) {
