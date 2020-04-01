@@ -29,24 +29,49 @@ final class PahkatWrapper {
         }
     }
 
-    func downloadPackage() {
-        ipc.isDownloading = true
+    func installSpellersForNewlyEnabledKeyboards() {
+        let enabledKeyboards = Bundle.enabledKeyboardBundles
+        let packageIds = enabledKeyboards.compactMap { $0.divvunPackageId }
+        let packageKeys = packageIds.map { packageKey(from: $0) }
+        let notInstalled = packageKeys.filter { tryToGetStatus(for: $0) == .notInstalled }
+        downloadAndInstallPackagesOneByOne(packageKeys: notInstalled)
+    }
 
-        let path = "/packages/speller-sme?platform=ios"
-        let pkgKey = PackageKey(from: URL(string: repoURL + path)!)
-
+    private func tryToGetStatus(for packageKey: PackageKey) -> PackageInstallStatus {
         do {
-            downloadTask = try store.download(packageKey: pkgKey) { (error, path) in
+            return try store.status(for: packageKey)
+        } catch {
+            fatalError("Error getting status for pahkat package key: \(error)")
+        }
+    }
+
+    private func packageKey(from packageId: String) -> PackageKey {
+        let path = "/packages/\(packageId)?platform=ios"
+        return PackageKey(from: URL(string: repoURL + path)!)
+    }
+
+    private func downloadAndInstallPackagesOneByOne(packageKeys: [PackageKey]) {
+        guard let firstPackage = packageKeys.first else {
+            return
+        }
+
+        downloadAndInstallPackage(packageKey: firstPackage) {
+            self.downloadAndInstallPackagesOneByOne(packageKeys: Array(packageKeys.dropFirst()))
+        }
+    }
+
+    private func downloadAndInstallPackage(packageKey: PackageKey, completion: (() -> Void)?) {
+        ipc.isDownloading = true
+        print("INSTALLING: \(packageKey)")
+        do {
+            downloadTask = try store.download(packageKey: packageKey) { (error, path) in
+                completion?()
                 if let error = error {
                     print(error)
                     return
                 }
 
-                if let path = path {
-                    print(path)
-                }
-
-                let action = TransactionAction.install(pkgKey)
+                let action = TransactionAction.install(packageKey)
 
                 do {
                     let transaction = try self.store.transaction(actions: [action])

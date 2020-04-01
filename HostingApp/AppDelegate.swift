@@ -67,7 +67,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         pahkat?.forceRefreshRepos()
-        pahkat?.downloadPackage()
+        pahkat?.installSpellersForNewlyEnabledKeyboards()
 
         return true
     }
@@ -76,7 +76,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
                      performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         // TODO: check for actual updates and install those instead
         pahkat?.forceRefreshRepos()
-        pahkat?.downloadPackage()
+//        pahkat?.downloadPackage()
         completionHandler(.newData)
     }
 
