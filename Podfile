@@ -15,6 +15,7 @@ target 'HostingApp' do
   pod 'SwiftLint'
   pod 'SQLite.swift', '~> 0.12.0'
   pod 'PahkatClient', :git => "https://github.com/divvun/pahkat-client-sdk-swift/", :submodules => true
+  pod 'RxSwift', '~> 5.1.1'
 end
 
 target 'HostingAppTests' do
