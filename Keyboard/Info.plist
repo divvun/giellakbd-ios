@@ -24,6 +24,8 @@
 	<string>1</string>
 	<key>DivvunKeyboardIndex</key>
 	<integer>0</integer>
+	<key>DivvunPackageId</key>
+	<string>speller-sme</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationQueriesSchemes</key>

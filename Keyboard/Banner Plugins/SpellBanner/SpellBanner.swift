@@ -27,9 +27,12 @@ public final class SpellBanner: Banner {
 
     var spellerURL: URL? {
         let spellerPackagesDir = KeyboardSettings.pahkatStoreURL
-            .appendingPathComponent("pkg") // TODO: get this dynamically if possible
-        let spellerDir = "speller-sme" // TODO: get this dynamically
+            .appendingPathComponent("pkg")
 
+        guard let spellerDir = getDivvunPackageId() else {
+            print("No DivvunPackageId found; BHFST not loaded.")
+            return nil
+        }
 
         guard let lang = self.getPrimaryLanguage() else {
             print("No primary language found for keyboard; BHFST not loaded.")
@@ -96,6 +99,14 @@ public final class SpellBanner: Banner {
                 return nil
         }
         return String(lang.split(separator: "-")[0])
+    }
+
+    private func getDivvunPackageId() -> String? {
+        guard let info = Bundle.main.infoDictionary,
+            let packageId = info["DivvunPackageId"] as? String else {
+            return nil
+        }
+        return packageId
     }
 
     private func loadSpeller() {
