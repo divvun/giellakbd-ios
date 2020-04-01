@@ -29,12 +29,14 @@ public final class SpellBanner: Banner {
         let spellerPackagesDir = KeyboardSettings.pahkatStoreURL
             .appendingPathComponent("pkg")
 
-        guard let spellerDir = getDivvunPackageId() else {
+        let currentKeyboard = Bundle.main
+
+        guard let spellerDir = currentKeyboard.divvunPackageId else {
             print("No DivvunPackageId found; BHFST not loaded.")
             return nil
         }
 
-        guard let lang = self.getPrimaryLanguage() else {
+        guard let lang = currentKeyboard.primaryLanguage else {
             print("No primary language found for keyboard; BHFST not loaded.")
             return nil
         }
@@ -90,23 +92,6 @@ public final class SpellBanner: Banner {
 
     func updateTheme(_ theme: ThemeType) {
         bannerView.updateTheme(theme)
-    }
-
-    private func getPrimaryLanguage() -> String? {
-        guard let extensionInfo = Bundle.main.infoDictionary!["NSExtension"] as? [String: AnyObject],
-            let attrs = extensionInfo["NSExtensionAttributes"] as? [String: AnyObject],
-            let lang = attrs["PrimaryLanguage"] as? String else {
-                return nil
-        }
-        return String(lang.split(separator: "-")[0])
-    }
-
-    private func getDivvunPackageId() -> String? {
-        guard let info = Bundle.main.infoDictionary,
-            let packageId = info["DivvunPackageId"] as? String else {
-            return nil
-        }
-        return packageId
     }
 
     private func loadSpeller() {

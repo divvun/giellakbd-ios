@@ -362,7 +362,6 @@
 				99989FB52417970400EF8CD3 /* UserDictionary+Test.swift */,
 				99DA184224095AD0003E7353 /* UserDictionaryService.swift */,
 				999790B923F40E4F003F7885 /* WordContext.swift */,
-				9960A25924349C8A00A5C117 /* KeyboardBundle.swift */,
 				9904409A23FBDC200063064E /* KeyboardLocale.swift */,
 				997021042416DF8C00A81A27 /* KeyboardLocale+AllLocales.swift */,
 			);
@@ -996,7 +995,6 @@
 				C655E8561EC5559200B12BE4 /* HomeView.swift in Sources */,
 				C6A3905B1EB61BF8009378C1 /* KeyboardSettings.swift in Sources */,
 				C67D6EFC23EAE928001F8DCA /* SKQueue.swift in Sources */,
-				9960A25A24349C8A00A5C117 /* KeyboardBundle.swift in Sources */,
 				C691A0EB23682C9700085AC3 /* TestingView.swift in Sources */,
 				C6B638461EDF94CA00A6ECB2 /* AboutController.swift in Sources */,
 				9904409D23FBE63F0063064E /* KeyboardLocalesViewController.swift in Sources */,

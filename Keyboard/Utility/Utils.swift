@@ -223,6 +223,41 @@ extension UIScreen {
     }
 }
 
+extension Bundle {
+    static var allKeyboardBundles: [Bundle] = {
+        do {
+            guard let pluginsPath = Bundle.main.resourceURL?.appendingPathComponent("PlugIns") else {
+                return []
+            }
+            print("pluginsPath: \(pluginsPath)")
+            return try FileManager.default.contentsOfDirectory(at: pluginsPath, includingPropertiesForKeys: .none, options: [])
+                .compactMap {
+                    Bundle(url: $0)
+            }
+        } catch {
+            fatalError("Error getting plugin bundles: \(error)")
+        }
+    }()
+
+    var divvunPackageId: String? {
+        guard let info = infoDictionary,
+            let packageId = info["DivvunPackageId"] as? String,
+            packageId.isEmpty == false else {
+            return nil
+        }
+        return packageId
+    }
+
+    var primaryLanguage: String? {
+        guard let extensionInfo = infoDictionary!["NSExtension"] as? [String: AnyObject],
+            let attrs = extensionInfo["NSExtensionAttributes"] as? [String: AnyObject],
+            let lang = attrs["PrimaryLanguage"] as? String else {
+                return nil
+        }
+        return String(lang.split(separator: "-")[0])
+    }
+}
+
 func isBeingRunFromTests() -> Bool {
     return ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
 }
