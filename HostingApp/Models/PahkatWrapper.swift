@@ -97,6 +97,8 @@ final class PahkatWrapper {
         let path = "/packages/\(packageId)?platform=ios"
         return PackageKey(from: URL(string: repoURL + path)!)
     }
+    
+    private let queue = SerialDispatchQueueScheduler(qos: .userInitiated)
 
     private func downloadAndInstallPackages(packageKeys: [PackageKey]) -> Single<Empty> {
         if packageKeys.isEmpty {
@@ -110,12 +112,15 @@ final class PahkatWrapper {
             .merge(maxConcurrent: 1)
             .toArray()
 
-        return downloadSequentially.map { _ in
-            let actions = packageKeys.map { TransactionAction.install($0) }
-            let transaction = try self.store.transaction(actions: actions)
-            transaction.process(delegate: self)
-            return Empty.instance
-        }
+        return downloadSequentially
+            .observeOn(queue)
+            .subscribeOn(queue)
+            .map { _ in
+                let actions = packageKeys.map { TransactionAction.install($0) }
+                let transaction = try self.store.transaction(actions: actions)
+                transaction.process(delegate: self)
+                return Empty.instance
+            }
     }
 
 }
