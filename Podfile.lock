@@ -1,13 +1,13 @@
 PODS:
   - DivvunSpell (0.2.3)
-  - Sentry (4.4.3):
-    - Sentry/Core (= 4.4.3)
-  - Sentry/Core (4.4.3)
+  - Sentry (4.5.0):
+    - Sentry/Core (= 4.5.0)
+  - Sentry/Core (4.5.0)
   - SQLite.swift (0.12.2):
     - SQLite.swift/standard (= 0.12.2)
   - SQLite.swift/standard (0.12.2)
   - SwiftLint (0.39.1)
-  - UIDeviceComplete (2.6.5)
+  - UIDeviceComplete (2.6.6)
 
 DEPENDENCIES:
   - DivvunSpell (from `https://github.com/divvun/divvunspell-swift`)
@@ -35,15 +35,15 @@ CHECKOUT OPTIONS:
     :git: https://github.com/divvun/divvunspell-swift
     :submodules: true
   UIDeviceComplete:
-    :commit: 8c9daafea9ade9e7a9f2df36a58c7fee9ca003e2
+    :commit: 459f394e621cf0c4da0d4ca589dc662f7572ef0f
     :git: https://github.com/bbqsrc/UIDeviceComplete
 
 SPEC CHECKSUMS:
   DivvunSpell: 0bfcaee6ab4c45ec6c0e827fd09523faf3c283bc
-  Sentry: 14bdd673870e8cf64932b149fad5bbbf39a9b390
+  Sentry: ab6c209f23700d1460691dbc90e19ed0a05d496b
   SQLite.swift: d2b4642190917051ce6bd1d49aab565fe794eea3
   SwiftLint: 55e96a4a4d537d4a3156859fc1c54bd24851a046
-  UIDeviceComplete: 5654c8f59f25adf3b0ea876c2a0463dc64c49226
+  UIDeviceComplete: c89b90393fb2a3446f5e0e86eca0c02d6f8e09f0
 
 PODFILE CHECKSUM: 1749be4d1a9322838bd1942de30071f2919590aa
 
