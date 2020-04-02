@@ -142,7 +142,7 @@ open class KeyboardViewController: UIInputViewController {
             }
 
             // Smol iPads and 9 inch iPad Pro
-            if sizeInches < 11 {
+            if sizeInches < 12 {
                 return 314.0
             }
 
