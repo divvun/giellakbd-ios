@@ -66,7 +66,6 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        pahkat?.forceRefreshRepos()
         pahkat?.installSpellersForNewlyEnabledKeyboards()
 
         return true
@@ -75,14 +74,14 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         // TODO: check for actual updates and install those instead
-        pahkat?.forceRefreshRepos()
-//        pahkat?.downloadPackage()
         completionHandler(.newData)
     }
 
     func applicationWillEnterForeground(_: UIApplication) {
         // I'd gladly use .NSExtensionHostWillEnterForeground but it doesn't work
         NotificationCenter.default.post(Notification(name: .HostingAppWillEnterForeground))
+
+        pahkat?.installSpellersForNewlyEnabledKeyboards()
     }
 
     func parseUrl(_: URL) {
