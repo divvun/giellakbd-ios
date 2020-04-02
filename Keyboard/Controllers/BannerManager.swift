@@ -11,6 +11,7 @@ final class BannerManager {
     private let view: UIView
     private let spellBanner: SpellBanner
     private let updateBanner: UpdateBanner
+    private let openHostBanner: SpellerAvailableBanner
     private var currentBanner: Banner?
 
     init(view: UIView, theme: ThemeType, delegate: BannerManagerDelegate?) {
@@ -19,12 +20,13 @@ final class BannerManager {
 
         spellBanner = SpellBanner(theme: theme)
         updateBanner = UpdateBanner(theme: theme)
+        openHostBanner = SpellerAvailableBanner(theme: theme)
 
         spellBanner.delegate = self
         updateBanner.delegate = self
 
 //        presentBanner(updateBanner)
-        presentBanner(spellBanner)
+        presentBanner(openHostBanner)
     }
 
     private func presentBanner(_ banner: Banner) {

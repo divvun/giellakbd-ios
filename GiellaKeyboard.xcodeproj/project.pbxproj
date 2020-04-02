@@ -23,6 +23,8 @@
 		99074EF224224B4400075480 /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99074EF124224B4400075480 /* Banner.swift */; };
 		99074EF324224BFA00075480 /* BannerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99074EEE24224AE700075480 /* BannerManager.swift */; };
 		99074EF62423AAA300075480 /* SpellBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAF59AA22F9CD0600F7C9FC /* SpellBannerView.swift */; };
+		99094698243674F20070AEB6 /* SpellerAvailableBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99094697243674F20070AEB6 /* SpellerAvailableBanner.swift */; };
+		9909469B2436787C0070AEB6 /* SpellerAvailableBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990946992436753A0070AEB6 /* SpellerAvailableBannerView.swift */; };
 		991EE55023D9AB4700DC3677 /* ViewDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991EE54F23D9AB4700DC3677 /* ViewDebugger.swift */; };
 		99460238243B27140027C1CC /* InputContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99460237243B27140027C1CC /* InputContext.swift */; };
 		9946023A243B2BF80027C1CC /* KeyboardViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99460239243B2BF80027C1CC /* KeyboardViewControllerTests.swift */; };
@@ -195,6 +197,8 @@
 		99074EE92422387700075480 /* SpellBannerSeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpellBannerSeparatorView.swift; sourceTree = "<group>"; };
 		99074EEE24224AE700075480 /* BannerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerManager.swift; sourceTree = "<group>"; };
 		99074EF124224B4400075480 /* Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
+		99094697243674F20070AEB6 /* SpellerAvailableBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpellerAvailableBanner.swift; sourceTree = "<group>"; };
+		990946992436753A0070AEB6 /* SpellerAvailableBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpellerAvailableBannerView.swift; sourceTree = "<group>"; };
 		991EE54F23D9AB4700DC3677 /* ViewDebugger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewDebugger.swift; sourceTree = "<group>"; };
 		99460237243B27140027C1CC /* InputContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputContext.swift; sourceTree = "<group>"; };
 		99460239243B2BF80027C1CC /* KeyboardViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardViewControllerTests.swift; sourceTree = "<group>"; };
@@ -510,6 +514,7 @@
 				99074EF024224B2E00075480 /* Protocols */,
 				998F873A2428D025003D5AB6 /* Update Banner */,
 				99074EE6242237DE00075480 /* SpellBanner */,
+				99094696243674700070AEB6 /* SpellerAvailableBanner */,
 			);
 			path = "Banner Plugins";
 			sourceTree = "<group>";
@@ -533,6 +538,15 @@
 				999C30162428E91000E127A6 /* BannerView.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		99094696243674700070AEB6 /* SpellerAvailableBanner */ = {
+			isa = PBXGroup;
+			children = (
+				99094697243674F20070AEB6 /* SpellerAvailableBanner.swift */,
+				990946992436753A0070AEB6 /* SpellerAvailableBannerView.swift */,
+			);
+			path = SpellerAvailableBanner;
 			sourceTree = "<group>";
 		};
 		998F873A2428D025003D5AB6 /* Update Banner */ = {
@@ -1049,9 +1063,11 @@
 				999C3019242A3FCF00E127A6 /* DownloadSimulator.swift in Sources */,
 				FDAF59A522F9CCE100F7C9FC /* Theme.swift in Sources */,
 				999C30132428E6C000E127A6 /* UpdateBanner.swift in Sources */,
+				99094698243674F20070AEB6 /* SpellerAvailableBanner.swift in Sources */,
 				99074EEB2422387A00075480 /* SpellBannerSeparatorView.swift in Sources */,
 				99074EE4242230F000075480 /* SpellBannerCell.swift in Sources */,
 				99C4E56724320F49005F8C8A /* IPC.swift in Sources */,
+				9909469B2436787C0070AEB6 /* SpellerAvailableBannerView.swift in Sources */,
 				99074EF324224BFA00075480 /* BannerManager.swift in Sources */,
 				999C30152428E70600E127A6 /* UpdateBannerView.swift in Sources */,
 				FDBD09C52333A56800303152 /* SplitKeyboard.swift in Sources */,
