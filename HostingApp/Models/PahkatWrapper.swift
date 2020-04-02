@@ -14,14 +14,14 @@ extension PrefixPackageStore {
                         emitter(.success(result))
                         return
                     }
-                    
+
                     if let error = error {
                         emitter(.error(error))
                     } else {
                         emitter(.error(UnknownError()))
                     }
                 })
-                
+
                 return Disposables.create {
                     task.cancel(byProducingResumeData: { resumableData in
                         // TODO: we should handle this for resuming broken downloads, but not right now.
@@ -41,7 +41,7 @@ final class PahkatWrapper {
     private let repoURL = "https://x.brendan.so/divvun-pahkat-repo"
     private var downloadTask: URLSessionDownloadTask?
     private let ipc = IPC()
-    
+
     private let bag = DisposeBag()
 
     init?() {
@@ -97,7 +97,7 @@ final class PahkatWrapper {
         let path = "/packages/\(packageId)?platform=ios"
         return PackageKey(from: URL(string: repoURL + path)!)
     }
-    
+
     private let queue = SerialDispatchQueueScheduler(qos: .userInitiated)
 
     private func downloadAndInstallPackages(packageKeys: [PackageKey]) -> Single<Empty> {
