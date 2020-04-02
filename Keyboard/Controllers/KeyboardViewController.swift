@@ -293,12 +293,16 @@ open class KeyboardViewController: UIInputViewController {
         keyboardContainer.addSubview(splitKeyboard.leftKeyboardView)
         keyboardContainer.addSubview(splitKeyboard.rightKeyboardView)
 
+        let leftWidthMultiplier: CGFloat = 0.3181 // proportion used on native keyboard
         splitKeyboard.leftKeyboardView.bottomAnchor.constraint(equalTo: keyboardContainer.bottomAnchor).enable()
         splitKeyboard.leftKeyboardView.leftAnchor.constraint(equalTo: keyboardContainer.leftAnchor).enable()
-        splitKeyboard.leftKeyboardView.widthAnchor.constraint(equalTo: keyboardContainer.widthAnchor, multiplier: 0.25).enable()
+        splitKeyboard.leftKeyboardView.widthAnchor.constraint(equalTo: keyboardContainer.widthAnchor,
+                                                              multiplier: leftWidthMultiplier).enable()
 
+        let rightWidthMultiplier: CGFloat = 0.3561 // proportion used on native keyboard
         splitKeyboard.rightKeyboardView.bottomAnchor.constraint(equalTo: keyboardContainer.bottomAnchor).enable()
-        splitKeyboard.rightKeyboardView.widthAnchor.constraint(equalTo: keyboardContainer.widthAnchor, multiplier: 0.25).enable()
+        splitKeyboard.rightKeyboardView.widthAnchor.constraint(equalTo: keyboardContainer.widthAnchor,
+                                                               multiplier: rightWidthMultiplier).enable()
         splitKeyboard.rightKeyboardView.rightAnchor.constraint(equalTo: keyboardContainer.rightAnchor).enable()
 
         splitKeyboard.rightKeyboardView.topAnchor.constraint(equalTo: splitKeyboard.leftKeyboardView.topAnchor).enable()
