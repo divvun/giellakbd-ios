@@ -40,12 +40,14 @@ open class KeyboardViewController: UIInputViewController {
     @IBOutlet var nextKeyboardButton: UIButton!
     private var keyboardContainer: UIView!
     private var keyboardView: KeyboardViewProvider!
+    private var bannerContainerView: UIView?
     private var heightConstraint: NSLayoutConstraint!
     private var extraSpacingView: UIView!
     private var deadKeyHandler: DeadKeyHandler!
-    public private(set) var bannerView: BannerView?
     public private(set) var keyboardDefinition: KeyboardDefinition!
     private var keyboardMode: KeyboardMode = .normal
+
+    private var bannerManager: BannerManager?
 
     private var showsBanner = true
 
@@ -140,7 +142,7 @@ open class KeyboardViewController: UIInputViewController {
             }
 
             // Smol iPads and 9 inch iPad Pro
-            if sizeInches < 11 {
+            if sizeInches < 12 {
                 return 314.0
             }
 
@@ -244,21 +246,6 @@ open class KeyboardViewController: UIInputViewController {
         print("\(definitions.map { $0.locale })")
     }
 
-    private func setupKeyboardContainer() {
-        if keyboardContainer != nil {
-            keyboardContainer.removeFromSuperview()
-            keyboardContainer = nil
-        }
-
-        keyboardContainer = UIView()
-        keyboardContainer.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(keyboardContainer)
-        keyboardContainer.topAnchor.constraint(equalTo: view.topAnchor).enable(priority: .defaultHigh)
-        keyboardContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor).enable(priority: .required)
-        keyboardContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor).enable(priority: .required)
-        keyboardContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor).enable(priority: .required)
-    }
-
     private func setupKeyboardView(withBanner: Bool) {
         if keyboardView != nil {
             keyboardView.remove()
@@ -277,10 +264,27 @@ open class KeyboardViewController: UIInputViewController {
         }
 
         if withBanner {
-            setupBannerView()
+            bannerContainerView = makeBannerContainerView()
+            if bannerManager == nil {
+                bannerManager = BannerManager(view: bannerContainerView!, theme: theme, delegate: self)
+            }
         } else {
             self.keyboardView.topAnchor.constraint(equalTo: keyboardContainer.topAnchor).enable()
         }
+    }
+
+    private func setupKeyboardContainer() {
+        guard keyboardContainer == nil else {
+            return
+        }
+
+        keyboardContainer = UIView()
+        keyboardContainer.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(keyboardContainer)
+        keyboardContainer.topAnchor.constraint(equalTo: view.topAnchor).enable(priority: .defaultHigh)
+        keyboardContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor).enable(priority: .required)
+        keyboardContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor).enable(priority: .required)
+        keyboardContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor).enable(priority: .required)
     }
 
     private func setupSplitKeyboard() {
@@ -289,12 +293,16 @@ open class KeyboardViewController: UIInputViewController {
         keyboardContainer.addSubview(splitKeyboard.leftKeyboardView)
         keyboardContainer.addSubview(splitKeyboard.rightKeyboardView)
 
+        let leftWidthMultiplier: CGFloat = 0.3181 // proportion used on native keyboard
         splitKeyboard.leftKeyboardView.bottomAnchor.constraint(equalTo: keyboardContainer.bottomAnchor).enable()
         splitKeyboard.leftKeyboardView.leftAnchor.constraint(equalTo: keyboardContainer.leftAnchor).enable()
-        splitKeyboard.leftKeyboardView.widthAnchor.constraint(equalTo: keyboardContainer.widthAnchor, multiplier: 0.25).enable()
+        splitKeyboard.leftKeyboardView.widthAnchor.constraint(equalTo: keyboardContainer.widthAnchor,
+                                                              multiplier: leftWidthMultiplier).enable()
 
+        let rightWidthMultiplier: CGFloat = 0.3561 // proportion used on native keyboard
         splitKeyboard.rightKeyboardView.bottomAnchor.constraint(equalTo: keyboardContainer.bottomAnchor).enable()
-        splitKeyboard.rightKeyboardView.widthAnchor.constraint(equalTo: keyboardContainer.widthAnchor, multiplier: 0.25).enable()
+        splitKeyboard.rightKeyboardView.widthAnchor.constraint(equalTo: keyboardContainer.widthAnchor,
+                                                               multiplier: rightWidthMultiplier).enable()
         splitKeyboard.rightKeyboardView.rightAnchor.constraint(equalTo: keyboardContainer.rightAnchor).enable()
 
         splitKeyboard.rightKeyboardView.topAnchor.constraint(equalTo: splitKeyboard.leftKeyboardView.topAnchor).enable()
@@ -344,22 +352,23 @@ open class KeyboardViewController: UIInputViewController {
         self.keyboardView = keyboardView
     }
 
-    private func setupBannerView() {
-        bannerView = BannerView(theme: theme)
-        guard let bannerView = bannerView else { fatalError("No banner view found in setupBannerView") }
+    private func makeBannerContainerView() -> UIView {
+        let bannerContainer = UIView()
 
-        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        bannerContainer.translatesAutoresizingMaskIntoConstraints = false
 
-        keyboardContainer.insertSubview(bannerView, at: 0)
+        keyboardContainer.insertSubview(bannerContainer, at: 0)
 
-        bannerView.heightAnchor.constraint(equalToConstant: theme.bannerHeight).enable()
-        bannerView.leftAnchor.constraint(equalTo: keyboardContainer.leftAnchor).enable()
-        bannerView.rightAnchor.constraint(equalTo: keyboardContainer.rightAnchor).enable()
+        bannerContainer.heightAnchor.constraint(equalToConstant: theme.bannerHeight).enable()
+        bannerContainer.leftAnchor.constraint(equalTo: keyboardContainer.leftAnchor).enable()
+        bannerContainer.rightAnchor.constraint(equalTo: keyboardContainer.rightAnchor).enable()
 
-        bannerView.bottomAnchor.constraint(equalTo: keyboardView.topAnchor).enable()
-        bannerView.topAnchor.constraint(equalTo: keyboardContainer.topAnchor).enable()
+        bannerContainer.bottomAnchor.constraint(equalTo: keyboardView.topAnchor).enable()
+        bannerContainer.topAnchor.constraint(equalTo: keyboardContainer.topAnchor).enable()
 
-        bannerView.isHidden = false
+        bannerContainer.isHidden = false
+
+        return bannerContainer
     }
 
     private var isFirstRun = true
@@ -398,22 +407,21 @@ open class KeyboardViewController: UIInputViewController {
 
     var bannerVisible: Bool {
         set {
-            bannerView?.isHidden = !newValue
+            bannerContainerView?.isHidden = !newValue
             updateHeightConstraint()
         }
 
         get {
-            guard let bannerView = bannerView else {
+            guard let bannerContainer = bannerContainerView else {
                 return false
             }
-            return bannerView.isHidden == false
+            return bannerContainer.isHidden == false
         }
     }
 
     private func propagateTextInputUpdateToBanner() {
-        let proxy = textDocumentProxy
-        if let bannerView = bannerView, let context = try? CursorContext.from(proxy: proxy) {
-            bannerView.delegate?.textInputDidChange(bannerView, context: context)
+        if let context = try? CursorContext.from(proxy: textDocumentProxy) {
+            bannerManager?.propagateTextInputUpdateToBanners(newContext: context)
         }
     }
 
@@ -534,7 +542,7 @@ open class KeyboardViewController: UIInputViewController {
             theme = newTheme
 
             updateAfterThemeChange()
-            bannerView?.updateTheme(theme: theme)
+            bannerManager?.updateTheme(theme)
             keyboardView.updateTheme(theme: theme)
         }
     }
@@ -555,7 +563,6 @@ open class KeyboardViewController: UIInputViewController {
 
     open override func textDidChange(_: UITextInput?) {
         // The app has just changed the document's contents, the document context has been updated.
-
         updateInputState()
     }
 
@@ -680,15 +687,22 @@ extension KeyboardViewController: KeyboardViewDelegate {
             keyboardView.page = (keyboardView.page == .symbols1 ? .symbols2 : .symbols1)
         case .keyboard:
             break
+        case .normalKeyboard:
+            updateKeyboardMode(.normal)
         case .splitKeyboard:
-            keyboardMode = keyboardMode == .split ? .normal : .split
+            updateKeyboardMode(.split)
         case .sideKeyboardLeft:
-            keyboardMode = keyboardMode == .left ? .normal : .left
+            updateKeyboardMode(.left)
         case .sideKeyboardRight:
-            keyboardMode = keyboardMode == .right ? .normal : .right
+            updateKeyboardMode(.right)
         case .keyboardMode:
             dismissKeyboard()
         }
+    }
+
+    private func updateKeyboardMode(_ keyboardMode: KeyboardMode) {
+        self.keyboardMode = keyboardMode
+        setupKeyboardView(withBanner: showsBanner)
     }
 
     private func handleBackspace() {
@@ -717,5 +731,14 @@ extension KeyboardViewController: KeyboardViewDelegate {
 extension KeyboardViewController: KeyboardViewKeyboardKeyDelegate {
     func didTriggerKeyboardButton(sender: UIView, forEvent event: UIEvent) {
         self.handleInputModeList(from: sender, with: event)
+    }
+}
+
+extension KeyboardViewController: BannerManagerDelegate {
+    func bannerDidProvideInput(banner: Banner, inputText: String) {
+        if banner is SpellBanner {
+            Audio.playClickSound()
+            replaceSelected(with: inputText)
+        }
     }
 }

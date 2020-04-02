@@ -1,6 +1,6 @@
 import UIDeviceComplete
 
-class KeyView: UIView {
+final class KeyView: UIView {
     private let key: KeyDefinition
     private let theme: ThemeType
 
@@ -279,7 +279,7 @@ class KeyView: UIView {
             setupShift(page, traits, theme)
         case .shiftSymbols:
             setupShiftSymbols(page, traits)
-        case .spacer, .splitKeyboard, .sideKeyboardLeft, .sideKeyboardRight:
+        case .spacer, .normalKeyboard, .splitKeyboard, .sideKeyboardLeft, .sideKeyboardRight:
             // TODO: why is an empty image view being added here?
             imageView = UIImageView()
             if let imageView = self.imageView {

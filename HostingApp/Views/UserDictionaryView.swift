@@ -1,6 +1,6 @@
 import UIKit
 
-class UserDictionaryView: UIView, Nibbable {
+final class UserDictionaryView: UIView, Nibbable {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var emptyState: UIView!
     @IBOutlet weak var dictionaryIconContainer: UIView!

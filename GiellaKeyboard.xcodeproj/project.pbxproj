@@ -17,6 +17,12 @@
 		9904409D23FBE63F0063064E /* KeyboardLocalesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9904409C23FBE63F0063064E /* KeyboardLocalesViewController.swift */; };
 		990440A523FC14A30063064E /* UserDictionaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990440A423FC14A30063064E /* UserDictionaryTests.swift */; };
 		990440AC23FC245D0063064E /* KeyboardLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9904409A23FBDC200063064E /* KeyboardLocale.swift */; };
+		99074EE4242230F000075480 /* SpellBannerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99074EE3242230F000075480 /* SpellBannerCell.swift */; };
+		99074EE82422383700075480 /* SpellBannerFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99074EE72422383700075480 /* SpellBannerFlowLayout.swift */; };
+		99074EEB2422387A00075480 /* SpellBannerSeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99074EE92422387700075480 /* SpellBannerSeparatorView.swift */; };
+		99074EF224224B4400075480 /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99074EF124224B4400075480 /* Banner.swift */; };
+		99074EF324224BFA00075480 /* BannerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99074EEE24224AE700075480 /* BannerManager.swift */; };
+		99074EF62423AAA300075480 /* SpellBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAF59AA22F9CD0600F7C9FC /* SpellBannerView.swift */; };
 		991EE55023D9AB4700DC3677 /* ViewDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991EE54F23D9AB4700DC3677 /* ViewDebugger.swift */; };
 		997021052416DF8C00A81A27 /* KeyboardLocale+AllLocales.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997021042416DF8C00A81A27 /* KeyboardLocale+AllLocales.swift */; };
 		997550B623EAC631004ED6A5 /* UserDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997550B523EAC631004ED6A5 /* UserDictionary.swift */; };
@@ -64,7 +70,7 @@
 		C6996B5722FC2C93007EBC3D /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6996B5422FC2C8B007EBC3D /* Utils.swift */; };
 		C6996B5A22FC2CC7007EBC3D /* SystemKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6996B5822FC2CC2007EBC3D /* SystemKeys.swift */; };
 		C6996B5C22FC2D3E007EBC3D /* CursorContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6996B5B22FC2D3E007EBC3D /* CursorContext.swift */; };
-		C6996B5E22FC3257007EBC3D /* DivvunSpellBannerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6996B5D22FC3257007EBC3D /* DivvunSpellBannerPlugin.swift */; };
+		C6996B5E22FC3257007EBC3D /* SpellBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6996B5D22FC3257007EBC3D /* SpellBanner.swift */; };
 		C6A2E01D1EDFA259006BAB69 /* AboutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6A2E01C1EDFA259006BAB69 /* AboutView.xib */; };
 		C6A2E01F1EDFAAA2006BAB69 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A2E01E1EDFAAA2006BAB69 /* AboutView.swift */; };
 		C6A3905B1EB61BF8009378C1 /* KeyboardSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A3905A1EB61BF8009378C1 /* KeyboardSettings.swift */; };
@@ -87,7 +93,6 @@
 		FDAF59A522F9CCE100F7C9FC /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAF59A222F9CCE000F7C9FC /* Theme.swift */; };
 		FDAF59A722F9CCE100F7C9FC /* KeyDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAF59A322F9CCE100F7C9FC /* KeyDefinition.swift */; };
 		FDAF59A922F9CCF200F7C9FC /* LongPressController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAF59A822F9CCF200F7C9FC /* LongPressController.swift */; };
-		FDAF59AD22F9CD0700F7C9FC /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAF59AA22F9CD0600F7C9FC /* BannerView.swift */; };
 		FDAF59AF22F9CD0700F7C9FC /* KeyOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAF59AC22F9CD0700F7C9FC /* KeyOverlayView.swift */; };
 		FDBD09C52333A56800303152 /* SplitKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDBD09C32333A50E00303152 /* SplitKeyboard.swift */; };
 /* End PBXBuildFile section */
@@ -171,6 +176,11 @@
 		990440A223FC14A30063064E /* HostingAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HostingAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		990440A423FC14A30063064E /* UserDictionaryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionaryTests.swift; sourceTree = "<group>"; };
 		990440A623FC14A30063064E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		99074EE3242230F000075480 /* SpellBannerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpellBannerCell.swift; sourceTree = "<group>"; };
+		99074EE72422383700075480 /* SpellBannerFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpellBannerFlowLayout.swift; sourceTree = "<group>"; };
+		99074EE92422387700075480 /* SpellBannerSeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpellBannerSeparatorView.swift; sourceTree = "<group>"; };
+		99074EEE24224AE700075480 /* BannerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerManager.swift; sourceTree = "<group>"; };
+		99074EF124224B4400075480 /* Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
 		991EE54F23D9AB4700DC3677 /* ViewDebugger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewDebugger.swift; sourceTree = "<group>"; };
 		997021042416DF8C00A81A27 /* KeyboardLocale+AllLocales.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyboardLocale+AllLocales.swift"; sourceTree = "<group>"; };
 		997550B523EAC631004ED6A5 /* UserDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionary.swift; sourceTree = "<group>"; };
@@ -224,7 +234,7 @@
 		C6996B5422FC2C8B007EBC3D /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		C6996B5822FC2CC2007EBC3D /* SystemKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemKeys.swift; sourceTree = "<group>"; };
 		C6996B5B22FC2D3E007EBC3D /* CursorContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CursorContext.swift; sourceTree = "<group>"; };
-		C6996B5D22FC3257007EBC3D /* DivvunSpellBannerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DivvunSpellBannerPlugin.swift; sourceTree = "<group>"; };
+		C6996B5D22FC3257007EBC3D /* SpellBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpellBanner.swift; sourceTree = "<group>"; };
 		C6A2E01C1EDFA259006BAB69 /* AboutView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutView.xib; sourceTree = "<group>"; };
 		C6A2E01E1EDFAAA2006BAB69 /* AboutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		C6A3905A1EB61BF8009378C1 /* KeyboardSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardSettings.swift; sourceTree = "<group>"; };
@@ -244,7 +254,7 @@
 		FDAF59A222F9CCE000F7C9FC /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		FDAF59A322F9CCE100F7C9FC /* KeyDefinition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyDefinition.swift; sourceTree = "<group>"; };
 		FDAF59A822F9CCF200F7C9FC /* LongPressController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LongPressController.swift; sourceTree = "<group>"; };
-		FDAF59AA22F9CD0600F7C9FC /* BannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
+		FDAF59AA22F9CD0600F7C9FC /* SpellBannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpellBannerView.swift; sourceTree = "<group>"; };
 		FDAF59AB22F9CD0600F7C9FC /* KeyboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardView.swift; sourceTree = "<group>"; };
 		FDAF59AC22F9CD0700F7C9FC /* KeyOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyOverlayView.swift; sourceTree = "<group>"; };
 		FDBD09C32333A50E00303152 /* SplitKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitKeyboard.swift; sourceTree = "<group>"; };
@@ -303,7 +313,6 @@
 		4E6AEE4F19D2484B00931E8F /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				FDAF59AA22F9CD0600F7C9FC /* BannerView.swift */,
 				FDAF59AB22F9CD0600F7C9FC /* KeyboardView.swift */,
 				FDAF59AC22F9CD0700F7C9FC /* KeyOverlayView.swift */,
 				C649D3D2234B7C7A00EF4273 /* KeyView.swift */,
@@ -337,9 +346,9 @@
 				FDAF59A822F9CCF200F7C9FC /* LongPressController.swift */,
 				C6F249671F736FEE00840F2B /* EntryPoint.swift */,
 				C6996B5122FB0055007EBC3D /* DeadKeyHandler.swift */,
-				C6996B5D22FC3257007EBC3D /* DivvunSpellBannerPlugin.swift */,
 				FDBD09C32333A50E00303152 /* SplitKeyboard.swift */,
 				99DD30F423E3059C0065E8D8 /* Audio.swift */,
+				99074EEE24224AE700075480 /* BannerManager.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -404,6 +413,7 @@
 				4E6AEE5219D2488B00931E8F /* Controllers */,
 				4E6AEE5019D2486900931E8F /* Models */,
 				4E6AEE4F19D2484B00931E8F /* Views */,
+				99074EE5242237C700075480 /* Banner Plugins */,
 				4EE7599519F759F300B4E6ED /* Utility */,
 				4E807DBB19461DC700D875D1 /* Supporting Files */,
 			);
@@ -458,6 +468,35 @@
 				990440A623FC14A30063064E /* Info.plist */,
 			);
 			path = HostingAppTests;
+			sourceTree = "<group>";
+		};
+		99074EE5242237C700075480 /* Banner Plugins */ = {
+			isa = PBXGroup;
+			children = (
+				99074EF024224B2E00075480 /* Protocols */,
+				99074EE6242237DE00075480 /* SpellBanner */,
+			);
+			path = "Banner Plugins";
+			sourceTree = "<group>";
+		};
+		99074EE6242237DE00075480 /* SpellBanner */ = {
+			isa = PBXGroup;
+			children = (
+				C6996B5D22FC3257007EBC3D /* SpellBanner.swift */,
+				FDAF59AA22F9CD0600F7C9FC /* SpellBannerView.swift */,
+				99074EE3242230F000075480 /* SpellBannerCell.swift */,
+				99074EE72422383700075480 /* SpellBannerFlowLayout.swift */,
+				99074EE92422387700075480 /* SpellBannerSeparatorView.swift */,
+			);
+			path = SpellBanner;
+			sourceTree = "<group>";
+		};
+		99074EF024224B2E00075480 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				99074EF124224B4400075480 /* Banner.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		C676AD621EC98C0F00523FF3 /* Controllers */ = {
@@ -645,7 +684,7 @@
 					};
 					990440A123FC14A30063064E = {
 						CreatedOnToolsVersion = 11.3.1;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						TestTargetID = 4E807D9219461D9000D875D1;
 					};
 					C6F2492E1F736DCE00840F2B = {
@@ -933,11 +972,12 @@
 				997550B723EAC631004ED6A5 /* UserDictionary.swift in Sources */,
 				99DD30F623E307430065E8D8 /* Audio.swift in Sources */,
 				C6996B5322FB06FA007EBC3D /* DeadKeyHandler.swift in Sources */,
-				C6996B5E22FC3257007EBC3D /* DivvunSpellBannerPlugin.swift in Sources */,
+				C6996B5E22FC3257007EBC3D /* SpellBanner.swift in Sources */,
 				999790BB23F40E4F003F7885 /* WordContext.swift in Sources */,
 				C6996B5C22FC2D3E007EBC3D /* CursorContext.swift in Sources */,
 				C6996B5A22FC2CC7007EBC3D /* SystemKeys.swift in Sources */,
 				C6F249461F736E1400840F2B /* KeyboardDefinition.swift in Sources */,
+				99074EE82422383700075480 /* SpellBannerFlowLayout.swift in Sources */,
 				C6F249471F736E1A00840F2B /* KeyboardViewController.swift in Sources */,
 				99DA184424095AF0003E7353 /* UserDictionaryService.swift in Sources */,
 				C649D3D4234B7C8000EF4273 /* KeyView.swift in Sources */,
@@ -946,8 +986,12 @@
 				C6996B5622FC2C92007EBC3D /* Utils.swift in Sources */,
 				FDAF59A722F9CCE100F7C9FC /* KeyDefinition.swift in Sources */,
 				FDAF59A522F9CCE100F7C9FC /* Theme.swift in Sources */,
+				99074EEB2422387A00075480 /* SpellBannerSeparatorView.swift in Sources */,
+				99074EE4242230F000075480 /* SpellBannerCell.swift in Sources */,
+				99074EF324224BFA00075480 /* BannerManager.swift in Sources */,
 				FDBD09C52333A56800303152 /* SplitKeyboard.swift in Sources */,
-				FDAF59AD22F9CD0700F7C9FC /* BannerView.swift in Sources */,
+				99074EF62423AAA300075480 /* SpellBannerView.swift in Sources */,
+				99074EF224224B4400075480 /* Banner.swift in Sources */,
 				FDAF59A922F9CCF200F7C9FC /* LongPressController.swift in Sources */,
 				990440AC23FC245D0063064E /* KeyboardLocale.swift in Sources */,
 				C6F9564823E4520D009C469C /* init.m in Sources */,
@@ -1273,8 +1317,9 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = HostingAppTests/Info.plist;
@@ -1284,6 +1329,8 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaKeyboardTest.HostingAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1302,9 +1349,10 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = HostingAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
@@ -1313,6 +1361,8 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaKeyboardTest.HostingAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HostingApp.app/HostingApp";
@@ -1328,7 +1378,7 @@
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -1374,7 +1424,7 @@
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;

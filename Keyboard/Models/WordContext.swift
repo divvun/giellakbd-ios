@@ -3,10 +3,10 @@ import DivvunSpell
 
 public struct WordContext: Equatable {
     var secondBefore: String? { words[0] }
-    var firstBefore: String? { words[1]}
+    var firstBefore: String? { words[1] }
     var word: String { words[2]! }
     var firstAfter: String? { words[3] }
-    var secondAfter: String? {words[4] }
+    var secondAfter: String? { words[4] }
 
     private var words: [String?]
 

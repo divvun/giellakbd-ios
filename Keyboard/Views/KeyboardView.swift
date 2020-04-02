@@ -14,7 +14,7 @@ protocol KeyboardViewDelegate: class {
 
 // FIXME: this could be simplified with a typealias
 // swiftlint:disable all
-internal class KeyboardView: UIView,
+final internal class KeyboardView: UIView,
     KeyboardViewProvider,
     UICollectionViewDataSource,
     UICollectionViewDelegate,
@@ -59,6 +59,7 @@ internal class KeyboardView: UIView,
     private let layout = UICollectionViewFlowLayout()
 
     private var longpressController: LongPressBehaviorProvider?
+    private var currentlyLongpressedKey: KeyDefinition?
 
     // Sorry. The globe button is the greatest lie of them all. This is the only known way to have a UIEvent we can trigger the
     // keyboard switcher popup with. I don't like it either.
@@ -211,7 +212,7 @@ internal class KeyboardView: UIView,
         // removeOverlay(forKey: key)
         removeAllOverlays()
 
-        let overlay = KeyOverlayView(keyView, key: key, theme: theme)
+        let overlay = KeyOverlayView(origin: keyView, key: key, theme: theme)
         overlay.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(overlay)
 
@@ -235,8 +236,8 @@ internal class KeyboardView: UIView,
         }
         keyLabel.textAlignment = .center
         keyLabel.translatesAutoresizingMaskIntoConstraints = false
-        overlay.keyBoundsView.addSubview(keyLabel)
-        keyLabel.centerIn(superview: overlay.keyBoundsView)
+        overlay.originFrameView.addSubview(keyLabel)
+        keyLabel.centerIn(superview: overlay.originFrameView)
 
         superview?.setNeedsLayout()
     }
@@ -256,13 +257,13 @@ internal class KeyboardView: UIView,
     // MARK: - LongPressOverlayDelegate
 
     func longpress(didCreateOverlayContentView contentView: UIView) {
-        if overlays.first?.value.keyBoundsView == nil {
+        if overlays.first?.value.originFrameView == nil {
             if let activeKey = activeKey {
                 showOverlay(forKeyAtIndexPath: activeKey.indexPath)
             }
         }
 
-        guard let overlayContentView = self.overlays.first?.value.keyBoundsView else {
+        guard let overlayContentView = self.overlays.first?.value.originFrameView else {
             return
         }
 
@@ -303,6 +304,7 @@ internal class KeyboardView: UIView,
 
     func longpressDidCancel() {
         longpressController = nil
+        currentlyLongpressedKey = nil
         collectionView.alpha = 1.0
         if isLogicallyIPad, let activeKey = activeKey {
             delegate?.didTriggerKey(activeKey.key)
@@ -312,6 +314,7 @@ internal class KeyboardView: UIView,
     func longpress(didSelectKey key: KeyDefinition) {
         delegate?.didTriggerKey(key)
         longpressController = nil
+        currentlyLongpressedKey = nil
     }
 
     func longpressFrameOfReference() -> CGRect {
@@ -319,6 +322,17 @@ internal class KeyboardView: UIView,
     }
 
     func longpressKeySize() -> CGSize {
+        switch currentlyLongpressedKey?.type {
+        case .returnkey(name: _):
+            // iPhone keyboard mode overlay
+            return CGSize(width: 50, height: 35)
+        case .keyboardMode:
+            // iPad keyboard mode overlay
+            return CGSize(width: 75, height: 53)
+        default:
+            break
+        }
+
         let width = bounds.size.width / CGFloat(currentPage.first?.count ?? 10)
         var height = (bounds.size.height / CGFloat(currentPage.count)) - theme.popupCornerRadius * 2
         height = max(32.0, height)
@@ -535,11 +549,8 @@ internal class KeyboardView: UIView,
     }
 
     private func showKeyboardModeOverlay(_ longpressGestureRecognizer: UILongPressGestureRecognizer, key: KeyDefinition) {
-        let longpressController = LongPressOverlayController(key: key, page: page, theme: theme, longpressValues: [
-            KeyDefinition(type: .sideKeyboardLeft),
-            KeyDefinition(type: .splitKeyboard),
-            KeyDefinition(type: .sideKeyboardRight)
-        ])
+        let longpressValues = keyboardModeDefinitions()
+        let longpressController = LongPressOverlayController(key: key, page: page, theme: theme, longpressValues: longpressValues)
         longpressController.delegate = self
 
         self.longpressController = longpressController
@@ -547,10 +558,28 @@ internal class KeyboardView: UIView,
             longpressGestureRecognizer.location(in: collectionView))
     }
 
+    private func keyboardModeDefinitions() -> [KeyDefinition] {
+        if isLogicallyIPad {
+            return [
+                KeyDefinition(type: .sideKeyboardLeft),
+                KeyDefinition(type: .normalKeyboard),
+                KeyDefinition(type: .sideKeyboardRight),
+                KeyDefinition(type: .splitKeyboard)
+            ]
+        } else {
+            return [
+                KeyDefinition(type: .sideKeyboardLeft),
+                KeyDefinition(type: .normalKeyboard),
+                KeyDefinition(type: .sideKeyboardRight)
+            ]
+        }
+    }
+
     @objc func touchesFoundLongpress(_ longpressGestureRecognizer: UILongPressGestureRecognizer) {
         if let indexPath = collectionView.indexPathForItem(at: longpressGestureRecognizer.location(in: collectionView)),
             longpressController == nil {
             let key = currentPage[indexPath.section][indexPath.row]
+            currentlyLongpressedKey = key
             switch key.type {
             case let .input(string, _):
                 guard let longpressValues = longpressKeys(for: string),
@@ -568,11 +597,9 @@ internal class KeyboardView: UIView,
                 let location = longpressGestureRecognizer.location(in: collectionView)
                 longpressController.touchesBegan(location)
             case .keyboardMode:
-                break
-                // TODO: re-enable once tested and icons are enabled
-//                if longpressGestureRecognizer.state == .began {
-//                    showKeyboardModeOverlay(longpressGestureRecognizer, key: key)
-//                }
+                if longpressGestureRecognizer.state == .began {
+                    showKeyboardModeOverlay(longpressGestureRecognizer, key: key)
+                }
 
             case .spacebar:
                 if longpressGestureRecognizer.state == .began {
@@ -584,6 +611,10 @@ internal class KeyboardView: UIView,
             case .backspace:
                 // Cancel, the repeat trigger timing deals with this
                 break
+            case .returnkey(name: _):
+                if longpressGestureRecognizer.state == .began {
+                    showKeyboardModeOverlay(longpressGestureRecognizer, key: key)
+                }
             default:
                 delegate?.didTriggerHoldKey(key)
             }
@@ -702,7 +733,7 @@ internal class KeyboardView: UIView,
         return 0
     }
 
-    class KeyCell: UICollectionViewCell {
+    final class KeyCell: UICollectionViewCell {
         var keyView: KeyView?
 
         override init(frame: CGRect) {
