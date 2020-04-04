@@ -21,6 +21,10 @@ final class PahkatWrapper {
         }
     }
 
+    func setBackgroundURLSessionCompletion(_ completion: @escaping (() -> Void)) {
+        store.backgrounURLSessionCompletion = completion
+    }
+
     func forceRefreshRepos() {
         do {
             try store.forceRefreshRepos()

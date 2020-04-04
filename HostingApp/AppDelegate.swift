@@ -94,4 +94,10 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         parseUrl(url)
         return true
     }
+
+    func application(_ application: UIApplication,
+                     handleEventsForBackgroundURLSession identifier: String,
+                     completionHandler: @escaping () -> Void) {
+        pahkat?.setBackgroundURLSessionCompletion(completionHandler)
+    }
 }
