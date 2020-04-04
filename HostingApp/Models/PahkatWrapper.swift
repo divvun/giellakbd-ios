@@ -38,7 +38,7 @@ final class PahkatWrapper {
         let packageIds = Set(enabledKeyboards.compactMap { $0.divvunPackageId })
         let packageKeys = packageIds.map { packageKey(from: $0) }
         let notInstalled = packageKeys.filter { tryToGetStatus(for: $0) == .notInstalled }
-        downloadAndInstallPackagesOneByOne(packageKeys: notInstalled)
+        downloadAndInstallPackagesSequentially(packageKeys: notInstalled)
     }
 
     private func tryToGetStatus(for packageKey: PackageKey) -> PackageInstallStatus {
@@ -54,13 +54,14 @@ final class PahkatWrapper {
         return PackageKey(from: URL(string: repoURL + path)!)
     }
 
-    private func downloadAndInstallPackagesOneByOne(packageKeys: [PackageKey]) {
+    private func downloadAndInstallPackagesSequentially(packageKeys: [PackageKey]) {
+        // TODO: make this thread safe
         guard let firstPackage = packageKeys.first else {
             return
         }
 
         downloadAndInstallPackage(packageKey: firstPackage) {
-            self.downloadAndInstallPackagesOneByOne(packageKeys: Array(packageKeys.dropFirst()))
+            self.downloadAndInstallPackagesSequentially(packageKeys: Array(packageKeys.dropFirst()))
         }
     }
 
