@@ -1,39 +1,5 @@
 import Foundation
 import PahkatClient
-import RxSwift
-
-struct UnknownError: Error {
-}
-
-extension PrefixPackageStore {
-    func downloadAsync(packageKey: PackageKey) -> Single<String> {
-        return Single<String>.create { emitter -> Disposable in
-            do {
-                let task = try self.download(packageKey: packageKey, completion: { (error, result) in
-                    if let result = result {
-                        emitter(.success(result))
-                        return
-                    }
-
-                    if let error = error {
-                        emitter(.error(error))
-                    } else {
-                        emitter(.error(UnknownError()))
-                    }
-                })
-
-                return Disposables.create {
-                    task.cancel(byProducingResumeData: { resumableData in
-                        // TODO: we should handle this for resuming broken downloads, but not right now.
-                    })
-                }
-            } catch let error {
-                emitter(.error(error))
-                return Disposables.create()
-            }
-        }
-    }
-}
 
 final class PahkatWrapper {
     private let store: PrefixPackageStore
@@ -41,8 +7,6 @@ final class PahkatWrapper {
     private let repoURL = "https://x.brendan.so/divvun-pahkat-repo"
     private var downloadTask: URLSessionDownloadTask?
     private let ipc = IPC()
-
-    private let bag = DisposeBag()
 
     init?() {
         do {
@@ -70,19 +34,7 @@ final class PahkatWrapper {
         let packageIds = Set(enabledKeyboards.compactMap { $0.divvunPackageId })
         let packageKeys = packageIds.map { packageKey(from: $0) }
         let notInstalled = packageKeys.filter { tryToGetStatus(for: $0) == .notInstalled }
-
-        downloadAndInstallPackages(packageKeys: notInstalled)
-            .do(
-                onSubscribe: { [weak self] in self?.ipc.isDownloading = true },
-                onDispose: { [weak self] in self?.ipc.isDownloading = false }
-            )
-            .subscribe(onSuccess: { _ in
-                print("Successfully installed packages!")
-            }, onError: { error in
-                print("Error occurred downloading and installing packages")
-                print(error)
-            })
-            .disposed(by: bag)
+        downloadAndInstallPackagesOneByOne(packageKeys: notInstalled)
     }
 
     private func tryToGetStatus(for packageKey: PackageKey) -> PackageInstallStatus {
@@ -98,26 +50,43 @@ final class PahkatWrapper {
         return PackageKey(from: URL(string: repoURL + path)!)
     }
 
-    private func downloadAndInstallPackages(packageKeys: [PackageKey]) -> Single<Empty> {
-        if packageKeys.isEmpty {
-            return Single.just(Empty.instance)
+    private func downloadAndInstallPackagesOneByOne(packageKeys: [PackageKey]) {
+        guard let firstPackage = packageKeys.first else {
+            return
         }
 
-        let downloadSequentially = Observable.from(packageKeys)
-            .map {
-                self.store.downloadAsync(packageKey: $0)
-            }
-            .merge(maxConcurrent: 1)
-            .toArray()
-
-        return downloadSequentially.map { _ in
-            let actions = packageKeys.map { TransactionAction.install($0) }
-            let transaction = try self.store.transaction(actions: actions)
-            transaction.process(delegate: self)
-            return Empty.instance
+        downloadAndInstallPackage(packageKey: firstPackage) {
+            self.downloadAndInstallPackagesOneByOne(packageKeys: Array(packageKeys.dropFirst()))
         }
     }
 
+    private func downloadAndInstallPackage(packageKey: PackageKey, completion: (() -> Void)?) {
+        ipc.isDownloading = true
+        print("INSTALLING: \(packageKey)")
+        do {
+            downloadTask = try store.download(packageKey: packageKey) { (error, path) in
+                completion?()
+                if let error = error {
+                    print(error)
+                    return
+                }
+
+                let action = TransactionAction.install(packageKey)
+
+                do {
+                    let transaction = try self.store.transaction(actions: [action])
+                    transaction.process(delegate: self)
+                } catch {
+                    print(error)
+                }
+                self.ipc.isDownloading = false
+                print("Done!")
+            }
+        } catch {
+            ipc.isDownloading = false
+            print(error)
+        }
+    }
 }
 
 extension PahkatWrapper: PackageTransactionDelegate {
