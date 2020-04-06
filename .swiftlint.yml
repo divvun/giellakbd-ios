@@ -9,6 +9,10 @@ disabled_rules:
 cyclomatic_complexity:
   ignores_case_statements: true
 
+type_body_length:
+  - 200 # warning
+  - 360 # error
+
 identifier_name:
   excluded:
     - i

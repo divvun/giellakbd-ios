@@ -271,6 +271,8 @@ open class KeyboardViewController: UIInputViewController {
         } else {
             self.keyboardView.topAnchor.constraint(equalTo: keyboardContainer.topAnchor).enable()
         }
+
+        updateCapitalization()
     }
 
     private func setupKeyboardContainer() {
