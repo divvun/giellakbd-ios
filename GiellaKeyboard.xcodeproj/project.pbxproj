@@ -24,6 +24,7 @@
 		99074EF324224BFA00075480 /* BannerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99074EEE24224AE700075480 /* BannerManager.swift */; };
 		99074EF62423AAA300075480 /* SpellBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAF59AA22F9CD0600F7C9FC /* SpellBannerView.swift */; };
 		991EE55023D9AB4700DC3677 /* ViewDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991EE54F23D9AB4700DC3677 /* ViewDebugger.swift */; };
+		99460238243B27140027C1CC /* InputContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99460237243B27140027C1CC /* InputContext.swift */; };
 		9946023A243B2BF80027C1CC /* KeyboardViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99460239243B2BF80027C1CC /* KeyboardViewControllerTests.swift */; };
 		997021052416DF8C00A81A27 /* KeyboardLocale+AllLocales.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997021042416DF8C00A81A27 /* KeyboardLocale+AllLocales.swift */; };
 		997550B623EAC631004ED6A5 /* UserDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997550B523EAC631004ED6A5 /* UserDictionary.swift */; };
@@ -185,6 +186,7 @@
 		99074EEE24224AE700075480 /* BannerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerManager.swift; sourceTree = "<group>"; };
 		99074EF124224B4400075480 /* Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
 		991EE54F23D9AB4700DC3677 /* ViewDebugger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewDebugger.swift; sourceTree = "<group>"; };
+		99460237243B27140027C1CC /* InputContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputContext.swift; sourceTree = "<group>"; };
 		99460239243B2BF80027C1CC /* KeyboardViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardViewControllerTests.swift; sourceTree = "<group>"; };
 		997021042416DF8C00A81A27 /* KeyboardLocale+AllLocales.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyboardLocale+AllLocales.swift"; sourceTree = "<group>"; };
 		997550B523EAC631004ED6A5 /* UserDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionary.swift; sourceTree = "<group>"; };
@@ -337,6 +339,7 @@
 				FDAF59A222F9CCE000F7C9FC /* Theme.swift */,
 				C6996B5822FC2CC2007EBC3D /* SystemKeys.swift */,
 				C6996B5B22FC2D3E007EBC3D /* CursorContext.swift */,
+				99460237243B27140027C1CC /* InputContext.swift */,
 				997550B523EAC631004ED6A5 /* UserDictionary.swift */,
 				99989FB52417970400EF8CD3 /* UserDictionary+Test.swift */,
 				99DA184224095AD0003E7353 /* UserDictionaryService.swift */,
@@ -667,7 +670,7 @@
 		4E807D8B19461D9000D875D1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1130;
+				LastSwiftUpdateCheck = 1140;
 				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = Apple;
 				TargetAttributes = {
@@ -987,6 +990,7 @@
 				C6996B5C22FC2D3E007EBC3D /* CursorContext.swift in Sources */,
 				C6996B5A22FC2CC7007EBC3D /* SystemKeys.swift in Sources */,
 				C6F249461F736E1400840F2B /* KeyboardDefinition.swift in Sources */,
+				99460238243B27140027C1CC /* InputContext.swift in Sources */,
 				99074EE82422383700075480 /* SpellBannerFlowLayout.swift in Sources */,
 				C6F249471F736E1A00840F2B /* KeyboardViewController.swift in Sources */,
 				99DA184424095AF0003E7353 /* UserDictionaryService.swift in Sources */,

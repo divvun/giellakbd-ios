@@ -481,9 +481,7 @@ open class KeyboardViewController: UIInputViewController {
 
     private func updateCapitalization() {
         let proxy = textDocumentProxy
-        guard let ctx = try? CursorContext.from(proxy: textDocumentProxy) else {
-            return
-        }
+        let ctx = InputContext.from(proxy: proxy)
 
         guard let page = keyboardView?.page else {
             return
@@ -499,17 +497,17 @@ open class KeyboardViewController: UIInputViewController {
         if let autoCapitalizationType = proxy.autocapitalizationType {
             switch autoCapitalizationType {
             case .words:
-                if ctx.current.1 == "" {
+                if ctx.currentWord == "" {
                     keyboardView.page = .shifted
                 }
             case .sentences:
-                let lastCharacter: Character? = ctx.firstBefore?.1.last
+                let lastCharacter: Character? = ctx.previousWord?.last
 
-                if ctx.current.1 == "",
-                    ((lastCharacter?.isPunctuation ?? false) && lastCharacter != ",") || ctx.firstBefore?.1 == nil {
+                if ctx.currentWord == "",
+                    ((lastCharacter?.isPunctuation ?? false) && lastCharacter != ",") || ctx.previousWord == nil {
                     keyboardView.page = .shifted
                 } else if case .shifted = page {
-                    if !(ctx.firstBefore?.1.last?.isUppercase ?? false) {
+                    if !(ctx.previousWord?.last?.isUppercase ?? false) {
                         keyboardView.page = .normal
                     }
                 }
