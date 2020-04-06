@@ -51,6 +51,10 @@ open class KeyboardViewController: UIInputViewController {
 
     private var showsBanner = true
 
+    public var page: BaseKeyboard.KeyboardPage {
+        keyboardView.page
+    }
+
     public init(withBanner: Bool) {
         showsBanner = withBanner
         super.init(nibName: nil, bundle: nil)
@@ -230,12 +234,19 @@ open class KeyboardViewController: UIInputViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
 
-        guard let kbdIndex = Bundle.main.infoDictionary?["DivvunKeyboardIndex"] as? Int else {
-            fatalError("There was no DivvunKeyboardIndex")
-        }
+        let kbdIndex: Int
+        if isBeingRunFromTests() {
+            kbdIndex = 0
+        } else {
+            guard let index = Bundle.main.infoDictionary?["DivvunKeyboardIndex"] as? Int else {
+                fatalError("There was no DivvunKeyboardIndex")
+            }
 
-        if kbdIndex < 0 || kbdIndex >= definitions.count {
-            fatalError("Invalid kbdIndex: \(kbdIndex); count: \(definitions.count)")
+            if index < 0 || index >= definitions.count {
+                fatalError("Invalid kbdIndex: \(index); count: \(definitions.count)")
+            }
+
+            kbdIndex = index
         }
 
         keyboardDefinition = definitions[kbdIndex]

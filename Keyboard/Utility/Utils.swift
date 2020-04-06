@@ -223,3 +223,7 @@ extension UIScreen {
         return size.width > size.height
     }
 }
+
+func isBeingRunFromTests() -> Bool {
+    return ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+}
