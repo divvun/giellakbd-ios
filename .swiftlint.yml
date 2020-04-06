@@ -11,7 +11,7 @@ cyclomatic_complexity:
 
 type_body_length:
   - 200 # warning
-  - 360 # error
+  - 375 # error
 
 identifier_name:
   excluded:

@@ -68,17 +68,6 @@ open class KeyboardViewController: UIInputViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private(set) lazy var definitions: [KeyboardDefinition] = {
-        let path = Bundle.top.url(forResource: "KeyboardDefinitions", withExtension: "json")!
-        do {
-            let data = try String(contentsOf: path).data(using: .utf8)!
-            let raws = try JSONDecoder().decode([RawKeyboardDefinition].self, from: data)
-            return try raws.map { try KeyboardDefinition(fromRaw: $0, traits: self.traitCollection) }
-        } catch {
-            fatalError("Error getting keyboard definitions from json file: \(error)")
-        }
-    }()
-
     private var landscapeHeight: CGFloat {
         switch UIDevice.current.dc.deviceFamily {
         case .iPad:
@@ -233,6 +222,26 @@ open class KeyboardViewController: UIInputViewController {
 
     open override func viewDidLoad() {
         super.viewDidLoad()
+        setupKeyboard()
+    }
+
+    private func setupKeyboard() {
+        loadKeyboardDefinition()
+        deadKeyHandler = DeadKeyHandler(keyboard: keyboardDefinition)
+        setupKeyboardView(withBanner: showsBanner)
+    }
+
+    private func loadKeyboardDefinition() {
+        let definitions: [KeyboardDefinition]
+        let path = Bundle.top.url(forResource: "KeyboardDefinitions", withExtension: "json")!
+        do {
+            let data = try String(contentsOf: path).data(using: .utf8)!
+            let raws = try JSONDecoder().decode([RawKeyboardDefinition].self, from: data)
+            definitions = try raws.map { try KeyboardDefinition(fromRaw: $0, traits: self.traitCollection) }
+            print("\(definitions.map { $0.locale })")
+        } catch {
+            fatalError("Error getting keyboard definitions from json file: \(error)")
+        }
 
         let kbdIndex: Int
         if isBeingRunFromTests() {
@@ -250,11 +259,6 @@ open class KeyboardViewController: UIInputViewController {
         }
 
         keyboardDefinition = definitions[kbdIndex]
-        deadKeyHandler = DeadKeyHandler(keyboard: keyboardDefinition)
-
-        setupKeyboardView(withBanner: showsBanner)
-
-        print("\(definitions.map { $0.locale })")
     }
 
     private func setupKeyboardView(withBanner: Bool) {
@@ -544,6 +548,10 @@ open class KeyboardViewController: UIInputViewController {
     override open func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         checkDarkMode()
+        if traitCollection.userInterfaceIdiom == .pad,
+            previousTraitCollection?.horizontalSizeClass != traitCollection.horizontalSizeClass {
+            setupKeyboard()
+        }
     }
 
     private func checkDarkMode(traits: UITraitCollection) {
