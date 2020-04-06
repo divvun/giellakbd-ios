@@ -2,16 +2,19 @@
 import XCTest
 
 final class KeyboardViewControllerTests: XCTestCase {
-    func test_keyboard_should_auto_shift_after_full_stop() {
-        let sut = KeyboardViewController(withBanner: true)
-        sut.viewDidLoad()
+    // This test isn't accurate because textDocumentProxy.autocapitalizationType isn't .sentences.
+    // Leaving as a reference for creating other KeyboardViewController tests
 
-        sut.insertText("H")
-        sut.insertText("i")
-        sut.insertText(" ")
-        sut.insertText(" ")
+//    func test_keyboard_should_auto_shift_after_full_stop() {
+//        let sut = KeyboardViewController(withBanner: true)
+//        sut.viewDidLoad()
 
-        XCTAssertEqual("Hi. ", sut.textDocumentProxy.documentContextBeforeInput)
-        XCTAssertEqual(sut.page, .shifted)
-    }
+//        sut.insertText("H")
+//        sut.insertText("i")
+//        sut.insertText(" ")
+//        sut.insertText(" ")
+
+//        XCTAssertEqual("Hi. ", sut.textDocumentProxy.documentContextBeforeInput)
+//        XCTAssertEqual(.shifted, sut.page)
+//    }
 }
