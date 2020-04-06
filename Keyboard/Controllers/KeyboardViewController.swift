@@ -125,6 +125,11 @@ open class KeyboardViewController: UIInputViewController {
         print("Size inches: \(sizeInches)")
         switch UIDevice.current.dc.deviceFamily {
         case .iPad:
+            if !traitsAreLogicallyIPad(traitCollection: self.traitCollection) {
+                // we're in floating mode on iPad.
+                return 318.0
+            }
+
             if self.traitCollection.userInterfaceIdiom == .phone {
                 // Hardcode because the device lies about the height
                 if sizeInches < 11 {
@@ -551,6 +556,7 @@ open class KeyboardViewController: UIInputViewController {
         if traitCollection.userInterfaceIdiom == .pad,
             previousTraitCollection?.horizontalSizeClass != traitCollection.horizontalSizeClass {
             setupKeyboard()
+            updateHeightConstraint()
         }
     }
 
