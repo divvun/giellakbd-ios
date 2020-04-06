@@ -125,14 +125,10 @@ open class KeyboardViewController: UIInputViewController {
         print("Size inches: \(sizeInches)")
         switch UIDevice.current.dc.deviceFamily {
         case .iPad:
-            if !traitsAreLogicallyIPad(traitCollection: self.traitCollection) {
-                // we're in floating mode on iPad.
-                return 318.0
-            }
-
-            if self.traitCollection.userInterfaceIdiom == .phone {
+            if self.traitCollection.userInterfaceIdiom == .phone
+                || !traitsAreLogicallyIPad(traitCollection: self.traitCollection) {
                 // Hardcode because the device lies about the height
-                if sizeInches < 11 {
+                if sizeInches <= 11 {
                     return 258.0
                 } else {
                     return 328.0
