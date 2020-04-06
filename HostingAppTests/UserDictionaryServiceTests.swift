@@ -7,7 +7,7 @@ private func makeDict() -> UserDictionary {
     return UserDictionary(locale: defaultLocale)
 }
 
-class UserDictionaryServiceTests: XCTestCase {
+final class UserDictionaryServiceTests: XCTestCase {
     var userDictionary = makeDict()
 
     override func setUp() {
