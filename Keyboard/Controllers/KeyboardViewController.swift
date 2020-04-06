@@ -51,6 +51,10 @@ open class KeyboardViewController: UIInputViewController {
 
     private var showsBanner = true
 
+    public var page: BaseKeyboard.KeyboardPage {
+        keyboardView.page
+    }
+
     public init(withBanner: Bool) {
         showsBanner = withBanner
         super.init(nibName: nil, bundle: nil)
@@ -63,17 +67,6 @@ open class KeyboardViewController: UIInputViewController {
     public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    private(set) lazy var definitions: [KeyboardDefinition] = {
-        let path = Bundle.top.url(forResource: "KeyboardDefinitions", withExtension: "json")!
-        do {
-            let data = try String(contentsOf: path).data(using: .utf8)!
-            let raws = try JSONDecoder().decode([RawKeyboardDefinition].self, from: data)
-            return try raws.map { try KeyboardDefinition(fromRaw: $0, traits: self.traitCollection) }
-        } catch {
-            fatalError("Error getting keyboard definitions from json file: \(error)")
-        }
-    }()
 
     private var landscapeHeight: CGFloat {
         switch UIDevice.current.dc.deviceFamily {
@@ -132,9 +125,10 @@ open class KeyboardViewController: UIInputViewController {
         print("Size inches: \(sizeInches)")
         switch UIDevice.current.dc.deviceFamily {
         case .iPad:
-            if self.traitCollection.userInterfaceIdiom == .phone {
+            if self.traitCollection.userInterfaceIdiom == .phone
+                || !traitsAreLogicallyIPad(traitCollection: self.traitCollection) {
                 // Hardcode because the device lies about the height
-                if sizeInches < 11 {
+                if sizeInches <= 11 {
                     return 258.0
                 } else {
                     return 328.0
@@ -229,21 +223,43 @@ open class KeyboardViewController: UIInputViewController {
 
     open override func viewDidLoad() {
         super.viewDidLoad()
+        setupKeyboard()
+    }
 
-        guard let kbdIndex = Bundle.main.infoDictionary?["DivvunKeyboardIndex"] as? Int else {
-            fatalError("There was no DivvunKeyboardIndex")
+    private func setupKeyboard() {
+        loadKeyboardDefinition()
+        deadKeyHandler = DeadKeyHandler(keyboard: keyboardDefinition)
+        setupKeyboardView(withBanner: showsBanner)
+    }
+
+    private func loadKeyboardDefinition() {
+        let definitions: [KeyboardDefinition]
+        let path = Bundle.top.url(forResource: "KeyboardDefinitions", withExtension: "json")!
+        do {
+            let data = try String(contentsOf: path).data(using: .utf8)!
+            let raws = try JSONDecoder().decode([RawKeyboardDefinition].self, from: data)
+            definitions = try raws.map { try KeyboardDefinition(fromRaw: $0, traits: self.traitCollection) }
+            print("\(definitions.map { $0.locale })")
+        } catch {
+            fatalError("Error getting keyboard definitions from json file: \(error)")
         }
 
-        if kbdIndex < 0 || kbdIndex >= definitions.count {
-            fatalError("Invalid kbdIndex: \(kbdIndex); count: \(definitions.count)")
+        let kbdIndex: Int
+        if isBeingRunFromTests() {
+            kbdIndex = 0
+        } else {
+            guard let index = Bundle.main.infoDictionary?["DivvunKeyboardIndex"] as? Int else {
+                fatalError("There was no DivvunKeyboardIndex")
+            }
+
+            if index < 0 || index >= definitions.count {
+                fatalError("Invalid kbdIndex: \(index); count: \(definitions.count)")
+            }
+
+            kbdIndex = index
         }
 
         keyboardDefinition = definitions[kbdIndex]
-        deadKeyHandler = DeadKeyHandler(keyboard: keyboardDefinition)
-
-        setupKeyboardView(withBanner: showsBanner)
-
-        print("\(definitions.map { $0.locale })")
     }
 
     private func setupKeyboardView(withBanner: Bool) {
@@ -271,6 +287,8 @@ open class KeyboardViewController: UIInputViewController {
         } else {
             self.keyboardView.topAnchor.constraint(equalTo: keyboardContainer.topAnchor).enable()
         }
+
+        updateCapitalization()
     }
 
     private func setupKeyboardContainer() {
@@ -468,9 +486,7 @@ open class KeyboardViewController: UIInputViewController {
 
     private func updateCapitalization() {
         let proxy = textDocumentProxy
-        guard let ctx = try? CursorContext.from(proxy: textDocumentProxy) else {
-            return
-        }
+        let ctx = InputContext.from(proxy: proxy)
 
         guard let page = keyboardView?.page else {
             return
@@ -486,17 +502,17 @@ open class KeyboardViewController: UIInputViewController {
         if let autoCapitalizationType = proxy.autocapitalizationType {
             switch autoCapitalizationType {
             case .words:
-                if ctx.current.1 == "" {
+                if ctx.currentWord == "" {
                     keyboardView.page = .shifted
                 }
             case .sentences:
-                let lastCharacter: Character? = ctx.firstBefore?.1.last
+                let lastCharacter: Character? = ctx.previousWord?.last
 
-                if ctx.current.1 == "",
-                    ((lastCharacter?.isPunctuation ?? false) && lastCharacter != ",") || ctx.firstBefore?.1 == nil {
+                if ctx.currentWord == "",
+                    ((lastCharacter?.isPunctuation ?? false) && lastCharacter != ",") || ctx.previousWord == nil {
                     keyboardView.page = .shifted
                 } else if case .shifted = page {
-                    if !(ctx.firstBefore?.1.last?.isUppercase ?? false) {
+                    if !(ctx.previousWord?.last?.isUppercase ?? false) {
                         keyboardView.page = .normal
                     }
                 }
@@ -533,6 +549,11 @@ open class KeyboardViewController: UIInputViewController {
     override open func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         checkDarkMode()
+        if traitCollection.userInterfaceIdiom == .pad,
+            previousTraitCollection?.horizontalSizeClass != traitCollection.horizontalSizeClass {
+            setupKeyboard()
+            updateHeightConstraint()
+        }
     }
 
     private func checkDarkMode(traits: UITraitCollection) {

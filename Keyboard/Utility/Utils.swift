@@ -174,8 +174,7 @@ extension UIView {
     }
 
     var isLogicallyIPad: Bool {
-        return UIDevice.current.dc.deviceFamily == .iPad &&
-            self.traitCollection.userInterfaceIdiom == .pad
+        return traitsAreLogicallyIPad(traitCollection: self.traitCollection)
     }
 }
 
@@ -222,4 +221,14 @@ extension UIScreen {
         let size = self.bounds.size
         return size.width > size.height
     }
+}
+
+func isBeingRunFromTests() -> Bool {
+    return ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+}
+
+func traitsAreLogicallyIPad(traitCollection: UITraitCollection) -> Bool {
+    return UIDevice.current.dc.deviceFamily == .iPad
+        && traitCollection.userInterfaceIdiom == .pad
+        && traitCollection.horizontalSizeClass == .regular
 }

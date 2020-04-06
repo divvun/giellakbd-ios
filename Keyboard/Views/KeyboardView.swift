@@ -307,7 +307,12 @@ final internal class KeyboardView: UIView,
         currentlyLongpressedKey = nil
         collectionView.alpha = 1.0
         if isLogicallyIPad, let activeKey = activeKey {
-            delegate?.didTriggerKey(activeKey.key)
+            switch activeKey.key.type {
+            case .spacebar(name: _):
+                break
+            default:
+                delegate?.didTriggerKey(activeKey.key)
+            }
         }
     }
 
