@@ -2,7 +2,11 @@
   "images" : [
     {
       "filename" : "keyboard-mode-right.pdf",
-      "idiom" : "universal"
+      "idiom" : "iphone"
+    },
+    {
+      "filename" : "keyboard-mode-right-ipad.pdf",
+      "idiom" : "ipad"
     }
   ],
   "info" : {

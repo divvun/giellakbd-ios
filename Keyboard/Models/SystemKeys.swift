@@ -8,8 +8,7 @@ final class SystemKeys {
                                               traits: UITraitCollection) -> [KeyDefinition] {
         var keys = [KeyDefinition]()
 
-        let isIPad = UIDevice.current.dc.deviceFamily == .iPad &&
-            traits.userInterfaceIdiom == .pad
+        let isIPad = traitsAreLogicallyIPad(traitCollection: traits)
 
         // Left side of space bar
         if !UIDevice.current.dc.deviceModel.hasNotch {

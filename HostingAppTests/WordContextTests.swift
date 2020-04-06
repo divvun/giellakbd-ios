@@ -1,7 +1,7 @@
 @testable import HostingApp
 import XCTest
 
-class WordContextTests: XCTestCase {
+final class WordContextTests: XCTestCase {
 
     func test_is_continuation_of_context_returns_true_when_is_continuation() {
         var initial = WordContext(word: "testin")

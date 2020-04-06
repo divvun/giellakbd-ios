@@ -247,12 +247,7 @@ class LongPressOverlayController: NSObject,
         cell.label.font = labelFont
 
         func setupKeyboardModeCell(imageName: String) {
-            cell.label.text = nil
-            var imageName = imageName
-            if UIDevice.current.dc.deviceFamily == .iPad {
-                imageName.append("-ipad")
-            }
-            cell.imageView.image = UIImage(named: imageName)
+            cell.imageView.image = UIImage(named: imageName, in: Bundle.top, compatibleWith: collectionView.traitCollection)
         }
 
         if case let .input(string, _) = key.type {

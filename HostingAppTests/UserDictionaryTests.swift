@@ -7,7 +7,7 @@ private func makeSUT() -> UserDictionary {
     return UserDictionary(locale: locale)
 }
 
-class UserDictionaryTests: XCTestCase {
+final class UserDictionaryTests: XCTestCase {
     var userDictionary = makeSUT()
 
     override func setUp() {

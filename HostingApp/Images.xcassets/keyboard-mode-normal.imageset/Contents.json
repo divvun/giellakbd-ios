@@ -2,7 +2,11 @@
   "images" : [
     {
       "filename" : "keyboard-mode-normal.pdf",
-      "idiom" : "universal"
+      "idiom" : "iphone"
+    },
+    {
+      "filename" : "keyboard-mode-normal-ipad.pdf",
+      "idiom" : "ipad"
     }
   ],
   "info" : {
