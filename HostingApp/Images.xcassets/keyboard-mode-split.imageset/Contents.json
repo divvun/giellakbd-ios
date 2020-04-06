@@ -2,7 +2,11 @@
   "images" : [
     {
       "filename" : "keyboard-mode-split.pdf",
-      "idiom" : "universal"
+      "idiom" : "iphone"
+    },
+    {
+      "filename" : "keyboard-mode-split-ipad.pdf",
+      "idiom" : "ipad"
     }
   ],
   "info" : {
