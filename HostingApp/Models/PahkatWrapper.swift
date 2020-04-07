@@ -7,6 +7,7 @@ final class PahkatWrapper {
     private let repoURL = "https://x.brendan.so/divvun-pahkat-repo"
     private var downloadTask: URLSessionDownloadTask?
     private let ipc = IPC()
+    private var currentDownloadId: String?
 
     init?() {
         do {
@@ -55,7 +56,6 @@ final class PahkatWrapper {
     }
 
     private func downloadAndInstallPackagesSequentially(packageKeys: [PackageKey]) {
-        // TODO: make this thread safe
         guard let firstPackage = packageKeys.first else {
             return
         }
@@ -66,7 +66,6 @@ final class PahkatWrapper {
     }
 
     private func downloadAndInstallPackage(packageKey: PackageKey, completion: (() -> Void)?) {
-        ipc.isDownloading = true
         print("INSTALLING: \(packageKey)")
         do {
             downloadTask = try store.download(packageKey: packageKey) { (error, _) in
@@ -84,11 +83,11 @@ final class PahkatWrapper {
                 } catch {
                     print(error)
                 }
-                self.ipc.isDownloading = false
                 print("Done!")
             }
+            ipc.startDownload(id: packageKey.id)
+            currentDownloadId = packageKey.id
         } catch {
-            ipc.isDownloading = false
             print(error)
         }
     }
@@ -108,6 +107,10 @@ extension PahkatWrapper: PackageTransactionDelegate {
     }
 
     func transactionDidComplete(_ id: UInt32) {
+        if let currentDownloadId = currentDownloadId {
+            ipc.finishDownload(id: currentDownloadId)
+            self.currentDownloadId = nil
+        }
         print(#function, "\(id)")
     }
 

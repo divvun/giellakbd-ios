@@ -29,11 +29,11 @@ final class UpdateBanner: Banner {
 }
 
 extension UpdateBanner: IPCDelegate {
-    func didBeginDownloadingUpdate() {
-        bannerView.text = "Downloading"
+    func didBeginDownloading(id: String) {
+        bannerView.text = "Downloading \(id)"
     }
 
-    func didFinishDownloadingUpdate() {
-        bannerView.text = "NOT Downlaoding"
+    func didFinishInstalling(id: String) {
+        bannerView.text = "Finished installing \(id)"
     }
 }
