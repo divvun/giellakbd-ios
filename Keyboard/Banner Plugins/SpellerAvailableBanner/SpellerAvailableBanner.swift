@@ -1,7 +1,6 @@
 import Foundation
 
 final class SpellerAvailableBanner: Banner {
-    weak var delegate: UpdateBannerDelegate?
     private let bannerView: SpellerAvailableBannerView
     private let ipc = IPC()
 

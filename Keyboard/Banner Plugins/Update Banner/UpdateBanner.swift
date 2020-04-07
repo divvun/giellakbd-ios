@@ -1,12 +1,6 @@
 import Foundation
 
-protocol UpdateBannerDelegate: class {
-    func willBeginupdates(banner: UpdateBanner)
-    func didFinishUpdates(banner: UpdateBanner)
-}
-
 final class UpdateBanner: Banner {
-    weak var delegate: UpdateBannerDelegate?
     private let bannerView: UpdateBannerView
     private let ipc = IPC()
 
@@ -21,10 +15,6 @@ final class UpdateBanner: Banner {
 
     func updateTheme(_ theme: ThemeType) {
         bannerView.updateTheme(theme)
-    }
-
-    private func startUpdates() {
-        delegate?.willBeginupdates(banner: self)
     }
 }
 

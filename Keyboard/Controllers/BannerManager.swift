@@ -23,7 +23,6 @@ final class BannerManager {
         spellerAvailableBanner = SpellerAvailableBanner(theme: theme)
 
         spellBanner.delegate = self
-        updateBanner.delegate = self
 
 //        presentBanner(updateBanner)
         presentBanner(spellerAvailableBanner)
@@ -52,15 +51,5 @@ extension BannerManager: SpellBannerDelegate {
 
     func didSelectSuggestion(banner: SpellBanner, suggestion: String) {
         delegate?.bannerDidProvideInput(banner: banner, inputText: suggestion)
-    }
-}
-
-extension BannerManager: UpdateBannerDelegate {
-    func willBeginupdates(banner: UpdateBanner) {
-        presentBanner(banner)
-    }
-
-    func didFinishUpdates(banner: UpdateBanner) {
-        presentBanner(spellBanner)
     }
 }
