@@ -7,28 +7,24 @@ protocol IPCDelegate: class {
 }
 
 final class IPC {
-//    enum DelegateCall {
-//        case none
-//        case didBeginDownloadingUpdate
-//        case didFinishDownloadingUpdate
-//    }
-
     weak var delegate: IPCDelegate? {
         didSet {
             setupFileWatcher()
         }
     }
 
-    private var fileWatcher: SKQueue? = nil
-    private var isDownloading: Set<String> = Set()
+    private var fileWatcher: SKQueue?
+    private var currentlyDownloadingIds: Set<String> = Set()
 
     private let ipcDirectory = KeyboardSettings.groupContainerURL
         .appendingPathComponent("ipc", isDirectory: true)
-    
+
     // This one is for HostingApp
     public func startDownload(id: String) {
+        let ipcFilePath = file(for: id).path
         try? FileManager.default.createDirectory(at: ipcDirectory, withIntermediateDirectories: true, attributes: nil)
-        FileManager.default.createFile(atPath: file(for: id).path, contents: nil, attributes: nil)
+        FileManager.default.createFile(atPath: ipcFilePath, contents: nil, attributes: nil)
+//        fileWatcher?.addPath(ipcFilePath)
     }
 
     // This one is for HostingApp
@@ -38,6 +34,7 @@ final class IPC {
             return
         }
         try? FileManager.default.removeItem(at: ipcFile)
+//        fileWatcher?.removePath(ipcFile.path)
     }
 
     private func file(for downloadId: String) -> URL {
@@ -48,7 +45,6 @@ final class IPC {
         do {
             fileWatcher = try SKQueue(delegate: self)
             fileWatcher?.addPath(ipcDirectory.path) // kqueue requires adding the containing directory before the file of interest
-            // TODO: watch all added files
         } catch {
             let error = Sentry.Event(level: .error)
             Client.shared?.send(event: error, completion: nil)
@@ -66,26 +62,28 @@ final class IPC {
 extension IPC: SKQueueDelegate {
     func receivedNotification(_ notification: SKQueueNotification, path: String, queue: SKQueue) {
         print(notification)
-        print(path)
-//        let id = "hihihih" // get last path component to get the id
+
+//        guard path != ipcDirectory.path else {
+//             disregard changes to the ipc directory itself; only watch for files inside it
+//            return
+//        }
+
         guard let url = URL(string: path) else {
             return
         }
-        let id = String(url.lastPathComponent.split(separator: "-")[1])
-        print("ID: \(id)")
-        print(url)
 
+        let id = String(url.lastPathComponent.split(separator: "-").last!)
         if fileExists(atUrl: url) {
-            if !self.isDownloading.contains(id) {
-                self.isDownloading.insert(id)
+            if self.currentlyDownloadingIds.contains(id) == false {
+                self.currentlyDownloadingIds.insert(id)
                 DispatchQueue.main.async {
 //                    self.onStartDownload(id)
                     self.delegate?.didBeginDownloading(id: id)
                 }
             }
         } else {
-            if self.isDownloading.contains(id) {
-                self.isDownloading.remove(id)
+            if self.currentlyDownloadingIds.contains(id) {
+                self.currentlyDownloadingIds.remove(id)
                 DispatchQueue.main.async {
 //                    self.onFinishDownload(id)
                     self.delegate?.didFinishInstalling(id: id)
@@ -94,7 +92,6 @@ extension IPC: SKQueueDelegate {
         }
     }
 }
-
 
 // final class IPC {
 //     enum DelegateCall {
