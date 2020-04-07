@@ -156,7 +156,7 @@ final class KeyView: UIView {
         label.widthAnchor.constraint(equalTo: labelContainer.widthAnchor).enable()
 
         let yConstant: CGFloat
-        if case .normal = page, case KeyType.input(_) = self.key.type {
+        if case .normal = page, case KeyType.input(_, _) = self.key.type {
             yConstant = -2.0
         } else {
             yConstant = 0.0
@@ -192,7 +192,7 @@ final class KeyView: UIView {
         addSubview(labelContainer)
 
         let yConstant: CGFloat
-        if case .normal = page, case KeyType.input(_) = self.key.type {
+        if case .normal = page, case KeyType.input(_, _) = self.key.type {
             yConstant = -2.0
         } else {
             yConstant = 0.0

@@ -69,7 +69,7 @@ final class PahkatWrapper {
         ipc.isDownloading = true
         print("INSTALLING: \(packageKey)")
         do {
-            downloadTask = try store.download(packageKey: packageKey) { (error, path) in
+            downloadTask = try store.download(packageKey: packageKey) { (error, _) in
                 completion?()
                 if let error = error {
                     print(error)
