@@ -8,6 +8,7 @@ final class PahkatWrapper {
     private var downloadTask: URLSessionDownloadTask?
     private let ipc = IPC()
     private var currentDownloadId: String?
+    private var installCompletion: (() -> Void)?
 
     init?() {
         do {
@@ -69,12 +70,12 @@ final class PahkatWrapper {
         print("INSTALLING: \(packageKey)")
         do {
             downloadTask = try store.download(packageKey: packageKey) { (error, _) in
-                completion?()
                 if let error = error {
                     print(error)
                     return
                 }
 
+                self.installCompletion = completion
                 let action = TransactionAction.install(packageKey)
 
                 do {
@@ -112,6 +113,7 @@ extension PahkatWrapper: PackageTransactionDelegate {
             self.currentDownloadId = nil
         }
         print(#function, "\(id)")
+        installCompletion?()
     }
 
     func transactionDidCancel(_ id: UInt32) {
