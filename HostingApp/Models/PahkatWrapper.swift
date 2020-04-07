@@ -56,11 +56,11 @@ final class PahkatWrapper {
     }
 
     private func downloadAndInstallPackagesSequentially(packageKeys: [PackageKey]) {
-        guard let firstPackage = packageKeys.first else {
+        guard packageKeys.isEmpty == false else {
             return
         }
 
-        downloadAndInstallPackage(packageKey: firstPackage) {
+        downloadAndInstallPackage(packageKey: packageKeys[0]) {
             self.downloadAndInstallPackagesSequentially(packageKeys: Array(packageKeys.dropFirst()))
         }
     }
