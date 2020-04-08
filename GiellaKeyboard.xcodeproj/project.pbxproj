@@ -73,8 +73,6 @@
 		C676AD5B1EC9679000523FF3 /* InstructionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C676AD5A1EC9679000523FF3 /* InstructionsController.swift */; };
 		C676AD5F1EC985EB00523FF3 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C676AD5E1EC985EB00523FF3 /* Strings.swift */; };
 		C67A3F3A1EE7F24900C9015C /* About.txt in Resources */ = {isa = PBXBuildFile; fileRef = C67A3F3C1EE7F24900C9015C /* About.txt */; };
-		C67D6EFC23EAE928001F8DCA /* SKQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67D6EFB23EAE928001F8DCA /* SKQueue.swift */; };
-		C67D6EFD23EAE928001F8DCA /* SKQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C67D6EFB23EAE928001F8DCA /* SKQueue.swift */; };
 		C691A0E723682C8B00085AC3 /* TestingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C691A0E623682C8B00085AC3 /* TestingController.swift */; };
 		C691A0EA23682C9700085AC3 /* TestingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C691A0E823682C9700085AC3 /* TestingView.xib */; };
 		C691A0EB23682C9700085AC3 /* TestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C691A0E923682C9700085AC3 /* TestingView.swift */; };
@@ -253,7 +251,6 @@
 		C676AD601EC986F000523FF3 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = HostingApp/nb.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C676AD611EC986FA00523FF3 /* se */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = se; path = HostingApp/se.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C67A3F3B1EE7F24900C9015C /* Base */ = {isa = PBXFileReference; lastKnownFileType = text; name = Base; path = Base.lproj/About.txt; sourceTree = "<group>"; };
-		C67D6EFB23EAE928001F8DCA /* SKQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKQueue.swift; sourceTree = "<group>"; };
 		C691A0E623682C8B00085AC3 /* TestingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestingController.swift; sourceTree = "<group>"; };
 		C691A0E823682C9700085AC3 /* TestingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestingView.xib; sourceTree = "<group>"; };
 		C691A0E923682C9700085AC3 /* TestingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestingView.swift; sourceTree = "<group>"; };
@@ -472,7 +469,6 @@
 				C6996B5422FC2C8B007EBC3D /* Utils.swift */,
 				991EE54F23D9AB4700DC3677 /* ViewDebugger.swift */,
 				C6F9564723E4520D009C469C /* init.m */,
-				C67D6EFB23EAE928001F8DCA /* SKQueue.swift */,
 				999C3018242A3FCF00E127A6 /* DownloadSimulator.swift */,
 				99C4E56524320CF0005F8C8A /* IPC.swift */,
 				9930BD8E243CD2BF00C0EF7F /* FolderWatcher.swift */,
@@ -1011,7 +1007,6 @@
 				C6996B5722FC2C93007EBC3D /* Utils.swift in Sources */,
 				C655E8561EC5559200B12BE4 /* HomeView.swift in Sources */,
 				C6A3905B1EB61BF8009378C1 /* KeyboardSettings.swift in Sources */,
-				C67D6EFC23EAE928001F8DCA /* SKQueue.swift in Sources */,
 				C691A0EB23682C9700085AC3 /* TestingView.swift in Sources */,
 				C6B638461EDF94CA00A6ECB2 /* AboutController.swift in Sources */,
 				9904409D23FBE63F0063064E /* KeyboardLocalesViewController.swift in Sources */,
@@ -1074,7 +1069,6 @@
 				FDBD09C52333A56800303152 /* SplitKeyboard.swift in Sources */,
 				99074EF62423AAA300075480 /* SpellBannerView.swift in Sources */,
 				99074EF224224B4400075480 /* Banner.swift in Sources */,
-				C67D6EFD23EAE928001F8DCA /* SKQueue.swift in Sources */,
 				9930BD90243CD2BF00C0EF7F /* FolderWatcher.swift in Sources */,
 				FDAF59A922F9CCF200F7C9FC /* LongPressController.swift in Sources */,
 				990440AC23FC245D0063064E /* KeyboardLocale.swift in Sources */,
