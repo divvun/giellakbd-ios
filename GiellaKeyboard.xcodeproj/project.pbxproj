@@ -26,9 +26,10 @@
 		99094698243674F20070AEB6 /* SpellerAvailableBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99094697243674F20070AEB6 /* SpellerAvailableBanner.swift */; };
 		9909469B2436787C0070AEB6 /* SpellerAvailableBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990946992436753A0070AEB6 /* SpellerAvailableBannerView.swift */; };
 		991EE55023D9AB4700DC3677 /* ViewDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991EE54F23D9AB4700DC3677 /* ViewDebugger.swift */; };
+		9930BD8F243CD2BF00C0EF7F /* FolderWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9930BD8E243CD2BF00C0EF7F /* FolderWatcher.swift */; };
+		9930BD90243CD2BF00C0EF7F /* FolderWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9930BD8E243CD2BF00C0EF7F /* FolderWatcher.swift */; };
 		99460238243B27140027C1CC /* InputContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99460237243B27140027C1CC /* InputContext.swift */; };
 		9946023A243B2BF80027C1CC /* KeyboardViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99460239243B2BF80027C1CC /* KeyboardViewControllerTests.swift */; };
-		9960A25A24349C8A00A5C117 /* KeyboardBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9960A25924349C8A00A5C117 /* KeyboardBundle.swift */; };
 		997021052416DF8C00A81A27 /* KeyboardLocale+AllLocales.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997021042416DF8C00A81A27 /* KeyboardLocale+AllLocales.swift */; };
 		997550B623EAC631004ED6A5 /* UserDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997550B523EAC631004ED6A5 /* UserDictionary.swift */; };
 		997550B723EAC631004ED6A5 /* UserDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997550B523EAC631004ED6A5 /* UserDictionary.swift */; };
@@ -200,9 +201,9 @@
 		99094697243674F20070AEB6 /* SpellerAvailableBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpellerAvailableBanner.swift; sourceTree = "<group>"; };
 		990946992436753A0070AEB6 /* SpellerAvailableBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpellerAvailableBannerView.swift; sourceTree = "<group>"; };
 		991EE54F23D9AB4700DC3677 /* ViewDebugger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewDebugger.swift; sourceTree = "<group>"; };
+		9930BD8E243CD2BF00C0EF7F /* FolderWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderWatcher.swift; sourceTree = "<group>"; };
 		99460237243B27140027C1CC /* InputContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputContext.swift; sourceTree = "<group>"; };
 		99460239243B2BF80027C1CC /* KeyboardViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardViewControllerTests.swift; sourceTree = "<group>"; };
-		9960A25924349C8A00A5C117 /* KeyboardBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardBundle.swift; sourceTree = "<group>"; };
 		997021042416DF8C00A81A27 /* KeyboardLocale+AllLocales.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyboardLocale+AllLocales.swift"; sourceTree = "<group>"; };
 		997550B523EAC631004ED6A5 /* UserDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionary.swift; sourceTree = "<group>"; };
 		999790AB23F2B4E8003F7885 /* UserDictionaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionaryViewController.swift; sourceTree = "<group>"; };
@@ -474,6 +475,7 @@
 				C67D6EFB23EAE928001F8DCA /* SKQueue.swift */,
 				999C3018242A3FCF00E127A6 /* DownloadSimulator.swift */,
 				99C4E56524320CF0005F8C8A /* IPC.swift */,
+				9930BD8E243CD2BF00C0EF7F /* FolderWatcher.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -987,6 +989,7 @@
 				99989FB72417990E00EF8CD3 /* UserDictionary+Test.swift in Sources */,
 				C6B638441EDF81B200A6ECB2 /* SimpleButton.swift in Sources */,
 				C63EE0FF2361D86800A1E15A /* MenuButton.swift in Sources */,
+				9930BD8F243CD2BF00C0EF7F /* FolderWatcher.swift in Sources */,
 				997550B623EAC631004ED6A5 /* UserDictionary.swift in Sources */,
 				999790B223F2F484003F7885 /* WordContextViewController.swift in Sources */,
 				99C4E5642431E89A005F8C8A /* PahkatWrapper.swift in Sources */,
@@ -1072,6 +1075,7 @@
 				99074EF62423AAA300075480 /* SpellBannerView.swift in Sources */,
 				99074EF224224B4400075480 /* Banner.swift in Sources */,
 				C67D6EFD23EAE928001F8DCA /* SKQueue.swift in Sources */,
+				9930BD90243CD2BF00C0EF7F /* FolderWatcher.swift in Sources */,
 				FDAF59A922F9CCF200F7C9FC /* LongPressController.swift in Sources */,
 				990440AC23FC245D0063064E /* KeyboardLocale.swift in Sources */,
 				C6F9564823E4520D009C469C /* init.m in Sources */,
