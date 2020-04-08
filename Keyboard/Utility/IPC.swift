@@ -33,10 +33,15 @@ final class IPC {
         try? FileManager.default.removeItem(at: ipcFile)
     }
 
-    public func setupFolderWatcher() {
+    private func setupFolderWatcher() {
         folderWatcher = FolderWatcher(directory: ipcDirectory)
         folderWatcher?.delegate = self
         folderWatcher?.start()
+    }
+
+    public func isDownloading(id: String) -> Bool {
+        let fileURL = file(for: id)
+        return fileExists(atUrl: fileURL)
     }
 
     private func file(for downloadId: String) -> URL {

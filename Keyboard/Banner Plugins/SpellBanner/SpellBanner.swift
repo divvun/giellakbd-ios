@@ -48,6 +48,10 @@ public final class SpellBanner: Banner {
             .appendingPathComponent("\(languageShortened).bhfst")
     }
 
+    var spellerNeedsInstall: Bool {
+        return spellerURL == nil
+    }
+
     init(theme: ThemeType) {
         self.bannerView = SpellBannerView(theme: theme)
         bannerView.delegate = self
@@ -96,7 +100,7 @@ public final class SpellBanner: Banner {
         bannerView.updateTheme(theme)
     }
 
-    private func loadSpeller() {
+    public func loadSpeller() {
         print("Loading speller…")
 
         DispatchQueue.global(qos: .background).async {
