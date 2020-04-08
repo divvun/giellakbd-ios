@@ -18,7 +18,7 @@ final class FolderWatcher {
 
     public func start() {
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { _ in
-            self.checkForChanges()
+            self.notifyDelegateOfChanges()
         })
     }
 
@@ -26,7 +26,11 @@ final class FolderWatcher {
         timer?.invalidate()
     }
 
-    private func checkForChanges() {
+    private func notifyDelegateOfChanges() {
+        guard let delegate = delegate else {
+            return
+        }
+
         let newContents = getFolderContents(url: watchedFolder)
         let previousContents = watchedFolderContents
 
@@ -35,10 +39,10 @@ final class FolderWatcher {
         }
 
         let addedFiles = newContents.subtracting(previousContents)
-        addedFiles.forEach { delegate?.fileWasAdded(at: $0) }
+        addedFiles.forEach { delegate.fileWasAdded(at: $0) }
 
         let removedFiles = previousContents.subtracting(newContents)
-        removedFiles.forEach { delegate?.fileWasRemoved(at: $0) }
+        removedFiles.forEach { delegate.fileWasRemoved(at: $0) }
 
         watchedFolderContents = newContents
     }
