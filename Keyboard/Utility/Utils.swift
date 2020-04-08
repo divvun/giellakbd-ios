@@ -232,7 +232,6 @@ extension Bundle {
             guard let pluginsPath = Bundle.main.resourceURL?.appendingPathComponent("PlugIns") else {
                 return []
             }
-            print("pluginsPath: \(pluginsPath)")
             return try FileManager.default.contentsOfDirectory(at: pluginsPath, includingPropertiesForKeys: .none, options: [])
                 .compactMap {
                     Bundle(url: $0)
