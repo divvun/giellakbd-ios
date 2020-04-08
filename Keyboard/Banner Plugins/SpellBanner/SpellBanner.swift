@@ -49,7 +49,11 @@ public final class SpellBanner: Banner {
     }
 
     var spellerNeedsInstall: Bool {
-        return spellerURL == nil
+        guard let spellerURL = spellerURL else {
+            return false
+        }
+        let hasSpeller = FileManager.default.fileExists(atPath: spellerURL.path)
+        return hasSpeller == false
     }
 
     init(theme: ThemeType) {
