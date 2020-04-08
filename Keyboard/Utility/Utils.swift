@@ -227,7 +227,7 @@ let str1 = "containing"
 let str2 = "Bundle"
 
 extension Bundle {
-    static var allKeyboardBundles: [Bundle] = {
+    static var allKeyboardBundles: [Bundle] {
         do {
             guard let pluginsPath = Bundle.main.resourceURL?.appendingPathComponent("PlugIns") else {
                 return []
@@ -240,13 +240,13 @@ extension Bundle {
         } catch {
             fatalError("Error getting plugin bundles: \(error)")
         }
-    }()
+    }
 
     // Returns the keyboard bundles for keyboards the user has enabled in iOS Keyboard Settings
-    static var enabledKeyboardBundles: [Bundle] = {
+    static var enabledKeyboardBundles: [Bundle] {
         let enabledLanguages = enabledGiellaKeyboardLanguages
         return allKeyboardBundles.filter { enabledLanguages.contains($0.primaryLanguage ?? "") }
-    }()
+    }
 
     var divvunPackageId: String? {
         guard let info = infoDictionary,
