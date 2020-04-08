@@ -17,7 +17,7 @@ final class PahkatWrapper {
             do {
                 store = try PrefixPackageStore.open(path: storePath)
             } catch {
-                print(error)
+                print("Error opening Pahkat PrefixPackageStore: \(error)")
                 return nil
             }
         }
@@ -82,14 +82,14 @@ final class PahkatWrapper {
                     let transaction = try self.store.transaction(actions: [action])
                     transaction.process(delegate: self)
                 } catch {
-                    print(error)
+                    print("Pahkat transaction error: \(error)")
                 }
                 print("Done!")
             }
             ipc.startDownload(id: packageKey.id)
             currentDownloadId = packageKey.id
         } catch {
-            print(error)
+            print("Pahkat download error: \(error)")
         }
     }
 }
