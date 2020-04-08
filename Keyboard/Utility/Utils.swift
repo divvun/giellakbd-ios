@@ -266,6 +266,14 @@ extension Bundle {
         return lang
     }
 
+    var urlScheme: String? {
+        guard let schemes = infoDictionary!["LSApplicationQueriesSchemes"] as? [String],
+            let urlScheme = schemes.first else {
+                return nil
+        }
+        return urlScheme
+    }
+
     //swiftlint:disable identifier_name
     private static var enabledGiellaInputModes: [UITextInputMode] {
         UITextInputMode.activeInputModes.compactMap {
@@ -286,7 +294,6 @@ extension Bundle {
     private static var enabledGiellaKeyboardLanguages: [String] {
         return enabledGiellaInputModes.compactMap { $0.primaryLanguage }
     }
-
 }
 
 func isBeingRunFromTests() -> Bool {

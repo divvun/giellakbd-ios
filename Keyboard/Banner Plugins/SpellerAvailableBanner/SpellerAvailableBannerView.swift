@@ -32,8 +32,10 @@ final class SpellerAvailableBannerView: UIView, BannerView {
     }
 
     @objc func openHostingApp() {
-        print(#function)
-        openURL(URL(string: "giellakbd://openFromBanner")!)
+        guard let urlScheme = Bundle.main.urlScheme else {
+            return
+        }
+        openURL(URL(string: "\(urlScheme)://openFromBanner")!)
     }
 
     @discardableResult
