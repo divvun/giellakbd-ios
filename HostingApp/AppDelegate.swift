@@ -80,7 +80,9 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillEnterForeground(_: UIApplication) {
         // I'd gladly use .NSExtensionHostWillEnterForeground but it doesn't work
         NotificationCenter.default.post(Notification(name: .HostingAppWillEnterForeground))
+    }
 
+    func applicationDidBecomeActive(_ application: UIApplication) {
         pahkat?.installSpellersForNewlyEnabledKeyboards()
     }
 
