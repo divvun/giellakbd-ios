@@ -1,8 +1,17 @@
 # Original: About
 about: Om
 
+# Original: Add
+#add: UNTRANSLATED
+
 # Original: Add New Keyboard…
 addNewKeyboard: Legg til nytt tastatur…
+
+# Original: Add Word
+#addWord: UNTRANSLATED
+
+# Original: This word will be suggested in the spelling banner for similar input.
+#addWordMessage: UNTRANSLATED
 
 # Original: Allow Full Access
 allowFullAccess: Gi full tilgang
@@ -10,11 +19,28 @@ allowFullAccess: Gi full tilgang
 # Original: Attributions
 attributions: Andre kilder
 
+# Original: Block
+#block: UNTRANSLATED
+
+# Original: Blocked
+#blocked: UNTRANSLATED
+
+# Original: Cancel
+#cancel: UNTRANSLATED
+
 # Original: Contexts for "{word}"
 #contextsFor: UNTRANSLATED
 
+# Original: Delete
+#delete: UNTRANSLATED
+
+# Original: Detected
+#detected: UNTRANSLATED
+
 # Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
-enableTapSoundsPlain: Om du vil slå på tastaturklikkelyder må du trykke {keyboard} og slå på {allowFullAccess}.
+enableTapSoundsPlain: >-
+  Om du vil slå på tastaturklikkelyder må du trykke {keyboard} og slå på
+  {allowFullAccess}.
 
 # Original: General
 general: Generelt
@@ -64,8 +90,17 @@ skip: Hopp over
 # Original: Tap {item}
 tapPlain: 'Berør {item}'
 
+# Original: Unblock
+#unblock: UNTRANSLATED
+
+# Original: User-Defined
+#userDefined: UNTRANSLATED
+
 # Original: User Dictionary
 #userDictionary: UNTRANSLATED
 
 # Original: When you have finished, return to this app to continue.
 whenYouHaveFinished: Når du er ferdig – gå tilbake til denne appen for å fortsette.
+
+# Original: Word
+#word: UNTRANSLATED

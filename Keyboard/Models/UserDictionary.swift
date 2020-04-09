@@ -86,19 +86,45 @@ public final class UserDictionary {
     // MARK: - Querying Dictionary
 
     public func getSuggestions(for input: String) -> [String] {
-        return getUserWords()
+        return getDetectedAndUserDefinedWords()
             .map { (word: $0, score: $0.levenshtein(input) ) }
             .filter { $0.score < 4 }
             .sorted { $0.score < $1.score }
             .map { $0.word }
     }
 
-    public func getUserWords() -> [String] {
-        var words: [String] = []
-        let query = WordTable.table.select(WordTable.word)
-            .filter(WordTable.locale == locale.identifier)
+    public func getDetectedAndUserDefinedWords() -> [String] {
+        let query = baseWordsQuery()
             .filter(WordTable.state == WordState.userWord.rawValue || WordTable.state == WordState.manuallyAdded.rawValue)
+        return getWordList(query: query)
+    }
+
+    public func getDetectedWords() -> [String] {
+        let query = baseWordsQuery()
+            .filter(WordTable.state == WordState.userWord.rawValue)
+        return getWordList(query: query)
+    }
+
+    public func getUserDefinedWords() -> [String] {
+        let query = baseWordsQuery()
+            .filter(WordTable.state == WordState.manuallyAdded.rawValue)
+        return getWordList(query: query)
+    }
+
+    public func getBlacklistedWords() -> [String] {
+        let query = baseWordsQuery()
+            .filter(WordTable.state == WordState.blacklisted.rawValue)
+        return getWordList(query: query)
+    }
+
+    private func baseWordsQuery() -> Table {
+        return WordTable.table.select(WordTable.word)
+            .filter(WordTable.locale == locale.identifier)
             .order(WordTable.word)
+    }
+
+    private func getWordList(query: Table) -> [String] {
+        var words: [String] = []
         do {
             let rows = try database.prepare(query)
             for row in rows {
@@ -106,7 +132,7 @@ public final class UserDictionary {
                 words.append(word)
             }
         } catch {
-            print("Error getting user words: \(error)")
+            print("Error getting word list: \(error)")
         }
         return words
     }
@@ -175,6 +201,20 @@ public final class UserDictionary {
         } catch {
             fatalError("Error deleting word from UserDictionary \(error)")
         }
+    }
+
+    public func blacklistWord(_ word: String) {
+        guard let existingWord = fetchWord(word) else {
+            return
+        }
+        updateWordState(id: existingWord[WordTable.id], state: .blacklisted)
+    }
+
+    public func unblacklistWord(_ word: String) {
+        guard let existingWord = fetchWord(word) else {
+            return
+        }
+        updateWordState(id: existingWord[WordTable.id], state: .manuallyAdded)
     }
 
     @discardableResult

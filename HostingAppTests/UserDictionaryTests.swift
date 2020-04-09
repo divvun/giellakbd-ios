@@ -26,7 +26,7 @@ final class UserDictionaryTests: XCTestCase {
         sut.dropTables()
         userDictionary = makeSUT() // re-create tables
 
-        let words = sut.getUserWords()
+        let words = sut.getDetectedAndUserDefinedWords()
         XCTAssertEqual(0, words.count)
     }
 
@@ -38,7 +38,7 @@ final class UserDictionaryTests: XCTestCase {
         sut.addCandidate(word: "Test")
         sut.addCandidate(word: "tEsT")
 
-        let words = sut.getUserWords()
+        let words = sut.getDetectedAndUserDefinedWords()
         XCTAssertEqual(1, words.count)
         XCTAssertEqual("test", words.first)
     }
@@ -48,7 +48,7 @@ final class UserDictionaryTests: XCTestCase {
 
         sut.addCandidate(word: "test")
 
-        let words = sut.getUserWords()
+        let words = sut.getDetectedAndUserDefinedWords()
         XCTAssertEqual(0, words.count)
     }
 
@@ -59,7 +59,7 @@ final class UserDictionaryTests: XCTestCase {
         sut.addCandidate(word: word)
         sut.addCandidate(word: word)
 
-        let words = sut.getUserWords()
+        let words = sut.getDetectedAndUserDefinedWords()
         XCTAssertEqual(1, words.count)
         XCTAssertEqual(word, words.first)
     }
@@ -70,7 +70,7 @@ final class UserDictionaryTests: XCTestCase {
 
         sut.addWordManually(word)
 
-        let words = sut.getUserWords()
+        let words = sut.getDetectedAndUserDefinedWords()
         XCTAssertEqual(1, words.count)
         XCTAssertEqual(word, words.first)
     }
@@ -85,11 +85,11 @@ final class UserDictionaryTests: XCTestCase {
         englishDict.addWordManually("test1")
         spanishDict.addWordManually("test2")
 
-        let englishWords = englishDict.getUserWords()
+        let englishWords = englishDict.getDetectedAndUserDefinedWords()
         XCTAssertEqual(1, englishWords.count)
         XCTAssertEqual("test1", englishWords.first)
 
-        let spanishWords = spanishDict.getUserWords()
+        let spanishWords = spanishDict.getDetectedAndUserDefinedWords()
         XCTAssertEqual(1, spanishWords.count)
         XCTAssertEqual("test2", spanishWords.first)
     }
@@ -104,7 +104,7 @@ final class UserDictionaryTests: XCTestCase {
 
         sut.addWordManually(word)
 
-        let words = sut.getUserWords()
+        let words = sut.getDetectedAndUserDefinedWords()
         XCTAssertEqual(1, words.count)
         XCTAssertEqual(word, words.first)
     }
@@ -116,7 +116,7 @@ final class UserDictionaryTests: XCTestCase {
         sut.addWordManually("cantelope")
         sut.addWordManually("apple")
 
-        let words = sut.getUserWords()
+        let words = sut.getDetectedAndUserDefinedWords()
         XCTAssertEqual("apple", words[0])
         XCTAssertEqual("banana", words[1])
         XCTAssertEqual("cantelope", words[2])
@@ -206,21 +206,21 @@ final class UserDictionaryTests: XCTestCase {
         englishDict.addWordManually("test")
         spanishDict.addWordManually("test")
 
-        let englishWords = englishDict.getUserWords()
+        let englishWords = englishDict.getDetectedAndUserDefinedWords()
         XCTAssertEqual(1, englishWords.count)
         XCTAssertEqual("test", englishWords.first)
 
-        let spanishWords = spanishDict.getUserWords()
+        let spanishWords = spanishDict.getDetectedAndUserDefinedWords()
         XCTAssertEqual(1, spanishWords.count)
         XCTAssertEqual("test", spanishWords.first)
 
         englishDict.removeWord("test")
-        XCTAssertEqual(0, englishDict.getUserWords().count)
-        XCTAssertEqual(1, spanishDict.getUserWords().count)
+        XCTAssertEqual(0, englishDict.getDetectedAndUserDefinedWords().count)
+        XCTAssertEqual(1, spanishDict.getDetectedAndUserDefinedWords().count)
 
         spanishDict.removeWord("test")
-        XCTAssertEqual(0, englishDict.getUserWords().count)
-        XCTAssertEqual(0, spanishDict.getUserWords().count)
+        XCTAssertEqual(0, englishDict.getDetectedAndUserDefinedWords().count)
+        XCTAssertEqual(0, spanishDict.getDetectedAndUserDefinedWords().count)
     }
 
     func test_insert_word_manually_should_insert_word_context() {

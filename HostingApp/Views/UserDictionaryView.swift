@@ -1,6 +1,8 @@
 import UIKit
 
 final class UserDictionaryView: UIView, Nibbable {
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var tableContainer: UIView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var emptyState: UIView!
     @IBOutlet weak var dictionaryIconContainer: UIView!
