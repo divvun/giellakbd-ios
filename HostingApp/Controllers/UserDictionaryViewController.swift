@@ -182,14 +182,15 @@ extension UserDictionaryViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView,
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let title = "Blacklist"
+        let blockTitle = "Block" // TODO: LOCALIZE
 
-        let blacklist = UIContextualAction(style: .normal, title: title, handler: { (_, _, completionHandler) in
+        let blacklist = UIContextualAction(style: .normal, title: blockTitle, handler: { (_, _, completionHandler) in
             self.blockWord(at: indexPath)
             completionHandler(true)
         })
 
-        let delete = UIContextualAction(style: .destructive, title: "Delete") { (_, _, completionHandler) in
+        let deleteTitle = "Delete" // TODO: LOCALIZE
+        let delete = UIContextualAction(style: .destructive, title: deleteTitle) { (_, _, completionHandler) in
             self.deleteWord(at: indexPath)
             completionHandler(true)
         }
