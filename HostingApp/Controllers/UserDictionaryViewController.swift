@@ -13,7 +13,13 @@ final class UserDictionaryViewController: ViewController<UserDictionaryView> {
             ? blockedWords
             : userWords
     }
-    private var isEmpty: Bool { userWords.count == 0 }
+    private var isEmpty: Bool {
+        userWords.isEmpty && blockedWords.isEmpty
+    }
+
+    private var tableContainer: UIView {
+        contentView.tableContainer!
+    }
 
     private var tableView: UITableView {
         contentView.tableView!
@@ -94,7 +100,7 @@ final class UserDictionaryViewController: ViewController<UserDictionaryView> {
     }
 
     private func updateEmptyStateView() {
-        tableView.isHidden = isEmpty
+        tableContainer.isHidden = isEmpty
     }
 
     private func deselectSelectedRow() {

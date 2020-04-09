@@ -117,6 +117,7 @@
                 <outlet property="emptyState" destination="Beg-AU-DQc" id="Fic-I4-QhT"/>
                 <outlet property="noWordsLabel" destination="hWc-Gb-ixs" id="yMw-hr-VgR"/>
                 <outlet property="segmentedControl" destination="rhM-rQ-1Qr" id="LBz-BN-gc5"/>
+                <outlet property="tableContainer" destination="68q-TT-0TC" id="GJz-YH-Ko6"/>
                 <outlet property="tableView" destination="luW-AL-biC" id="J08-jj-R7c"/>
             </connections>
             <point key="canvasLocation" x="140.57971014492756" y="153.34821428571428"/>
