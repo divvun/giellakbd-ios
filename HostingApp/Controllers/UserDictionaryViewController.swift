@@ -11,6 +11,10 @@ final class UserDictionaryViewController: ViewController<UserDictionaryView> {
         contentView.tableView!
     }
 
+    private var segmentedControl: UISegmentedControl {
+        contentView.segmentedControl!
+    }
+
     init(keyboardLocale: KeyboardLocale) {
         self.userDictionary = UserDictionary(locale: keyboardLocale)
         super.init()
@@ -44,6 +48,7 @@ final class UserDictionaryViewController: ViewController<UserDictionaryView> {
 
     private func setupView() {
         setupNavBar()
+        setupSegmentedControl()
         setupTableView()
         updateEmptyStateView()
     }
@@ -52,6 +57,13 @@ final class UserDictionaryViewController: ViewController<UserDictionaryView> {
         title = Strings.userDictionary
         let plusButton = UIBarButtonItem.init(barButtonSystemItem: .add, target: self, action: #selector(showAddWordAlert))
         navigationItem.rightBarButtonItem = plusButton
+    }
+
+    private func setupSegmentedControl() {
+        let whitelist = "Whitelist" // TODO: LOCALIZE
+        let blacklist = "Blacklist" // TODO: LOCALIZE
+        segmentedControl.setTitle(whitelist, forSegmentAt: 0)
+        segmentedControl.setTitle(blacklist, forSegmentAt: 1)
     }
 
     private func setupTableView() {
