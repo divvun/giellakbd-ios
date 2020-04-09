@@ -27,7 +27,7 @@ final class UserDictionaryServiceTests: XCTestCase {
         sut.updateContext(WordContext(word: "hi"))
         sut.updateContext(WordContext(firstBefore: "hi", word: ""))
 
-        let words = userDictionary.getUserWords()
+        let words = userDictionary.getDetectedAndUserDefinedWords()
         let contexts = userDictionary.getContexts(for: "hi")
 
         XCTAssertEqual(1, words.count)

@@ -67,10 +67,11 @@
                             <rect key="frame" x="0.0" y="0.0" width="414" height="47"/>
                             <subviews>
                                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="rhM-rQ-1Qr">
-                                    <rect key="frame" x="141.5" y="8" width="131" height="32"/>
+                                    <rect key="frame" x="108.5" y="8" width="197" height="32"/>
                                     <segments>
                                         <segment title="First"/>
                                         <segment title="Second"/>
+                                        <segment title="Third"/>
                                     </segments>
                                 </segmentedControl>
                             </subviews>
@@ -120,7 +121,7 @@
                 <outlet property="tableContainer" destination="68q-TT-0TC" id="GJz-YH-Ko6"/>
                 <outlet property="tableView" destination="luW-AL-biC" id="J08-jj-R7c"/>
             </connections>
-            <point key="canvasLocation" x="140.57971014492756" y="153.34821428571428"/>
+            <point key="canvasLocation" x="-164" y="23"/>
         </view>
     </objects>
     <resources>

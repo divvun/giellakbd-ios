@@ -1,20 +1,36 @@
 import UIKit
 
 final class UserDictionaryViewController: ViewController<UserDictionaryView> {
+    enum SegmentIndex: Int {
+        case detected = 0
+        case userDefined
+        case blocked
+    }
+
     private let userDictionary: UserDictionary
-    private var userWords: [String] {
-        userDictionary.getUserWords()
+    private var detectedWords: [String] {
+        userDictionary.getDetectedWords()
+    }
+    private var userDefinedWords: [String] {
+        userDictionary.getUserDefinedWords()
     }
     private var blockedWords: [String] {
         userDictionary.getBlacklistedWords()
     }
     private var currentWordlist: [String] {
-        return isShowingBlockedWords
-            ? blockedWords
-            : userWords
+        switch currentSegment {
+        case .detected:
+            return detectedWords
+        case .userDefined:
+            return userDefinedWords
+        case .blocked:
+            return blockedWords
+        }
     }
     private var isEmpty: Bool {
-        userWords.isEmpty && blockedWords.isEmpty
+        detectedWords.isEmpty
+            && userDefinedWords.isEmpty
+            && blockedWords.isEmpty
     }
 
     private var tableContainer: UIView {
@@ -28,11 +44,9 @@ final class UserDictionaryViewController: ViewController<UserDictionaryView> {
     private var segmentedControl: UISegmentedControl {
         contentView.segmentedControl!
     }
-    private let detectedIndex = 0
-    private let blockedIndex = 1
 
-    private var isShowingBlockedWords: Bool {
-        return segmentedControl.selectedSegmentIndex == blockedIndex
+    private var currentSegment: SegmentIndex {
+        SegmentIndex(rawValue: segmentedControl.selectedSegmentIndex)!
     }
 
     init(keyboardLocale: KeyboardLocale) {
@@ -80,10 +94,12 @@ final class UserDictionaryViewController: ViewController<UserDictionaryView> {
     }
 
     private func setupSegmentedControl() {
-        let whitelist = "Detected" // TODO: LOCALIZE
-        let blacklist = "Blocked" // TODO: LOCALIZE
-        segmentedControl.setTitle(whitelist, forSegmentAt: detectedIndex)
-        segmentedControl.setTitle(blacklist, forSegmentAt: blockedIndex)
+        let detected = "Detected" // TODO: LOCALIZE
+        let userDefined = "User-Defined" // TODO: LOCALIZE
+        let blocked = "Blocked" // TODO: LOCALIZE
+        segmentedControl.setTitle(detected, forSegmentAt: SegmentIndex.detected.rawValue)
+        segmentedControl.setTitle(userDefined, forSegmentAt: SegmentIndex.userDefined.rawValue)
+        segmentedControl.setTitle(blocked, forSegmentAt: SegmentIndex.blocked.rawValue)
         segmentedControl.addTarget(self, action: #selector(refreshTable), for: .valueChanged)
     }
 
@@ -137,19 +153,21 @@ final class UserDictionaryViewController: ViewController<UserDictionaryView> {
 
     private func insertWordAndUpdateView(_ word: String) {
         userDictionary.addWordManually(word)
-        let insertIndexPath = indexPathForNewWord(word: word)
-        tableView.insertRows(at: [insertIndexPath], with: .automatic)
+        if currentSegment == .userDefined {
+            let insertIndexPath = indexPathForNewWord(word: word)
+            tableView.insertRows(at: [insertIndexPath], with: .automatic)
+        }
         updateEmptyStateView()
     }
 
     private func deleteWord(at indexPath: IndexPath) {
-        let word = userWords[indexPath.row]
+        let word = currentWordlist[indexPath.row]
         userDictionary.removeWord(word)
         tableView.deleteRows(at: [indexPath], with: .automatic)
     }
 
     private func blockWord(at indexPath: IndexPath) {
-        let word = userWords[indexPath.row]
+        let word = currentWordlist[indexPath.row]
         userDictionary.blacklistWord(word)
         tableView.deleteRows(at: [indexPath], with: .automatic)
     }
@@ -161,10 +179,10 @@ final class UserDictionaryViewController: ViewController<UserDictionaryView> {
     }
 
     private func indexPathForNewWord(word: String) -> IndexPath {
-        if let index = userWords.firstIndex(where: { word < $0 }) {
+        if let index = userDefinedWords.firstIndex(where: { word < $0 }) {
             return IndexPath(row: index - 1, section: 0)
         } else {
-            return IndexPath(row: userWords.count - 1, section: 0)
+            return IndexPath(row: userDefinedWords.count - 1, section: 0)
         }
     }
 }
@@ -194,12 +212,12 @@ extension UserDictionaryViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView,
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        return isShowingBlockedWords
+        return currentSegment == .blocked
             ? blockedWordsSwipeConfiguration(indexPath: indexPath)
-            : detectedWordsSwipeConfiguration(indexPath: indexPath)
+            : normalWordsSwipeConfiguration(indexPath: indexPath)
     }
 
-    private func detectedWordsSwipeConfiguration(indexPath: IndexPath) -> UISwipeActionsConfiguration {
+    private func normalWordsSwipeConfiguration(indexPath: IndexPath) -> UISwipeActionsConfiguration {
         let blockTitle = "Block" // TODO: LOCALIZE
         let block = UIContextualAction(style: .normal, title: blockTitle, handler: { (_, _, completionHandler) in
             self.blockWord(at: indexPath)
