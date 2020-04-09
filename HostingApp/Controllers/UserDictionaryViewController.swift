@@ -5,6 +5,14 @@ final class UserDictionaryViewController: ViewController<UserDictionaryView> {
     private var userWords: [String] {
         userDictionary.getUserWords()
     }
+    private var blockedWords: [String] {
+        userDictionary.getBlacklistedWords()
+    }
+    private var currentWordlist: [String] {
+        return isShowingBlockedWords
+            ? blockedWords
+            : userWords
+    }
     private var isEmpty: Bool { userWords.count == 0 }
 
     private var tableView: UITableView {
@@ -13,6 +21,12 @@ final class UserDictionaryViewController: ViewController<UserDictionaryView> {
 
     private var segmentedControl: UISegmentedControl {
         contentView.segmentedControl!
+    }
+    private let detectedIndex = 0
+    private let blockedIndex = 1
+
+    private var isShowingBlockedWords: Bool {
+        return segmentedControl.selectedSegmentIndex == blockedIndex
     }
 
     init(keyboardLocale: KeyboardLocale) {
@@ -60,10 +74,11 @@ final class UserDictionaryViewController: ViewController<UserDictionaryView> {
     }
 
     private func setupSegmentedControl() {
-        let whitelist = "Whitelist" // TODO: LOCALIZE
-        let blacklist = "Blacklist" // TODO: LOCALIZE
-        segmentedControl.setTitle(whitelist, forSegmentAt: 0)
-        segmentedControl.setTitle(blacklist, forSegmentAt: 1)
+        let whitelist = "Detected" // TODO: LOCALIZE
+        let blacklist = "Blocked" // TODO: LOCALIZE
+        segmentedControl.setTitle(whitelist, forSegmentAt: detectedIndex)
+        segmentedControl.setTitle(blacklist, forSegmentAt: blockedIndex)
+        segmentedControl.addTarget(self, action: #selector(refreshTable), for: .valueChanged)
     }
 
     private func setupTableView() {
@@ -72,6 +87,10 @@ final class UserDictionaryViewController: ViewController<UserDictionaryView> {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.tableFooterView = UIView()
+    }
+
+    @objc private func refreshTable() {
+        tableView.reloadData()
     }
 
     private func updateEmptyStateView() {
@@ -134,12 +153,12 @@ final class UserDictionaryViewController: ViewController<UserDictionaryView> {
 
 extension UserDictionaryViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return userWords.count
+        return currentWordlist.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(DisclosureCell.self)
-        cell.textLabel?.text = userWords[indexPath.item]
+        cell.textLabel?.text = currentWordlist[indexPath.item]
         return cell
     }
 
@@ -150,7 +169,7 @@ extension UserDictionaryViewController: UITableViewDataSource {
 
 extension UserDictionaryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let word = userWords[indexPath.row]
+        let word = currentWordlist[indexPath.row]
         let wordController = WordContextViewController(dictionary: userDictionary, word: word)
         navigationController?.pushViewController(wordController, animated: true)
     }

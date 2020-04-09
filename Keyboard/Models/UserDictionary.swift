@@ -94,11 +94,23 @@ public final class UserDictionary {
     }
 
     public func getUserWords() -> [String] {
-        var words: [String] = []
         let query = WordTable.table.select(WordTable.word)
             .filter(WordTable.locale == locale.identifier)
             .filter(WordTable.state == WordState.userWord.rawValue || WordTable.state == WordState.manuallyAdded.rawValue)
             .order(WordTable.word)
+        return getWordList(query: query)
+    }
+
+    public func getBlacklistedWords() -> [String] {
+        let query = WordTable.table.select(WordTable.word)
+            .filter(WordTable.locale == locale.identifier)
+            .filter(WordTable.state == WordState.blacklisted.rawValue)
+            .order(WordTable.word)
+        return getWordList(query: query)
+    }
+
+    private func getWordList(query: Table) -> [String] {
+        var words: [String] = []
         do {
             let rows = try database.prepare(query)
             for row in rows {
@@ -106,7 +118,7 @@ public final class UserDictionary {
                 words.append(word)
             }
         } catch {
-            print("Error getting user words: \(error)")
+            print("Error getting word list: \(error)")
         }
         return words
     }
