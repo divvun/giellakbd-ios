@@ -141,10 +141,16 @@ final class UserDictionaryViewController: ViewController<UserDictionaryView> {
         userDictionary.removeWord(word)
         tableView.deleteRows(at: [indexPath], with: .automatic)
     }
-    
+
     private func blockWord(at indexPath: IndexPath) {
         let word = userWords[indexPath.row]
         userDictionary.blacklistWord(word)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+    }
+
+    private func unblockWord(at indexPath: IndexPath) {
+        let word = blockedWords[indexPath.row]
+        userDictionary.unblacklistWord(word)
         tableView.deleteRows(at: [indexPath], with: .automatic)
     }
 
@@ -182,23 +188,38 @@ extension UserDictionaryViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView,
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let blockTitle = "Block" // TODO: LOCALIZE
+        return isShowingBlockedWords
+            ? blockedWordsSwipeConfiguration(indexPath: indexPath)
+            : detectedWordsSwipeConfiguration(indexPath: indexPath)
+    }
 
-        let blacklist = UIContextualAction(style: .normal, title: blockTitle, handler: { (_, _, completionHandler) in
+    private func detectedWordsSwipeConfiguration(indexPath: IndexPath) -> UISwipeActionsConfiguration {
+        let blockTitle = "Block" // TODO: LOCALIZE
+        let block = UIContextualAction(style: .normal, title: blockTitle, handler: { (_, _, completionHandler) in
             self.blockWord(at: indexPath)
             completionHandler(true)
         })
+        block.backgroundColor = .gray
 
         let deleteTitle = "Delete" // TODO: LOCALIZE
         let delete = UIContextualAction(style: .destructive, title: deleteTitle) { (_, _, completionHandler) in
             self.deleteWord(at: indexPath)
             completionHandler(true)
         }
-
-        blacklist.backgroundColor = .gray
         delete.backgroundColor = .red
-        let configuration = UISwipeActionsConfiguration(actions: [delete, blacklist])
-        return configuration
+
+        return UISwipeActionsConfiguration(actions: [delete, block])
+    }
+
+    private func blockedWordsSwipeConfiguration(indexPath: IndexPath) -> UISwipeActionsConfiguration {
+        let unblockTitle = "Unblock" // TODO: LOCALIZE
+        let unblock = UIContextualAction(style: .normal, title: unblockTitle, handler: { (_, _, completionHandler) in
+            self.unblockWord(at: indexPath)
+            completionHandler(true)
+        })
+        unblock.backgroundColor = .gray
+
+        return UISwipeActionsConfiguration(actions: [unblock])
     }
 }
 
