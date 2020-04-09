@@ -1,14 +1,52 @@
 import UIKit
 
 final class UserDictionaryViewController: ViewController<UserDictionaryView> {
-    private let userDictionary: UserDictionary
-    private var userWords: [String] {
-        userDictionary.getUserWords()
+    enum SegmentIndex: Int {
+        case detected = 0
+        case userDefined
+        case blocked
     }
-    private var isEmpty: Bool { userWords.count == 0 }
+
+    private let userDictionary: UserDictionary
+    private var detectedWords: [String] {
+        userDictionary.getDetectedWords()
+    }
+    private var userDefinedWords: [String] {
+        userDictionary.getUserDefinedWords()
+    }
+    private var blockedWords: [String] {
+        userDictionary.getBlacklistedWords()
+    }
+    private var currentWordlist: [String] {
+        switch currentSegment {
+        case .detected:
+            return detectedWords
+        case .userDefined:
+            return userDefinedWords
+        case .blocked:
+            return blockedWords
+        }
+    }
+    private var isEmpty: Bool {
+        detectedWords.isEmpty
+            && userDefinedWords.isEmpty
+            && blockedWords.isEmpty
+    }
+
+    private var tableContainer: UIView {
+        contentView.tableContainer!
+    }
 
     private var tableView: UITableView {
         contentView.tableView!
+    }
+
+    private var segmentedControl: UISegmentedControl {
+        contentView.segmentedControl!
+    }
+
+    private var currentSegment: SegmentIndex {
+        SegmentIndex(rawValue: segmentedControl.selectedSegmentIndex)!
     }
 
     init(keyboardLocale: KeyboardLocale) {
@@ -44,6 +82,7 @@ final class UserDictionaryViewController: ViewController<UserDictionaryView> {
 
     private func setupView() {
         setupNavBar()
+        setupSegmentedControl()
         setupTableView()
         updateEmptyStateView()
     }
@@ -54,6 +93,13 @@ final class UserDictionaryViewController: ViewController<UserDictionaryView> {
         navigationItem.rightBarButtonItem = plusButton
     }
 
+    private func setupSegmentedControl() {
+        segmentedControl.setTitle(Strings.detected, forSegmentAt: SegmentIndex.detected.rawValue)
+        segmentedControl.setTitle(Strings.userDefined, forSegmentAt: SegmentIndex.userDefined.rawValue)
+        segmentedControl.setTitle(Strings.blocked, forSegmentAt: SegmentIndex.blocked.rawValue)
+        segmentedControl.addTarget(self, action: #selector(refreshTable), for: .valueChanged)
+    }
+
     private func setupTableView() {
         tableView.isHidden = false
         tableView.register(DisclosureCell.self)
@@ -62,8 +108,12 @@ final class UserDictionaryViewController: ViewController<UserDictionaryView> {
         tableView.tableFooterView = UIView()
     }
 
+    @objc private func refreshTable() {
+        tableView.reloadData()
+    }
+
     private func updateEmptyStateView() {
-        tableView.isHidden = isEmpty
+        tableContainer.isHidden = isEmpty
     }
 
     private func deselectSelectedRow() {
@@ -73,18 +123,15 @@ final class UserDictionaryViewController: ViewController<UserDictionaryView> {
     }
 
     @objc private func showAddWordAlert() {
-        let title = "Add Word" // LOCALIZE ME
-        let message = "This word will be suggested in the spelling banner for similar input." // LOCALIZE ME
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let alert = UIAlertController(title: Strings.addWord, message: Strings.addWordMessage, preferredStyle: .alert)
         alert.addTextField { (textField) in
-            textField.placeholder = "Word"
+            textField.placeholder = Strings.word
             textField.autocapitalizationType = .none
             textField.autocorrectionType = .no
             textField.delegate = self
         }
 
-        // LOCALIZE
-        let addAction = UIAlertAction(title: "Add", style: .default) { _ in
+        let addAction = UIAlertAction(title: Strings.add, style: .default) { _ in
             guard let word = alert.textFields?.first?.text,
                 word.isEmpty == false else {
                 return
@@ -93,41 +140,55 @@ final class UserDictionaryViewController: ViewController<UserDictionaryView> {
         }
 
         alert.addAction(addAction)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: Strings.cancel, style: .cancel))
 
         self.present(alert, animated: true)
     }
 
     private func insertWordAndUpdateView(_ word: String) {
         userDictionary.addWordManually(word)
-        let insertIndexPath = indexPathForNewWord(word: word)
-        tableView.insertRows(at: [insertIndexPath], with: .automatic)
+        if currentSegment == .userDefined {
+            let insertIndexPath = indexPathForNewWord(word: word)
+            tableView.insertRows(at: [insertIndexPath], with: .automatic)
+        }
         updateEmptyStateView()
     }
 
     private func deleteWord(at indexPath: IndexPath) {
-        let word = userWords[indexPath.row]
+        let word = currentWordlist[indexPath.row]
         userDictionary.removeWord(word)
         tableView.deleteRows(at: [indexPath], with: .automatic)
     }
 
+    private func blockWord(at indexPath: IndexPath) {
+        let word = currentWordlist[indexPath.row]
+        userDictionary.blacklistWord(word)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+    }
+
+    private func unblockWord(at indexPath: IndexPath) {
+        let word = blockedWords[indexPath.row]
+        userDictionary.unblacklistWord(word)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+    }
+
     private func indexPathForNewWord(word: String) -> IndexPath {
-        if let index = userWords.firstIndex(where: { word < $0 }) {
+        if let index = userDefinedWords.firstIndex(where: { word < $0 }) {
             return IndexPath(row: index - 1, section: 0)
         } else {
-            return IndexPath(row: userWords.count - 1, section: 0)
+            return IndexPath(row: userDefinedWords.count - 1, section: 0)
         }
     }
 }
 
 extension UserDictionaryViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return userWords.count
+        return currentWordlist.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(DisclosureCell.self)
-        cell.textLabel?.text = userWords[indexPath.item]
+        cell.textLabel?.text = currentWordlist[indexPath.item]
         return cell
     }
 
@@ -138,9 +199,42 @@ extension UserDictionaryViewController: UITableViewDataSource {
 
 extension UserDictionaryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let word = userWords[indexPath.row]
+        let word = currentWordlist[indexPath.row]
         let wordController = WordContextViewController(dictionary: userDictionary, word: word)
         navigationController?.pushViewController(wordController, animated: true)
+    }
+
+    func tableView(_ tableView: UITableView,
+                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        return currentSegment == .blocked
+            ? blockedWordsSwipeConfiguration(indexPath: indexPath)
+            : normalWordsSwipeConfiguration(indexPath: indexPath)
+    }
+
+    private func normalWordsSwipeConfiguration(indexPath: IndexPath) -> UISwipeActionsConfiguration {
+        let block = UIContextualAction(style: .normal, title: Strings.block, handler: { (_, _, completionHandler) in
+            self.blockWord(at: indexPath)
+            completionHandler(true)
+        })
+        block.backgroundColor = .gray
+
+        let delete = UIContextualAction(style: .destructive, title: Strings.delete) { (_, _, completionHandler) in
+            self.deleteWord(at: indexPath)
+            completionHandler(true)
+        }
+        delete.backgroundColor = .red
+
+        return UISwipeActionsConfiguration(actions: [delete, block])
+    }
+
+    private func blockedWordsSwipeConfiguration(indexPath: IndexPath) -> UISwipeActionsConfiguration {
+        let unblock = UIContextualAction(style: .normal, title: Strings.unblock, handler: { (_, _, completionHandler) in
+            self.unblockWord(at: indexPath)
+            completionHandler(true)
+        })
+        unblock.backgroundColor = .gray
+
+        return UISwipeActionsConfiguration(actions: [unblock])
     }
 }
 
@@ -150,31 +244,5 @@ extension UserDictionaryViewController: UITextFieldDelegate {
             return false
         }
         return true
-    }
-
-    func tableView(_ tableView: UITableView,
-                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let title = "Blacklist"
-
-        let blacklist = UIContextualAction(style: .normal, title: title,
-                                        handler: { (_, _, completionHandler) in
-                                            // IMPLEMENT ME
-                                            let alert = UIAlertController(title: "HI",
-                                                                          message: "blacklist",
-                                                                          preferredStyle: .alert)
-                                            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-                                            self.present(alert, animated: true)
-                                            completionHandler(true)
-        })
-
-        let delete = UIContextualAction(style: .destructive, title: "Delete") { (_, _, completionHandler) in
-            self.deleteWord(at: indexPath)
-            completionHandler(true)
-        }
-
-        blacklist.backgroundColor = .gray
-        delete.backgroundColor = .red
-        let configuration = UISwipeActionsConfiguration(actions: [delete, blacklist])
-        return configuration
     }
 }

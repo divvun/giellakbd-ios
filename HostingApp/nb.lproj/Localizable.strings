@@ -1,8 +1,16 @@
 "about" = "Om";
+"add" = "Add";
 "addNewKeyboard" = "Legg til nytt tastatur…";
+"addWord" = "Add Word";
+"addWordMessage" = "This word will be suggested in the spelling banner for similar input.";
 "allowFullAccess" = "Gi full tilgang";
 "attributions" = "Andre kilder";
+"block" = "Block";
+"blocked" = "Blocked";
+"cancel" = "Cancel";
 "contextsFor" = "Contexts for \"%1$@\"";
+"delete" = "Delete";
+"detected" = "Detected";
 "enableTapSoundsPlain" = "Om du vil slå på tastaturklikkelyder må du trykke %1$@ og slå på %2$@.";
 "general" = "Generelt";
 "keyboard" = "Tastatur";
@@ -20,5 +28,8 @@
 "settings" = "Innstillinger";
 "skip" = "Hopp over";
 "tapPlain" = "Berør %1$@";
+"unblock" = "Unblock";
+"userDefined" = "User-Defined";
 "userDictionary" = "User Dictionary";
 "whenYouHaveFinished" = "Når du er ferdig – gå tilbake til denne appen for å fortsette.";
+"word" = "Word";

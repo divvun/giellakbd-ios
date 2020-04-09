@@ -1,8 +1,16 @@
 "about" = "Boallobeavddeprográmma birra";
+"add" = "Add";
 "addNewKeyboard" = "Lasit ođđa boallobeavddi …";
+"addWord" = "Add Word";
+"addWordMessage" = "This word will be suggested in the spelling banner for similar input.";
 "allowFullAccess" = "Atte dievaslaš beassan dán áppii";
 "attributions" = "Eará gáldut";
+"block" = "Block";
+"blocked" = "Blocked";
+"cancel" = "Cancel";
 "contextsFor" = "Contexts for \"%1$@\"";
+"delete" = "Delete";
+"detected" = "Detected";
 "enableTapSoundsPlain" = "Jus háliidat gullat jienaid go coahkkalat boallobeavddi, de coahkkal %1$@ ja bija johtui %2$@.";
 "general" = "Oppalaš";
 "keyboard" = "Boallobeavddi";
@@ -20,5 +28,8 @@
 "settings" = "Heivehusat";
 "skip" = "Njuike badjel";
 "tapPlain" = "Coahkkal %1$@";
+"unblock" = "Unblock";
+"userDefined" = "User-Defined";
 "userDictionary" = "User Dictionary";
 "whenYouHaveFinished" = "Go leat geargan, máhcat dán áppii ja joatkke barggu.";
+"word" = "Word";
