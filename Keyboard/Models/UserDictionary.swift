@@ -189,6 +189,13 @@ public final class UserDictionary {
         }
     }
 
+    public func blacklistWord(_ word: String) {
+        guard let existingWord = fetchWord(word) else {
+            return
+        }
+        updateWordState(id: existingWord[WordTable.id], state: .blacklisted)
+    }
+
     @discardableResult
     public func updateContext(contextId: Int64, newContext: WordContext) -> Bool {
         guard let wordRow = fetchWord(newContext.word),

@@ -141,6 +141,12 @@ final class UserDictionaryViewController: ViewController<UserDictionaryView> {
         userDictionary.removeWord(word)
         tableView.deleteRows(at: [indexPath], with: .automatic)
     }
+    
+    private func blockWord(at indexPath: IndexPath) {
+        let word = userWords[indexPath.row]
+        userDictionary.blacklistWord(word)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+    }
 
     private func indexPathForNewWord(word: String) -> IndexPath {
         if let index = userWords.firstIndex(where: { word < $0 }) {
@@ -178,15 +184,9 @@ extension UserDictionaryViewController: UITableViewDelegate {
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let title = "Blacklist"
 
-        let blacklist = UIContextualAction(style: .normal, title: title,
-                                           handler: { (_, _, completionHandler) in
-                                            // IMPLEMENT ME
-                                            let alert = UIAlertController(title: "HI",
-                                                                          message: "blacklist",
-                                                                          preferredStyle: .alert)
-                                            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-                                            self.present(alert, animated: true)
-                                            completionHandler(true)
+        let blacklist = UIContextualAction(style: .normal, title: title, handler: { (_, _, completionHandler) in
+            self.blockWord(at: indexPath)
+            completionHandler(true)
         })
 
         let delete = UIContextualAction(style: .destructive, title: "Delete") { (_, _, completionHandler) in
