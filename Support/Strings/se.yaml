@@ -14,7 +14,9 @@ attributions: Eará gáldut
 #contextsFor: UNTRANSLATED
 
 # Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
-enableTapSoundsPlain: Jus háliidat gullat jienaid go coahkkalat boallobeavddi, de coahkkal {keyboard} ja bija johtui {allowFullAccess}.
+enableTapSoundsPlain: >-
+  Jus háliidat gullat jienaid go coahkkalat boallobeavddi, de coahkkal
+  {keyboard} ja bija johtui {allowFullAccess}.
 
 # Original: General
 general: Oppalaš
@@ -41,7 +43,7 @@ localeSjd: Gielddasámegiella
 #noUserWordsDescription: UNTRANSLATED
 
 # Original: Open the {item} app
-openAppPlain: Raba {item}-áppa
+openAppPlain: 'Raba {item}-áppa'
 
 # Original: Open Settings
 openSettings: Raba heivehusaid
@@ -50,7 +52,7 @@ openSettings: Raba heivehusaid
 save: Vurke
 
 # Original: Set Up {keyboard}
-setUp: Heivet {keyboard}
+setUp: 'Heivet {keyboard}'
 
 # Original: Setting Up
 settingUp: Heiveheamen
@@ -62,10 +64,10 @@ settings: Heivehusat
 skip: Njuike badjel
 
 # Original: Tap {item}
-tapPlain: Coahkkal {item}
+tapPlain: 'Coahkkal {item}'
 
 # Original: User Dictionary
 #userDictionary: UNTRANSLATED
 
 # Original: When you have finished, return to this app to continue.
-whenYouHaveFinished: Go leat geargan, máhcat dán áppii ja joatkke barggu.
+whenYouHaveFinished: 'Go leat geargan, máhcat dán áppii ja joatkke barggu.'

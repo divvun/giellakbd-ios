@@ -14,7 +14,9 @@ attributions: Andre kilder
 #contextsFor: UNTRANSLATED
 
 # Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
-enableTapSoundsPlain: Om du vil slå på tastaturklikkelyder må du trykke {keyboard} og slå på {allowFullAccess}.
+enableTapSoundsPlain: >-
+  Om du vil slå på tastaturklikkelyder må du trykke {keyboard} og slå på
+  {allowFullAccess}.
 
 # Original: General
 general: Generelt
