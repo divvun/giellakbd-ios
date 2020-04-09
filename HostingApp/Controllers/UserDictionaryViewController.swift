@@ -94,12 +94,9 @@ final class UserDictionaryViewController: ViewController<UserDictionaryView> {
     }
 
     private func setupSegmentedControl() {
-        let detected = "Detected" // TODO: LOCALIZE
-        let userDefined = "User-Defined" // TODO: LOCALIZE
-        let blocked = "Blocked" // TODO: LOCALIZE
-        segmentedControl.setTitle(detected, forSegmentAt: SegmentIndex.detected.rawValue)
-        segmentedControl.setTitle(userDefined, forSegmentAt: SegmentIndex.userDefined.rawValue)
-        segmentedControl.setTitle(blocked, forSegmentAt: SegmentIndex.blocked.rawValue)
+        segmentedControl.setTitle(Strings.detected, forSegmentAt: SegmentIndex.detected.rawValue)
+        segmentedControl.setTitle(Strings.userDefined, forSegmentAt: SegmentIndex.userDefined.rawValue)
+        segmentedControl.setTitle(Strings.blocked, forSegmentAt: SegmentIndex.blocked.rawValue)
         segmentedControl.addTarget(self, action: #selector(refreshTable), for: .valueChanged)
     }
 
@@ -126,18 +123,15 @@ final class UserDictionaryViewController: ViewController<UserDictionaryView> {
     }
 
     @objc private func showAddWordAlert() {
-        let title = "Add Word" // LOCALIZE ME
-        let message = "This word will be suggested in the spelling banner for similar input." // LOCALIZE ME
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let alert = UIAlertController(title: Strings.addWord, message: Strings.addWordMessage, preferredStyle: .alert)
         alert.addTextField { (textField) in
-            textField.placeholder = "Word"
+            textField.placeholder = Strings.word
             textField.autocapitalizationType = .none
             textField.autocorrectionType = .no
             textField.delegate = self
         }
 
-        // LOCALIZE
-        let addAction = UIAlertAction(title: "Add", style: .default) { _ in
+        let addAction = UIAlertAction(title: Strings.add, style: .default) { _ in
             guard let word = alert.textFields?.first?.text,
                 word.isEmpty == false else {
                 return
@@ -146,7 +140,7 @@ final class UserDictionaryViewController: ViewController<UserDictionaryView> {
         }
 
         alert.addAction(addAction)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: Strings.cancel, style: .cancel))
 
         self.present(alert, animated: true)
     }
@@ -218,15 +212,13 @@ extension UserDictionaryViewController: UITableViewDelegate {
     }
 
     private func normalWordsSwipeConfiguration(indexPath: IndexPath) -> UISwipeActionsConfiguration {
-        let blockTitle = "Block" // TODO: LOCALIZE
-        let block = UIContextualAction(style: .normal, title: blockTitle, handler: { (_, _, completionHandler) in
+        let block = UIContextualAction(style: .normal, title: Strings.block, handler: { (_, _, completionHandler) in
             self.blockWord(at: indexPath)
             completionHandler(true)
         })
         block.backgroundColor = .gray
 
-        let deleteTitle = "Delete" // TODO: LOCALIZE
-        let delete = UIContextualAction(style: .destructive, title: deleteTitle) { (_, _, completionHandler) in
+        let delete = UIContextualAction(style: .destructive, title: Strings.delete) { (_, _, completionHandler) in
             self.deleteWord(at: indexPath)
             completionHandler(true)
         }
@@ -236,8 +228,7 @@ extension UserDictionaryViewController: UITableViewDelegate {
     }
 
     private func blockedWordsSwipeConfiguration(indexPath: IndexPath) -> UISwipeActionsConfiguration {
-        let unblockTitle = "Unblock" // TODO: LOCALIZE
-        let unblock = UIContextualAction(style: .normal, title: unblockTitle, handler: { (_, _, completionHandler) in
+        let unblock = UIContextualAction(style: .normal, title: Strings.unblock, handler: { (_, _, completionHandler) in
             self.unblockWord(at: indexPath)
             completionHandler(true)
         })

@@ -37,7 +37,7 @@ class Strings {
             if let dir = Bundle.main.path(forResource: languageCode, ofType: "lproj"), let bundle = Bundle(path: dir) {
                 self.bundle = bundle
             } else {
-                print("No bundle found for \(languageCode)")
+                print("No bundle found for \(languageCode))")
                 self.bundle = Bundle.main
             }
         }
@@ -60,9 +60,24 @@ class Strings {
         return string(for: "about")
     }
 
+    /** Add */
+    static var add: String {
+        return string(for: "add")
+    }
+
     /** Add New Keyboard… */
     static var addNewKeyboard: String {
         return string(for: "addNewKeyboard")
+    }
+
+    /** Add Word */
+    static var addWord: String {
+        return string(for: "addWord")
+    }
+
+    /** This word will be suggested in the spelling banner for similar input. */
+    static var addWordMessage: String {
+        return string(for: "addWordMessage")
     }
 
     /** Allow Full Access */
@@ -75,10 +90,35 @@ class Strings {
         return string(for: "attributions")
     }
 
+    /** Block */
+    static var block: String {
+        return string(for: "block")
+    }
+
+    /** Blocked */
+    static var blocked: String {
+        return string(for: "blocked")
+    }
+
+    /** Cancel */
+    static var cancel: String {
+        return string(for: "cancel")
+    }
+
     /** Contexts for "{word}" */
     static func contextsFor(word: String) -> String {
         let format = string(for: "contextsFor")
         return String(format: format, word)
+    }
+
+    /** Delete */
+    static var delete: String {
+        return string(for: "delete")
+    }
+
+    /** Detected */
+    static var detected: String {
+        return string(for: "detected")
     }
 
     /** If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}. */
@@ -170,6 +210,16 @@ class Strings {
         return String(format: format, item)
     }
 
+    /** Unblock */
+    static var unblock: String {
+        return string(for: "unblock")
+    }
+
+    /** User-Defined */
+    static var userDefined: String {
+        return string(for: "userDefined")
+    }
+
     /** User Dictionary */
     static var userDictionary: String {
         return string(for: "userDictionary")
@@ -178,6 +228,11 @@ class Strings {
     /** When you have finished, return to this app to continue. */
     static var whenYouHaveFinished: String {
         return string(for: "whenYouHaveFinished")
+    }
+
+    /** Word */
+    static var word: String {
+        return string(for: "word")
     }
 
     private init() {}
