@@ -154,22 +154,13 @@ extension UserDictionaryViewController: UITableViewDelegate {
         let wordController = WordContextViewController(dictionary: userDictionary, word: word)
         navigationController?.pushViewController(wordController, animated: true)
     }
-}
-
-extension UserDictionaryViewController: UITextFieldDelegate {
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if string.contains(" ") {
-            return false
-        }
-        return true
-    }
 
     func tableView(_ tableView: UITableView,
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let title = "Blacklist"
 
         let blacklist = UIContextualAction(style: .normal, title: title,
-                                        handler: { (_, _, completionHandler) in
+                                           handler: { (_, _, completionHandler) in
                                             // IMPLEMENT ME
                                             let alert = UIAlertController(title: "HI",
                                                                           message: "blacklist",
@@ -188,5 +179,14 @@ extension UserDictionaryViewController: UITextFieldDelegate {
         delete.backgroundColor = .red
         let configuration = UISwipeActionsConfiguration(actions: [delete, blacklist])
         return configuration
+    }
+}
+
+extension UserDictionaryViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if string.contains(" ") {
+            return false
+        }
+        return true
     }
 }
