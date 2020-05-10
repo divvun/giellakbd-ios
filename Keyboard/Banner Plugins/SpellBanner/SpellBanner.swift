@@ -25,6 +25,38 @@ public final class SpellBanner: Banner {
         bannerView
     }
 
+    var spellerURL: URL? {
+        let spellerPackagesDir = KeyboardSettings.pahkatStoreURL
+            .appendingPathComponent("pkg")
+
+        let currentKeyboard = Bundle.main
+
+        guard let spellerKey = currentKeyboard.spellerPackageKey,
+            let url = URL(string: spellerKey),
+            let packageId = url.pathComponents.last
+        else {
+            print("No speller package key found; BHFST not loaded.")
+            return nil
+        }
+        
+        guard let spellerPath = currentKeyboard.spellerPath else {
+            print("No speller path found; BHFST not loaded.")
+            return nil
+        }
+
+        return spellerPackagesDir
+            .appendingPathComponent(packageId)
+            .appendingPathComponent(spellerPath)
+    }
+
+    var spellerNeedsInstall: Bool {
+        guard let spellerURL = spellerURL else {
+            return false
+        }
+        let hasSpeller = FileManager.default.fileExists(atPath: spellerURL.path)
+        return hasSpeller == false
+    }
+
     init(theme: ThemeType) {
         self.bannerView = SpellBannerView(theme: theme)
         bannerView.delegate = self
@@ -70,45 +102,29 @@ public final class SpellBanner: Banner {
     }
 
     func updateTheme(_ theme: ThemeType) {
-        bannerView.updateTheme(theme: theme)
+        bannerView.updateTheme(theme)
     }
 
-    private func getPrimaryLanguage() -> String? {
-        guard let extensionInfo = Bundle.main.infoDictionary!["NSExtension"] as? [String: AnyObject],
-            let attrs = extensionInfo["NSExtensionAttributes"] as? [String: AnyObject],
-            let lang = attrs["PrimaryLanguage"] as? String else {
-                return nil
-        }
-        return String(lang.split(separator: "-")[0])
-    }
-
-    private func loadSpeller() {
+    public func loadSpeller() {
         print("Loading speller…")
 
         DispatchQueue.global(qos: .background).async {
             print("Dispatching request to load speller…")
 
-            guard let bundle = Bundle.top.url(forResource: "dicts", withExtension: "bundle") else {
-                print("No dict bundle found; BHFST not loaded.")
+            guard let spellerPath = self.spellerURL?.path else {
+                print("Unable to get spellerURL; BHFST not loaded")
                 return
             }
 
-            guard let lang = self.getPrimaryLanguage() else {
-                print("No primary language found for keyboard; BHFST not loaded.")
-                return
-            }
-
-            let path = bundle.appendingPathComponent("\(lang).bhfst")
-
-            if !FileManager.default.fileExists(atPath: path.path) {
-                print("No speller at: \(path)")
+            if !FileManager.default.fileExists(atPath: spellerPath) {
+                print("No speller at: \(spellerPath)")
                 print("DivvunSpell **not** loaded.")
                 return
             }
 
             let speller: ThfstChunkedBoxSpeller
             do {
-                let archive = try ThfstChunkedBoxSpellerArchive.open(path: path.path)
+                let archive = try ThfstChunkedBoxSpellerArchive.open(path: spellerPath)
                 speller = try archive.speller()
                 self.speller = speller
                 print("DivvunSpell loaded!")

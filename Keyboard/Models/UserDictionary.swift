@@ -30,14 +30,8 @@ public final class UserDictionary {
     }
 
     private lazy var dbFilePath: String = {
-        let groupId = KeyboardSettings.groupId
         let dbFileName = "userDictionary.sqlite3"
-
-        guard let groupUrl = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupId) else {
-            fatalError("Error opening app group for group id: \(groupId)")
-        }
-
-        return "\(groupUrl)\(dbFileName)"
+        return KeyboardSettings.groupContainerURL.appendingPathComponent(dbFileName).path
     }()
 
     internal lazy var database: Connection = {

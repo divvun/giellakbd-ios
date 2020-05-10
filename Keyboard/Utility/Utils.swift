@@ -13,7 +13,7 @@ extension UIDevice {
     }
 }
 
-extension UIUserInterfaceStyle: CustomDebugStringConvertible {
+extension UIUserInterfaceStyle {
     public var debugDescription: String {
         switch self {
         case .dark:
@@ -28,7 +28,7 @@ extension UIUserInterfaceStyle: CustomDebugStringConvertible {
     }
 }
 
-extension UIUserInterfaceIdiom: CustomDebugStringConvertible {
+extension UIUserInterfaceIdiom {
     public var debugDescription: String {
         switch self {
         case .phone:
@@ -47,7 +47,7 @@ extension UIUserInterfaceIdiom: CustomDebugStringConvertible {
     }
 }
 
-extension UIUserInterfaceSizeClass: CustomDebugStringConvertible {
+extension UIUserInterfaceSizeClass {
     public var debugDescription: String {
         switch self {
         case .compact:
@@ -62,7 +62,7 @@ extension UIUserInterfaceSizeClass: CustomDebugStringConvertible {
     }
 }
 
-extension UIKeyboardAppearance: CustomDebugStringConvertible {
+extension UIKeyboardAppearance {
     public var debugDescription: String {
         switch self {
         case .dark:
@@ -220,6 +220,83 @@ extension UIScreen {
     var isDeviceLandscape: Bool {
         let size = self.bounds.size
         return size.width > size.height
+    }
+}
+
+let str1 = "containing"
+let str2 = "Bundle"
+
+extension Bundle {
+    static var allKeyboardBundles: [Bundle] {
+        do {
+            guard let pluginsPath = Bundle.main.resourceURL?.appendingPathComponent("PlugIns") else {
+                return []
+            }
+            return try FileManager.default.contentsOfDirectory(at: pluginsPath, includingPropertiesForKeys: .none, options: [])
+                .compactMap {
+                    Bundle(url: $0)
+            }
+        } catch {
+            fatalError("Error getting plugin bundles: \(error)")
+        }
+    }
+
+    // Returns the keyboard bundles for keyboards the user has enabled in iOS Keyboard Settings
+    static var enabledKeyboardBundles: [Bundle] {
+        let enabledLanguages = enabledGiellaKeyboardLanguages
+        return allKeyboardBundles.filter { enabledLanguages.contains($0.primaryLanguage ?? "") }
+    }
+
+    var spellerPackageKey: String? {
+        guard let info = infoDictionary, let packageKey = info["DivvunSpellerPackageKey"] as? String else {
+            return nil
+        }
+        return packageKey.isEmpty ? nil : packageKey
+    }
+    
+    var spellerPath: String? {
+        guard let info = infoDictionary, let spellerPath = info["DivvunSpellerPath"] as? String else {
+            return nil
+        }
+        return spellerPath.isEmpty ? nil : spellerPath
+    }
+
+    var primaryLanguage: String? {
+        guard let extensionInfo = infoDictionary!["NSExtension"] as? [String: AnyObject],
+            let attrs = extensionInfo["NSExtensionAttributes"] as? [String: AnyObject],
+            let lang = attrs["PrimaryLanguage"] as? String else {
+                return nil
+        }
+        return lang
+    }
+
+    var urlScheme: String? {
+        guard let schemes = infoDictionary!["LSApplicationQueriesSchemes"] as? [String],
+            let urlScheme = schemes.first else {
+                return nil
+        }
+        return urlScheme
+    }
+
+    //swiftlint:disable identifier_name
+    private static var enabledGiellaInputModes: [UITextInputMode] {
+        UITextInputMode.activeInputModes.compactMap {
+            let s = str1 + str2
+            let v = $0.perform(Selector(s))
+            if let x = v?.takeUnretainedValue() as? Bundle,
+                let bunId = x.bundleIdentifier,
+                let mainId = Bundle.main.bundleIdentifier {
+                if bunId.contains(mainId) {
+                    return $0
+                }
+            }
+            return nil
+        }
+    }
+    //swiftlint:enable identifier_name
+
+    private static var enabledGiellaKeyboardLanguages: [String] {
+        return enabledGiellaInputModes.compactMap { $0.primaryLanguage }
     }
 }
 

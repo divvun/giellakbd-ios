@@ -23,7 +23,11 @@
 		99074EF224224B4400075480 /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99074EF124224B4400075480 /* Banner.swift */; };
 		99074EF324224BFA00075480 /* BannerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99074EEE24224AE700075480 /* BannerManager.swift */; };
 		99074EF62423AAA300075480 /* SpellBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAF59AA22F9CD0600F7C9FC /* SpellBannerView.swift */; };
+		99094698243674F20070AEB6 /* SpellerAvailableBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99094697243674F20070AEB6 /* SpellerAvailableBanner.swift */; };
+		9909469B2436787C0070AEB6 /* SpellerAvailableBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990946992436753A0070AEB6 /* SpellerAvailableBannerView.swift */; };
 		991EE55023D9AB4700DC3677 /* ViewDebugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991EE54F23D9AB4700DC3677 /* ViewDebugger.swift */; };
+		9930BD8F243CD2BF00C0EF7F /* FolderWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9930BD8E243CD2BF00C0EF7F /* FolderWatcher.swift */; };
+		9930BD90243CD2BF00C0EF7F /* FolderWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9930BD8E243CD2BF00C0EF7F /* FolderWatcher.swift */; };
 		99460238243B27140027C1CC /* InputContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99460237243B27140027C1CC /* InputContext.swift */; };
 		9946023A243B2BF80027C1CC /* KeyboardViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99460239243B2BF80027C1CC /* KeyboardViewControllerTests.swift */; };
 		997021052416DF8C00A81A27 /* KeyboardLocale+AllLocales.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997021042416DF8C00A81A27 /* KeyboardLocale+AllLocales.swift */; };
@@ -39,7 +43,14 @@
 		999790BB23F40E4F003F7885 /* WordContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999790B923F40E4F003F7885 /* WordContext.swift */; };
 		99989FB72417990E00EF8CD3 /* UserDictionary+Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99989FB52417970400EF8CD3 /* UserDictionary+Test.swift */; };
 		99989FBA2417CFBA00EF8CD3 /* BaseSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99989FB92417CFBA00EF8CD3 /* BaseSettingsViewController.swift */; };
+		999C30132428E6C000E127A6 /* UpdateBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999C30122428E6C000E127A6 /* UpdateBanner.swift */; };
+		999C30152428E70600E127A6 /* UpdateBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999C30142428E70600E127A6 /* UpdateBannerView.swift */; };
+		999C30172428E91000E127A6 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999C30162428E91000E127A6 /* BannerView.swift */; };
+		999C3019242A3FCF00E127A6 /* DownloadSimulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999C3018242A3FCF00E127A6 /* DownloadSimulator.swift */; };
 		99B94C6323E0501F0076A786 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 99B94C6523E0501F0076A786 /* Localizable.strings */; };
+		99C4E5642431E89A005F8C8A /* PahkatWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C4E5632431E89A005F8C8A /* PahkatWrapper.swift */; };
+		99C4E56724320F49005F8C8A /* IPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C4E56524320CF0005F8C8A /* IPC.swift */; };
+		99C4E56824321740005F8C8A /* IPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C4E56524320CF0005F8C8A /* IPC.swift */; };
 		99DA18412408294A003E7353 /* WordContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA18402408294A003E7353 /* WordContextTests.swift */; };
 		99DA184424095AF0003E7353 /* UserDictionaryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA184224095AD0003E7353 /* UserDictionaryService.swift */; };
 		99DA1846240D09B5003E7353 /* UserDictionaryServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA1845240D09B5003E7353 /* UserDictionaryServiceTests.swift */; };
@@ -185,7 +196,10 @@
 		99074EE92422387700075480 /* SpellBannerSeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpellBannerSeparatorView.swift; sourceTree = "<group>"; };
 		99074EEE24224AE700075480 /* BannerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerManager.swift; sourceTree = "<group>"; };
 		99074EF124224B4400075480 /* Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
+		99094697243674F20070AEB6 /* SpellerAvailableBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpellerAvailableBanner.swift; sourceTree = "<group>"; };
+		990946992436753A0070AEB6 /* SpellerAvailableBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpellerAvailableBannerView.swift; sourceTree = "<group>"; };
 		991EE54F23D9AB4700DC3677 /* ViewDebugger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewDebugger.swift; sourceTree = "<group>"; };
+		9930BD8E243CD2BF00C0EF7F /* FolderWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderWatcher.swift; sourceTree = "<group>"; };
 		99460237243B27140027C1CC /* InputContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputContext.swift; sourceTree = "<group>"; };
 		99460239243B2BF80027C1CC /* KeyboardViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardViewControllerTests.swift; sourceTree = "<group>"; };
 		997021042416DF8C00A81A27 /* KeyboardLocale+AllLocales.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyboardLocale+AllLocales.swift"; sourceTree = "<group>"; };
@@ -199,12 +213,18 @@
 		999790B923F40E4F003F7885 /* WordContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordContext.swift; sourceTree = "<group>"; };
 		99989FB52417970400EF8CD3 /* UserDictionary+Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDictionary+Test.swift"; sourceTree = "<group>"; };
 		99989FB92417CFBA00EF8CD3 /* BaseSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSettingsViewController.swift; sourceTree = "<group>"; };
+		999C30122428E6C000E127A6 /* UpdateBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateBanner.swift; sourceTree = "<group>"; };
+		999C30142428E70600E127A6 /* UpdateBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateBannerView.swift; sourceTree = "<group>"; };
+		999C30162428E91000E127A6 /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
+		999C3018242A3FCF00E127A6 /* DownloadSimulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadSimulator.swift; sourceTree = "<group>"; };
 		99B94C6423E0501F0076A786 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		99B94C6623E050280076A786 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		99B94C6723E0502C0076A786 /* se */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = se; path = se.lproj/Localizable.strings; sourceTree = "<group>"; };
 		99B94C6823E0502C0076A786 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Localizable.strings; sourceTree = "<group>"; };
 		99B94C6923E0502D0076A786 /* nn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nn; path = nn.lproj/Localizable.strings; sourceTree = "<group>"; };
 		99B94C6A23E0502E0076A786 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
+		99C4E5632431E89A005F8C8A /* PahkatWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PahkatWrapper.swift; sourceTree = "<group>"; };
+		99C4E56524320CF0005F8C8A /* IPC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPC.swift; sourceTree = "<group>"; };
 		99DA18402408294A003E7353 /* WordContextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordContextTests.swift; sourceTree = "<group>"; };
 		99DA184224095AD0003E7353 /* UserDictionaryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionaryService.swift; sourceTree = "<group>"; };
 		99DA1845240D09B5003E7353 /* UserDictionaryServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionaryServiceTests.swift; sourceTree = "<group>"; };
@@ -392,6 +412,7 @@
 		4E807D9519461D9000D875D1 /* HostingApp */ = {
 			isa = PBXGroup;
 			children = (
+				99C4E5622431E888005F8C8A /* Models */,
 				C676AD621EC98C0F00523FF3 /* Controllers */,
 				C6A969D71EB6126100A1143E /* Views */,
 				4EF16F9A19D2550D0076AFCB /* AppDelegate.swift */,
@@ -448,6 +469,9 @@
 				C6996B5422FC2C8B007EBC3D /* Utils.swift */,
 				991EE54F23D9AB4700DC3677 /* ViewDebugger.swift */,
 				C6F9564723E4520D009C469C /* init.m */,
+				999C3018242A3FCF00E127A6 /* DownloadSimulator.swift */,
+				99C4E56524320CF0005F8C8A /* IPC.swift */,
+				9930BD8E243CD2BF00C0EF7F /* FolderWatcher.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -486,7 +510,9 @@
 			isa = PBXGroup;
 			children = (
 				99074EF024224B2E00075480 /* Protocols */,
+				998F873A2428D025003D5AB6 /* Update Banner */,
 				99074EE6242237DE00075480 /* SpellBanner */,
+				99094696243674700070AEB6 /* SpellerAvailableBanner */,
 			);
 			path = "Banner Plugins";
 			sourceTree = "<group>";
@@ -507,8 +533,35 @@
 			isa = PBXGroup;
 			children = (
 				99074EF124224B4400075480 /* Banner.swift */,
+				999C30162428E91000E127A6 /* BannerView.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		99094696243674700070AEB6 /* SpellerAvailableBanner */ = {
+			isa = PBXGroup;
+			children = (
+				99094697243674F20070AEB6 /* SpellerAvailableBanner.swift */,
+				990946992436753A0070AEB6 /* SpellerAvailableBannerView.swift */,
+			);
+			path = SpellerAvailableBanner;
+			sourceTree = "<group>";
+		};
+		998F873A2428D025003D5AB6 /* Update Banner */ = {
+			isa = PBXGroup;
+			children = (
+				999C30122428E6C000E127A6 /* UpdateBanner.swift */,
+				999C30142428E70600E127A6 /* UpdateBannerView.swift */,
+			);
+			path = "Update Banner";
+			sourceTree = "<group>";
+		};
+		99C4E5622431E888005F8C8A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				99C4E5632431E89A005F8C8A /* PahkatWrapper.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		C676AD621EC98C0F00523FF3 /* Controllers */ = {
@@ -932,8 +985,10 @@
 				99989FB72417990E00EF8CD3 /* UserDictionary+Test.swift in Sources */,
 				C6B638441EDF81B200A6ECB2 /* SimpleButton.swift in Sources */,
 				C63EE0FF2361D86800A1E15A /* MenuButton.swift in Sources */,
+				9930BD8F243CD2BF00C0EF7F /* FolderWatcher.swift in Sources */,
 				997550B623EAC631004ED6A5 /* UserDictionary.swift in Sources */,
 				999790B223F2F484003F7885 /* WordContextViewController.swift in Sources */,
+				99C4E5642431E89A005F8C8A /* PahkatWrapper.swift in Sources */,
 				C655E8541EC5551100B12BE4 /* Extensions.swift in Sources */,
 				C691A0E723682C8B00085AC3 /* TestingController.swift in Sources */,
 				C65430B41EC94BF0007FC053 /* LanguagesController.swift in Sources */,
@@ -955,6 +1010,7 @@
 				C691A0EB23682C9700085AC3 /* TestingView.swift in Sources */,
 				C6B638461EDF94CA00A6ECB2 /* AboutController.swift in Sources */,
 				9904409D23FBE63F0063064E /* KeyboardLocalesViewController.swift in Sources */,
+				99C4E56824321740005F8C8A /* IPC.swift in Sources */,
 				999790B023F2B55F003F7885 /* UserDictionaryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -993,19 +1049,27 @@
 				99460238243B27140027C1CC /* InputContext.swift in Sources */,
 				99074EE82422383700075480 /* SpellBannerFlowLayout.swift in Sources */,
 				C6F249471F736E1A00840F2B /* KeyboardViewController.swift in Sources */,
+				999C30172428E91000E127A6 /* BannerView.swift in Sources */,
 				99DA184424095AF0003E7353 /* UserDictionaryService.swift in Sources */,
 				C649D3D4234B7C8000EF4273 /* KeyView.swift in Sources */,
 				991EE55023D9AB4700DC3677 /* ViewDebugger.swift in Sources */,
 				FDAF59AF22F9CD0700F7C9FC /* KeyOverlayView.swift in Sources */,
 				C6996B5622FC2C92007EBC3D /* Utils.swift in Sources */,
 				FDAF59A722F9CCE100F7C9FC /* KeyDefinition.swift in Sources */,
+				999C3019242A3FCF00E127A6 /* DownloadSimulator.swift in Sources */,
 				FDAF59A522F9CCE100F7C9FC /* Theme.swift in Sources */,
+				999C30132428E6C000E127A6 /* UpdateBanner.swift in Sources */,
+				99094698243674F20070AEB6 /* SpellerAvailableBanner.swift in Sources */,
 				99074EEB2422387A00075480 /* SpellBannerSeparatorView.swift in Sources */,
 				99074EE4242230F000075480 /* SpellBannerCell.swift in Sources */,
+				99C4E56724320F49005F8C8A /* IPC.swift in Sources */,
+				9909469B2436787C0070AEB6 /* SpellerAvailableBannerView.swift in Sources */,
 				99074EF324224BFA00075480 /* BannerManager.swift in Sources */,
+				999C30152428E70600E127A6 /* UpdateBannerView.swift in Sources */,
 				FDBD09C52333A56800303152 /* SplitKeyboard.swift in Sources */,
 				99074EF62423AAA300075480 /* SpellBannerView.swift in Sources */,
 				99074EF224224B4400075480 /* Banner.swift in Sources */,
+				9930BD90243CD2BF00C0EF7F /* FolderWatcher.swift in Sources */,
 				FDAF59A922F9CCF200F7C9FC /* LongPressController.swift in Sources */,
 				990440AC23FC245D0063064E /* KeyboardLocale.swift in Sources */,
 				C6F9564823E4520D009C469C /* init.m in Sources */,

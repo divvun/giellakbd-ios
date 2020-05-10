@@ -11,6 +11,17 @@ final class KeyboardSettings {
         return "group.\(Bundle.top.bundleIdentifier!)"
     }()
 
+    static var groupContainerURL: URL = {
+        guard let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupId) else {
+            fatalError("Error opening app group for group id: \(groupId)")
+        }
+        return url
+    }()
+
+    static var pahkatStoreURL: URL = {
+        return groupContainerURL.appendingPathComponent("pahkat")
+    }()
+
     static var languageCode: String {
         get { return defaults.string(forKey: "language") ?? Locale.current.languageCode! }
         set { defaults.set(newValue, forKey: "language") }

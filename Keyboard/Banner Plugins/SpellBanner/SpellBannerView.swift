@@ -10,7 +10,7 @@ public protocol SpellBannerViewDelegate: class {
     func didSelectBannerItem(_ banner: SpellBannerView, item: SpellBannerItem)
 }
 
-public final class SpellBannerView: UIView {
+public final class SpellBannerView: UIView, BannerView {
     weak public var delegate: SpellBannerViewDelegate?
 
     private var theme: ThemeType
@@ -36,12 +36,12 @@ public final class SpellBannerView: UIView {
 
     public override func layoutSubviews() {
         // Because just invalidateLayout() seems to keep some weird cache, so we need to reset it fully
-        collectionView.collectionViewLayout = createCollectionViewLayout()
+        collectionView.collectionViewLayout = makeCollectionViewLayout()
         super.layoutSubviews()
         collectionView.collectionViewLayout.invalidateLayout()
     }
 
-    func createCollectionViewLayout() -> UICollectionViewFlowLayout {
+    private func makeCollectionViewLayout() -> UICollectionViewFlowLayout {
         let flowLayout = SpellBannerFlowLayout()
         flowLayout.estimatedItemSize = CGSize(width: 1, height: 1)
         flowLayout.scrollDirection = .horizontal
@@ -60,7 +60,7 @@ public final class SpellBannerView: UIView {
     }
 
     private func makeCollectionView() -> UICollectionView {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: makeCollectionViewLayout())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(collectionView)
         collectionView.fill(superview: self)
@@ -74,8 +74,7 @@ public final class SpellBannerView: UIView {
         return collectionView
     }
 
-    func updateTheme(theme: ThemeType) {
-        self.theme = theme
+    func updateTheme(_ theme: ThemeType) {
         collectionView.removeFromSuperview()
         collectionView = makeCollectionView()
     }
