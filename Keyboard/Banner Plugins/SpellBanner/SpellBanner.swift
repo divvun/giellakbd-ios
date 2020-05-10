@@ -31,21 +31,22 @@ public final class SpellBanner: Banner {
 
         let currentKeyboard = Bundle.main
 
-        guard let spellerDir = currentKeyboard.divvunPackageId else {
-            print("No DivvunPackageId found; BHFST not loaded.")
+        guard let spellerKey = currentKeyboard.spellerPackageKey,
+            let url = URL(string: spellerKey),
+            let packageId = url.pathComponents.last
+        else {
+            print("No speller package key found; BHFST not loaded.")
             return nil
         }
-
-        guard let lang = currentKeyboard.primaryLanguage else {
-            print("No primary language found for keyboard; BHFST not loaded.")
+        
+        guard let spellerPath = currentKeyboard.spellerPath else {
+            print("No speller path found; BHFST not loaded.")
             return nil
         }
-
-        let languageShortened = String(lang.split(separator: "-")[0])
 
         return spellerPackagesDir
-            .appendingPathComponent(spellerDir)
-            .appendingPathComponent("\(languageShortened).bhfst")
+            .appendingPathComponent(packageId)
+            .appendingPathComponent(spellerPath)
     }
 
     var spellerNeedsInstall: Bool {

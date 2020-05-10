@@ -38,7 +38,7 @@ final class PahkatWrapper {
     func installSpellersForNewlyEnabledKeyboards() {
         let enabledKeyboards = Bundle.enabledKeyboardBundles
         let packageIds = Set(enabledKeyboards.compactMap { $0.divvunPackageId })
-        let packageKeys = packageIds.map { packageKey(from: $0) }
+        let packageKeys = packageIds.compactMap { packageKey(from: $0) }
         let notInstalled = packageKeys.filter { tryToGetStatus(for: $0) == .notInstalled }
         downloadAndInstallPackagesSequentially(packageKeys: notInstalled)
     }
@@ -51,13 +51,14 @@ final class PahkatWrapper {
         }
     }
 
-    private func packageKey(from packageId: String) -> PackageKey {
-        let path = "/packages/\(packageId)?platform=ios"
-        return PackageKey(from: URL(string: repoURL + path)!)
+    private func packageKey(from packageKey: String) -> PackageKey? {
+        guard let url = URL(string: packageKey) else { return nil }
+        
+        return PackageKey(from: url)
     }
 
     private func downloadAndInstallPackagesSequentially(packageKeys: [PackageKey]) {
-        guard packageKeys.isEmpty == false else {
+        if packageKeys.isEmpty {
             return
         }
 

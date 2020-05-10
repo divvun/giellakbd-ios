@@ -247,13 +247,18 @@ extension Bundle {
         return allKeyboardBundles.filter { enabledLanguages.contains($0.primaryLanguage ?? "") }
     }
 
-    var divvunPackageId: String? {
-        guard let info = infoDictionary,
-            let packageId = info["DivvunPackageId"] as? String,
-            packageId.isEmpty == false else {
+    var spellerPackageKey: String? {
+        guard let info = infoDictionary, let packageKey = info["DivvunSpellerPackageKey"] as? String else {
             return nil
         }
-        return packageId
+        return packageKey.isEmpty ? nil : packageKey
+    }
+    
+    var spellerPath: String? {
+        guard let info = infoDictionary, let spellerPath = info["DivvunSpellerPath"] as? String else {
+            return nil
+        }
+        return spellerPath.isEmpty ? nil : spellerPath
     }
 
     var primaryLanguage: String? {

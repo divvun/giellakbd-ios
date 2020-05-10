@@ -32,7 +32,7 @@ final class BannerManager {
     }
 
     private func updateBanner() {
-        guard let currentSpellerId = Bundle.main.divvunPackageId else {
+        guard let currentSpellerId = Bundle.main.spellerPackageKey else {
             print("BannerMananger: Couldn't get current speller id")
             // There is no speller for this keyboard. Show empty spell banner.
             presentBanner(spellBanner)
