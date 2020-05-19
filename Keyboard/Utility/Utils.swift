@@ -247,11 +247,11 @@ extension Bundle {
         return allKeyboardBundles.filter { enabledLanguages.contains($0.primaryLanguage ?? "") }
     }
 
-    var spellerPackageKey: String? {
+    var spellerPackageKey: URL? {
         guard let info = infoDictionary, let packageKey = info["DivvunSpellerPackageKey"] as? String else {
             return nil
         }
-        return packageKey.isEmpty ? nil : packageKey
+        return packageKey.isEmpty ? nil : URL(string: packageKey)
     }
     
     var spellerPath: String? {

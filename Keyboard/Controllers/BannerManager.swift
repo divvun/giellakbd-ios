@@ -39,7 +39,7 @@ final class BannerManager {
             return
         }
 
-        if ipc.isDownloading(id: currentSpellerId) {
+        if ipc.isDownloading(id: currentSpellerId.absoluteString) {
             presentBanner(updateInProgressBanner)
         } else if spellBanner.spellerNeedsInstall {
             presentBanner(spellerAvailableBanner)

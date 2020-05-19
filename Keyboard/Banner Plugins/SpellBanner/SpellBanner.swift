@@ -32,13 +32,12 @@ public final class SpellBanner: Banner {
         let currentKeyboard = Bundle.main
 
         guard let spellerKey = currentKeyboard.spellerPackageKey,
-            let url = URL(string: spellerKey),
-            let packageId = url.pathComponents.last
+            let packageId = spellerKey.pathComponents.last
         else {
             print("No speller package key found; BHFST not loaded.")
             return nil
         }
-        
+
         guard let spellerPath = currentKeyboard.spellerPath else {
             print("No speller path found; BHFST not loaded.")
             return nil
