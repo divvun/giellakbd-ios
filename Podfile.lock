@@ -1,6 +1,6 @@
 PODS:
   - DivvunSpell (0.2.3)
-  - PahkatClient (0.2.3)
+  - PahkatClient (0.2.4)
   - Sentry (4.5.0):
     - Sentry/Core (= 4.5.0)
   - Sentry/Core (4.5.0)
@@ -13,7 +13,7 @@ PODS:
 DEPENDENCIES:
   - DivvunSpell (from `https://github.com/divvun/divvunspell-swift`)
   - PahkatClient (from `https://github.com/divvun/pahkat-client-sdk-swift/`)
-  - Sentry
+  - Sentry (= 4.5.0)
   - SQLite.swift (~> 0.12.0)
   - SwiftLint
   - UIDeviceComplete (from `https://github.com/bbqsrc/UIDeviceComplete`)
@@ -36,11 +36,11 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   DivvunSpell:
-    :commit: cdf852a9bae5ee9e6b63efce858f1f3990d86d2c
+    :commit: d92b47613d85f15ab7e5ae4a62cb5fd1a70c984e
     :git: https://github.com/divvun/divvunspell-swift
     :submodules: true
   PahkatClient:
-    :commit: 0ca885718ea0eeb7e015c799fdf8fdd23c478b02
+    :commit: 8920d7d1f092282a86e0685b056e108c12afdabf
     :git: https://github.com/divvun/pahkat-client-sdk-swift/
     :submodules: true
   UIDeviceComplete:
@@ -49,12 +49,12 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   DivvunSpell: 0bfcaee6ab4c45ec6c0e827fd09523faf3c283bc
-  PahkatClient: 433db5f90f26e366d25a5142ae05422d64f14866
+  PahkatClient: e1751113e5606d82703c05611baa566a36efb5b0
   Sentry: ab6c209f23700d1460691dbc90e19ed0a05d496b
   SQLite.swift: d2b4642190917051ce6bd1d49aab565fe794eea3
   SwiftLint: 22ccbbe3b8008684be5955693bab135e0ed6a447
   UIDeviceComplete: c89b90393fb2a3446f5e0e86eca0c02d6f8e09f0
 
-PODFILE CHECKSUM: c88c34b6986da2c0a3d1e4f4f2f574092a73c47d
+PODFILE CHECKSUM: a33b24e827c32d4398c4111a77053c5a332a1d0e
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.8.4
