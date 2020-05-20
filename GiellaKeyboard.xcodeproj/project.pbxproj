@@ -1277,6 +1277,7 @@
 					"-framework",
 					"\"DivvunSpell\"",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D ENABLE_USER_DICTIONARY -D COCOAPODS";
 				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaKeyboardTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1317,6 +1318,7 @@
 					"-framework",
 					"\"DivvunSpell\"",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D ENABLE_USER_DICTIONARY -D COCOAPODS";
 				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaKeyboardTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
