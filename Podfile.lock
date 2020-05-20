@@ -40,7 +40,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/divvun/divvunspell-swift
     :submodules: true
   PahkatClient:
-    :commit: 8920d7d1f092282a86e0685b056e108c12afdabf
+    :commit: d0824e857aad9b3ddc2d592530d817894657f3ef
     :git: https://github.com/divvun/pahkat-client-sdk-swift/
     :submodules: true
   UIDeviceComplete:
@@ -57,4 +57,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: a33b24e827c32d4398c4111a77053c5a332a1d0e
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.1
