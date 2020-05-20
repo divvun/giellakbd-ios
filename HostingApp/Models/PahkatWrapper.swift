@@ -53,7 +53,6 @@ final class PahkatWrapper {
 
     private func packageKey(from packageKey: String) -> PackageKey? {
         guard let url = URL(string: packageKey) else { return nil }
-        
         return PackageKey(from: url)
     }
 

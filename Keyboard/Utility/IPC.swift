@@ -17,10 +17,17 @@ final class IPC {
     private let ipcDirectory = KeyboardSettings.groupContainerURL
         .appendingPathComponent("ipc", isDirectory: true)
 
+    init() {
+        do {
+            try FileManager.default.createDirectory(at: ipcDirectory, withIntermediateDirectories: true, attributes: nil)
+        } catch {
+            fatalError("Couldn't create IPC directory")
+        }
+    }
+
     // This one is for HostingApp
     public func startDownload(id: String) {
         let ipcFilePath = file(for: id).path
-        try? FileManager.default.createDirectory(at: ipcDirectory, withIntermediateDirectories: true, attributes: nil)
         FileManager.default.createFile(atPath: ipcFilePath, contents: nil, attributes: nil)
     }
 
