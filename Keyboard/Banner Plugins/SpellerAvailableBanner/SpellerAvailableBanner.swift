@@ -2,7 +2,6 @@ import Foundation
 
 final class SpellerAvailableBanner: Banner {
     private let bannerView: SpellerAvailableBannerView
-    private let ipc = IPC()
 
     var view: UIView {
         bannerView
