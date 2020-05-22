@@ -33,8 +33,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     let ncDelegate = AppNavControllerDelegate()
 
     private let pahkat = PahkatWrapper()
-
-    private var ipc: IPC?
+    private var isInstalling = false
 
     var isKeyboardEnabled: Bool {
         return !Bundle.enabledKeyboardBundles.isEmpty
@@ -66,9 +65,39 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        pahkat?.installSpellersForNewlyEnabledKeyboards()
+        installSpellersIfNeeded()
 
         return true
+    }
+
+    func installSpellersIfNeeded() {
+        guard let pahkat = pahkat,
+            pahkat.needsInstall,
+            isInstalling == false else {
+            return
+        }
+        isInstalling = true
+
+        // TODO: this alert is made of jank, consider doing something nicer
+        let currentViewController = navController.visibleViewController
+        let alert = UIAlertController(title: "Installing Spellers", // TODO: localize
+                                      message: " \n", // gives us space for the spinner
+                                      preferredStyle: .alert)
+        let spinner = UIActivityIndicatorView(frame: alert.view.bounds)
+        alert.view.addSubview(spinner)
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        spinner.centerXAnchor.constraint(equalTo: alert.view.centerXAnchor).enable()
+        spinner.centerYAnchor.constraint(equalTo: alert.view.centerYAnchor, constant: 20).enable()
+        spinner.isUserInteractionEnabled = false
+        spinner.startAnimating()
+
+        currentViewController?.present(alert, animated: true, completion: nil)
+
+        pahkat.installSpellersForNewlyEnabledKeyboards(completion: {
+            alert.dismiss(animated: true, completion: {
+                self.isInstalling = false
+            })
+        })
     }
 
     func application(_ application: UIApplication,
@@ -83,7 +112,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        pahkat?.installSpellersForNewlyEnabledKeyboards()
+        installSpellersIfNeeded()
     }
 
     func parseUrl(_: URL) {

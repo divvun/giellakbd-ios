@@ -9,6 +9,20 @@ final class PahkatWrapper {
     private var currentDownloadId: String?
     private var installCompletion: (() -> Void)?
 
+    private var enabledKeyboardPackageKeys: [PackageKey] {
+        let enabledKeyboards = Bundle.enabledKeyboardBundles
+        let packageKeyStrings = Set(enabledKeyboards.compactMap { $0.spellerPackageKey })
+        return packageKeyStrings.compactMap { try? PackageKey.from(url: $0) }
+    }
+
+    private var notInstalledKeyboardPackageKeys: [PackageKey] {
+        return enabledKeyboardPackageKeys.filter { tryToGetStatus(for: $0) == .notInstalled }
+    }
+
+    public var needsInstall: Bool {
+        return notInstalledKeyboardPackageKeys.count != 0
+    }
+
     init?() {
         do {
             store = try PrefixPackageStore.create(path: storePath)
@@ -34,10 +48,8 @@ final class PahkatWrapper {
         }
     }
 
-    func installSpellersForNewlyEnabledKeyboards() {
-        let enabledKeyboards = Bundle.enabledKeyboardBundles
-        let packageKeyStrings = Set(enabledKeyboards.compactMap { $0.spellerPackageKey })
-        let packageKeys = packageKeyStrings.compactMap { try? PackageKey.from(url: $0) }
+    func installSpellersForNewlyEnabledKeyboards(completion: (() -> Void)?) {
+        let packageKeys = enabledKeyboardPackageKeys
 
         // Set package repos correctly
         let repoUrls = Set(packageKeys.map { $0.repositoryURL })
@@ -56,7 +68,7 @@ final class PahkatWrapper {
         }
 
         let notInstalled = packageKeys.filter { tryToGetStatus(for: $0) == .notInstalled }
-        downloadAndInstallPackagesSequentially(packageKeys: notInstalled)
+        downloadAndInstallPackagesSequentially(packageKeys: notInstalled, completion: completion)
     }
 
     private func tryToGetStatus(for packageKey: PackageKey) -> PackageInstallStatus {
@@ -72,13 +84,14 @@ final class PahkatWrapper {
         return try? PackageKey.from(url: url)
     }
 
-    private func downloadAndInstallPackagesSequentially(packageKeys: [PackageKey]) {
+    private func downloadAndInstallPackagesSequentially(packageKeys: [PackageKey], completion: (() -> Void)?) {
         if packageKeys.isEmpty {
+            completion?()
             return
         }
 
         downloadAndInstallPackage(packageKey: packageKeys[0]) {
-            self.downloadAndInstallPackagesSequentially(packageKeys: Array(packageKeys.dropFirst()))
+            self.downloadAndInstallPackagesSequentially(packageKeys: Array(packageKeys.dropFirst()), completion: completion)
         }
     }
 
