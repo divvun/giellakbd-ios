@@ -4,7 +4,6 @@ import PahkatClient
 final class PahkatWrapper {
     private let store: PrefixPackageStore
     private let storePath = KeyboardSettings.pahkatStoreURL.path
-    private let repoURL = "https://x.brendan.so/divvun-pahkat-repo"
     private var downloadTask: URLSessionDownloadTask?
     private let ipc = IPC()
     private var currentDownloadId: String?
@@ -38,7 +37,24 @@ final class PahkatWrapper {
     func installSpellersForNewlyEnabledKeyboards() {
         let enabledKeyboards = Bundle.enabledKeyboardBundles
         let packageKeyStrings = Set(enabledKeyboards.compactMap { $0.spellerPackageKey })
-        let packageKeys = packageKeyStrings.compactMap { PackageKey(from: $0) }
+        let packageKeys = packageKeyStrings.compactMap { try? PackageKey.from(url: $0) }
+
+        // Set package repos correctly
+        let repoUrls = Set(packageKeys.map { $0.repositoryURL })
+        var repoMap = [URL: RepoRecord]()
+        for key in repoUrls {
+            repoMap[key] = RepoRecord(channel: nil)
+        }
+
+        do {
+            try store.set(repos: repoMap)
+            try store.refreshRepos()
+        } catch let error {
+            // TODO use Sentry to catch this error
+            print(error)
+            return
+        }
+
         let notInstalled = packageKeys.filter { tryToGetStatus(for: $0) == .notInstalled }
         downloadAndInstallPackagesSequentially(packageKeys: notInstalled)
     }
@@ -53,7 +69,7 @@ final class PahkatWrapper {
 
     private func packageKey(from packageKey: String) -> PackageKey? {
         guard let url = URL(string: packageKey) else { return nil }
-        return PackageKey(from: url)
+        return try? PackageKey.from(url: url)
     }
 
     private func downloadAndInstallPackagesSequentially(packageKeys: [PackageKey]) {
