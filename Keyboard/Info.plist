@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>DivvunSpellerPath</key>
+	<string>se.bhfst</string>
+	<key>DivvunSpellerPackageKey</key>
+	<string>https://pahkat.uit.no/main/packages/speller-sme?channel=nightly&amp;platform=mobile</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -24,8 +28,6 @@
 	<string>1</string>
 	<key>DivvunKeyboardIndex</key>
 	<integer>0</integer>
-	<key>DivvunPackageId</key>
-	<string>speller-sme</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationQueriesSchemes</key>

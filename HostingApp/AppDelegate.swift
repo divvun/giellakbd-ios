@@ -1,5 +1,6 @@
 import Sentry
 import UIKit
+import PahkatClient
 
 final class AppNavControllerDelegate: NSObject, UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController,
@@ -42,6 +43,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         AppDelegate.instance = self
+        Pahkat.enableLogging()
 
         Strings.languageCode = KeyboardSettings.languageCode
 
@@ -93,7 +95,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
         currentViewController?.present(alert, animated: true, completion: nil)
 
-        pahkat.installSpellersForNewlyEnabledKeyboards(completion: {
+        pahkat.installSpellersForNewlyEnabledKeyboards(completion: { error in
             alert.dismiss(animated: true, completion: {
                 self.isInstalling = false
             })
