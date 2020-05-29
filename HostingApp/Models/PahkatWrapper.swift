@@ -50,7 +50,7 @@ final class PahkatWrapper {
         }
     }
 
-    func installSpellersForNewlyEnabledKeyboards(completion: @escaping ((Error?) -> Void)) {
+    func checkForSpellerUpdates(logger: @escaping (String) -> Void) -> Single<Void> {
         let packageKeys = enabledKeyboardPackageKeys
 
         // Set package repos correctly
@@ -61,29 +61,27 @@ final class PahkatWrapper {
         }
 
         do {
-            print("Setting repos: \(repoMap)")
+            logger("Setting repos: \(repoMap)")
             try store.set(repos: repoMap)
             try store.refreshRepos()
         } catch let error {
             // TODO use Sentry to catch this error
-            print(error)
-            return
+            return Single.error(error)
         }
 
-        print("Try to get status")
+        logger("Try to get status")
         let updates = packageKeys.filter { tryToGetStatus(for: $0) != .upToDate }
 
-        Observable.from(updates)
-            .flatMap { key -> Single<Void> in self.downloadPackage(packageKey: key) }
+        return Observable.from(updates)
+            .flatMap { key -> Single<Void> in
+                logger("Downloading \(key.id)...")
+                return self.downloadPackage(packageKey: key)
+            }
             .toArray()
             .flatMap { _ -> Single<Void> in
-                self.install(packageKeys: updates)
-            }.subscribe(
-                onSuccess: { _ in
-                    completion(nil)
-                },
-                onError: { error in completion(error) })
-            .disposed(by: bag)
+                logger("Installing packages...")
+                return self.install(packageKeys: updates)
+            }
     }
 
     private func tryToGetStatus(for packageKey: PackageKey) -> PackageInstallStatus {

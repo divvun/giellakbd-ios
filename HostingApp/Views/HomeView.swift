@@ -22,7 +22,11 @@ final class HomeView: UIView, Nibbable {
     @IBOutlet var testingButton: MenuButton!
     @IBOutlet var settingsButton: MenuButton!
 
+    @IBOutlet var mainStack: UIStackView?
     @IBOutlet var configStack: UIStackView?
+    
+    @IBOutlet var progressView: UIStackView?
+    @IBOutlet var progressLabel: UILabel?
 
     override func awakeFromNib() {
         titleLabel.text = Strings.localizedName

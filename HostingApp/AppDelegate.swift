@@ -33,7 +33,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     //swiftlint:disable:next weak_delegate
     let ncDelegate = AppNavControllerDelegate()
 
-    private let pahkat = PahkatWrapper()
+    let pahkat = PahkatWrapper()
     private var isInstalling = false
 
     var isKeyboardEnabled: Bool {
@@ -67,45 +67,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        installSpellersIfNeeded()
-
         return true
-    }
-
-    func installSpellersIfNeeded() {
-        guard let pahkat = pahkat,
-            pahkat.needsInstall,
-            isInstalling == false else {
-            return
-        }
-        isInstalling = true
-
-        // TODO: this alert is made of jank, consider doing something nicer
-        let currentViewController = navController.visibleViewController
-        let alert = UIAlertController(title: "Installing Spellers", // TODO: localize
-                                      message: " \n", // gives us space for the spinner
-                                      preferredStyle: .alert)
-        let spinner = UIActivityIndicatorView(frame: alert.view.bounds)
-        alert.view.addSubview(spinner)
-        spinner.translatesAutoresizingMaskIntoConstraints = false
-        spinner.centerXAnchor.constraint(equalTo: alert.view.centerXAnchor).enable()
-        spinner.centerYAnchor.constraint(equalTo: alert.view.centerYAnchor, constant: 20).enable()
-        spinner.isUserInteractionEnabled = false
-        spinner.startAnimating()
-
-        currentViewController?.present(alert, animated: false, completion: nil)
-
-        pahkat.installSpellersForNewlyEnabledKeyboards(completion: { error in
-            DispatchQueue.main.async {
-                alert.dismiss(animated: false, completion: nil)
-                self.isInstalling = false
-
-                if let error = error {
-                    let alert = UIAlertController(title: "Error", message: "\(error)", preferredStyle: .alert)
-                    currentViewController?.present(alert, animated: false, completion: nil)
-                }
-            }
-        })
     }
 
     func application(_ application: UIApplication,
@@ -117,10 +79,6 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillEnterForeground(_: UIApplication) {
         // I'd gladly use .NSExtensionHostWillEnterForeground but it doesn't work
         NotificationCenter.default.post(Notification(name: .HostingAppWillEnterForeground))
-    }
-
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        installSpellersIfNeeded()
     }
 
     func parseUrl(_: URL) {

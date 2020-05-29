@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,6 +16,26 @@
                 <imageView userInteractionEnabled="NO" alpha="0.10000000000000001" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="XcZ-sF-8KW">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                 </imageView>
+                <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="zaG-2N-iWd">
+                    <rect key="frame" x="42" y="300" width="291" height="67.5"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Installing Spellers..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5VH-6u-ggs">
+                            <rect key="frame" x="0.0" y="0.0" width="291" height="23"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="23" id="71f-iD-S3n"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="center" lineBreakMode="clip" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vRs-gb-JZU">
+                            <rect key="frame" x="0.0" y="47" width="291" height="20.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                </stackView>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="9Ne-rM-V7i">
                     <rect key="frame" x="59.5" y="219" width="256" height="229"/>
                     <subviews>
@@ -102,7 +122,11 @@
                 <constraint firstAttribute="bottom" secondItem="XcZ-sF-8KW" secondAttribute="bottom" id="7LC-RW-oPx"/>
                 <constraint firstAttribute="trailing" secondItem="XcZ-sF-8KW" secondAttribute="trailing" id="AKC-Kj-7qe"/>
                 <constraint firstItem="XcZ-sF-8KW" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="INm-Dh-Ofa"/>
+                <constraint firstItem="zaG-2N-iWd" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Ia0-lI-Vbo"/>
+                <constraint firstAttribute="trailing" secondItem="zaG-2N-iWd" secondAttribute="trailing" constant="42" id="MnJ-pd-YH2"/>
+                <constraint firstItem="zaG-2N-iWd" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="42" id="NjU-Lj-olB"/>
                 <constraint firstItem="9Ne-rM-V7i" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="QR3-Ny-Si6"/>
+                <constraint firstItem="zaG-2N-iWd" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Zxv-BE-Z47"/>
                 <constraint firstItem="FzJ-FA-ZXf" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="topMargin" constant="8" id="ePT-Tg-ptW"/>
                 <constraint firstItem="XcZ-sF-8KW" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="qF0-1l-R6b"/>
                 <constraint firstItem="9Ne-rM-V7i" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="leading" constant="32" id="vnU-WV-Nbf"/>
@@ -116,6 +140,9 @@
                 <outlet property="langButton" destination="sCp-CJ-ReN" id="PFg-dk-Kxp"/>
                 <outlet property="langButton2" destination="lrn-yX-PE1" id="Vk3-nf-LA1"/>
                 <outlet property="layoutsButton" destination="bA9-vt-xCz" id="1Gd-TH-grp"/>
+                <outlet property="mainStack" destination="9Ne-rM-V7i" id="vFY-BX-RRp"/>
+                <outlet property="progressLabel" destination="vRs-gb-JZU" id="lOV-lC-lCV"/>
+                <outlet property="progressView" destination="zaG-2N-iWd" id="Wq2-SI-AOr"/>
                 <outlet property="settingsButton" destination="hdS-2z-RlR" id="LZv-BX-4Ri"/>
                 <outlet property="testingButton" destination="NQY-9A-SWq" id="hon-8d-3VN"/>
                 <outlet property="titleLabel" destination="2eI-bM-tyI" id="cBJ-Rp-SQH"/>
