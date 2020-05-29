@@ -1,13 +1,15 @@
 import Foundation
 import PahkatClient
+import Sentry
+import RxSwift
 
 final class PahkatWrapper {
     private let store: PrefixPackageStore
     private let storePath = KeyboardSettings.pahkatStoreURL.path
     private var downloadTask: URLSessionDownloadTask?
-    private let ipc = IPC()
-    private var currentDownloadId: String?
-    private var installCompletion: ((Error?) -> Void) = { _ in () }
+    let ipc = IPC()
+    var currentDownloadId: String?
+    let bag = DisposeBag()
 
     private var enabledKeyboardPackageKeys: [PackageKey] {
         let enabledKeyboards = Bundle.enabledKeyboardBundles
@@ -69,10 +71,19 @@ final class PahkatWrapper {
         }
 
         print("Try to get status")
-        let notInstalled = packageKeys.filter { tryToGetStatus(for: $0) == .notInstalled }
+        let updates = packageKeys.filter { tryToGetStatus(for: $0) != .upToDate }
 
-        print("Not installed: \(notInstalled)")
-        downloadAndInstallPackagesSequentially(packageKeys: notInstalled, completion: completion)
+        Observable.from(updates)
+            .flatMap { key -> Single<Void> in self.downloadPackage(packageKey: key) }
+            .toArray()
+            .flatMap { _ -> Single<Void> in
+                self.install(packageKeys: updates)
+            }.subscribe(
+                onSuccess: { _ in
+                    completion(nil)
+                },
+                onError: { error in completion(error) })
+            .disposed(by: bag)
     }
 
     private func tryToGetStatus(for packageKey: PackageKey) -> PackageInstallStatus {
@@ -88,56 +99,57 @@ final class PahkatWrapper {
         return try? PackageKey.from(url: url)
     }
 
-    private func downloadAndInstallPackagesSequentially(packageKeys: [PackageKey], completion: @escaping ((Error?) -> Void)) {
-        if packageKeys.isEmpty {
-            print("Done")
-            completion(nil)
-            return
-        }
+    private func install(packageKeys: [PackageKey]) -> Single<Void> {
+        let actions = packageKeys.map { TransactionAction.install($0) }
 
-        downloadAndInstallPackage(packageKey: packageKeys[0]) { error in
-            if let error = error {
-                completion(error)
-                return
-            }
-            self.downloadAndInstallPackagesSequentially(packageKeys: Array(packageKeys.dropFirst()), completion: completion)
-        }
-    }
-
-    private func downloadAndInstallPackage(packageKey: PackageKey, completion: @escaping ((Error?) -> Void)) {
-        print("INSTALLING: \(packageKey)")
-        do {
-            downloadTask = try store.download(packageKey: packageKey) { (error, _) in
+        return Single<Void>.create(subscribe: { emitter in
+            let delegate = TxDelegate(wrapper: self, callback: { error in
                 if let error = error {
                     print(error)
-                    completion(error)
-                    return
+                    emitter(.error(error))
+                } else {
+                    emitter(.success(()))
                 }
+            })
 
-                self.installCompletion = completion
-                let action = TransactionAction.install(packageKey)
-
-                do {
-                    let transaction = try self.store.transaction(actions: [action])
-                    transaction.process(delegate: self)
-                    completion(nil)
-                } catch {
-                    print("Pahkat transaction error: \(error)")
-                    completion(error)
-                    return
-                }
-                print("Done!")
+            do {
+                let transaction = try self.store.transaction(actions: actions)
+                transaction.process(delegate: delegate)
+            } catch {
+                print(error)
+                emitter(.error(error))
             }
-            ipc.startDownload(id: packageKey.id)
-            currentDownloadId = packageKey.id
-        } catch {
-            print("Pahkat download error: \(error)")
-            completion(error)
-        }
+            return Disposables.create()
+        })
+    }
+
+    private func downloadPackage(packageKey: PackageKey) -> Single<Void> {
+        return Single<Void>.create(subscribe: { emitter in
+            do {
+                self.downloadTask = try self.store.download(packageKey: packageKey) { (error, _) in
+                    if let error = error {
+                        print(error)
+                        emitter(.error(error))
+                        return
+                    }
+                    emitter(.success(()))
+                }
+                self.ipc.startDownload(id: packageKey.id)
+                self.currentDownloadId = packageKey.id
+            } catch {
+                print("Pahkat download error: \(error)")
+                emitter(.error(error))
+            }
+
+            return Disposables.create()
+        })
     }
 }
 
-extension PahkatWrapper: PackageTransactionDelegate {
+class TxDelegate: PackageTransactionDelegate {
+    private weak var wrapper: PahkatWrapper?
+    private let callback: (Error?) -> Void
+
     func isTransactionCancelled(_ id: UInt32) -> Bool {
         return false
     }
@@ -151,25 +163,32 @@ extension PahkatWrapper: PackageTransactionDelegate {
     }
 
     func transactionDidComplete(_ id: UInt32) {
-        if let currentDownloadId = currentDownloadId {
-            ipc.finishDownload(id: currentDownloadId)
-            self.currentDownloadId = nil
+        if let currentDownloadId = wrapper?.currentDownloadId {
+            wrapper?.ipc.finishDownload(id: currentDownloadId)
+            wrapper?.currentDownloadId = nil
         }
         print(#function, "\(id)")
-        installCompletion(nil)
+//        installCompletion(nil)
+        callback(nil)
     }
 
     func transactionDidCancel(_ id: UInt32) {
         print(#function, "\(id)")
-        installCompletion(nil)
+//        installCompletion(nil)
+        callback(nil)
     }
 
     func transactionDidError(_ id: UInt32, packageKey: PackageKey?, error: Error?) {
         print(#function, "\(id) \(String(describing: error))")
-        installCompletion(error)
+        callback(error)
     }
 
     func transactionDidUnknownEvent(_ id: UInt32, packageKey: PackageKey?, event: UInt32) {
         print(#function, "\(id)")
+    }
+
+    init(wrapper: PahkatWrapper, callback: @escaping (Error?) -> Void) {
+        self.wrapper = wrapper
+        self.callback = callback
     }
 }

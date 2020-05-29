@@ -7,6 +7,7 @@ target 'BaseKeyboard' do
   pod 'UIDeviceComplete', :git => "https://github.com/bbqsrc/UIDeviceComplete"
   pod 'SwiftLint'
   pod 'SQLite.swift', '~> 0.12.0'
+  pod 'RxSwift'
 end
 
 target 'HostingApp' do

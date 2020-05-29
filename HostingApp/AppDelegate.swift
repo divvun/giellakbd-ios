@@ -93,12 +93,18 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         spinner.isUserInteractionEnabled = false
         spinner.startAnimating()
 
-        currentViewController?.present(alert, animated: true, completion: nil)
+        currentViewController?.present(alert, animated: false, completion: nil)
 
         pahkat.installSpellersForNewlyEnabledKeyboards(completion: { error in
-            alert.dismiss(animated: true, completion: {
+            DispatchQueue.main.async {
+                alert.dismiss(animated: false, completion: nil)
                 self.isInstalling = false
-            })
+
+                if let error = error {
+                    let alert = UIAlertController(title: "Error", message: "\(error)", preferredStyle: .alert)
+                    currentViewController?.present(alert, animated: false, completion: nil)
+                }
+            }
         })
     }
 
