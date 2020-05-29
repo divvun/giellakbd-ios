@@ -29,8 +29,32 @@ final class HomeController: ViewController<HomeView>, HideNavBar {
         contentView.awakeFromNib()
     }
 
+    private let bag = DisposeBag()
+    private var doingPahkat = false
+
     @objc private func refreshUI() {
         contentView.configStack?.isHidden = AppDelegate.instance.isKeyboardEnabled
+
+        if doingPahkat {
+            return
+        }
+
+        if let pahkat = AppDelegate.instance.pahkat {
+            DispatchQueue.global(qos: .userInitiated).async {
+                pahkat.checkForSpellerUpdates(logger: { [weak self] message in
+                    print(message)
+                    self?.setProgress(value: message)
+                }).subscribe(onSuccess: { [weak self] _ in
+                    self?.hideProgress()
+                    self?.doingPahkat  = false
+                }, onError: { [weak self] error in
+                    self?.setProgress(value: "Error: \(error)")
+                    self?.doingPahkat = false
+                }).disposed(by: self.bag)
+            }
+        }
+
+        doingPahkat = true
     }
 
     override func viewDidLoad() {
@@ -70,34 +94,6 @@ final class HomeController: ViewController<HomeView>, HideNavBar {
             self.contentView.progressView?.isHidden = true
             self.contentView.mainStack?.isHidden = false
         }
-    }
-
-    private let bag = DisposeBag()
-
-    private var doingPahkat = false
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        if doingPahkat {
-            return
-        }
-
-        if let pahkat = AppDelegate.instance.pahkat {
-            DispatchQueue.global(qos: .userInitiated).async {
-                pahkat.checkForSpellerUpdates(logger: { [weak self] message in
-                    self?.setProgress(value: message)
-                }).subscribe(onSuccess: { [weak self] _ in
-                    self?.hideProgress()
-                    self?.doingPahkat  = false
-                }, onError: { [weak self] error in
-                    self?.setProgress(value: "Error: \(error)")
-                    self?.doingPahkat = false
-                }).disposed(by: self.bag)
-            }
-        }
-
-        doingPahkat = true
     }
 
     deinit {

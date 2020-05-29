@@ -8,7 +8,6 @@ final class PahkatWrapper {
     private let storePath = KeyboardSettings.pahkatStoreURL.path
     private var downloadTask: URLSessionDownloadTask?
     let ipc = IPC()
-    var currentDownloadId: String?
     let bag = DisposeBag()
 
     private var enabledKeyboardPackageKeys: [PackageKey] {
@@ -38,9 +37,9 @@ final class PahkatWrapper {
         }
     }
 
-    func setBackgroundURLSessionCompletion(_ completion: @escaping (() -> Void)) {
-        store.backgroundURLSessionCompletion = completion
-    }
+//    func setBackgroundURLSessionCompletion(_ completion: @escaping (() -> Void)) {
+//        store.backgroundURLSessionCompletion = completion
+//    }
 
     func forceRefreshRepos() {
         do {
@@ -101,7 +100,7 @@ final class PahkatWrapper {
         let actions = packageKeys.map { TransactionAction.install($0) }
 
         return Single<Void>.create(subscribe: { emitter in
-            let delegate = TxDelegate(wrapper: self, callback: { error in
+            let delegate = TxDelegate(callback: { error in
                 if let error = error {
                     print(error)
                     emitter(.error(error))
@@ -124,18 +123,20 @@ final class PahkatWrapper {
     private func downloadPackage(packageKey: PackageKey) -> Single<Void> {
         return Single<Void>.create(subscribe: { emitter in
             do {
+                print("!!!!!!!! Starting download for \(packageKey.id)")
                 self.downloadTask = try self.store.download(packageKey: packageKey) { (error, _) in
+                    print("!!!!!!!! DOWNLOAD CALLBACK DID HAPPEN for \(packageKey.id)")
+                    self.ipc.finishDownload(id: packageKey.id)
                     if let error = error {
-                        print(error)
+                        print("!!!!!!!! \(error)")
                         emitter(.error(error))
                         return
                     }
                     emitter(.success(()))
                 }
                 self.ipc.startDownload(id: packageKey.id)
-                self.currentDownloadId = packageKey.id
             } catch {
-                print("Pahkat download error: \(error)")
+                print("!!!!!!!! Pahkat download error: \(error)")
                 emitter(.error(error))
             }
 
@@ -145,7 +146,6 @@ final class PahkatWrapper {
 }
 
 class TxDelegate: PackageTransactionDelegate {
-    private weak var wrapper: PahkatWrapper?
     private let callback: (Error?) -> Void
 
     func isTransactionCancelled(_ id: UInt32) -> Bool {
@@ -161,10 +161,6 @@ class TxDelegate: PackageTransactionDelegate {
     }
 
     func transactionDidComplete(_ id: UInt32) {
-        if let currentDownloadId = wrapper?.currentDownloadId {
-            wrapper?.ipc.finishDownload(id: currentDownloadId)
-            wrapper?.currentDownloadId = nil
-        }
         print(#function, "\(id)")
 //        installCompletion(nil)
         callback(nil)
@@ -185,8 +181,7 @@ class TxDelegate: PackageTransactionDelegate {
         print(#function, "\(id)")
     }
 
-    init(wrapper: PahkatWrapper, callback: @escaping (Error?) -> Void) {
-        self.wrapper = wrapper
+    init(callback: @escaping (Error?) -> Void) {
         self.callback = callback
     }
 }
