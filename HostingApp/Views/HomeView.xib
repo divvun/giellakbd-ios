@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -59,7 +59,7 @@
                                 </button>
                             </subviews>
                         </stackView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hdS-2z-RlR" customClass="MenuButton" customModule="HostingApp" customModuleProvider="target">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hdS-2z-RlR" customClass="MenuButton" customModule="HostingApp" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="125" width="256" height="34"/>
                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                             <state key="normal" title="SETTINGS"/>
@@ -104,7 +104,7 @@
                             <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <state key="normal" image="language"/>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lrn-yX-PE1">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lrn-yX-PE1">
                             <rect key="frame" x="38" y="0.0" width="80" height="32"/>
                             <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="2"/>
                             <state key="normal" title="LANGUAGE"/>
@@ -137,6 +137,7 @@
                 <outlet property="bgImage" destination="XcZ-sF-8KW" id="VXp-WU-abf"/>
                 <outlet property="configStack" destination="cp8-Sb-uRL" id="A7E-3o-rTp"/>
                 <outlet property="helpButton" destination="yo2-5r-bvG" id="dm0-v0-Hl1"/>
+                <outlet property="installingSpellersLabel" destination="5VH-6u-ggs" id="W0z-II-apl"/>
                 <outlet property="langButton" destination="sCp-CJ-ReN" id="PFg-dk-Kxp"/>
                 <outlet property="langButton2" destination="lrn-yX-PE1" id="Vk3-nf-LA1"/>
                 <outlet property="layoutsButton" destination="bA9-vt-xCz" id="1Gd-TH-grp"/>

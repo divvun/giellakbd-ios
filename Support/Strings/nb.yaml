@@ -51,6 +51,9 @@ general: Generelt
 # Original: Installing packages...
 #installingPackages: UNTRANSLATED
 
+# Original: Installing Spellers...
+#installingSpellers: UNTRANSLATED
+
 # Original: Keyboard
 keyboard: Tastatur
 

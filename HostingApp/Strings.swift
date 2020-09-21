@@ -143,6 +143,11 @@ class Strings {
         return string(for: "installingPackages")
     }
 
+    /** Installing Spellers... */
+    static var installingSpellers: String {
+        return string(for: "installingSpellers")
+    }
+
     /** Keyboard */
     static var keyboard: String {
         return string(for: "keyboard")

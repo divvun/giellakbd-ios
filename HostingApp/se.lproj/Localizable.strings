@@ -15,6 +15,7 @@
 "enableTapSoundsPlain" = "Jus háliidat gullat jienaid go coahkkalat boallobeavddi, de coahkkal %1$@ ja bija johtui %2$@.";
 "general" = "Oppalaš";
 "installingPackages" = "Installing packages...";
+"installingSpellers" = "Installing Spellers...";
 "keyboard" = "Boallobeavddi";
 "keyboards" = "Boallobeavddit";
 "language" = "Giella";

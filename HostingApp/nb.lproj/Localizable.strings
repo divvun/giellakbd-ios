@@ -15,6 +15,7 @@
 "enableTapSoundsPlain" = "Om du vil slå på tastaturklikkelyder må du trykke %1$@ og slå på %2$@.";
 "general" = "Generelt";
 "installingPackages" = "Installing packages...";
+"installingSpellers" = "Installing Spellers...";
 "keyboard" = "Tastatur";
 "keyboards" = "Tastatur";
 "language" = "Språk";

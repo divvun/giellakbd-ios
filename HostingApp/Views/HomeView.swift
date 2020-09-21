@@ -26,6 +26,7 @@ final class HomeView: UIView, Nibbable {
     @IBOutlet var configStack: UIStackView?
     
     @IBOutlet var progressView: UIStackView?
+    @IBOutlet var installingSpellersLabel: UILabel!
     @IBOutlet var progressLabel: UILabel?
 
     override func awakeFromNib() {
@@ -35,5 +36,6 @@ final class HomeView: UIView, Nibbable {
         layoutsButton.setTitle(Strings.layouts, for: [])
         aboutButton.setTitle(Strings.about, for: [])
         settingsButton.setTitle(Strings.settings, for: [])
+        installingSpellersLabel.text = Strings.installingSpellers
     }
 }
