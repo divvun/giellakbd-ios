@@ -11,8 +11,10 @@
 "contextsFor" = "Contexts for \"%1$@\"";
 "delete" = "Delete";
 "detected" = "Detected";
+"downloading" = "Downloading \"%1$@\"...";
 "enableTapSoundsPlain" = "Jus háliidat gullat jienaid go coahkkalat boallobeavddi, de coahkkal %1$@ ja bija johtui %2$@.";
 "general" = "Oppalaš";
+"installingPackages" = "Installing packages...";
 "keyboard" = "Boallobeavddi";
 "keyboards" = "Boallobeavddit";
 "language" = "Giella";

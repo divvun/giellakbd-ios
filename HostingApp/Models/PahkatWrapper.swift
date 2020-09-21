@@ -73,12 +73,12 @@ final class PahkatWrapper {
 
         return Observable.from(updates)
             .flatMap { key -> Single<Void> in
-                logger("Downloading \(key.id)...")
+                logger(Strings.downloading(package: key.id))
                 return self.downloadPackage(packageKey: key)
             }
             .toArray()
             .flatMap { _ -> Single<Void> in
-                logger("Installing packages...")
+                logger(Strings.installingPackages)
                 return self.install(packageKeys: updates)
             }
     }

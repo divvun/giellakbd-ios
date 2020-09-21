@@ -37,6 +37,9 @@ delete: Delete
 # Original: Detected
 detected: Detected
 
+# Original: Downloading "{package}"...
+downloading: 'Downloading "{package}"...'
+
 # Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
 enableTapSoundsPlain: >-
   If you wish to enable key tap sounds, you must then tap {keyboard} and toggle
@@ -44,6 +47,9 @@ enableTapSoundsPlain: >-
 
 # Original: General
 general: General
+
+# Original: Installing packages...
+installingPackages: Installing packages...
 
 # Original: Keyboard
 keyboard: Keyboard

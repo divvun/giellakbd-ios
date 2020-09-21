@@ -37,7 +37,7 @@ class Strings {
             if let dir = Bundle.main.path(forResource: languageCode, ofType: "lproj"), let bundle = Bundle(path: dir) {
                 self.bundle = bundle
             } else {
-                print("No bundle found for \(languageCode)")
+                print("No bundle found for \(languageCode))")
                 self.bundle = Bundle.main
             }
         }
@@ -121,6 +121,12 @@ class Strings {
         return string(for: "detected")
     }
 
+    /** Downloading "{package}"... */
+    static func downloading(package: String) -> String {
+        let format = string(for: "downloading")
+        return String(format: format, package)
+    }
+
     /** If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}. */
     static func enableTapSoundsPlain(keyboard: String, allowFullAccess: String) -> String {
         let format = string(for: "enableTapSoundsPlain")
@@ -130,6 +136,11 @@ class Strings {
     /** General */
     static var general: String {
         return string(for: "general")
+    }
+
+    /** Installing packages... */
+    static var installingPackages: String {
+        return string(for: "installingPackages")
     }
 
     /** Keyboard */

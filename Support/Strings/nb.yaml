@@ -37,6 +37,9 @@ attributions: Andre kilder
 # Original: Detected
 #detected: UNTRANSLATED
 
+# Original: Downloading "{package}"...
+#downloading: UNTRANSLATED
+
 # Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
 enableTapSoundsPlain: >-
   Om du vil slå på tastaturklikkelyder må du trykke {keyboard} og slå på
@@ -44,6 +47,9 @@ enableTapSoundsPlain: >-
 
 # Original: General
 general: Generelt
+
+# Original: Installing packages...
+#installingPackages: UNTRANSLATED
 
 # Original: Keyboard
 keyboard: Tastatur

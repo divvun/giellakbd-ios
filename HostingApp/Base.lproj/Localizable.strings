@@ -11,8 +11,10 @@
 "contextsFor" = "Contexts for \"%1$@\"";
 "delete" = "Delete";
 "detected" = "Detected";
+"downloading" = "Downloading \"%1$@\"...";
 "enableTapSoundsPlain" = "If you wish to enable key tap sounds, you must then tap %1$@ and toggle %2$@.";
 "general" = "General";
+"installingPackages" = "Installing packages...";
 "keyboard" = "Keyboard";
 "keyboards" = "Keyboards";
 "language" = "Language";

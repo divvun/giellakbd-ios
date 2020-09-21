@@ -37,6 +37,9 @@ attributions: Eará gáldut
 # Original: Detected
 #detected: UNTRANSLATED
 
+# Original: Downloading "{package}"...
+#downloading: UNTRANSLATED
+
 # Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
 enableTapSoundsPlain: >-
   Jus háliidat gullat jienaid go coahkkalat boallobeavddi, de coahkkal
@@ -44,6 +47,9 @@ enableTapSoundsPlain: >-
 
 # Original: General
 general: Oppalaš
+
+# Original: Installing packages...
+#installingPackages: UNTRANSLATED
 
 # Original: Keyboard
 keyboard: Boallobeavddi

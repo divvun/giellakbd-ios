@@ -11,8 +11,10 @@
 "contextsFor" = "Contexts for \"%1$@\"";
 "delete" = "Delete";
 "detected" = "Detected";
+"downloading" = "Downloading \"%1$@\"...";
 "enableTapSoundsPlain" = "Om du vil slå på tastaturklikkelyder må du trykke %1$@ og slå på %2$@.";
 "general" = "Generelt";
+"installingPackages" = "Installing packages...";
 "keyboard" = "Tastatur";
 "keyboards" = "Tastatur";
 "language" = "Språk";
