@@ -60,7 +60,7 @@ final class PahkatWrapper {
         }
 
         do {
-            logger("Setting repos: \(repoMap)")
+//            logger("Setting repos: \(repoMap)")
             try store.set(repos: repoMap)
             try store.refreshRepos()
         } catch let error {
@@ -68,7 +68,7 @@ final class PahkatWrapper {
             return Single.error(error)
         }
 
-        logger("Try to get status")
+//        logger("Try to get status")
         let updates = packageKeys.filter { tryToGetStatus(for: $0) != .upToDate }
 
         return Observable.from(updates)
