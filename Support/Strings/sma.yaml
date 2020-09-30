@@ -1,115 +1,114 @@
 # Original: About
-about: Boallobeavddeprográmma birra
+about: Tastatuvreprogrammen bïjre
 
 # Original: Add
-#add: UNTRANSLATED
+#add: Lissehth
 
 # Original: Add New Keyboard…
-addNewKeyboard: Lasit ođđa boallobeavddi …
+addNewKeyboard: Lissedh orre tastatuvrem...
 
 # Original: Add Word
-#addWord: UNTRANSLATED
+#addWord: Lissedh baakoem
 
 # Original: This word will be suggested in the spelling banner for similar input.
-#addWordMessage: UNTRANSLATED
+#addWordMessage: Daate baakoe jeajhta gosse tjaalah seamma-laaketje baakoeh. 
 
 # Original: Allow Full Access
-allowFullAccess: Atte dievaslaš beassan dán áppii
+allowFullAccess: Vedtih gaajhkh luehpieh dan appese. 
 
 # Original: Attributions
-attributions: Eará gáldut
+attributions: Jeatjah gaaltijh
 
 # Original: Block
-#block: UNTRANSLATED
+#block: Hööpth baakoem
 
 # Original: Blocked
-#blocked: UNTRANSLATED
+#blocked: Hööpteme baakoe
 
 # Original: Cancel
-#cancel: UNTRANSLATED
+#cancel: Orrijidh
 
 # Original: Contexts for "{word}"
-#contextsFor: UNTRANSLATED
+#contextsFor: "{word}" kontekste
 
 # Original: Delete
-#delete: UNTRANSLATED
+#delete: Sliejhth
 
 # Original: Detected
-#detected: UNTRANSLATED
+#detected: Aajhtseme
 
 # Original: Downloading "{package}"...
-#downloading: UNTRANSLATED
+#downloading: "{package}" veedtjeminie...
 
 # Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
 enableTapSoundsPlain: >-
-  Jus háliidat gullat jienaid go coahkkalat boallobeavddi, de coahkkal
-  {keyboard} ja bija johtui {allowFullAccess}.
+  Jis tastatuvretjoejem sïjhth govledh, dellie diedtah {keyboard} jïh baajh {allowFullAccess}.
 
 # Original: General
-general: Oppalaš
+general: Sïejhme
 
 # Original: Installing packages...
-#installingPackages: UNTRANSLATED
+#installingPackages: Måadtoestidh paahkah...
 
 # Original: Installing Spellers...
-#installingSpellers: UNTRANSLATED
+#installingSpellers: Mådtoestidh tjaelemestaeriedimmiem...
 
 # Original: Keyboard
-keyboard: Boallobeavddi
+keyboard: Tastatuvre
 
 # Original: Keyboards
-keyboards: Boallobeavddit
+keyboards: Tastatuvrh
 
 # Original: Language
-language: Giella
+language: Gïele
 
 # Original: Layouts
-layouts: Hámuhusat
+layouts: Hammoeh
 
 # Original: Kildin Sami
-localeSjd: Gielddasámegiella
+localeSjd: Gielddasaemien
 
 # Original: No user-created words yet.
-#noUserWords: UNTRANSLATED
+#noUserWords: Provhkije ij naan baakoe dorjeme.  
 
 # Original: Words that are left uncorrected and are not in the built-in dictionary will appear here.
-#noUserWordsDescription: UNTRANSLATED
+#noUserWordsDescription: Baakoeh mah eah leah staeriedamme jïh eah gååvnesh baakoegærjesne, jijhtieh daase. 
 
 # Original: Open the {item} app
-openAppPlain: 'Raba {item}-áppa'
+openAppPlain: 'Rïhpesh {item}-appem'
 
 # Original: Open Settings
-openSettings: Raba heivehusaid
+openSettings: Rïhpesh sjïehtedimmiem
 
 # Original: Save
-save: Vurke
+save: Vöörhkh
 
 # Original: Set Up {keyboard}
-setUp: 'Heivet {keyboard}'
+setUp: 'Sjïehtedh {keyboard}'
 
 # Original: Setting Up
-settingUp: Heiveheamen
+settingUp: Sjïehtediminie 
 
 # Original: Settings
-settings: Heivehusat
+settings: Sjïehtedamme
 
 # Original: Skip
-skip: Njuike badjel
+skip: Baajh årrodh 
 
 # Original: Tap {item}
-tapPlain: 'Coahkkal {item}'
+tapPlain: 'Dïedtelh {item}'
 
 # Original: Unblock
-#unblock: UNTRANSLATED
+#unblock: Ellieh vielie hööpth 
 
 # Original: User-Defined
-#userDefined: UNTRANSLATED
+#userDefined: Provhkije tjilkestamme
 
 # Original: User Dictionary
-#userDictionary: UNTRANSLATED
+#userDictionary: Provhkijen baakoegærja
 
 # Original: When you have finished, return to this app to continue.
-whenYouHaveFinished: 'Go leat geargan, máhcat dán áppii ja joatkke barggu.'
+whenYouHaveFinished: 'Gosse galkeme, dellie bååstede dan appese barkojne jåerhkh'
 
 # Original: Word
-#word: UNTRANSLATED
+#word: Baakoe
