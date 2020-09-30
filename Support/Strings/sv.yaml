@@ -2,114 +2,114 @@
 about: Om
 
 # Original: Add
-add: Legg til
+add: Lägg till
 
 # Original: Add New Keyboard…
-addNewKeyboard: Legg til nytt tastatur…
+addNewKeyboard: Lägg till nytt tangentbord...
 
 # Original: Add Word
-addWord: Legg til ord
+addWord: Lägg till ord
 
 # Original: This word will be suggested in the spelling banner for similar input.
-addWordMessage: Dette ordet vil bli foreslått i banneret for liknende inndata
+addWordMessage: Detta ordet vill bli föreslaget i bannret för snarlika ord
 
 # Original: Allow Full Access
-allowFullAccess: Gi full tilgang
+allowFullAccess: Ge full tillgång
 
 # Original: Attributions
-attributions: Andre kilder
+attributions: Andra källor
 
 # Original: Block
-block: Sperr
+block: Spärr
 
 # Original: Blocked
-blocked: Sperra
+blocked: Spärrad
 
 # Original: Cancel
 cancel: Avbryt
 
 # Original: Contexts for "{word}"
-contextsFor: Kontekstar for "{word}"
+contextsFor: Kontexter för "{word}"
 
 # Original: Delete
-delete: Slett
+delete: Ta bort
 
 # Original: Detected
-detected: Oppdaga
+detected: Uppdagat
 
 # Original: Downloading "{package}"...
-downloading: Laster ned "{package}"...
+downloading: Laddar ned "{package}"...
 
 # Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
 enableTapSoundsPlain: >-
-  Om du vil slå på tastaturklikkelyder må du trykke {keyboard} og slå på
+  Om du vill slå på tangentbordsklickljud måste du trycka {keyboard} og slå på
   {allowFullAccess}.
 
 # Original: General
-general: Generelt
+general: Generellt
 
 # Original: Installing packages...
-installingPackages: Installerer pakker...
+installingPackages: Installerar paket...
 
 # Original: Installing Spellers...
-installingSpellers: Installerer stavekontroller...
+installingSpellers: Installerar rättstavning...
 
 # Original: Keyboard
-keyboard: Tastatur
+keyboard: Tangentbord
 
 # Original: Keyboards
-keyboards: Tastatur
+keyboards: Tangentbord
 
 # Original: Language
 language: Språk
 
 # Original: Layouts
-layouts: Tastatur
+layouts: Tangentbord
 
 # Original: Kildin Sami
 localeSjd: Kildinsamisk
 
 # Original: No user-created words yet.
-noUserWords: Ingen brukergenererte ord ennå.
+noUserWords: Inga användarskapade ord ännu.
 
 # Original: Words that are left uncorrected and are not in the built-in dictionary will appear here.
-noUserWordsDescription: Ord som ikke blir retta og som ikke finnes i ordlista vil dukke opp her.
+noUserWordsDescription: Ord som inte blir korrigerade och som inte finns i ordlistan vill dyka upp här.
 
 # Original: Open the {item} app
-openAppPlain: Åpne {item}-appen
+openAppPlain: Öppna {item}-appen
 
 # Original: Open Settings
-openSettings: Åpne Innstillinger
+openSettings: Öppna Inställningar
 
 # Original: Save
-save: Lagre
+save: Spara
 
 # Original: Set Up {keyboard}
 setUp: Konfigurer {keyboard}
 
 # Original: Setting Up
-settingUp: Konfigurerer
+settingUp: Konfigurerar
 
 # Original: Settings
-settings: Innstillinger
+settings: Inställningar
 
 # Original: Skip
-skip: Hopp over
+skip: Hoppa över
 
 # Original: Tap {item}
-tapPlain: Berør {item}
+tapPlain: Berör {item}
 
 # Original: Unblock
-unblock: Fjern sperring
+unblock: Ta bort spärrning
 
 # Original: User-Defined
-userDefined: Brukerdefinert
+userDefined: Användardefinierad
 
 # Original: User Dictionary
-userDictionary: Brukerordliste
+userDictionary: Användarordlista
 
 # Original: When you have finished, return to this app to continue.
-whenYouHaveFinished: Når du er ferdig – gå tilbake til denne appen for å fortsette.
+whenYouHaveFinished: När du är färdig – gå tillbaks till denna appen för att fortsätta.
 
 # Original: Word
 word: ord
