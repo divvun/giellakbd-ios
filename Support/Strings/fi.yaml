@@ -1,117 +1,117 @@
 # Original: About
-about: About
+about: Tietoja
 
 # Original: Add
-add: Add
+add: Lisää
 
 # Original: Add New Keyboard…
-addNewKeyboard: Add New Keyboard…
+addNewKeyboard: Lisää uusi näppäimistö…
 
 # Original: Add Word
-addWord: Add Word
+addWord: Lisää sana
 
 # Original: This word will be suggested in the spelling banner for similar input.
-addWordMessage: This word will be suggested in the spelling banner for similar input.
+addWordMessage: Tätä sanaa ehdotetaan oikolukubannerissa samankaltaisille syötteille 
 
 # Original: Allow Full Access
-allowFullAccess: Allow Full Access
+allowFullAccess: Salli kaikki oikeudet
 
 # Original: Attributions
-attributions: Attributions
+attributions: Attribuutiot
 
 # Original: Block
-block: Block
+block: Estä
 
 # Original: Blocked
-blocked: Blocked
+blocked: Estetty
 
 # Original: Cancel
-cancel: Cancel
+cancel: Peru
 
 # Original: Contexts for "{word}"
-contextsFor: 'Contexts for "{word}"'
+contextsFor: 'Kontekstit sanalle "{word}"'
 
 # Original: Delete
-delete: Delete
+delete: Poista
 
 # Original: Detected
-detected: Detected
+detected: Tunnistettu
 
 # Original: Downloading "{package}"...
-downloading: 'Downloading "{package}"...'
+downloading: 'Ladataan pakettia "{package}"...'
 
 # Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
 enableTapSoundsPlain: >-
-  If you wish to enable key tap sounds, you must then tap {keyboard} and toggle
+  Jos haluat näppäinäänet käyttöön, paina nappia {keyboard} ja vaihda asetusta
   {allowFullAccess}.
 
 # Original: General
 general: General
 
 # Original: Installing packages...
-installingPackages: Installing packages...
+installingPackages: Asennetaan paketteja...
 
 # Original: Installing Spellers...
-installingSpellers: Installing Spellers...
+installingSpellers: Asennetaan oikaisulukimia...
 
 # Original: Keyboard
-keyboard: Keyboard
+keyboard: Näppäimistö
 
 # Original: Keyboards
-keyboards: Keyboards
+keyboards: Näppäimistöt
 
 # Original: Language
-language: Language
+language: Kieli
 
 # Original: Layouts
-layouts: Layouts
+layouts: Asetelmat
 
 # Original: Kildin Sami
-localeSjd: Kildin Sami
+localeSjd: Kiltinänsaame
 
 # Original: No user-created words yet.
-noUserWords: No user-created words yet.
+noUserWords: Käyttäjän luomia sanoja ei ole vielä.
 
 # Original: Words that are left uncorrected and are not in the built-in dictionary will appear here.
 noUserWordsDescription: >-
-  Words that are left uncorrected and are not in the built-in dictionary will
-  appear here.
+  Sanat joita ei korjata ja jotka eivät ole sisäänrakennetussa sanakirjassa
+  näkyvät täällä.
 
 # Original: Open the {item} app
-openAppPlain: 'Open the {item} app'
+openAppPlain: 'Avaa sovellus {item}'
 
 # Original: Open Settings
-openSettings: Open Settings
+openSettings: Avaa asetukset
 
 # Original: Save
-save: Save
+save: Tallenna
 
 # Original: Set Up {keyboard}
-setUp: 'Set Up {keyboard}'
+setUp: 'Aseta {keyboard}'
 
 # Original: Setting Up
-settingUp: Setting Up
+settingUp: Asetetaan
 
 # Original: Settings
-settings: Settings
+settings: Asetukset
 
 # Original: Skip
-skip: Skip
+skip: Ohita
 
 # Original: Tap {item}
-tapPlain: 'Tap {item}'
+tapPlain: 'Paina {item}'
 
 # Original: Unblock
-unblock: Unblock
+unblock: Poista estot
 
 # Original: User-Defined
-userDefined: User-Defined
+userDefined: Käyttäjän
 
 # Original: User Dictionary
-userDictionary: User Dictionary
+userDictionary: Käyttäjän sanakirja
 
 # Original: When you have finished, return to this app to continue.
-whenYouHaveFinished: 'When you have finished, return to this app to continue.'
+whenYouHaveFinished: 'Palaa takaisin tähän sovellukseen lopetettuasi.'
 
 # Original: Word
-word: Word
+word: Sana
