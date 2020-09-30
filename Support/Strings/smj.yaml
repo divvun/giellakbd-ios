@@ -1,0 +1,115 @@
+# Original: About
+about: Boallobeavddeprográmma birra
+
+# Original: Add
+#add: UNTRANSLATED
+
+# Original: Add New Keyboard…
+addNewKeyboard: Lasit ođđa boallobeavddi …
+
+# Original: Add Word
+#addWord: UNTRANSLATED
+
+# Original: This word will be suggested in the spelling banner for similar input.
+#addWordMessage: UNTRANSLATED
+
+# Original: Allow Full Access
+allowFullAccess: Atte dievaslaš beassan dán áppii
+
+# Original: Attributions
+attributions: Eará gáldut
+
+# Original: Block
+#block: UNTRANSLATED
+
+# Original: Blocked
+#blocked: UNTRANSLATED
+
+# Original: Cancel
+#cancel: UNTRANSLATED
+
+# Original: Contexts for "{word}"
+#contextsFor: UNTRANSLATED
+
+# Original: Delete
+#delete: UNTRANSLATED
+
+# Original: Detected
+#detected: UNTRANSLATED
+
+# Original: Downloading "{package}"...
+#downloading: UNTRANSLATED
+
+# Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
+enableTapSoundsPlain: >-
+  Jus háliidat gullat jienaid go coahkkalat boallobeavddi, de coahkkal
+  {keyboard} ja bija johtui {allowFullAccess}.
+
+# Original: General
+general: Oppalaš
+
+# Original: Installing packages...
+#installingPackages: UNTRANSLATED
+
+# Original: Installing Spellers...
+#installingSpellers: UNTRANSLATED
+
+# Original: Keyboard
+keyboard: Boallobeavddi
+
+# Original: Keyboards
+keyboards: Boallobeavddit
+
+# Original: Language
+language: Giella
+
+# Original: Layouts
+layouts: Hámuhusat
+
+# Original: Kildin Sami
+localeSjd: Gielddasámegiella
+
+# Original: No user-created words yet.
+#noUserWords: UNTRANSLATED
+
+# Original: Words that are left uncorrected and are not in the built-in dictionary will appear here.
+#noUserWordsDescription: UNTRANSLATED
+
+# Original: Open the {item} app
+openAppPlain: 'Raba {item}-áppa'
+
+# Original: Open Settings
+openSettings: Raba heivehusaid
+
+# Original: Save
+save: Vurke
+
+# Original: Set Up {keyboard}
+setUp: 'Heivet {keyboard}'
+
+# Original: Setting Up
+settingUp: Heiveheamen
+
+# Original: Settings
+settings: Heivehusat
+
+# Original: Skip
+skip: Njuike badjel
+
+# Original: Tap {item}
+tapPlain: 'Coahkkal {item}'
+
+# Original: Unblock
+#unblock: UNTRANSLATED
+
+# Original: User-Defined
+#userDefined: UNTRANSLATED
+
+# Original: User Dictionary
+#userDictionary: UNTRANSLATED
+
+# Original: When you have finished, return to this app to continue.
+whenYouHaveFinished: 'Go leat geargan, máhcat dán áppii ja joatkke barggu.'
+
+# Original: Word
+#word: UNTRANSLATED

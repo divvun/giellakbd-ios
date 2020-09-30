@@ -1,0 +1,117 @@
+# Original: About
+about: About
+
+# Original: Add
+add: Add
+
+# Original: Add New Keyboard…
+addNewKeyboard: Add New Keyboard…
+
+# Original: Add Word
+addWord: Add Word
+
+# Original: This word will be suggested in the spelling banner for similar input.
+addWordMessage: This word will be suggested in the spelling banner for similar input.
+
+# Original: Allow Full Access
+allowFullAccess: Allow Full Access
+
+# Original: Attributions
+attributions: Attributions
+
+# Original: Block
+block: Block
+
+# Original: Blocked
+blocked: Blocked
+
+# Original: Cancel
+cancel: Cancel
+
+# Original: Contexts for "{word}"
+contextsFor: 'Contexts for "{word}"'
+
+# Original: Delete
+delete: Delete
+
+# Original: Detected
+detected: Detected
+
+# Original: Downloading "{package}"...
+downloading: 'Downloading "{package}"...'
+
+# Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
+enableTapSoundsPlain: >-
+  If you wish to enable key tap sounds, you must then tap {keyboard} and toggle
+  {allowFullAccess}.
+
+# Original: General
+general: General
+
+# Original: Installing packages...
+installingPackages: Installing packages...
+
+# Original: Installing Spellers...
+installingSpellers: Installing Spellers...
+
+# Original: Keyboard
+keyboard: Keyboard
+
+# Original: Keyboards
+keyboards: Keyboards
+
+# Original: Language
+language: Language
+
+# Original: Layouts
+layouts: Layouts
+
+# Original: Kildin Sami
+localeSjd: Kildin Sami
+
+# Original: No user-created words yet.
+noUserWords: No user-created words yet.
+
+# Original: Words that are left uncorrected and are not in the built-in dictionary will appear here.
+noUserWordsDescription: >-
+  Words that are left uncorrected and are not in the built-in dictionary will
+  appear here.
+
+# Original: Open the {item} app
+openAppPlain: 'Open the {item} app'
+
+# Original: Open Settings
+openSettings: Open Settings
+
+# Original: Save
+save: Save
+
+# Original: Set Up {keyboard}
+setUp: 'Set Up {keyboard}'
+
+# Original: Setting Up
+settingUp: Setting Up
+
+# Original: Settings
+settings: Settings
+
+# Original: Skip
+skip: Skip
+
+# Original: Tap {item}
+tapPlain: 'Tap {item}'
+
+# Original: Unblock
+unblock: Unblock
+
+# Original: User-Defined
+userDefined: User-Defined
+
+# Original: User Dictionary
+userDictionary: User Dictionary
+
+# Original: When you have finished, return to this app to continue.
+whenYouHaveFinished: 'When you have finished, return to this app to continue.'
+
+# Original: Word
+word: Word
