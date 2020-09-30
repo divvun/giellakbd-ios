@@ -2,16 +2,16 @@
 about: Om
 
 # Original: Add
-#add: UNTRANSLATED
+add: Legg til
 
 # Original: Add New Keyboard…
 addNewKeyboard: Legg til nytt tastatur…
 
 # Original: Add Word
-#addWord: UNTRANSLATED
+addWord: Legg til ord
 
 # Original: This word will be suggested in the spelling banner for similar input.
-#addWordMessage: UNTRANSLATED
+addWordMessage: Dette ordet vil bli foreslått i banneret for liknende inndata
 
 # Original: Allow Full Access
 allowFullAccess: Gi full tilgang
@@ -20,25 +20,25 @@ allowFullAccess: Gi full tilgang
 attributions: Andre kilder
 
 # Original: Block
-#block: UNTRANSLATED
+block: Sperr
 
 # Original: Blocked
-#blocked: UNTRANSLATED
+blocked: Sperra
 
 # Original: Cancel
-#cancel: UNTRANSLATED
+cancel: Avbryt
 
 # Original: Contexts for "{word}"
-#contextsFor: UNTRANSLATED
+contextsFor: Kontekstar for "{word}"
 
 # Original: Delete
-#delete: UNTRANSLATED
+delete: Slett
 
 # Original: Detected
-#detected: UNTRANSLATED
+detected: Oppdaga
 
 # Original: Downloading "{package}"...
-#downloading: UNTRANSLATED
+downloading: Laster ned "{package}"...
 
 # Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
 enableTapSoundsPlain: >-
@@ -49,10 +49,10 @@ enableTapSoundsPlain: >-
 general: Generelt
 
 # Original: Installing packages...
-#installingPackages: UNTRANSLATED
+installingPackages: Installerer pakker...
 
 # Original: Installing Spellers...
-#installingSpellers: UNTRANSLATED
+installingSpellers: Installerer stavekontroller...
 
 # Original: Keyboard
 keyboard: Tastatur
@@ -70,13 +70,13 @@ layouts: Tastatur
 localeSjd: Kildinsamisk
 
 # Original: No user-created words yet.
-#noUserWords: UNTRANSLATED
+noUserWords: Ingen brukergenererte ord ennå.
 
 # Original: Words that are left uncorrected and are not in the built-in dictionary will appear here.
-#noUserWordsDescription: UNTRANSLATED
+noUserWordsDescription: Ord som ikke blir retta og som ikke finnes i ordlista vil dukke opp her.
 
 # Original: Open the {item} app
-openAppPlain: 'Åpne {item}-appen'
+openAppPlain: Åpne {item}-appen
 
 # Original: Open Settings
 openSettings: Åpne Innstillinger
@@ -85,10 +85,10 @@ openSettings: Åpne Innstillinger
 save: Lagre
 
 # Original: Set Up {keyboard}
-setUp: 'Konfigurer {keyboard}'
+setUp: Konfigurer {keyboard}
 
 # Original: Setting Up
-settingUp: Konfigurasjon
+settingUp: Konfigurerer
 
 # Original: Settings
 settings: Innstillinger
@@ -97,19 +97,19 @@ settings: Innstillinger
 skip: Hopp over
 
 # Original: Tap {item}
-tapPlain: 'Berør {item}'
+tapPlain: Berør {item}
 
 # Original: Unblock
-#unblock: UNTRANSLATED
+unblock: Fjern sperring
 
 # Original: User-Defined
-#userDefined: UNTRANSLATED
+userDefined: Brukerdefinert
 
 # Original: User Dictionary
-#userDictionary: UNTRANSLATED
+userDictionary: Brukerordliste
 
 # Original: When you have finished, return to this app to continue.
 whenYouHaveFinished: Når du er ferdig – gå tilbake til denne appen for å fortsette.
 
 # Original: Word
-#word: UNTRANSLATED
+word: ord
