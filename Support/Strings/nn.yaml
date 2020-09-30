@@ -11,13 +11,13 @@ addNewKeyboard: Legg til nytt tastatur…
 addWord: Legg til ord
 
 # Original: This word will be suggested in the spelling banner for similar input.
-addWordMessage: Dette ordet vil bli foreslått i banneret for liknende inndata
+addWordMessage: Dette ordet vil bli føreslått i banneret for liknande ord
 
 # Original: Allow Full Access
-allowFullAccess: Gi full tilgang
+allowFullAccess: Gje full tilgang
 
 # Original: Attributions
-attributions: Andre kilder
+attributions: Andre kjelder
 
 # Original: Block
 block: Sperr
@@ -38,11 +38,11 @@ delete: Slett
 detected: Oppdaga
 
 # Original: Downloading "{package}"...
-downloading: Laster ned "{package}"...
+downloading: Lastar ned "{package}"...
 
 # Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
 enableTapSoundsPlain: >-
-  Om du vil slå på tastaturklikkelyder må du trykke {keyboard} og slå på
+  Om du vil slå på tastaturklikkelydar må du trykkja {keyboard} og slå på
   {allowFullAccess}.
 
 # Original: General
@@ -52,7 +52,7 @@ general: Generelt
 installingPackages: Installerer pakker...
 
 # Original: Installing Spellers...
-installingSpellers: Installerer stavekontroller...
+installingSpellers: Installerer stavekontrollar...
 
 # Original: Keyboard
 keyboard: Tastatur
@@ -70,16 +70,16 @@ layouts: Tastatur
 localeSjd: Kildinsamisk
 
 # Original: No user-created words yet.
-noUserWords: Ingen brukergenererte ord ennå.
+noUserWords: Ingen brukergenererte ord enno.
 
 # Original: Words that are left uncorrected and are not in the built-in dictionary will appear here.
-noUserWordsDescription: Ord som ikke blir retta og som ikke finnes i ordlista vil dukke opp her.
+noUserWordsDescription: Ord som ikkje blir retta og som ikkje finst i ordlista vil dukka opp her.
 
 # Original: Open the {item} app
-openAppPlain: Åpne {item}-appen
+openAppPlain: Opne {item}-appen
 
 # Original: Open Settings
-openSettings: Åpne Innstillinger
+openSettings: Opne Innstillingar
 
 # Original: Save
 save: Lagre
@@ -91,25 +91,25 @@ setUp: Konfigurer {keyboard}
 settingUp: Konfigurerer
 
 # Original: Settings
-settings: Innstillinger
+settings: Innstillingar
 
 # Original: Skip
 skip: Hopp over
 
 # Original: Tap {item}
-tapPlain: Berør {item}
+tapPlain: Rør {item}
 
 # Original: Unblock
 unblock: Fjern sperring
 
 # Original: User-Defined
-userDefined: Brukerdefinert
+userDefined: Brukardefinert
 
 # Original: User Dictionary
-userDictionary: Brukerordliste
+userDictionary: Brukarordliste
 
 # Original: When you have finished, return to this app to continue.
-whenYouHaveFinished: Når du er ferdig – gå tilbake til denne appen for å fortsette.
+whenYouHaveFinished: Når du er ferdig – gå tilbake til denne appen for å halda fram.
 
 # Original: Word
 word: ord
