@@ -11,7 +11,7 @@ addNewKeyboard: Lägg till nytt tangentbord...
 addWord: Lägg till ord
 
 # Original: This word will be suggested in the spelling banner for similar input.
-addWordMessage: Detta ordet vill bli föreslaget i bannret för snarlika ord
+addWordMessage: Detta ordet kommer att föreslås i fanan för snarlika ord
 
 # Original: Allow Full Access
 allowFullAccess: Ge full tillgång
@@ -35,7 +35,7 @@ contextsFor: Kontexter för "{word}"
 delete: Ta bort
 
 # Original: Detected
-detected: Uppdagat
+detected: Upptäckt
 
 # Original: Downloading "{package}"...
 downloading: Laddar ned "{package}"...
@@ -73,7 +73,7 @@ localeSjd: Kildinsamisk
 noUserWords: Inga användarskapade ord ännu.
 
 # Original: Words that are left uncorrected and are not in the built-in dictionary will appear here.
-noUserWordsDescription: Ord som inte blir korrigerade och som inte finns i ordlistan vill dyka upp här.
+noUserWordsDescription: Ord som inte blir korrigerade och som inte finns i ordlistan kommer att dyka upp här.
 
 # Original: Open the {item} app
 openAppPlain: Öppna {item}-appen
@@ -85,7 +85,7 @@ openSettings: Öppna Inställningar
 save: Spara
 
 # Original: Set Up {keyboard}
-setUp: Konfigurer {keyboard}
+setUp: Konfigurera {keyboard}
 
 # Original: Setting Up
 settingUp: Konfigurerar
@@ -97,10 +97,10 @@ settings: Inställningar
 skip: Hoppa över
 
 # Original: Tap {item}
-tapPlain: Berör {item}
+tapPlain: Tryck {item}
 
 # Original: Unblock
-unblock: Ta bort spärrning
+unblock: Ta bort spärr
 
 # Original: User-Defined
 userDefined: Användardefinierad
