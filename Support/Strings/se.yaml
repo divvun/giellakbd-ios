@@ -2,16 +2,16 @@
 about: Boallobeavddeprográmma birra
 
 # Original: Add
-#add: UNTRANSLATED
+add: Lasit
 
 # Original: Add New Keyboard…
 addNewKeyboard: Lasit ođđa boallobeavddi …
 
 # Original: Add Word
-#addWord: UNTRANSLATED
+addWord: Lasit sáni
 
 # Original: This word will be suggested in the spelling banner for similar input.
-#addWordMessage: UNTRANSLATED
+addWordMessage: Dát sátni ihtá evttohussan go čálát sullasaš sániid
 
 # Original: Allow Full Access
 allowFullAccess: Atte dievaslaš beassan dán áppii
@@ -20,25 +20,25 @@ allowFullAccess: Atte dievaslaš beassan dán áppii
 attributions: Eará gáldut
 
 # Original: Block
-#block: UNTRANSLATED
+block: Hehtte
 
 # Original: Blocked
-#blocked: UNTRANSLATED
+blocked: Hehttejuvvon
 
 # Original: Cancel
-#cancel: UNTRANSLATED
+cancel: Gaskkalduhte
 
 # Original: Contexts for "{word}"
-#contextsFor: UNTRANSLATED
+contextsFor: ”{word}” konteavsttat
 
 # Original: Delete
-#delete: UNTRANSLATED
+delete: Sihko
 
 # Original: Detected
-#detected: UNTRANSLATED
+detected: Áicojuvvon
 
 # Original: Downloading "{package}"...
-#downloading: UNTRANSLATED
+downloading: Viežžamin ”{package}” …
 
 # Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
 enableTapSoundsPlain: >-
@@ -49,13 +49,13 @@ enableTapSoundsPlain: >-
 general: Oppalaš
 
 # Original: Installing packages...
-#installingPackages: UNTRANSLATED
+installingPackages: Sajáiduhttimin páhkaid …
 
 # Original: Installing Spellers...
-#installingSpellers: UNTRANSLATED
+installingSpellers: Sajáiduhttimin čállindárkkisteddjiid …
 
 # Original: Keyboard
-keyboard: Boallobeavddi
+keyboard: Boallobeavdi
 
 # Original: Keyboards
 keyboards: Boallobeavddit
@@ -70,13 +70,13 @@ layouts: Hámuhusat
 localeSjd: Gielddasámegiella
 
 # Original: No user-created words yet.
-#noUserWords: UNTRANSLATED
+noUserWords: Geavaheaddji iežas sátnelistu ain guoros.
 
 # Original: Words that are left uncorrected and are not in the built-in dictionary will appear here.
-#noUserWordsDescription: UNTRANSLATED
+noUserWordsDescription: Sánit mat eai leat divvojuvvon ja eai gávdno áppa sátnelisttus ihtet dás.
 
 # Original: Open the {item} app
-openAppPlain: 'Raba {item}-áppa'
+openAppPlain: Raba {item}-áppa
 
 # Original: Open Settings
 openSettings: Raba heivehusaid
@@ -85,7 +85,7 @@ openSettings: Raba heivehusaid
 save: Vurke
 
 # Original: Set Up {keyboard}
-setUp: 'Heivet {keyboard}'
+setUp: Heivet {keyboard}
 
 # Original: Setting Up
 settingUp: Heiveheamen
@@ -97,19 +97,19 @@ settings: Heivehusat
 skip: Njuike badjel
 
 # Original: Tap {item}
-tapPlain: 'Coahkkal {item}'
+tapPlain: Coahkkal {item}
 
 # Original: Unblock
-#unblock: UNTRANSLATED
+unblock: Boatkke hehttema
 
 # Original: User-Defined
-#userDefined: UNTRANSLATED
+userDefined: Geavaheaddjimeroštuvvon
 
 # Original: User Dictionary
-#userDictionary: UNTRANSLATED
+userDictionary: Geavaheaddji sátnelistu
 
 # Original: When you have finished, return to this app to continue.
-whenYouHaveFinished: 'Go leat geargan, máhcat dán áppii ja joatkke barggu.'
+whenYouHaveFinished: Go leat geargan, máhcat dán áppii ja joatkke barggu.
 
 # Original: Word
-#word: UNTRANSLATED
+word: sátni
