@@ -16,6 +16,13 @@ pod install
 
 To enable Sentry, add a `SentryDSN` key to the `HostingApp/Supporting Files/Info.plist` file.
 
+### Updating localisations
+
+```
+npm i -g technocreatives/i18n-eller
+i18n-eller generate swift Support/Strings/en.yaml Support/Strings/*.yaml -o HostingApp
+```
+
 ##### Note: the first build will take a while.
 
 ## License
