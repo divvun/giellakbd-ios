@@ -1,63 +1,63 @@
 # Original: About
-about: Tastatuvreprogrammen bïjre
+about: Båaloebuertieprogrammen bïjre
 
 # Original: Add
-#add: Lissehth
+add: Lissehth
 
-# Original: Add New Keyboard…
-addNewKeyboard: Lissedh orre tastatuvrem...
+# Original: Add New Keyboard …
+addNewKeyboard: Lissedh orre båaloebuertiem …
 
 # Original: Add Word
-#addWord: Lissedh baakoem
+addWord: Lissedh baakoem
 
 # Original: This word will be suggested in the spelling banner for similar input.
-#addWordMessage: Daate baakoe jeajhta gosse tjaalah seamma-laaketje baakoeh. 
+addWordMessage: Daate baakoe jeajhta gosse tjaalah seamma-laaketje baakoeh. 
 
 # Original: Allow Full Access
-allowFullAccess: Vedtih gaajhkh luehpieh dan appese. 
+allowFullAccess: Vedtih gaajhkh luehpieh dan appese
 
 # Original: Attributions
 attributions: Jeatjah gaaltijh
 
 # Original: Block
-#block: Hööpth baakoem
+block: Hööpth baakoem
 
 # Original: Blocked
-#blocked: Hööpteme baakoe
+blocked: Hööpteme baakoe
 
 # Original: Cancel
-#cancel: Orrijidh
+cancel: Orrijidh
 
 # Original: Contexts for "{word}"
-#contextsFor: "{word}" kontekste
+contextsFor: "{word}" kontekste
 
 # Original: Delete
-#delete: Sliejhth
+delete: Sliejhth
 
 # Original: Detected
-#detected: Aajhtseme
+detected: Aajhtseme
 
-# Original: Downloading "{package}"...
-#downloading: "{package}" veedtjeminie...
+# Original: Downloading "{package}" …
+downloading: "{package}" veedtjeminie …
 
 # Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
 enableTapSoundsPlain: >-
-  Jis tastatuvretjoejem sïjhth govledh, dellie diedtah {keyboard} jïh baajh {allowFullAccess}.
+ Jis båaloebuertietjoejem sïjhth govledh, dellie diedtah {keyboard} jïh baajh {allowFullAccess}.
 
 # Original: General
 general: Sïejhme
 
-# Original: Installing packages...
-#installingPackages: Måadtoestidh paahkah...
+# Original: Installing packages …
+installingPackages: Måadtoestidh paahkah …
 
-# Original: Installing Spellers...
-#installingSpellers: Mådtoestidh tjaelemestaeriedimmiem...
+# Original: Installing Spellers …
+installingSpellers: Mådtoestidh tjaelemestaeriedimmiem …
 
 # Original: Keyboard
-keyboard: Tastatuvre
+keyboard: Båaloebuertie
 
 # Original: Keyboards
-keyboards: Tastatuvrh
+keyboards: Båaloebuertieh
 
 # Original: Language
 language: Gïele
@@ -69,46 +69,46 @@ layouts: Hammoeh
 localeSjd: Gielddasaemien
 
 # Original: No user-created words yet.
-#noUserWords: Provhkije ij naan baakoe dorjeme.  
+noUserWords: Provhkije ij naan baakoe dorjeme.
 
 # Original: Words that are left uncorrected and are not in the built-in dictionary will appear here.
-#noUserWordsDescription: Baakoeh mah eah leah staeriedamme jïh eah gååvnesh baakoegærjesne, jijhtieh daase. 
+noUserWordsDescription: Baakoeh mah eah leah staeriedamme jïh eah gååvnesh baakoegærjesne, jijhtieh daase. 
 
 # Original: Open the {item} app
-openAppPlain: 'Rïhpesh {item}-appem'
+openAppPlain: Rïhpesh {item}-appem
 
 # Original: Open Settings
-openSettings: Rïhpesh sjïehtedimmiem
+openSettings: Rïhpesh sjïehtesjimmim
 
 # Original: Save
 save: Vöörhkh
 
 # Original: Set Up {keyboard}
-setUp: 'Sjïehtedh {keyboard}'
+setUp: Sjïehtedh {keyboard}
 
 # Original: Setting Up
 settingUp: Sjïehtediminie 
 
 # Original: Settings
-settings: Sjïehtedamme
+settings: Sjïehtesjidh
 
 # Original: Skip
 skip: Baajh årrodh 
 
 # Original: Tap {item}
-tapPlain: 'Dïedtelh {item}'
+tapPlain: Dïedtelh {item}
 
 # Original: Unblock
-#unblock: Ellieh vielie hööpth 
+unblock: Ollh-hööpth 
 
 # Original: User-Defined
-#userDefined: Provhkije tjilkestamme
+userDefined: Provhkije tjilkestamme
 
 # Original: User Dictionary
-#userDictionary: Provhkijen baakoegærja
+userDictionary: Provhkijen baakoegærja
 
 # Original: When you have finished, return to this app to continue.
-whenYouHaveFinished: 'Gosse galkeme, dellie bååstede dan appese barkojne jåerhkh'
+whenYouHaveFinished: Gosse galkeme, dellie bååstede dan appese barkojne jåerhkh.
 
 # Original: Word
-#word: Baakoe
+word: Baakoe
