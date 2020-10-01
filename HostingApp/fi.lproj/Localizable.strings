@@ -11,11 +11,11 @@
 "contextsFor" = "Kontekstit sanalle \"%1$@\"";
 "delete" = "Poista";
 "detected" = "Tunnistettu";
-"downloading" = "Ladataan pakettia \"%1$@\"...";
+"downloading" = "Ladataan pakettia \"%1$@\"…";
 "enableTapSoundsPlain" = "Jos haluat näppäinäänet käyttöön, paina nappia %1$@ ja vaihda asetusta %2$@.";
 "general" = "General";
-"installingPackages" = "Asennetaan paketteja...";
-"installingSpellers" = "Asennetaan oikaisulukimia...";
+"installingPackages" = "Asennetaan paketteja…";
+"installingSpellers" = "Asennetaan oikaisulukimia…";
 "keyboard" = "Näppäimistö";
 "keyboards" = "Näppäimistöt";
 "language" = "Kieli";

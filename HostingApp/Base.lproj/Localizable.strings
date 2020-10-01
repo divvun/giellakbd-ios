@@ -11,11 +11,11 @@
 "contextsFor" = "Contexts for \"%1$@\"";
 "delete" = "Delete";
 "detected" = "Detected";
-"downloading" = "Downloading \"%1$@\"...";
+"downloading" = "Downloading \"%1$@\"…";
 "enableTapSoundsPlain" = "If you wish to enable key tap sounds, you must then tap %1$@ and toggle %2$@.";
 "general" = "General";
-"installingPackages" = "Installing packages...";
-"installingSpellers" = "Installing Spellers...";
+"installingPackages" = "Installing packages…";
+"installingSpellers" = "Installing Spellers…";
 "keyboard" = "Keyboard";
 "keyboards" = "Keyboards";
 "language" = "Language";

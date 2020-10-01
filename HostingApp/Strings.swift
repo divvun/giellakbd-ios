@@ -121,7 +121,7 @@ class Strings {
         return string(for: "detected")
     }
 
-    /** Downloading "{package}"... */
+    /** Downloading "{package}"… */
     static func downloading(package: String) -> String {
         let format = string(for: "downloading")
         return String(format: format, package)
@@ -138,12 +138,12 @@ class Strings {
         return string(for: "general")
     }
 
-    /** Installing packages... */
+    /** Installing packages… */
     static var installingPackages: String {
         return string(for: "installingPackages")
     }
 
-    /** Installing Spellers... */
+    /** Installing Spellers… */
     static var installingSpellers: String {
         return string(for: "installingSpellers")
     }

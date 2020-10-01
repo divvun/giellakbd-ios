@@ -1,6 +1,6 @@
 "about" = "Om";
 "add" = "Lägg till";
-"addNewKeyboard" = "Lägg till nytt tangentbord...";
+"addNewKeyboard" = "Lägg till nytt tangentbord…";
 "addWord" = "Lägg till ord";
 "addWordMessage" = "Detta ordet kommer att föreslås i fanan för snarlika ord";
 "allowFullAccess" = "Ge full tillgång";
@@ -11,11 +11,11 @@
 "contextsFor" = "Kontexter för \"%1$@\"";
 "delete" = "Ta bort";
 "detected" = "Upptäckt";
-"downloading" = "Laddar ned \"%1$@\"...";
+"downloading" = "Laddar ned \"%1$@\"…";
 "enableTapSoundsPlain" = "Om du vill slå på tangentbordsklickljud måste du trycka %1$@ og slå på %2$@.";
 "general" = "Generellt";
-"installingPackages" = "Installerar paket...";
-"installingSpellers" = "Installerar rättstavning...";
+"installingPackages" = "Installerar paket…";
+"installingSpellers" = "Installerar rättstavning…";
 "keyboard" = "Tangentbord";
 "keyboards" = "Tangentbord";
 "language" = "Språk";
