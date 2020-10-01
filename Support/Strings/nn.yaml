@@ -29,7 +29,7 @@ blocked: Sperra
 cancel: Avbryt
 
 # Original: Contexts for "{word}"
-contextsFor: Kontekstar for "{word}"
+contextsFor: 'Kontekstar for "{word}"'
 
 # Original: Delete
 delete: Slett
@@ -38,12 +38,12 @@ delete: Slett
 detected: Oppdaga
 
 # Original: Downloading "{package}" …
-downloading: Lastar ned "{package}" …
+downloading: 'Lastar ned "{package}" …'
 
 # Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
 enableTapSoundsPlain: >-
-  Om du vil slå på tastaturklikkelydar må du trykkja {keyboard} og slå på
-  {allowFullAccess}.
+  'Om du vil slå på tastaturklikkelydar må du trykkja {keyboard} og slå på
+  {allowFullAccess}.'
 
 # Original: General
 general: Generelt
@@ -76,7 +76,7 @@ noUserWords: Ingen brukergenererte ord enno.
 noUserWordsDescription: Ord som ikkje blir retta og som ikkje finst i ordlista vil dukka opp her.
 
 # Original: Open the {item} app
-openAppPlain: Opne {item}-appen
+openAppPlain: 'Opne {item}-appen'
 
 # Original: Open Settings
 openSettings: Opne Innstillingar
@@ -85,7 +85,7 @@ openSettings: Opne Innstillingar
 save: Lagre
 
 # Original: Set Up {keyboard}
-setUp: Konfigurer {keyboard}
+setUp: 'Konfigurer {keyboard}'
 
 # Original: Setting Up
 settingUp: Konfigurerer
@@ -97,7 +97,7 @@ settings: Innstillingar
 skip: Hopp over
 
 # Original: Tap {item}
-tapPlain: Rør {item}
+tapPlain: 'Rør {item}'
 
 # Original: Unblock
 unblock: Fjern sperring

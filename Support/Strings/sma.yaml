@@ -75,7 +75,7 @@ noUserWords: Provhkije ij naan baakoe dorjeme.
 noUserWordsDescription: Baakoeh mah eah leah staeriedamme jïh eah gååvnesh baakoegærjesne, jijhtieh daase. 
 
 # Original: Open the {item} app
-openAppPlain: Rïhpesh {item}-appem
+openAppPlain: 'Rïhpesh {item}-appem'
 
 # Original: Open Settings
 openSettings: Rïhpesh sjïehtesjimmim
@@ -84,7 +84,7 @@ openSettings: Rïhpesh sjïehtesjimmim
 save: Vöörhkh
 
 # Original: Set Up {keyboard}
-setUp: Sjïehtedh {keyboard}
+setUp: 'Sjïehtedh {keyboard}'
 
 # Original: Setting Up
 settingUp: Sjïehtediminie 
@@ -96,7 +96,7 @@ settings: Sjïehtesjidh
 skip: Baajh årrodh 
 
 # Original: Tap {item}
-tapPlain: Dïedtelh {item}
+tapPlain: 'Dïedtelh {item}'
 
 # Original: Unblock
 unblock: Ollh-hööpth 
