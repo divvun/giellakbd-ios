@@ -256,6 +256,11 @@ class Strings {
 
 fileprivate let localeTree = [
     "en": ["en"],
+    "fi": ["fi"],
     "nb": ["nb"],
-    "se": ["se"]
+    "nn": ["nn"],
+    "se": ["se"],
+    "sma": ["sma"],
+    "smj": ["smj"],
+    "sv": ["sv"]
 ]
