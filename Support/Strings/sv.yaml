@@ -29,7 +29,7 @@ blocked: Spärrad
 cancel: Avbryt
 
 # Original: Contexts for "{word}"
-contextsFor: Kontexter för "{word}"
+contextsFor: 'Kontexter för "{word}"'
 
 # Original: Delete
 delete: Ta bort
@@ -38,12 +38,12 @@ delete: Ta bort
 detected: Upptäckt
 
 # Original: Downloading "{package}"…
-downloading: Laddar ned "{package}"…
+downloading: 'Laddar ned "{package}"…'
 
 # Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
 enableTapSoundsPlain: >-
-  Om du vill slå på tangentbordsklickljud måste du trycka {keyboard} og slå på
-  {allowFullAccess}.
+  'Om du vill slå på tangentbordsklickljud måste du trycka {keyboard} og slå på
+  {allowFullAccess}.'
 
 # Original: General
 general: Generellt
@@ -76,7 +76,7 @@ noUserWords: Inga användarskapade ord ännu.
 noUserWordsDescription: Ord som inte blir korrigerade och som inte finns i ordlistan kommer att dyka upp här.
 
 # Original: Open the {item} app
-openAppPlain: Öppna {item}-appen
+openAppPlain: 'Öppna {item}-appen'
 
 # Original: Open Settings
 openSettings: Öppna Inställningar
@@ -85,7 +85,7 @@ openSettings: Öppna Inställningar
 save: Spara
 
 # Original: Set Up {keyboard}
-setUp: Konfigurera {keyboard}
+setUp: 'Konfigurera {keyboard}'
 
 # Original: Setting Up
 settingUp: Konfigurerar
@@ -97,7 +97,7 @@ settings: Inställningar
 skip: Hoppa över
 
 # Original: Tap {item}
-tapPlain: Tryck {item}
+tapPlain: 'Tryck {item}'
 
 # Original: Unblock
 unblock: Ta bort spärr

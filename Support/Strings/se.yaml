@@ -29,7 +29,7 @@ blocked: Caggojuvvon sátni
 cancel: Gaskkalduhte
 
 # Original: Contexts for "{word}"
-contextsFor: ”{word}” konteavsttat
+contextsFor: '”{word}” konteavsttat'
 
 # Original: Delete
 delete: Sihko
@@ -38,12 +38,12 @@ delete: Sihko
 detected: Áicojuvvon
 
 # Original: Downloading "{package}"…
-downloading: Viežžamin ”{package}” …
+downloading: 'Viežžamin ”{package}” …'
 
 # Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
 enableTapSoundsPlain: >-
-  Jus háliidat gullat jienaid go coahkkalat boallobeavddi, de coahkkal
-  {keyboard} ja bija johtui {allowFullAccess}.
+  'Jus háliidat gullat jienaid go coahkkalat boallobeavddi, de coahkkal
+  {keyboard} ja bija johtui {allowFullAccess}.'
 
 # Original: General
 general: Oppalaš
@@ -76,7 +76,7 @@ noUserWords: Geavaheaddji iežas sátnelistu ain guoros.
 noUserWordsDescription: Sánit mat eai leat divvojuvvon ja eai gávdno áppa sátnelisttus ihtet dás.
 
 # Original: Open the {item} app
-openAppPlain: Raba {item}-áppa
+openAppPlain: 'Raba {item}-áppa'
 
 # Original: Open Settings
 openSettings: Raba heivehusaid
@@ -85,7 +85,7 @@ openSettings: Raba heivehusaid
 save: Vurke
 
 # Original: Set Up {keyboard}
-setUp: Heivet {keyboard}
+setUp: 'Heivet {keyboard}'
 
 # Original: Setting Up
 settingUp: Heiveheamen
@@ -97,7 +97,7 @@ settings: Heivehusat
 skip: Guođe
 
 # Original: Tap {item}
-tapPlain: Coahkkal {item}
+tapPlain: 'Coahkkal {item}'
 
 # Original: Unblock
 unblock: Ale cakka sáni šat

@@ -29,7 +29,7 @@ blocked: Tsakkaduvvam bágo
 cancel: Boarkki
 
 # Original: Contexts for "{word}"
-contextsFor: ”{word}” kontevsta
+contextsFor: '”{word}” kontevsta'
 
 # Original: Delete
 delete: Sihko
@@ -38,12 +38,12 @@ delete: Sihko
 detected: Oajvvaduvvam bágo
 
 # Original: Downloading "{package}"…
-downloading: Viedtjamin ”{package}” …
+downloading: 'Viedtjamin ”{package}” …'
 
 # Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
 enableTapSoundsPlain: >-
-  Jus sidá jienajt gullat gå dieddela boallobievdev, de dieddela
-  {keyboard} ja dåhkkida {allowFullAccess}.
+  'Jus sidá jienajt gullat gå dieddela boallobievdev, de dieddela
+  {keyboard} ja dåhkkida {allowFullAccess}.'
 
 # Original: General
 general: Åbbålasj
