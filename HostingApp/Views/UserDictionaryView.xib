@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -47,7 +48,8 @@
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <viewLayoutGuide key="safeArea" id="n3q-Dj-KCE"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstItem="hWc-Gb-ixs" firstAttribute="leading" secondItem="n3q-Dj-KCE" secondAttribute="leading" constant="32" id="77U-iM-K49"/>
                         <constraint firstItem="n3q-Dj-KCE" firstAttribute="trailing" secondItem="hWc-Gb-ixs" secondAttribute="trailing" constant="32" id="9Sv-qr-SiS"/>
@@ -58,7 +60,6 @@
                         <constraint firstItem="bEa-ca-KBb" firstAttribute="leading" secondItem="Beg-AU-DQc" secondAttribute="leading" constant="32" id="uKh-Wf-xG8"/>
                         <constraint firstItem="bEa-ca-KBb" firstAttribute="top" secondItem="hWc-Gb-ixs" secondAttribute="bottom" constant="8" id="zGW-zD-AT7"/>
                     </constraints>
-                    <viewLayoutGuide key="safeArea" id="n3q-Dj-KCE"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="68q-TT-0TC" userLabel="TableContainer">
                     <rect key="frame" x="0.0" y="44" width="414" height="818"/>
@@ -75,19 +76,22 @@
                                     </segments>
                                 </segmentedControl>
                             </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
+                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="rhM-rQ-1Qr" secondAttribute="trailing" constant="8" id="2fR-m9-1w3"/>
                                 <constraint firstItem="rhM-rQ-1Qr" firstAttribute="top" secondItem="mtq-NQ-pUq" secondAttribute="top" constant="8" id="AHw-PE-AzE"/>
+                                <constraint firstItem="rhM-rQ-1Qr" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="mtq-NQ-pUq" secondAttribute="leading" constant="8" id="Uwd-wD-G54"/>
                                 <constraint firstItem="rhM-rQ-1Qr" firstAttribute="centerX" secondItem="mtq-NQ-pUq" secondAttribute="centerX" id="o39-3c-gni"/>
                                 <constraint firstAttribute="bottom" secondItem="rhM-rQ-1Qr" secondAttribute="bottom" constant="8" id="rE8-p9-Caq"/>
                             </constraints>
                         </view>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="luW-AL-biC">
                             <rect key="frame" x="0.0" y="47" width="414" height="771"/>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </tableView>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <viewLayoutGuide key="safeArea" id="vFl-0R-NQZ"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstItem="mtq-NQ-pUq" firstAttribute="leading" secondItem="vFl-0R-NQZ" secondAttribute="leading" id="8Po-gz-ey4"/>
                         <constraint firstAttribute="trailing" secondItem="luW-AL-biC" secondAttribute="trailing" id="Bq6-FH-que"/>
@@ -97,9 +101,9 @@
                         <constraint firstItem="luW-AL-biC" firstAttribute="top" secondItem="mtq-NQ-pUq" secondAttribute="bottom" id="qje-Y7-Lew"/>
                         <constraint firstAttribute="bottom" secondItem="luW-AL-biC" secondAttribute="bottom" id="sDx-NP-Mfr"/>
                     </constraints>
-                    <viewLayoutGuide key="safeArea" id="vFl-0R-NQZ"/>
                 </view>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="68q-TT-0TC" secondAttribute="trailing" id="0QC-X2-ddZ"/>
@@ -111,7 +115,6 @@
                 <constraint firstAttribute="bottom" secondItem="Beg-AU-DQc" secondAttribute="bottom" constant="20" symbolic="YES" id="xzu-rN-JGh"/>
                 <constraint firstItem="68q-TT-0TC" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="yCd-Le-OEH"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
                 <outlet property="detailLabel" destination="bEa-ca-KBb" id="Zx4-xg-1LI"/>
                 <outlet property="dictionaryIconContainer" destination="M1B-on-W8e" id="b5R-EE-M2w"/>
@@ -126,5 +129,8 @@
     </objects>
     <resources>
         <image name="dictionary" width="182" height="151"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>
