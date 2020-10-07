@@ -42,8 +42,8 @@ downloading: 'Viežžamin ”{package}” …'
 
 # Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
 enableTapSoundsPlain: >-
-  'Jus háliidat gullat jienaid go coahkkalat boallobeavddi, de coahkkal
-  {keyboard} ja bija johtui {allowFullAccess}.'
+  Jus háliidat gullat jienaid go coahkkalat boallobeavddi, de coahkkal
+  {keyboard} ja bija johtui {allowFullAccess}.
 
 # Original: General
 general: Oppalaš

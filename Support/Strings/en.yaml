@@ -42,8 +42,8 @@ downloading: 'Downloading "{package}"…'
 
 # Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
 enableTapSoundsPlain: >-
-  'If you wish to enable key tap sounds, you must then tap {keyboard} and toggle
-  {allowFullAccess}.'
+  If you wish to enable key tap sounds, you must then tap {keyboard} and toggle
+  {allowFullAccess}.
 
 # Original: General
 general: General

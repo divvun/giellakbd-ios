@@ -42,8 +42,8 @@ downloading: 'Laddar ned "{package}"…'
 
 # Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
 enableTapSoundsPlain: >-
-  'Om du vill slå på tangentbordsklickljud måste du trycka {keyboard} og slå på
-  {allowFullAccess}.'
+  Om du vill slå på tangentbordsklickljud måste du trycka {keyboard} og slå på
+  {allowFullAccess}.
 
 # Original: General
 general: Generellt

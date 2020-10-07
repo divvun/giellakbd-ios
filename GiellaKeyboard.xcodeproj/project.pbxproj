@@ -770,6 +770,10 @@
 				nn,
 				sv,
 				fi,
+				sma,
+				smj,
+				smn,
+				sms,
 			);
 			mainGroup = 4E807D8A19461D9000D875D1;
 			productRefGroup = 4E807D9419461D9000D875D1 /* Products */;
