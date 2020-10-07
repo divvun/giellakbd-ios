@@ -21,6 +21,7 @@ final class WordContextViewController: ViewController<WordContextView> {
         tableView.dataSource = self
         tableView.register(WordContextCell.self)
         tableView.tableFooterView = UIView()
+        tableView.allowsSelection = false
     }
 
     required init?(coder _: NSCoder) {
