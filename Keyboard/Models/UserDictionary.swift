@@ -205,10 +205,12 @@ public final class UserDictionary {
     }
 
     public func blacklistWord(_ word: String) {
-        guard let existingWord = fetchWord(word) else {
-            return
+        if let existingWord = fetchWord(word) {
+            updateWordState(id: existingWord[WordTable.id], state: .blacklisted)
+        } else {
+            let wordId = insertWord(word: word, state: .blacklisted)
+            insertContext(WordContext(word: word), for: wordId)
         }
-        updateWordState(id: existingWord[WordTable.id], state: .blacklisted)
     }
 
     public func unblacklistWord(_ word: String) {

@@ -146,10 +146,15 @@ final class UserDictionaryViewController: ViewController<UserDictionaryView> {
     }
 
     private func insertWordAndUpdateView(_ word: String) {
-        userDictionary.addWordManually(word)
-        if currentSegment == .userDefined {
-            let insertIndexPath = indexPathForNewWord(word: word)
-            tableView.insertRows(at: [insertIndexPath], with: .automatic)
+        switch currentSegment {
+        case .detected:
+            userDictionary.addWordManually(word)
+        case .userDefined:
+            userDictionary.addWordManually(word)
+            animateInsertionOfNewWord(word)
+        case .blocked:
+            userDictionary.blacklistWord(word)
+            animateInsertionOfNewWord(word)
         }
         updateEmptyStateView()
     }
@@ -170,6 +175,11 @@ final class UserDictionaryViewController: ViewController<UserDictionaryView> {
         let word = blockedWords[indexPath.row]
         userDictionary.unblacklistWord(word)
         tableView.deleteRows(at: [indexPath], with: .automatic)
+    }
+
+    private func animateInsertionOfNewWord(_ word: String) {
+        let insertIndexPath = indexPathForNewWord(word: word)
+        tableView.insertRows(at: [insertIndexPath], with: .automatic)
     }
 
     private func indexPathForNewWord(word: String) -> IndexPath {
