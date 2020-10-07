@@ -233,6 +233,8 @@
 		BDEC2FC4A98B67D1C339DCB0 /* Pods_HostingAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HostingAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C610DA4720D3E40E00C84945 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = HostingApp/fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C61CC29120C8A5C000B213B8 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = HostingApp/sv.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C62AF50F252DC8BD00620D6F /* sma */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sma; path = HostingApp/sma.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C62AF510252DC94400620D6F /* smj */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = smj; path = HostingApp/smj.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C63EE0FE2361D86800A1E15A /* MenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButton.swift; sourceTree = "<group>"; };
 		C63EE1002362F7E500A1E15A /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		C643BF5A20BD483C00124DDC /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -1108,6 +1110,8 @@
 				C643BF6E20BEB91600124DDC /* nn */,
 				C61CC29120C8A5C000B213B8 /* sv */,
 				C610DA4720D3E40E00C84945 /* fi */,
+				C62AF50F252DC8BD00620D6F /* sma */,
+				C62AF510252DC94400620D6F /* smj */,
 			);
 			name = Localizable.strings;
 			path = ..;
