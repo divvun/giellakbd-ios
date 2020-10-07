@@ -1,6 +1,6 @@
 import Foundation
 
-public struct KeyboardLocale {
+public struct KeyboardLocale: Hashable {
     let identifier: String
     let languageName: String
 

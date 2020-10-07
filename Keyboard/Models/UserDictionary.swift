@@ -2,6 +2,13 @@ import Foundation
 import SQLite
 
 public final class UserDictionary {
+
+    static func hasContentFor(locale: KeyboardLocale) -> Bool {
+        let dict = UserDictionary(locale: locale)
+        return dict.getDetectedAndUserDefinedWords().isEmpty == false ||
+            dict.getBlacklistedWords().isEmpty == false
+    }
+
     public let locale: KeyboardLocale
 
     private enum WordState: String {
