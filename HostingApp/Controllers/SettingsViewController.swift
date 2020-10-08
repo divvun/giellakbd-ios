@@ -2,6 +2,11 @@ import UIKit
 
 final class SettingsViewController: BaseSettingsViewController, SettingsController {
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        title = Strings.settings
+    }
+
     override func rows() -> [Row] {
         let destinationViewController: ViewControllerMaker
         let locales = KeyboardLocale.allLocales
