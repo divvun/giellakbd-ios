@@ -23,7 +23,7 @@ attributions: Eará gáldut
 block: Cakka sáni
 
 # Original: Blocked
-blocked: Caggojuvvon sátni
+blocked: Caggon sánit
 
 # Original: Cancel
 cancel: Gaskkalduhte
@@ -35,7 +35,7 @@ contextsFor: '”{word}” konteavsttat'
 delete: Sihko
 
 # Original: Detected
-detected: Áicojuvvon
+detected: Áicon sánit
 
 # Original: Downloading "{package}"…
 downloading: 'Viežžamin ”{package}” …'
@@ -103,7 +103,7 @@ tapPlain: 'Coahkkal {item}'
 unblock: Ale cakka sáni šat
 
 # Original: User-Defined
-userDefined: Geavaheaddjimeroštuvvon
+userDefined: Iežat sánit
 
 # Original: User Dictionary
 userDictionary: Geavaheaddji sátnelistu
