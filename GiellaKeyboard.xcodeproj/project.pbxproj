@@ -271,6 +271,9 @@
 		C6B638431EDF81B200A6ECB2 /* SimpleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleButton.swift; sourceTree = "<group>"; };
 		C6B638451EDF94CA00A6ECB2 /* AboutController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutController.swift; sourceTree = "<group>"; };
 		C6D304A61BFD73750023EC5F /* Keyboard-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Keyboard-Bridging-Header.h"; sourceTree = "<group>"; };
+		C6D56BE12534B8DB00620D6F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = HostingApp/en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C6D56BE22534B8E400620D6F /* smn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = smn; path = HostingApp/smn.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C6D56BE32534B8E500620D6F /* sms */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sms; path = HostingApp/sms.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C6DCFDD51EB0787A00FABC11 /* KeyboardDefinition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardDefinition.swift; sourceTree = "<group>"; };
 		C6EA31C021AF17CE0014F3B6 /* KeyboardDefinitions.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = KeyboardDefinitions.json; sourceTree = "<group>"; };
 		C6F2492F1F736DCE00840F2B /* BaseKeyboard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BaseKeyboard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1112,6 +1115,9 @@
 				C610DA4720D3E40E00C84945 /* fi */,
 				C62AF50F252DC8BD00620D6F /* sma */,
 				C62AF510252DC94400620D6F /* smj */,
+				C6D56BE12534B8DB00620D6F /* en */,
+				C6D56BE22534B8E400620D6F /* smn */,
+				C6D56BE32534B8E500620D6F /* sms */,
 			);
 			name = Localizable.strings;
 			path = ..;
