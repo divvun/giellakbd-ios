@@ -1,5 +1,5 @@
 # Original: About
-about: Tietoja
+about: Tietoja näppäimistösovelluksesta
 
 # Original: Add
 add: Lisää
@@ -23,7 +23,7 @@ attributions: Attribuutiot
 block: Estä
 
 # Original: Blocked
-blocked: Estetty
+blocked: Estetyt sanat
 
 # Original: Cancel
 cancel: Peru
@@ -35,7 +35,7 @@ contextsFor: 'Kontekstit sanalle "{word}"'
 delete: Poista
 
 # Original: Detected
-detected: Tunnistettu
+detected: Tunnistetut sanat
 
 # Original: Downloading "{package}"…
 downloading: 'Ladataan pakettia "{package}"…'
@@ -105,7 +105,7 @@ tapPlain: 'Paina {item}'
 unblock: Poista estot
 
 # Original: User-Defined
-userDefined: Käyttäjän
+userDefined: Omat sanat
 
 # Original: User Dictionary
 userDictionary: Käyttäjän sanakirja
