@@ -23,7 +23,7 @@ attributions: Andra källor
 block: Spärr
 
 # Original: Blocked
-blocked: Spärrad
+blocked: Spärrade ord
 
 # Original: Cancel
 cancel: Avbryt
@@ -35,7 +35,7 @@ contextsFor: 'Kontexter för "{word}"'
 delete: Ta bort
 
 # Original: Detected
-detected: Upptäckt
+detected: Upptäckta ord
 
 # Original: Downloading "{package}"…
 downloading: 'Laddar ned "{package}"…'
@@ -103,7 +103,7 @@ tapPlain: 'Tryck {item}'
 unblock: Ta bort spärr
 
 # Original: User-Defined
-userDefined: Användardefinierad
+userDefined: Egna ord
 
 # Original: User Dictionary
 userDictionary: Användarordlista

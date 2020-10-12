@@ -23,7 +23,7 @@ attributions: Andre kilder
 block: Sperr
 
 # Original: Blocked
-blocked: Sperra
+blocked: Sperra ord
 
 # Original: Cancel
 cancel: Avbryt
@@ -35,7 +35,7 @@ contextsFor: 'Kontekster for "{word}"'
 delete: Slett
 
 # Original: Detected
-detected: Oppdaga
+detected: Oppdaga ord
 
 # Original: Downloading "{package}" …
 downloading: 'Laster ned "{package}" …'
@@ -103,7 +103,7 @@ tapPlain: 'Berør {item}'
 unblock: Fjern sperring
 
 # Original: User-Defined
-userDefined: Brukerdefinert
+userDefined: Egne ord
 
 # Original: User Dictionary
 userDictionary: Brukerordliste
