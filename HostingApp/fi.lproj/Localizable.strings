@@ -1,4 +1,4 @@
-"about" = "Tietoja";
+"about" = "Tietoja näppäimistösovelluksesta";
 "add" = "Lisää";
 "addNewKeyboard" = "Lisää uusi näppäimistö…";
 "addWord" = "Lisää sana";
@@ -6,11 +6,11 @@
 "allowFullAccess" = "Salli kaikki oikeudet";
 "attributions" = "Attribuutiot";
 "block" = "Estä";
-"blocked" = "Estetty";
+"blocked" = "Estetyt sanat";
 "cancel" = "Peru";
 "contextsFor" = "Kontekstit sanalle \"%1$@\"";
 "delete" = "Poista";
-"detected" = "Tunnistettu";
+"detected" = "Tunnistetut sanat";
 "downloading" = "Ladataan pakettia \"%1$@\"…";
 "enableTapSoundsPlain" = "Jos haluat näppäinäänet käyttöön, paina nappia %1$@ ja vaihda asetusta %2$@.";
 "general" = "General";
@@ -32,7 +32,7 @@
 "skip" = "Ohita";
 "tapPlain" = "Paina %1$@";
 "unblock" = "Poista estot";
-"userDefined" = "Käyttäjän";
+"userDefined" = "Omat sanat";
 "userDictionary" = "Käyttäjän sanakirja";
 "whenYouHaveFinished" = "Palaa takaisin tähän sovellukseen lopetettuasi.";
 "word" = "Sana";

@@ -6,11 +6,11 @@
 "allowFullAccess" = "Ge full tillgång";
 "attributions" = "Andra källor";
 "block" = "Spärr";
-"blocked" = "Spärrad";
+"blocked" = "Spärrade ord";
 "cancel" = "Avbryt";
 "contextsFor" = "Kontexter för \"%1$@\"";
 "delete" = "Ta bort";
-"detected" = "Upptäckt";
+"detected" = "Upptäckta ord";
 "downloading" = "Laddar ned \"%1$@\"…";
 "enableTapSoundsPlain" = "Om du vill slå på tangentbordsklickljud måste du trycka %1$@ og slå på %2$@.";
 "general" = "Generellt";
@@ -32,7 +32,7 @@
 "skip" = "Hoppa över";
 "tapPlain" = "Tryck %1$@";
 "unblock" = "Ta bort spärr";
-"userDefined" = "Användardefinierad";
+"userDefined" = "Egna ord";
 "userDictionary" = "Användarordlista";
 "whenYouHaveFinished" = "När du är färdig – gå tillbaks till denna appen för att fortsätta.";
 "word" = "ord";

@@ -6,11 +6,11 @@
 "allowFullAccess" = "Atte dievaslaš beassan dán áppii";
 "attributions" = "Eará gáldut";
 "block" = "Cakka sáni";
-"blocked" = "Caggojuvvon sátni";
+"blocked" = "Caggon sánit";
 "cancel" = "Gaskkalduhte";
 "contextsFor" = "”%1$@” konteavsttat";
 "delete" = "Sihko";
-"detected" = "Áicojuvvon";
+"detected" = "Áicon sánit";
 "downloading" = "Viežžamin ”%1$@” …";
 "enableTapSoundsPlain" = "Jus háliidat gullat jienaid go coahkkalat boallobeavddi, de coahkkal %1$@ ja bija johtui %2$@.";
 "general" = "Oppalaš";
@@ -32,7 +32,7 @@
 "skip" = "Guođe";
 "tapPlain" = "Coahkkal %1$@";
 "unblock" = "Ale cakka sáni šat";
-"userDefined" = "Geavaheaddjimeroštuvvon";
+"userDefined" = "Iežat sánit";
 "userDictionary" = "Geavaheaddji sátnelistu";
 "whenYouHaveFinished" = "Go leat geargan, máhcat dán áppii ja joatkke barggu.";
 "word" = "sátni";

@@ -6,11 +6,11 @@
 "allowFullAccess" = "Gi full tilgang";
 "attributions" = "Andre kilder";
 "block" = "Sperr";
-"blocked" = "Sperra";
+"blocked" = "Sperra ord";
 "cancel" = "Avbryt";
 "contextsFor" = "Kontekster for \"%1$@\"";
 "delete" = "Slett";
-"detected" = "Oppdaga";
+"detected" = "Oppdaga ord";
 "downloading" = "Laster ned \"%1$@\" …";
 "enableTapSoundsPlain" = "Om du vil slå på tastaturklikkelyder må du trykke %1$@ og slå på %2$@.";
 "general" = "Generelt";
@@ -32,7 +32,7 @@
 "skip" = "Hopp over";
 "tapPlain" = "Berør %1$@";
 "unblock" = "Fjern sperring";
-"userDefined" = "Brukerdefinert";
+"userDefined" = "Egne ord";
 "userDictionary" = "Brukerordliste";
 "whenYouHaveFinished" = "Når du er ferdig, gå tilbake til denne appen for å fortsette.";
 "word" = "ord";

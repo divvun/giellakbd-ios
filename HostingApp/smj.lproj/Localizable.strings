@@ -1,4 +1,4 @@
-"about" = "Boallobievddeprográmma birra";
+"about" = "Boallobievdeprográmma birra";
 "add" = "Laseda";
 "addNewKeyboard" = "Laseda ådå boallobievdev …";
 "addWord" = "Laseda bágov";
@@ -6,11 +6,11 @@
 "allowFullAccess" = "Dåhkkida ålleslasj bessamav dán æhppaj";
 "attributions" = "Ietjá gáldo";
 "block" = "Tsakka bágov";
-"blocked" = "Tsakkaduvvam bágo";
+"blocked" = "Tsakkaduvvam";
 "cancel" = "Boarkki";
 "contextsFor" = "”%1$@” kontevsta";
 "delete" = "Sihko";
-"detected" = "Oajvvaduvvam bágo";
+"detected" = "Oajvvaduvvam";
 "downloading" = "Viedtjamin ”%1$@” …";
 "enableTapSoundsPlain" = "Jus sidá jienajt gullat gå dieddela boallobievdev, de dieddela %1$@ ja dåhkkida %2$@.";
 "general" = "Åbbålasj";
@@ -32,7 +32,7 @@
 "skip" = "Guode";
 "tapPlain" = "Dieddela %1$@";
 "unblock" = "Ale das bágo tsakka";
-"userDefined" = "Laseduvvam addnes";
-"userDictionary" = "Addne báhkolissta";
+"userDefined" = "Laseduvvam";
+"userDictionary" = "Addnebáhkolissta";
 "whenYouHaveFinished" = "Gå la gærggam, máhtsa dán æhppaj ja joarke bargov.";
 "word" = "Báhko";
