@@ -23,7 +23,7 @@ attributions: Ietjá gáldo
 block: Tsakka bágov
 
 # Original: Blocked
-blocked: Tsakkaduvvam bágo
+blocked: Tsakkaduvvam
 
 # Original: Cancel
 cancel: Boarkki
@@ -35,7 +35,7 @@ contextsFor: '”{word}” kontevsta'
 delete: Sihko
 
 # Original: Detected
-detected: Oajvvaduvvam bágo
+detected: Oajvvaduvvam
 
 # Original: Downloading "{package}"…
 downloading: 'Viedtjamin ”{package}” …'
@@ -103,7 +103,7 @@ tapPlain: 'Dieddela {item}'
 unblock: Ale das bágo tsakka
 
 # Original: User-Defined
-userDefined: Laseduvvam addnes
+userDefined: Laseduvvam
 
 # Original: User Dictionary
 userDictionary: Addnebáhkolissta
