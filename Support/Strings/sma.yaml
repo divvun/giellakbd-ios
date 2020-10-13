@@ -11,7 +11,7 @@ addNewKeyboard: Lissedh orre båaloebuertiem …
 addWord: Lissedh baakoem
 
 # Original: This word will be suggested in the spelling banner for similar input.
-addWordMessage: Daate baakoe jeajhta gosse tjaalah seamma-laaketje baakoeh. 
+addWordMessage: Daate baakoe jeajhta evtiehtassene gosse tjaalah seamma-laaketje baakoeh. 
 
 # Original: Allow Full Access
 allowFullAccess: Vedtih gaajhkh luehpieh dan appese
@@ -23,7 +23,7 @@ attributions: Jeatjah gaaltijh
 block: Hööpth baakoem
 
 # Original: Blocked
-blocked: Hööpteme baakoe
+blocked: Hööpteme baakoeh
 
 # Original: Cancel
 cancel: Orrijidh
@@ -69,10 +69,10 @@ layouts: Hammoeh
 localeSjd: Gielddasaemien
 
 # Original: No user-created words yet.
-noUserWords: Provhkije ij naan baakoe dorjeme.
+noUserWords: Ij naan baakoeh provhkijen baakoelæstosne.
 
 # Original: Words that are left uncorrected and are not in the built-in dictionary will appear here.
-noUserWordsDescription: Baakoeh mah eah leah staeriedamme jïh eah gååvnesh baakoegærjesne, jijhtieh daase. 
+noUserWordsDescription: Baakoeh maam staeriedimmiedirrege ij damth, men maam datne damtaj provhkh,  jijhtieh daase. 
 
 # Original: Open the {item} app
 openAppPlain: 'Rïhpesh {item}-appem'
@@ -102,10 +102,10 @@ tapPlain: 'Dïedtelh {item}'
 unblock: Ollh-hööpth 
 
 # Original: User-Defined
-userDefined: Provhkije tjilkestamme
+userDefined: Jïjtjedh baakoeh
 
 # Original: User Dictionary
-userDictionary: Provhkijen baakoegærja
+userDictionary: Provhkijen baakoelæstoe
 
 # Original: When you have finished, return to this app to continue.
 whenYouHaveFinished: Gosse galkeme, dellie bååstede dan appese barkojne jåerhkh.
