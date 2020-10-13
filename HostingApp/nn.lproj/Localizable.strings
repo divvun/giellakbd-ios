@@ -21,7 +21,7 @@
 "language" = "Språk";
 "layouts" = "Tastatur";
 "localeSjd" = "Kildinsamisk";
-"noUserWords" = "Ingen brukergenererte ord enno.";
+"noUserWords" = "Ingen ord i brukarordlista enno.";
 "noUserWordsDescription" = "Ord som ikkje blir retta og som ikkje finst i ordlista vil dukka opp her.";
 "openAppPlain" = "Opne %1$@-appen";
 "openSettings" = "Opne Innstillingar";
