@@ -11,7 +11,7 @@ addNewKeyboard: Legg til nytt tastatur …
 addWord: Legg til ord
 
 # Original: This word will be suggested in the spelling banner for similar input.
-addWordMessage: Dette ordet vil bli føreslått i banneret for liknande ord
+addWordMessage: Dette ordet kjem som forslag i banneret når du skriv snarlike ord
 
 # Original: Allow Full Access
 allowFullAccess: Gje full tilgang
@@ -73,7 +73,7 @@ localeSjd: Kildinsamisk
 noUserWords: Ingen ord i brukarordlista enno.
 
 # Original: Words that are left uncorrected and are not in the built-in dictionary will appear here.
-noUserWordsDescription: Ord som ikkje blir retta og som ikkje finst i ordlista vil dukka opp her.
+noUserWordsDescription: Ord som stavekontrollen ikkje kjenner, og som du bruker ofte, vil bli lagt til her.
 
 # Original: Open the {item} app
 openAppPlain: 'Opne {item}-appen'
