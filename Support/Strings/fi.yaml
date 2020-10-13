@@ -74,7 +74,7 @@ noUserWords: Käyttäjän luomia sanoja ei ole vielä.
 
 # Original: Words that are left uncorrected and are not in the built-in dictionary will appear here.
 noUserWordsDescription: >-
-  Sanat joita ei korjata ja jotka eivät ole sisäänrakennetussa sanakirjassa
+  Sanat joita oikoluku ei tunnista ja joita käytetään usein
   näkyvät täällä.
 
 # Original: Open the {item} app
