@@ -1,0 +1,116 @@
+# Original: About
+about: Повнелазонь программадонть
+
+# Original: Add
+add: Путомс
+
+# Original: Add New Keyboard…
+addNewKeyboard: Путомс од повнелаз…
+
+# Original: Add Word
+addWord: Поладомс вал
+
+# Original: This word will be suggested in the spelling banner for similar input.
+addWordMessage: Омбоцеде секе повнетнень лепштямсто те валоськак ливтеви кочкамкс валкаркскес.
+
+# Original: Allow Full Access
+allowFullAccess: Максомс весе видечитнень
+
+# Original: Attributions
+attributions: Аттрибутт
+
+# Original: Block
+block: Саймес саемс
+
+# Original: Blocked
+blocked: Саймес саезь
+
+# Original: Cancel
+cancel: Лоткавтомс
+
+# Original: Contexts for "{word}"
+contextsFor: '"{word}" валонть контекстэнзэ'
+
+# Original: Delete
+delete: Нардамс
+
+# Original: Detected
+detected: Нардазь
+
+# Original: Downloading "{package}"…
+downloading: 'Тарги "{package}"…'
+
+# Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
+enableTapSoundsPlain: >-
+  Мелеть сайтянзат марямс повнень токамо гайть, сави токамс "{keyboard}" ды кочкамс "{allowFullAccess}".
+
+# Original: General
+general: Вейсэнь
+
+# Original: Installing packages…
+installingPackages: Аравты пакеттнэсэ…
+
+# Original: Installing Spellers…
+installingSpellers: Аравты видестэ сёрмадома тевнеть…
+
+# Original: Keyboard
+keyboard: Повнелаз
+
+# Original: Keyboards
+keyboards: Повнелазт
+
+# Original: Language
+language: Кель
+
+# Original: Layouts
+layouts: Повнелув
+
+# Original: Kildin Sami
+localeSjd: Кильдинэнь саам
+
+# Original: No user-created words yet.
+noUserWords: Сёрмадыцянть эсензэ путовксонзо зярс арасть.
+
+# Original: Words that are left uncorrected and are not in the built-in dictionary will appear here.
+noUserWordsDescription: >-
+  Сёрмадомсто валт, конатне лиядыть апак вите ды сынсь а вастневить валкссонть, совавтовить тезэнь.
+
+# Original: Open the {item} app
+openAppPlain: 'Панжомс "{item}" повнелазонь программанть'
+
+# Original: Open Settings
+openSettings: Панжомс аравтомкатнень
+
+# Original: Save
+save: Ванстомс
+
+# Original: Set Up {keyboard}
+setUp: 'Аравтомс {keyboard}'
+
+# Original: Setting Up
+settingUp: Аравтови
+
+# Original: Settings
+settings: Аравтомкат
+
+# Original: Skip
+skip: Ютамс вакска
+
+# Original: Tap {item}
+tapPlain: 'Токамс {item}'
+
+# Original: Unblock
+unblock: Саемс сайместэ
+
+# Original: User-Defined
+userDefined: Сёрмадыцянсеть
+
+# Original: User Dictionary
+userDictionary: Сёрмадыцянь валкс
+
+# Original: When you have finished, return to this app to continue.
+whenYouHaveFinished: 'Зярдо весе аравтовсь, велявтта мекев те повнелазонь
+                      программантень тевень поладомга.'
+
+# Original: Word
+word: Вал
