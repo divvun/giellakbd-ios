@@ -1,14 +1,11 @@
 PODS:
-  - DivvunSpell (0.2.3)
-  - PahkatClient (0.2.8)
+  - DivvunSpell (0.3.1)
+  - PahkatClient (0.2.9)
   - RxSwift (5.1.1)
   - Sentry (4.5.0):
     - Sentry/Core (= 4.5.0)
   - Sentry/Core (4.5.0)
-  - SQLite.swift (0.12.2):
-    - SQLite.swift/standard (= 0.12.2)
-  - SQLite.swift/standard (0.12.2)
-  - SwiftLint (0.39.2)
+  - SwiftLint (0.40.3)
   - UIDeviceComplete (2.6.6)
 
 DEPENDENCIES:
@@ -16,7 +13,6 @@ DEPENDENCIES:
   - PahkatClient (from `https://github.com/divvun/pahkat-client-sdk-swift/`)
   - RxSwift
   - Sentry (= 4.5.0)
-  - SQLite.swift (~> 0.12.0)
   - SwiftLint
   - UIDeviceComplete (from `https://github.com/bbqsrc/UIDeviceComplete`)
 
@@ -24,7 +20,6 @@ SPEC REPOS:
   trunk:
     - RxSwift
     - Sentry
-    - SQLite.swift
     - SwiftLint
 
 EXTERNAL SOURCES:
@@ -39,11 +34,11 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   DivvunSpell:
-    :commit: d92b47613d85f15ab7e5ae4a62cb5fd1a70c984e
+    :commit: d82bc40bb02754d7434832bd8eb5d10032a6ebc7
     :git: https://github.com/divvun/divvunspell-swift
     :submodules: true
   PahkatClient:
-    :commit: af4153987d2393b59aae36bf98969612553178a9
+    :commit: be17b72d8dcb9c2cf5a0826d715c57c94c0d0327
     :git: https://github.com/divvun/pahkat-client-sdk-swift/
     :submodules: true
   UIDeviceComplete:
@@ -51,14 +46,13 @@ CHECKOUT OPTIONS:
     :git: https://github.com/bbqsrc/UIDeviceComplete
 
 SPEC CHECKSUMS:
-  DivvunSpell: 0bfcaee6ab4c45ec6c0e827fd09523faf3c283bc
-  PahkatClient: 45000077bb4c5067a214def76983f43f11ee5041
+  DivvunSpell: c3e72dacb27c028761c7317a89ba679630dcdf2f
+  PahkatClient: 2947a5b7314a1e23a7da336489a8a83cf1b515a4
   RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
   Sentry: ab6c209f23700d1460691dbc90e19ed0a05d496b
-  SQLite.swift: d2b4642190917051ce6bd1d49aab565fe794eea3
-  SwiftLint: 22ccbbe3b8008684be5955693bab135e0ed6a447
+  SwiftLint: dfd554ff0dff17288ee574814ccdd5cea85d76f7
   UIDeviceComplete: c89b90393fb2a3446f5e0e86eca0c02d6f8e09f0
 
-PODFILE CHECKSUM: 6e8121c08ec459b2fe0452dae72c5ecf4aec59de
+PODFILE CHECKSUM: 26807fbc5bdb7724e28a8f176374a138b6459a2f
 
 COCOAPODS: 1.9.1
