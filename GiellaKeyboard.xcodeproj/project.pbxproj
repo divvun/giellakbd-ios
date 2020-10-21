@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -89,7 +89,6 @@
 		C6A3905B1EB61BF8009378C1 /* KeyboardSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A3905A1EB61BF8009378C1 /* KeyboardSettings.swift */; };
 		C6B638441EDF81B200A6ECB2 /* SimpleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B638431EDF81B200A6ECB2 /* SimpleButton.swift */; };
 		C6B638461EDF94CA00A6ECB2 /* AboutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B638451EDF94CA00A6ECB2 /* AboutController.swift */; };
-		C6C275E0253F7E3100620D6F /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = C6C275DF253F7E3100620D6F /* SQLite */; };
 		C6EA31C321AF181D0014F3B6 /* KeyboardDefinitions.json in Resources */ = {isa = PBXBuildFile; fileRef = C6EA31C021AF17CE0014F3B6 /* KeyboardDefinitions.json */; };
 		C6F249331F736DCE00840F2B /* BaseKeyboard.h in Headers */ = {isa = PBXBuildFile; fileRef = C6F249311F736DCE00840F2B /* BaseKeyboard.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C6F249361F736DCE00840F2B /* BaseKeyboard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6F2492F1F736DCE00840F2B /* BaseKeyboard.framework */; };
@@ -323,7 +322,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C6C275E0253F7E3100620D6F /* SQLite in Frameworks */,
 				6949B7BA8FCEAD7A27EDFFE0 /* Pods_BaseKeyboard.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -722,7 +720,6 @@
 			);
 			name = BaseKeyboard;
 			packageProductDependencies = (
-				C6C275DF253F7E3100620D6F /* SQLite */,
 			);
 			productName = BaseKeyboard;
 			productReference = C6F2492F1F736DCE00840F2B /* BaseKeyboard.framework */;
@@ -789,7 +786,6 @@
 			);
 			mainGroup = 4E807D8A19461D9000D875D1;
 			packageReferences = (
-				C6C275D7253F7E0600620D6F /* XCRemoteSwiftPackageReference "SQLite" */,
 			);
 			productRefGroup = 4E807D9419461D9000D875D1 /* Products */;
 			projectDirPath = "";
@@ -1616,25 +1612,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		C6C275D7253F7E0600620D6F /* XCRemoteSwiftPackageReference "SQLite" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/stephencelis/SQLite.swift";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.12.2;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		C6C275DF253F7E3100620D6F /* SQLite */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C6C275D7253F7E0600620D6F /* XCRemoteSwiftPackageReference "SQLite" */;
-			productName = SQLite;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4E807D8B19461D9000D875D1 /* Project object */;
 }
