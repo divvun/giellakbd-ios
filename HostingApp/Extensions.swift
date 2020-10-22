@@ -152,6 +152,7 @@ extension Strings {
                 return bundle.path(forResource: "Localizable", ofType: "strings") != nil
         }
         .filter { $0 != "Base" }
+        .map { Locale(identifier: $0) }
         .sorted(by: {
             languageName(for: $0)! < languageName(for: $1)!
         })
