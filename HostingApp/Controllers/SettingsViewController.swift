@@ -10,9 +10,10 @@ final class SettingsViewController: BaseSettingsViewController, SettingsControll
     override func rows() -> [Row] {
         let destinationViewController: ViewControllerMaker
         let locales = KeyboardLocale.allLocales
-        if locales.count == 1 {
+
+        if let locale = locales.first {
             destinationViewController = {
-                UserDictionaryViewController(keyboardLocale: locales.first!)
+                UserDictionaryViewController(keyboardLocale: locale)
             }
         } else {
             destinationViewController = {

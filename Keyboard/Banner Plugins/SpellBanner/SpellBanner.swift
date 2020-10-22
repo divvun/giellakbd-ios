@@ -53,7 +53,8 @@ public final class SpellBanner: Banner {
             return false
         }
         let hasSpeller = FileManager.default.fileExists(atPath: spellerURL.path)
-        return hasSpeller == false
+        let databaseExists = FileManager.default.fileExists(atPath: UserDictionary.dbFilePath)
+        return !hasSpeller || !databaseExists
     }
 
     init(theme: ThemeType) {

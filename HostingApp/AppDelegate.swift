@@ -49,6 +49,9 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
         navController.delegate = ncDelegate
 
+        // Migrate the databases
+        UserDictionary.migrate()
+
         window = UIWindow(frame: UIScreen.main.bounds)
         window!.rootViewController = navController
         window!.makeKeyAndVisible()

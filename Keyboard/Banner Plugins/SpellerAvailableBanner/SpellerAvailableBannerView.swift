@@ -19,6 +19,7 @@ final class SpellerAvailableBannerView: UIView, BannerView {
     private func setupLabel() {
         addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false
+        // TODO: localise!!
         label.text = "Speller available. Tap to install."
         label.textAlignment = .center
         label.fill(superview: self)

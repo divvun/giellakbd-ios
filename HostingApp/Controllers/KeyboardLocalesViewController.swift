@@ -18,7 +18,6 @@ final class KeyboardLocalesViewController: BaseSettingsViewController, SettingsC
             $0.languageName < $1.languageName
         }
 
-
         for locale in sortedLocales {
             let row = Row(title: locale.languageName) { () -> UIViewController in
                 UserDictionaryViewController(keyboardLocale: locale)

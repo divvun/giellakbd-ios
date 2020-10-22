@@ -3,6 +3,11 @@ import SQLite
 
 extension UserDictionary {
     public func dropTables() {
+        guard let database = database else {
+            print("No database is loaded.")
+            return
+        }
+
         do {
             try database.run(WordTable.table.drop())
             try database.run(ContextTable.table.drop())
@@ -31,6 +36,11 @@ extension UserDictionary {
     }
 
     public func printDatabaseRows() {
+        guard let database = database else {
+            print("No database is loaded.")
+            return
+        }
+
         do {
             print("WORDS TABLE:")
             for row in try database.prepare(WordTable.table) {
@@ -67,6 +77,10 @@ extension UserDictionary {
     }
 
     private func getDatabaseRows(for table: Table) -> [SQLite.Row] {
+        guard let database = database else {
+            return []
+        }
+
         do {
             return try Array(database.prepare(table))
         } catch {

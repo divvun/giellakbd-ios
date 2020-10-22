@@ -9,6 +9,13 @@ public final class UserDictionary {
             dict.getBlacklistedWords().isEmpty == false
     }
 
+    static func migrate() {
+        for locale in KeyboardLocale.enabledLocales {
+            // Force the creation of the database.
+            let _ = UserDictionary(locale: locale).database
+        }
+    }
+
     public let locale: KeyboardLocale
 
     private enum WordState: String {
@@ -36,14 +43,14 @@ public final class UserDictionary {
         static let secondAfter = Expression<String?>("second_after")
     }
 
-    private lazy var dbFilePath: String = {
+    internal static var dbFilePath: String = {
         let dbFileName = "userDictionary.sqlite3"
         return KeyboardSettings.groupContainerURL.appendingPathComponent(dbFileName).path
     }()
 
-    internal lazy var database: Connection = {
-        guard let database = try? Connection(dbFilePath) else {
-            fatalError("Unable to create or open user dictionary database")
+    internal lazy var database: Connection? = {
+        guard let database = try? Connection(Self.dbFilePath) else {
+            return nil
         }
         try? database.execute("PRAGMA foreign_keys = ON;")
         createTablesIfNeeded(database: database)
@@ -125,6 +132,8 @@ public final class UserDictionary {
     }
 
     private func getWordList(query: Table) -> [String] {
+        guard let database = database else { return [] }
+
         var words: [String] = []
         do {
             let rows = try database.prepare(query)
@@ -143,6 +152,8 @@ public final class UserDictionary {
     }
 
     public func getContexts(for word: String) -> [WordContext] {
+        guard let database = database else { return [] }
+
         guard let wordRow = fetchWord(word) else {
             return []
         }
@@ -194,6 +205,8 @@ public final class UserDictionary {
     }
 
     public func removeWord(_ word: String) {
+        guard let database = database else { return }
+
         do {
             let query = WordTable.table
                 .filter(WordTable.word == word)
@@ -222,6 +235,8 @@ public final class UserDictionary {
 
     @discardableResult
     public func updateContext(contextId: Int64, newContext: WordContext) -> Bool {
+        guard let database = database else { return false }
+
         guard let wordRow = fetchWord(newContext.word),
             let contextRow = fetchContext(contextId: contextId),
             contextRow[ContextTable.wordId] == wordRow[WordTable.id] else {
@@ -259,6 +274,8 @@ public final class UserDictionary {
     }
 
     private func fetchWord(_ word: String) -> SQLite.Row? {
+        guard let database = database else { return nil }
+
         var row: SQLite.Row?
         do {
             let query = WordTable.table
@@ -272,11 +289,13 @@ public final class UserDictionary {
     }
 
     private func fetchContext(contextId: Int64) -> SQLite.Row? {
+        guard let database = database else { return nil }
         let query = ContextTable.table.filter(ContextTable.id == contextId)
         return try? database.pluck(query)
     }
 
     private func updateWordState(id: Int64, state: WordState) {
+        guard let database = database else { return }
         do {
             let word = WordTable.table.filter(WordTable.id == id)
             try database.run(word.update(WordTable.state <- state.rawValue))
@@ -292,6 +311,8 @@ public final class UserDictionary {
 
     @discardableResult
     private func insertWord(word: String, state: WordState) -> Int64 {
+        guard let database = database else { return -1 }
+        
         let insert = WordTable.table.insert(
             WordTable.word <- word.lowercased(),
             WordTable.locale <- locale.identifier,
@@ -307,6 +328,8 @@ public final class UserDictionary {
 
     @discardableResult
     private func insertContext(_ context: WordContext, for wordId: Int64) -> Int64 {
+        guard let database = database else { return -1 }
+
         let insert = ContextTable.table.insert(
             ContextTable.wordId <- wordId,
             ContextTable.secondBefore <- context.secondBefore,
