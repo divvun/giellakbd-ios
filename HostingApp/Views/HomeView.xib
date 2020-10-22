@@ -17,10 +17,13 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                 </imageView>
                 <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="zaG-2N-iWd">
-                    <rect key="frame" x="42" y="300" width="291" height="67.5"/>
+                    <rect key="frame" x="42" y="269.5" width="291" height="128.5"/>
                     <subviews>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="Vbp-wp-DF2">
+                            <rect key="frame" x="0.0" y="0.0" width="291" height="37"/>
+                        </activityIndicatorView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Installing Spellers..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5VH-6u-ggs">
-                            <rect key="frame" x="0.0" y="0.0" width="291" height="23"/>
+                            <rect key="frame" x="0.0" y="61" width="291" height="23"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="23" id="71f-iD-S3n"/>
                             </constraints>
@@ -29,7 +32,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="center" lineBreakMode="clip" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vRs-gb-JZU">
-                            <rect key="frame" x="0.0" y="47" width="291" height="20.5"/>
+                            <rect key="frame" x="0.0" y="108" width="291" height="20.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>

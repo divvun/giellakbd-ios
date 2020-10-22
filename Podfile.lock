@@ -43,7 +43,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/divvun/divvunspell-swift
     :submodules: true
   PahkatClient:
-    :commit: 44fa70bf8cbc2617e66e04b9731dbe32c2242bcc
+    :commit: 94d96bb6e4a41031c29d4ab50289d58eb4ab0de2
     :git: https://github.com/divvun/pahkat-client-sdk-swift/
     :submodules: true
   UIDeviceComplete:

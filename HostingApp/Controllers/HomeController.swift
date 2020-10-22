@@ -25,36 +25,39 @@ final class HomeController: ViewController<HomeView>, HideNavBar {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        refreshUI()
         contentView.awakeFromNib()
+        refreshUI()
     }
 
     private let bag = DisposeBag()
     private var doingPahkat = false
 
     @objc private func refreshUI() {
-        contentView.configStack?.isHidden = AppDelegate.instance.isKeyboardEnabled
+        DispatchQueue.main.async {
+            self.contentView.configStack?.isHidden = AppDelegate.instance.isKeyboardEnabled
 
-        if doingPahkat {
-            return
-        }
-
-        if let pahkat = AppDelegate.instance.pahkat {
-            DispatchQueue.global(qos: .userInitiated).async {
-                pahkat.checkForSpellerUpdates(logger: { [weak self] message in
-                    print(message)
-                    self?.setProgress(value: message)
-                }).subscribe(onSuccess: { [weak self] _ in
-                    self?.hideProgress()
-                    self?.doingPahkat  = false
-                }, onError: { [weak self] error in
-                    self?.setProgress(value: "Error: \(error)")
-                    self?.doingPahkat = false
-                }).disposed(by: self.bag)
+            if self.doingPahkat {
+                return
             }
-        }
 
-        doingPahkat = true
+            if let pahkat = AppDelegate.instance.pahkat {
+                DispatchQueue.global(qos: .userInitiated).async {
+                    pahkat.checkForSpellerUpdates(logger: { [weak self] message in
+                        print(message)
+                        self?.setProgress(value: message)
+                    }).subscribe(onSuccess: { [weak self] _ in
+                        self?.hideProgress()
+                    }, onError: { [weak self] error in
+                        self?.setProgress(value: "Error: \(String(describing: error))")
+                        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3), execute: { [weak self] in
+                            self?.hideProgress()
+                        })
+                    }).disposed(by: self.bag)
+                }
+            }
+
+            self.doingPahkat = true
+        }
     }
 
     override func viewDidLoad() {
@@ -93,6 +96,7 @@ final class HomeController: ViewController<HomeView>, HideNavBar {
         DispatchQueue.main.async {
             self.contentView.progressView?.isHidden = true
             self.contentView.mainStack?.isHidden = false
+            self.doingPahkat = false
         }
     }
 
