@@ -77,10 +77,9 @@ final class HomeController: ViewController<HomeView>, HideNavBar {
         contentView.testingButton.addTarget(self, action: #selector(openTesting), for: [.touchUpInside])
         contentView.settingsButton.addTarget(self, action: #selector(openSettings), for: [.touchUpInside])
 
-        #if ENABLE_USER_DICTIONARY
-        #else
-        contentView.settingsButton.isHidden = true
-        #endif
+        if !FeatureFlag.userDictionary {
+            contentView.settingsButton.isHidden = true
+        }
     }
 
     func setProgress(value: String) {

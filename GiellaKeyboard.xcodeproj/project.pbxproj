@@ -71,6 +71,8 @@
 		C655E8561EC5559200B12BE4 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C655E8551EC5559200B12BE4 /* HomeView.swift */; };
 		C655E85A1EC558D000B12BE4 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C655E8591EC558D000B12BE4 /* HomeController.swift */; };
 		C655E85D1EC55D0800B12BE4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C655E85B1EC55D0800B12BE4 /* Localizable.strings */; };
+		C6629244254B302000620D6F /* FeatureFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6629243254B302000620D6F /* FeatureFlag.swift */; };
+		C6629251254B319D00620D6F /* FeatureFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6629243254B302000620D6F /* FeatureFlag.swift */; };
 		C676AD5B1EC9679000523FF3 /* InstructionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C676AD5A1EC9679000523FF3 /* InstructionsController.swift */; };
 		C676AD5F1EC985EB00523FF3 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C676AD5E1EC985EB00523FF3 /* Strings.swift */; };
 		C67A3F3A1EE7F24900C9015C /* About.txt in Resources */ = {isa = PBXBuildFile; fileRef = C67A3F3C1EE7F24900C9015C /* About.txt */; };
@@ -249,6 +251,7 @@
 		C655E8551EC5559200B12BE4 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		C655E8591EC558D000B12BE4 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		C655E85C1EC55D0800B12BE4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = HostingApp/Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C6629243254B302000620D6F /* FeatureFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlag.swift; sourceTree = "<group>"; };
 		C676AD5A1EC9679000523FF3 /* InstructionsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsController.swift; sourceTree = "<group>"; };
 		C676AD5E1EC985EB00523FF3 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		C676AD601EC986F000523FF3 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = HostingApp/nb.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -427,6 +430,7 @@
 				C676AD5E1EC985EB00523FF3 /* Strings.swift */,
 				4E807D9619461D9000D875D1 /* Supporting Files */,
 				C63EE1002362F7E500A1E15A /* Settings.bundle */,
+				C6629243254B302000620D6F /* FeatureFlag.swift */,
 			);
 			path = HostingApp;
 			sourceTree = "<group>";
@@ -976,6 +980,7 @@
 				997550B623EAC631004ED6A5 /* UserDictionary.swift in Sources */,
 				999790B223F2F484003F7885 /* WordContextViewController.swift in Sources */,
 				99C4E5642431E89A005F8C8A /* PahkatWrapper.swift in Sources */,
+				C6629244254B302000620D6F /* FeatureFlag.swift in Sources */,
 				C655E8541EC5551100B12BE4 /* Extensions.swift in Sources */,
 				C691A0E723682C8B00085AC3 /* TestingController.swift in Sources */,
 				C65430B41EC94BF0007FC053 /* LanguagesController.swift in Sources */,
@@ -1035,6 +1040,7 @@
 				C6F249461F736E1400840F2B /* KeyboardDefinition.swift in Sources */,
 				99460238243B27140027C1CC /* InputContext.swift in Sources */,
 				99074EE82422383700075480 /* SpellBannerFlowLayout.swift in Sources */,
+				C6629251254B319D00620D6F /* FeatureFlag.swift in Sources */,
 				C6F249471F736E1A00840F2B /* KeyboardViewController.swift in Sources */,
 				999C30172428E91000E127A6 /* BannerView.swift in Sources */,
 				C61829B8254225B100620D6F /* KeyboardLocale+AllLocales.swift in Sources */,
@@ -1162,7 +1168,6 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_DICTIONARY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1180,7 +1185,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				METAL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_SWIFT_FLAGS = "-D ENABLE_USER_DICTIONARY";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1220,7 +1224,6 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_DICTIONARY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1231,7 +1234,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				METAL_ENABLE_DEBUG_INFO = NO;
-				OTHER_SWIFT_FLAGS = "-D ENABLE_USER_DICTIONARY";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -1274,7 +1276,7 @@
 					"-framework",
 					"\"DivvunSpell\"",
 				);
-				OTHER_SWIFT_FLAGS = "$(inherited) -D ENABLE_USER_DICTIONARY -D COCOAPODS";
+				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS";
 				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaKeyboardTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1318,7 +1320,7 @@
 					"-framework",
 					"\"DivvunSpell\"",
 				);
-				OTHER_SWIFT_FLAGS = "$(inherited) -D ENABLE_USER_DICTIONARY -D COCOAPODS";
+				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS";
 				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaKeyboardTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

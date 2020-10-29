@@ -135,9 +135,9 @@ public final class SpellBanner: Banner {
                 return
             }
 
-            #if ENABLE_USER_DICTIONARY
-            self.dictionaryService = UserDictionaryService(speller: speller, locale: KeyboardLocale.current)
-            #endif
+            if FeatureFlag.userDictionary {
+                self.dictionaryService = UserDictionaryService(speller: speller, locale: KeyboardLocale.current)
+            }
         }
     }
 }
