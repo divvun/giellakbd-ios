@@ -1,11 +1,11 @@
 # Original: About
-about: Повнелазонь программадонть
+about: Сёрмаповонь программадонть
 
 # Original: Add
 add: Путомс
 
 # Original: Add New Keyboard…
-addNewKeyboard: Путомс од повнелаз…
+addNewKeyboard: Путомс од сёрмаповт…
 
 # Original: Add Word
 addWord: Поладомс вал
@@ -54,16 +54,16 @@ installingPackages: Аравты пакеттнэсэ…
 installingSpellers: Аравты видестэ сёрмадома тевнеть…
 
 # Original: Keyboard
-keyboard: Повнелаз
+keyboard: Сёрмаповт
 
 # Original: Keyboards
-keyboards: Повнелазт
+keyboards: Весе сёрмаповт
 
 # Original: Language
 language: Кель
 
 # Original: Layouts
-layouts: Повнелув
+layouts: Повлувт
 
 # Original: Kildin Sami
 localeSjd: Кильдинэнь саам
@@ -76,7 +76,7 @@ noUserWordsDescription: >-
   Сёрмадомсто валт, конатне лиядыть апак вите ды сынсь а вастневить валкссонть, совавтовить тезэнь.
 
 # Original: Open the {item} app
-openAppPlain: 'Панжомс "{item}" повнелазонь программанть'
+openAppPlain: 'Панжомс "{item}" сёрмаповонь программанть'
 
 # Original: Open Settings
 openSettings: Панжомс аравтомкатнень
@@ -109,7 +109,7 @@ userDefined: Сёрмадыцянсеть
 userDictionary: Сёрмадыцянь валкс
 
 # Original: When you have finished, return to this app to continue.
-whenYouHaveFinished: 'Зярдо весе аравтовсь, велявтта мекев те повнелазонь
+whenYouHaveFinished: 'Зярдо весе аравтовсь, велявтта мекев те сёрмаповонь
                       программантень тевень поладомга.'
 
 # Original: Word
