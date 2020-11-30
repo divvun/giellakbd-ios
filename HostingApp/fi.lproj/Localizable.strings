@@ -22,7 +22,7 @@
 "layouts" = "Asetelmat";
 "localeSjd" = "Kiltinänsaame";
 "noUserWords" = "Käyttäjän luomia sanoja ei ole vielä.";
-"noUserWordsDescription" = "Sanat joita ei korjata ja jotka eivät ole sisäänrakennetussa sanakirjassa näkyvät täällä.";
+"noUserWordsDescription" = "Sanat joita oikoluku ei tunnista ja joita käytetään usein näkyvät täällä.";
 "openAppPlain" = "Avaa sovellus %1$@";
 "openSettings" = "Avaa asetukset";
 "save" = "Tallenna";

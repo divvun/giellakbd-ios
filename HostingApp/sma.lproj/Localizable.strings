@@ -2,11 +2,11 @@
 "add" = "Lissehth";
 "addNewKeyboard" = "Lissedh orre båaloebuertiem …";
 "addWord" = "Lissedh baakoem";
-"addWordMessage" = "Daate baakoe jeajhta gosse tjaalah seamma-laaketje baakoeh.";
+"addWordMessage" = "Daate baakoe jeajhta evtiehtassene gosse tjaalah seamma-laaketje baakoeh.";
 "allowFullAccess" = "Vedtih gaajhkh luehpieh dan appese";
 "attributions" = "Jeatjah gaaltijh";
 "block" = "Hööpth baakoem";
-"blocked" = "Hööpteme baakoe";
+"blocked" = "Hööpteme baakoeh";
 "cancel" = "Orrijidh";
 "contextsFor" = "\"%1$@\" kontekste";
 "delete" = "Sliejhth";
@@ -21,8 +21,8 @@
 "language" = "Gïele";
 "layouts" = "Hammoeh";
 "localeSjd" = "Gielddasaemien";
-"noUserWords" = "Provhkije ij naan baakoe dorjeme.";
-"noUserWordsDescription" = "Baakoeh mah eah leah staeriedamme jïh eah gååvnesh baakoegærjesne, jijhtieh daase.";
+"noUserWords" = "Ij naan baakoeh provhkijen baakoelæstosne.";
+"noUserWordsDescription" = "Baakoeh maam staeriedimmiedirrege ij damth, men maam datne damtaj provhkh,  jijhtieh daase.";
 "openAppPlain" = "Rïhpesh %1$@-appem";
 "openSettings" = "Rïhpesh sjïehtesjimmim";
 "save" = "Vöörhkh";
@@ -32,7 +32,7 @@
 "skip" = "Baajh årrodh";
 "tapPlain" = "Dïedtelh %1$@";
 "unblock" = "Ollh-hööpth";
-"userDefined" = "Provhkije tjilkestamme";
-"userDictionary" = "Provhkijen baakoegærja";
+"userDefined" = "Jïjtjedh baakoeh";
+"userDictionary" = "Provhkijen baakoelæstoe";
 "whenYouHaveFinished" = "Gosse galkeme, dellie bååstede dan appese barkojne jåerhkh.";
 "word" = "Baakoe";
