@@ -78,9 +78,15 @@ extension UIImage {
 
 extension Strings {
     static var localizedName: String {
-        let infoDict = Strings.bundle.localizedInfoDictionary ?? Strings.bundle.infoDictionary
+        if let name = Strings.bundle.localizedInfoDictionary?["CFBundleDisplayName"] as? String {
+            return name
+        }
 
-        if let name = infoDict?["CFBundleDisplayName"] as? String {
+        if let name = Strings.bundle.infoDictionary?["CFBundleDisplayName"] as? String {
+            return name
+        }
+
+        if let name = Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String {
             return name
         }
 
@@ -108,7 +114,11 @@ extension Strings {
     }
 
     static func creditWithUrls() -> NSAttributedString {
-        let string: NSString = "SimpleButton © Andreas Tinoco Lobo\nTap icon © Icons8\nLanguage icon © Icons8"
+        let d = Bundle.main.infoDictionary!
+        let version = d["CFBundleShortVersionString"] as! String
+        let name = d["CFBundleDisplayName"] as! String
+
+        let string: NSString = "SimpleButton © Andreas Tinoco Lobo\nTap icon © Icons8\nLanguage icon © Icons8\n\n\(name) v\(version)" as NSString
 
         let simpleUrl = "https://github.com/aloco/SimpleButton"
         let languageUrl = "https://icons8.com/icon/25628/language"
