@@ -760,6 +760,11 @@ extension KeyboardViewController: BannerManagerDelegate {
         if banner is SpellBanner {
             Audio.playClickSound()
             replaceSelected(with: inputText)
+
+            // If the keyboard is not compounding, we add a space
+            if !self.keyboardDefinition.features.contains(.compounding) {
+                insertText(" ")
+            }
         }
     }
 }

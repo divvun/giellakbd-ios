@@ -178,6 +178,12 @@ struct RawKeyboardDefinition: Decodable {
     }
 }
 
+enum KeyboardFeature {
+    // This is used for deciding whether or not tapping a banner item will
+    // result in insertion of a space. Subject to change.
+    case compounding
+}
+
 public struct KeyboardDefinition: Codable {
     let name: String
     let locale: String
@@ -192,6 +198,11 @@ public struct KeyboardDefinition: Codable {
     private(set) var shifted: [[KeyDefinition]] = []
     private(set) var symbols1: [[KeyDefinition]] = []
     private(set) var symbols2: [[KeyDefinition]] = []
+
+    // TODO: features should be derived from as-yet-undefined JSON input
+    var features: Set<KeyboardFeature> {
+        return Set()
+    }
 
     init(fromRaw raw: RawKeyboardDefinition, traits: UITraitCollection) throws {
         let deviceVariant = DeviceVariant.from(traits: traits)
