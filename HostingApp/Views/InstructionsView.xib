@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,13 +17,13 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                 </imageView>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="5Ge-bG-US3">
-                    <rect key="frame" x="16" y="90" width="343" height="401.5"/>
+                    <rect key="frame" x="16" y="120" width="343" height="401.5"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="U7J-h6-aN0">
                             <rect key="frame" x="0.0" y="0.0" width="343" height="204"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Vem-Ku-ioH">
-                                    <rect key="frame" x="0.0" y="0.0" width="205.5" height="24"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="204.5" height="24"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tap" translatesAutoresizingMaskIntoConstraints="NO" id="4Gs-Mk-jxN">
                                             <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
@@ -33,7 +33,7 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lfv-tZ-pKq">
-                                            <rect key="frame" x="28" y="3.5" width="177.5" height="20.5"/>
+                                            <rect key="frame" x="28" y="3.5" width="176.5" height="20.5"/>
                                             <attributedString key="attributedText">
                                                 <fragment content="Open the ">
                                                     <attributes>
@@ -75,7 +75,7 @@
                                     </subviews>
                                 </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="E4B-An-WfU">
-                                    <rect key="frame" x="0.0" y="72" width="133" height="24"/>
+                                    <rect key="frame" x="0.0" y="72" width="132.5" height="24"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tap" translatesAutoresizingMaskIntoConstraints="NO" id="lCV-xP-Hiw">
                                             <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
@@ -85,7 +85,7 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap Keyboard" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ki3-2X-rZU">
-                                            <rect key="frame" x="28" y="3.5" width="105" height="20.5"/>
+                                            <rect key="frame" x="28" y="3.5" width="104.5" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -93,7 +93,7 @@
                                     </subviews>
                                 </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Fvj-JC-rmv">
-                                    <rect key="frame" x="0.0" y="108" width="141.5" height="24"/>
+                                    <rect key="frame" x="0.0" y="108" width="141" height="24"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tap" translatesAutoresizingMaskIntoConstraints="NO" id="Ruj-Nr-d5p">
                                             <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
@@ -103,7 +103,7 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap Keyboards" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Ge-hm-2gn">
-                                            <rect key="frame" x="28" y="3.5" width="113.5" height="20.5"/>
+                                            <rect key="frame" x="28" y="3.5" width="113" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -111,7 +111,7 @@
                                     </subviews>
                                 </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Evu-IB-3k3">
-                                    <rect key="frame" x="0.0" y="144" width="207" height="24"/>
+                                    <rect key="frame" x="0.0" y="144" width="206" height="24"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tap" translatesAutoresizingMaskIntoConstraints="NO" id="lc8-gb-5qu">
                                             <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
@@ -121,7 +121,7 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap Add New Keyboard" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="seG-Je-CmM">
-                                            <rect key="frame" x="28" y="3.5" width="179" height="20.5"/>
+                                            <rect key="frame" x="28" y="3.5" width="178" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -129,7 +129,7 @@
                                     </subviews>
                                 </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="qfc-s4-UNf">
-                                    <rect key="frame" x="0.0" y="180" width="221.5" height="24"/>
+                                    <rect key="frame" x="0.0" y="180" width="222" height="24"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tap" translatesAutoresizingMaskIntoConstraints="NO" id="JRJ-qi-BqV">
                                             <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
@@ -139,7 +139,7 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap &quot;Template Keyboard&quot;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m9F-0P-tnE">
-                                            <rect key="frame" x="28" y="3.5" width="193.5" height="20.5"/>
+                                            <rect key="frame" x="28" y="3.5" width="194" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -171,7 +171,7 @@
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="piv-tr-ffi" secondAttribute="trailing" id="609-uv-EPw"/>
                 <constraint firstItem="piv-tr-ffi" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="9g0-MW-lkS"/>
-                <constraint firstItem="5Ge-bG-US3" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="90" id="Nrp-b9-zdv"/>
+                <constraint firstItem="5Ge-bG-US3" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="120" id="Nrp-b9-zdv"/>
                 <constraint firstAttribute="trailing" secondItem="5Ge-bG-US3" secondAttribute="trailing" constant="16" id="OTf-Fk-6nw"/>
                 <constraint firstAttribute="bottom" secondItem="piv-tr-ffi" secondAttribute="bottom" id="WVf-67-sVI"/>
                 <constraint firstItem="5Ge-bG-US3" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="Yyj-9v-Apm"/>
