@@ -11,13 +11,17 @@ final class SettingsViewController: BaseSettingsViewController, SettingsControll
         let destinationViewController: ViewControllerMaker
         let locales = KeyboardLocale.allLocales
 
-        if let locale = locales.first {
-            destinationViewController = {
-                UserDictionaryViewController(keyboardLocale: locale)
+        if locales.isEmpty {
+            destinationViewController = { () in
+                return UIViewController()
+            }
+        } else if locales.count == 1, let locale = locales.first {
+            destinationViewController = { () in
+                return UserDictionaryViewController(keyboardLocale: locale)
             }
         } else {
-            destinationViewController = {
-                KeyboardLocalesViewController()
+            destinationViewController = { () in
+                return KeyboardLocalesViewController()
             }
         }
 

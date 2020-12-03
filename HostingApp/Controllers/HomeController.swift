@@ -77,7 +77,13 @@ final class HomeController: ViewController<HomeView>, HideNavBar {
         contentView.testingButton.addTarget(self, action: #selector(openTesting), for: [.touchUpInside])
         contentView.settingsButton.addTarget(self, action: #selector(openSettings), for: [.touchUpInside])
 
+        // Currently settings only has user dictionary, hide if not enabled
         if !FeatureFlag.userDictionary {
+            contentView.settingsButton.isHidden = true
+        }
+
+        // Settings button must not show with no keyboards enabled
+        if KeyboardLocale.enabledLocales.isEmpty {
             contentView.settingsButton.isHidden = true
         }
     }

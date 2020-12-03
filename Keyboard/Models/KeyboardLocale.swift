@@ -14,6 +14,7 @@ public struct KeyboardLocale: Hashable {
 
     static func localeFromBundle(_ bundle: Bundle) -> KeyboardLocale? {
         guard let info = bundle.infoDictionary,
+            // TODO: should use autonym list
             let languageName = info["CFBundleDisplayName"] as? String,
             let ext = info["NSExtension"] as? [String: Any],
             let attributes = ext["NSExtensionAttributes"] as? [String: Any],

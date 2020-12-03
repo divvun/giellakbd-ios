@@ -206,34 +206,34 @@ final class UserDictionaryServiceTests: XCTestCase {
         XCTAssertNil(contexts.first?.secondAfter)
     }
 
-    private func makeSUT() -> UserDictionaryService {
-        let archive: ThfstChunkedBoxSpellerArchive
-        guard let bundle = Bundle.top.url(forResource: "dicts", withExtension: "bundle") else {
-            fatalError("No dict bundle found; BHFST not loaded.")
-        }
-
-        let lang = "se"
-        let path = bundle.appendingPathComponent("\(lang).bhfst")
-
-        if !FileManager.default.fileExists(atPath: path.path) {
-            let message = "No speller at: \(path)\n Important: In order to run tests,"
-            + " you must have an 'se.bhfst' file installed in 'dicts.bundle'"
-            fatalError(message)
-        }
-
-        do {
-            archive = try ThfstChunkedBoxSpellerArchive.open(path: path.path)
-            print("DivvunSpell loaded!")
-        } catch {
-            fatalError("Couldn't load archive")
-        }
-
-        do {
-            let speller = try archive.speller()
-            return UserDictionaryService(speller: speller, locale: defaultLocale)
-        } catch {
-            fatalError("DivvunSpell UserDictionaryService **not** loaded.")
-        }
-    }
+//    private func makeSUT() -> UserDictionaryService {
+//        let archive: ThfstChunkedBoxSpellerArchive
+//        guard let bundle = Bundle.top.url(forResource: "dicts", withExtension: "bundle") else {
+//            fatalError("No dict bundle found; BHFST not loaded.")
+//        }
+//
+//        let lang = "se"
+//        let path = bundle.appendingPathComponent("\(lang).bhfst")
+//
+//        if !FileManager.default.fileExists(atPath: path.path) {
+//            let message = "No speller at: \(path)\n Important: In order to run tests,"
+//            + " you must have an 'se.bhfst' file installed in 'dicts.bundle'"
+//            fatalError(message)
+//        }
+//
+//        do {
+//            archive = try ThfstChunkedBoxSpellerArchive.open(path: path.path)
+//            print("DivvunSpell loaded!")
+//        } catch {
+//            fatalError("Couldn't load archive")
+//        }
+//
+//        do {
+//            let speller = try archive.speller()
+//            return UserDictionaryService(speller: speller, locale: defaultLocale)
+//        } catch {
+//            fatalError("DivvunSpell UserDictionaryService **not** loaded.")
+//        }
+//    }
 
 }

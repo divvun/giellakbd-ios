@@ -3,6 +3,8 @@ import UIKit
 final class KeyboardLocalesViewController: BaseSettingsViewController, SettingsController {
 
     override func rows() -> [Row] {
+        self.title = Strings.userDictionary
+
         var rows: [Row] = []
 
         let enabledLocales = KeyboardLocale.enabledLocales
