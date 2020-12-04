@@ -484,6 +484,8 @@ open class KeyboardViewController: UIInputViewController {
         // The app is about to change the document's contents. Perform any preparation here.
     }
 
+    private let nonCapitalizingPunctuation: [Character] = [",", ":"]
+
     private func updateCapitalization() {
         let proxy = textDocumentProxy
         let ctx = InputContext.from(proxy: proxy)
@@ -500,16 +502,24 @@ open class KeyboardViewController: UIInputViewController {
         }
 
         if let autoCapitalizationType = proxy.autocapitalizationType {
+            let hasNoCurrentWord = ctx.currentWord == ""
+
             switch autoCapitalizationType {
             case .words:
-                if ctx.currentWord == "" {
+                if hasNoCurrentWord {
                     keyboardView.page = .shifted
                 }
             case .sentences:
                 let lastCharacter: Character? = ctx.previousWord?.last
+                let hasNoPreviousWord = ctx.previousWord == nil
+                var hasFinalPunctuator = false
+                if let lastCharacter = lastCharacter {
+                    if lastCharacter.isPunctuation && !nonCapitalizingPunctuation.contains(lastCharacter) {
+                        hasFinalPunctuator = true
+                    }
+                }
 
-                if ctx.currentWord == "",
-                    ((lastCharacter?.isPunctuation ?? false) && lastCharacter != ",") || ctx.previousWord == nil {
+                if hasNoCurrentWord, hasFinalPunctuator || hasNoPreviousWord {
                     keyboardView.page = .shifted
                 } else if case .shifted = page {
                     if !(ctx.previousWord?.last?.isUppercase ?? false) {
