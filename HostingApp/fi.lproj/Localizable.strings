@@ -18,7 +18,7 @@
 "installingSpellers" = "Asennetaan oikaisulukimia…";
 "keyboard" = "Näppäimistö";
 "keyboards" = "Näppäimistöt";
-"language" = "Kieli";
+"language" = "Appikieli";
 "layouts" = "Asetelmat";
 "localeSjd" = "Kiltinänsaame";
 "noUserWords" = "Käyttäjän luomia sanoja ei ole vielä.";

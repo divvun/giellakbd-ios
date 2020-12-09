@@ -158,7 +158,7 @@ class Strings {
         return string(for: "keyboards")
     }
 
-    /** Language */
+    /** App Language */
     static var language: String {
         return string(for: "language")
     }
