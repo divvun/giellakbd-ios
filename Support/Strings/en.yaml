@@ -61,7 +61,7 @@ keyboard: Keyboard
 keyboards: Keyboards
 
 # Original: Language
-language: Language
+language: App Language
 
 # Original: Layouts
 layouts: Layouts
