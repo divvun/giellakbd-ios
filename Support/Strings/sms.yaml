@@ -1,0 +1,117 @@
+# Original: About
+about: Tietoja näppäimistösovelluksesta
+
+# Original: Add
+add: Lisää
+
+# Original: Add New Keyboard…
+addNewKeyboard: Lisää uusi näppäimistö…
+
+# Original: Add Word
+addWord: Lisää sana
+
+# Original: This word will be suggested in the spelling banner for similar input.
+addWordMessage: Tätä sanaa ehdotetaan oikolukubannerissa samankaltaisille syötteille 
+
+# Original: Allow Full Access
+allowFullAccess: Salli kaikki oikeudet
+
+# Original: Attributions
+attributions: Attribuutiot
+
+# Original: Block
+block: Estä
+
+# Original: Blocked
+blocked: Estetyt sanat
+
+# Original: Cancel
+cancel: Peru
+
+# Original: Contexts for "{word}"
+contextsFor: 'Kontekstit sanalle "{word}"'
+
+# Original: Delete
+delete: Poista
+
+# Original: Detected
+detected: Tunnistetut sanat
+
+# Original: Downloading "{package}"…
+downloading: 'Ladataan pakettia "{package}"…'
+
+# Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
+enableTapSoundsPlain: >-
+  Jos haluat näppäinäänet käyttöön, paina nappia {keyboard} ja vaihda asetusta
+  {allowFullAccess}.
+
+# Original: General
+general: General
+
+# Original: Installing packages…
+installingPackages: Asennetaan paketteja…
+
+# Original: Installing Spellers…
+installingSpellers: Asennetaan oikaisulukimia…
+
+# Original: Keyboard
+keyboard: Näppäimistö
+
+# Original: Keyboards
+keyboards: Näppäimistöt
+
+# Original: Language
+language: Kieli
+
+# Original: Layouts
+layouts: Asetelmat
+
+# Original: Kildin Sami
+localeSjd: Kiltinänsaame
+
+# Original: No user-created words yet.
+noUserWords: Käyttäjän luomia sanoja ei ole vielä.
+
+# Original: Words that are left uncorrected and are not in the built-in dictionary will appear here.
+noUserWordsDescription: >-
+  Sanat joita oikoluku ei tunnista ja joita käytetään usein
+  näkyvät täällä.
+
+# Original: Open the {item} app
+openAppPlain: 'Avaa sovellus {item}'
+
+# Original: Open Settings
+openSettings: Avaa asetukset
+
+# Original: Save
+save: Tallenna
+
+# Original: Set Up {keyboard}
+setUp: 'Aseta {keyboard}'
+
+# Original: Setting Up
+settingUp: Asetetaan
+
+# Original: Settings
+settings: Asetukset
+
+# Original: Skip
+skip: Ohita
+
+# Original: Tap {item}
+tapPlain: 'Paina {item}'
+
+# Original: Unblock
+unblock: Poista estot
+
+# Original: User-Defined
+userDefined: Omat sanat
+
+# Original: User Dictionary
+userDictionary: Käyttäjän sanakirja
+
+# Original: When you have finished, return to this app to continue.
+whenYouHaveFinished: 'Palaa takaisin tähän sovellukseen lopetettuasi.'
+
+# Original: Word
+word: Sana
