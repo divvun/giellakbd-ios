@@ -21,7 +21,7 @@
 "language" = "Áppagiella";
 "layouts" = "Hámuhusat";
 "localeSjd" = "Gielddasámegiella";
-"noUserWords" = "Geavaheaddji iežas sátnelistu ain guoros.";
+"noUserWords" = "Iežat sátnelistu ain guoros.";
 "noUserWordsDescription" = "Sánit mat čállindárkkisteaddji ii dovdda, ja maid dávjá geavahat, lasihuvvojit deike.";
 "openAppPlain" = "Raba %1$@-áppa";
 "openSettings" = "Raba heivehusaid";
@@ -32,7 +32,7 @@
 "skip" = "Guođe";
 "tapPlain" = "Coahkkal %1$@";
 "unblock" = "Ale cakka sáni šat";
-"userDefined" = "Iežat sánit";
-"userDictionary" = "Geavaheaddji sátnelistu";
+"userDefined" = "Lasihuvvon";
+"userDictionary" = "Iežat sánit";
 "whenYouHaveFinished" = "Go leat geargan, máhcat dán áppii ja joatkke barggu.";
 "word" = "sátni";

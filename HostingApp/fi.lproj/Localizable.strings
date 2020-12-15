@@ -21,7 +21,7 @@
 "language" = "Appikieli";
 "layouts" = "Asetelmat";
 "localeSjd" = "Kiltinänsaame";
-"noUserWords" = "Käyttäjän luomia sanoja ei ole vielä.";
+"noUserWords" = "Omia sanoja ei ole vielä.";
 "noUserWordsDescription" = "Sanat joita oikoluku ei tunnista ja joita käytetään usein näkyvät täällä.";
 "openAppPlain" = "Avaa sovellus %1$@";
 "openSettings" = "Avaa asetukset";
@@ -33,6 +33,6 @@
 "tapPlain" = "Paina %1$@";
 "unblock" = "Poista estot";
 "userDefined" = "Omat sanat";
-"userDictionary" = "Käyttäjän sanakirja";
+"userDictionary" = "Oma sanakirja";
 "whenYouHaveFinished" = "Palaa takaisin tähän sovellukseen lopetettuasi.";
 "word" = "Sana";
