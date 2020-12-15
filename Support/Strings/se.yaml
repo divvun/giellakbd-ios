@@ -70,7 +70,7 @@ layouts: Hámuhusat
 localeSjd: Gielddasámegiella
 
 # Original: No user-created words yet.
-noUserWords: Geavaheaddji iežas sátnelistu ain guoros.
+noUserWords: Iežat sátnelistu ain guoros.
 
 # Original: Words that are left uncorrected and are not in the built-in dictionary will appear here.
 noUserWordsDescription: Sánit mat čállindárkkisteaddji ii dovdda, ja maid dávjá geavahat, lasihuvvojit deike.
@@ -103,10 +103,10 @@ tapPlain: 'Coahkkal {item}'
 unblock: Ale cakka sáni šat
 
 # Original: User-Defined
-userDefined: Iežat sánit
+userDefined: Lasihuvvon
 
 # Original: User Dictionary
-userDictionary: Geavaheaddji sátnelistu
+userDictionary: Iežat sánit
 
 # Original: When you have finished, return to this app to continue.
 whenYouHaveFinished: Go leat geargan, máhcat dán áppii ja joatkke barggu.
