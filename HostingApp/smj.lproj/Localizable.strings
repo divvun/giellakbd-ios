@@ -21,7 +21,7 @@
 "language" = "Æhppagiella";
 "layouts" = "Boallobievddeháme";
 "localeSjd" = "Gielldasámegiella";
-"noUserWords" = "Addnebáhkolissta l ájn guoros.";
+"noUserWords" = "Ietjat báhkolissta l ájn guoros.";
 "noUserWordsDescription" = "Gå moaddi tjálá bágov majt tjállemdárkastus ij dåbdå, de ihtá dat báhko dánná.";
 "openAppPlain" = "Rabá %1$@-ehpav";
 "openSettings" = "Rabá hiebadusájt";
@@ -33,6 +33,6 @@
 "tapPlain" = "Dieddela %1$@";
 "unblock" = "Ale das bágo tsakka";
 "userDefined" = "Laseduvvam";
-"userDictionary" = "Addnebáhkolissta";
+"userDictionary" = "Ietjat bágo";
 "whenYouHaveFinished" = "Gå la gærggam, máhtsa dán æhppaj ja joarke bargov.";
 "word" = "Báhko";

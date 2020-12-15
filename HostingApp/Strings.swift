@@ -236,7 +236,7 @@ class Strings {
         return string(for: "userDefined")
     }
 
-    /** User Dictionary */
+    /** Your own words */
     static var userDictionary: String {
         return string(for: "userDictionary")
     }

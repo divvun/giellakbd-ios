@@ -21,7 +21,7 @@
 "language" = "Appspråk";
 "layouts" = "Tastatur";
 "localeSjd" = "Kildinsamisk";
-"noUserWords" = "Ingen brukergenererte ord ennå.";
+"noUserWords" = "Ingen egne ord ennå.";
 "noUserWordsDescription" = "Ord som ikke blir retta og som ikke finnes i ordlista vil dukke opp her.";
 "openAppPlain" = "Åpne %1$@-appen";
 "openSettings" = "Åpne Innstillinger";
@@ -33,6 +33,6 @@
 "tapPlain" = "Berør %1$@";
 "unblock" = "Fjern sperring";
 "userDefined" = "Egne ord";
-"userDictionary" = "Brukerordliste";
+"userDictionary" = "Dine egne ord";
 "whenYouHaveFinished" = "Når du er ferdig, gå tilbake til denne appen for å fortsette.";
 "word" = "ord";
