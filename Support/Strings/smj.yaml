@@ -70,7 +70,7 @@ layouts: Boallobievddeháme
 localeSjd: Gielldasámegiella
 
 # Original: No user-created words yet.
-noUserWords: Addnebáhkolissta l ájn guoros. 
+noUserWords: Ietjat báhkolissta l ájn guoros. 
 
 # Original: Words that are left uncorrected and are not in the built-in dictionary will appear here. 
 noUserWordsDescription: Gå moaddi tjálá bágov majt tjállemdárkastus ij dåbdå, de ihtá dat báhko dánná. 
@@ -105,7 +105,7 @@ unblock: Ale das bágo tsakka
 userDefined: Laseduvvam
 
 # Original: User Dictionary
-userDictionary: Addnebáhkolissta
+userDictionary: Ietjat bágo
 
 # Original: When you have finished, return to this app to continue.
 whenYouHaveFinished: 'Gå la gærggam, máhtsa dán æhppaj ja joarke bargov.'
