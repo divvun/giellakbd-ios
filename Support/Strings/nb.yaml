@@ -70,7 +70,7 @@ layouts: Tastatur
 localeSjd: Kildinsamisk
 
 # Original: No user-created words yet.
-noUserWords: Ingen brukergenererte ord ennå.
+noUserWords: Ingen egne ord ennå.
 
 # Original: Words that are left uncorrected and are not in the built-in dictionary will appear here.
 noUserWordsDescription: Ord som ikke blir retta og som ikke finnes i ordlista vil dukke opp her.
@@ -106,7 +106,7 @@ unblock: Fjern sperring
 userDefined: Egne ord
 
 # Original: User Dictionary
-userDictionary: Brukerordliste
+userDictionary: Dine egne ord
 
 # Original: When you have finished, return to this app to continue.
 whenYouHaveFinished: Når du er ferdig, gå tilbake til denne appen for å fortsette.
