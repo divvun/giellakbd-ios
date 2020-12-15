@@ -70,7 +70,7 @@ layouts: Asetelmat
 localeSjd: Kiltinänsaame
 
 # Original: No user-created words yet.
-noUserWords: Käyttäjän luomia sanoja ei ole vielä.
+noUserWords: Omia sanoja ei ole vielä.
 
 # Original: Words that are left uncorrected and are not in the built-in dictionary will appear here.
 noUserWordsDescription: >-
@@ -108,7 +108,7 @@ unblock: Poista estot
 userDefined: Omat sanat
 
 # Original: User Dictionary
-userDictionary: Käyttäjän sanakirja
+userDictionary: Oma sanakirja
 
 # Original: When you have finished, return to this app to continue.
 whenYouHaveFinished: 'Palaa takaisin tähän sovellukseen lopetettuasi.'
