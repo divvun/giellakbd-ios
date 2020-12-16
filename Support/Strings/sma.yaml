@@ -69,7 +69,7 @@ layouts: Hammoeh
 localeSjd: Gielddasaemien
 
 # Original: No user-created words yet.
-noUserWords: Ij naan baakoeh provhkijen baakoelæstosne.
+noUserWords: Jïjtjedh baakoelæstoeh annje gåaroes.
 
 # Original: Words that are left uncorrected and are not in the built-in dictionary will appear here.
 noUserWordsDescription: Baakoeh maam staeriedimmiedirrege ij damth, men maam datne damtaj provhkh,  jijhtieh daase. 
@@ -102,10 +102,10 @@ tapPlain: 'Dïedtelh {item}'
 unblock: Ollh-hööpth 
 
 # Original: User-Defined
-userDefined: Jïjtjedh baakoeh
+userDefined: Datne lissiehtamme
 
 # Original: User Dictionary
-userDictionary: Provhkijen baakoelæstoe
+userDictionary: Jïjtjedh baakoeh
 
 # Original: When you have finished, return to this app to continue.
 whenYouHaveFinished: Gosse galkeme, dellie bååstede dan appese barkojne jåerhkh.
