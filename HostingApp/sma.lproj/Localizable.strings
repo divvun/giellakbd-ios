@@ -21,7 +21,7 @@
 "language" = "Appegïele";
 "layouts" = "Hammoeh";
 "localeSjd" = "Gielddasaemien";
-"noUserWords" = "Ij naan baakoeh provhkijen baakoelæstosne.";
+"noUserWords" = "Jïjtjedh baakoelæstoeh annje gåaroes.";
 "noUserWordsDescription" = "Baakoeh maam staeriedimmiedirrege ij damth, men maam datne damtaj provhkh,  jijhtieh daase.";
 "openAppPlain" = "Rïhpesh %1$@-appem";
 "openSettings" = "Rïhpesh sjïehtesjimmim";
@@ -32,7 +32,7 @@
 "skip" = "Baajh årrodh";
 "tapPlain" = "Dïedtelh %1$@";
 "unblock" = "Ollh-hööpth";
-"userDefined" = "Jïjtjedh baakoeh";
-"userDictionary" = "Provhkijen baakoelæstoe";
+"userDefined" = "Datne lissiehtamme";
+"userDictionary" = "Jïjtjedh baakoeh";
 "whenYouHaveFinished" = "Gosse galkeme, dellie bååstede dan appese barkojne jåerhkh.";
 "word" = "Baakoe";
