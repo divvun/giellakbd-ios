@@ -27,6 +27,10 @@ i18n-eller generate swift Support/Strings/en.yaml Support/Strings/*.yaml -o Host
 
 If you add a new locale, please open an issue to have it added to the language list inside the app.
 
+## Keyboard layouts
+
+This repo does not include any keyboard layouts. It is intended to be used as a template for [kbdgen](divvun/kbdgen), which consumes a.o. this codebase, and layouts as listed in e.g. [divvun-keyboard](/divvun/divvun-keyboard) to produce the actual keyboard app. The keyboard layout specifications are found in the [GiellaLT](https://github.com/giellalt?q=keyboard-&type=&language=) organisation.
+
 ## License
 
 `giellakbd-ios` is licensed under either of
