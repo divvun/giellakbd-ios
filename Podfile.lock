@@ -1,21 +1,21 @@
 PODS:
-  - DivvunSpell (0.3.3)
-  - PahkatClient (0.2.11)
-  - RxSwift (5.1.1)
-  - Sentry (4.5.0):
-    - Sentry/Core (= 4.5.0)
-  - Sentry/Core (4.5.0)
+  - DivvunSpell (1.0.0-beta.1)
+  - PahkatClient (0.1.0)
+  - RxSwift (5.1.2)
+  - Sentry (6.2.1):
+    - Sentry/Core (= 6.2.1)
+  - Sentry/Core (6.2.1)
   - SQLite.swift (0.12.2):
     - SQLite.swift/standard (= 0.12.2)
   - SQLite.swift/standard (0.12.2)
-  - SwiftLint (0.40.3)
+  - SwiftLint (0.43.0)
   - UIDeviceComplete (2.6.6)
 
 DEPENDENCIES:
-  - DivvunSpell (from `https://github.com/divvun/divvunspell-swift`)
-  - PahkatClient (from `https://github.com/divvun/pahkat-client-sdk-swift/`)
-  - RxSwift
-  - Sentry (= 4.5.0)
+  - "DivvunSpell (from `{:http=>\"https://github.com/divvun/divvunspell-sdk-swift/releases/download/v1.0.0-beta.1/cargo-pod.tgz\"}`)"
+  - "PahkatClient (from `{:http=>\"https://github.com/divvun/pahkat-client-sdk-swift/releases/download/v0.1.0/cargo-pod_ios.tgz\"}`)"
+  - RxSwift (~> 5.1.1)
+  - Sentry (= 6.2.1)
   - SQLite.swift (~> 0.12.0)
   - SwiftLint
   - UIDeviceComplete (from `https://github.com/bbqsrc/UIDeviceComplete`)
@@ -29,36 +29,30 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   DivvunSpell:
-    :git: https://github.com/divvun/divvunspell-swift
-    :submodules: true
+    :http: https://github.com/divvun/divvunspell-sdk-swift/releases/download/v1.0.0-beta.1/cargo-pod.tgz
   PahkatClient:
-    :git: https://github.com/divvun/pahkat-client-sdk-swift/
-    :submodules: true
+    :http: https://github.com/divvun/pahkat-client-sdk-swift/releases/download/v0.1.0/cargo-pod_ios.tgz
   UIDeviceComplete:
     :git: https://github.com/bbqsrc/UIDeviceComplete
 
 CHECKOUT OPTIONS:
   DivvunSpell:
-    :commit: 8c0bdd2f338d427602455874922dfbea232896f9
-    :git: https://github.com/divvun/divvunspell-swift
-    :submodules: true
+    :http: https://github.com/divvun/divvunspell-sdk-swift/releases/download/v1.0.0-beta.1/cargo-pod.tgz
   PahkatClient:
-    :commit: 94d96bb6e4a41031c29d4ab50289d58eb4ab0de2
-    :git: https://github.com/divvun/pahkat-client-sdk-swift/
-    :submodules: true
+    :http: https://github.com/divvun/pahkat-client-sdk-swift/releases/download/v0.1.0/cargo-pod_ios.tgz
   UIDeviceComplete:
     :commit: 459f394e621cf0c4da0d4ca589dc662f7572ef0f
     :git: https://github.com/bbqsrc/UIDeviceComplete
 
 SPEC CHECKSUMS:
-  DivvunSpell: 4c8835dcd06378860e61e308ae67d49f9058cf8a
-  PahkatClient: 5b1baab01b7c4ebfa424c74a60fec5cf1c230cef
-  RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
-  Sentry: ab6c209f23700d1460691dbc90e19ed0a05d496b
+  DivvunSpell: ca208e79169237ec09137c0d8675ad125f304753
+  PahkatClient: 65738a84e8d69d579fdd77c66e85e862e3b9580e
+  RxSwift: 1e2e1f9570186967f617e49128ed26ccf1bafc8e
+  Sentry: 9b922b396b0e0bca8516a10e36b0ea3ebea5faf7
   SQLite.swift: d2b4642190917051ce6bd1d49aab565fe794eea3
-  SwiftLint: dfd554ff0dff17288ee574814ccdd5cea85d76f7
+  SwiftLint: 0c645fdc6feed3e390c1701ab3cc669f88b42752
   UIDeviceComplete: c89b90393fb2a3446f5e0e86eca0c02d6f8e09f0
 
-PODFILE CHECKSUM: 5d7b2175d59754c00075a9e00b3fbf154dad90d1
+PODFILE CHECKSUM: b769606396d556c49f3d0732e54dda44490199d0
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.10.1

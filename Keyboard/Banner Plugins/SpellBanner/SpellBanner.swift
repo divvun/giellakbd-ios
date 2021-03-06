@@ -128,9 +128,8 @@ public final class SpellBanner: Banner {
                 speller = try archive.speller()
                 self.speller = speller
                 print("DivvunSpell loaded!")
-            } catch {
-                let error = Sentry.Event(level: .error)
-                Client.shared?.send(event: error, completion: nil)
+            } catch let error {
+                SentrySDK.capture(error: error)
                 print("DivvunSpell **not** loaded.")
                 return
             }

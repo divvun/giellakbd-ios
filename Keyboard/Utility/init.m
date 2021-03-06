@@ -9,10 +9,11 @@ __attribute__((constructor)) static void init_sentry() {
     NSString* dsn = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"SentryDSN"];
     
     if (dsn != nil) {
-        SentryClient *client = [[SentryClient alloc] initWithDsn:dsn didFailWithError:&error];
-        SentryClient.sharedClient = client;
-        [SentryClient.sharedClient startCrashHandlerWithError:&error];
-        
+        [SentrySDK startWithConfigureOptions:^(SentryOptions *options) {
+            options.dsn = dsn;
+            options.debug = @YES; // Helpful to see what's going on
+        }];
+
         if (error != nil) {
             NSLog(@"%@", error);
         } else {
