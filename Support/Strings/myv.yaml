@@ -35,14 +35,14 @@ contextsFor: '"{word}" валонть контекстэнзэ'
 delete: Нардамс
 
 # Original: Detected
-detected: Нардазь
+detected: Редязь
 
 # Original: Downloading "{package}"…
 downloading: 'Тарги "{package}"…'
 
 # Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
 enableTapSoundsPlain: >-
-  Мелеть сайтянзат марямс повнень токамо гайть, сави токамс "{keyboard}" ды кочкамс "{allowFullAccess}".
+  Мелеть сайтянзат марямс повнень токамо гайть, сави токамс {keyboard} ды кочкамс {allowFullAccess}.
 
 # Original: General
 general: Вейсэнь
@@ -76,7 +76,7 @@ noUserWordsDescription: >-
   Сёрмадомсто валт, конатне лиядыть апак вите ды сынсь а вастневить валкссонть, совавтовить тезэнь.
 
 # Original: Open the {item} app
-openAppPlain: 'Панжомс "{item}" сёрмаповонь программанть'
+openAppPlain: 'Панжомс {item} сёрмаповонь программанть'
 
 # Original: Open Settings
 openSettings: Панжомс аравтомкатнень
