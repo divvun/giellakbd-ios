@@ -2,116 +2,114 @@
 about: About
 
 # Original: Add
-add: Add
+add: Путомс
 
 # Original: Add New Keyboard…
-addNewKeyboard: Add New Keyboard…
+addNewKeyboard: Путомс од сёрмадомпувнят…
 
 # Original: Add Word
-addWord: Add Word
+addWord: Поладомс вал
 
 # Original: This word will be suggested in the spelling banner for similar input.
-addWordMessage: This word will be suggested in the spelling banner for similar input.
+addWordMessage: Омбоцеда сяка пувнятнень люпштамста тя валсь кармай кочкафок валкяльксс.
 
 # Original: Allow Full Access
-allowFullAccess: Allow Full Access
+allowFullAccess: Макомс сембе ширдень панжема
 
 # Original: Attributions
-attributions: Attributions
+attributions: Атрибутт
 
 # Original: Block
-block: Block
+block: Пякстамс
 
 # Original: Blocked
-blocked: Blocked
+blocked: Пякстаф
 
 # Original: Cancel
-cancel: Cancel
+cancel: Мрдафтомс
 
 # Original: Contexts for "{word}"
-contextsFor: 'Contexts for "{word}"'
+contextsFor: '"{word}" валть контекстонза'
 
 # Original: Delete
-delete: Delete
+delete: Нардамс
 
 # Original: Detected
-detected: Detected
+detected: Фатяф
 
 # Original: Downloading "{package}"…
-downloading: 'Downloading "{package}"…'
+downloading: 'Таргама "{package}"…'
 
 # Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
 enableTapSoundsPlain: >-
-  If you wish to enable key tap sounds, you must then tap {keyboard} and toggle
-  {allowFullAccess}.
+  Кда мяленте марямс пувнянь токамста вайгяль, сави люпштамс {keyboard} и кочкамс {allowFullAccess}.
 
 # Original: General
-general: General
+general: Марстонь
 
 # Original: Installing packages…
-installingPackages: Installing packages…
+installingPackages: Пакетонь арафтома…
 
 # Original: Installing Spellers…
-installingSpellers: Installing Spellers…
+installingSpellers: Сёрмадомань тевонь видеста арафтома…
 
 # Original: Keyboard
-keyboard: Keyboard
+keyboard: Сёрмапувнят
 
 # Original: Keyboards
-keyboards: Keyboards
+keyboards: Сембе сёрмадомпувнятне
 
 # Original: Language
-language: Language
+language: Кяль
 
 # Original: Layouts
-layouts: Layouts
+layouts: Пувнянь арафтомат
 
 # Original: Kildin Sami
-localeSjd: Kildin Sami
+localeSjd: Кильдинонь Саам
 
 # Original: No user-created words yet.
-noUserWords: No user-created words yet.
+noUserWords: Сёрмадыхнень путфкссна нинге аш.
 
 # Original: Words that are left uncorrected and are not in the built-in dictionary will appear here.
 noUserWordsDescription: >-
-  Words that are left uncorrected and are not in the built-in dictionary will
-  appear here.
+  Тяса эвондайхть валхт, конат апак петть и аф васьфневихть валксса.
 
 # Original: Open the {item} app
-openAppPlain: 'Open the {item} app'
+openAppPlain: 'Панжесть {item} сёрмаповонь программань полатксть'
 
 # Original: Open Settings
-openSettings: Open Settings
+openSettings: Панжесть арафтоматнень
 
 # Original: Save
-save: Save
+save: Ванфтомс
 
 # Original: Set Up {keyboard}
-setUp: 'Set Up {keyboard}'
+setUp: 'Арафтомс {keyboard}'
 
 # Original: Setting Up
-settingUp: Setting Up
+settingUp: Арафтома
 
 # Original: Settings
-settings: Settings
+settings: Арафтомат
 
 # Original: Skip
-skip: Skip
+skip: Нолдамс
 
 # Original: Tap {item}
-tapPlain: 'Tap {item}'
+tapPlain: 'Люпштамс {item}'
 
 # Original: Unblock
-unblock: Unblock
+unblock: панжемс
 
 # Original: User-Defined
-userDefined: User-Defined
+userDefined: Сёрмадыень тефт
 
 # Original: User Dictionary
-userDictionary: User Dictionary
+userDictionary: Сёрмадыень валкс
 
 # Original: When you have finished, return to this app to continue.
-whenYouHaveFinished: 'When you have finished, return to this app to continue.'
+whenYouHaveFinished: 'Мзярда шумордасасть, мрдада тя сёрмаповонь программань полатксти, штоба сяда тов тевонь поладома.'
 
 # Original: Word
-word: Word
+word: Вал
