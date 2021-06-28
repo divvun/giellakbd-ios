@@ -1,117 +1,115 @@
 # Original: About
-about: About
+about: О клавиатуре
 
 # Original: Add
-add: Add
+add: Добавить
 
 # Original: Add New Keyboard…
-addNewKeyboard: Add New Keyboard…
+addNewKeyboard: Добавить новую клавиатуру
 
 # Original: Add Word
-addWord: Add Word
+addWord: Добавить слово
 
 # Original: This word will be suggested in the spelling banner for similar input.
-addWordMessage: This word will be suggested in the spelling banner for similar input.
+addWordMessage: Это слово будет предложено в рекомендациях для похожего ввода.
 
 # Original: Allow Full Access
-allowFullAccess: Allow Full Access
+allowFullAccess: Разрешить полный доступ
 
 # Original: Attributions
-attributions: Attributions
+attributions: Дополнительные источники
 
 # Original: Block
-block: Block
+block: Заблокировать
 
 # Original: Blocked
-blocked: Blocked
+blocked: Заблокировано
 
 # Original: Cancel
-cancel: Cancel
+cancel: Отмена
 
 # Original: Contexts for "{word}"
-contextsFor: 'Contexts for "{word}"'
+contextsFor: '"{word}" в контексте'
 
 # Original: Delete
-delete: Delete
+delete: Удалить
 
 # Original: Detected
-detected: Detected
+detected: Удалено
 
 # Original: Downloading "{package}"…
-downloading: 'Downloading "{package}"…'
+downloading: 'Скачивание "{package}"…'
 
 # Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
 enableTapSoundsPlain: >-
-  If you wish to enable key tap sounds, you must then tap {keyboard} and toggle
-  {allowFullAccess}.
+  Если Вы хотите включить звук клавиатуры, нажмите {keyboard} и выберите {allowFullAccess}.
 
 # Original: General
-general: General
+general: Основные
 
 # Original: Installing packages…
-installingPackages: Installing packages…
+installingPackages: Установка пакетов... 
 
 # Original: Installing Spellers…
-installingSpellers: Installing Spellers…
+installingSpellers: Установка орфографических подсказок...
 
 # Original: Keyboard
-keyboard: Keyboard
+keyboard: Клавиатура
 
 # Original: Keyboards
-keyboards: Keyboards
+keyboards: Клавиатуры
 
 # Original: Language
-language: App Language
+language: Язык приложения
 
 # Original: Layouts
-layouts: Layouts
+layouts: Макеты
 
 # Original: Kildin Sami
-localeSjd: Kildin Sami
+localeSjd: Кильдин Сами
 
 # Original: No user-created words yet.
-noUserWords: No user-created words yet.
+noUserWords: Созданных пользователем слов пока нет.
 
 # Original: Words that are left uncorrected and are not in the built-in dictionary will appear here.
 noUserWordsDescription: >-
-  Words that are left uncorrected and are not in the built-in dictionary will
-  appear here.
+  Здесь появятся слова, которые не были исправлены и отсутствуют во встроенном словаре.  
 
 # Original: Open the {item} app
-openAppPlain: 'Open the {item} app'
+openAppPlain: 'Открыть {item}'
 
 # Original: Open Settings
-openSettings: Open Settings
+openSettings: Открыть Настройки
 
 # Original: Save
-save: Save
+save: Сохранить 
 
 # Original: Set Up {keyboard}
-setUp: 'Set Up {keyboard}'
+setUp: 'Настроить {keyboard}'
 
 # Original: Setting Up
-settingUp: Setting Up
+settingUp: Настройка
 
 # Original: Settings
-settings: Settings
+settings: Настройки
 
 # Original: Skip
-skip: Skip
+skip: Пропустить
 
 # Original: Tap {item}
-tapPlain: 'Tap {item}'
+tapPlain: 'Нажать {item}'
 
 # Original: Unblock
-unblock: Unblock
+unblock: Разблокировать 
 
 # Original: User-Defined
-userDefined: User-Defined
+userDefined: Мои слова
 
 # Original: User Dictionary
-userDictionary: Your own words
+userDictionary: Мой словарь
 
 # Original: When you have finished, return to this app to continue.
-whenYouHaveFinished: 'When you have finished, return to this app to continue.'
+whenYouHaveFinished: 'Когда вы закончите, вернитесь в приложение, чтобы продолжить.'
 
 # Original: Word
-word: Word
+word: Слово

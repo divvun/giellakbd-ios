@@ -261,6 +261,7 @@ fileprivate let localeTree = [
     "myv": ["myv"],
     "nb": ["nb"],
     "nn": ["nn"],
+    "ru": ["ru"],
     "se": ["se"],
     "sma": ["sma"],
     "smj": ["smj"],
