@@ -207,7 +207,7 @@ final class UserDictionaryServiceTests: XCTestCase {
     }
 
 //    private func makeSUT() -> UserDictionaryService {
-//        let archive: ThfstChunkedBoxSpellerArchive
+//        let archive: SpellerArchive
 //        guard let bundle = Bundle.top.url(forResource: "dicts", withExtension: "bundle") else {
 //            fatalError("No dict bundle found; BHFST not loaded.")
 //        }
@@ -222,7 +222,7 @@ final class UserDictionaryServiceTests: XCTestCase {
 //        }
 //
 //        do {
-//            archive = try ThfstChunkedBoxSpellerArchive.open(path: path.path)
+//            archive = try SpellerArchive.open(path: path.path)
 //            print("DivvunSpell loaded!")
 //        } catch {
 //            fatalError("Couldn't load archive")

@@ -12,7 +12,7 @@ protocol SpellBannerDelegate: class {
 public final class SpellBanner: Banner {
     weak var delegate: SpellBannerDelegate?
     private var dictionaryService: UserDictionaryService?
-    private var speller: ThfstChunkedBoxSpeller?
+    private var speller: Speller?
     private let bannerView: SpellBannerView
     private let opQueue: OperationQueue = {
         let opQueue = OperationQueue()
@@ -122,9 +122,9 @@ public final class SpellBanner: Banner {
                 return
             }
 
-            let speller: ThfstChunkedBoxSpeller
+            let speller: Speller
             do {
-                let archive = try ThfstChunkedBoxSpellerArchive.open(path: spellerPath)
+                let archive = try SpellerArchive.open(path: spellerPath)
                 speller = try archive.speller()
                 self.speller = speller
                 print("DivvunSpell loaded!")
@@ -151,12 +151,12 @@ extension SpellBanner: SpellBannerViewDelegate {
 
 final class SuggestionOperation: Operation {
     weak var userDictionary: UserDictionary?
-    weak var speller: ThfstChunkedBoxSpeller?
+    weak var speller: Speller?
     let word: String
     let completion: SuggestionCompletion
 
     init(userDictionary: UserDictionary?,
-         speller: ThfstChunkedBoxSpeller?,
+         speller: Speller?,
          word: String,
          completion: @escaping SuggestionCompletion) {
         self.userDictionary = userDictionary

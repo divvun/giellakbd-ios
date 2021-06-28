@@ -8,7 +8,7 @@ PODS:
   - SQLite.swift (0.12.2):
     - SQLite.swift/standard (= 0.12.2)
   - SQLite.swift/standard (0.12.2)
-  - SwiftLint (0.43.0)
+  - SwiftLint (0.43.1)
   - UIDeviceComplete (2.6.6)
 
 DEPENDENCIES:
@@ -50,7 +50,7 @@ SPEC CHECKSUMS:
   RxSwift: 1e2e1f9570186967f617e49128ed26ccf1bafc8e
   Sentry: 9b922b396b0e0bca8516a10e36b0ea3ebea5faf7
   SQLite.swift: d2b4642190917051ce6bd1d49aab565fe794eea3
-  SwiftLint: 0c645fdc6feed3e390c1701ab3cc669f88b42752
+  SwiftLint: 99f82d07b837b942dd563c668de129a03fc3fb52
   UIDeviceComplete: c89b90393fb2a3446f5e0e86eca0c02d6f8e09f0
 
 PODFILE CHECKSUM: b769606396d556c49f3d0732e54dda44490199d0
