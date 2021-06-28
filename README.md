@@ -6,16 +6,6 @@ An open source reimplementation of Apple's native iOS keyboard with a specific f
 
 ## Dependencies
 
-In order to build the `divvunspell` dependency, you will need to install the Rust compiler. See https://rustup.rs for instructions.
-
-Run the following commands:
-
-```
-rustup target install {aarch64,armv7,armv7s,x86_64,i386}-apple-ios
-cargo install cargo-lipo
-pod install
-```
-
 To enable Sentry, add a `SentryDSN` key to the `HostingApp/Supporting Files/Info.plist` file.
 
 ### Updating localisations
