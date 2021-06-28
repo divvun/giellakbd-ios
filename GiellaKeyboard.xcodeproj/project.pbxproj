@@ -253,6 +253,9 @@
 		C676AD601EC986F000523FF3 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = HostingApp/nb.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C676AD611EC986FA00523FF3 /* se */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = se; path = HostingApp/se.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C67A3F3B1EE7F24900C9015C /* Base */ = {isa = PBXFileReference; lastKnownFileType = text; name = Base; path = Base.lproj/About.txt; sourceTree = "<group>"; };
+		C67C155926899EA1004BD572 /* myv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = myv; path = HostingApp/myv.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C67C155A26899EA4004BD572 /* mdf */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = mdf; path = HostingApp/mdf.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C67C155B26899EC7004BD572 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = HostingApp/ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C691A0E623682C8B00085AC3 /* TestingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestingController.swift; sourceTree = "<group>"; };
 		C691A0E823682C9700085AC3 /* TestingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestingView.xib; sourceTree = "<group>"; };
 		C691A0E923682C9700085AC3 /* TestingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestingView.swift; sourceTree = "<group>"; };
@@ -775,6 +778,9 @@
 				smj,
 				smn,
 				sms,
+				myv,
+				mdf,
+				ru,
 			);
 			mainGroup = 4E807D8A19461D9000D875D1;
 			productRefGroup = 4E807D9419461D9000D875D1 /* Products */;
@@ -1126,6 +1132,9 @@
 				C6D56BE12534B8DB00620D6F /* en */,
 				C6D56BE22534B8E400620D6F /* smn */,
 				C6D56BE32534B8E500620D6F /* sms */,
+				C67C155926899EA1004BD572 /* myv */,
+				C67C155A26899EA4004BD572 /* mdf */,
+				C67C155B26899EC7004BD572 /* ru */,
 			);
 			name = Localizable.strings;
 			path = ..;
