@@ -2,7 +2,7 @@ platform :ios, '12.4'
 use_frameworks!
 
 target 'BaseKeyboard' do
-  pod 'Sentry', '=6.2.1'
+  pod 'Sentry', '=7.2.9'
   pod 'DivvunSpell', :http => "https://github.com/divvun/divvunspell-sdk-swift/releases/download/v1.0.0-beta.1/cargo-pod.tgz"
   pod 'UIDeviceComplete', :git => "https://github.com/bbqsrc/UIDeviceComplete"
   pod 'SwiftLint'
@@ -11,7 +11,7 @@ target 'BaseKeyboard' do
 end
 
 target 'HostingApp' do
-  pod 'Sentry', '=6.2.1'
+  pod 'Sentry', '=7.2.9'
   pod 'UIDeviceComplete', :git => "https://github.com/bbqsrc/UIDeviceComplete"
   pod 'SwiftLint'
   pod 'SQLite.swift', '~> 0.12.0'
