@@ -40,9 +40,11 @@ detected: Удалено
 # Original: Downloading "{package}"…
 downloading: 'Скачивание "{package}"…'
 
+enableKeyboards: Включить клавиатуры, которые вы хотите использовать.
+
 # Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
 enableTapSoundsPlain: >-
-  Если Вы хотите включить звук клавиатуры, нажмите {keyboard} и выберите {allowFullAccess}.
+  Чтобы включить проверку орфографии, обновление и звуки клавиатуры, нажмите {allowFullAccess}.
 
 # Original: General
 general: Основные
