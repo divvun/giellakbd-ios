@@ -127,15 +127,15 @@ class Strings {
         return String(format: format, package)
     }
 
-    /** Enable Keyboards */
+    /** Enable the keyboards that you want to use. */
     static var enableKeyboards: String {
         return string(for: "enableKeyboards")
     }
 
-    /** If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}. */
-    static func enableTapSoundsPlain(keyboard: String, allowFullAccess: String) -> String {
+    /** We need you to tap {allowFullAccess} to enable spell-checking, updating and keyboard sounds. */
+    static func enableTapSoundsPlain(allowFullAccess: String) -> String {
         let format = string(for: "enableTapSoundsPlain")
-        return String(format: format, keyboard, allowFullAccess)
+        return String(format: format, allowFullAccess)
     }
 
     /** General */

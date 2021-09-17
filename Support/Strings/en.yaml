@@ -40,11 +40,11 @@ detected: Detected
 # Original: Downloading "{package}"…
 downloading: 'Downloading "{package}"…'
 
-enableKeyboards: Enable Keyboards
+enableKeyboards: Enable the keyboards that you want to use.
 # Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
 enableTapSoundsPlain: >-
-  If you wish to enable key tap sounds, you must then tap {keyboard} and toggle
-  {allowFullAccess}.
+  We need you to tap {allowFullAccess} to enable spell-checking, updating and keyboard sounds.
+  
 
 # Original: General
 general: General

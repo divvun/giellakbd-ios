@@ -12,8 +12,8 @@
 "delete" = "Delete";
 "detected" = "Detected";
 "downloading" = "Downloading \"%1$@\"…";
-"enableKeyboards" = "Enable Keyboards";
-"enableTapSoundsPlain" = "If you wish to enable key tap sounds, you must then tap %1$@ and toggle %2$@.";
+"enableKeyboards" = "Enable the keyboards that you want to use.";
+"enableTapSoundsPlain" = "We need you to tap %1$@ to enable spell-checking, updating and keyboard sounds.";
 "general" = "General";
 "installingPackages" = "Installing packages…";
 "installingSpellers" = "Installing Spellers…";
