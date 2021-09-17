@@ -40,6 +40,7 @@ detected: Detected
 # Original: Downloading "{package}"…
 downloading: 'Downloading "{package}"…'
 
+enableKeyboards: Enable Keyboards
 # Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
 enableTapSoundsPlain: >-
   If you wish to enable key tap sounds, you must then tap {keyboard} and toggle

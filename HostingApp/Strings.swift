@@ -127,6 +127,11 @@ class Strings {
         return String(format: format, package)
     }
 
+    /** Enable Keyboards */
+    static var enableKeyboards: String {
+        return string(for: "enableKeyboards")
+    }
+
     /** If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}. */
     static func enableTapSoundsPlain(keyboard: String, allowFullAccess: String) -> String {
         let format = string(for: "enableTapSoundsPlain")
@@ -255,16 +260,5 @@ class Strings {
 }
 
 fileprivate let localeTree = [
-    "en": ["en"],
-    "fi": ["fi"],
-    "mdf": ["mdf"],
-    "myv": ["myv"],
-    "nb": ["nb"],
-    "nn": ["nn"],
-    "ru": ["ru"],
-    "se": ["se"],
-    "sma": ["sma"],
-    "smj": ["smj"],
-    "sms": ["sms"],
-    "sv": ["sv"]
+    "en": ["en"]
 ]
