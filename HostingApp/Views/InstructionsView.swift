@@ -6,7 +6,6 @@ final class InstructionsView: UIView, Nibbable {
     @IBOutlet var step3Label: UILabel!
     @IBOutlet var step4Label: UILabel!
 
-
     @IBOutlet var finishLabel: UILabel!
     @IBOutlet var tapSoundsLabel: UILabel!
 

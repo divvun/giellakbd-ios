@@ -94,7 +94,7 @@ extension Strings {
     }
 
     static var enableTapSounds: NSAttributedString {
-        let plain = Strings.enableTapSoundsPlain(keyboard: Strings.localizedName, allowFullAccess: Strings.allowFullAccess)
+        let plain = Strings.enableTapSoundsPlain(allowFullAccess: Strings.allowFullAccess) //Strings.enableTapSoundsPlain(keyboard: Strings.localizedName, allowFullAccess: Strings.allowFullAccess)
         let nsplain = plain as NSString
         let size = CGFloat(12)
 
