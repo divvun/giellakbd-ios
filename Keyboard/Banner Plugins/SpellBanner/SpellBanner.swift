@@ -154,6 +154,7 @@ final class SuggestionOperation: Operation {
     weak var speller: Speller?
     let word: String
     let completion: SuggestionCompletion
+    let gpt2: GPT2
 
     init(userDictionary: UserDictionary?,
          speller: Speller?,
@@ -163,6 +164,7 @@ final class SuggestionOperation: Operation {
         self.speller = speller
         self.word = word
         self.completion = completion
+        self.gpt2 = GPT2()
     }
 
     override func main() {
@@ -180,6 +182,9 @@ final class SuggestionOperation: Operation {
 
     private func getSuggestions(for word: String) -> [String] {
         var suggestions: [String] = []
+        let predictions = self.gpt2.generate(text: word, nTokens: 2, callback: nil)
+        
+        return [predictions]
 
         if let dictionary = userDictionary {
             let userSuggestions = dictionary.getSuggestions(for: word)
