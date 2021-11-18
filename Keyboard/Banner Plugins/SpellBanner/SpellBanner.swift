@@ -149,11 +149,13 @@ extension SpellBanner: SpellBannerViewDelegate {
     }
 }
 
+@available(iOSApplicationExtension 13.0, *)
 final class SuggestionOperation: Operation {
     weak var userDictionary: UserDictionary?
     weak var speller: Speller?
     let word: String
     let completion: SuggestionCompletion
+    let gpt2: GPT2
 
     init(userDictionary: UserDictionary?,
          speller: Speller?,
@@ -163,24 +165,31 @@ final class SuggestionOperation: Operation {
         self.speller = speller
         self.word = word
         self.completion = completion
+        self.gpt2 = GPT2()
     }
 
     override func main() {
         if isCancelled {
             return
         }
-
-        let suggestions = getSuggestions(for: word)
-        if !isCancelled {
-            DispatchQueue.main.async {
-                self.completion(suggestions)
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            let suggestions = self.getSuggestions(for: self.word)
+            if !self.isCancelled {
+                DispatchQueue.main.async {
+                    self.completion(suggestions)
+                }
             }
         }
     }
 
     private func getSuggestions(for word: String) -> [String] {
         var suggestions: [String] = []
-
+        
+        let predictions = self.gpt2.generate(text: word, nTokens: 2, callback: nil)
+        
+        return [predictions]
+        
         if let dictionary = userDictionary {
             let userSuggestions = dictionary.getSuggestions(for: word)
             suggestions.append(contentsOf: userSuggestions)

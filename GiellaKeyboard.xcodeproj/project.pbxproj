@@ -58,11 +58,14 @@
 		99DA1847240D1010003E7353 /* UserDictionaryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA184224095AD0003E7353 /* UserDictionaryService.swift */; };
 		99DD30F623E307430065E8D8 /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DD30F423E3059C0065E8D8 /* Audio.swift */; };
 		C61829B8254225B100620D6F /* KeyboardLocale+AllLocales.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997021042416DF8C00A81A27 /* KeyboardLocale+AllLocales.swift */; };
+		C62B93B627468437005BF7D7 /* halfmodel.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = C62B93B527468437005BF7D7 /* halfmodel.mlmodel */; };
+		C62B93B92746852C005BF7D7 /* gpt2_tokenizer.json in Resources */ = {isa = PBXBuildFile; fileRef = C62B93B72746852C005BF7D7 /* gpt2_tokenizer.json */; };
 		C63EE0FF2361D86800A1E15A /* MenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63EE0FE2361D86800A1E15A /* MenuButton.swift */; };
 		C63EE1012362F7E500A1E15A /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C63EE1002362F7E500A1E15A /* Settings.bundle */; };
 		C643BF5B20BD483C00124DDC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C643BF5A20BD483C00124DDC /* LaunchScreen.storyboard */; };
 		C649D3D4234B7C8000EF4273 /* KeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C649D3D2234B7C7A00EF4273 /* KeyView.swift */; };
 		C649D3D5234B7D8400EF4273 /* KeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDAF59AB22F9CD0600F7C9FC /* KeyboardView.swift */; };
+		C64F9281274685D3004F559C /* tokenizer.json in Resources */ = {isa = PBXBuildFile; fileRef = C62B93B82746852C005BF7D7 /* tokenizer.json */; };
 		C65430B01EC94BC7007FC053 /* InstructionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65430AF1EC94BC7007FC053 /* InstructionsView.swift */; };
 		C65430B21EC94BD1007FC053 /* InstructionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C65430B11EC94BD1007FC053 /* InstructionsView.xib */; };
 		C65430B41EC94BF0007FC053 /* LanguagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65430B31EC94BF0007FC053 /* LanguagesController.swift */; };
@@ -72,6 +75,13 @@
 		C655E85D1EC55D0800B12BE4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C655E85B1EC55D0800B12BE4 /* Localizable.strings */; };
 		C6629244254B302000620D6F /* FeatureFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6629243254B302000620D6F /* FeatureFlag.swift */; };
 		C6629251254B319D00620D6F /* FeatureFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6629243254B302000620D6F /* FeatureFlag.swift */; };
+		C66C9E5F2746831D007FB7B0 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66C9E522746831D007FB7B0 /* Math.swift */; };
+		C66C9E602746831D007FB7B0 /* UtilsML.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66C9E532746831D007FB7B0 /* UtilsML.swift */; };
+		C66C9E612746831D007FB7B0 /* GPT2ByteEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66C9E542746831D007FB7B0 /* GPT2ByteEncoder.swift */; };
+		C66C9E632746831D007FB7B0 /* MLMultiArray+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66C9E562746831D007FB7B0 /* MLMultiArray+Utils.swift */; };
+		C66C9E672746831D007FB7B0 /* SquadDataset.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66C9E5A2746831D007FB7B0 /* SquadDataset.swift */; };
+		C66C9E682746831D007FB7B0 /* GPT2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66C9E5B2746831D007FB7B0 /* GPT2.swift */; };
+		C66C9E6A2746831D007FB7B0 /* GPT2Tokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66C9E5D2746831D007FB7B0 /* GPT2Tokenizer.swift */; };
 		C676AD5B1EC9679000523FF3 /* InstructionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C676AD5A1EC9679000523FF3 /* InstructionsController.swift */; };
 		C676AD5F1EC985EB00523FF3 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C676AD5E1EC985EB00523FF3 /* Strings.swift */; };
 		C67A3F3A1EE7F24900C9015C /* About.txt in Resources */ = {isa = PBXBuildFile; fileRef = C67A3F3C1EE7F24900C9015C /* About.txt */; };
@@ -235,6 +245,9 @@
 		C61CC29120C8A5C000B213B8 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = HostingApp/sv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C62AF50F252DC8BD00620D6F /* sma */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sma; path = HostingApp/sma.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C62AF510252DC94400620D6F /* smj */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = smj; path = HostingApp/smj.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C62B93B527468437005BF7D7 /* halfmodel.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = halfmodel.mlmodel; sourceTree = "<group>"; };
+		C62B93B72746852C005BF7D7 /* gpt2_tokenizer.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gpt2_tokenizer.json; sourceTree = "<group>"; };
+		C62B93B82746852C005BF7D7 /* tokenizer.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tokenizer.json; sourceTree = "<group>"; };
 		C63EE0FE2361D86800A1E15A /* MenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButton.swift; sourceTree = "<group>"; };
 		C63EE1002362F7E500A1E15A /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		C643BF5A20BD483C00124DDC /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -248,6 +261,13 @@
 		C655E8591EC558D000B12BE4 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		C655E85C1EC55D0800B12BE4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = HostingApp/Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C6629243254B302000620D6F /* FeatureFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlag.swift; sourceTree = "<group>"; };
+		C66C9E522746831D007FB7B0 /* Math.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
+		C66C9E532746831D007FB7B0 /* UtilsML.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilsML.swift; sourceTree = "<group>"; };
+		C66C9E542746831D007FB7B0 /* GPT2ByteEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPT2ByteEncoder.swift; sourceTree = "<group>"; };
+		C66C9E562746831D007FB7B0 /* MLMultiArray+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MLMultiArray+Utils.swift"; sourceTree = "<group>"; };
+		C66C9E5A2746831D007FB7B0 /* SquadDataset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SquadDataset.swift; sourceTree = "<group>"; };
+		C66C9E5B2746831D007FB7B0 /* GPT2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPT2.swift; sourceTree = "<group>"; };
+		C66C9E5D2746831D007FB7B0 /* GPT2Tokenizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPT2Tokenizer.swift; sourceTree = "<group>"; };
 		C676AD5A1EC9679000523FF3 /* InstructionsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsController.swift; sourceTree = "<group>"; };
 		C676AD5E1EC985EB00523FF3 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		C676AD601EC986F000523FF3 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = HostingApp/nb.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -433,6 +453,7 @@
 		4E807DBA19461DC700D875D1 /* Keyboard */ = {
 			isa = PBXGroup;
 			children = (
+				C66C9E512746831D007FB7B0 /* MLSources */,
 				4E6AEE5219D2488B00931E8F /* Controllers */,
 				4E6AEE5019D2486900931E8F /* Models */,
 				4E6AEE4F19D2484B00931E8F /* Views */,
@@ -557,6 +578,23 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		C66C9E512746831D007FB7B0 /* MLSources */ = {
+			isa = PBXGroup;
+			children = (
+				C62B93B72746852C005BF7D7 /* gpt2_tokenizer.json */,
+				C62B93B82746852C005BF7D7 /* tokenizer.json */,
+				C62B93B527468437005BF7D7 /* halfmodel.mlmodel */,
+				C66C9E522746831D007FB7B0 /* Math.swift */,
+				C66C9E532746831D007FB7B0 /* UtilsML.swift */,
+				C66C9E542746831D007FB7B0 /* GPT2ByteEncoder.swift */,
+				C66C9E562746831D007FB7B0 /* MLMultiArray+Utils.swift */,
+				C66C9E5A2746831D007FB7B0 /* SquadDataset.swift */,
+				C66C9E5B2746831D007FB7B0 /* GPT2.swift */,
+				C66C9E5D2746831D007FB7B0 /* GPT2Tokenizer.swift */,
+			);
+			path = MLSources;
+			sourceTree = SOURCE_ROOT;
 		};
 		C676AD621EC98C0F00523FF3 /* Controllers */ = {
 			isa = PBXGroup;
@@ -732,8 +770,9 @@
 				TargetAttributes = {
 					4E807D9219461D9000D875D1 = {
 						CreatedOnToolsVersion = 6.0;
+						DevelopmentTeam = 2K5J2584NX;
 						LastSwiftMigration = 1110;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -742,8 +781,9 @@
 					};
 					4E807DB819461DC700D875D1 = {
 						CreatedOnToolsVersion = 6.0;
+						DevelopmentTeam = 2K5J2584NX;
 						LastSwiftMigration = 1110;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -809,6 +849,7 @@
 				C691A0ED23682CC000085AC3 /* HomeView.xib in Resources */,
 				C655E85D1EC55D0800B12BE4 /* Localizable.strings in Resources */,
 				C6974E611A31557A00D1A0B3 /* Background.jpg in Resources */,
+				C64F9281274685D3004F559C /* tokenizer.json in Resources */,
 				C67A3F3A1EE7F24900C9015C /* About.txt in Resources */,
 				C65430B21EC94BD1007FC053 /* InstructionsView.xib in Resources */,
 				999790AE23F2B545003F7885 /* UserDictionaryView.xib in Resources */,
@@ -827,6 +868,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C62B93B92746852C005BF7D7 /* gpt2_tokenizer.json in Resources */,
 				FD1387D7234CB95400C5B916 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1043,18 +1085,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				997550B723EAC631004ED6A5 /* UserDictionary.swift in Sources */,
+				C66C9E6A2746831D007FB7B0 /* GPT2Tokenizer.swift in Sources */,
 				99DD30F623E307430065E8D8 /* Audio.swift in Sources */,
 				C6996B5322FB06FA007EBC3D /* DeadKeyHandler.swift in Sources */,
 				C6996B5E22FC3257007EBC3D /* SpellBanner.swift in Sources */,
 				999790BB23F40E4F003F7885 /* WordContext.swift in Sources */,
 				C6996B5C22FC2D3E007EBC3D /* CursorContext.swift in Sources */,
 				C6996B5A22FC2CC7007EBC3D /* SystemKeys.swift in Sources */,
+				C62B93B627468437005BF7D7 /* halfmodel.mlmodel in Sources */,
 				C6F249461F736E1400840F2B /* KeyboardDefinition.swift in Sources */,
 				99460238243B27140027C1CC /* InputContext.swift in Sources */,
 				99074EE82422383700075480 /* SpellBannerFlowLayout.swift in Sources */,
 				C6629251254B319D00620D6F /* FeatureFlag.swift in Sources */,
 				C6F249471F736E1A00840F2B /* KeyboardViewController.swift in Sources */,
+				C66C9E632746831D007FB7B0 /* MLMultiArray+Utils.swift in Sources */,
 				999C30172428E91000E127A6 /* BannerView.swift in Sources */,
+				C66C9E602746831D007FB7B0 /* UtilsML.swift in Sources */,
+				C66C9E672746831D007FB7B0 /* SquadDataset.swift in Sources */,
 				C61829B8254225B100620D6F /* KeyboardLocale+AllLocales.swift in Sources */,
 				99DA184424095AF0003E7353 /* UserDictionaryService.swift in Sources */,
 				C649D3D4234B7C8000EF4273 /* KeyView.swift in Sources */,
@@ -1074,13 +1121,16 @@
 				999C30152428E70600E127A6 /* UpdateBannerView.swift in Sources */,
 				FDBD09C52333A56800303152 /* SplitKeyboard.swift in Sources */,
 				99074EF62423AAA300075480 /* SpellBannerView.swift in Sources */,
+				C66C9E612746831D007FB7B0 /* GPT2ByteEncoder.swift in Sources */,
 				99074EF224224B4400075480 /* Banner.swift in Sources */,
 				9930BD90243CD2BF00C0EF7F /* FolderWatcher.swift in Sources */,
 				FDAF59A922F9CCF200F7C9FC /* LongPressController.swift in Sources */,
 				990440AC23FC245D0063064E /* KeyboardLocale.swift in Sources */,
+				C66C9E682746831D007FB7B0 /* GPT2.swift in Sources */,
 				C6F9564823E4520D009C469C /* init.m in Sources */,
 				C649D3D5234B7D8400EF4273 /* KeyboardView.swift in Sources */,
 				C6F2494F1F736E3E00840F2B /* KeyboardSettings.swift in Sources */,
+				C66C9E5F2746831D007FB7B0 /* Math.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1266,15 +1316,15 @@
 				CODE_SIGN_ENTITLEMENTS = HostingApp/HostingApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2K5J2584NX;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Support",
 				);
 				INFOPLIST_FILE = HostingApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1307,15 +1357,15 @@
 				CODE_SIGN_ENTITLEMENTS = HostingApp/HostingApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2K5J2584NX;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Support",
 				);
 				INFOPLIST_FILE = HostingApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1347,12 +1397,12 @@
 				CODE_SIGN_ENTITLEMENTS = Keyboard/Keyboard.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2K5J2584NX;
 				ENABLE_BITCODE = NO;
 				GENERATE_PROFILING_CODE = YES;
 				INFOPLIST_FILE = Keyboard/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaKeyboardTest.Keyboard;
@@ -1377,12 +1427,12 @@
 				CODE_SIGN_ENTITLEMENTS = Keyboard/Keyboard.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2K5J2584NX;
 				ENABLE_BITCODE = NO;
 				GENERATE_PROFILING_CODE = YES;
 				INFOPLIST_FILE = Keyboard/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				PRODUCT_BUNDLE_IDENTIFIER = no.divvun.GiellaKeyboardTest.Keyboard;
@@ -1487,7 +1537,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = BaseKeyboard/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "$(inherited)";
@@ -1533,7 +1583,7 @@
 				);
 				INFOPLIST_FILE = BaseKeyboard/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "$(inherited)";
