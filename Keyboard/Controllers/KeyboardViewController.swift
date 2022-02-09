@@ -443,7 +443,7 @@ open class KeyboardViewController: UIInputViewController {
         }
     }
 
-    func replaceSelected(with input: NSAttributedString) {
+    func replaceSelected(with input: String) {
         do {
             let ctx = try CursorContext.from(proxy: textDocumentProxy)
             textDocumentProxy.adjustTextPosition(byCharacterOffset: ctx.current.1.count - Int(ctx.currentOffset))
@@ -460,15 +460,15 @@ open class KeyboardViewController: UIInputViewController {
 
     private var lastInput: String = ""
 
-    func insertText(_ input: NSAttributedString) {
+    func insertText(_ input: String) {
         let proxy = textDocumentProxy
-        proxy.insertText(input.string)
+        proxy.insertText(input)
 
-        if lastInput != " " && input.string == " " {
+        if lastInput != " " && input == " " {
             handleAutoFullStop()
             lastInput = ""
         } else {
-            lastInput = input.string
+            lastInput = input
         }
 
         updateInputState()
@@ -643,12 +643,12 @@ extension KeyboardViewController: KeyboardViewDelegate {
     private func handleDeadKey(string: String, endShifted: Bool = true) {
         switch deadKeyHandler.handleInput(string, page: keyboardView.page) {
         case .none:
-            insertText(NSAttributedString(string: string))
+            insertText(string)
         case .transforming:
             // Do nothing for now
             break
         case let .output(value):
-            insertText(NSAttributedString(string: value))
+            insertText(value)
         }
 
         if endShifted {
@@ -738,7 +738,7 @@ extension KeyboardViewController: KeyboardViewDelegate {
 
     private func handleBackspace() {
         if let value = deadKeyHandler.finish() {
-            insertText(NSAttributedString(string: value))
+            insertText(value)
         }
         deleteBackward()
     }
@@ -752,9 +752,9 @@ extension KeyboardViewController: KeyboardViewDelegate {
 
     fileprivate func handleReturn() {
         if let value = deadKeyHandler.finish() {
-            insertText(NSAttributedString(string: value))
+            insertText(value)
         }
-        insertText(NSAttributedString(string: "\n"))
+        insertText("\n")
     }
 
 }
@@ -769,11 +769,11 @@ extension KeyboardViewController: BannerManagerDelegate {
     func bannerDidProvideInput(banner: Banner, inputText: NSAttributedString) {
         if banner is SpellBanner {
             Audio.playClickSound()
-            replaceSelected(with: inputText)
+            replaceSelected(with: inputText.string)
 
             // If the keyboard is not compounding, we add a space
             if !self.keyboardDefinition.features.contains(.compounding) {
-                insertText(NSAttributedString(string: " "))
+                insertText(" ")
             }
         }
     }
