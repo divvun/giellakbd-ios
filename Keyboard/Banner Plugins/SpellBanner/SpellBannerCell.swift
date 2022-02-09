@@ -41,10 +41,10 @@ final class SpellBannerCell: UICollectionViewCell {
 
     func set(item: SpellBannerItem?) {
         guard let item = item else {
-            titleLabel.text = ""
+            titleLabel.attributedText = NSAttributedString(string:"")
             return
         }
-        titleLabel.text = item.title.string
+        titleLabel.attributedText = item.title
     }
 
     required init?(coder _: NSCoder) {
