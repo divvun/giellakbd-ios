@@ -2,11 +2,11 @@ import Foundation
 import Sentry
 import DivvunSpell
 
-typealias SuggestionCompletion = ([String]) -> Void
+typealias SuggestionCompletion = ([NSAttributedString]) -> Void
 
 protocol SpellBannerDelegate: class {
     var hasFullAccess: Bool { get }
-    func didSelectSuggestion(banner: SpellBanner, suggestion: String)
+    func didSelectSuggestion(banner: SpellBanner, suggestion: NSAttributedString)
 }
 
 public final class SpellBanner: Banner {
@@ -91,11 +91,11 @@ public final class SpellBanner: Banner {
         opQueue.addOperation(suggestionOp)
     }
 
-    private func makeSuggestionBannerItems(currentWord: String, suggestions: [String]) -> [SpellBannerItem] {
-        let currentWordItem = SpellBannerItem(title: "\"\(currentWord)\"", value: currentWord)
+    private func makeSuggestionBannerItems(currentWord: String, suggestions: [NSAttributedString]) -> [SpellBannerItem] {
+        let currentWordItem = SpellBannerItem(title: NSAttributedString(string: "\"\(currentWord)\""), value: NSAttributedString(string: currentWord))
 
         var suggestions = suggestions
-        suggestions.removeAll { $0 == currentWord } // don't show current word twice
+        suggestions.removeAll { $0.string == currentWord } // don't show current word twice
         let suggestionItems = suggestions.map { SpellBannerItem(title: $0, value: $0) }
 
         return [currentWordItem] + suggestionItems
@@ -178,7 +178,7 @@ final class SuggestionOperation: Operation {
         }
     }
 
-    private func getSuggestions(for word: String) -> [String] {
+    private func getSuggestions(for word: String) -> [NSAttributedString] {
         var suggestions: [String] = []
 
         if let dictionary = userDictionary {
@@ -192,7 +192,14 @@ final class SuggestionOperation: Operation {
                 .prefix(3)) ?? []
             suggestions.append(contentsOf: spellerSuggestions)
         }
-
-        return suggestions
+        
+        
+        var bold_suggestions:[NSAttributedString] = []
+                for s in suggestions {
+                    let bold = s.bolden(substring: s)
+                    bold_suggestions.append(contentsOf:[bold])
+                    
+                }
+        return bold_suggestions
     }
 }

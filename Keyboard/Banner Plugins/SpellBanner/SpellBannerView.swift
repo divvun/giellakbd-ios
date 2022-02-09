@@ -2,8 +2,8 @@ import UIKit
 import DivvunSpell
 
 public struct SpellBannerItem {
-    public let title: String
-    public let value: String
+    public let title: NSAttributedString
+    public let value: NSAttributedString
 }
 
 public protocol SpellBannerViewDelegate: class {
@@ -116,7 +116,7 @@ extension SpellBannerView: UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView,
                                layout _: UICollectionViewLayout,
                                sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let title = items[indexPath.item]?.title ?? ""
+        let title = items[indexPath.item]?.title.string ?? ""
 
         // It is constrained by infinity so it isn't constrained.
         let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: collectionView.frame.height)

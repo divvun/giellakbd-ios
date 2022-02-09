@@ -3,7 +3,7 @@ import DivvunSpell
 
 protocol BannerManagerDelegate: class {
     var hasFullAccess: Bool { get }
-    func bannerDidProvideInput(banner: Banner, inputText: String)
+    func bannerDidProvideInput(banner: Banner, inputText: NSAttributedString)
 }
 
 final class BannerManager {
@@ -82,7 +82,7 @@ extension BannerManager: SpellBannerDelegate {
         return delegate?.hasFullAccess ?? false
     }
 
-    func didSelectSuggestion(banner: SpellBanner, suggestion: String) {
+    func didSelectSuggestion(banner: SpellBanner, suggestion: NSAttributedString) {
         delegate?.bannerDidProvideInput(banner: banner, inputText: suggestion)
     }
 }

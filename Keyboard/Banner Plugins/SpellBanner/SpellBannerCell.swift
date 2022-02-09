@@ -44,7 +44,7 @@ final class SpellBannerCell: UICollectionViewCell {
             titleLabel.text = ""
             return
         }
-        titleLabel.text = item.title
+        titleLabel.text = item.title.string
     }
 
     required init?(coder _: NSCoder) {
