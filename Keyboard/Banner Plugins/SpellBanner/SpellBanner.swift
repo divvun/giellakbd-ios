@@ -92,14 +92,25 @@ public final class SpellBanner: Banner {
     }
 
     private func makeSuggestionBannerItems(currentWord: String, suggestions: [String]) -> [SpellBannerItem] {
-        let currentWordItem = SpellBannerItem(title: "\"\(currentWord)\"", value: currentWord)
-
+        var currentWordItem = SpellBannerItem(title: NSAttributedString(string: "\"\(currentWord)\""), value: NSAttributedString(string: currentWord))
         var suggestions = suggestions
+        
         suggestions.removeAll { $0 == currentWord } // don't show current word twice
-        let suggestionItems = suggestions.map { SpellBannerItem(title: $0, value: $0) }
-
+        let isWordCorrect = (try? speller?.isCorrect(word: currentWord)) ?? false
+        if isWordCorrect {
+            let correctInput = currentWord.bolden(substring: currentWord)
+            currentWordItem = SpellBannerItem(title: correctInput, value: correctInput)
+        }
+       
+        let suggestionItems = suggestions.enumerated().map { (i, s) -> NSAttributedString in
+            if (i == 0 && !isWordCorrect) {
+                return s.bolden(substring: s)
+            }
+            return NSAttributedString(string: s)
+        }.map { SpellBannerItem(title: $0, value: $0) }
         return [currentWordItem] + suggestionItems
     }
+    
 
     func updateTheme(_ theme: ThemeType) {
         bannerView.updateTheme(theme)
@@ -143,7 +154,7 @@ public final class SpellBanner: Banner {
 
 extension SpellBanner: SpellBannerViewDelegate {
     public func didSelectBannerItem(_ banner: SpellBannerView, item: SpellBannerItem) {
-        delegate?.didSelectSuggestion(banner: self, suggestion: item.value)
+        delegate?.didSelectSuggestion(banner: self, suggestion: item.value.string)
         opQueue.cancelAllOperations()
         banner.clearSuggestions()
     }
@@ -185,14 +196,14 @@ final class SuggestionOperation: Operation {
             let userSuggestions = dictionary.getSuggestions(for: word)
             suggestions.append(contentsOf: userSuggestions)
         }
-
+        
         if let speller = speller {
             let spellerSuggestions = (try? speller
                 .suggest(word: word)
                 .prefix(3)) ?? []
             suggestions.append(contentsOf: spellerSuggestions)
         }
-
+    
         return suggestions
     }
 }
