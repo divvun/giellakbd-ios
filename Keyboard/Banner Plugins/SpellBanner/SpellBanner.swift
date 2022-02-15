@@ -92,14 +92,14 @@ public final class SpellBanner: Banner {
     }
 
     private func makeSuggestionBannerItems(currentWord: String, suggestions: [String]) -> [SpellBannerItem] {
-        var currentWordItem = SpellBannerItem(title: NSAttributedString(string: "\"\(currentWord)\""), value: NSAttributedString(string: currentWord))
+        var currentWordItem = SpellBannerItem(title: NSAttributedString(string: "\"\(currentWord)\""), value: currentWord)
         var suggestions = suggestions
         
         suggestions.removeAll { $0 == currentWord } // don't show current word twice
         let isWordCorrect = (try? speller?.isCorrect(word: currentWord)) ?? false
         if isWordCorrect {
             let correctInput = currentWord.bolden(substring: currentWord)
-            currentWordItem = SpellBannerItem(title: correctInput, value: correctInput)
+            currentWordItem = SpellBannerItem(title: correctInput, value: correctInput.string)
         }
        
         let suggestionItems = suggestions.enumerated().map { (i, s) -> NSAttributedString in
@@ -107,7 +107,7 @@ public final class SpellBanner: Banner {
                 return s.bolden(substring: s)
             }
             return NSAttributedString(string: s)
-        }.map { SpellBannerItem(title: $0, value: $0) }
+        }.map { SpellBannerItem(title: $0, value: $0.string.trimmingCharacters(in: CharacterSet(charactersIn: "*"))) }
         return [currentWordItem] + suggestionItems
     }
     
@@ -154,7 +154,7 @@ public final class SpellBanner: Banner {
 
 extension SpellBanner: SpellBannerViewDelegate {
     public func didSelectBannerItem(_ banner: SpellBannerView, item: SpellBannerItem) {
-        delegate?.didSelectSuggestion(banner: self, suggestion: item.value.string)
+        delegate?.didSelectSuggestion(banner: self, suggestion: item.value)
         opQueue.cancelAllOperations()
         banner.clearSuggestions()
     }
