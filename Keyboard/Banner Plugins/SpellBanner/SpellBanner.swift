@@ -194,7 +194,12 @@ final class SuggestionOperation: Operation {
 
         if let dictionary = userDictionary {
             let userSuggestions = dictionary.getSuggestions(for: word)
-            suggestions.append(contentsOf: userSuggestions)
+            if !userSuggestions.isEmpty {
+                let userSuggestion = ["*" + userSuggestions[0]]
+                suggestions.append(contentsOf: userSuggestion)
+            } else {
+                suggestions.append(contentsOf: userSuggestions)
+            }
         }
         
         if let speller = speller {

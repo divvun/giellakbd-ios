@@ -122,7 +122,7 @@ extension SpellBannerView: UICollectionViewDelegateFlowLayout {
         let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: collectionView.frame.height)
         let boundingBox = title.boundingRect(with: constraintRect,
                                              options: .usesLineFragmentOrigin,
-                                             attributes: [NSAttributedString.Key.font: theme.bannerFont],
+//                                             attributes: [NSAttributedString.Key.font: theme.bannerFont],
                                              context: nil)
 
         return CGSize(width: max(frame.width / 3.0,
