@@ -3,7 +3,7 @@ import DivvunSpell
 
 public struct SpellBannerItem {
     public let title: NSAttributedString
-    public let value: NSAttributedString
+    public let value: String
 }
 
 public protocol SpellBannerViewDelegate: AnyObject {
