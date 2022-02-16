@@ -98,7 +98,8 @@ public final class SpellBanner: Banner {
         suggestions.removeAll { $0 == currentWord } // don't show current word twice
         let isWordCorrect = (try? speller?.isCorrect(word: currentWord)) ?? false
         if isWordCorrect {
-            let correctInput = currentWord.bolden(substring: currentWord)
+            let currentWord =  "\"\(currentWord)\""
+            let correctInput = currentWord.bolden(substring:currentWord)
             currentWordItem = SpellBannerItem(title: correctInput, value: correctInput.string)
         }
        
@@ -107,7 +108,7 @@ public final class SpellBanner: Banner {
                 return s.bolden(substring: s)
             }
             return NSAttributedString(string: s)
-        }.map { SpellBannerItem(title: $0, value: $0.string.trimmingCharacters(in: CharacterSet(charactersIn: "*"))) }
+        }.map { SpellBannerItem(title: $0, value: $0.string.trimmingCharacters(in: CharacterSet(charactersIn: "*")))}
         return [currentWordItem] + suggestionItems
     }
     
