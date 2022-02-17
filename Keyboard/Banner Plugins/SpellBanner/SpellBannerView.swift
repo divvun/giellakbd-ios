@@ -6,7 +6,7 @@ public struct SpellBannerItem {
     public let value: String
 }
 
-public protocol SpellBannerViewDelegate: class {
+public protocol SpellBannerViewDelegate: AnyObject {
     func didSelectBannerItem(_ banner: SpellBannerView, item: SpellBannerItem)
 }
 

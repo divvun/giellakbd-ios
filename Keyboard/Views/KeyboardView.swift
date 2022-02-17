@@ -1,6 +1,6 @@
 import UIKit
 
-protocol KeyboardViewDelegate: class {
+protocol KeyboardViewDelegate: AnyObject {
     func didSwipeKey(_ key: KeyDefinition)
     func didTriggerKey(_ key: KeyDefinition)
     func didTriggerDoubleTap(forKey key: KeyDefinition)
@@ -750,7 +750,7 @@ final internal class KeyboardView: UIView,
         }
 
         func configure(page: KeyboardPage, key: KeyDefinition, theme: ThemeType, traits: UITraitCollection) {
-            _ = contentView.subviews.forEach { view in
+            contentView.subviews.forEach { view in
                 view.removeFromSuperview()
             }
             keyView = nil

@@ -1,7 +1,7 @@
 import Foundation
 import DivvunSpell
 
-protocol BannerManagerDelegate: class {
+protocol BannerManagerDelegate: AnyObject {
     var hasFullAccess: Bool { get }
     func bannerDidProvideInput(banner: Banner, inputText: String)
 }
