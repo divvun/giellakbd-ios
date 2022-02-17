@@ -4,7 +4,7 @@ import DivvunSpell
 
 typealias SuggestionCompletion = ([String]) -> Void
 
-protocol SpellBannerDelegate: class {
+protocol SpellBannerDelegate: AnyObject {
     var hasFullAccess: Bool { get }
     func didSelectSuggestion(banner: SpellBanner, suggestion: String)
 }

@@ -1,7 +1,7 @@
 import Foundation
 import Sentry
 
-protocol IPCDelegate: class {
+protocol IPCDelegate: AnyObject {
     func didBeginDownloading(id: String)
     func didFinishInstalling(id: String)
 }

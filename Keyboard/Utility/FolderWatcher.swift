@@ -1,6 +1,6 @@
 import Foundation
 
-protocol FolderWatcherDelegate: class {
+protocol FolderWatcherDelegate: AnyObject {
     func fileWasAdded(at url: URL)
     func fileWasRemoved(at url: URL)
 }

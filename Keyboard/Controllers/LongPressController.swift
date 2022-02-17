@@ -1,6 +1,6 @@
 import UIKit
 
-protocol LongPressOverlayDelegate: class {
+protocol LongPressOverlayDelegate: AnyObject {
     func longpress(didCreateOverlayContentView contentView: UIView)
     func longpressDidCancel()
     func longpress(didSelectKey key: KeyDefinition)
@@ -9,7 +9,7 @@ protocol LongPressOverlayDelegate: class {
     func longpressKeySize() -> CGSize
 }
 
-protocol LongPressCursorMovementDelegate: class {
+protocol LongPressCursorMovementDelegate: AnyObject {
     func longpress(movedCursor: Int)
     func longpressDidCancel()
 }
