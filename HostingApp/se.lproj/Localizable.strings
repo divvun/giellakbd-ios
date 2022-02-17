@@ -12,7 +12,8 @@
 "delete" = "Sihko";
 "detected" = "Áicon sánit";
 "downloading" = "Viežžamin ”%1$@” …";
-"enableTapSoundsPlain" = "Jus háliidat gullat jienaid go coahkkalat boallobeavddi, de coahkkal %1$@ ja bija johtui %2$@.";
+"enableKeyboards" = "Enable the keyboards that you want to use.";
+"enableTapSoundsPlain" = "Jus háliidat gullat jienaid go coahkkalat boallobeavddi, de coahkkal %0$@ ja bija johtui %1$@.";
 "general" = "Oppalaš";
 "installingPackages" = "Sajáiduhttimin páhkaid …";
 "installingSpellers" = "Sajáiduhttimin čállindárkkisteddjiid …";

@@ -12,7 +12,8 @@
 "delete" = "Ta bort";
 "detected" = "Upptäckta ord";
 "downloading" = "Laddar ned \"%1$@\"…";
-"enableTapSoundsPlain" = "Om du vill slå på tangentbordsklickljud måste du trycka %1$@ og slå på %2$@.";
+"enableKeyboards" = "Enable the keyboards that you want to use.";
+"enableTapSoundsPlain" = "Om du vill slå på tangentbordsklickljud måste du trycka %0$@ og slå på %1$@.";
 "general" = "Generellt";
 "installingPackages" = "Installerar paket…";
 "installingSpellers" = "Installerar rättstavning…";

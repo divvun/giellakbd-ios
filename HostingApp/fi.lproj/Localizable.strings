@@ -12,7 +12,8 @@
 "delete" = "Poista";
 "detected" = "Tunnistetut sanat";
 "downloading" = "Ladataan pakettia \"%1$@\"…";
-"enableTapSoundsPlain" = "Jos haluat näppäinäänet käyttöön, paina nappia %1$@ ja vaihda asetusta %2$@.";
+"enableKeyboards" = "Enable the keyboards that you want to use.";
+"enableTapSoundsPlain" = "Jos haluat näppäinäänet käyttöön, paina nappia %0$@ ja vaihda asetusta %1$@.";
 "general" = "General";
 "installingPackages" = "Asennetaan paketteja…";
 "installingSpellers" = "Asennetaan oikaisulukimia…";
