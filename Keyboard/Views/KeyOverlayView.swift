@@ -33,12 +33,12 @@ final class KeyOverlayView: UIView {
             .constraint(greaterThanOrEqualTo: bottomAnchor, constant: -origin.frame.height - theme.popupCornerRadius)
             .enable(priority: .defaultHigh)
 
-        leftAnchor
-            .constraint(lessThanOrEqualTo: originFrameView.leftAnchor, constant: -theme.popupCornerRadius)
+        originFrameView.leftAnchor
+            .constraint(lessThanOrEqualTo: leftAnchor, constant: theme.popupCornerRadius)
             .enable(priority: .required)
 
-        rightAnchor
-            .constraint(greaterThanOrEqualTo: originFrameView.rightAnchor, constant: theme.popupCornerRadius)
+        originFrameView.rightAnchor
+            .constraint(greaterThanOrEqualTo: rightAnchor, constant: -theme.popupCornerRadius)
             .enable(priority: .required)
 
         originFrameView.heightAnchor
