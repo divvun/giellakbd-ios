@@ -4,7 +4,6 @@ final class KeyOverlayView: UIView {
     private class KeyOverlayShadowView: UIView {}
 
     private let originView: UIView
-    private let key: KeyDefinition
     private let theme: ThemeType
 
     let originFrameView: UIView
@@ -15,7 +14,6 @@ final class KeyOverlayView: UIView {
     init(origin: UIView, key: KeyDefinition, theme: ThemeType) {
         originView = origin
         originView.translatesAutoresizingMaskIntoConstraints = false
-        self.key = key
         self.theme = theme
         originFrameView = UIView(frame: origin.bounds)
         originFrameView.clipsToBounds = false
