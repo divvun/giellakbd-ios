@@ -3,8 +3,7 @@ import UIKit
 final class KeyOverlayView: UIView {
     private class KeyOverlayShadowView: UIView {}
 
-    private let originView: UIView
-    private let originContentView: UIView
+    private let ghostKeyView: GhostKeyView
     private let theme: ThemeType
 
     let originFrameView: UIView
@@ -12,10 +11,8 @@ final class KeyOverlayView: UIView {
 
     private var path: CGPath!
 
-    init(origin: UIView, key: KeyDefinition, theme: ThemeType) {
-        originView = origin
-
-        originContentView = origin.subviews.first!
+    init(origin: GhostKeyView, key: KeyDefinition, theme: ThemeType) {
+        ghostKeyView = origin
 
         self.theme = theme
         originFrameView = UIView(frame: origin.bounds)
@@ -148,9 +145,9 @@ final class KeyOverlayView: UIView {
         let topRight = CGPoint(x: self.frame.width, y: 0.0).withRadius(theme.popupCornerRadius)
 
         let shouldShowRoundedRect = self.bounds.maxY < bubbleHeight
-        let shouldShowRegularBubble = bounds.width < originView.frame.width * 2
+        let shouldShowRegularBubble = bounds.width < ghostKeyView.frame.width * 2
 
-        let contentViewFrameInKeyboardView = originView.convert(originContentView.frame, to: superview)
+        let contentViewFrameInKeyboardView = ghostKeyView.convert(ghostKeyView.contentView.frame, to: superview)
 
         if shouldShowRoundedRect {
             return [

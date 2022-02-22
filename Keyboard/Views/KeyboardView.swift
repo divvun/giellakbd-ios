@@ -33,8 +33,7 @@ final internal class KeyboardView: UIView,
 
     // For each touch of a cell, we create a view in exactly that place so it can be known where
     // to present the overlayView. Otherwise the collectionView changes this and things behave erratically
-    private var hackView: UIView?
-    private var hackViewContentView: UIView?
+    private var ghostKeyView: GhostKeyView?
 
     private var currentPage: [[KeyDefinition]] {
         return keyDefinitionsForPage(page)
@@ -217,35 +216,25 @@ final internal class KeyboardView: UIView,
         // removeOverlay(forKey: key)
         removeAllOverlays()
 
-        let translatedFrame = keyView.convert(keyView.frame, to: self)
-        hackView = UIView(frame: translatedFrame)
-        hackViewContentView = UIView(frame: keyView.contentView.convert(keyView.contentView.frame, to: self))
-        guard let hackView = hackView,
-              let hackViewContentView = hackViewContentView else {
-                  return
-              }
+//        hackView = UIView(frame: translatedFrame)
+        ghostKeyView = GhostKeyView(keyView: keyView, in: self)
+        guard let ghostKeyView = ghostKeyView else {
+            return
+        }
 
-        hackViewContentView.translatesAutoresizingMaskIntoConstraints = false
-        hackView.addSubview(hackViewContentView)
+        ghostKeyView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(ghostKeyView)
 
-        hackViewContentView.centerXAnchor.constraint(equalTo: hackView.centerXAnchor).enable(priority: .required)
-        hackViewContentView.centerYAnchor.constraint(equalTo: hackView.centerYAnchor).enable(priority: .required)
-        hackViewContentView.widthAnchor.constraint(equalToConstant: hackViewContentView.frame.width).enable(priority: .required)
-        hackViewContentView.heightAnchor.constraint(equalToConstant: hackViewContentView.frame.height).enable(priority: .required)
+        ghostKeyView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: ghostKeyView.frame.minX).enable(priority: .required)
+        ghostKeyView.topAnchor.constraint(equalTo: self.topAnchor, constant: ghostKeyView.frame.minY).enable(priority: .required)
+        ghostKeyView.widthAnchor.constraint(equalToConstant: ghostKeyView.frame.width).enable(priority: .required)
+        ghostKeyView.heightAnchor.constraint(equalToConstant: ghostKeyView.frame.height).enable(priority: .required)
 
-        hackView.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(hackView)
-
-        hackView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: hackView.frame.minX).enable(priority: .required)
-        hackView.topAnchor.constraint(equalTo: self.topAnchor, constant: hackView.frame.minY).enable(priority: .required)
-        hackView.widthAnchor.constraint(equalToConstant: hackView.frame.width).enable(priority: .required)
-        hackView.heightAnchor.constraint(equalToConstant: hackView.frame.height).enable(priority: .required)
-
-        let overlay = KeyOverlayView(origin: hackView, key: key, theme: theme)
+        let overlay = KeyOverlayView(origin: ghostKeyView, key: key, theme: theme)
         overlay.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(overlay)
 
-        applyOverlayConstraints(to: overlay, keyView: hackView)
+        applyOverlayConstraints(to: overlay, keyView: ghostKeyView)
         overlays[key.type] = overlay
 
         overlay.clipsToBounds = false
@@ -287,8 +276,8 @@ final internal class KeyboardView: UIView,
     }
 
     func removeAllOverlays() {
-        hackView?.removeFromSuperview()
-        hackView = nil
+        ghostKeyView?.removeFromSuperview()
+        ghostKeyView = nil
         for overlay in overlays.values {
             overlay.removeFromSuperview()
         }
@@ -818,5 +807,33 @@ final internal class KeyboardView: UIView,
         required init?(coder _: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }
+    }
+}
+
+// This class is used to remember the position of a key that was tapped on the keyboard
+// It's needed because the collectionView forgets the position of keys after they've been tapped,
+// and the overlay view needs this to be accurately drawn
+final class GhostKeyView: UIView {
+    let contentView: UIView
+
+    init(keyView: KeyView, in parentView: UIView) {
+        let translatedFrame = keyView.convert(keyView.frame, to: parentView)
+        contentView = UIView(frame: keyView.contentView.convert(keyView.contentView.frame, to: parentView))
+
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+
+        super.init(frame: translatedFrame)
+
+        self.addSubview(contentView)
+
+        contentView.centerXAnchor.constraint(equalTo: self.centerXAnchor).enable(priority: .required)
+        contentView.centerYAnchor.constraint(equalTo: self.centerYAnchor).enable(priority: .required)
+        contentView.widthAnchor.constraint(equalToConstant: contentView.frame.width).enable(priority: .required)
+        contentView.heightAnchor.constraint(equalToConstant: contentView.frame.height).enable(priority: .required)
+
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("sad days ahead")
     }
 }
