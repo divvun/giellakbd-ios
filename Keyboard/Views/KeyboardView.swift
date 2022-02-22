@@ -213,10 +213,8 @@ final internal class KeyboardView: UIView,
             return
         }
         let key = currentPage[indexPath.section][indexPath.row]
-        // removeOverlay(forKey: key)
         removeAllOverlays()
 
-//        hackView = UIView(frame: translatedFrame)
         ghostKeyView = GhostKeyView(keyView: keyView, in: self)
         guard let ghostKeyView = ghostKeyView else {
             return
@@ -570,17 +568,6 @@ final internal class KeyboardView: UIView,
         }
 
         activeKey = nil
-
-        //        for touch in touches {
-        //            if let indexPath = collectionView.indexPathForItem(at: touch.location(in: collectionView)) {
-        //                let key = currentPage[indexPath.section][indexPath.row]
-        //                if key.type.triggersOnTouchUp {
-        //                    if let delegate = delegate {
-        //                        delegate.didTriggerKey(currentPage[indexPath.section][indexPath.row])
-        //                    }
-        //                }
-        //            }
-        //        }
     }
 
     private func showKeyboardModeOverlay(_ longpressGestureRecognizer: UILongPressGestureRecognizer, key: KeyDefinition) {
@@ -830,7 +817,6 @@ final class GhostKeyView: UIView {
         contentView.centerYAnchor.constraint(equalTo: self.centerYAnchor).enable(priority: .required)
         contentView.widthAnchor.constraint(equalToConstant: contentView.frame.width).enable(priority: .required)
         contentView.heightAnchor.constraint(equalToConstant: contentView.frame.height).enable(priority: .required)
-
     }
 
     required init?(coder: NSCoder) {
