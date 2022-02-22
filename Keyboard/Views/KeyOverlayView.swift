@@ -6,50 +6,52 @@ final class KeyOverlayView: UIView {
     private let ghostKeyView: GhostKeyView
     private let theme: ThemeType
 
-    let originFrameView: UIView
+    // This view is what contains the character (or collection of characters) above the key that
+    // has been tapped. We then later draw curves to make it appear connected to the tapped key.
+    let overlayContentView: UIView
     private var shadowView: KeyOverlayShadowView?
 
     private var path: CGPath!
 
-    init(origin: GhostKeyView, key: KeyDefinition, theme: ThemeType) {
-        ghostKeyView = origin
+    init(ghostKeyView: GhostKeyView, key: KeyDefinition, theme: ThemeType) {
+        self.ghostKeyView = ghostKeyView
 
         self.theme = theme
-        originFrameView = UIView(frame: origin.bounds)
-        originFrameView.clipsToBounds = false
-        originFrameView.translatesAutoresizingMaskIntoConstraints = false
+        overlayContentView = UIView(frame: ghostKeyView.bounds)
+        overlayContentView.clipsToBounds = false
+        overlayContentView.translatesAutoresizingMaskIntoConstraints = false
 
-        super.init(frame: CGRect(x: 0, y: 0, width: origin.frame.width, height: origin.frame.height * 2))
+        super.init(frame: CGRect(x: 0, y: 0, width: ghostKeyView.frame.width, height: ghostKeyView.frame.height * 2))
         self.translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .clear
-        addSubview(originFrameView)
+        addSubview(overlayContentView)
 
         // This one breaks the top of the keyboard when given any chance to do so
-        originFrameView.topAnchor
+        overlayContentView.topAnchor
             .constraint(equalTo: topAnchor, constant: theme.popupCornerRadius)
             .enable(priority: .required)
 
-        originFrameView.bottomAnchor
-            .constraint(greaterThanOrEqualTo: bottomAnchor, constant: -origin.frame.height - theme.popupCornerRadius)
+        overlayContentView.bottomAnchor
+            .constraint(greaterThanOrEqualTo: bottomAnchor, constant: -ghostKeyView.frame.height - theme.popupCornerRadius)
             .enable(priority: .defaultHigh)
 
-        originFrameView.leftAnchor
+        overlayContentView.leftAnchor
             .constraint(equalTo: leftAnchor, constant: theme.popupCornerRadius)
             .enable(priority: .required)
 
-        originFrameView.rightAnchor
+        overlayContentView.rightAnchor
             .constraint(equalTo: rightAnchor, constant: -theme.popupCornerRadius)
             .enable(priority: .required)
 
-        originFrameView.heightAnchor
-            .constraint(greaterThanOrEqualToConstant: origin.frame.height - theme.popupCornerRadius * 2)
+        overlayContentView.heightAnchor
+            .constraint(greaterThanOrEqualToConstant: ghostKeyView.frame.height - theme.popupCornerRadius * 2)
             .enable(priority: .defaultHigh)
 
-        originFrameView.widthAnchor
-            .constraint(greaterThanOrEqualToConstant: origin.frame.width)
+        overlayContentView.widthAnchor
+            .constraint(greaterThanOrEqualToConstant: ghostKeyView.frame.width)
             .enable(priority: .required)
 
-        originFrameView.backgroundColor = .clear
+        overlayContentView.backgroundColor = .clear
         isUserInteractionEnabled = false
     }
 
@@ -63,9 +65,9 @@ final class KeyOverlayView: UIView {
         shadowView.backgroundColor = UIColor.black
         superview.insertSubview(shadowView, belowSubview: self)
 
-        // originFrameView is centered in the popup with `popupCornerRadius` amount of padding on each side.
+        // overlayContentView is centered in the popup with `popupCornerRadius` amount of padding on each side.
         // Stretch our shadow view to fill the entire popup
-        shadowView.fill(superview: originFrameView)
+        shadowView.fill(superview: overlayContentView)
         shadowView.layer.shadowColor = UIColor(white: 0.0, alpha: 1.0).cgColor
         shadowView.layer.shadowOffset = CGSize(width: 0, height: theme.popupCornerRadius / 2.0)
         shadowView.layer.shadowOpacity = 1.0
@@ -132,7 +134,7 @@ final class KeyOverlayView: UIView {
 
     private func getOverlayPoints() -> [PopupPathPoint] {
         // The height of the wide bubble at the top of the popup that contains the magnified character (or long press options)
-        let bubbleHeight = originFrameView.frame.height + theme.popupCornerRadius * 2
+        let bubbleHeight = overlayContentView.frame.height + theme.popupCornerRadius * 2
 
         let topCenter = CGPoint(x: self.bounds.midX, y: 0.0).withRadius(theme.popupCornerRadius)
         let topLeft = CGPoint.zero.withRadius(theme.popupCornerRadius)
@@ -159,7 +161,7 @@ final class KeyOverlayView: UIView {
                 topCenter
             ]
         } else if shouldShowRegularBubble {
-            let y = originFrameView.frame.height + theme.popupCornerRadius * 3
+            let y = overlayContentView.frame.height + theme.popupCornerRadius * 3
 
             let keyTopLeft = CGPoint(x: contentViewFrameInKeyboardView.minX - frame.minX, y: y).withRadius(theme.popupCornerRadius)
             let keyTopRight = CGPoint(x: contentViewFrameInKeyboardView.maxX - frame.minX, y: y).withRadius(theme.popupCornerRadius)

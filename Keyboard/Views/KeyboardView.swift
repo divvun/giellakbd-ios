@@ -230,7 +230,7 @@ final internal class KeyboardView: UIView,
         ghostKeyView.widthAnchor.constraint(equalToConstant: ghostKeyView.frame.width).enable(priority: .required)
         ghostKeyView.heightAnchor.constraint(equalToConstant: ghostKeyView.frame.height).enable(priority: .required)
 
-        let overlay = KeyOverlayView(origin: ghostKeyView, key: key, theme: theme)
+        let overlay = KeyOverlayView(ghostKeyView: ghostKeyView, key: key, theme: theme)
         overlay.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(overlay)
 
@@ -259,13 +259,13 @@ final internal class KeyboardView: UIView,
         keyLabel.textAlignment = .center
         keyLabel.translatesAutoresizingMaskIntoConstraints = false
         let keyLabelHeight = longpressKeySize().height
-        overlay.originFrameView.addSubview(keyLabelContainerView)
+        overlay.overlayContentView.addSubview(keyLabelContainerView)
 
         keyLabelContainerView.addSubview(keyLabel)
         keyLabel.centerIn(superview: keyLabelContainerView)
 
         keyLabelContainerView.heightAnchor.constraint(equalToConstant: keyLabelHeight).enable(priority: .required)
-        keyLabelContainerView.fill(superview: overlay.originFrameView)
+        keyLabelContainerView.fill(superview: overlay.overlayContentView)
 
         superview?.setNeedsLayout()
     }
@@ -287,13 +287,13 @@ final internal class KeyboardView: UIView,
     // MARK: - LongPressOverlayDelegate
 
     func longpress(didCreateOverlayContentView contentView: UIView) {
-        if overlays.first?.value.originFrameView == nil {
+        if overlays.first?.value.overlayContentView == nil {
             if let activeKey = activeKey {
                 showOverlay(forKeyAtIndexPath: activeKey.indexPath)
             }
         }
 
-        guard let overlayContentView = self.overlays.first?.value.originFrameView else {
+        guard let overlayContentView = self.overlays.first?.value.overlayContentView else {
             return
         }
 
