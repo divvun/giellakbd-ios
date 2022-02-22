@@ -4,6 +4,7 @@ final class KeyOverlayView: UIView {
     private class KeyOverlayShadowView: UIView {}
 
     private let originView: UIView
+    private let originContentView: UIView
     private let theme: ThemeType
 
     let originFrameView: UIView
@@ -13,7 +14,9 @@ final class KeyOverlayView: UIView {
 
     init(origin: UIView, key: KeyDefinition, theme: ThemeType) {
         originView = origin
-        originView.translatesAutoresizingMaskIntoConstraints = false
+
+        originContentView = origin.subviews.first!
+
         self.theme = theme
         originFrameView = UIView(frame: origin.bounds)
         originFrameView.clipsToBounds = false
@@ -27,22 +30,22 @@ final class KeyOverlayView: UIView {
         // This one breaks the top of the keyboard when given any chance to do so
         originFrameView.topAnchor
             .constraint(equalTo: topAnchor, constant: theme.popupCornerRadius)
-            .enable(priority: .defaultHigh)
+            .enable(priority: .required)
 
         originFrameView.bottomAnchor
             .constraint(greaterThanOrEqualTo: bottomAnchor, constant: -origin.frame.height - theme.popupCornerRadius)
             .enable(priority: .defaultHigh)
 
         originFrameView.leftAnchor
-            .constraint(lessThanOrEqualTo: leftAnchor, constant: theme.popupCornerRadius)
+            .constraint(equalTo: leftAnchor, constant: theme.popupCornerRadius)
             .enable(priority: .required)
 
         originFrameView.rightAnchor
-            .constraint(greaterThanOrEqualTo: rightAnchor, constant: -theme.popupCornerRadius)
+            .constraint(equalTo: rightAnchor, constant: -theme.popupCornerRadius)
             .enable(priority: .required)
 
         originFrameView.heightAnchor
-            .constraint(equalToConstant: origin.frame.height - theme.popupCornerRadius * 2)
+            .constraint(greaterThanOrEqualToConstant: origin.frame.height - theme.popupCornerRadius * 2)
             .enable(priority: .defaultHigh)
 
         originFrameView.widthAnchor
@@ -131,12 +134,6 @@ final class KeyOverlayView: UIView {
     }
 
     private func getOverlayPoints() -> [PopupPathPoint] {
-        let superview = self.superview!
-        let originFrameInSuperview = originView.convert(originView.frame, to: superview)
-        let originFrameInLocalBounds = superview
-            .convert(originFrameInSuperview, to: self)
-            .insetBy(dx: theme.keyHorizontalMargin, dy: theme.keyVerticalMargin)
-
         // The height of the wide bubble at the top of the popup that contains the magnified character (or long press options)
         let bubbleHeight = originFrameView.frame.height + theme.popupCornerRadius * 2
 
@@ -148,13 +145,12 @@ final class KeyOverlayView: UIView {
         let letterBottomLeft = CGPoint(x: 0, y: bubbleHeight).withRadius(theme.popupCornerRadius)
         let letterBottomRight = CGPoint(x: self.frame.width, y: bubbleHeight).withRadius(theme.popupCornerRadius)
 
-        let bottomLeft = CGPoint(x: originFrameInLocalBounds.minX, y: self.bounds.maxY).withRadius(theme.keyCornerRadius)
-        let bottomRight = CGPoint(x: originFrameInLocalBounds.maxX, y: self.bounds.maxY).withRadius(theme.keyCornerRadius)
-
         let topRight = CGPoint(x: self.frame.width, y: 0.0).withRadius(theme.popupCornerRadius)
 
-        let shouldShowRoundedRect = originFrameInLocalBounds.maxY < bounds.maxY - theme.popupCornerRadius
-        let shouldShowRegularBubble = originFrameInLocalBounds.maxX + theme.popupCornerRadius * 2 >= bounds.maxX
+        let shouldShowRoundedRect = self.bounds.maxY < bubbleHeight
+        let shouldShowRegularBubble = bounds.width < originView.frame.width * 2
+
+        let contentViewFrameInKeyboardView = originView.convert(originContentView.frame, to: superview)
 
         if shouldShowRoundedRect {
             return [
@@ -167,8 +163,11 @@ final class KeyOverlayView: UIView {
             ]
         } else if shouldShowRegularBubble {
             let y = originFrameView.frame.height + theme.popupCornerRadius * 3
-            let keyTopLeft = CGPoint(x: originFrameInLocalBounds.minX, y: y).withRadius(theme.popupCornerRadius)
-            let keyTopRight = CGPoint(x: originFrameInLocalBounds.maxX, y: y).withRadius(theme.popupCornerRadius)
+
+            let keyTopLeft = CGPoint(x: contentViewFrameInKeyboardView.minX - frame.minX, y: y).withRadius(theme.popupCornerRadius)
+            let keyTopRight = CGPoint(x: contentViewFrameInKeyboardView.maxX - frame.minX, y: y).withRadius(theme.popupCornerRadius)
+            let bottomLeft = CGPoint(x: contentViewFrameInKeyboardView.minX - frame.minX, y: self.bounds.maxY).withRadius(theme.keyCornerRadius)
+            let bottomRight = CGPoint(x: contentViewFrameInKeyboardView.maxX - frame.minX, y: self.bounds.maxY).withRadius(theme.keyCornerRadius)
 
             return [
                 topCenter,
@@ -201,20 +200,20 @@ final class KeyOverlayView: UIView {
                 bubbleConnectionCornerRadius = spaceBetweenBubbleBottomAndKeyBottom - keyRadius
             }
 
-            let leftRadius = originFrameInLocalBounds.minX < theme.popupCornerRadius
+            let leftRadius = contentViewFrameInKeyboardView.minX - frame.minX < theme.popupCornerRadius
                 ? 0
                 : theme.popupCornerRadius
-            let rightRadius = originFrameInLocalBounds.maxX > self.frame.width - theme.popupCornerRadius
+            let rightRadius = contentViewFrameInKeyboardView.maxX - frame.minX > self.frame.width - theme.popupCornerRadius
                 ? 0
                 : theme.popupCornerRadius
             return [
                 topCenter,
                 topLeft,
                 CGPoint(x: 0, y: bubbleHeight).withRadius(leftRadius),
-                CGPoint(x: originFrameInLocalBounds.minX, y: bubbleHeight).withRadius(bubbleConnectionCornerRadius),
-                CGPoint(x: originFrameInLocalBounds.minX, y: self.bounds.maxY).withRadius(keyRadius),
-                CGPoint(x: originFrameInLocalBounds.maxX, y: self.bounds.maxY).withRadius(keyRadius),
-                CGPoint(x: originFrameInLocalBounds.maxX, y: bubbleHeight).withRadius(bubbleConnectionCornerRadius),
+                CGPoint(x: contentViewFrameInKeyboardView.minX - frame.minX, y: bubbleHeight).withRadius(bubbleConnectionCornerRadius),
+                CGPoint(x: contentViewFrameInKeyboardView.minX - frame.minX, y: self.bounds.maxY).withRadius(keyRadius),
+                CGPoint(x: contentViewFrameInKeyboardView.maxX - frame.minX, y: self.bounds.maxY).withRadius(keyRadius),
+                CGPoint(x: contentViewFrameInKeyboardView.maxX - frame.minX, y: bubbleHeight).withRadius(bubbleConnectionCornerRadius),
                 CGPoint(x: self.frame.width, y: bubbleHeight).withRadius(rightRadius),
                 topRight,
                 topCenter

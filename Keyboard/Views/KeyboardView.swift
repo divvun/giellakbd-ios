@@ -31,6 +31,11 @@ final internal class KeyboardView: UIView,
 
     weak var delegate: (KeyboardViewDelegate & KeyboardViewKeyboardKeyDelegate)?
 
+    // For each touch of a cell, we create a view in exactly that place so it can be known where
+    // to present the overlayView. Otherwise the collectionView changes this and things behave erratically
+    private var hackView: UIView?
+    private var hackViewContentView: UIView?
+
     private var currentPage: [[KeyDefinition]] {
         return keyDefinitionsForPage(page)
     }
@@ -158,7 +163,7 @@ final internal class KeyboardView: UIView,
         return true
     }
 
-    private func applyOverlayConstraints(to overlay: KeyOverlayView, keyView: KeyView) {
+    private func applyOverlayConstraints(to overlay: KeyOverlayView, keyView: UIView) {
         guard let superview = superview else {
             return
 //            fatalError("superview not found for overlay constraints")
@@ -177,12 +182,12 @@ final internal class KeyboardView: UIView,
             .constraint(greaterThanOrEqualTo: superview.topAnchor)
             .enable(priority: .defaultLow)
 
-        let bottomAnchorView = keyView.contentView ?? keyView
+        let bottomAnchorView = keyView.subviews.first!
         let offset: CGFloat = 0.5 // Without this small offset, the overlay appears slightly above the key
         overlay.bottomAnchor.constraint(equalTo: bottomAnchorView.bottomAnchor, constant: offset)
             .enable(priority: .defaultHigh)
 
-        overlay.centerXAnchor.constraint(lessThanOrEqualTo: keyView.centerXAnchor)
+        overlay.centerXAnchor.constraint(equalTo: keyView.centerXAnchor)
             .enable(priority: .defaultHigh)
 
         // Handle the left and right sides not getting crushed on the edges of the screen
@@ -212,14 +217,42 @@ final internal class KeyboardView: UIView,
         // removeOverlay(forKey: key)
         removeAllOverlays()
 
-        let overlay = KeyOverlayView(origin: keyView, key: key, theme: theme)
+        let translatedFrame = keyView.convert(keyView.frame, to: self)
+        hackView = UIView(frame: translatedFrame)
+        hackViewContentView = UIView(frame: keyView.contentView.convert(keyView.contentView.frame, to: self))
+        guard let hackView = hackView,
+              let hackViewContentView = hackViewContentView else {
+                  return
+              }
+
+        hackViewContentView.translatesAutoresizingMaskIntoConstraints = false
+        hackView.addSubview(hackViewContentView)
+
+        hackViewContentView.centerXAnchor.constraint(equalTo: hackView.centerXAnchor).enable(priority: .required)
+        hackViewContentView.centerYAnchor.constraint(equalTo: hackView.centerYAnchor).enable(priority: .required)
+        hackViewContentView.widthAnchor.constraint(equalToConstant: hackViewContentView.frame.width).enable(priority: .required)
+        hackViewContentView.heightAnchor.constraint(equalToConstant: hackViewContentView.frame.height).enable(priority: .required)
+
+        hackView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(hackView)
+
+        hackView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: hackView.frame.minX).enable(priority: .required)
+        hackView.topAnchor.constraint(equalTo: self.topAnchor, constant: hackView.frame.minY).enable(priority: .required)
+        hackView.widthAnchor.constraint(equalToConstant: hackView.frame.width).enable(priority: .required)
+        hackView.heightAnchor.constraint(equalToConstant: hackView.frame.height).enable(priority: .required)
+
+        let overlay = KeyOverlayView(origin: hackView, key: key, theme: theme)
         overlay.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(overlay)
 
-        applyOverlayConstraints(to: overlay, keyView: keyView)
+        applyOverlayConstraints(to: overlay, keyView: hackView)
         overlays[key.type] = overlay
 
         overlay.clipsToBounds = false
+
+        let keyLabelContainerView = UIView()
+        keyLabelContainerView.backgroundColor = .clear
+        keyLabelContainerView.translatesAutoresizingMaskIntoConstraints = false
 
         let keyLabel = UILabel(frame: .zero)
         keyLabel.clipsToBounds = false
@@ -236,8 +269,14 @@ final internal class KeyboardView: UIView,
         }
         keyLabel.textAlignment = .center
         keyLabel.translatesAutoresizingMaskIntoConstraints = false
-        overlay.originFrameView.addSubview(keyLabel)
-        keyLabel.centerIn(superview: overlay.originFrameView)
+        let keyLabelHeight = longpressKeySize().height
+        overlay.originFrameView.addSubview(keyLabelContainerView)
+
+        keyLabelContainerView.addSubview(keyLabel)
+        keyLabel.centerIn(superview: keyLabelContainerView)
+
+        keyLabelContainerView.heightAnchor.constraint(equalToConstant: keyLabelHeight).enable(priority: .required)
+        keyLabelContainerView.fill(superview: overlay.originFrameView)
 
         superview?.setNeedsLayout()
     }
@@ -248,6 +287,8 @@ final internal class KeyboardView: UIView,
     }
 
     func removeAllOverlays() {
+        hackView?.removeFromSuperview()
+        hackView = nil
         for overlay in overlays.values {
             overlay.removeFromSuperview()
         }
