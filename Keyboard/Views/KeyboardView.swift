@@ -162,18 +162,18 @@ final internal class KeyboardView: UIView,
         return true
     }
 
-    private func applyOverlayConstraints(to overlay: KeyOverlayView, keyView: UIView) {
+    private func applyOverlayConstraints(to overlay: KeyOverlayView, ghostKeyView: GhostKeyView) {
         guard let superview = superview else {
             return
 //            fatalError("superview not found for overlay constraints")
         }
 
         overlay.heightAnchor
-            .constraint(greaterThanOrEqualTo: keyView.heightAnchor)
+            .constraint(greaterThanOrEqualTo: ghostKeyView.heightAnchor)
             .enable(priority: .defaultHigh)
 
         overlay.widthAnchor.constraint(
-            greaterThanOrEqualTo: keyView.widthAnchor,
+            greaterThanOrEqualTo: ghostKeyView.widthAnchor,
             constant: theme.popupCornerRadius * 2)
             .enable(priority: .required)
 
@@ -181,23 +181,22 @@ final internal class KeyboardView: UIView,
             .constraint(greaterThanOrEqualTo: superview.topAnchor)
             .enable(priority: .defaultLow)
 
-        let bottomAnchorView = keyView.subviews.first!
         let offset: CGFloat = 0.5 // Without this small offset, the overlay appears slightly above the key
-        overlay.bottomAnchor.constraint(equalTo: bottomAnchorView.bottomAnchor, constant: offset)
+        overlay.bottomAnchor.constraint(equalTo: ghostKeyView.contentView.bottomAnchor, constant: offset)
             .enable(priority: .defaultHigh)
 
-        overlay.centerXAnchor.constraint(equalTo: keyView.centerXAnchor)
+        overlay.centerXAnchor.constraint(equalTo: ghostKeyView.centerXAnchor)
             .enable(priority: .defaultHigh)
 
         // Handle the left and right sides not getting crushed on the edges of the screen
 
-        overlay.leftAnchor.constraint(greaterThanOrEqualTo: keyView.leftAnchor)
+        overlay.leftAnchor.constraint(greaterThanOrEqualTo: ghostKeyView.leftAnchor)
             .enable(priority: .defaultHigh)
         overlay.leftAnchor
             .constraint(greaterThanOrEqualTo: superview.leftAnchor)
             .enable(priority: .required)
 
-        overlay.rightAnchor.constraint(lessThanOrEqualTo: keyView.rightAnchor)
+        overlay.rightAnchor.constraint(lessThanOrEqualTo: ghostKeyView.rightAnchor)
             .enable(priority: .defaultHigh)
         overlay.rightAnchor
             .constraint(lessThanOrEqualTo: superview.rightAnchor)
@@ -232,7 +231,7 @@ final internal class KeyboardView: UIView,
         overlay.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(overlay)
 
-        applyOverlayConstraints(to: overlay, keyView: ghostKeyView)
+        applyOverlayConstraints(to: overlay, ghostKeyView: ghostKeyView)
         overlays[key.type] = overlay
 
         overlay.clipsToBounds = false
