@@ -1,6 +1,6 @@
 import UIKit
 
-protocol KeyboardViewDelegate: class {
+protocol KeyboardViewDelegate: AnyObject {
     func didSwipeKey(_ key: KeyDefinition)
     func didTriggerKey(_ key: KeyDefinition)
     func didTriggerDoubleTap(forKey key: KeyDefinition)
@@ -30,6 +30,10 @@ final internal class KeyboardView: UIView,
     private let definition: KeyboardDefinition
 
     weak var delegate: (KeyboardViewDelegate & KeyboardViewKeyboardKeyDelegate)?
+
+    // For each touch of a cell, we create a view in exactly that place so it can be known where
+    // to present the overlayView. Otherwise the collectionView changes this and things behave erratically
+    private var ghostKeyView: GhostKeyView?
 
     private var currentPage: [[KeyDefinition]] {
         return keyDefinitionsForPage(page)
@@ -158,18 +162,18 @@ final internal class KeyboardView: UIView,
         return true
     }
 
-    private func applyOverlayConstraints(to overlay: KeyOverlayView, keyView: KeyView) {
+    private func applyOverlayConstraints(to overlay: KeyOverlayView, ghostKeyView: GhostKeyView) {
         guard let superview = superview else {
             return
 //            fatalError("superview not found for overlay constraints")
         }
 
         overlay.heightAnchor
-            .constraint(greaterThanOrEqualTo: keyView.heightAnchor)
+            .constraint(greaterThanOrEqualTo: ghostKeyView.heightAnchor)
             .enable(priority: .defaultHigh)
 
         overlay.widthAnchor.constraint(
-            greaterThanOrEqualTo: keyView.widthAnchor,
+            greaterThanOrEqualTo: ghostKeyView.widthAnchor,
             constant: theme.popupCornerRadius * 2)
             .enable(priority: .required)
 
@@ -177,23 +181,22 @@ final internal class KeyboardView: UIView,
             .constraint(greaterThanOrEqualTo: superview.topAnchor)
             .enable(priority: .defaultLow)
 
-        let bottomAnchorView = keyView.contentView ?? keyView
         let offset: CGFloat = 0.5 // Without this small offset, the overlay appears slightly above the key
-        overlay.bottomAnchor.constraint(equalTo: bottomAnchorView.bottomAnchor, constant: offset)
+        overlay.bottomAnchor.constraint(equalTo: ghostKeyView.contentView.bottomAnchor, constant: offset)
             .enable(priority: .defaultHigh)
 
-        overlay.centerXAnchor.constraint(lessThanOrEqualTo: keyView.centerXAnchor)
+        overlay.centerXAnchor.constraint(equalTo: ghostKeyView.centerXAnchor)
             .enable(priority: .defaultHigh)
 
         // Handle the left and right sides not getting crushed on the edges of the screen
 
-        overlay.leftAnchor.constraint(greaterThanOrEqualTo: keyView.leftAnchor)
+        overlay.leftAnchor.constraint(greaterThanOrEqualTo: ghostKeyView.leftAnchor)
             .enable(priority: .defaultHigh)
         overlay.leftAnchor
             .constraint(greaterThanOrEqualTo: superview.leftAnchor)
             .enable(priority: .required)
 
-        overlay.rightAnchor.constraint(lessThanOrEqualTo: keyView.rightAnchor)
+        overlay.rightAnchor.constraint(lessThanOrEqualTo: ghostKeyView.rightAnchor)
             .enable(priority: .defaultHigh)
         overlay.rightAnchor
             .constraint(lessThanOrEqualTo: superview.rightAnchor)
@@ -209,17 +212,33 @@ final internal class KeyboardView: UIView,
             return
         }
         let key = currentPage[indexPath.section][indexPath.row]
-        // removeOverlay(forKey: key)
         removeAllOverlays()
 
-        let overlay = KeyOverlayView(origin: keyView, key: key, theme: theme)
+        ghostKeyView = GhostKeyView(keyView: keyView, in: self)
+        guard let ghostKeyView = ghostKeyView else {
+            return
+        }
+
+        ghostKeyView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(ghostKeyView)
+
+        ghostKeyView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: ghostKeyView.frame.minX).enable(priority: .required)
+        ghostKeyView.topAnchor.constraint(equalTo: self.topAnchor, constant: ghostKeyView.frame.minY).enable(priority: .required)
+        ghostKeyView.widthAnchor.constraint(equalToConstant: ghostKeyView.frame.width).enable(priority: .required)
+        ghostKeyView.heightAnchor.constraint(equalToConstant: ghostKeyView.frame.height).enable(priority: .required)
+
+        let overlay = KeyOverlayView(ghostKeyView: ghostKeyView, key: key, theme: theme)
         overlay.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(overlay)
 
-        applyOverlayConstraints(to: overlay, keyView: keyView)
+        applyOverlayConstraints(to: overlay, ghostKeyView: ghostKeyView)
         overlays[key.type] = overlay
 
         overlay.clipsToBounds = false
+
+        let keyLabelContainerView = UIView()
+        keyLabelContainerView.backgroundColor = .clear
+        keyLabelContainerView.translatesAutoresizingMaskIntoConstraints = false
 
         let keyLabel = UILabel(frame: .zero)
         keyLabel.clipsToBounds = false
@@ -236,8 +255,14 @@ final internal class KeyboardView: UIView,
         }
         keyLabel.textAlignment = .center
         keyLabel.translatesAutoresizingMaskIntoConstraints = false
-        overlay.originFrameView.addSubview(keyLabel)
-        keyLabel.centerIn(superview: overlay.originFrameView)
+        let keyLabelHeight = longpressKeySize().height
+        overlay.overlayContentView.addSubview(keyLabelContainerView)
+
+        keyLabelContainerView.addSubview(keyLabel)
+        keyLabel.centerIn(superview: keyLabelContainerView)
+
+        keyLabelContainerView.heightAnchor.constraint(equalToConstant: keyLabelHeight).enable(priority: .required)
+        keyLabelContainerView.fill(superview: overlay.overlayContentView)
 
         superview?.setNeedsLayout()
     }
@@ -248,6 +273,8 @@ final internal class KeyboardView: UIView,
     }
 
     func removeAllOverlays() {
+        ghostKeyView?.removeFromSuperview()
+        ghostKeyView = nil
         for overlay in overlays.values {
             overlay.removeFromSuperview()
         }
@@ -257,13 +284,13 @@ final internal class KeyboardView: UIView,
     // MARK: - LongPressOverlayDelegate
 
     func longpress(didCreateOverlayContentView contentView: UIView) {
-        if overlays.first?.value.originFrameView == nil {
+        if overlays.first?.value.overlayContentView == nil {
             if let activeKey = activeKey {
                 showOverlay(forKeyAtIndexPath: activeKey.indexPath)
             }
         }
 
-        guard let overlayContentView = self.overlays.first?.value.originFrameView else {
+        guard let overlayContentView = self.overlays.first?.value.overlayContentView else {
             return
         }
 
@@ -540,17 +567,6 @@ final internal class KeyboardView: UIView,
         }
 
         activeKey = nil
-
-        //        for touch in touches {
-        //            if let indexPath = collectionView.indexPathForItem(at: touch.location(in: collectionView)) {
-        //                let key = currentPage[indexPath.section][indexPath.row]
-        //                if key.type.triggersOnTouchUp {
-        //                    if let delegate = delegate {
-        //                        delegate.didTriggerKey(currentPage[indexPath.section][indexPath.row])
-        //                    }
-        //                }
-        //            }
-        //        }
     }
 
     private func showKeyboardModeOverlay(_ longpressGestureRecognizer: UILongPressGestureRecognizer, key: KeyDefinition) {
@@ -750,7 +766,7 @@ final internal class KeyboardView: UIView,
         }
 
         func configure(page: KeyboardPage, key: KeyDefinition, theme: ThemeType, traits: UITraitCollection) {
-            _ = contentView.subviews.forEach { view in
+            contentView.subviews.forEach { view in
                 view.removeFromSuperview()
             }
             keyView = nil
@@ -777,5 +793,32 @@ final internal class KeyboardView: UIView,
         required init?(coder _: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }
+    }
+}
+
+// This class is used to remember the position of a key that was tapped on the keyboard
+// It's needed because the collectionView forgets the position of keys after they've been tapped,
+// and the overlay view needs this to be accurately drawn
+final class GhostKeyView: UIView {
+    let contentView: UIView
+
+    init(keyView: KeyView, in parentView: UIView) {
+        let translatedFrame = keyView.convert(keyView.frame, to: parentView)
+        contentView = UIView(frame: keyView.contentView.convert(keyView.contentView.frame, to: parentView))
+
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+
+        super.init(frame: translatedFrame)
+
+        self.addSubview(contentView)
+
+        contentView.centerXAnchor.constraint(equalTo: self.centerXAnchor).enable(priority: .required)
+        contentView.centerYAnchor.constraint(equalTo: self.centerYAnchor).enable(priority: .required)
+        contentView.widthAnchor.constraint(equalToConstant: contentView.frame.width).enable(priority: .required)
+        contentView.heightAnchor.constraint(equalToConstant: contentView.frame.height).enable(priority: .required)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("sad days ahead")
     }
 }

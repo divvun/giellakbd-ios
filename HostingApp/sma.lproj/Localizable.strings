@@ -12,7 +12,8 @@
 "delete" = "Sliejhth";
 "detected" = "Aajhtseme";
 "downloading" = "\"%1$@\" veedtjeminie …";
-"enableTapSoundsPlain" = "Jis båaloebuertietjoejem sïjhth govledh, dellie diedtah %1$@ jïh baajh %2$@.";
+"enableKeyboards" = "Enable the keyboards that you want to use.";
+"enableTapSoundsPlain" = "Jis båaloebuertietjoejem sïjhth govledh, dellie diedtah %0$@ jïh baajh %1$@.";
 "general" = "Sïejhme";
 "installingPackages" = "Måadtoestidh paahkah …";
 "installingSpellers" = "Mådtoestidh tjaelemestaeriedimmiem …";

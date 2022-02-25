@@ -12,7 +12,8 @@
 "delete" = "Нардамс";
 "detected" = "Фатяф";
 "downloading" = "Таргама \"%1$@\"…";
-"enableTapSoundsPlain" = "Кда мяленте марямс пувнянь токамста вайгяль, сави люпштамс %1$@ и кочкамс %2$@.";
+"enableKeyboards" = "Enable the keyboards that you want to use.";
+"enableTapSoundsPlain" = "Кда мяленте марямс пувнянь токамста вайгяль, сави люпштамс %0$@ и кочкамс %1$@.";
 "general" = "Марстонь";
 "installingPackages" = "Пакетонь арафтома…";
 "installingSpellers" = "Сёрмадомань тевонь видеста арафтома…";
