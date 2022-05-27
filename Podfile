@@ -3,7 +3,7 @@ use_frameworks!
 
 target 'BaseKeyboard' do
   pod 'Sentry', '=7.3.0'
-  pod 'DivvunSpell', :http => "https://github.com/divvun/divvunspell-sdk-swift/releases/download/v1.0.0-beta.1/cargo-pod.tgz"
+  pod 'DivvunSpell', :http => "https://github.com/divvun/divvunspell-sdk-swift/releases/download/v1.0.0-beta.3/cargo-pod.tgz"
   pod 'UIDeviceComplete', :git => "https://github.com/bbqsrc/UIDeviceComplete"
   pod 'SwiftLint'
   pod 'SQLite.swift', '~> 0.12.0'
@@ -15,12 +15,12 @@ target 'HostingApp' do
   pod 'UIDeviceComplete', :git => "https://github.com/bbqsrc/UIDeviceComplete"
   pod 'SwiftLint'
   pod 'SQLite.swift', '~> 0.12.0'
-  pod 'PahkatClient', :http => "https://github.com/divvun/pahkat-client-sdk-swift/releases/download/v0.1.0/cargo-pod_ios.tgz"
+  pod 'PahkatClient', :http => "https://github.com/divvun/pahkat-client-sdk-swift/releases/download/v0.2.0/cargo-pod.tgz"
 end
 
 target 'HostingAppTests' do
   pod 'SQLite.swift', '~> 0.12.0'
-  pod 'DivvunSpell', :http => "https://github.com/divvun/divvunspell-sdk-swift/releases/download/v1.0.0-beta.1/cargo-pod.tgz"
+  pod 'DivvunSpell', :http => "https://github.com/divvun/divvunspell-sdk-swift/releases/download/v1.0.0-beta.3/cargo-pod.tgz"
 end
 
 post_install do |installer|
