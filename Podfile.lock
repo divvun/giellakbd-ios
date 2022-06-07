@@ -1,6 +1,6 @@
 PODS:
   - DivvunSpell (1.0.0-beta.1)
-  - PahkatClient (0.1.0)
+  - PahkatClient (0.2.0)
   - RxSwift (5.1.2)
   - Sentry (7.3.0):
     - Sentry/Core (= 7.3.0)
@@ -12,8 +12,8 @@ PODS:
   - UIDeviceComplete (2.6.6)
 
 DEPENDENCIES:
-  - "DivvunSpell (from `{:http=>\"https://github.com/divvun/divvunspell-sdk-swift/releases/download/v1.0.0-beta.1/cargo-pod.tgz\"}`)"
-  - "PahkatClient (from `{:http=>\"https://github.com/divvun/pahkat-client-sdk-swift/releases/download/v0.1.0/cargo-pod_ios.tgz\"}`)"
+  - "DivvunSpell (from `{:http=>\"https://github.com/divvun/divvunspell-sdk-swift/releases/download/v1.0.0-beta.3/cargo-pod.tgz\"}`)"
+  - "PahkatClient (from `{:http=>\"https://github.com/divvun/pahkat-client-sdk-swift/releases/download/v0.2.0/cargo-pod.tgz\"}`)"
   - RxSwift (~> 5.1.1)
   - Sentry (= 7.3.0)
   - SQLite.swift (~> 0.12.0)
@@ -29,30 +29,30 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   DivvunSpell:
-    :http: https://github.com/divvun/divvunspell-sdk-swift/releases/download/v1.0.0-beta.1/cargo-pod.tgz
+    :http: https://github.com/divvun/divvunspell-sdk-swift/releases/download/v1.0.0-beta.3/cargo-pod.tgz
   PahkatClient:
-    :http: https://github.com/divvun/pahkat-client-sdk-swift/releases/download/v0.1.0/cargo-pod_ios.tgz
+    :http: https://github.com/divvun/pahkat-client-sdk-swift/releases/download/v0.2.0/cargo-pod.tgz
   UIDeviceComplete:
     :git: https://github.com/bbqsrc/UIDeviceComplete
 
 CHECKOUT OPTIONS:
   DivvunSpell:
-    :http: https://github.com/divvun/divvunspell-sdk-swift/releases/download/v1.0.0-beta.1/cargo-pod.tgz
+    :http: https://github.com/divvun/divvunspell-sdk-swift/releases/download/v1.0.0-beta.3/cargo-pod.tgz
   PahkatClient:
-    :http: https://github.com/divvun/pahkat-client-sdk-swift/releases/download/v0.1.0/cargo-pod_ios.tgz
+    :http: https://github.com/divvun/pahkat-client-sdk-swift/releases/download/v0.2.0/cargo-pod.tgz
   UIDeviceComplete:
     :commit: 459f394e621cf0c4da0d4ca589dc662f7572ef0f
     :git: https://github.com/bbqsrc/UIDeviceComplete
 
 SPEC CHECKSUMS:
-  DivvunSpell: ca208e79169237ec09137c0d8675ad125f304753
-  PahkatClient: 65738a84e8d69d579fdd77c66e85e862e3b9580e
+  DivvunSpell: a49ab7b8f0dba02062619bfe801e371f0671c32a
+  PahkatClient: 936e8228ea57c77850a852f14c9f7141fb22fa75
   RxSwift: 1e2e1f9570186967f617e49128ed26ccf1bafc8e
   Sentry: 9a4e621430e2dae4477d791f2f7e905720b6efbf
   SQLite.swift: d2b4642190917051ce6bd1d49aab565fe794eea3
   SwiftLint: 99f82d07b837b942dd563c668de129a03fc3fb52
   UIDeviceComplete: c89b90393fb2a3446f5e0e86eca0c02d6f8e09f0
 
-PODFILE CHECKSUM: 543c9def8f64ff585a4a38a3b28d37e7e7922555
+PODFILE CHECKSUM: 3bdac8799e8bb6736f7c98536eb9da1726a1e29d
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.10.0

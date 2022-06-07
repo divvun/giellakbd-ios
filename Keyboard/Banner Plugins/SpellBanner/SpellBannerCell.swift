@@ -44,7 +44,14 @@ final class SpellBannerCell: UICollectionViewCell {
             titleLabel.attributedText = NSAttributedString(string: "")
             return
         }
-        titleLabel.attributedText = item.title
+        switch item.title {
+        case .quoted(let x):
+            titleLabel.attributedText = NSAttributedString(string: "\"\(x)\"")
+        case .normal(let x):
+            titleLabel.attributedText = NSAttributedString(string: x)
+        case .bolden(let x):
+            titleLabel.attributedText = x.bolden(substring: x)
+        }
     }
 
     required init?(coder _: NSCoder) {

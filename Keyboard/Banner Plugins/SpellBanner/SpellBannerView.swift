@@ -1,8 +1,29 @@
 import UIKit
 import DivvunSpell
 
+public enum SpellBannerItemTitle {
+    case quoted(String)
+    case normal(String)
+    case bolden(String)
+}
+
+extension SpellBannerItemTitle {
+    var value: String {
+        get {
+            switch self {
+            case .normal(let x):
+                return x
+            case .quoted(let x):
+                return x
+            case .bolden(let x):
+                return x
+            }
+        }
+    }
+}
+
 public struct SpellBannerItem {
-    public let title: NSAttributedString
+    public let title: SpellBannerItemTitle
     public let value: String
 }
 
@@ -116,7 +137,7 @@ extension SpellBannerView: UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView,
                                layout _: UICollectionViewLayout,
                                sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let title = items[indexPath.item]?.title ?? NSAttributedString(string: "")
+        let title = (items[indexPath.item]?.title ?? .normal("")).value
 
         // It is constrained by infinity so it isn't constrained.
         let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: collectionView.frame.height)
