@@ -2,20 +2,20 @@ import UIKit
 import DivvunSpell
 
 public enum SpellBannerItemTitle {
-    case quoted(String)
+    case humanInput(String, isCorrect: Bool)
     case normal(String)
-    case bolden(String)
+    case correction(String)
 }
 
 extension SpellBannerItemTitle {
     var value: String {
         get {
             switch self {
+            case .humanInput(let x, _):
+                return x
             case .normal(let x):
                 return x
-            case .quoted(let x):
-                return x
-            case .bolden(let x):
+            case .correction(let x):
                 return x
             }
         }

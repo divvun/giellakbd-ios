@@ -92,18 +92,19 @@ public final class SpellBanner: Banner {
     }
 
     private func makeSuggestionBannerItems(currentWord: String, suggestions: [String]) -> [SpellBannerItem] {
-        var currentWordItem = SpellBannerItem(title: .quoted(currentWord), value: currentWord)
-        var suggestions = suggestions
-        
-        suggestions.removeAll { $0 == currentWord } // don't show current word twice
-        let isWordCorrect = (try? speller?.isCorrect(word: currentWord)) ?? false
-        if isWordCorrect {
-            currentWordItem = SpellBannerItem(title: .bolden(currentWord), value: currentWord)
+        guard let speller = speller else {
+            return []
         }
+        
+        var suggestions = suggestions
+        suggestions.removeAll { $0 == currentWord } // don't show current word twice
+        
+        let isWordCorrect = (try? speller.isCorrect(word: currentWord)) ?? false
+        let currentWordItem = SpellBannerItem(title: .humanInput(currentWord, isCorrect: isWordCorrect), value: currentWord)
        
         let suggestionItems = suggestions.enumerated().map { (i, s) -> SpellBannerItemTitle in
             if (i == 0 && !isWordCorrect) {
-                return .bolden(s)
+                return .correction(s)
             }
             return .normal(s)
         }.map { SpellBannerItem(title: $0, value: $0.value.trimmingCharacters(in: CharacterSet(charactersIn: "*")))}
