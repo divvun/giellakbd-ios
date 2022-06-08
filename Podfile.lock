@@ -41,7 +41,7 @@ CHECKOUT OPTIONS:
   PahkatClient:
     :http: https://github.com/divvun/pahkat-client-sdk-swift/releases/download/v0.2.0/cargo-pod.tgz
   UIDeviceComplete:
-    :commit: 459f394e621cf0c4da0d4ca589dc662f7572ef0f
+    :commit: af940b2ea4231b3295cd4cb2d59d115afa0d102f
     :git: https://github.com/bbqsrc/UIDeviceComplete
 
 SPEC CHECKSUMS:
