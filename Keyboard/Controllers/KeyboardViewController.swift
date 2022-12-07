@@ -1,5 +1,4 @@
 import UIKit
-import UIDeviceComplete
 import DivvunSpell
 
 protocol KeyboardViewProvider {
@@ -87,10 +86,8 @@ open class KeyboardViewController: UIInputViewController {
                 return 405.0
             case .iPadPro12_9Inch, .iPadPro12_9Inch_SecondGen, .iPadPro12_9Inch_ThirdGen:
                 return 405.0
-            case .iPadSevenGen:
-                return 405.0
             default:
-                let sizeInches = UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches
+                let sizeInches = UIDevice.current.dc.screenSize.sizeInches ?? 12.9
 
                 if sizeInches < 11 {
                     return landscapeDeviceHeight / 2.0

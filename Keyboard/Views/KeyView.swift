@@ -1,4 +1,3 @@
-import UIDeviceComplete
 
 final class KeyView: UIView {
     private let key: KeyDefinition
