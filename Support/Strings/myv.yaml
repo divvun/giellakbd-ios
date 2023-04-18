@@ -40,9 +40,13 @@ detected: Редязь
 # Original: Downloading "{package}"…
 downloading: 'Тарги "{package}"…'
 
-# Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
+# Original: Enable the keyboards that you want to use.
+#enableKeyboards: UNTRANSLATED
+
+# Original: We need you to tap {allowFullAccess} to enable spell-checking, updating and keyboard sounds.
 enableTapSoundsPlain: >-
-  Мелеть сайтянзат марямс повнень токамо гайть, сави токамс {keyboard} ды кочкамс {allowFullAccess}.
+  Мелеть сайтянзат марямс повнень токамо гайть, сави токамс {keyboard} ды
+  кочкамс {allowFullAccess}.
 
 # Original: General
 general: Вейсэнь
@@ -59,7 +63,7 @@ keyboard: Сёрмаповт
 # Original: Keyboards
 keyboards: Весе сёрмаповт
 
-# Original: Language
+# Original: App Language
 language: Кель
 
 # Original: Layouts
@@ -73,7 +77,8 @@ noUserWords: Сёрмадыцянть эсензэ путовксонзо зяр
 
 # Original: Words that are left uncorrected and are not in the built-in dictionary will appear here.
 noUserWordsDescription: >-
-  Сёрмадомсто валт, конатне лиядыть апак вите ды сынсь а вастневить валкссонть, совавтовить тезэнь.
+  Сёрмадомсто валт, конатне лиядыть апак вите ды сынсь а вастневить валкссонть,
+  совавтовить тезэнь.
 
 # Original: Open the {item} app
 openAppPlain: 'Панжомс {item} сёрмаповонь программанть'
@@ -105,12 +110,13 @@ unblock: Саемс сайместэ
 # Original: User-Defined
 userDefined: Сёрмадыцянсеть
 
-# Original: User Dictionary
+# Original: Your own words
 userDictionary: Сёрмадыцянь валкс
 
 # Original: When you have finished, return to this app to continue.
-whenYouHaveFinished: 'Зярдо весе аравтовсь, велявтта мекев те сёрмаповонь
-                      программантень тевень поладомга.'
+whenYouHaveFinished: >-
+  Зярдо весе аравтовсь, велявтта мекев те сёрмаповонь программантень тевень
+  поладомга.
 
 # Original: Word
 word: Вал

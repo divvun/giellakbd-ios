@@ -40,7 +40,10 @@ detected: Upptäckta ord
 # Original: Downloading "{package}"…
 downloading: 'Laddar ned "{package}"…'
 
-# Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
+# Original: Enable the keyboards that you want to use.
+#enableKeyboards: UNTRANSLATED
+
+# Original: We need you to tap {allowFullAccess} to enable spell-checking, updating and keyboard sounds.
 enableTapSoundsPlain: >-
   Om du vill slå på tangentbordsklickljud måste du trycka {keyboard} og slå på
   {allowFullAccess}.
@@ -60,7 +63,7 @@ keyboard: Tangentbord
 # Original: Keyboards
 keyboards: Tangentbord
 
-# Original: Language
+# Original: App Language
 language: Appspråk
 
 # Original: Layouts
@@ -73,7 +76,9 @@ localeSjd: Kildinsamisk
 noUserWords: Inga användarskapade ord ännu.
 
 # Original: Words that are left uncorrected and are not in the built-in dictionary will appear here.
-noUserWordsDescription: Ord som inte blir korrigerade och som inte finns i ordlistan kommer att dyka upp här.
+noUserWordsDescription: >-
+  Ord som inte blir korrigerade och som inte finns i ordlistan kommer att dyka
+  upp här.
 
 # Original: Open the {item} app
 openAppPlain: 'Öppna {item}-appen'
@@ -105,7 +110,7 @@ unblock: Ta bort spärr
 # Original: User-Defined
 userDefined: Dina egna ord
 
-# Original: User Dictionary
+# Original: Your own words
 userDictionary: Användarordlista
 
 # Original: When you have finished, return to this app to continue.

@@ -40,11 +40,13 @@ detected: Detected
 # Original: Downloading "{package}"…
 downloading: 'Downloading "{package}"…'
 
+# Original: Enable the keyboards that you want to use.
 enableKeyboards: Enable the keyboards that you want to use.
-# Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
+
+# Original: We need you to tap {allowFullAccess} to enable spell-checking, updating and keyboard sounds.
 enableTapSoundsPlain: >-
-  We need you to tap {allowFullAccess} to enable spell-checking, updating and keyboard sounds.
-  
+  We need you to tap {allowFullAccess} to enable spell-checking, updating and
+  keyboard sounds.
 
 # Original: General
 general: General
@@ -61,7 +63,7 @@ keyboard: Keyboard
 # Original: Keyboards
 keyboards: Keyboards
 
-# Original: Language
+# Original: App Language
 language: App Language
 
 # Original: Layouts
@@ -108,7 +110,7 @@ unblock: Unblock
 # Original: User-Defined
 userDefined: User-Defined
 
-# Original: User Dictionary
+# Original: Your own words
 userDictionary: Your own words
 
 # Original: When you have finished, return to this app to continue.

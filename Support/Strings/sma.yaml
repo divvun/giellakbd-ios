@@ -4,14 +4,14 @@ about: Båaloebuertieprogrammen bïjre
 # Original: Add
 add: Lissehth
 
-# Original: Add New Keyboard …
+# Original: Add New Keyboard…
 addNewKeyboard: Lissedh orre båaloebuertiem …
 
 # Original: Add Word
 addWord: Lissedh baakoem
 
 # Original: This word will be suggested in the spelling banner for similar input.
-addWordMessage: Daate baakoe jeajhta evtiehtassene gosse tjaalah seamma-laaketje baakoeh. 
+addWordMessage: Daate baakoe jeajhta evtiehtassene gosse tjaalah seamma-laaketje baakoeh.
 
 # Original: Allow Full Access
 allowFullAccess: Vedtih gaajhkh luehpieh dan appese
@@ -37,20 +37,24 @@ delete: Sliejhth
 # Original: Detected
 detected: Aajhtseme
 
-# Original: Downloading "{package}" …
+# Original: Downloading "{package}"…
 downloading: '"{package}" veedtjeminie …'
 
-# Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
+# Original: Enable the keyboards that you want to use.
+#enableKeyboards: UNTRANSLATED
+
+# Original: We need you to tap {allowFullAccess} to enable spell-checking, updating and keyboard sounds.
 enableTapSoundsPlain: >-
-  Jis båaloebuertietjoejem sïjhth govledh, dellie diedtah {keyboard} jïh baajh {allowFullAccess}.
+  Jis båaloebuertietjoejem sïjhth govledh, dellie diedtah {keyboard} jïh baajh
+  {allowFullAccess}.
 
 # Original: General
 general: Sïejhme
 
-# Original: Installing packages …
+# Original: Installing packages…
 installingPackages: Måadtoestidh paahkah …
 
-# Original: Installing Spellers …
+# Original: Installing Spellers…
 installingSpellers: Mådtoestidh tjaelemestaeriedimmiem …
 
 # Original: Keyboard
@@ -59,7 +63,7 @@ keyboard: Båaloebuertie
 # Original: Keyboards
 keyboards: Båaloebuertieh
 
-# Original: Language
+# Original: App Language
 language: Appegïele
 
 # Original: Layouts
@@ -72,7 +76,9 @@ localeSjd: Gielddasaemien
 noUserWords: Jïjtjedh baakoelæstoeh annje gåaroes.
 
 # Original: Words that are left uncorrected and are not in the built-in dictionary will appear here.
-noUserWordsDescription: Baakoeh maam staeriedimmiedirrege ij damth, men maam datne damtaj provhkh,  jijhtieh daase. 
+noUserWordsDescription: >-
+  Baakoeh maam staeriedimmiedirrege ij damth, men maam datne damtaj provhkh, 
+  jijhtieh daase.
 
 # Original: Open the {item} app
 openAppPlain: 'Rïhpesh {item}-appem'
@@ -87,28 +93,28 @@ save: Vöörhkh
 setUp: 'Sjïehtedh {keyboard}'
 
 # Original: Setting Up
-settingUp: Sjïehtediminie 
+settingUp: Sjïehtediminie
 
 # Original: Settings
 settings: Sjïehtesjidh
 
 # Original: Skip
-skip: Baajh årrodh 
+skip: Baajh årrodh
 
 # Original: Tap {item}
 tapPlain: 'Dïedtelh {item}'
 
 # Original: Unblock
-unblock: Ollh-hööpth 
+unblock: Ollh-hööpth
 
 # Original: User-Defined
 userDefined: Datne lissiehtamme
 
-# Original: User Dictionary
+# Original: Your own words
 userDictionary: Jïjtjedh baakoeh
 
 # Original: When you have finished, return to this app to continue.
-whenYouHaveFinished: Gosse galkeme, dellie bååstede dan appese barkojne jåerhkh.
+whenYouHaveFinished: 'Gosse galkeme, dellie bååstede dan appese barkojne jåerhkh.'
 
 # Original: Word
 word: Baakoe

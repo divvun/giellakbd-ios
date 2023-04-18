@@ -11,7 +11,7 @@ addNewKeyboard: Lisää uusi näppäimistö…
 addWord: Lisää sana
 
 # Original: This word will be suggested in the spelling banner for similar input.
-addWordMessage: Tätä sanaa ehdotetaan oikolukubannerissa samankaltaisille syötteille 
+addWordMessage: Tätä sanaa ehdotetaan oikolukubannerissa samankaltaisille syötteille
 
 # Original: Allow Full Access
 allowFullAccess: Salli kaikki oikeudet
@@ -40,7 +40,10 @@ detected: Tunnistetut sanat
 # Original: Downloading "{package}"…
 downloading: 'Ladataan pakettia "{package}"…'
 
-# Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
+# Original: Enable the keyboards that you want to use.
+#enableKeyboards: UNTRANSLATED
+
+# Original: We need you to tap {allowFullAccess} to enable spell-checking, updating and keyboard sounds.
 enableTapSoundsPlain: >-
   Jos haluat näppäinäänet käyttöön, paina nappia {keyboard} ja vaihda asetusta
   {allowFullAccess}.
@@ -60,7 +63,7 @@ keyboard: Näppäimistö
 # Original: Keyboards
 keyboards: Näppäimistöt
 
-# Original: Language
+# Original: App Language
 language: Appikieli
 
 # Original: Layouts
@@ -73,9 +76,7 @@ localeSjd: Kiltinänsaame
 noUserWords: Käyttäjän luomia sanoja ei ole vielä.
 
 # Original: Words that are left uncorrected and are not in the built-in dictionary will appear here.
-noUserWordsDescription: >-
-  Sanat joita oikoluku ei tunnista ja joita käytetään usein
-  näkyvät täällä.
+noUserWordsDescription: Sanat joita oikoluku ei tunnista ja joita käytetään usein näkyvät täällä.
 
 # Original: Open the {item} app
 openAppPlain: 'Avaa sovellus {item}'
@@ -107,11 +108,11 @@ unblock: Poista estot
 # Original: User-Defined
 userDefined: Omat sanat
 
-# Original: User Dictionary
+# Original: Your own words
 userDictionary: Käyttäjän sanakirja
 
 # Original: When you have finished, return to this app to continue.
-whenYouHaveFinished: 'Palaa takaisin tähän sovellukseen lopetettuasi.'
+whenYouHaveFinished: Palaa takaisin tähän sovellukseen lopetettuasi.
 
 # Original: Word
 word: Sana

@@ -40,9 +40,13 @@ detected: Фатяф
 # Original: Downloading "{package}"…
 downloading: 'Таргама "{package}"…'
 
-# Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
+# Original: Enable the keyboards that you want to use.
+#enableKeyboards: UNTRANSLATED
+
+# Original: We need you to tap {allowFullAccess} to enable spell-checking, updating and keyboard sounds.
 enableTapSoundsPlain: >-
-  Кда мяленте марямс пувнянь токамста вайгяль, сави люпштамс {keyboard} и кочкамс {allowFullAccess}.
+  Кда мяленте марямс пувнянь токамста вайгяль, сави люпштамс {keyboard} и
+  кочкамс {allowFullAccess}.
 
 # Original: General
 general: Марстонь
@@ -59,7 +63,7 @@ keyboard: Сёрмапувнят
 # Original: Keyboards
 keyboards: Сембе сёрмадомпувнятне
 
-# Original: Language
+# Original: App Language
 language: Кяль
 
 # Original: Layouts
@@ -72,8 +76,7 @@ localeSjd: Кильдинонь Саам
 noUserWords: Сёрмадыхнень путфкссна нинге аш.
 
 # Original: Words that are left uncorrected and are not in the built-in dictionary will appear here.
-noUserWordsDescription: >-
-  Тяса эвондайхть валхт, конат апак петть и аф васьфневихть валксса.
+noUserWordsDescription: 'Тяса эвондайхть валхт, конат апак петть и аф васьфневихть валксса.'
 
 # Original: Open the {item} app
 openAppPlain: 'Панжесть {item} сёрмаповонь программань полатксть'
@@ -105,11 +108,13 @@ unblock: панжемс
 # Original: User-Defined
 userDefined: Сёрмадыень тефт
 
-# Original: User Dictionary
+# Original: Your own words
 userDictionary: Сёрмадыень валкс
 
 # Original: When you have finished, return to this app to continue.
-whenYouHaveFinished: 'Мзярда шумордасасть, мрдада тя сёрмаповонь программань полатксти, штоба сяда тов тевонь поладома.'
+whenYouHaveFinished: >-
+  Мзярда шумордасасть, мрдада тя сёрмаповонь программань полатксти, штоба сяда
+  тов тевонь поладома.
 
 # Original: Word
 word: Вал

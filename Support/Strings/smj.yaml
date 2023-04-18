@@ -11,7 +11,7 @@ addNewKeyboard: Laseda ådå boallobievdev …
 addWord: Laseda bágov
 
 # Original: This word will be suggested in the spelling banner for similar input.
-addWordMessage: Dát báhko ihtá ævtodussan gå tjálá muodugasj bágov. 
+addWordMessage: Dát báhko ihtá ævtodussan gå tjálá muodugasj bágov.
 
 # Original: Allow Full Access
 allowFullAccess: Dåhkkida ålleslasj bessamav dán æhppaj
@@ -40,10 +40,13 @@ detected: Oajvvaduvvam
 # Original: Downloading "{package}"…
 downloading: 'Viedtjamin ”{package}” …'
 
-# Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
+# Original: Enable the keyboards that you want to use.
+#enableKeyboards: UNTRANSLATED
+
+# Original: We need you to tap {allowFullAccess} to enable spell-checking, updating and keyboard sounds.
 enableTapSoundsPlain: >-
-  Jus sidá jienajt gullat gå dieddela boallobievdev, de dieddela
-  {keyboard} ja dåhkkida {allowFullAccess}.
+  Jus sidá jienajt gullat gå dieddela boallobievdev, de dieddela {keyboard} ja
+  dåhkkida {allowFullAccess}.
 
 # Original: General
 general: Åbbålasj
@@ -60,7 +63,7 @@ keyboard: Boallobievdde
 # Original: Keyboards
 keyboards: Boallobievde
 
-# Original: Language
+# Original: App Language
 language: Æhppagiella
 
 # Original: Layouts
@@ -70,10 +73,11 @@ layouts: Boallobievddeháme
 localeSjd: Gielldasámegiella
 
 # Original: No user-created words yet.
-noUserWords: Ietjat báhkolissta l ájn guoros. 
+noUserWords: Ietjat báhkolissta l ájn guoros.
 
-# Original: Words that are left uncorrected and are not in the built-in dictionary will appear here. 
-noUserWordsDescription: Gå moaddi tjálá bágov majt tjállemdárkastus ij dåbdå, de ihtá dat báhko dánná. 
+# Original: Words that are left uncorrected and are not in the built-in dictionary will appear here.
+noUserWordsDescription: 'Gå moaddi tjálá bágov majt tjállemdárkastus ij dåbdå, de ihtá dat báhko dánná.'
+
 # Original: Open the {item} app
 openAppPlain: 'Rabá {item}-ehpav'
 
@@ -104,7 +108,7 @@ unblock: Ale das bágo tsakka
 # Original: User-Defined
 userDefined: Laseduvvam
 
-# Original: User Dictionary
+# Original: Your own words
 userDictionary: Ietjat bágo
 
 # Original: When you have finished, return to this app to continue.

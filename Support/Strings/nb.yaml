@@ -37,10 +37,13 @@ delete: Slett
 # Original: Detected
 detected: Oppdaga ord
 
-# Original: Downloading "{package}" …
+# Original: Downloading "{package}"…
 downloading: 'Laster ned "{package}" …'
 
-# Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
+# Original: Enable the keyboards that you want to use.
+#enableKeyboards: UNTRANSLATED
+
+# Original: We need you to tap {allowFullAccess} to enable spell-checking, updating and keyboard sounds.
 enableTapSoundsPlain: >-
   Om du vil slå på tastaturklikkelyder må du trykke {keyboard} og slå på
   {allowFullAccess}.
@@ -60,7 +63,7 @@ keyboard: Tastatur
 # Original: Keyboards
 keyboards: Tastatur
 
-# Original: Language
+# Original: App Language
 language: Appspråk
 
 # Original: Layouts
@@ -105,11 +108,11 @@ unblock: Fjern sperring
 # Original: User-Defined
 userDefined: Egne ord
 
-# Original: User Dictionary
+# Original: Your own words
 userDictionary: Dine egne ord
 
 # Original: When you have finished, return to this app to continue.
-whenYouHaveFinished: Når du er ferdig, gå tilbake til denne appen for å fortsette.
+whenYouHaveFinished: 'Når du er ferdig, gå tilbake til denne appen for å fortsette.'
 
 # Original: Word
 word: ord

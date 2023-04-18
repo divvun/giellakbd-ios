@@ -40,17 +40,19 @@ detected: Удалено
 # Original: Downloading "{package}"…
 downloading: 'Скачивание "{package}"…'
 
-enableKeyboards: Включить клавиатуры, которые вы хотите использовать.
+# Original: Enable the keyboards that you want to use.
+enableKeyboards: 'Включить клавиатуры, которые вы хотите использовать.'
 
-# Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
+# Original: We need you to tap {allowFullAccess} to enable spell-checking, updating and keyboard sounds.
 enableTapSoundsPlain: >-
-  Чтобы включить проверку орфографии, обновление и звуки клавиатуры, нажмите {allowFullAccess}.
+  Чтобы включить проверку орфографии, обновление и звуки клавиатуры, нажмите
+  {allowFullAccess}.
 
 # Original: General
 general: Основные
 
 # Original: Installing packages…
-installingPackages: Установка пакетов... 
+installingPackages: Установка пакетов...
 
 # Original: Installing Spellers…
 installingSpellers: Установка орфографических подсказок...
@@ -61,7 +63,7 @@ keyboard: Клавиатура
 # Original: Keyboards
 keyboards: Клавиатуры
 
-# Original: Language
+# Original: App Language
 language: Язык приложения
 
 # Original: Layouts
@@ -75,7 +77,8 @@ noUserWords: Созданных пользователем слов пока н�
 
 # Original: Words that are left uncorrected and are not in the built-in dictionary will appear here.
 noUserWordsDescription: >-
-  Здесь появятся слова, которые не были исправлены и отсутствуют во встроенном словаре.  
+  Здесь появятся слова, которые не были исправлены и отсутствуют во встроенном
+  словаре.  
 
 # Original: Open the {item} app
 openAppPlain: 'Открыть {item}'
@@ -84,7 +87,7 @@ openAppPlain: 'Открыть {item}'
 openSettings: Открыть Настройки
 
 # Original: Save
-save: Сохранить 
+save: Сохранить
 
 # Original: Set Up {keyboard}
 setUp: 'Настроить {keyboard}'
@@ -102,12 +105,12 @@ skip: Пропустить
 tapPlain: 'Нажать {item}'
 
 # Original: Unblock
-unblock: Разблокировать 
+unblock: Разблокировать
 
 # Original: User-Defined
 userDefined: Мои слова
 
-# Original: User Dictionary
+# Original: Your own words
 userDictionary: Мой словарь
 
 # Original: When you have finished, return to this app to continue.

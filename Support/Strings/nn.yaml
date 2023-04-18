@@ -4,7 +4,7 @@ about: Om tastaturappen
 # Original: Add
 add: Legg til
 
-# Original: Add New Keyboard …
+# Original: Add New Keyboard…
 addNewKeyboard: Legg til nytt tastatur …
 
 # Original: Add Word
@@ -37,10 +37,13 @@ delete: Slett
 # Original: Detected
 detected: Oppdaga ord
 
-# Original: Downloading "{package}" …
+# Original: Downloading "{package}"…
 downloading: 'Lastar ned "{package}" …'
 
-# Original: If you wish to enable key tap sounds, you must then tap {keyboard} and toggle {allowFullAccess}.
+# Original: Enable the keyboards that you want to use.
+#enableKeyboards: UNTRANSLATED
+
+# Original: We need you to tap {allowFullAccess} to enable spell-checking, updating and keyboard sounds.
 enableTapSoundsPlain: >-
   Om du vil slå på tastaturklikkelydar må du trykkja {keyboard} og slå på
   {allowFullAccess}.
@@ -48,10 +51,10 @@ enableTapSoundsPlain: >-
 # Original: General
 general: Generelt
 
-# Original: Installing packages …
+# Original: Installing packages…
 installingPackages: Installerer pakker …
 
-# Original: Installing Spellers …
+# Original: Installing Spellers…
 installingSpellers: Installerer stavekontrollar …
 
 # Original: Keyboard
@@ -60,7 +63,7 @@ keyboard: Tastatur
 # Original: Keyboards
 keyboards: Tastatur
 
-# Original: Language
+# Original: App Language
 language: Appspråk
 
 # Original: Layouts
@@ -73,7 +76,9 @@ localeSjd: Kildinsamisk
 noUserWords: Ingen eigne ord enno.
 
 # Original: Words that are left uncorrected and are not in the built-in dictionary will appear here.
-noUserWordsDescription: Ord som stavekontrollen ikkje kjenner, og som du bruker ofte, vil bli lagt til her.
+noUserWordsDescription: >-
+  Ord som stavekontrollen ikkje kjenner, og som du bruker ofte, vil bli lagt til
+  her.
 
 # Original: Open the {item} app
 openAppPlain: 'Opne {item}-appen'
@@ -105,11 +110,11 @@ unblock: Fjern sperring
 # Original: User-Defined
 userDefined: Eigne ord
 
-# Original: User Dictionary
+# Original: Your own words
 userDictionary: Dine eigne ord
 
 # Original: When you have finished, return to this app to continue.
-whenYouHaveFinished: Når du er ferdig, gå attende til denne appen for å halda fram.
+whenYouHaveFinished: 'Når du er ferdig, gå attende til denne appen for å halda fram.'
 
 # Original: Word
 word: ord
