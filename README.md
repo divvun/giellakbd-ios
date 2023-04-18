@@ -2,9 +2,22 @@
 
 An open source reimplementation of Apple's native iOS keyboard with a specific focus on support for localised keyboards and support for minority and indigenous languages.
 
+
+## Building & Running
+
 ##### Note: the first build will take a while.
 
-## Dependencies
+1. [Install Cocoapods](https://cocoapods.org/)
+2. `pod install`
+3. Open `GiellaKeyboard.xcworkspace`
+4. From the target menu in Xcode, select `HostingApp`
+5. Run
+6. Follow the instructions to enable the keyboard on your device/simulator
+7. After enabling, open an app that uses the keyboard, such as Messages, and tap a text field to bring up the keyboard
+8. Tap and hold the globe button in the bottom left corner of the keyboard and select "Template Keyboard"
+9. Done. You should now see the Divvun nordsamisk keyboard
+
+## Sentry
 
 To enable Sentry, add a `SentryDSN` key to the `HostingApp/Supporting Files/Info.plist` file.
 
