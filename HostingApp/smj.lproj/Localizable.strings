@@ -12,7 +12,8 @@
 "delete" = "Sihko";
 "detected" = "Oajvvaduvvam";
 "downloading" = "Viedtjamin ”%1$@” …";
-"enableTapSoundsPlain" = "Jus sidá jienajt gullat gå dieddela boallobievdev, de dieddela %1$@ ja dåhkkida %2$@.";
+"enableKeyboards" = "Enable the keyboards that you want to use.";
+"enableTapSoundsPlain" = "Jus sidá jienajt gullat gå dieddela boallobievdev, de dieddela %0$@ ja dåhkkida %1$@.";
 "general" = "Åbbålasj";
 "installingPackages" = "Sajájduhttemin páhkajt";
 "installingSpellers" = "Sajájduhttemin tjállemdárkadusájt";

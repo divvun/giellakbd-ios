@@ -12,7 +12,8 @@
 "delete" = "Нардамс";
 "detected" = "Редязь";
 "downloading" = "Тарги \"%1$@\"…";
-"enableTapSoundsPlain" = "Мелеть сайтянзат марямс повнень токамо гайть, сави токамс %1$@ ды кочкамс %2$@.";
+"enableKeyboards" = "Enable the keyboards that you want to use.";
+"enableTapSoundsPlain" = "Мелеть сайтянзат марямс повнень токамо гайть, сави токамс %0$@ ды кочкамс %1$@.";
 "general" = "Вейсэнь";
 "installingPackages" = "Аравты пакеттнэсэ…";
 "installingSpellers" = "Аравты видестэ сёрмадома тевнеть…";

@@ -12,7 +12,8 @@
 "delete" = "Slett";
 "detected" = "Oppdaga ord";
 "downloading" = "Lastar ned \"%1$@\" …";
-"enableTapSoundsPlain" = "Om du vil slå på tastaturklikkelydar må du trykkja %1$@ og slå på %2$@.";
+"enableKeyboards" = "Enable the keyboards that you want to use.";
+"enableTapSoundsPlain" = "Om du vil slå på tastaturklikkelydar må du trykkja %0$@ og slå på %1$@.";
 "general" = "Generelt";
 "installingPackages" = "Installerer pakker …";
 "installingSpellers" = "Installerer stavekontrollar …";
