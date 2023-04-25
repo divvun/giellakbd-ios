@@ -34,6 +34,10 @@ If you add a new locale, please open an issue to have it added to the language l
 
 This repo does not include any keyboard layouts. It is intended to be used as a template for [kbdgen](https://github.com/divvun/kbdgen), which consumes among other things this codebase, as well as layouts as listed in e.g. [divvun-keyboard](https://github.com/divvun/divvun-keyboard) to produce the actual keyboard app. The keyboard layout specifications are found in the [GiellaLT](https://github.com/giellalt?q=keyboard-&type=&language=) organisation.
 
+## Deploying
+
+Builds can be deployed using the [divvun-keyboard repo](https://github.com/divvun/divvun-keyboard)
+
 ## License
 
 `giellakbd-ios` is licensed under either of
