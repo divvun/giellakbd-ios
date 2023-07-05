@@ -1001,6 +1001,7 @@
 		};
 		99C8EC9623AA3F2B00E4EB7D /* Run Script - make dicts.bundle */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
