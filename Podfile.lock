@@ -11,8 +11,8 @@ PODS:
   - SwiftLint (0.43.1)
 
 DEPENDENCIES:
-  - "DivvunSpell (from `{:http=>\"https://github.com/divvun/divvunspell-sdk-swift/releases/download/v1.0.0-beta.3/cargo-pod.tgz\"}`)"
-  - "PahkatClient (from `{:http=>\"https://github.com/divvun/pahkat-client-sdk-swift/releases/download/v0.2.0/cargo-pod.tgz\"}`)"
+  - "DivvunSpell (from `{:http=>\"https://github.com/divvun/divvunspell-sdk-swift/releases/download/v1.0.0-beta.4/cargo-pod.tgz\"}`)"
+  - "PahkatClient (from `{:http=>\"https://github.com/divvun/pahkat-client-sdk-swift/releases/download/v0.2.1/cargo-pod.tgz\"}`)"
   - RxSwift (~> 5.1.1)
   - Sentry (= 7.3.0)
   - SQLite.swift (~> 0.12.0)
@@ -27,24 +27,24 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   DivvunSpell:
-    :http: https://github.com/divvun/divvunspell-sdk-swift/releases/download/v1.0.0-beta.3/cargo-pod.tgz
+    :http: https://github.com/divvun/divvunspell-sdk-swift/releases/download/v1.0.0-beta.4/cargo-pod.tgz
   PahkatClient:
-    :http: https://github.com/divvun/pahkat-client-sdk-swift/releases/download/v0.2.0/cargo-pod.tgz
+    :http: https://github.com/divvun/pahkat-client-sdk-swift/releases/download/v0.2.1/cargo-pod.tgz
 
 CHECKOUT OPTIONS:
   DivvunSpell:
-    :http: https://github.com/divvun/divvunspell-sdk-swift/releases/download/v1.0.0-beta.3/cargo-pod.tgz
+    :http: https://github.com/divvun/divvunspell-sdk-swift/releases/download/v1.0.0-beta.4/cargo-pod.tgz
   PahkatClient:
-    :http: https://github.com/divvun/pahkat-client-sdk-swift/releases/download/v0.2.0/cargo-pod.tgz
+    :http: https://github.com/divvun/pahkat-client-sdk-swift/releases/download/v0.2.1/cargo-pod.tgz
 
 SPEC CHECKSUMS:
-  DivvunSpell: a49ab7b8f0dba02062619bfe801e371f0671c32a
-  PahkatClient: 936e8228ea57c77850a852f14c9f7141fb22fa75
+  DivvunSpell: aacb77a377dbda67ddc76dcc254bc8b78157fc4b
+  PahkatClient: 8f79a254f8240548772b0ecfc838b36ed15ab2a3
   RxSwift: 1e2e1f9570186967f617e49128ed26ccf1bafc8e
   Sentry: 9a4e621430e2dae4477d791f2f7e905720b6efbf
   SQLite.swift: d2b4642190917051ce6bd1d49aab565fe794eea3
   SwiftLint: 99f82d07b837b942dd563c668de129a03fc3fb52
 
-PODFILE CHECKSUM: 3b18f71f7f09d4be8c66fffcf23c2f4fb2f5b022
+PODFILE CHECKSUM: aeb7edabbed03cc517219f461b6288e46bbdfa60
 
 COCOAPODS: 1.12.1
