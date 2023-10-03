@@ -46,6 +46,10 @@ extension Screen {
     public static var maxSupportedInches: Double { 12.9 }
     
     public var sizeInches: Double? {
+        // Hack to fix landscape mode. Without this some iPads are mistakenly recognized as smaller devices.
+        // And some devices aren't recognized at all.
+        let height = width > height ? width : height
+
         switch (height, scale) {
         case (480, _): return 3.5
         case (568, _): return 4.0
@@ -70,7 +74,6 @@ extension Screen {
         switch deviceModel {
         case .iPadMini, .iPadMini2, .iPadMini3, .iPadMini4, .iPadMini5: return 7.9
         case .iPadPro10_5Inch: return 10.5
-        case .iPadPro12_9Inch, .iPadPro12_9Inch_SecondGen, .iPadPro12_9Inch_ThirdGen, .iPadPro12_9Inch_FourthGen, .iPadPro12_9Inch_FifthGen, .iPadPro12_9Inch_SixthGen: return 12.9
         default: return 9.7
         }
     }
