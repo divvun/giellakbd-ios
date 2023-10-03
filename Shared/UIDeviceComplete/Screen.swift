@@ -70,6 +70,7 @@ extension Screen {
         switch deviceModel {
         case .iPadMini, .iPadMini2, .iPadMini3, .iPadMini4, .iPadMini5: return 7.9
         case .iPadPro10_5Inch: return 10.5
+        case .iPadPro12_9Inch, .iPadPro12_9Inch_SecondGen, .iPadPro12_9Inch_ThirdGen, .iPadPro12_9Inch_FourthGen, .iPadPro12_9Inch_FifthGen, .iPadPro12_9Inch_SixthGen: return 12.9
         default: return 9.7
         }
     }
