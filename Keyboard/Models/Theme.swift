@@ -290,10 +290,10 @@ private class IPadThemeBase {
 
     static let keyCornerRadius: CGFloat = 5.0
     static let keyHorizontalMargin: CGFloat = screenInches >= 11
-        ? 3.0
+        ? 4.0
         : 5.0
     static let keyVerticalMargin: CGFloat = screenInches >= 11
-        ? 3.0
+        ? 4.0
         : 5.0
 
     static let lowerKeyFont: UIFont = UIFont.systemFont(ofSize: 24.0, weight: .light)
