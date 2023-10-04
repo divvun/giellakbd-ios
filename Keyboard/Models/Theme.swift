@@ -296,7 +296,9 @@ private class IPadThemeBase {
         ? 4.0
         : 5.0
 
-    static let lowerKeyFont: UIFont = UIFont.systemFont(ofSize: 24.0, weight: .light)
+    static let lowerKeyFont: UIFont = screenInches >= 11
+    ? UIFont.systemFont(ofSize: 28.0)
+    : UIFont.systemFont(ofSize: 24.0, weight: .light)
     static let capitalKeyFont: UIFont = UIFont.systemFont(ofSize: 22.0)
 
     static let popupLongpressKeysPerRow: Int = 4
