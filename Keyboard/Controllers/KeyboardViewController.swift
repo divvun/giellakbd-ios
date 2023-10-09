@@ -692,7 +692,7 @@ extension KeyboardViewController: KeyboardViewDelegate {
         case .fullStop:
             handleDeadKey(string: ".")
         case .tab:
-            break
+            handleTab()
 //            textDocumentProxy.
         case let .input(string, _):
             handleDeadKey(string: string)
@@ -752,6 +752,13 @@ extension KeyboardViewController: KeyboardViewDelegate {
             insertText(value)
         }
         insertText("\n")
+    }
+
+    fileprivate func handleTab() {
+        if let value = deadKeyHandler.finish() {
+            insertText(value)
+        }
+        insertText("\t")
     }
 
 }
