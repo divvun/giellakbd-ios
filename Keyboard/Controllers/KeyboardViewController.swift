@@ -85,7 +85,7 @@ open class KeyboardViewController: UIInputViewController {
             case .iPadPro11Inch:
                 return 405.0
             case .iPadPro12_9Inch, .iPadPro12_9Inch_SecondGen, .iPadPro12_9Inch_ThirdGen, .iPadPro12_9Inch_FourthGen, .iPadPro12_9Inch_FifthGen, .iPadPro12_9Inch_SixthGen:
-                return 405.0
+                return 426.0
             default:
                 let sizeInches = UIDevice.current.dc.screenSize.sizeInches ?? 12.9
 

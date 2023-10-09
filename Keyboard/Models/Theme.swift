@@ -288,16 +288,20 @@ private class IPadThemeBase {
 
     static let bannerHeight: CGFloat = 55.0
 
-    static let keyCornerRadius: CGFloat = 5.0
+    static let keyCornerRadius: CGFloat = screenInches >= 11
+        ? 7.0
+        : 5.0
     static let keyHorizontalMargin: CGFloat = screenInches >= 11
-        ? 3.0
+        ? 4.0
         : 5.0
     static let keyVerticalMargin: CGFloat = screenInches >= 11
-        ? 3.0
+        ? 4.0
         : 5.0
 
-    static let lowerKeyFont: UIFont = UIFont.systemFont(ofSize: 24.0, weight: .light)
-    static let capitalKeyFont: UIFont = UIFont.systemFont(ofSize: 22.0)
+    static let lowerKeyFont: UIFont = screenInches >= 11
+    ? UIFont.systemFont(ofSize: 30.0)
+    : UIFont.systemFont(ofSize: 31.0, weight: .light)
+    static let capitalKeyFont: UIFont = UIFont.systemFont(ofSize: 28.0)
 
     static let popupLongpressKeysPerRow: Int = 4
 
