@@ -279,16 +279,19 @@ private class IPadThemeBase {
     static let modifierKeyFontSize: CGFloat = 17.0
     static let altKeyFontSize: CGFloat = 13.0
     static let altKeyFont: UIFont = UIFont.systemFont(ofSize: altKeyFontSize)
+    static var isLargeiPad: Bool {
+        screenInches >= 11
+    }
     static var isLargeLandscape: Bool {
         return screenInches >= 11 && UIScreen.main.isDeviceLandscape
     }
     static var altLabelTopAnchorConstant: CGFloat {
-        isLargeLandscape
+        isLargeiPad
         ? 0.0
         : 5.0
     }
     static var altLabelBottomAnchorConstant: CGFloat {
-        isLargeLandscape
+        isLargeiPad
         ? -3.0
         : -4.0
     }
