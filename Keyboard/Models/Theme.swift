@@ -288,7 +288,9 @@ private class IPadThemeBase {
 
     static let bannerHeight: CGFloat = 55.0
 
-    static let keyCornerRadius: CGFloat = 5.0
+    static let keyCornerRadius: CGFloat = screenInches >= 11
+        ? 7.0
+        : 5.0
     static let keyHorizontalMargin: CGFloat = screenInches >= 11
         ? 4.0
         : 5.0
