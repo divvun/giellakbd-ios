@@ -279,29 +279,50 @@ private class IPadThemeBase {
     static let modifierKeyFontSize: CGFloat = 17.0
     static let altKeyFontSize: CGFloat = 13.0
     static let altKeyFont: UIFont = UIFont.systemFont(ofSize: altKeyFontSize)
-    static let altLabelTopAnchorConstant: CGFloat = screenInches >= 11
+    static var isLargeiPad: Bool {
+        screenInches >= 11
+    }
+    static var isLargeLandscape: Bool {
+        return screenInches >= 11 && UIScreen.main.isDeviceLandscape
+    }
+    static var altLabelTopAnchorConstant: CGFloat {
+        isLargeiPad
         ? 0.0
         : 5.0
-    static let altLabelBottomAnchorConstant: CGFloat = screenInches >= 11
+    }
+    static var altLabelBottomAnchorConstant: CGFloat {
+        isLargeiPad
         ? -3.0
         : -4.0
+    }
 
     static let bannerHeight: CGFloat = 55.0
 
-    static let keyCornerRadius: CGFloat = screenInches >= 11
+    static var keyCornerRadius: CGFloat {
+        isLargeLandscape
         ? 7.0
         : 5.0
-    static let keyHorizontalMargin: CGFloat = screenInches >= 11
+    }
+    static var keyHorizontalMargin: CGFloat {
+        isLargeLandscape
         ? 4.0
         : 5.0
-    static let keyVerticalMargin: CGFloat = screenInches >= 11
+    }
+    static var keyVerticalMargin: CGFloat {
+        isLargeLandscape
         ? 4.0
         : 5.0
-
-    static let lowerKeyFont: UIFont = screenInches >= 11
-    ? UIFont.systemFont(ofSize: 30.0)
-    : UIFont.systemFont(ofSize: 31.0, weight: .light)
-    static let capitalKeyFont: UIFont = UIFont.systemFont(ofSize: 28.0)
+    }
+    static var lowerKeyFont: UIFont {
+        isLargeLandscape
+        ? UIFont.systemFont(ofSize: 29.0)
+        : UIFont.systemFont(ofSize: 24.0, weight: .light)
+    }
+    static var capitalKeyFont: UIFont {
+        isLargeLandscape
+        ? UIFont.systemFont(ofSize: 28.0)
+        : UIFont.systemFont(ofSize: 22.0)
+    }
 
     static let popupLongpressKeysPerRow: Int = 4
 
