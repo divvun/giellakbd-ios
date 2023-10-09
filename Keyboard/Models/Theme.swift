@@ -315,7 +315,7 @@ private class IPadThemeBase {
     }
     static var lowerKeyFont: UIFont {
         isLargeLandscape
-        ? UIFont.systemFont(ofSize: 30.0)
+        ? UIFont.systemFont(ofSize: 29.0)
         : UIFont.systemFont(ofSize: 24.0, weight: .light)
     }
     static var capitalKeyFont: UIFont {
