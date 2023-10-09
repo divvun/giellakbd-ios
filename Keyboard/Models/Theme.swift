@@ -330,8 +330,7 @@ private class IPadThemeBase {
 }
 
 final class LightThemeIpadImpl: LightThemeImpl {
-    override var keyCornerRadius: CGFloat { print("is large landscape, size: \(IPadThemeBase.isLargeLandscape), \(IPadThemeBase.altLabelTopAnchorConstant)")
-        return IPadThemeBase.keyCornerRadius }
+    override var keyCornerRadius: CGFloat { return IPadThemeBase.keyCornerRadius }
     override var keyHorizontalMargin: CGFloat { return IPadThemeBase.keyHorizontalMargin }
     override var keyVerticalMargin: CGFloat { return IPadThemeBase.keyVerticalMargin }
 
