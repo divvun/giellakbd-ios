@@ -273,7 +273,7 @@ private class IPhoneThemeBase {
 
 }
 
-private let screenInches = UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches
+let screenInches = UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches
 
 private class IPadThemeBase {
     static let modifierKeyFontSize: CGFloat = 17.0

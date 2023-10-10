@@ -265,7 +265,11 @@ final class KeyView: UIView {
         case let .spacebar(string):
             text(string, page: page)
         case let .returnkey(string):
-            text(string, page: page)
+            if screenInches >= 11 {
+                image(named: "return", traits: traits)
+            } else {
+                text(string, page: page)
+            }
         case .symbols:
             setupSymbols(page, traits)
         case .keyboardMode:
