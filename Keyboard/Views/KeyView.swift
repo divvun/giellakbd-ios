@@ -295,7 +295,7 @@ final class KeyView: UIView {
         case .caps:
             image(named: "caps", traits: traits)
         case .tab:
-            text("tab", page: page)
+            image(named: "tab", traits: traits)
         }
     }
 
