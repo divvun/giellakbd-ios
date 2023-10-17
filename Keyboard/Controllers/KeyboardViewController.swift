@@ -181,12 +181,12 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     private var preferredHeight: CGFloat {
-        var value: CGFloat
+        var preferredHeight: CGFloat
 
         if UIScreen.main.isDeviceLandscape {
-            value = landscapeHeight
+            preferredHeight = landscapeHeight
         } else {
-            value = portraitHeight
+            preferredHeight = portraitHeight
         }
 
         // Ordinarily a keyboard has 4 rows, iPad 12 inch+ has 5. Some have more. We calculate for that.
@@ -194,13 +194,14 @@ open class KeyboardViewController: UIInputViewController {
         let normalRowCount: CGFloat = (UIDevice.current.dc.screenSize.sizeInches ?? 0.0) >= 12.0
             ? 5.0
             : 4.0
-        value = value / normalRowCount * rowCount
+        let rowHeight = preferredHeight / normalRowCount
+        preferredHeight = rowHeight * rowCount
 
         if !bannerVisible {
-             value -= theme.bannerHeight
+             preferredHeight -= theme.bannerHeight
         }
 
-        return value
+        return preferredHeight
     }
 
     private func initHeightConstraint() {
