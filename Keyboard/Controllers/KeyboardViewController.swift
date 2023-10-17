@@ -196,6 +196,13 @@ open class KeyboardViewController: UIInputViewController {
             : 4.0
         let rowHeight = preferredHeight / normalRowCount
         preferredHeight = rowHeight * rowCount
+        
+        // Some keyboards are more than 4 rows, and on 9" iPads they take up
+        // almost the whole screen unless we shave off some pixels
+        let screenSize = UIDevice.current.dc.screenSize.sizeInches
+        if screenSize == 9.7 && rowCount > 4 {
+            preferredHeight -= 50
+        }
 
         if !bannerVisible {
              preferredHeight -= theme.bannerHeight
