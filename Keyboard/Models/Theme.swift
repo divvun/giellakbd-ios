@@ -277,7 +277,11 @@ let screenInches = UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSuppor
 
 private class IPadThemeBase {
     static let modifierKeyFontSize: CGFloat = 17.0
-    static let altKeyFontSize: CGFloat = 13.0
+    static var altKeyFontSize: CGFloat {
+        is9inLandscape
+        ? 15.0
+        : 13.0
+    }
     static let altKeyFont: UIFont = UIFont.systemFont(ofSize: altKeyFontSize)
     static var isLargeiPad: Bool {
         screenInches >= 11
@@ -289,9 +293,12 @@ private class IPadThemeBase {
         return screenInches == 9.7 && UIScreen.main.isDeviceLandscape
     }
     static var altLabelTopAnchorConstant: CGFloat {
-        isLargeiPad
-        ? 0.0
-        : 5.0
+        if isLargeiPad {
+            return 0.0
+        } else if is9inLandscape {
+            return 8.0
+        }
+        return 5.0
     }
     static var altLabelBottomAnchorConstant: CGFloat {
         isLargeiPad
