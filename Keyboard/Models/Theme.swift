@@ -321,7 +321,7 @@ private class IPadThemeBase {
     static var keyVerticalMargin: CGFloat {
         isLargeLandscape
         ? 4.0
-        : 5.0
+        : 6.0
     }
     static var lowerKeyFont: UIFont {
         isLargeLandscape || is9inLandscape

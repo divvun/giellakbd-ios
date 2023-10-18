@@ -77,9 +77,9 @@ open class KeyboardViewController: UIInputViewController {
 
             switch UIDevice.current.dc.deviceModel {
             case .iPadMini2, .iPadMini3, .iPadMini4, .iPadMini5:
-                return 405.0
+                return 400.0
             case .iPadThirdGen, .iPadFourthGen, .iPadFifthGen, .iPadSixthGen, .iPadAir, .iPadAir2, .iPadPro9_7Inch:
-                return 405.0
+                return 400.0
             case .iPadAir3, .iPadPro10_5Inch:
                 return 405.0
             case .iPadPro11Inch:
