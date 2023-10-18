@@ -322,9 +322,12 @@ private class IPadThemeBase {
         : 5.0
     }
     static var keyVerticalMargin: CGFloat {
-        isLargeLandscape
-        ? 4.0
-        : 6.0
+        if isLargeLandscape {
+            return 4.0
+        } else if isSmallOrMediumLandscape {
+            return 6.0
+        }
+        return 5.0
     }
     static var lowerKeyFont: UIFont {
         isLargeLandscape || isSmallOrMediumLandscape
