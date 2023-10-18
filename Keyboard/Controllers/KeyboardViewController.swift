@@ -199,8 +199,8 @@ open class KeyboardViewController: UIInputViewController {
         
         // Some keyboards are more than 4 rows, and on 9" iPads they take up
         // almost the whole screen unless we shave off some pixels
-        let screenSize = UIDevice.current.dc.screenSize.sizeInches
-        if screenSize == 9.7 && rowCount > 4 {
+        let screenSize = UIDevice.current.dc.screenSize.sizeInches ?? 12
+        if screenSize < 11 && rowCount > 4 {
             preferredHeight -= 50
         }
 

@@ -278,7 +278,7 @@ let screenInches = UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSuppor
 private class IPadThemeBase {
     static let modifierKeyFontSize: CGFloat = 17.0
     static var altKeyFontSize: CGFloat {
-        is9inLandscape
+        isSmallOrMediumLandscape
         ? 16.0
         : 13.0
     }
@@ -289,13 +289,13 @@ private class IPadThemeBase {
     static var isLargeLandscape: Bool {
         return screenInches >= 11 && UIScreen.main.isDeviceLandscape
     }
-    static var is9inLandscape: Bool {
-        return screenInches == 9.7 && UIScreen.main.isDeviceLandscape
+    static var isSmallOrMediumLandscape: Bool {
+        return screenInches < 11 && UIScreen.main.isDeviceLandscape
     }
     static var altLabelTopAnchorConstant: CGFloat {
         if isLargeiPad {
             return 0.0
-        } else if is9inLandscape {
+        } else if isSmallOrMediumLandscape {
             return 9.0
         }
         return 5.0
@@ -303,7 +303,7 @@ private class IPadThemeBase {
     static var altLabelBottomAnchorConstant: CGFloat {
         if isLargeiPad {
             return -3.0
-        } else if is9inLandscape {
+        } else if isSmallOrMediumLandscape {
             return -9.0
         }
         return -4.0
@@ -327,12 +327,12 @@ private class IPadThemeBase {
         : 6.0
     }
     static var lowerKeyFont: UIFont {
-        isLargeLandscape || is9inLandscape
+        isLargeLandscape || isSmallOrMediumLandscape
         ? UIFont.systemFont(ofSize: 29.0)
         : UIFont.systemFont(ofSize: 24.0, weight: .light)
     }
     static var capitalKeyFont: UIFont {
-        isLargeLandscape || is9inLandscape
+        isLargeLandscape || isSmallOrMediumLandscape
         ? UIFont.systemFont(ofSize: 28.0)
         : UIFont.systemFont(ofSize: 22.0)
     }
