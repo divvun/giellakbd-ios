@@ -285,6 +285,9 @@ private class IPadThemeBase {
     static var isLargeLandscape: Bool {
         return screenInches >= 11 && UIScreen.main.isDeviceLandscape
     }
+    static var is9inLandscape: Bool {
+        return screenInches == 9.7 && UIScreen.main.isDeviceLandscape
+    }
     static var altLabelTopAnchorConstant: CGFloat {
         isLargeiPad
         ? 0.0
@@ -314,12 +317,12 @@ private class IPadThemeBase {
         : 5.0
     }
     static var lowerKeyFont: UIFont {
-        isLargeLandscape
+        isLargeLandscape || is9inLandscape
         ? UIFont.systemFont(ofSize: 29.0)
         : UIFont.systemFont(ofSize: 24.0, weight: .light)
     }
     static var capitalKeyFont: UIFont {
-        isLargeLandscape
+        isLargeLandscape || is9inLandscape
         ? UIFont.systemFont(ofSize: 28.0)
         : UIFont.systemFont(ofSize: 22.0)
     }
