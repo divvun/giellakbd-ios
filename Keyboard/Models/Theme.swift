@@ -312,14 +312,20 @@ private class IPadThemeBase {
     static let bannerHeight: CGFloat = 55.0
 
     static var keyCornerRadius: CGFloat {
-        isLargeLandscape
-        ? 7.0
-        : 5.0
+        if isLargeLandscape {
+            return 7.0
+        } else if isSmallOrMediumLandscape {
+            return 6.0
+        }
+        return 5.0
     }
     static var keyHorizontalMargin: CGFloat {
-        isLargeLandscape
-        ? 4.0
-        : 5.0
+        if isLargeLandscape {
+            return 4.0
+        } else if isSmallOrMediumLandscape {
+            return 7.0
+        }
+        return 5.0
     }
     static var keyVerticalMargin: CGFloat {
         if isLargeLandscape {
