@@ -200,9 +200,9 @@ open class KeyboardViewController: UIInputViewController {
         // Some keyboards are more than 4 rows, and on 9" iPads they take up
         // almost the whole screen in landscape unless we shave off some pixels
         let screenSize = UIDevice.current.dc.screenSize.sizeInches ?? 12
-        let isLandscape = UIDevice.current.orientation.isLandscape
+        let isLandscape = UIScreen.main.isDeviceLandscape
         if screenSize < 11 && rowCount > 4 && isLandscape {
-            preferredHeight -= 50
+            preferredHeight -= 40
         }
 
         if !bannerVisible {
