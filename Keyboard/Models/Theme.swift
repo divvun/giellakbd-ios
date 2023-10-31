@@ -296,7 +296,7 @@ private class IPadThemeBase {
         if isLargeiPad {
             return 0.0
         } else if isSmallOrMediumLandscape {
-            return 9.0
+            return 4.0
         }
         return 5.0
     }
@@ -304,7 +304,7 @@ private class IPadThemeBase {
         if isLargeiPad {
             return -3.0
         } else if isSmallOrMediumLandscape {
-            return -9.0
+            return -6.0
         }
         return -4.0
     }
