@@ -647,11 +647,12 @@ extension KeyboardViewController: KeyboardViewDelegate {
     }
 
     private func handleDeadKey(string: String, endShifted: Bool = true) {
+        var endShifted = endShifted
         switch deadKeyHandler.handleInput(string, page: keyboardView.page) {
         case .none:
             insertText(string)
         case .transforming:
-            // Do nothing for now
+            endShifted = false
             break
         case let .output(value):
             insertText(value)
