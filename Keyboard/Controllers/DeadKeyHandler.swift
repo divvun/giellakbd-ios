@@ -22,7 +22,7 @@ struct DeadKeyHandler {
     }
 
     mutating func handleInput(_ input: String, page: KeyboardPage) -> DeadKeyState {
-        if let deadKeyRef = deadKey(input, page: page) {
+        if current == nil, let deadKeyRef = deadKey(input, page: page) {
             current = deadKeyRef
             return .transforming
         }
