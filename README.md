@@ -8,7 +8,7 @@ An open source reimplementation of Apple's native iOS keyboard with a specific f
 ##### Note: the first build will take a while.
 
 1. [Install Cocoapods](https://cocoapods.org/)
-2. `pod install`
+2. `pod install`. This may fail. If it does - see rexml solution below
 3. Open `GiellaKeyboard.xcworkspace`
 4. From the target menu in Xcode, select `HostingApp`
 5. Run
@@ -16,6 +16,18 @@ An open source reimplementation of Apple's native iOS keyboard with a specific f
 7. After enabling, open an app that uses the keyboard, such as Messages, and tap a text field to bring up the keyboard
 8. Tap and hold the globe button in the bottom left corner of the keyboard and select "Template Keyboard"
 9. Done. You should now see the Divvun nordsamisk keyboard
+
+### rexml
+
+Macos ships with a "broken" version of rexml.
+
+If you error is "REXML::ParseException - #<TypeError: wrong argument type String (expected Regexp)>", you can try:
+
+```bash
+sudo gem install rexml -v 3.2.6
+sudo gem uninstall rexml -v 3.2.9
+```
+
 
 ## Sentry
 
