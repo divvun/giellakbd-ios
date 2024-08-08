@@ -112,8 +112,8 @@ struct RawKeyboardDefinition: Decodable {
     let longPress: [String: [String]]?
     let transforms: [String: TransformTree]?
 
-    let ipad9in: RawKeyboardMode
-    let ipad12in: RawKeyboardMode
+    let ipad9in: RawKeyboardMode?
+    let ipad12in: RawKeyboardMode?
     let iphone: RawKeyboardMode
 
     private enum Keys: String, CodingKey {
@@ -172,8 +172,8 @@ struct RawKeyboardDefinition: Decodable {
         }
 
         iphone = try container.decode(RawKeyboardMode.self, forKey: .iphone)
-        ipad9in = try container.decode(RawKeyboardMode.self, forKey: .ipad9in)
-        ipad12in = try container.decode(RawKeyboardMode.self, forKey: .ipad12in)
+        ipad9in = try? container.decode(RawKeyboardMode.self, forKey: .ipad9in)
+        ipad12in = try? container.decode(RawKeyboardMode.self, forKey: .ipad12in)
     }
 }
 
@@ -221,9 +221,9 @@ public struct KeyboardDefinition: Codable {
         case .iphone:
             mode = raw.iphone
         case .ipad9in:
-            mode = raw.ipad9in
+            mode = raw.ipad9in!
         case .ipad12in:
-            mode = raw.ipad12in
+            mode = raw.ipad12in!
         }
 
         switch deviceVariant {
