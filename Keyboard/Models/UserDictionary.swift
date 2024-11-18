@@ -25,6 +25,8 @@ public final class UserDictionary {
         case blacklisted
     }
 
+    typealias Expression = SQLite.Expression
+
     internal struct WordTable {
         static let table = Table("user_word")
         static let id = Expression<Int64>("id")
