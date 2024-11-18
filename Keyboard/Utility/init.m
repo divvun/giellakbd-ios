@@ -1,4 +1,4 @@
-@import Sentry;
+//@import Sentry;
 #import <Foundation/Foundation.h>
 
 // This tire fire of code runs before absolutely anything else, guaranteeing that Sentry can init.
@@ -9,10 +9,10 @@ __attribute__((constructor)) static void init_sentry() {
     NSString* dsn = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"SentryDSN"];
     
     if (dsn != nil) {
-        [SentrySDK startWithConfigureOptions:^(SentryOptions *options) {
-            options.dsn = dsn;
-            options.debug = @YES; // Helpful to see what's going on
-        }];
+//        [SentrySDK startWithConfigureOptions:^(SentryOptions *options) {
+//            options.dsn = dsn;
+//            options.debug = @YES; // Helpful to see what's going on
+//        }];
 
         if (error != nil) {
             NSLog(@"%@", error);
