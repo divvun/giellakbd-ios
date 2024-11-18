@@ -1,6 +1,6 @@
 import Foundation
 import PahkatClient
-import Sentry
+//import Sentry
 import RxSwift
 
 final class PahkatWrapper {

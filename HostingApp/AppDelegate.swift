@@ -1,4 +1,4 @@
-import Sentry
+//import Sentry
 import UIKit
 import PahkatClient
 
