@@ -43,7 +43,6 @@ open class KeyboardViewController: UIInputViewController {
     private var heightConstraint: NSLayoutConstraint!
     private var extraSpacingView: UIView!
     private var deadKeyHandler: DeadKeyHandler!
-    private var keyboardDefinitions: [KeyboardDefinition?]!
     public private(set) var keyboardDefinition: KeyboardDefinition?
     private var keyboardMode: KeyboardMode = .normal
 
@@ -249,6 +248,7 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     private func loadKeyboardDefinition() -> KeyboardDefinition? {
+        let keyboardDefinitions: [KeyboardDefinition?]
         let path = Bundle.top.url(forResource: "KeyboardDefinitions", withExtension: "json")!
         do {
             let data = try String(contentsOf: path).data(using: .utf8)!
