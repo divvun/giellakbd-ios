@@ -227,6 +227,7 @@ public struct KeyboardDefinition: Codable {
         }
 
         guard let mode = mode else {
+            // There's no keyboard definition for the device with the given traits
             return nil
         }
 
