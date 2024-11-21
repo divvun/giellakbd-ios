@@ -238,13 +238,14 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     private func setupKeyboard() {
-        if let keyboardDefinition = loadKeyboardDefinition() {
-            self.keyboardDefinition = keyboardDefinition
-            deadKeyHandler = DeadKeyHandler(keyboard: keyboardDefinition)
-            setupKeyboardView(withBanner: showsBanner)
-        } else {
+        guard let keyboardDefinition = loadKeyboardDefinition() else {
             setupKeyboardNotSupportedOnThisDeviceView()
+            return
         }
+
+        self.keyboardDefinition = keyboardDefinition
+        deadKeyHandler = DeadKeyHandler(keyboard: keyboardDefinition)
+        setupKeyboardView(withBanner: showsBanner)
     }
 
     private func loadKeyboardDefinition() -> KeyboardDefinition? {
