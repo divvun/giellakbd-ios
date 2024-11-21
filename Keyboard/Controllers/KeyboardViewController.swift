@@ -43,7 +43,7 @@ open class KeyboardViewController: UIInputViewController {
     private var heightConstraint: NSLayoutConstraint!
     private var extraSpacingView: UIView!
     private var deadKeyHandler: DeadKeyHandler!
-    public private(set) var keyboardDefinition: KeyboardDefinition!
+    public private(set) var keyboardDefinition: KeyboardDefinition?
     private var keyboardMode: KeyboardMode = .normal
 
     private var bannerManager: BannerManager?
@@ -189,6 +189,11 @@ open class KeyboardViewController: UIInputViewController {
             preferredHeight = portraitHeight
         }
 
+        guard let keyboardDefinition = keyboardDefinition else {
+            // this can happen if for instance we're on iPad and there's no iPad layout for this particular keyboard
+            return preferredHeight
+        }
+
         // Ordinarily a keyboard has 4 rows, iPad 12 inch+ has 5. Some have more. We calculate for that.
         let rowCount = CGFloat(keyboardDefinition.normal.count)
         let normalRowCount: CGFloat = (UIDevice.current.dc.screenSize.sizeInches ?? 0.0) >= 12.0
@@ -233,19 +238,24 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     private func setupKeyboard() {
-        loadKeyboardDefinition()
+        guard let keyboardDefinition = loadKeyboardDefinition() else {
+            setupKeyboardNotSupportedOnThisDeviceView()
+            return
+        }
+
+        self.keyboardDefinition = keyboardDefinition
         deadKeyHandler = DeadKeyHandler(keyboard: keyboardDefinition)
-        setupKeyboardView(withBanner: showsBanner)
+        setupKeyboardView(keyboardDefinition, withBanner: showsBanner)
     }
 
-    private func loadKeyboardDefinition() {
-        let definitions: [KeyboardDefinition]
+    private func loadKeyboardDefinition() -> KeyboardDefinition? {
+        let keyboardDefinitions: [KeyboardDefinition?]
         let path = Bundle.top.url(forResource: "KeyboardDefinitions", withExtension: "json")!
         do {
             let data = try String(contentsOf: path).data(using: .utf8)!
             let raws = try JSONDecoder().decode([RawKeyboardDefinition].self, from: data)
-            definitions = try raws.map { try KeyboardDefinition(fromRaw: $0, traits: self.traitCollection) }
-            print("\(definitions.map { $0.locale })")
+            keyboardDefinitions = try raws.map { try KeyboardDefinition(fromRaw: $0, traits: self.traitCollection) }
+            print("keyboard definition locales: \(keyboardDefinitions.map { $0?.locale })")
         } catch {
             fatalError("Error getting keyboard definitions from json file: \(error)")
         }
@@ -258,17 +268,35 @@ open class KeyboardViewController: UIInputViewController {
                 fatalError("There was no DivvunKeyboardIndex")
             }
 
-            if index < 0 || index >= definitions.count {
-                fatalError("Invalid kbdIndex: \(index); count: \(definitions.count)")
+            if index < 0 || index >= keyboardDefinitions.count {
+                fatalError("Invalid kbdIndex: \(index); count: \(keyboardDefinitions.count)")
             }
 
             kbdIndex = index
         }
 
-        keyboardDefinition = definitions[kbdIndex]
+        return keyboardDefinitions[kbdIndex]
     }
 
-    private func setupKeyboardView(withBanner: Bool) {
+    private func setupKeyboardNotSupportedOnThisDeviceView() {
+        setupKeyboardContainer()
+
+        let textField = UITextField()
+        // TODO: localize this message
+        textField.text = "Keyboard not supported on this device"
+        keyboardContainer.addSubview(textField)
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            textField.centerXAnchor.constraint(equalTo: keyboardContainer.centerXAnchor),
+            textField.centerYAnchor.constraint(equalTo: keyboardContainer.centerYAnchor)
+        ])
+    }
+
+    private func hasKeyboardDefinition(for traits: UITraitCollection) -> Bool {
+        return false
+    }
+
+    private func setupKeyboardView(_ keyboardDefinition: KeyboardDefinition, withBanner: Bool) {
         if keyboardView != nil {
             keyboardView.remove()
             keyboardView = nil
@@ -278,11 +306,11 @@ open class KeyboardViewController: UIInputViewController {
 
         switch keyboardMode {
         case .split:
-            setupSplitKeyboard()
+            setupSplitKeyboard(keyboardDefinition)
         case .left, .right:
-            setupOneHandedKeyboard(mode: keyboardMode)
+            setupOneHandedKeyboard(keyboardDefinition, mode: keyboardMode)
         default:
-            setupNormalKeyboard()
+            setupNormalKeyboard(keyboardDefinition)
         }
 
         if withBanner {
@@ -311,7 +339,7 @@ open class KeyboardViewController: UIInputViewController {
         keyboardContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor).enable(priority: .required)
     }
 
-    private func setupSplitKeyboard() {
+    private func setupSplitKeyboard(_ keyboardDefinition: KeyboardDefinition) {
         let splitKeyboard = SplitKeyboardView(definition: keyboardDefinition, theme: theme)
 
         keyboardContainer.addSubview(splitKeyboard.leftKeyboardView)
@@ -337,7 +365,7 @@ open class KeyboardViewController: UIInputViewController {
         self.keyboardView = splitKeyboard
     }
 
-    private func setupOneHandedKeyboard(mode: KeyboardMode) {
+    private func setupOneHandedKeyboard(_ keyboardDefinition: KeyboardDefinition, mode: KeyboardMode) {
         guard mode == .left || mode == .right else {
             fatalError("Attemtping to setup one-handed keyboard with invalid KeyboardMode")
         }
@@ -361,7 +389,7 @@ open class KeyboardViewController: UIInputViewController {
         self.keyboardView = keyboardView
     }
 
-    private func setupNormalKeyboard() {
+    private func setupNormalKeyboard(_ keyboardDefinition: KeyboardDefinition) {
         let keyboardView = KeyboardView(definition: keyboardDefinition, theme: theme)
         keyboardView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -739,8 +767,11 @@ extension KeyboardViewController: KeyboardViewDelegate {
     }
 
     private func updateKeyboardMode(_ keyboardMode: KeyboardMode) {
+        guard let keyboardDefinition = self.keyboardDefinition else {
+            return
+        }
         self.keyboardMode = keyboardMode
-        setupKeyboardView(withBanner: showsBanner)
+        setupKeyboardView(keyboardDefinition, withBanner: showsBanner)
     }
 
     private func handleBackspace() {
@@ -786,7 +817,7 @@ extension KeyboardViewController: BannerManagerDelegate {
             replaceSelected(with: inputText)
 
             // If the keyboard is not compounding, we add a space
-            if !self.keyboardDefinition.features.contains(.compounding) {
+            if !self.keyboardDefinition!.features.contains(.compounding) {
                 insertText(" ")
             }
         }
