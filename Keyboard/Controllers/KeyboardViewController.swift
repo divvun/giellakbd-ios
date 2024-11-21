@@ -245,7 +245,7 @@ open class KeyboardViewController: UIInputViewController {
 
         self.keyboardDefinition = keyboardDefinition
         deadKeyHandler = DeadKeyHandler(keyboard: keyboardDefinition)
-        setupKeyboardView(withBanner: showsBanner)
+        setupKeyboardView(keyboardDefinition, withBanner: showsBanner)
     }
 
     private func loadKeyboardDefinition() -> KeyboardDefinition? {
@@ -296,7 +296,7 @@ open class KeyboardViewController: UIInputViewController {
         return false
     }
 
-    private func setupKeyboardView(withBanner: Bool) {
+    private func setupKeyboardView(_ keyboardDefinition: KeyboardDefinition, withBanner: Bool) {
         if keyboardView != nil {
             keyboardView.remove()
             keyboardView = nil
@@ -306,11 +306,11 @@ open class KeyboardViewController: UIInputViewController {
 
         switch keyboardMode {
         case .split:
-            setupSplitKeyboard()
+            setupSplitKeyboard(keyboardDefinition)
         case .left, .right:
-            setupOneHandedKeyboard(mode: keyboardMode)
+            setupOneHandedKeyboard(keyboardDefinition, mode: keyboardMode)
         default:
-            setupNormalKeyboard()
+            setupNormalKeyboard(keyboardDefinition)
         }
 
         if withBanner {
@@ -339,12 +339,7 @@ open class KeyboardViewController: UIInputViewController {
         keyboardContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor).enable(priority: .required)
     }
 
-    private func setupSplitKeyboard() {
-        guard let keyboardDefinition = keyboardDefinition else {
-            setupKeyboardNotSupportedOnThisDeviceView()
-            return
-        }
-
+    private func setupSplitKeyboard(_ keyboardDefinition: KeyboardDefinition) {
         let splitKeyboard = SplitKeyboardView(definition: keyboardDefinition, theme: theme)
 
         keyboardContainer.addSubview(splitKeyboard.leftKeyboardView)
@@ -370,14 +365,9 @@ open class KeyboardViewController: UIInputViewController {
         self.keyboardView = splitKeyboard
     }
 
-    private func setupOneHandedKeyboard(mode: KeyboardMode) {
+    private func setupOneHandedKeyboard(_ keyboardDefinition: KeyboardDefinition, mode: KeyboardMode) {
         guard mode == .left || mode == .right else {
             fatalError("Attemtping to setup one-handed keyboard with invalid KeyboardMode")
-        }
-
-        guard let keyboardDefinition = keyboardDefinition else {
-            setupKeyboardNotSupportedOnThisDeviceView()
-            return
         }
 
         let keyboardView = KeyboardView(definition: keyboardDefinition, theme: theme)
@@ -399,12 +389,7 @@ open class KeyboardViewController: UIInputViewController {
         self.keyboardView = keyboardView
     }
 
-    private func setupNormalKeyboard() {
-        guard let keyboardDefinition = keyboardDefinition else {
-            setupKeyboardNotSupportedOnThisDeviceView()
-            return
-        }
-
+    private func setupNormalKeyboard(_ keyboardDefinition: KeyboardDefinition) {
         let keyboardView = KeyboardView(definition: keyboardDefinition, theme: theme)
         keyboardView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -782,8 +767,11 @@ extension KeyboardViewController: KeyboardViewDelegate {
     }
 
     private func updateKeyboardMode(_ keyboardMode: KeyboardMode) {
+        guard let keyboardDefinition = self.keyboardDefinition else {
+            return
+        }
         self.keyboardMode = keyboardMode
-        setupKeyboardView(withBanner: showsBanner)
+        setupKeyboardView(keyboardDefinition, withBanner: showsBanner)
     }
 
     private func handleBackspace() {
