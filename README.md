@@ -17,6 +17,13 @@ An open source reimplementation of Apple's native iOS keyboard with a specific f
 8. Tap and hold the globe button in the bottom left corner of the keyboard and select "Template Keyboard"
 9. Done. You should now see the Divvun nordsamisk keyboard
 
+### Building Locally in Xcode 16.1
+
+1. Apply all the changes found in [this commit](https://github.com/divvun/giellakbd-ios/commit/a9d0112d2b710130e82c17801b0b5315e8cae0d2#diff-53c0193e8eb071b0f176311374cb19a7ce0dce7cdfe1a11cd986989ca835ce63L1) (remove Sentry, typealias SQLite.Expression)
+2. Remove the `-framework` and `"Sentry"` flags from the Other Linker Flags section in the project build settings
+
+Now it should build. You may need to run `pod install` as well. Remember not to commit these changes. An actual fix will need to happen when the build system's version of Xcode is upgraded.
+
 ### rexml
 
 Macos ships with a "broken" version of rexml.
