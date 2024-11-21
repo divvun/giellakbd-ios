@@ -203,7 +203,7 @@ public struct KeyboardDefinition: Codable {
         return Set()
     }
 
-    init(fromRaw raw: RawKeyboardDefinition, traits: UITraitCollection) throws {
+    init?(fromRaw raw: RawKeyboardDefinition, traits: UITraitCollection) throws {
         let deviceVariant = DeviceVariant.from(traits: traits)
 
         self.name = raw.name
@@ -215,15 +215,19 @@ public struct KeyboardDefinition: Codable {
         self.longPress = raw.longPress ?? [:]
         self.transforms = raw.transforms ?? [:]
 
-        let mode: RawKeyboardMode
+        let mode: RawKeyboardMode?
 
         switch deviceVariant {
         case .iphone:
             mode = raw.iphone
         case .ipad9in:
-            mode = raw.ipad9in!
+            mode = raw.ipad9in
         case .ipad12in:
-            mode = raw.ipad12in!
+            mode = raw.ipad12in
+        }
+
+        guard let mode = mode else {
+            return nil
         }
 
         switch deviceVariant {
