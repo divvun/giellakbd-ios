@@ -286,10 +286,23 @@ open class KeyboardViewController: UIInputViewController {
         textField.text = "Keyboard not supported on this device"
         keyboardContainer.addSubview(textField)
         textField.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            textField.centerXAnchor.constraint(equalTo: keyboardContainer.centerXAnchor),
-            textField.centerYAnchor.constraint(equalTo: keyboardContainer.centerYAnchor)
-        ])
+        textField.centerXAnchor.constraint(equalTo: keyboardContainer.centerXAnchor).enable()
+        textField.centerYAnchor.constraint(equalTo: keyboardContainer.centerYAnchor).enable()
+
+        if needsInputModeSwitchKey {
+            let globeButton = UIButton()
+            keyboardContainer.addSubview(globeButton)
+            let globeImage = UIImage(named: "globe", in: Bundle.top, compatibleWith: self.traitCollection)
+            globeButton.setImage(globeImage, for: .normal)
+            globeButton.backgroundColor = .clear
+            globeButton.tintColor = theme.textColor
+            globeButton.isAccessibilityElement = true
+            globeButton.accessibilityLabel = NSLocalizedString("accessibility.nextKeyboard", comment: "")
+            globeButton.translatesAutoresizingMaskIntoConstraints = false
+            globeButton.bottomAnchor.constraint(equalTo: keyboardContainer.bottomAnchor, constant: -10).enable()
+            globeButton.leftAnchor.constraint(equalTo: keyboardContainer.leftAnchor, constant: 10).enable()
+            globeButton.addTarget(self, action: #selector(handleInputModeList(from:with:)), for: .allTouchEvents)
+        }
     }
 
     private func hasKeyboardDefinition(for traits: UITraitCollection) -> Bool {
