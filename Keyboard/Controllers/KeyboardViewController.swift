@@ -54,6 +54,10 @@ open class KeyboardViewController: UIInputViewController {
         keyboardView.page
     }
 
+    private var keyboardNotSupportedOnThisDevice: Bool {
+        return keyboardView == nil
+    }
+
     public init(withBanner: Bool) {
         showsBanner = withBanner
         super.init(nibName: nil, bundle: nil)
@@ -621,7 +625,13 @@ open class KeyboardViewController: UIInputViewController {
 
             updateAfterThemeChange()
             bannerManager?.updateTheme(theme)
-            keyboardView.updateTheme(theme: theme)
+            if keyboardView != nil {
+                keyboardView.updateTheme(theme: theme)
+            }
+            if keyboardNotSupportedOnThisDevice {
+                // resetup the keyboard not supported view to update its theme
+                setupKeyboardNotSupportedOnThisDeviceView()
+            }
         }
     }
 
