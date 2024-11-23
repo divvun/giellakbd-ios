@@ -60,18 +60,24 @@ final class SplitKeyboardView: KeyboardViewProvider {
     var rightKeyboardView: KeyboardView
 
     required init(definition: KeyboardDefinition, theme: ThemeType) {
+        guard let normal = definition.normal,
+              let shifted = definition.shifted,
+              let symbols1 = definition.symbols1,
+              let symbols2 = definition.symbols2 else {
+            fatalError("Keyboard definition must contain all keys")
+        }
         let leftDefinition = definition.copy(
-            normal: leftHalf(definition.normal.splitAndBalanceSpacebar()),
-            shifted: leftHalf(definition.shifted.splitAndBalanceSpacebar()),
-            symbols1: leftHalf(definition.symbols1.splitAndBalanceSpacebar()),
-            symbols2: leftHalf(definition.symbols2.splitAndBalanceSpacebar())
+            normal: leftHalf(normal.splitAndBalanceSpacebar()),
+            shifted: leftHalf(shifted.splitAndBalanceSpacebar()),
+            symbols1: leftHalf(symbols1.splitAndBalanceSpacebar()),
+            symbols2: leftHalf(symbols2.splitAndBalanceSpacebar())
         )
 
         let rightDefinition = definition.copy(
-            normal: rightHalf(definition.normal.splitAndBalanceSpacebar()),
-            shifted: rightHalf(definition.shifted.splitAndBalanceSpacebar()),
-            symbols1: rightHalf(definition.symbols1.splitAndBalanceSpacebar()),
-            symbols2: rightHalf(definition.symbols2.splitAndBalanceSpacebar())
+            normal: rightHalf(normal.splitAndBalanceSpacebar()),
+            shifted: rightHalf(shifted.splitAndBalanceSpacebar()),
+            symbols1: rightHalf(symbols1.splitAndBalanceSpacebar()),
+            symbols2: rightHalf(symbols2.splitAndBalanceSpacebar())
         )
 
         let leftKeyboardView = KeyboardView(definition: leftDefinition, theme: theme)

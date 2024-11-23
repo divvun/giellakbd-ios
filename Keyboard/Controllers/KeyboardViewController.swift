@@ -45,6 +45,8 @@ open class KeyboardViewController: UIInputViewController {
     private var deadKeyHandler: DeadKeyHandler!
     public private(set) var keyboardDefinition: KeyboardDefinition?
     private var keyboardMode: KeyboardMode = .normal
+    private var keyboardName: String!
+    private var keyboardLocale: String!
 
     private var bannerManager: BannerManager?
 
@@ -193,13 +195,13 @@ open class KeyboardViewController: UIInputViewController {
             preferredHeight = portraitHeight
         }
 
-        guard let keyboardDefinition = keyboardDefinition else {
+        guard let keyboardDefinitionNormal = keyboardDefinition?.normal else {
             // this can happen if for instance we're on iPad and there's no iPad layout for this particular keyboard
             return preferredHeight
         }
 
         // Ordinarily a keyboard has 4 rows, iPad 12 inch+ has 5. Some have more. We calculate for that.
-        let rowCount = CGFloat(keyboardDefinition.normal.count)
+        let rowCount = CGFloat(keyboardDefinitionNormal.count)
         let normalRowCount: CGFloat = (UIDevice.current.dc.screenSize.sizeInches ?? 0.0) >= 12.0
             ? 5.0
             : 4.0
@@ -253,13 +255,13 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     private func loadKeyboardDefinition() -> KeyboardDefinition? {
-        let keyboardDefinitions: [KeyboardDefinition?]
+        let keyboardDefinitions: [KeyboardDefinition]
         let path = Bundle.top.url(forResource: "KeyboardDefinitions", withExtension: "json")!
         do {
             let data = try String(contentsOf: path).data(using: .utf8)!
             let raws = try JSONDecoder().decode([RawKeyboardDefinition].self, from: data)
             keyboardDefinitions = try raws.map { try KeyboardDefinition(fromRaw: $0, traits: self.traitCollection) }
-            print("keyboard definition locales: \(keyboardDefinitions.map { $0?.locale })")
+            print("keyboard definition locales: \(keyboardDefinitions.map { $0.locale })")
         } catch {
             fatalError("Error getting keyboard definitions from json file: \(error)")
         }
@@ -279,7 +281,15 @@ open class KeyboardViewController: UIInputViewController {
             kbdIndex = index
         }
 
-        return keyboardDefinitions[kbdIndex]
+        let keyboardDefinition = keyboardDefinitions[kbdIndex]
+        keyboardName = keyboardDefinition.name
+        keyboardLocale = keyboardDefinition.locale
+
+        guard keyboardDefinition.supportsCurrentDevice else {
+            return nil
+        }
+
+        return keyboardDefinition
     }
 
     private func setupKeyboardNotSupportedOnThisDeviceView() {
@@ -287,7 +297,7 @@ open class KeyboardViewController: UIInputViewController {
 
         let textField = UITextField()
         // TODO: localize this message
-        textField.text = NSLocalizedString("keyboardNotSupported", comment: "")
+        textField.text = String(format: NSLocalizedString("keyboardNotSupported", comment: ""), keyboardName)
         keyboardContainer.addSubview(textField)
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.centerXAnchor.constraint(equalTo: keyboardContainer.centerXAnchor).enable()

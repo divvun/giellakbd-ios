@@ -7,4 +7,4 @@
 "accessibility.shift" = "shift";
 "accessibility.nextKeyboard" = "next keyboard";
 
-"keyboardNotSupported" = "This keyboard is currently not supported on this device";
+"keyboardNotSupported" = "The %@ keyboard is currently not supported on this device";
