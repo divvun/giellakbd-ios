@@ -38,7 +38,7 @@ private let landscapeDeviceHeight: CGFloat = {
 open class KeyboardViewController: UIInputViewController {
     @IBOutlet var nextKeyboardButton: UIButton!
     private var keyboardContainer: UIView!
-    private var keyboardView: KeyboardViewProvider?
+    private var keyboardView: KeyboardViewProvider!
     private var bannerContainerView: UIView?
     private var heightConstraint: NSLayoutConstraint!
     private var extraSpacingView: UIView!
@@ -51,11 +51,7 @@ open class KeyboardViewController: UIInputViewController {
     private var showsBanner = true
 
     public var page: BaseKeyboard.KeyboardPage {
-        keyboardView?.page ?? .normal
-    }
-
-    private var keyboardNotSupportedOnThisDevice: Bool {
-        return keyboardView == nil
+        keyboardView.page
     }
 
     public init(withBanner: Bool) {
@@ -314,12 +310,10 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     private func setupKeyboardView(_ keyboardDefinition: KeyboardDefinition, withBanner: Bool) {
-        guard let keyboardView = keyboardView else {
-            return
+        if keyboardView != nil {
+            keyboardView.remove()
+            keyboardView = nil
         }
-
-        keyboardView.remove()
-        self.keyboardView = nil
 
         setupKeyboardContainer()
 
@@ -338,7 +332,7 @@ open class KeyboardViewController: UIInputViewController {
                 bannerManager = BannerManager(view: bannerContainerView!, theme: theme, delegate: self)
             }
         } else {
-            self.keyboardView?.topAnchor.constraint(equalTo: keyboardContainer.topAnchor).enable()
+            self.keyboardView.topAnchor.constraint(equalTo: keyboardContainer.topAnchor).enable()
         }
 
         updateCapitalization()
@@ -424,10 +418,6 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     private func makeBannerContainerView() -> UIView {
-        guard let keyboardView = keyboardView else {
-            return UIView()
-        }
-
         let bannerContainer = UIView()
 
         bannerContainer.translatesAutoresizingMaskIntoConstraints = false
@@ -564,7 +554,7 @@ open class KeyboardViewController: UIInputViewController {
             switch autoCapitalizationType {
             case .words:
                 if hasNoCurrentWord {
-                    keyboardView?.page = .shifted
+                    keyboardView.page = .shifted
                 }
             case .sentences:
                 let lastCharacter: Character? = ctx.previousWord?.last
@@ -577,14 +567,14 @@ open class KeyboardViewController: UIInputViewController {
                 }
 
                 if hasNoCurrentWord, hasFinalPunctuator || hasNoPreviousWord {
-                    keyboardView?.page = .shifted
+                    keyboardView.page = .shifted
                 } else if case .shifted = page {
                     if !(ctx.previousWord?.last?.isUppercase ?? false) {
-                        keyboardView?.page = .normal
+                        keyboardView.page = .normal
                     }
                 }
             case .allCharacters:
-                keyboardView?.page = .shifted
+                keyboardView.page = .shifted
             default:
                 break
             }
@@ -631,10 +621,7 @@ open class KeyboardViewController: UIInputViewController {
 
             updateAfterThemeChange()
             bannerManager?.updateTheme(theme)
-            keyboardView?.updateTheme(theme: theme)
-            if keyboardNotSupportedOnThisDevice {
-                setupKeyboardNotSupportedOnThisDeviceView()
-            }
+            keyboardView.updateTheme(theme: theme)
         }
     }
 
@@ -694,17 +681,13 @@ extension KeyboardViewController: KeyboardViewDelegate {
 
     func didTriggerDoubleTap(forKey key: KeyDefinition) {
         if case .shift = key.type {
-            keyboardView?.page = (keyboardView?.page == .capslock ? .normal : .capslock)
+            keyboardView.page = (keyboardView.page == .capslock ? .normal : .capslock)
         } else if key.type.supportsDoubleTap {
             didTriggerKey(key)
         }
     }
 
     private func handleDeadKey(string: String, endShifted: Bool = true) {
-        guard let keyboardView = keyboardView else {
-            return
-        }
-
         var endShifted = endShifted
         switch deadKeyHandler.handleInput(string, page: keyboardView.page) {
         case .none:
@@ -718,7 +701,7 @@ extension KeyboardViewController: KeyboardViewDelegate {
 
         if endShifted {
             if keyboardView.page == .shifted {
-                self.keyboardView!.page = .normal
+                keyboardView.page = .normal
             }
         }
     }
@@ -768,9 +751,9 @@ extension KeyboardViewController: KeyboardViewDelegate {
             // TODO: hit most approximate key instead!
             break
         case .shift:
-            keyboardView?.page = (keyboardView?.page == .normal ? .shifted : .normal)
+            keyboardView.page = (keyboardView.page == .normal ? .shifted : .normal)
         case .caps:
-            keyboardView?.page = (keyboardView?.page == .capslock ? .normal : .capslock)
+            keyboardView.page = (keyboardView.page == .capslock ? .normal : .capslock)
         case .backspace:
             handleBackspace()
         case .spacebar:
@@ -778,9 +761,9 @@ extension KeyboardViewController: KeyboardViewDelegate {
         case .returnkey:
             handleReturn()
         case .symbols:
-            keyboardView?.page = (keyboardView?.page == .symbols1 || keyboardView?.page == .symbols2 ? .normal : .symbols1)
+            keyboardView.page = (keyboardView.page == .symbols1 || keyboardView.page == .symbols2 ? .normal : .symbols1)
         case .shiftSymbols:
-            keyboardView?.page = (keyboardView?.page == .symbols1 ? .symbols2 : .symbols1)
+            keyboardView.page = (keyboardView.page == .symbols1 ? .symbols2 : .symbols1)
         case .keyboard:
             break
         case .normalKeyboard:
@@ -813,7 +796,7 @@ extension KeyboardViewController: KeyboardViewDelegate {
 
     fileprivate func handleSpace() {
         if let page = keyboardView?.page, page == .symbols1 || page == .symbols2 {
-            keyboardView?.page = .normal
+            keyboardView.page = .normal
         }
         handleDeadKey(string: " ", endShifted: false)
     }
