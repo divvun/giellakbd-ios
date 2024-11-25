@@ -292,6 +292,50 @@ open class KeyboardViewController: UIInputViewController {
         return keyboardDefinition
     }
 
+    @objc private func emailButtonTapped() {
+        let keyboardName = keyboardName!
+        let keyboardLocale = keyboardLocale!
+        let deviceName = DeviceVariant.from(traits: self.traitCollection).rawValue
+
+        // TODO: get email dynamically from kbdgen bundle
+        let email = "feedback@divvun.no"
+        let subject = "Request for \(keyboardName) (keyboard-\(keyboardLocale)) on \(deviceName)"
+        let body =
+        """
+        Keyboard: \(keyboardName)
+        Repository: https://github.com/giellalt/keyboard-\(keyboardLocale)
+        Device: \(deviceName)
+        
+        Additional notes (optional):
+        
+        """
+        let coded = "mailto:\(email)?subject=\(subject)&body=\(body)"
+
+        guard let escaped = coded.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
+            print("couldn't escape")
+            return
+        }
+        guard let emailURL = URL(string: escaped) else {
+            print("couldn't make email url")
+            return
+        }
+
+        openURL(emailURL)
+    }
+
+    // TODO: find a way to make this reusable - this is copy-pasted
+    @discardableResult
+    @objc func openURL(_ url: URL) -> Bool {
+        var responder: UIResponder? = self
+        while responder != nil {
+            if let application = responder as? UIApplication {
+                return application.perform(#selector(openURL(_:)), with: url) != nil
+            }
+            responder = responder?.next
+        }
+        return false
+    }
+
     private func setupKeyboardNotSupportedOnThisDeviceView() {
         setupKeyboardContainer()
 
@@ -302,6 +346,15 @@ open class KeyboardViewController: UIInputViewController {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.centerXAnchor.constraint(equalTo: keyboardContainer.centerXAnchor).enable()
         textField.centerYAnchor.constraint(equalTo: keyboardContainer.centerYAnchor).enable()
+
+        let emailButton = UIButton()
+        keyboardContainer.addSubview(emailButton)
+        emailButton.backgroundColor = .red
+        emailButton.setTitle("Email", for: .normal)
+        emailButton.addTarget(self, action: #selector(emailButtonTapped), for: .touchUpInside)
+        emailButton.translatesAutoresizingMaskIntoConstraints = false
+        emailButton.rightAnchor.constraint(equalTo: keyboardContainer.rightAnchor, constant: -10).enable()
+        emailButton.topAnchor.constraint(equalTo: keyboardContainer.topAnchor, constant: 10).enable()
 
         if needsInputModeSwitchKey {
             let globeButton = UIButton()
