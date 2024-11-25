@@ -45,6 +45,8 @@ open class KeyboardViewController: UIInputViewController {
     private var deadKeyHandler: DeadKeyHandler!
     public private(set) var keyboardDefinition: KeyboardDefinition?
     private var keyboardMode: KeyboardMode = .normal
+    private var keyboardName: String!
+    private var keyboardLocale: String!
 
     private var bannerManager: BannerManager?
 
@@ -52,6 +54,10 @@ open class KeyboardViewController: UIInputViewController {
 
     public var page: BaseKeyboard.KeyboardPage {
         keyboardView.page
+    }
+
+    private var keyboardNotSupportedOnThisDevice: Bool {
+        return keyboardView == nil
     }
 
     public init(withBanner: Bool) {
@@ -189,13 +195,13 @@ open class KeyboardViewController: UIInputViewController {
             preferredHeight = portraitHeight
         }
 
-        guard let keyboardDefinition = keyboardDefinition else {
+        guard let keyboardDefinitionNormal = keyboardDefinition?.normal else {
             // this can happen if for instance we're on iPad and there's no iPad layout for this particular keyboard
             return preferredHeight
         }
 
         // Ordinarily a keyboard has 4 rows, iPad 12 inch+ has 5. Some have more. We calculate for that.
-        let rowCount = CGFloat(keyboardDefinition.normal.count)
+        let rowCount = CGFloat(keyboardDefinitionNormal.count)
         let normalRowCount: CGFloat = (UIDevice.current.dc.screenSize.sizeInches ?? 0.0) >= 12.0
             ? 5.0
             : 4.0
@@ -249,13 +255,13 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     private func loadKeyboardDefinition() -> KeyboardDefinition? {
-        let keyboardDefinitions: [KeyboardDefinition?]
+        let keyboardDefinitions: [KeyboardDefinition]
         let path = Bundle.top.url(forResource: "KeyboardDefinitions", withExtension: "json")!
         do {
             let data = try String(contentsOf: path).data(using: .utf8)!
             let raws = try JSONDecoder().decode([RawKeyboardDefinition].self, from: data)
             keyboardDefinitions = try raws.map { try KeyboardDefinition(fromRaw: $0, traits: self.traitCollection) }
-            print("keyboard definition locales: \(keyboardDefinitions.map { $0?.locale })")
+            print("keyboard definition locales: \(keyboardDefinitions.map { $0.locale })")
         } catch {
             fatalError("Error getting keyboard definitions from json file: \(error)")
         }
@@ -275,25 +281,68 @@ open class KeyboardViewController: UIInputViewController {
             kbdIndex = index
         }
 
-        return keyboardDefinitions[kbdIndex]
+        let keyboardDefinition = keyboardDefinitions[kbdIndex]
+        keyboardName = keyboardDefinition.name
+        keyboardLocale = keyboardDefinition.locale
+
+        guard keyboardDefinition.supportsCurrentDevice else {
+            return nil
+        }
+
+        return keyboardDefinition
     }
 
     private func setupKeyboardNotSupportedOnThisDeviceView() {
         setupKeyboardContainer()
 
-        let textField = UITextField()
-        // TODO: localize this message
-        textField.text = "Keyboard not supported on this device"
-        keyboardContainer.addSubview(textField)
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            textField.centerXAnchor.constraint(equalTo: keyboardContainer.centerXAnchor),
-            textField.centerYAnchor.constraint(equalTo: keyboardContainer.centerYAnchor)
-        ])
-    }
+        let notSupportedLabel = UILabel()
+        notSupportedLabel.text = String(format: NSLocalizedString("keyboardNotSupported", comment: ""), keyboardName)
+        notSupportedLabel.textAlignment = .center
+        notSupportedLabel.lineBreakMode = .byWordWrapping
+        notSupportedLabel.numberOfLines = 0
+        notSupportedLabel.font = UIFont.systemFont(ofSize: 20)
 
-    private func hasKeyboardDefinition(for traits: UITraitCollection) -> Bool {
-        return false
+        func actionButton(_ title: String, _ action: Selector) -> UIButton {
+            let button = UIButton()
+            button.backgroundColor = .white
+            button.setTitle(title, for: .normal)
+            button.setTitleColor(.blue, for: .normal)
+            button.sizeToFit()
+            let width = button.frame.width
+            button.widthAnchor.constraint(equalToConstant: width + 20).enable()
+            button.heightAnchor.constraint(equalToConstant: 44).enable()
+            button.addTarget(self, action: action, for: .touchUpInside)
+            button.layer.cornerRadius = 10
+            return button
+        }
+
+        let emailButton = actionButton("Email Us", #selector(emailButtonTapped))
+        let githubIssueButton = actionButton("Submit GitHub Issue", #selector(githubIssueButtonTapped))
+
+        let vstack = UIStackView(arrangedSubviews: [notSupportedLabel, emailButton, githubIssueButton])
+        keyboardContainer.addSubview(vstack)
+        vstack.axis = .vertical
+        vstack.spacing = 20
+        vstack.alignment = .center
+        vstack.translatesAutoresizingMaskIntoConstraints = false
+        vstack.centerXAnchor.constraint(equalTo: keyboardContainer.centerXAnchor).enable()
+        vstack.centerYAnchor.constraint(equalTo: keyboardContainer.centerYAnchor).enable()
+        vstack.widthAnchor.constraint(equalTo: keyboardContainer.widthAnchor, multiplier: 0.9).enable()
+
+        if needsInputModeSwitchKey {
+            let globeButton = UIButton()
+            keyboardContainer.addSubview(globeButton)
+            let globeImage = UIImage(named: "globe", in: Bundle.top, compatibleWith: self.traitCollection)
+            globeButton.setImage(globeImage, for: .normal)
+            globeButton.backgroundColor = .clear
+            globeButton.tintColor = theme.textColor
+            globeButton.isAccessibilityElement = true
+            globeButton.accessibilityLabel = NSLocalizedString("accessibility.nextKeyboard", comment: "")
+            globeButton.translatesAutoresizingMaskIntoConstraints = false
+            globeButton.bottomAnchor.constraint(equalTo: keyboardContainer.bottomAnchor, constant: -10).enable()
+            globeButton.leftAnchor.constraint(equalTo: keyboardContainer.leftAnchor, constant: 10).enable()
+            globeButton.addTarget(self, action: #selector(handleInputModeList(from:with:)), for: .allTouchEvents)
+        }
     }
 
     private func setupKeyboardView(_ keyboardDefinition: KeyboardDefinition, withBanner: Bool) {
@@ -608,7 +657,13 @@ open class KeyboardViewController: UIInputViewController {
 
             updateAfterThemeChange()
             bannerManager?.updateTheme(theme)
-            keyboardView.updateTheme(theme: theme)
+            if keyboardView != nil {
+                keyboardView.updateTheme(theme: theme)
+            }
+            if keyboardNotSupportedOnThisDevice {
+                // resetup the keyboard not supported view to update its theme
+                setupKeyboardNotSupportedOnThisDeviceView()
+            }
         }
     }
 
@@ -653,6 +708,52 @@ open class KeyboardViewController: UIInputViewController {
             }
         }
     }
+
+    // MARK: Actions
+
+    @objc private func emailButtonTapped() {
+        let keyboardName = keyboardName!
+        let keyboardLocale = keyboardLocale!
+        let deviceName = DeviceVariant.from(traits: self.traitCollection).displayName()
+
+        // TODO: get email dynamically from kbdgen bundle
+        let email = "feedback@divvun.no"
+        let subject = "Request for \(keyboardName) (keyboard-\(keyboardLocale)) on \(deviceName)"
+        let body =
+        """
+        Keyboard: \(keyboardName)
+        Repository: https://github.com/giellalt/keyboard-\(keyboardLocale)
+        Device: \(deviceName)
+        
+        Additional notes (optional):
+        
+        """
+        let coded = "mailto:\(email)?subject=\(subject)&body=\(body)"
+
+        guard let escaped = coded.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+              let url = URL(string: escaped) else {
+            print("Error creating request email URL")
+            return
+        }
+
+        URLOpener().aggresivelyOpenURL(url, responder: self)
+    }
+
+    @objc private func githubIssueButtonTapped() {
+        let keyboardLocale = keyboardLocale!
+        let deviceName = DeviceVariant.from(traits: self.traitCollection).displayName()
+        let repo = "keyboard-\(keyboardLocale)"
+        let coded = "https://github.com/giellalt/\(repo)/issues/new?labels=enhancement&title=Add+Support+for+\(deviceName)&body=Additional+notes+(optional):\n\n"
+
+        guard let escaped = coded.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+              let url = URL(string: escaped) else {
+            print("Error creating request github URL")
+            return
+        }
+
+        URLOpener().aggresivelyOpenURL(url, responder: self)
+    }
+
 }
 
 extension KeyboardViewController: KeyboardViewDelegate {

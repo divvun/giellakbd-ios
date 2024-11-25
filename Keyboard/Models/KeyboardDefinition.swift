@@ -72,6 +72,14 @@ enum DeviceVariant: String, Decodable {
             return .iphone
         }
     }
+
+    func displayName() -> String {
+        switch self {
+        case .ipad9in: return "iPad 9\""
+        case .ipad12in: return "iPad 12\""
+        case .iphone: return "iPhone"
+        }
+    }
 }
 
 public struct RawKeyboardMode: Decodable {
@@ -198,12 +206,16 @@ public struct KeyboardDefinition: Codable {
     private(set) var symbols1: [[KeyDefinition]] = []
     private(set) var symbols2: [[KeyDefinition]] = []
 
+    public var supportsCurrentDevice: Bool {
+        return normal.isEmpty == false
+    }
+
     // TODO: features should be derived from as-yet-undefined JSON input
     var features: Set<KeyboardFeature> {
         return Set()
     }
 
-    init?(fromRaw raw: RawKeyboardDefinition, traits: UITraitCollection) throws {
+    init(fromRaw raw: RawKeyboardDefinition, traits: UITraitCollection) throws {
         let deviceVariant = DeviceVariant.from(traits: traits)
 
         self.name = raw.name
@@ -228,7 +240,7 @@ public struct KeyboardDefinition: Codable {
 
         guard let mode = mode else {
             // There's no keyboard definition for the device with the given traits
-            return nil
+            return
         }
 
         switch deviceVariant {
