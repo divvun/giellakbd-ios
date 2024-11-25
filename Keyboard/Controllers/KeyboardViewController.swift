@@ -327,7 +327,6 @@ open class KeyboardViewController: UIInputViewController {
         setupKeyboardContainer()
 
         let textField = UITextField()
-        // TODO: localize this message
         textField.text = String(format: NSLocalizedString("keyboardNotSupported", comment: ""), keyboardName)
         keyboardContainer.addSubview(textField)
         textField.translatesAutoresizingMaskIntoConstraints = false
