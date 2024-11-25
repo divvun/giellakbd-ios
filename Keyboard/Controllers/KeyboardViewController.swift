@@ -292,37 +292,6 @@ open class KeyboardViewController: UIInputViewController {
         return keyboardDefinition
     }
 
-    @objc private func emailButtonTapped() {
-        let keyboardName = keyboardName!
-        let keyboardLocale = keyboardLocale!
-        let deviceName = DeviceVariant.from(traits: self.traitCollection).rawValue
-
-        // TODO: get email dynamically from kbdgen bundle
-        let email = "feedback@divvun.no"
-        let subject = "Request for \(keyboardName) (keyboard-\(keyboardLocale)) on \(deviceName)"
-        let body =
-        """
-        Keyboard: \(keyboardName)
-        Repository: https://github.com/giellalt/keyboard-\(keyboardLocale)
-        Device: \(deviceName)
-        
-        Additional notes (optional):
-        
-        """
-        let coded = "mailto:\(email)?subject=\(subject)&body=\(body)"
-
-        guard let escaped = coded.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
-            print("couldn't escape")
-            return
-        }
-        guard let emailURL = URL(string: escaped) else {
-            print("couldn't make email url")
-            return
-        }
-
-        URLOpener().aggresivelyOpenURL(emailURL, responder: self)
-    }
-
     private func setupKeyboardNotSupportedOnThisDeviceView() {
         setupKeyboardContainer()
 
@@ -721,6 +690,40 @@ open class KeyboardViewController: UIInputViewController {
             }
         }
     }
+
+    // MARK: Actions
+
+    @objc private func emailButtonTapped() {
+        let keyboardName = keyboardName!
+        let keyboardLocale = keyboardLocale!
+        let deviceName = DeviceVariant.from(traits: self.traitCollection).rawValue
+
+        // TODO: get email dynamically from kbdgen bundle
+        let email = "feedback@divvun.no"
+        let subject = "Request for \(keyboardName) (keyboard-\(keyboardLocale)) on \(deviceName)"
+        let body =
+        """
+        Keyboard: \(keyboardName)
+        Repository: https://github.com/giellalt/keyboard-\(keyboardLocale)
+        Device: \(deviceName)
+        
+        Additional notes (optional):
+        
+        """
+        let coded = "mailto:\(email)?subject=\(subject)&body=\(body)"
+
+        guard let escaped = coded.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
+            print("couldn't escape")
+            return
+        }
+        guard let emailURL = URL(string: escaped) else {
+            print("couldn't make email url")
+            return
+        }
+
+        URLOpener().aggresivelyOpenURL(emailURL, responder: self)
+    }
+
 }
 
 extension KeyboardViewController: KeyboardViewDelegate {
