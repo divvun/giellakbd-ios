@@ -714,7 +714,7 @@ open class KeyboardViewController: UIInputViewController {
     @objc private func emailButtonTapped() {
         let keyboardName = keyboardName!
         let keyboardLocale = keyboardLocale!
-        let deviceName = DeviceVariant.from(traits: self.traitCollection).rawValue
+        let deviceName = DeviceVariant.from(traits: self.traitCollection).displayName()
 
         // TODO: get email dynamically from kbdgen bundle
         let email = "feedback@divvun.no"
@@ -730,49 +730,28 @@ open class KeyboardViewController: UIInputViewController {
         """
         let coded = "mailto:\(email)?subject=\(subject)&body=\(body)"
 
-        guard let escaped = coded.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
-            print("couldn't escape")
-            return
-        }
-        guard let emailURL = URL(string: escaped) else {
-            print("couldn't make email url")
+        guard let escaped = coded.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+              let url = URL(string: escaped) else {
+            print("Error creating request email URL")
             return
         }
 
-        URLOpener().aggresivelyOpenURL(emailURL, responder: self)
+        URLOpener().aggresivelyOpenURL(url, responder: self)
     }
 
     @objc private func githubIssueButtonTapped() {
-        let keyboardName = keyboardName!
         let keyboardLocale = keyboardLocale!
-        let deviceName = DeviceVariant.from(traits: self.traitCollection).rawValue
+        let deviceName = DeviceVariant.from(traits: self.traitCollection).displayName()
+        let repo = "keyboard-\(keyboardLocale)"
+        let coded = "https://github.com/giellalt/\(repo)/issues/new?labels=enhancement&title=Add+Support+for+\(deviceName)&body=Additional+notes+(optional):\n\n"
 
-        // TODO: get email dynamically from kbdgen bundle
-        let email = "feedback@divvun.no"
-        let subject = "Request for \(keyboardName) (keyboard-\(keyboardLocale)) on \(deviceName)"
-        let body =
-        """
-        Keyboard: \(keyboardName)
-        Repository: https://github.com/giellalt/keyboard-\(keyboardLocale)
-        Device: \(deviceName)
-        
-        Additional notes (optional):
-        
-        GITHUB ISSUE BUTTON!!!!!!!!
-        
-        """
-        let coded = "mailto:\(email)?subject=\(subject)&body=\(body)"
-
-        guard let escaped = coded.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
-            print("couldn't escape")
-            return
-        }
-        guard let emailURL = URL(string: escaped) else {
-            print("couldn't make email url")
+        guard let escaped = coded.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+              let url = URL(string: escaped) else {
+            print("Error creating request github URL")
             return
         }
 
-        URLOpener().aggresivelyOpenURL(emailURL, responder: self)
+        URLOpener().aggresivelyOpenURL(url, responder: self)
     }
 
 }

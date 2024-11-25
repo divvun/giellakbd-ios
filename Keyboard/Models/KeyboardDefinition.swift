@@ -72,6 +72,14 @@ enum DeviceVariant: String, Decodable {
             return .iphone
         }
     }
+
+    func displayName() -> String {
+        switch self {
+        case .ipad9in: return "iPad 9\""
+        case .ipad12in: return "iPad 12\""
+        case .iphone: return "iPhone"
+        }
+    }
 }
 
 public struct RawKeyboardMode: Decodable {
