@@ -1,5 +1,5 @@
 import Foundation
-//import Sentry
+import Sentry
 
 protocol IPCDelegate: AnyObject {
     func didBeginDownloading(id: String)

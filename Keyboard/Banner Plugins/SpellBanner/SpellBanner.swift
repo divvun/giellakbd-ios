@@ -1,5 +1,5 @@
 import Foundation
-//import Sentry
+import Sentry
 import DivvunSpell
 
 typealias SuggestionCompletion = ([String]) -> Void
@@ -140,7 +140,7 @@ public final class SpellBanner: Banner {
                 self.speller = speller
                 print("DivvunSpell loaded!")
             } catch let error {
-//                SentrySDK.capture(error: error)
+                SentrySDK.capture(error: error)
                 print("DivvunSpell **not** loaded.")
                 return
             }
