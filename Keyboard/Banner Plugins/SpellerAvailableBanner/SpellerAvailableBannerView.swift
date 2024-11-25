@@ -36,19 +36,8 @@ final class SpellerAvailableBannerView: UIView, BannerView {
         guard let urlScheme = Bundle.main.urlScheme else {
             return
         }
-        openURL(URL(string: "\(urlScheme)://openFromBanner")!)
-    }
-
-    @discardableResult
-    @objc func openURL(_ url: URL) -> Bool {
-        var responder: UIResponder? = self
-        while responder != nil {
-            if let application = responder as? UIApplication {
-                return application.perform(#selector(openURL(_:)), with: url) != nil
-            }
-            responder = responder?.next
-        }
-        return false
+        let url = URL(string: "\(urlScheme)://openFromBanner")!
+        URLOpener().aggresivelyOpenURL(url, responder: self)
     }
 
     func updateTheme(_ theme: ThemeType) {

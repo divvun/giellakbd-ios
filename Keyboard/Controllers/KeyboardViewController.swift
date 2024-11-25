@@ -320,20 +320,7 @@ open class KeyboardViewController: UIInputViewController {
             return
         }
 
-        openURL(emailURL)
-    }
-
-    // TODO: find a way to make this reusable - this is copy-pasted
-    @discardableResult
-    @objc func openURL(_ url: URL) -> Bool {
-        var responder: UIResponder? = self
-        while responder != nil {
-            if let application = responder as? UIApplication {
-                return application.perform(#selector(openURL(_:)), with: url) != nil
-            }
-            responder = responder?.next
-        }
-        return false
+        URLOpener().aggresivelyOpenURL(emailURL, responder: self)
     }
 
     private func setupKeyboardNotSupportedOnThisDeviceView() {
