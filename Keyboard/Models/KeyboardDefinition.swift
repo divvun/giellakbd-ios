@@ -201,13 +201,13 @@ public struct KeyboardDefinition: Codable {
     let longPress: [String: [String]]
     let transforms: [String: TransformTree]
 
-    private(set) var normal: [[KeyDefinition]]?
-    private(set) var shifted: [[KeyDefinition]]?
-    private(set) var symbols1: [[KeyDefinition]]?
-    private(set) var symbols2: [[KeyDefinition]]?
+    private(set) var normal: [[KeyDefinition]] = []
+    private(set) var shifted: [[KeyDefinition]] = []
+    private(set) var symbols1: [[KeyDefinition]] = []
+    private(set) var symbols2: [[KeyDefinition]] = []
 
     public var supportsCurrentDevice: Bool {
-        return normal != nil
+        return normal.isEmpty == false
     }
 
     // TODO: features should be derived from as-yet-undefined JSON input
@@ -271,10 +271,10 @@ public struct KeyboardDefinition: Codable {
             }
         }
 
-        normal?.platformize(page: .normal, spaceName: spaceName, returnName: returnName, traits: traits)
-        shifted?.platformize(page: .shifted, spaceName: spaceName, returnName: returnName, traits: traits)
-        symbols1?.platformize(page: .symbols1, spaceName: spaceName, returnName: returnName, traits: traits)
-        symbols2?.platformize(page: .symbols2, spaceName: spaceName, returnName: returnName, traits: traits)
+        normal.platformize(page: .normal, spaceName: spaceName, returnName: returnName, traits: traits)
+        shifted.platformize(page: .shifted, spaceName: spaceName, returnName: returnName, traits: traits)
+        symbols1.platformize(page: .symbols1, spaceName: spaceName, returnName: returnName, traits: traits)
+        symbols2.platformize(page: .symbols2, spaceName: spaceName, returnName: returnName, traits: traits)
     }
 
     private func keyDefinitionsFromRaw(_ rawKeyDefinitions: [[RawKeyDefinition]]) -> [[KeyDefinition]] {
