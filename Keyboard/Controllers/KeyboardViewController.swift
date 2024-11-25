@@ -359,10 +359,6 @@ open class KeyboardViewController: UIInputViewController {
         }
     }
 
-    private func hasKeyboardDefinition(for traits: UITraitCollection) -> Bool {
-        return false
-    }
-
     private func setupKeyboardView(_ keyboardDefinition: KeyboardDefinition, withBanner: Bool) {
         if keyboardView != nil {
             keyboardView.remove()
