@@ -295,21 +295,39 @@ open class KeyboardViewController: UIInputViewController {
     private func setupKeyboardNotSupportedOnThisDeviceView() {
         setupKeyboardContainer()
 
-        let textField = UITextField()
-        textField.text = String(format: NSLocalizedString("keyboardNotSupported", comment: ""), keyboardName)
-        keyboardContainer.addSubview(textField)
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.centerXAnchor.constraint(equalTo: keyboardContainer.centerXAnchor).enable()
-        textField.centerYAnchor.constraint(equalTo: keyboardContainer.centerYAnchor).enable()
+        let notSupportedLabel = UILabel()
+        notSupportedLabel.text = String(format: NSLocalizedString("keyboardNotSupported", comment: ""), keyboardName)
+        notSupportedLabel.textAlignment = .center
+        notSupportedLabel.lineBreakMode = .byWordWrapping
+        notSupportedLabel.numberOfLines = 0
+        notSupportedLabel.font = UIFont.systemFont(ofSize: 20)
 
-        let emailButton = UIButton()
-        keyboardContainer.addSubview(emailButton)
-        emailButton.backgroundColor = .red
-        emailButton.setTitle("Email", for: .normal)
-        emailButton.addTarget(self, action: #selector(emailButtonTapped), for: .touchUpInside)
-        emailButton.translatesAutoresizingMaskIntoConstraints = false
-        emailButton.rightAnchor.constraint(equalTo: keyboardContainer.rightAnchor, constant: -10).enable()
-        emailButton.topAnchor.constraint(equalTo: keyboardContainer.topAnchor, constant: 10).enable()
+        func actionButton(_ title: String, _ action: Selector) -> UIButton {
+            let button = UIButton()
+            button.backgroundColor = .white
+            button.setTitle(title, for: .normal)
+            button.setTitleColor(.blue, for: .normal)
+            button.sizeToFit()
+            let width = button.frame.width
+            button.widthAnchor.constraint(equalToConstant: width + 20).enable()
+            button.heightAnchor.constraint(equalToConstant: 44).enable()
+            button.addTarget(self, action: action, for: .touchUpInside)
+            button.layer.cornerRadius = 10
+            return button
+        }
+
+        let emailButton = actionButton("Email Us", #selector(emailButtonTapped))
+        let githubIssueButton = actionButton("Submit GitHub Issue", #selector(githubIssueButtonTapped))
+
+        let vstack = UIStackView(arrangedSubviews: [notSupportedLabel, emailButton, githubIssueButton])
+        keyboardContainer.addSubview(vstack)
+        vstack.axis = .vertical
+        vstack.spacing = 20
+        vstack.alignment = .center
+        vstack.translatesAutoresizingMaskIntoConstraints = false
+        vstack.centerXAnchor.constraint(equalTo: keyboardContainer.centerXAnchor).enable()
+        vstack.centerYAnchor.constraint(equalTo: keyboardContainer.centerYAnchor).enable()
+        vstack.widthAnchor.constraint(equalTo: keyboardContainer.widthAnchor, multiplier: 0.9).enable()
 
         if needsInputModeSwitchKey {
             let globeButton = UIButton()
@@ -708,6 +726,39 @@ open class KeyboardViewController: UIInputViewController {
         Device: \(deviceName)
         
         Additional notes (optional):
+        
+        """
+        let coded = "mailto:\(email)?subject=\(subject)&body=\(body)"
+
+        guard let escaped = coded.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
+            print("couldn't escape")
+            return
+        }
+        guard let emailURL = URL(string: escaped) else {
+            print("couldn't make email url")
+            return
+        }
+
+        URLOpener().aggresivelyOpenURL(emailURL, responder: self)
+    }
+
+    @objc private func githubIssueButtonTapped() {
+        let keyboardName = keyboardName!
+        let keyboardLocale = keyboardLocale!
+        let deviceName = DeviceVariant.from(traits: self.traitCollection).rawValue
+
+        // TODO: get email dynamically from kbdgen bundle
+        let email = "feedback@divvun.no"
+        let subject = "Request for \(keyboardName) (keyboard-\(keyboardLocale)) on \(deviceName)"
+        let body =
+        """
+        Keyboard: \(keyboardName)
+        Repository: https://github.com/giellalt/keyboard-\(keyboardLocale)
+        Device: \(deviceName)
+        
+        Additional notes (optional):
+        
+        GITHUB ISSUE BUTTON!!!!!!!!
         
         """
         let coded = "mailto:\(email)?subject=\(subject)&body=\(body)"
