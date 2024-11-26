@@ -6,3 +6,5 @@
 "accessibility.moreSymbols" = "lasi: symbola";
 "accessibility.shift" = "molsso";
 "accessibility.nextKeyboard" = "boahtte boallobeavdi";
+
+"keyboardNotSupported" = "";

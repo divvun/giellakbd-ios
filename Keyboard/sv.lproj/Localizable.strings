@@ -6,3 +6,5 @@
 "accessibility.moreSymbols" = "mera: symboler";
 "accessibility.shift" = "skift";
 "accessibility.nextKeyboard" = "nästa tangentbord";
+
+"keyboardNotSupported" = "";

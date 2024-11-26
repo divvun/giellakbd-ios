@@ -6,3 +6,5 @@
 "accessibility.moreSymbols" = "meire: symbol";
 "accessibility.shift" = "skift";
 "accessibility.nextKeyboard" = "neste tastatur";
+
+"keyboardNotSupported" = "";
