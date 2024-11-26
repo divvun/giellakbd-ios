@@ -40,7 +40,7 @@ final internal class KeyboardView: UIView,
     }
 
     private func keyDefinitionsForPage(_ page: KeyboardPage) -> [[KeyDefinition]] {
-        guard let layout = definition.layout else {
+        guard let layout = definition.currentDeviceLayout else {
             return []
         }
         switch page {

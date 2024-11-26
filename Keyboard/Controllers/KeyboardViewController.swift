@@ -189,7 +189,7 @@ open class KeyboardViewController: UIInputViewController {
             preferredHeight = portraitHeight
         }
 
-        guard let layout = keyboardDefinition.layout else {
+        guard let layout = keyboardDefinition.currentDeviceLayout else {
             // this can happen if for instance we're on iPad and there's no iPad layout for this particular keyboard
             return preferredHeight
         }

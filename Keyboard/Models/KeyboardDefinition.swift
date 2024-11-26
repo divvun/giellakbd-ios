@@ -208,10 +208,10 @@ public struct KeyboardDefinition: Codable {
         var symbols2: [[KeyDefinition]] = []
     }
 
-    private(set) var layout: Layout?
+    private(set) var currentDeviceLayout: Layout?
 
     public var supportsCurrentDevice: Bool {
-        return layout != nil
+        return currentDeviceLayout != nil
     }
 
     // TODO: features should be derived from as-yet-undefined JSON input
@@ -250,7 +250,7 @@ public struct KeyboardDefinition: Codable {
 
         switch deviceVariant {
         case .iphone:
-            self.layout = Layout(
+            self.currentDeviceLayout = Layout(
                 normal: keyDefinitionsFromRaw(mode.normal),
                 shifted: keyDefinitionsFromRaw(mode.shifted),
                 symbols1: keyDefinitionsFromRaw(mode.symbols1 ?? []),
@@ -275,13 +275,13 @@ public struct KeyboardDefinition: Codable {
                 symbols2Converted = keyDefinitionsFromRaw(symbols2)
             }
 
-            self.layout = Layout(normal: normal, shifted: shifted, symbols1: symbols1Converted, symbols2: symbols2Converted)
+            self.currentDeviceLayout = Layout(normal: normal, shifted: shifted, symbols1: symbols1Converted, symbols2: symbols2Converted)
         }
 
-        layout!.normal.platformize(page: .normal, spaceName: spaceName, returnName: returnName, traits: traits)
-        layout!.shifted.platformize(page: .shifted, spaceName: spaceName, returnName: returnName, traits: traits)
-        layout!.symbols1.platformize(page: .symbols1, spaceName: spaceName, returnName: returnName, traits: traits)
-        layout!.symbols2.platformize(page: .symbols2, spaceName: spaceName, returnName: returnName, traits: traits)
+        currentDeviceLayout!.normal.platformize(page: .normal, spaceName: spaceName, returnName: returnName, traits: traits)
+        currentDeviceLayout!.shifted.platformize(page: .shifted, spaceName: spaceName, returnName: returnName, traits: traits)
+        currentDeviceLayout!.symbols1.platformize(page: .symbols1, spaceName: spaceName, returnName: returnName, traits: traits)
+        currentDeviceLayout!.symbols2.platformize(page: .symbols2, spaceName: spaceName, returnName: returnName, traits: traits)
     }
 
     private func keyDefinitionsFromRaw(_ rawKeyDefinitions: [[RawKeyDefinition]]) -> [[KeyDefinition]] {
@@ -323,7 +323,7 @@ public struct KeyboardDefinition: Codable {
         self.transforms = other.transforms
         self.longPress = other.longPress
 
-        self.layout = Layout(
+        self.currentDeviceLayout = Layout(
             normal: normal,
             shifted: shifted,
             symbols1: symbols1,

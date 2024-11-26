@@ -60,7 +60,7 @@ final class SplitKeyboardView: KeyboardViewProvider {
     var rightKeyboardView: KeyboardView
 
     required init(definition: KeyboardDefinition, theme: ThemeType) {
-        guard let layout = definition.layout else {
+        guard let layout = definition.currentDeviceLayout else {
             fatalError("Keyboard definition must have a layout.")
         }
         let leftDefinition = definition.copy(
