@@ -43,10 +43,8 @@ open class KeyboardViewController: UIInputViewController {
     private var heightConstraint: NSLayoutConstraint!
     private var extraSpacingView: UIView!
     private var deadKeyHandler: DeadKeyHandler!
-    public private(set) var keyboardDefinition: KeyboardDefinition?
+    public private(set) var keyboardDefinition: KeyboardDefinition!
     private var keyboardMode: KeyboardMode = .normal
-    private var keyboardName: String!
-    private var keyboardLocale: String!
 
     private var bannerManager: BannerManager?
 
@@ -54,10 +52,6 @@ open class KeyboardViewController: UIInputViewController {
 
     public var page: BaseKeyboard.KeyboardPage {
         keyboardView.page
-    }
-
-    private var keyboardNotSupportedOnThisDevice: Bool {
-        return keyboardView == nil
     }
 
     public init(withBanner: Bool) {
@@ -195,13 +189,13 @@ open class KeyboardViewController: UIInputViewController {
             preferredHeight = portraitHeight
         }
 
-        guard let keyboardDefinitionNormal = keyboardDefinition?.normal else {
+        guard let layout = keyboardDefinition.currentDeviceLayout else {
             // this can happen if for instance we're on iPad and there's no iPad layout for this particular keyboard
             return preferredHeight
         }
 
         // Ordinarily a keyboard has 4 rows, iPad 12 inch+ has 5. Some have more. We calculate for that.
-        let rowCount = CGFloat(keyboardDefinitionNormal.count)
+        let rowCount = CGFloat(layout.normal.count)
         let normalRowCount: CGFloat = (UIDevice.current.dc.screenSize.sizeInches ?? 0.0) >= 12.0
             ? 5.0
             : 4.0
@@ -244,17 +238,18 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     private func setupKeyboard() {
-        guard let keyboardDefinition = loadKeyboardDefinition() else {
+        self.keyboardDefinition = loadKeyboardDefinition()
+
+        guard keyboardDefinition.supportsCurrentDevice else {
             setupKeyboardNotSupportedOnThisDeviceView()
             return
         }
 
-        self.keyboardDefinition = keyboardDefinition
         deadKeyHandler = DeadKeyHandler(keyboard: keyboardDefinition)
         setupKeyboardView(keyboardDefinition, withBanner: showsBanner)
     }
 
-    private func loadKeyboardDefinition() -> KeyboardDefinition? {
+    private func loadKeyboardDefinition() -> KeyboardDefinition {
         let keyboardDefinitions: [KeyboardDefinition]
         let path = Bundle.top.url(forResource: "KeyboardDefinitions", withExtension: "json")!
         do {
@@ -281,22 +276,14 @@ open class KeyboardViewController: UIInputViewController {
             kbdIndex = index
         }
 
-        let keyboardDefinition = keyboardDefinitions[kbdIndex]
-        keyboardName = keyboardDefinition.name
-        keyboardLocale = keyboardDefinition.locale
-
-        guard keyboardDefinition.supportsCurrentDevice else {
-            return nil
-        }
-
-        return keyboardDefinition
+        return keyboardDefinitions[kbdIndex]
     }
 
     private func setupKeyboardNotSupportedOnThisDeviceView() {
         setupKeyboardContainer()
 
         let notSupportedLabel = UILabel()
-        notSupportedLabel.text = String(format: NSLocalizedString("keyboardNotSupported", comment: ""), keyboardName)
+        notSupportedLabel.text = String(format: NSLocalizedString("keyboardNotSupported", comment: ""), keyboardDefinition.name)
         notSupportedLabel.textAlignment = .center
         notSupportedLabel.lineBreakMode = .byWordWrapping
         notSupportedLabel.numberOfLines = 0
@@ -660,7 +647,7 @@ open class KeyboardViewController: UIInputViewController {
             if keyboardView != nil {
                 keyboardView.updateTheme(theme: theme)
             }
-            if keyboardNotSupportedOnThisDevice {
+            if keyboardDefinition.supportsCurrentDevice == false {
                 // resetup the keyboard not supported view to update its theme
                 setupKeyboardNotSupportedOnThisDeviceView()
             }
@@ -712,8 +699,8 @@ open class KeyboardViewController: UIInputViewController {
     // MARK: Actions
 
     @objc private func emailButtonTapped() {
-        let keyboardName = keyboardName!
-        let keyboardLocale = keyboardLocale!
+        let keyboardName = keyboardDefinition.name
+        let keyboardLocale = keyboardDefinition.locale
         let deviceName = DeviceVariant.from(traits: self.traitCollection).displayName()
 
         // TODO: get email dynamically from kbdgen bundle
@@ -740,9 +727,8 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     @objc private func githubIssueButtonTapped() {
-        let keyboardLocale = keyboardLocale!
         let deviceName = DeviceVariant.from(traits: self.traitCollection).displayName()
-        let repo = "keyboard-\(keyboardLocale)"
+        let repo = "keyboard-\(keyboardDefinition.locale)"
         let coded = "https://github.com/giellalt/\(repo)/issues/new?labels=enhancement&title=Add+Support+for+\(deviceName)&body=Additional+notes+(optional):\n\n"
 
         guard let escaped = coded.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
@@ -868,9 +854,6 @@ extension KeyboardViewController: KeyboardViewDelegate {
     }
 
     private func updateKeyboardMode(_ keyboardMode: KeyboardMode) {
-        guard let keyboardDefinition = self.keyboardDefinition else {
-            return
-        }
         self.keyboardMode = keyboardMode
         setupKeyboardView(keyboardDefinition, withBanner: showsBanner)
     }
@@ -918,7 +901,7 @@ extension KeyboardViewController: BannerManagerDelegate {
             replaceSelected(with: inputText)
 
             // If the keyboard is not compounding, we add a space
-            if !self.keyboardDefinition!.features.contains(.compounding) {
+            if !self.keyboardDefinition.features.contains(.compounding) {
                 insertText(" ")
             }
         }

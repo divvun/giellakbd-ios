@@ -40,15 +40,18 @@ final internal class KeyboardView: UIView,
     }
 
     private func keyDefinitionsForPage(_ page: KeyboardPage) -> [[KeyDefinition]] {
+        guard let layout = definition.currentDeviceLayout else {
+            return []
+        }
         switch page {
         case .symbols1:
-            return definition.symbols1
+            return layout.symbols1
         case .symbols2:
-            return definition.symbols2
+            return layout.symbols2
         case .shifted, .capslock:
-            return definition.shifted
+            return layout.shifted
         default:
-            return definition.normal
+            return layout.normal
         }
     }
 

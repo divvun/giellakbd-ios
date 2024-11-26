@@ -60,18 +60,21 @@ final class SplitKeyboardView: KeyboardViewProvider {
     var rightKeyboardView: KeyboardView
 
     required init(definition: KeyboardDefinition, theme: ThemeType) {
+        guard let layout = definition.currentDeviceLayout else {
+            fatalError("Keyboard definition must have a layout.")
+        }
         let leftDefinition = definition.copy(
-            normal: leftHalf(definition.normal.splitAndBalanceSpacebar()),
-            shifted: leftHalf(definition.shifted.splitAndBalanceSpacebar()),
-            symbols1: leftHalf(definition.symbols1.splitAndBalanceSpacebar()),
-            symbols2: leftHalf(definition.symbols2.splitAndBalanceSpacebar())
+            normal: leftHalf(layout.normal.splitAndBalanceSpacebar()),
+            shifted: leftHalf(layout.shifted.splitAndBalanceSpacebar()),
+            symbols1: leftHalf(layout.symbols1.splitAndBalanceSpacebar()),
+            symbols2: leftHalf(layout.symbols2.splitAndBalanceSpacebar())
         )
 
         let rightDefinition = definition.copy(
-            normal: rightHalf(definition.normal.splitAndBalanceSpacebar()),
-            shifted: rightHalf(definition.shifted.splitAndBalanceSpacebar()),
-            symbols1: rightHalf(definition.symbols1.splitAndBalanceSpacebar()),
-            symbols2: rightHalf(definition.symbols2.splitAndBalanceSpacebar())
+            normal: rightHalf(layout.normal.splitAndBalanceSpacebar()),
+            shifted: rightHalf(layout.shifted.splitAndBalanceSpacebar()),
+            symbols1: rightHalf(layout.symbols1.splitAndBalanceSpacebar()),
+            symbols2: rightHalf(layout.symbols2.splitAndBalanceSpacebar())
         )
 
         let leftKeyboardView = KeyboardView(definition: leftDefinition, theme: theme)

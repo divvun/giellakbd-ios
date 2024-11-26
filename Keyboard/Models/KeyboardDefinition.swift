@@ -201,13 +201,17 @@ public struct KeyboardDefinition: Codable {
     let longPress: [String: [String]]
     let transforms: [String: TransformTree]
 
-    private(set) var normal: [[KeyDefinition]] = []
-    private(set) var shifted: [[KeyDefinition]] = []
-    private(set) var symbols1: [[KeyDefinition]] = []
-    private(set) var symbols2: [[KeyDefinition]] = []
+    struct Layout: Codable {
+        var normal: [[KeyDefinition]] = []
+        var shifted: [[KeyDefinition]] = []
+        var symbols1: [[KeyDefinition]] = []
+        var symbols2: [[KeyDefinition]] = []
+    }
+
+    private(set) var currentDeviceLayout: Layout?
 
     public var supportsCurrentDevice: Bool {
-        return normal.isEmpty == false
+        return currentDeviceLayout != nil
     }
 
     // TODO: features should be derived from as-yet-undefined JSON input
@@ -240,41 +244,44 @@ public struct KeyboardDefinition: Codable {
 
         guard let mode = mode else {
             // There's no keyboard definition for the device with the given traits
+            // Don't set the layout property and return
             return
         }
 
         switch deviceVariant {
         case .iphone:
-            self.normal = keyDefinitionsFromRaw(mode.normal)
-            self.shifted = keyDefinitionsFromRaw(mode.shifted)
+            self.currentDeviceLayout = Layout(
+                normal: keyDefinitionsFromRaw(mode.normal),
+                shifted: keyDefinitionsFromRaw(mode.shifted),
+                symbols1: keyDefinitionsFromRaw(mode.symbols1 ?? []),
+                symbols2: keyDefinitionsFromRaw(mode.symbols2 ?? [])
+            )
 
-            if let symbols1 = mode.symbols1 {
-                self.symbols1 = keyDefinitionsFromRaw(symbols1)
-            }
-            if let symbols2 = mode.symbols2 {
-                self.symbols2 = keyDefinitionsFromRaw(symbols2)
-            }
         case .ipad12in, .ipad9in:
             let alt = mode.alt ?? []
             let altShift = mode.altShift ?? []
             let symbols1 = mode.symbols1 ?? []
             let symbols2 = mode.symbols2 ?? []
 
-            self.normal = keyDefinitionsFromRaw(mode.normal, alternates: alt)
-            self.shifted = keyDefinitionsFromRaw(mode.shifted, alternates: altShift)
+            let normal = keyDefinitionsFromRaw(mode.normal, alternates: alt)
+            let shifted = keyDefinitionsFromRaw(mode.shifted, alternates: altShift)
+            var symbols1Converted: [[KeyDefinition]] = []
+            var symbols2Converted: [[KeyDefinition]] = []
 
             if symbols2.isEmpty {
-                self.symbols1 = keyDefinitionsFromRaw(symbols1)
+                symbols1Converted = keyDefinitionsFromRaw(symbols1)
             } else {
-                self.symbols1 = keyDefinitionsFromRaw(symbols1, alternates: symbols2)
-                self.symbols2 = keyDefinitionsFromRaw(symbols2)
+                symbols1Converted = keyDefinitionsFromRaw(symbols1, alternates: symbols2)
+                symbols2Converted = keyDefinitionsFromRaw(symbols2)
             }
+
+            self.currentDeviceLayout = Layout(normal: normal, shifted: shifted, symbols1: symbols1Converted, symbols2: symbols2Converted)
         }
 
-        normal.platformize(page: .normal, spaceName: spaceName, returnName: returnName, traits: traits)
-        shifted.platformize(page: .shifted, spaceName: spaceName, returnName: returnName, traits: traits)
-        symbols1.platformize(page: .symbols1, spaceName: spaceName, returnName: returnName, traits: traits)
-        symbols2.platformize(page: .symbols2, spaceName: spaceName, returnName: returnName, traits: traits)
+        currentDeviceLayout!.normal.platformize(page: .normal, spaceName: spaceName, returnName: returnName, traits: traits)
+        currentDeviceLayout!.shifted.platformize(page: .shifted, spaceName: spaceName, returnName: returnName, traits: traits)
+        currentDeviceLayout!.symbols1.platformize(page: .symbols1, spaceName: spaceName, returnName: returnName, traits: traits)
+        currentDeviceLayout!.symbols2.platformize(page: .symbols2, spaceName: spaceName, returnName: returnName, traits: traits)
     }
 
     private func keyDefinitionsFromRaw(_ rawKeyDefinitions: [[RawKeyDefinition]]) -> [[KeyDefinition]] {
@@ -316,10 +323,12 @@ public struct KeyboardDefinition: Codable {
         self.transforms = other.transforms
         self.longPress = other.longPress
 
-        self.normal = normal
-        self.shifted = shifted
-        self.symbols1 = symbols1
-        self.symbols2 = symbols2
+        self.currentDeviceLayout = Layout(
+            normal: normal,
+            shifted: shifted,
+            symbols1: symbols1,
+            symbols2: symbols2
+        )
     }
 }
 
