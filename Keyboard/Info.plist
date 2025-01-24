@@ -6,6 +6,8 @@
 	<string>se.bhfst</string>
 	<key>DivvunSpellerPackageKey</key>
 	<string>https://pahkat.uit.no/main/packages/speller-sme?channel=nightly&amp;platform=mobile</string>
+	<key>DivvunContactEmail</key>
+	<string>feedback@divvun.no</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
