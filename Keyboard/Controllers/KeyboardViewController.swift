@@ -704,7 +704,7 @@ open class KeyboardViewController: UIInputViewController {
         let deviceName = DeviceVariant.from(traits: self.traitCollection).displayName()
 
         // TODO: get email dynamically from kbdgen bundle
-        let email = "feedback@divvun.no"
+        let email = Bundle.main.object(forInfoDictionaryKey: "DivvunContactEmail") as? String ?? "feedback@divvun.no"
         let subject = "Request for \(keyboardName) (keyboard-\(keyboardLocale)) on \(deviceName)"
         let body =
         """
