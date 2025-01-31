@@ -1,5 +1,45 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
+  <file original="BaseKeyboard/en.lproj/Localizable.strings" datatype="plaintext" source-language="en" target-language="sv">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.2" build-num="16C5032a"/>
+    </header>
+    <body>
+      <trans-unit id="The %@ keyboard is currently not supported on this device.&#10;You can submit a request for support with one of the following options:" xml:space="preserve">
+        <source>The %@ keyboard is currently not supported on this device.
+You can submit a request for support with one of the following options:</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="accessibility.backspace" xml:space="preserve">
+        <source>accessibility.backspace</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="accessibility.moreLetters" xml:space="preserve">
+        <source>accessibility.moreLetters</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="accessibility.moreNumbers" xml:space="preserve">
+        <source>accessibility.moreNumbers</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="accessibility.moreSymbols" xml:space="preserve">
+        <source>accessibility.moreSymbols</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="accessibility.nextKeyboard" xml:space="preserve">
+        <source>accessibility.nextKeyboard</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="accessibility.shift" xml:space="preserve">
+        <source>accessibility.shift</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="accessibility.space" xml:space="preserve">
+        <source>accessibility.space</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+    </body>
+  </file>
   <file original="HostingApp/Base.lproj/Localizable.strings" source-language="en" target-language="sv" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.2" build-num="16C5032a"/>
@@ -202,7 +242,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="HostingApp/en.lproj/InfoPlist.strings" source-language="en" target-language="sv" datatype="plaintext">
+  <file original="HostingApp/en.lproj/InfoPlist.strings" datatype="plaintext" source-language="en" target-language="sv">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.2" build-num="16C5032a"/>
     </header>
@@ -217,7 +257,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="HostingApp/Settings.bundle/en.lproj/Root.strings" source-language="en" target-language="sv" datatype="plaintext">
+  <file original="HostingApp/Settings.bundle/en.lproj/Root.strings" datatype="plaintext" source-language="en" target-language="sv">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.2" build-num="16C5032a"/>
     </header>
@@ -240,7 +280,7 @@
       </trans-unit>
     </body>
   </file>
-  <file original="Keyboard/en.lproj/InfoPlist.strings" source-language="en" target-language="sv" datatype="plaintext">
+  <file original="Keyboard/en.lproj/InfoPlist.strings" datatype="plaintext" source-language="en" target-language="sv">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.2" build-num="16C5032a"/>
     </header>
@@ -260,6 +300,11 @@
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.2" build-num="16C5032a"/>
     </header>
     <body>
+      <trans-unit id="The %@ keyboard is currently not supported on this device.&#10;You can submit a request for support with one of the following options:" xml:space="preserve">
+        <source>The %@ keyboard is currently not supported on this device.
+You can submit a request for support with one of the following options:</source>
+        <note/>
+      </trans-unit>
       <trans-unit id="accessibility.backspace" xml:space="preserve">
         <source>delete</source>
         <target>radera</target>
@@ -294,11 +339,6 @@
         <source>space</source>
         <target>mellanslag</target>
         <note>* accessibility.* strings contain the text to be spoken by VoiceOver when an element is selected */</note>
-      </trans-unit>
-      <trans-unit id="keyboardNotSupported" xml:space="preserve">
-        <source>The %@ keyboard is currently not supported on this device.
-You can submit a request for support with one of the following options:</source>
-        <note/>
       </trans-unit>
     </body>
   </file>

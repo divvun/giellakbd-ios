@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
-  <file original="BaseKeyboard/en.lproj/Localizable.strings" source-language="en" target-language="en" datatype="plaintext">
+  <file original="BaseKeyboard/en.lproj/Localizable.strings" datatype="plaintext" source-language="en" target-language="smn">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.2" build-num="16C5032a"/>
     </header>
@@ -8,48 +8,39 @@
       <trans-unit id="The %@ keyboard is currently not supported on this device.&#10;You can submit a request for support with one of the following options:" xml:space="preserve">
         <source>The %@ keyboard is currently not supported on this device.
 You can submit a request for support with one of the following options:</source>
-        <target>The %@ keyboard is currently not supported on this device.
-You can submit a request for support with one of the following options:</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="accessibility.backspace" xml:space="preserve">
         <source>accessibility.backspace</source>
-        <target>accessibility.backspace</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="accessibility.moreLetters" xml:space="preserve">
         <source>accessibility.moreLetters</source>
-        <target>accessibility.moreLetters</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="accessibility.moreNumbers" xml:space="preserve">
         <source>accessibility.moreNumbers</source>
-        <target>accessibility.moreNumbers</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="accessibility.moreSymbols" xml:space="preserve">
         <source>accessibility.moreSymbols</source>
-        <target>accessibility.moreSymbols</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="accessibility.nextKeyboard" xml:space="preserve">
         <source>accessibility.nextKeyboard</source>
-        <target>accessibility.nextKeyboard</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="accessibility.shift" xml:space="preserve">
         <source>accessibility.shift</source>
-        <target>accessibility.shift</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
       <trans-unit id="accessibility.space" xml:space="preserve">
         <source>accessibility.space</source>
-        <target>accessibility.space</target>
         <note>No comment provided by engineer.</note>
       </trans-unit>
     </body>
   </file>
-  <file original="HostingApp/Base.lproj/Localizable.strings" source-language="en" target-language="en" datatype="plaintext">
+  <file original="HostingApp/Base.lproj/Localizable.strings" source-language="en" target-language="smn" datatype="plaintext">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.2" build-num="16C5032a"/>
     </header>
@@ -126,12 +117,11 @@ You can submit a request for support with one of the following options:</target>
       </trans-unit>
       <trans-unit id="enableKeyboards" xml:space="preserve">
         <source>Enable the keyboards that you want to use.</source>
-        <target>Enable the keyboards that you want to use.</target>
         <note/>
       </trans-unit>
       <trans-unit id="enableTapSoundsPlain" xml:space="preserve">
         <source>We need you to tap %1$@ to enable spell-checking, updating and keyboard sounds.</source>
-        <target>We need you to tap %1$@ to enable spell-checking, updating and keyboard sounds.</target>
+        <target>If you wish to enable key tap sounds, you must then tap %1$@ and toggle %2$@.</target>
         <note/>
       </trans-unit>
       <trans-unit id="general" xml:space="preserve">
@@ -161,7 +151,7 @@ You can submit a request for support with one of the following options:</target>
       </trans-unit>
       <trans-unit id="language" xml:space="preserve">
         <source>App Language</source>
-        <target>App Language</target>
+        <target>Language</target>
         <note/>
       </trans-unit>
       <trans-unit id="layouts" xml:space="preserve">
@@ -236,7 +226,7 @@ You can submit a request for support with one of the following options:</target>
       </trans-unit>
       <trans-unit id="userDictionary" xml:space="preserve">
         <source>Your own words</source>
-        <target>Your own words</target>
+        <target>User Dictionary</target>
         <note/>
       </trans-unit>
       <trans-unit id="whenYouHaveFinished" xml:space="preserve">
@@ -251,68 +241,60 @@ You can submit a request for support with one of the following options:</target>
       </trans-unit>
     </body>
   </file>
-  <file original="HostingApp/en.lproj/InfoPlist.strings" source-language="en" target-language="en" datatype="plaintext">
+  <file original="HostingApp/en.lproj/InfoPlist.strings" datatype="plaintext" source-language="en" target-language="smn">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.2" build-num="16C5032a"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
         <source>Template Keyboard</source>
-        <target>Template Keyboard</target>
         <note>Bundle display name</note>
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
         <source>HostingApp</source>
-        <target>HostingApp</target>
         <note>Bundle name</note>
       </trans-unit>
     </body>
   </file>
-  <file original="HostingApp/Settings.bundle/en.lproj/Root.strings" source-language="en" target-language="en" datatype="plaintext">
+  <file original="HostingApp/Settings.bundle/en.lproj/Root.strings" datatype="plaintext" source-language="en" target-language="smn">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.2" build-num="16C5032a"/>
     </header>
     <body>
       <trans-unit id="Enabled" xml:space="preserve">
         <source>Enabled</source>
-        <target>Enabled</target>
         <note/>
       </trans-unit>
       <trans-unit id="Group" xml:space="preserve">
         <source>Group</source>
-        <target>Group</target>
         <note>A single strings file, whose title is specified in your preferences schema. The strings files provide the localized content to display to the user for each of your preferences.</note>
       </trans-unit>
       <trans-unit id="Name" xml:space="preserve">
         <source>Name</source>
-        <target>Name</target>
         <note/>
       </trans-unit>
       <trans-unit id="none given" xml:space="preserve">
         <source>none given</source>
-        <target>none given</target>
         <note/>
       </trans-unit>
     </body>
   </file>
-  <file original="Keyboard/en.lproj/InfoPlist.strings" source-language="en" target-language="en" datatype="plaintext">
+  <file original="Keyboard/en.lproj/InfoPlist.strings" datatype="plaintext" source-language="en" target-language="smn">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.2" build-num="16C5032a"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
         <source>Template Keyboard</source>
-        <target>Template Keyboard</target>
         <note>Bundle display name</note>
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
         <source>Keyboard</source>
-        <target>Keyboard</target>
         <note>Bundle name</note>
       </trans-unit>
     </body>
   </file>
-  <file original="Keyboard/en.lproj/Localizable.strings" source-language="en" target-language="en" datatype="plaintext">
+  <file original="Keyboard/en.lproj/Localizable.strings" datatype="plaintext" source-language="en" target-language="smn">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.2" build-num="16C5032a"/>
     </header>
@@ -320,43 +302,34 @@ You can submit a request for support with one of the following options:</target>
       <trans-unit id="The %@ keyboard is currently not supported on this device.&#10;You can submit a request for support with one of the following options:" xml:space="preserve">
         <source>The %@ keyboard is currently not supported on this device.
 You can submit a request for support with one of the following options:</source>
-        <target>The %@ keyboard is currently not supported on this device.
-You can submit a request for support with one of the following options:</target>
         <note/>
       </trans-unit>
       <trans-unit id="accessibility.backspace" xml:space="preserve">
         <source>delete</source>
-        <target>delete</target>
         <note/>
       </trans-unit>
       <trans-unit id="accessibility.moreLetters" xml:space="preserve">
         <source>more: letters</source>
-        <target>more: letters</target>
         <note/>
       </trans-unit>
       <trans-unit id="accessibility.moreNumbers" xml:space="preserve">
         <source>more: numbers</source>
-        <target>more: numbers</target>
         <note/>
       </trans-unit>
       <trans-unit id="accessibility.moreSymbols" xml:space="preserve">
         <source>more: symbols</source>
-        <target>more: symbols</target>
         <note/>
       </trans-unit>
       <trans-unit id="accessibility.nextKeyboard" xml:space="preserve">
         <source>next keyboard</source>
-        <target>next keyboard</target>
         <note/>
       </trans-unit>
       <trans-unit id="accessibility.shift" xml:space="preserve">
         <source>shift</source>
-        <target>shift</target>
         <note/>
       </trans-unit>
       <trans-unit id="accessibility.space" xml:space="preserve">
         <source>space</source>
-        <target>space</target>
         <note>* accessibility.* strings contain the text to be spoken by VoiceOver when an element is selected */</note>
       </trans-unit>
     </body>
