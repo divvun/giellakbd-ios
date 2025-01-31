@@ -729,7 +729,7 @@ open class KeyboardViewController: UIInputViewController {
     @objc private func githubIssueButtonTapped() {
         let deviceName = DeviceVariant.from(traits: self.traitCollection).displayName()
         let repo = "keyboard-\(keyboardDefinition.locale)"
-        let coded = "https://github.com/giellalt/\(repo)/issues/new?labels=enhancement&title=Add+Support+for+\(deviceName)&body=Additional+notes+(optional):\n\n"
+        let coded = "https://github.com/giellalt/\(repo)/issues/new?labels=enhancement&title=Add Support for \(deviceName)&body=Additional notes (optional):\n\n"
 
         guard let escaped = coded.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
               let url = URL(string: escaped) else {
