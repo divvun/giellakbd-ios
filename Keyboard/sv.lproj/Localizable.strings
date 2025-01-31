@@ -6,5 +6,3 @@
 "accessibility.moreSymbols" = "mera: symboler";
 "accessibility.shift" = "skift";
 "accessibility.nextKeyboard" = "nästa tangentbord";
-
-"keyboardNotSupported" = "The %@ keyboard is currently not supported on this device.\nYou can submit a request for support with one of the following options:";

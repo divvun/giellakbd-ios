@@ -6,5 +6,3 @@
 "accessibility.moreSymbols" = "lasi: symbola";
 "accessibility.shift" = "molsso";
 "accessibility.nextKeyboard" = "boahtte boallobeavdi";
-
-"keyboardNotSupported" = "The %@ keyboard is currently not supported on this device.\nYou can submit a request for support with one of the following options:";
