@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
+  <file original="HostingApp/Base.lproj/Localizable.strings" source-language="en" target-language="en" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.2" build-num="16C5032a"/>
+    </header>
+    <body>
+      <trans-unit id="about" xml:space="preserve">
+        <source>About</source>
+        <target>About</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="add" xml:space="preserve">
+        <source>Add</source>
+        <target>Add</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="addNewKeyboard" xml:space="preserve">
+        <source>Add New Keyboard…</source>
+        <target>Add New Keyboard…</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="addWord" xml:space="preserve">
+        <source>Add Word</source>
+        <target>Add Word</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="addWordMessage" xml:space="preserve">
+        <source>This word will be suggested in the spelling banner for similar input.</source>
+        <target>This word will be suggested in the spelling banner for similar input.</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="allowFullAccess" xml:space="preserve">
+        <source>Allow Full Access</source>
+        <target>Allow Full Access</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="attributions" xml:space="preserve">
+        <source>Attributions</source>
+        <target>Attributions</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="block" xml:space="preserve">
+        <source>Block</source>
+        <target>Block</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="blocked" xml:space="preserve">
+        <source>Blocked</source>
+        <target>Blocked</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="cancel" xml:space="preserve">
+        <source>Cancel</source>
+        <target>Cancel</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="contextsFor" xml:space="preserve">
+        <source>Contexts for "%1$@"</source>
+        <target>Contexts for "%1$@"</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="delete" xml:space="preserve">
+        <source>Delete</source>
+        <target>Delete</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="detected" xml:space="preserve">
+        <source>Detected</source>
+        <target>Detected</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="downloading" xml:space="preserve">
+        <source>Downloading "%1$@"…</source>
+        <target>Downloading "%1$@"…</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="enableKeyboards" xml:space="preserve">
+        <source>Enable the keyboards that you want to use.</source>
+        <target>Enable the keyboards that you want to use.</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="enableTapSoundsPlain" xml:space="preserve">
+        <source>We need you to tap %1$@ to enable spell-checking, updating and keyboard sounds.</source>
+        <target>We need you to tap %1$@ to enable spell-checking, updating and keyboard sounds.</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="general" xml:space="preserve">
+        <source>General</source>
+        <target>General</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="installingPackages" xml:space="preserve">
+        <source>Installing packages…</source>
+        <target>Installing packages…</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="installingSpellers" xml:space="preserve">
+        <source>Installing Spellers…</source>
+        <target>Installing Spellers…</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="keyboard" xml:space="preserve">
+        <source>Keyboard</source>
+        <target>Keyboard</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="keyboards" xml:space="preserve">
+        <source>Keyboards</source>
+        <target>Keyboards</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="language" xml:space="preserve">
+        <source>App Language</source>
+        <target>App Language</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="layouts" xml:space="preserve">
+        <source>Layouts</source>
+        <target>Layouts</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="localeSjd" xml:space="preserve">
+        <source>Kildin Sami</source>
+        <target>Kildin Sami</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="noUserWords" xml:space="preserve">
+        <source>No user-created words yet.</source>
+        <target>No user-created words yet.</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="noUserWordsDescription" xml:space="preserve">
+        <source>Words that are left uncorrected and are not in the built-in dictionary will appear here.</source>
+        <target>Words that are left uncorrected and are not in the built-in dictionary will appear here.</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="openAppPlain" xml:space="preserve">
+        <source>Open the %1$@ app</source>
+        <target>Open the %1$@ app</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="openSettings" xml:space="preserve">
+        <source>Open Settings</source>
+        <target>Open Settings</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="save" xml:space="preserve">
+        <source>Save</source>
+        <target>Save</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="setUp" xml:space="preserve">
+        <source>Set Up %1$@</source>
+        <target>Set Up %1$@</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="settingUp" xml:space="preserve">
+        <source>Setting Up</source>
+        <target>Setting Up</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="settings" xml:space="preserve">
+        <source>Settings</source>
+        <target>Settings</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="skip" xml:space="preserve">
+        <source>Skip</source>
+        <target>Skip</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="tapPlain" xml:space="preserve">
+        <source>Tap %1$@</source>
+        <target>Tap %1$@</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="unblock" xml:space="preserve">
+        <source>Unblock</source>
+        <target>Unblock</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="userDefined" xml:space="preserve">
+        <source>User-Defined</source>
+        <target>User-Defined</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="userDictionary" xml:space="preserve">
+        <source>Your own words</source>
+        <target>Your own words</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="whenYouHaveFinished" xml:space="preserve">
+        <source>When you have finished, return to this app to continue.</source>
+        <target>When you have finished, return to this app to continue.</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="word" xml:space="preserve">
+        <source>Word</source>
+        <target>Word</target>
+        <note/>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="HostingApp/en.lproj/InfoPlist.strings" source-language="en" target-language="en" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.2" build-num="16C5032a"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleDisplayName" xml:space="preserve">
+        <source>Template Keyboard</source>
+        <target>Template Keyboard</target>
+        <note>Bundle display name</note>
+      </trans-unit>
+      <trans-unit id="CFBundleName" xml:space="preserve">
+        <source>HostingApp</source>
+        <target>HostingApp</target>
+        <note>Bundle name</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="HostingApp/Settings.bundle/en.lproj/Root.strings" source-language="en" target-language="en" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.2" build-num="16C5032a"/>
+    </header>
+    <body>
+      <trans-unit id="Enabled" xml:space="preserve">
+        <source>Enabled</source>
+        <target>Enabled</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="Group" xml:space="preserve">
+        <source>Group</source>
+        <target>Group</target>
+        <note>A single strings file, whose title is specified in your preferences schema. The strings files provide the localized content to display to the user for each of your preferences.</note>
+      </trans-unit>
+      <trans-unit id="Name" xml:space="preserve">
+        <source>Name</source>
+        <target>Name</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="none given" xml:space="preserve">
+        <source>none given</source>
+        <target>none given</target>
+        <note/>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="Keyboard/en.lproj/InfoPlist.strings" source-language="en" target-language="en" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.2" build-num="16C5032a"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleDisplayName" xml:space="preserve">
+        <source>Template Keyboard</source>
+        <target>Template Keyboard</target>
+        <note>Bundle display name</note>
+      </trans-unit>
+      <trans-unit id="CFBundleName" xml:space="preserve">
+        <source>Keyboard</source>
+        <target>Keyboard</target>
+        <note>Bundle name</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="Keyboard/en.lproj/Localizable.strings" source-language="en" target-language="en" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.2" build-num="16C5032a"/>
+    </header>
+    <body>
+      <trans-unit id="accessibility.backspace" xml:space="preserve">
+        <source>delete</source>
+        <target>delete</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="accessibility.moreLetters" xml:space="preserve">
+        <source>more: letters</source>
+        <target>more: letters</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="accessibility.moreNumbers" xml:space="preserve">
+        <source>more: numbers</source>
+        <target>more: numbers</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="accessibility.moreSymbols" xml:space="preserve">
+        <source>more: symbols</source>
+        <target>more: symbols</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="accessibility.nextKeyboard" xml:space="preserve">
+        <source>next keyboard</source>
+        <target>next keyboard</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="accessibility.shift" xml:space="preserve">
+        <source>shift</source>
+        <target>shift</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="accessibility.space" xml:space="preserve">
+        <source>space</source>
+        <target>space</target>
+        <note>* accessibility.* strings contain the text to be spoken by VoiceOver when an element is selected */</note>
+      </trans-unit>
+      <trans-unit id="keyboardNotSupported" xml:space="preserve">
+        <source>The %@ keyboard is currently not supported on this device.
+You can submit a request for support with one of the following options:</source>
+        <target>The %@ keyboard is currently not supported on this device.
+You can submit a request for support with one of the following options:</target>
+        <note/>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
