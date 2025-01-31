@@ -1,0 +1,8 @@
+//* accessibility.* strings contain the text to be spoken by VoiceOver when an element is selected */
+"accessibility.space" = "mellomrom";
+"accessibility.backspace" = "slett";
+"accessibility.moreLetters" = "meire: bokstavar";
+"accessibility.moreNumbers" = "meire: tal";
+"accessibility.moreSymbols" = "meire: symbol";
+"accessibility.shift" = "skift";
+"accessibility.nextKeyboard" = "neste tastatur";
