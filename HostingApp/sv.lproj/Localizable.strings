@@ -1,39 +1,117 @@
+/* (No Comment) */
 "about" = "Om";
+
+/* (No Comment) */
 "add" = "Lägg till";
+
+/* (No Comment) */
 "addNewKeyboard" = "Lägg till nytt tangentbord…";
+
+/* (No Comment) */
 "addWord" = "Lägg till ord";
+
+/* (No Comment) */
 "addWordMessage" = "Detta ordet kommer att föreslås i fanan för snarlika ord";
+
+/* (No Comment) */
 "allowFullAccess" = "Ge full tillgång";
+
+/* (No Comment) */
 "attributions" = "Andra källor";
+
+/* (No Comment) */
 "block" = "Spärr";
+
+/* (No Comment) */
 "blocked" = "Spärrade ord";
+
+/* (No Comment) */
 "cancel" = "Avbryt";
+
+/* (No Comment) */
 "contextsFor" = "Kontexter för \"%1$@\"";
+
+/* (No Comment) */
 "delete" = "Ta bort";
+
+/* (No Comment) */
 "detected" = "Upptäckta ord";
+
+/* (No Comment) */
 "downloading" = "Laddar ned \"%1$@\"…";
+
+/* (No Comment) */
 "enableKeyboards" = "Enable the keyboards that you want to use.";
+
+/* (No Comment) */
 "enableTapSoundsPlain" = "Om du vill slå på tangentbordsklickljud måste du trycka %0$@ og slå på %1$@.";
+
+/* (No Comment) */
 "general" = "Generellt";
+
+/* (No Comment) */
 "installingPackages" = "Installerar paket…";
+
+/* (No Comment) */
 "installingSpellers" = "Installerar rättstavning…";
+
+/* (No Comment) */
 "keyboard" = "Tangentbord";
+
+/* (No Comment) */
 "keyboards" = "Tangentbord";
+
+/* (No Comment) */
 "language" = "Appspråk";
+
+/* (No Comment) */
 "layouts" = "Tangentbord";
+
+/* (No Comment) */
 "localeSjd" = "Kildinsamisk";
+
+/* (No Comment) */
 "noUserWords" = "Inga användarskapade ord ännu.";
+
+/* (No Comment) */
 "noUserWordsDescription" = "Ord som inte blir korrigerade och som inte finns i ordlistan kommer att dyka upp här.";
+
+/* (No Comment) */
 "openAppPlain" = "Öppna %1$@-appen";
+
+/* (No Comment) */
 "openSettings" = "Öppna Inställningar";
+
+/* (No Comment) */
 "save" = "Spara";
-"setUp" = "Konfigurera %1$@";
-"settingUp" = "Konfigurerar";
+
+/* (No Comment) */
 "settings" = "Inställningar";
+
+/* (No Comment) */
+"settingUp" = "Konfigurerar";
+
+/* (No Comment) */
+"setUp" = "Konfigurera %1$@";
+
+/* (No Comment) */
 "skip" = "Hoppa över";
+
+/* (No Comment) */
 "tapPlain" = "Tryck %1$@";
+
+/* (No Comment) */
 "unblock" = "Ta bort spärr";
+
+/* (No Comment) */
 "userDefined" = "Dina egna ord";
+
+/* (No Comment) */
 "userDictionary" = "Användarordlista";
+
+/* (No Comment) */
 "whenYouHaveFinished" = "När du är färdig – gå tillbaks till denna appen för att fortsätta.";
+
+/* (No Comment) */
 "word" = "ord";
+

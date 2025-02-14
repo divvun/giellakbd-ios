@@ -1,39 +1,117 @@
+/* (No Comment) */
 "about" = "Boallobievdeprográmma birra";
+
+/* (No Comment) */
 "add" = "Laseda";
+
+/* (No Comment) */
 "addNewKeyboard" = "Laseda ådå boallobievdev …";
+
+/* (No Comment) */
 "addWord" = "Laseda bágov";
+
+/* (No Comment) */
 "addWordMessage" = "Dát báhko ihtá ævtodussan gå tjálá muodugasj bágov.";
+
+/* (No Comment) */
 "allowFullAccess" = "Dåhkkida ålleslasj bessamav dán æhppaj";
+
+/* (No Comment) */
 "attributions" = "Ietjá gáldo";
+
+/* (No Comment) */
 "block" = "Tsakka bágov";
+
+/* (No Comment) */
 "blocked" = "Tsakkaduvvam";
+
+/* (No Comment) */
 "cancel" = "Boarkki";
+
+/* (No Comment) */
 "contextsFor" = "”%1$@” kontevsta";
+
+/* (No Comment) */
 "delete" = "Sihko";
+
+/* (No Comment) */
 "detected" = "Oajvvaduvvam";
+
+/* (No Comment) */
 "downloading" = "Viedtjamin ”%1$@” …";
+
+/* (No Comment) */
 "enableKeyboards" = "Enable the keyboards that you want to use.";
+
+/* (No Comment) */
 "enableTapSoundsPlain" = "Jus sidá jienajt gullat gå dieddela boallobievdev, de dieddela %0$@ ja dåhkkida %1$@.";
+
+/* (No Comment) */
 "general" = "Åbbålasj";
+
+/* (No Comment) */
 "installingPackages" = "Sajájduhttemin páhkajt";
+
+/* (No Comment) */
 "installingSpellers" = "Sajájduhttemin tjállemdárkadusájt";
+
+/* (No Comment) */
 "keyboard" = "Boallobievdde";
+
+/* (No Comment) */
 "keyboards" = "Boallobievde";
+
+/* (No Comment) */
 "language" = "Æhppagiella";
+
+/* (No Comment) */
 "layouts" = "Boallobievddeháme";
+
+/* (No Comment) */
 "localeSjd" = "Gielldasámegiella";
+
+/* (No Comment) */
 "noUserWords" = "Ietjat báhkolissta l ájn guoros.";
+
+/* (No Comment) */
 "noUserWordsDescription" = "Gå moaddi tjálá bágov majt tjállemdárkastus ij dåbdå, de ihtá dat báhko dánná.";
+
+/* (No Comment) */
 "openAppPlain" = "Rabá %1$@-ehpav";
+
+/* (No Comment) */
 "openSettings" = "Rabá hiebadusájt";
+
+/* (No Comment) */
 "save" = "Vuorkki";
-"setUp" = "Hiebada %1$@";
-"settingUp" = "Hiebadime";
+
+/* (No Comment) */
 "settings" = "Hiebadime";
+
+/* (No Comment) */
+"settingUp" = "Hiebadime";
+
+/* (No Comment) */
+"setUp" = "Hiebada %1$@";
+
+/* (No Comment) */
 "skip" = "Guode";
+
+/* (No Comment) */
 "tapPlain" = "Dieddela %1$@";
+
+/* (No Comment) */
 "unblock" = "Ale das bágo tsakka";
+
+/* (No Comment) */
 "userDefined" = "Laseduvvam";
+
+/* (No Comment) */
 "userDictionary" = "Ietjat bágo";
+
+/* (No Comment) */
 "whenYouHaveFinished" = "Gå la gærggam, máhtsa dán æhppaj ja joarke bargov.";
+
+/* (No Comment) */
 "word" = "Báhko";
+

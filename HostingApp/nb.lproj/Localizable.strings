@@ -1,39 +1,117 @@
+/* (No Comment) */
 "about" = "Om tastaturappen";
+
+/* (No Comment) */
 "add" = "Legg til";
+
+/* (No Comment) */
 "addNewKeyboard" = "Legg til nytt tastatur …";
+
+/* (No Comment) */
 "addWord" = "Legg til ord";
+
+/* (No Comment) */
 "addWordMessage" = "Dette ordet vil bli foreslått i banneret for liknende inndata";
+
+/* (No Comment) */
 "allowFullAccess" = "Gi full tilgang";
+
+/* (No Comment) */
 "attributions" = "Andre kilder";
+
+/* (No Comment) */
 "block" = "Sperr";
+
+/* (No Comment) */
 "blocked" = "Sperra ord";
+
+/* (No Comment) */
 "cancel" = "Avbryt";
+
+/* (No Comment) */
 "contextsFor" = "Kontekster for \"%1$@\"";
+
+/* (No Comment) */
 "delete" = "Slett";
+
+/* (No Comment) */
 "detected" = "Oppdaga ord";
+
+/* (No Comment) */
 "downloading" = "Laster ned \"%1$@\" …";
+
+/* (No Comment) */
 "enableKeyboards" = "Enable the keyboards that you want to use.";
+
+/* (No Comment) */
 "enableTapSoundsPlain" = "Om du vil slå på tastaturklikkelyder må du trykke %0$@ og slå på %1$@.";
+
+/* (No Comment) */
 "general" = "Generelt";
+
+/* (No Comment) */
 "installingPackages" = "Installerer pakker …";
+
+/* (No Comment) */
 "installingSpellers" = "Installerer stavekontroller …";
+
+/* (No Comment) */
 "keyboard" = "Tastatur";
+
+/* (No Comment) */
 "keyboards" = "Tastatur";
+
+/* (No Comment) */
 "language" = "Appspråk";
+
+/* (No Comment) */
 "layouts" = "Tastatur";
+
+/* (No Comment) */
 "localeSjd" = "Kildinsamisk";
+
+/* (No Comment) */
 "noUserWords" = "Ingen egne ord ennå.";
+
+/* (No Comment) */
 "noUserWordsDescription" = "Ord som ikke blir retta og som ikke finnes i ordlista vil dukke opp her.";
+
+/* (No Comment) */
 "openAppPlain" = "Åpne %1$@-appen";
+
+/* (No Comment) */
 "openSettings" = "Åpne Innstillinger";
+
+/* (No Comment) */
 "save" = "Lagre";
-"setUp" = "Konfigurer %1$@";
-"settingUp" = "Konfigurerer";
+
+/* (No Comment) */
 "settings" = "Innstillinger";
+
+/* (No Comment) */
+"settingUp" = "Konfigurerer";
+
+/* (No Comment) */
+"setUp" = "Konfigurer %1$@";
+
+/* (No Comment) */
 "skip" = "Hopp over";
+
+/* (No Comment) */
 "tapPlain" = "Berør %1$@";
+
+/* (No Comment) */
 "unblock" = "Fjern sperring";
+
+/* (No Comment) */
 "userDefined" = "Egne ord";
+
+/* (No Comment) */
 "userDictionary" = "Dine egne ord";
+
+/* (No Comment) */
 "whenYouHaveFinished" = "Når du er ferdig, gå tilbake til denne appen for å fortsette.";
+
+/* (No Comment) */
 "word" = "ord";
+
