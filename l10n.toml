@@ -1,3 +1,0 @@
-[[paths]]
-    reference = "locales/en/strings.xliff"
-    l10n = "locales/{locale}/strings.xliff"
