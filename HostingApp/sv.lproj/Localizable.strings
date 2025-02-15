@@ -1,6 +1,27 @@
 /* (No Comment) */
 "about" = "Om";
 
+/* Spoken by VoiceOver when an element is selected */
+"accessibility.backspace" = "radera";
+
+/* Spoken by VoiceOver when an element is selected */
+"accessibility.moreLetters" = "mera: bokstäver";
+
+/* Spoken by VoiceOver when an element is selected */
+"accessibility.moreNumbers" = "mera: siffror";
+
+/* Spoken by VoiceOver when an element is selected */
+"accessibility.moreSymbols" = "mera: symboler";
+
+/* Spoken by VoiceOver when an element is selected */
+"accessibility.nextKeyboard" = "nästa tangentbord";
+
+/* Spoken by VoiceOver when an element is selected */
+"accessibility.shift" = "skift";
+
+/* Spoken by VoiceOver when an element is selected */
+"accessibility.space" = "mellanslag";
+
 /* (No Comment) */
 "add" = "Lägg till";
 
