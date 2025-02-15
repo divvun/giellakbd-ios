@@ -37,28 +37,3 @@
 "userDictionary" = "Your own words";
 "whenYouHaveFinished" = "When you have finished, return to this app to continue.";
 "word" = "Word";
-
-/* Spoken by VoiceOver when an element is selected */
-"accessibility.space" = "space";
-
-/* Spoken by VoiceOver when an element is selected */
-"accessibility.backspace" = "delete";
-
-/* Spoken by VoiceOver when an element is selected */
-"accessibility.moreLetters" = "more: letters";
-
-/* Spoken by VoiceOver when an element is selected */
-"accessibility.moreNumbers" = "more: numbers";
-
-/* Spoken by VoiceOver when an element is selected */
-"accessibility.moreSymbols" = "more: symbols";
-
-/* Spoken by VoiceOver when an element is selected */
-"accessibility.shift" = "shift";
-
-/* Spoken by VoiceOver when an element is selected */
-"accessibility.nextKeyboard" = "next keyboard";
-
-"The %@ keyboard is currently not supported on this device." = "The %@ keyboard is currently not supported on this device.";
-
-"You can submit a request for support with one of the following options:" = "You can submit a request for support with one of the following options:";

@@ -115,23 +115,3 @@
 /* (No Comment) */
 "word" = "ord";
 
-/* (No Comment) */
-"accessibility.backspace" = "radera";
-
-/* (No Comment) */
-"accessibility.moreLetters" = "mera: bokstäver";
-
-/* (No Comment) */
-"accessibility.moreNumbers" = "mera: siffror";
-
-/* (No Comment) */
-"accessibility.moreSymbols" = "mera: symboler";
-
-/* (No Comment) */
-"accessibility.nextKeyboard" = "nästa tangentbord";
-
-/* (No Comment) */
-"accessibility.shift" = "skift";
-
-/* * accessibility.* strings contain the text to be spoken by VoiceOver when an element is selected * / */
-"accessibility.space" = "mellanslag";

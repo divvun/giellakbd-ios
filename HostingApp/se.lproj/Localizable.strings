@@ -115,24 +115,3 @@
 /* (No Comment) */
 "word" = "sátni";
 
-/* (No Comment) */
-"accessibility.backspace" = "mudde";
-
-/* (No Comment) */
-"accessibility.moreLetters" = "lasi: bustávat";
-
-/* (No Comment) */
-"accessibility.moreNumbers" = "lasi: logut";
-
-/* (No Comment) */
-"accessibility.moreSymbols" = "lasi: symbola";
-
-/* (No Comment) */
-"accessibility.nextKeyboard" = "boahtte boallobeavdi";
-
-/* (No Comment) */
-"accessibility.shift" = "molsso";
-
-/* * accessibility.* strings contain the text to be spoken by VoiceOver when an element is selected * / */
-"accessibility.space" = "gaska";
-
