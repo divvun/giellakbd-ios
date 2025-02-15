@@ -1,6 +1,27 @@
 /* (No Comment) */
 "about" = "Om tastaturappen";
 
+/* Spoken by VoiceOver when an element is selected */
+"accessibility.backspace" = "slett";
+
+/* Spoken by VoiceOver when an element is selected */
+"accessibility.moreLetters" = "mere: bokstaver";
+
+/* Spoken by VoiceOver when an element is selected */
+"accessibility.moreNumbers" = "mere: tall";
+
+/* Spoken by VoiceOver when an element is selected */
+"accessibility.moreSymbols" = "mere: symboler";
+
+/* Spoken by VoiceOver when an element is selected */
+"accessibility.nextKeyboard" = "neste tastatur";
+
+/* Spoken by VoiceOver when an element is selected */
+"accessibility.shift" = "skift";
+
+/* Spoken by VoiceOver when an element is selected */
+"accessibility.space" = "mellomrom";
+
 /* (No Comment) */
 "add" = "Legg til";
 

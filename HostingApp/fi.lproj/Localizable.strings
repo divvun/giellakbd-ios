@@ -1,6 +1,27 @@
 /* (No Comment) */
 "about" = "Tietoja näppäimistösovelluksesta";
 
+/* Spoken by VoiceOver when an element is selected */
+"accessibility.backspace" = "askelpalautin";
+
+/* Spoken by VoiceOver when an element is selected */
+"accessibility.moreLetters" = "enemmän: kirjaimia";
+
+/* Spoken by VoiceOver when an element is selected */
+"accessibility.moreNumbers" = "enemmän: numeroita";
+
+/* Spoken by VoiceOver when an element is selected */
+"accessibility.moreSymbols" = "enemmän: symboleja";
+
+/* Spoken by VoiceOver when an element is selected */
+"accessibility.nextKeyboard" = "seuraava näppäimistö";
+
+/* Spoken by VoiceOver when an element is selected */
+"accessibility.shift" = "vaihto";
+
+/* Spoken by VoiceOver when an element is selected */
+"accessibility.space" = "väli";
+
 /* (No Comment) */
 "add" = "Lisää";
 
