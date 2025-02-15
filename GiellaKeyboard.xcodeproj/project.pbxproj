@@ -49,7 +49,8 @@
 		999C30152428E70600E127A6 /* UpdateBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999C30142428E70600E127A6 /* UpdateBannerView.swift */; };
 		999C30172428E91000E127A6 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999C30162428E91000E127A6 /* BannerView.swift */; };
 		999C3019242A3FCF00E127A6 /* DownloadSimulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999C3018242A3FCF00E127A6 /* DownloadSimulator.swift */; };
-		99B94C6323E0501F0076A786 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 99B94C6523E0501F0076A786 /* Localizable.strings */; };
+		99C12ADE2D60BF370096A499 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 99B94C6523E0501F0076A786 /* Localizable.strings */; };
+		99C12ADF2D60BF6A0096A499 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 99B94C6523E0501F0076A786 /* Localizable.strings */; };
 		99C4E5642431E89A005F8C8A /* PahkatWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C4E5632431E89A005F8C8A /* PahkatWrapper.swift */; };
 		99C4E56724320F49005F8C8A /* IPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C4E56524320CF0005F8C8A /* IPC.swift */; };
 		99C4E56824321740005F8C8A /* IPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C4E56524320CF0005F8C8A /* IPC.swift */; };
@@ -872,6 +873,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD1387D7234CB95400C5B916 /* Images.xcassets in Resources */,
+				99C12ADF2D60BF6A0096A499 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -879,8 +881,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				99B94C6323E0501F0076A786 /* Localizable.strings in Resources */,
 				FD1387DD234CBF2B00C5B916 /* Images.xcassets in Resources */,
+				99C12ADE2D60BF370096A499 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
