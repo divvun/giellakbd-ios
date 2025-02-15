@@ -1,27 +1,6 @@
 /* (No Comment) */
 "about" = "Boallobeavddeprográmma birra";
 
-/* Spoken by VoiceOver when an element is selected */
-"accessibility.backspace" = "mudde";
-
-/* Spoken by VoiceOver when an element is selected */
-"accessibility.moreLetters" = "lasi: bustávat";
-
-/* Spoken by VoiceOver when an element is selected */
-"accessibility.moreNumbers" = "lasi: logut";
-
-/* Spoken by VoiceOver when an element is selected */
-"accessibility.moreSymbols" = "lasi: symbola";
-
-/* Spoken by VoiceOver when an element is selected */
-"accessibility.nextKeyboard" = "boahtte boallobeavdi";
-
-/* Spoken by VoiceOver when an element is selected */
-"accessibility.shift" = "molsso";
-
-/* Spoken by VoiceOver when an element is selected */
-"accessibility.space" = "gaska";
-
 /* (No Comment) */
 "add" = "Lasit";
 
