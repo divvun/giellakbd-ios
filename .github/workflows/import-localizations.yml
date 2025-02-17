@@ -1,7 +1,8 @@
-name: "Firefox: import translations"
+name: "Import Localizations"
 on:
   # schedule:
   #   - cron: '0 11 * * 1'
+  push:
   workflow_dispatch:
     inputs:
       branchName:
