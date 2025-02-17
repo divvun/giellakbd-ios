@@ -2,6 +2,7 @@ platform :ios, '12.4'
 use_frameworks!
 
 target 'BaseKeyboard' do
+  pod 'Sentry', '=7.3.0'
   pod 'DivvunSpell', :http => "https://github.com/divvun/divvunspell-sdk-swift/releases/download/v1.0.0-beta.4/cargo-pod.tgz"
   pod 'SwiftLint'
   pod 'SQLite.swift', '~> 0.12.0'
@@ -9,6 +10,7 @@ target 'BaseKeyboard' do
 end
 
 target 'HostingApp' do
+  pod 'Sentry', '=7.3.0'
   pod 'SwiftLint'
   pod 'SQLite.swift', '~> 0.12.0'
   pod 'PahkatClient', :http => "https://github.com/divvun/pahkat-client-sdk-swift/releases/download/v0.2.1/cargo-pod.tgz"

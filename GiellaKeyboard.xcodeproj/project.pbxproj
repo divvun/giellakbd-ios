@@ -1318,6 +1318,8 @@
 					"-framework",
 					"\"Foundation\"",
 					"-framework",
+					"\"Sentry\"",
+					"-framework",
 					"\"DivvunSpell\"",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS";
@@ -1359,6 +1361,8 @@
 					"-l\"z\"",
 					"-framework",
 					"\"Foundation\"",
+					"-framework",
+					"\"Sentry\"",
 					"-framework",
 					"\"DivvunSpell\"",
 				);
