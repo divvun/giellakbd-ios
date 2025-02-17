@@ -62,7 +62,7 @@
 "downloading" = "Lastar ned \"%1$@\" …";
 
 /* (No Comment) */
-"enableKeyboards" = "Enable the keyboards that you want to use.";
+"enableKeyboards" = "Slå på tastatura du vil nytta.";
 
 /* (No Comment) */
 "enableTapSoundsPlain" = "Om du vil slå på tastaturklikkelydar må du trykkja %0$@ og slå på %1$@.";
@@ -121,6 +121,9 @@
 /* (No Comment) */
 "tapPlain" = "Rør %1$@";
 
+/* Shown inside the keyboard view when keyboard doesn't support current device */
+"The %@ keyboard is currently not supported on this device." = "%@-tastaturet er ikkje støtta akkurat no på dette apparatet.";
+
 /* (No Comment) */
 "unblock" = "Fjern sperring";
 
@@ -134,5 +137,8 @@
 "whenYouHaveFinished" = "Når du er ferdig, gå attende til denne appen for å halda fram.";
 
 /* (No Comment) */
-"word" = "ord";
+"word" = "Ord";
+
+/* Shown inside the keyboard view when keyboard doesn't support current device */
+"You can submit a request for support with one of the following options:" = "Du kan be om støtte via eitt av desse alternativa:";
 

@@ -1,0 +1,536 @@
+[0/1] Planning build
+Building for debugging...
+[0/3] Write swift-version-4657CCE4B953477C.txt
+Build of product 'LocalizationTools' complete! (0.18s)
+Command line invocation:
+    /Applications/Xcode_16.2.app/Contents/Developer/usr/bin/xcodebuild -importLocalizations -project /Users/runner/work/giellakbd-ios/giellakbd-ios/LocalizationTools/../GiellaKeyboard.xcodeproj -localizationPath /var/folders/r4/ph658m2d3vs0vj00g75q0zyr0000gn/T/locales_to_import/en.xcloc
+
+User defaults from command line:
+    IDEPackageSupportUseBuiltinSCM = YES
+
+Localization Import started for GiellaKeyboard project
+2025-02-17 19:41:23 Started import
+2025-02-17 19:41:24 Comparing
+2025-02-17 19:41:24 Checking for new localizations in the XLIFF for HostingApp/en.lproj/InfoPlist.strings...
+2025-02-17 19:41:24 Checking for new localizations in the xcloc for HostingApp/Images.xcassets...
+2025-02-17 19:41:24 Checking for new localizations in the XLIFF for HostingApp/Base.lproj/Localizable.strings...
+2025-02-17 19:41:24 Checking for new localizations in the XLIFF for HostingApp/Settings.bundle/en.lproj/Root.strings...
+2025-02-17 19:41:24 Checking for new localizations in the XLIFF for Keyboard/en.lproj/InfoPlist.strings...
+2025-02-17 19:41:24 --- WARNING: Key "accessibility.moreSymbols" used with multiple values. Value "more: symbols" kept. Value "accessibility.moreSymbols" ignored.
+2025-02-17 19:41:24 --- WARNING: Key "accessibility.shift" used with multiple values. Value "shift" kept. Value "accessibility.shift" ignored.
+2025-02-17 19:41:24 --- WARNING: Key "accessibility.backspace" used with multiple values. Value "delete" kept. Value "accessibility.backspace" ignored.
+2025-02-17 19:41:24 --- WARNING: Key "accessibility.moreNumbers" used with multiple values. Value "more: numbers" kept. Value "accessibility.moreNumbers" ignored.
+2025-02-17 19:41:24 --- WARNING: Key "accessibility.moreLetters" used with multiple values. Value "more: letters" kept. Value "accessibility.moreLetters" ignored.
+2025-02-17 19:41:24 --- WARNING: Key "accessibility.space" used with multiple values. Value "space" kept. Value "accessibility.space" ignored.
+2025-02-17 19:41:24 --- WARNING: Key "accessibility.nextKeyboard" used with multiple values. Value "next keyboard" kept. Value "accessibility.nextKeyboard" ignored.
+--- xcodebuild: WARNING: HostingApp/en.lproj/InfoPlist.strings: File not found in the XLIFF
+--- xcodebuild: WARNING: Keyboard/en.lproj/InfoPlist.strings: File not found in the XLIFF
+2025-02-17 19:41:24 Writing
+2025-02-17 19:41:24 --- WARNING: Key "accessibility.moreSymbols" used with multiple values. Value "more: symbols" kept. Value "accessibility.moreSymbols" ignored.
+2025-02-17 19:41:24 --- WARNING: Key "accessibility.shift" used with multiple values. Value "shift" kept. Value "accessibility.shift" ignored.
+2025-02-17 19:41:24 --- WARNING: Key "accessibility.backspace" used with multiple values. Value "delete" kept. Value "accessibility.backspace" ignored.
+2025-02-17 19:41:24 --- WARNING: Key "accessibility.moreNumbers" used with multiple values. Value "more: numbers" kept. Value "accessibility.moreNumbers" ignored.
+2025-02-17 19:41:24 --- WARNING: Key "accessibility.moreLetters" used with multiple values. Value "more: letters" kept. Value "accessibility.moreLetters" ignored.
+2025-02-17 19:41:24 --- WARNING: Key "accessibility.space" used with multiple values. Value "space" kept. Value "accessibility.space" ignored.
+2025-02-17 19:41:24 --- WARNING: Key "accessibility.nextKeyboard" used with multiple values. Value "next keyboard" kept. Value "accessibility.nextKeyboard" ignored.
+2025-02-17 19:41:24 No translations to import for HostingApp/Settings.bundle/en.lproj/Root.strings
+2025-02-17 19:41:24 No translations to import for HostingApp/Base.lproj/Localizable.strings
+Command line invocation:
+    /Applications/Xcode_16.2.app/Contents/Developer/usr/bin/xcodebuild -importLocalizations -project /Users/runner/work/giellakbd-ios/giellakbd-ios/LocalizationTools/../GiellaKeyboard.xcodeproj -localizationPath /var/folders/r4/ph658m2d3vs0vj00g75q0zyr0000gn/T/locales_to_import/fi.xcloc
+
+User defaults from command line:
+    IDEPackageSupportUseBuiltinSCM = YES
+
+Localization Import started for GiellaKeyboard project
+2025-02-17 19:41:26 Started import
+2025-02-17 19:41:26 Comparing
+2025-02-17 19:41:26 Checking for new localizations in the XLIFF for HostingApp/en.lproj/InfoPlist.strings...
+2025-02-17 19:41:27 Checking for new localizations in the xcloc for HostingApp/Images.xcassets...
+2025-02-17 19:41:27 Checking for new localizations in the XLIFF for HostingApp/Base.lproj/Localizable.strings...
+2025-02-17 19:41:27 Checking for new localizations in the XLIFF for HostingApp/Settings.bundle/en.lproj/Root.strings...
+2025-02-17 19:41:27 --- WARNING: Key "accessibility.moreSymbols" used with multiple values. Value "more: symbols" kept. Value "accessibility.moreSymbols" ignored.
+2025-02-17 19:41:27 --- WARNING: Key "accessibility.shift" used with multiple values. Value "shift" kept. Value "accessibility.shift" ignored.
+2025-02-17 19:41:27 --- WARNING: Key "accessibility.backspace" used with multiple values. Value "delete" kept. Value "accessibility.backspace" ignored.
+2025-02-17 19:41:27 --- WARNING: Key "accessibility.moreNumbers" used with multiple values. Value "more: numbers" kept. Value "accessibility.moreNumbers" ignored.
+2025-02-17 19:41:27 --- WARNING: Key "accessibility.moreLetters" used with multiple values. Value "more: letters" kept. Value "accessibility.moreLetters" ignored.
+2025-02-17 19:41:27 --- WARNING: Key "accessibility.space" used with multiple values. Value "space" kept. Value "accessibility.space" ignored.
+2025-02-17 19:41:27 --- WARNING: Key "accessibility.nextKeyboard" used with multiple values. Value "next keyboard" kept. Value "accessibility.nextKeyboard" ignored.
+2025-02-17 19:41:27 Checking for new localizations in the XLIFF for Keyboard/en.lproj/InfoPlist.strings...
+--- xcodebuild: WARNING: HostingApp/en.lproj/InfoPlist.strings: File not found in the XLIFF
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "You can submit a request for support with one of the following options:")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "The %@ keyboard is currently not supported on this device.")
+--- xcodebuild: WARNING: Keyboard/en.lproj/InfoPlist.strings: File not found in the XLIFF
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "Group")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "Name")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "Enabled")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "none given")
+2025-02-17 19:41:27 Writing
+2025-02-17 19:41:27 --- WARNING: Key "accessibility.moreSymbols" used with multiple values. Value "more: symbols" kept. Value "accessibility.moreSymbols" ignored.
+2025-02-17 19:41:27 --- WARNING: Key "accessibility.shift" used with multiple values. Value "shift" kept. Value "accessibility.shift" ignored.
+2025-02-17 19:41:27 --- WARNING: Key "accessibility.backspace" used with multiple values. Value "delete" kept. Value "accessibility.backspace" ignored.
+2025-02-17 19:41:27 --- WARNING: Key "accessibility.moreNumbers" used with multiple values. Value "more: numbers" kept. Value "accessibility.moreNumbers" ignored.
+2025-02-17 19:41:27 --- WARNING: Key "accessibility.moreLetters" used with multiple values. Value "more: letters" kept. Value "accessibility.moreLetters" ignored.
+2025-02-17 19:41:27 --- WARNING: Key "accessibility.space" used with multiple values. Value "space" kept. Value "accessibility.space" ignored.
+2025-02-17 19:41:27 --- WARNING: Key "accessibility.nextKeyboard" used with multiple values. Value "next keyboard" kept. Value "accessibility.nextKeyboard" ignored.
+2025-02-17 19:41:27 No translations to import for HostingApp/Settings.bundle/en.lproj/Root.strings
+Command line invocation:
+    /Applications/Xcode_16.2.app/Contents/Developer/usr/bin/xcodebuild -importLocalizations -project /Users/runner/work/giellakbd-ios/giellakbd-ios/LocalizationTools/../GiellaKeyboard.xcodeproj -localizationPath /var/folders/r4/ph658m2d3vs0vj00g75q0zyr0000gn/T/locales_to_import/mdf.xcloc
+
+User defaults from command line:
+    IDEPackageSupportUseBuiltinSCM = YES
+
+Localization Import started for GiellaKeyboard project
+2025-02-17 19:41:28 Started import
+2025-02-17 19:41:28 Comparing
+2025-02-17 19:41:28 Checking for new localizations in the XLIFF for HostingApp/en.lproj/InfoPlist.strings...
+2025-02-17 19:41:28 Checking for new localizations in the xcloc for HostingApp/Images.xcassets...
+2025-02-17 19:41:28 Checking for new localizations in the XLIFF for HostingApp/Base.lproj/Localizable.strings...
+2025-02-17 19:41:28 Checking for new localizations in the XLIFF for HostingApp/Settings.bundle/en.lproj/Root.strings...
+2025-02-17 19:41:28 Checking for new localizations in the XLIFF for Keyboard/en.lproj/InfoPlist.strings...
+2025-02-17 19:41:28 --- WARNING: Key "accessibility.moreSymbols" used with multiple values. Value "more: symbols" kept. Value "accessibility.moreSymbols" ignored.
+2025-02-17 19:41:28 --- WARNING: Key "accessibility.shift" used with multiple values. Value "shift" kept. Value "accessibility.shift" ignored.
+2025-02-17 19:41:28 --- WARNING: Key "accessibility.backspace" used with multiple values. Value "delete" kept. Value "accessibility.backspace" ignored.
+2025-02-17 19:41:28 --- WARNING: Key "accessibility.moreNumbers" used with multiple values. Value "more: numbers" kept. Value "accessibility.moreNumbers" ignored.
+2025-02-17 19:41:28 --- WARNING: Key "accessibility.moreLetters" used with multiple values. Value "more: letters" kept. Value "accessibility.moreLetters" ignored.
+2025-02-17 19:41:28 --- WARNING: Key "accessibility.space" used with multiple values. Value "space" kept. Value "accessibility.space" ignored.
+2025-02-17 19:41:28 --- WARNING: Key "accessibility.nextKeyboard" used with multiple values. Value "next keyboard" kept. Value "accessibility.nextKeyboard" ignored.
+--- xcodebuild: WARNING: HostingApp/en.lproj/InfoPlist.strings: File not found in the XLIFF
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "You can submit a request for support with one of the following options:")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "The %@ keyboard is currently not supported on this device.")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.shift")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.backspace")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.moreNumbers")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.moreLetters")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.space")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.nextKeyboard")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.moreSymbols")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "Group")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "Name")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "Enabled")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "none given")
+--- xcodebuild: WARNING: Keyboard/en.lproj/InfoPlist.strings: File not found in the XLIFF
+2025-02-17 19:41:28 Writing
+2025-02-17 19:41:28 --- WARNING: Key "accessibility.moreSymbols" used with multiple values. Value "more: symbols" kept. Value "accessibility.moreSymbols" ignored.
+2025-02-17 19:41:28 --- WARNING: Key "accessibility.shift" used with multiple values. Value "shift" kept. Value "accessibility.shift" ignored.
+2025-02-17 19:41:28 --- WARNING: Key "accessibility.backspace" used with multiple values. Value "delete" kept. Value "accessibility.backspace" ignored.
+2025-02-17 19:41:28 --- WARNING: Key "accessibility.moreNumbers" used with multiple values. Value "more: numbers" kept. Value "accessibility.moreNumbers" ignored.
+2025-02-17 19:41:28 --- WARNING: Key "accessibility.moreLetters" used with multiple values. Value "more: letters" kept. Value "accessibility.moreLetters" ignored.
+2025-02-17 19:41:28 --- WARNING: Key "accessibility.space" used with multiple values. Value "space" kept. Value "accessibility.space" ignored.
+2025-02-17 19:41:28 --- WARNING: Key "accessibility.nextKeyboard" used with multiple values. Value "next keyboard" kept. Value "accessibility.nextKeyboard" ignored.
+2025-02-17 19:41:28 No translations to import for HostingApp/Settings.bundle/en.lproj/Root.strings
+Command line invocation:
+    /Applications/Xcode_16.2.app/Contents/Developer/usr/bin/xcodebuild -importLocalizations -project /Users/runner/work/giellakbd-ios/giellakbd-ios/LocalizationTools/../GiellaKeyboard.xcodeproj -localizationPath /var/folders/r4/ph658m2d3vs0vj00g75q0zyr0000gn/T/locales_to_import/myv.xcloc
+
+User defaults from command line:
+    IDEPackageSupportUseBuiltinSCM = YES
+
+Localization Import started for GiellaKeyboard project
+2025-02-17 19:41:29 Started import
+2025-02-17 19:41:29 Comparing
+2025-02-17 19:41:29 Checking for new localizations in the XLIFF for HostingApp/en.lproj/InfoPlist.strings...
+2025-02-17 19:41:29 Checking for new localizations in the xcloc for HostingApp/Images.xcassets...
+2025-02-17 19:41:29 Checking for new localizations in the XLIFF for HostingApp/Base.lproj/Localizable.strings...
+2025-02-17 19:41:29 --- WARNING: Key "accessibility.moreSymbols" used with multiple values. Value "more: symbols" kept. Value "accessibility.moreSymbols" ignored.
+2025-02-17 19:41:29 --- WARNING: Key "accessibility.shift" used with multiple values. Value "shift" kept. Value "accessibility.shift" ignored.
+2025-02-17 19:41:29 --- WARNING: Key "accessibility.backspace" used with multiple values. Value "delete" kept. Value "accessibility.backspace" ignored.
+2025-02-17 19:41:29 --- WARNING: Key "accessibility.moreNumbers" used with multiple values. Value "more: numbers" kept. Value "accessibility.moreNumbers" ignored.
+2025-02-17 19:41:29 --- WARNING: Key "accessibility.moreLetters" used with multiple values. Value "more: letters" kept. Value "accessibility.moreLetters" ignored.
+2025-02-17 19:41:29 --- WARNING: Key "accessibility.space" used with multiple values. Value "space" kept. Value "accessibility.space" ignored.
+2025-02-17 19:41:29 --- WARNING: Key "accessibility.nextKeyboard" used with multiple values. Value "next keyboard" kept. Value "accessibility.nextKeyboard" ignored.
+2025-02-17 19:41:29 Checking for new localizations in the XLIFF for HostingApp/Settings.bundle/en.lproj/Root.strings...
+2025-02-17 19:41:29 Checking for new localizations in the XLIFF for Keyboard/en.lproj/InfoPlist.strings...
+--- xcodebuild: WARNING: HostingApp/en.lproj/InfoPlist.strings: File not found in the XLIFF
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "You can submit a request for support with one of the following options:")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "The %@ keyboard is currently not supported on this device.")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.shift")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.backspace")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.moreNumbers")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.moreLetters")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.space")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.nextKeyboard")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.moreSymbols")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "Group")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "Name")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "Enabled")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "none given")
+--- xcodebuild: WARNING: Keyboard/en.lproj/InfoPlist.strings: File not found in the XLIFF
+2025-02-17 19:41:29 Writing
+2025-02-17 19:41:29 --- WARNING: Key "accessibility.moreSymbols" used with multiple values. Value "more: symbols" kept. Value "accessibility.moreSymbols" ignored.
+2025-02-17 19:41:29 --- WARNING: Key "accessibility.shift" used with multiple values. Value "shift" kept. Value "accessibility.shift" ignored.
+2025-02-17 19:41:29 --- WARNING: Key "accessibility.backspace" used with multiple values. Value "delete" kept. Value "accessibility.backspace" ignored.
+2025-02-17 19:41:29 --- WARNING: Key "accessibility.moreNumbers" used with multiple values. Value "more: numbers" kept. Value "accessibility.moreNumbers" ignored.
+2025-02-17 19:41:29 --- WARNING: Key "accessibility.moreLetters" used with multiple values. Value "more: letters" kept. Value "accessibility.moreLetters" ignored.
+2025-02-17 19:41:29 --- WARNING: Key "accessibility.space" used with multiple values. Value "space" kept. Value "accessibility.space" ignored.
+2025-02-17 19:41:29 --- WARNING: Key "accessibility.nextKeyboard" used with multiple values. Value "next keyboard" kept. Value "accessibility.nextKeyboard" ignored.
+2025-02-17 19:41:29 No translations to import for HostingApp/Settings.bundle/en.lproj/Root.strings
+Command line invocation:
+    /Applications/Xcode_16.2.app/Contents/Developer/usr/bin/xcodebuild -importLocalizations -project /Users/runner/work/giellakbd-ios/giellakbd-ios/LocalizationTools/../GiellaKeyboard.xcodeproj -localizationPath /var/folders/r4/ph658m2d3vs0vj00g75q0zyr0000gn/T/locales_to_import/nb.xcloc
+
+User defaults from command line:
+    IDEPackageSupportUseBuiltinSCM = YES
+
+Localization Import started for GiellaKeyboard project
+2025-02-17 19:41:30 Started import
+2025-02-17 19:41:31 Comparing
+2025-02-17 19:41:31 Checking for new localizations in the XLIFF for HostingApp/en.lproj/InfoPlist.strings...
+2025-02-17 19:41:31 Checking for new localizations in the XLIFF for HostingApp/Base.lproj/Localizable.strings...
+2025-02-17 19:41:31 --- WARNING: Key "accessibility.moreSymbols" used with multiple values. Value "more: symbols" kept. Value "accessibility.moreSymbols" ignored.
+2025-02-17 19:41:31 --- WARNING: Key "accessibility.shift" used with multiple values. Value "shift" kept. Value "accessibility.shift" ignored.
+2025-02-17 19:41:31 --- WARNING: Key "accessibility.backspace" used with multiple values. Value "delete" kept. Value "accessibility.backspace" ignored.
+2025-02-17 19:41:31 --- WARNING: Key "accessibility.moreNumbers" used with multiple values. Value "more: numbers" kept. Value "accessibility.moreNumbers" ignored.
+2025-02-17 19:41:31 --- WARNING: Key "accessibility.moreLetters" used with multiple values. Value "more: letters" kept. Value "accessibility.moreLetters" ignored.
+2025-02-17 19:41:31 --- WARNING: Key "accessibility.space" used with multiple values. Value "space" kept. Value "accessibility.space" ignored.
+2025-02-17 19:41:31 --- WARNING: Key "accessibility.nextKeyboard" used with multiple values. Value "next keyboard" kept. Value "accessibility.nextKeyboard" ignored.
+2025-02-17 19:41:31 Checking for new localizations in the XLIFF for HostingApp/Settings.bundle/en.lproj/Root.strings...
+2025-02-17 19:41:31 Checking for new localizations in the XLIFF for Keyboard/en.lproj/InfoPlist.strings...
+2025-02-17 19:41:31 Checking for new localizations in the xcloc for HostingApp/Images.xcassets...
+--- xcodebuild: WARNING: HostingApp/en.lproj/InfoPlist.strings: File not found in the XLIFF
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "You can submit a request for support with one of the following options:")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "The %@ keyboard is currently not supported on this device.")
+--- xcodebuild: WARNING: Keyboard/en.lproj/InfoPlist.strings: File not found in the XLIFF
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "Group")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "Name")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "Enabled")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "none given")
+2025-02-17 19:41:31 Writing
+2025-02-17 19:41:31 --- WARNING: Key "accessibility.moreSymbols" used with multiple values. Value "more: symbols" kept. Value "accessibility.moreSymbols" ignored.
+2025-02-17 19:41:31 --- WARNING: Key "accessibility.shift" used with multiple values. Value "shift" kept. Value "accessibility.shift" ignored.
+2025-02-17 19:41:31 --- WARNING: Key "accessibility.backspace" used with multiple values. Value "delete" kept. Value "accessibility.backspace" ignored.
+2025-02-17 19:41:31 --- WARNING: Key "accessibility.moreNumbers" used with multiple values. Value "more: numbers" kept. Value "accessibility.moreNumbers" ignored.
+2025-02-17 19:41:31 --- WARNING: Key "accessibility.moreLetters" used with multiple values. Value "more: letters" kept. Value "accessibility.moreLetters" ignored.
+2025-02-17 19:41:31 --- WARNING: Key "accessibility.space" used with multiple values. Value "space" kept. Value "accessibility.space" ignored.
+2025-02-17 19:41:31 --- WARNING: Key "accessibility.nextKeyboard" used with multiple values. Value "next keyboard" kept. Value "accessibility.nextKeyboard" ignored.
+2025-02-17 19:41:31 No translations to import for HostingApp/Settings.bundle/en.lproj/Root.strings
+Command line invocation:
+    /Applications/Xcode_16.2.app/Contents/Developer/usr/bin/xcodebuild -importLocalizations -project /Users/runner/work/giellakbd-ios/giellakbd-ios/LocalizationTools/../GiellaKeyboard.xcodeproj -localizationPath /var/folders/r4/ph658m2d3vs0vj00g75q0zyr0000gn/T/locales_to_import/nn.xcloc
+
+User defaults from command line:
+    IDEPackageSupportUseBuiltinSCM = YES
+
+Localization Import started for GiellaKeyboard project
+2025-02-17 19:41:32 Started import
+2025-02-17 19:41:32 Comparing
+2025-02-17 19:41:32 Checking for new localizations in the XLIFF for HostingApp/en.lproj/InfoPlist.strings...
+2025-02-17 19:41:32 Checking for new localizations in the XLIFF for HostingApp/Base.lproj/Localizable.strings...
+--- xcodebuild: WARNING: HostingApp/en.lproj/InfoPlist.strings: File not found in the XLIFF
+--- xcodebuild: WARNING: Keyboard/en.lproj/InfoPlist.strings: File not found in the XLIFF
+2025-02-17 19:41:32 --- WARNING: Key "accessibility.moreSymbols" used with multiple values. Value "more: symbols" kept. Value "accessibility.moreSymbols" ignored.
+2025-02-17 19:41:32 --- WARNING: Key "accessibility.shift" used with multiple values. Value "shift" kept. Value "accessibility.shift" ignored.
+2025-02-17 19:41:32 Writing
+2025-02-17 19:41:32 --- WARNING: Key "accessibility.backspace" used with multiple values. Value "delete" kept. Value "accessibility.backspace" ignored.
+2025-02-17 19:41:32 --- WARNING: Key "accessibility.moreNumbers" used with multiple values. Value "more: numbers" kept. Value "accessibility.moreNumbers" ignored.
+2025-02-17 19:41:32 --- WARNING: Key "accessibility.moreLetters" used with multiple values. Value "more: letters" kept. Value "accessibility.moreLetters" ignored.
+2025-02-17 19:41:32 --- WARNING: Key "accessibility.space" used with multiple values. Value "space" kept. Value "accessibility.space" ignored.
+2025-02-17 19:41:32 --- WARNING: Key "accessibility.nextKeyboard" used with multiple values. Value "next keyboard" kept. Value "accessibility.nextKeyboard" ignored.
+2025-02-17 19:41:32 Checking for new localizations in the XLIFF for HostingApp/Settings.bundle/en.lproj/Root.strings...
+2025-02-17 19:41:32 Checking for new localizations in the xcloc for HostingApp/Images.xcassets...
+2025-02-17 19:41:32 Checking for new localizations in the XLIFF for Keyboard/en.lproj/InfoPlist.strings...
+2025-02-17 19:41:32 --- WARNING: Key "accessibility.moreSymbols" used with multiple values. Value "more: symbols" kept. Value "accessibility.moreSymbols" ignored.
+2025-02-17 19:41:32 --- WARNING: Key "accessibility.shift" used with multiple values. Value "shift" kept. Value "accessibility.shift" ignored.
+2025-02-17 19:41:32 --- WARNING: Key "accessibility.backspace" used with multiple values. Value "delete" kept. Value "accessibility.backspace" ignored.
+2025-02-17 19:41:32 --- WARNING: Key "accessibility.moreNumbers" used with multiple values. Value "more: numbers" kept. Value "accessibility.moreNumbers" ignored.
+2025-02-17 19:41:32 --- WARNING: Key "accessibility.moreLetters" used with multiple values. Value "more: letters" kept. Value "accessibility.moreLetters" ignored.
+2025-02-17 19:41:32 --- WARNING: Key "accessibility.space" used with multiple values. Value "space" kept. Value "accessibility.space" ignored.
+2025-02-17 19:41:32 --- WARNING: Key "accessibility.nextKeyboard" used with multiple values. Value "next keyboard" kept. Value "accessibility.nextKeyboard" ignored.
+Command line invocation:
+    /Applications/Xcode_16.2.app/Contents/Developer/usr/bin/xcodebuild -importLocalizations -project /Users/runner/work/giellakbd-ios/giellakbd-ios/LocalizationTools/../GiellaKeyboard.xcodeproj -localizationPath /var/folders/r4/ph658m2d3vs0vj00g75q0zyr0000gn/T/locales_to_import/ru.xcloc
+
+User defaults from command line:
+    IDEPackageSupportUseBuiltinSCM = YES
+
+Localization Import started for GiellaKeyboard project
+2025-02-17 19:41:32 Started import
+2025-02-17 19:41:33 Comparing
+2025-02-17 19:41:33 Checking for new localizations in the XLIFF for HostingApp/en.lproj/InfoPlist.strings...
+2025-02-17 19:41:33 Checking for new localizations in the xcloc for HostingApp/Images.xcassets...
+2025-02-17 19:41:33 Checking for new localizations in the XLIFF for HostingApp/Base.lproj/Localizable.strings...
+2025-02-17 19:41:33 Checking for new localizations in the XLIFF for HostingApp/Settings.bundle/en.lproj/Root.strings...
+2025-02-17 19:41:33 --- WARNING: Key "accessibility.moreSymbols" used with multiple values. Value "more: symbols" kept. Value "accessibility.moreSymbols" ignored.
+2025-02-17 19:41:33 --- WARNING: Key "accessibility.shift" used with multiple values. Value "shift" kept. Value "accessibility.shift" ignored.
+2025-02-17 19:41:33 --- WARNING: Key "accessibility.backspace" used with multiple values. Value "delete" kept. Value "accessibility.backspace" ignored.
+2025-02-17 19:41:33 --- WARNING: Key "accessibility.moreNumbers" used with multiple values. Value "more: numbers" kept. Value "accessibility.moreNumbers" ignored.
+2025-02-17 19:41:33 --- WARNING: Key "accessibility.moreLetters" used with multiple values. Value "more: letters" kept. Value "accessibility.moreLetters" ignored.
+2025-02-17 19:41:33 --- WARNING: Key "accessibility.space" used with multiple values. Value "space" kept. Value "accessibility.space" ignored.
+2025-02-17 19:41:33 Checking for new localizations in the XLIFF for Keyboard/en.lproj/InfoPlist.strings...
+2025-02-17 19:41:33 --- WARNING: Key "accessibility.nextKeyboard" used with multiple values. Value "next keyboard" kept. Value "accessibility.nextKeyboard" ignored.
+--- xcodebuild: WARNING: HostingApp/en.lproj/InfoPlist.strings: File not found in the XLIFF
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "You can submit a request for support with one of the following options:")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "The %@ keyboard is currently not supported on this device.")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.shift")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.backspace")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.moreNumbers")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.moreLetters")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.space")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.nextKeyboard")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.moreSymbols")
+--- xcodebuild: WARNING: Keyboard/en.lproj/InfoPlist.strings: File not found in the XLIFF
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "Group")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "Name")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "Enabled")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "none given")
+2025-02-17 19:41:33 Writing
+2025-02-17 19:41:33 --- WARNING: Key "accessibility.moreSymbols" used with multiple values. Value "more: symbols" kept. Value "accessibility.moreSymbols" ignored.
+2025-02-17 19:41:33 --- WARNING: Key "accessibility.shift" used with multiple values. Value "shift" kept. Value "accessibility.shift" ignored.
+2025-02-17 19:41:33 --- WARNING: Key "accessibility.backspace" used with multiple values. Value "delete" kept. Value "accessibility.backspace" ignored.
+2025-02-17 19:41:33 --- WARNING: Key "accessibility.moreNumbers" used with multiple values. Value "more: numbers" kept. Value "accessibility.moreNumbers" ignored.
+2025-02-17 19:41:33 --- WARNING: Key "accessibility.moreLetters" used with multiple values. Value "more: letters" kept. Value "accessibility.moreLetters" ignored.
+2025-02-17 19:41:33 --- WARNING: Key "accessibility.space" used with multiple values. Value "space" kept. Value "accessibility.space" ignored.
+2025-02-17 19:41:33 --- WARNING: Key "accessibility.nextKeyboard" used with multiple values. Value "next keyboard" kept. Value "accessibility.nextKeyboard" ignored.
+2025-02-17 19:41:33 No translations to import for HostingApp/Settings.bundle/en.lproj/Root.strings
+Command line invocation:
+    /Applications/Xcode_16.2.app/Contents/Developer/usr/bin/xcodebuild -importLocalizations -project /Users/runner/work/giellakbd-ios/giellakbd-ios/LocalizationTools/../GiellaKeyboard.xcodeproj -localizationPath /var/folders/r4/ph658m2d3vs0vj00g75q0zyr0000gn/T/locales_to_import/se.xcloc
+
+User defaults from command line:
+    IDEPackageSupportUseBuiltinSCM = YES
+
+Localization Import started for GiellaKeyboard project
+2025-02-17 19:41:33 Started import
+2025-02-17 19:41:33 Comparing
+2025-02-17 19:41:33 Checking for new localizations in the XLIFF for HostingApp/en.lproj/InfoPlist.strings...
+2025-02-17 19:41:33 Checking for new localizations in the xcloc for HostingApp/Images.xcassets...
+2025-02-17 19:41:33 Checking for new localizations in the XLIFF for HostingApp/Settings.bundle/en.lproj/Root.strings...
+2025-02-17 19:41:33 Checking for new localizations in the XLIFF for HostingApp/Base.lproj/Localizable.strings...
+2025-02-17 19:41:33 Checking for new localizations in the XLIFF for Keyboard/en.lproj/InfoPlist.strings...
+2025-02-17 19:41:33 --- WARNING: Key "accessibility.moreSymbols" used with multiple values. Value "more: symbols" kept. Value "accessibility.moreSymbols" ignored.
+2025-02-17 19:41:33 --- WARNING: Key "accessibility.shift" used with multiple values. Value "shift" kept. Value "accessibility.shift" ignored.
+2025-02-17 19:41:33 --- WARNING: Key "accessibility.backspace" used with multiple values. Value "delete" kept. Value "accessibility.backspace" ignored.
+2025-02-17 19:41:33 --- WARNING: Key "accessibility.moreNumbers" used with multiple values. Value "more: numbers" kept. Value "accessibility.moreNumbers" ignored.
+2025-02-17 19:41:33 --- WARNING: Key "accessibility.moreLetters" used with multiple values. Value "more: letters" kept. Value "accessibility.moreLetters" ignored.
+2025-02-17 19:41:33 --- WARNING: Key "accessibility.space" used with multiple values. Value "space" kept. Value "accessibility.space" ignored.
+2025-02-17 19:41:33 --- WARNING: Key "accessibility.nextKeyboard" used with multiple values. Value "next keyboard" kept. Value "accessibility.nextKeyboard" ignored.
+--- xcodebuild: WARNING: HostingApp/en.lproj/InfoPlist.strings: File not found in the XLIFF
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "You can submit a request for support with one of the following options:")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "The %@ keyboard is currently not supported on this device.")
+--- xcodebuild: WARNING: Keyboard/en.lproj/InfoPlist.strings: File not found in the XLIFF
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "Group")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "Name")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "Enabled")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "none given")
+2025-02-17 19:41:33 Writing
+2025-02-17 19:41:33 --- WARNING: Key "accessibility.moreSymbols" used with multiple values. Value "more: symbols" kept. Value "accessibility.moreSymbols" ignored.
+2025-02-17 19:41:33 --- WARNING: Key "accessibility.shift" used with multiple values. Value "shift" kept. Value "accessibility.shift" ignored.
+2025-02-17 19:41:33 --- WARNING: Key "accessibility.backspace" used with multiple values. Value "delete" kept. Value "accessibility.backspace" ignored.
+2025-02-17 19:41:33 --- WARNING: Key "accessibility.moreNumbers" used with multiple values. Value "more: numbers" kept. Value "accessibility.moreNumbers" ignored.
+2025-02-17 19:41:33 No translations to import for HostingApp/Settings.bundle/en.lproj/Root.strings
+2025-02-17 19:41:33 --- WARNING: Key "accessibility.moreLetters" used with multiple values. Value "more: letters" kept. Value "accessibility.moreLetters" ignored.
+2025-02-17 19:41:33 --- WARNING: Key "accessibility.space" used with multiple values. Value "space" kept. Value "accessibility.space" ignored.
+2025-02-17 19:41:33 --- WARNING: Key "accessibility.nextKeyboard" used with multiple values. Value "next keyboard" kept. Value "accessibility.nextKeyboard" ignored.
+Command line invocation:
+    /Applications/Xcode_16.2.app/Contents/Developer/usr/bin/xcodebuild -importLocalizations -project /Users/runner/work/giellakbd-ios/giellakbd-ios/LocalizationTools/../GiellaKeyboard.xcodeproj -localizationPath /var/folders/r4/ph658m2d3vs0vj00g75q0zyr0000gn/T/locales_to_import/sma.xcloc
+
+User defaults from command line:
+    IDEPackageSupportUseBuiltinSCM = YES
+
+Localization Import started for GiellaKeyboard project
+2025-02-17 19:41:34 Started import
+2025-02-17 19:41:34 Comparing
+2025-02-17 19:41:34 Checking for new localizations in the XLIFF for HostingApp/en.lproj/InfoPlist.strings...
+2025-02-17 19:41:34 Checking for new localizations in the xcloc for HostingApp/Images.xcassets...
+2025-02-17 19:41:34 Checking for new localizations in the XLIFF for HostingApp/Base.lproj/Localizable.strings...
+2025-02-17 19:41:34 Checking for new localizations in the XLIFF for HostingApp/Settings.bundle/en.lproj/Root.strings...
+2025-02-17 19:41:34 Checking for new localizations in the XLIFF for Keyboard/en.lproj/InfoPlist.strings...
+2025-02-17 19:41:34 --- WARNING: Key "accessibility.moreSymbols" used with multiple values. Value "more: symbols" kept. Value "accessibility.moreSymbols" ignored.
+2025-02-17 19:41:34 --- WARNING: Key "accessibility.shift" used with multiple values. Value "shift" kept. Value "accessibility.shift" ignored.
+2025-02-17 19:41:34 --- WARNING: Key "accessibility.backspace" used with multiple values. Value "delete" kept. Value "accessibility.backspace" ignored.
+2025-02-17 19:41:34 --- WARNING: Key "accessibility.moreNumbers" used with multiple values. Value "more: numbers" kept. Value "accessibility.moreNumbers" ignored.
+2025-02-17 19:41:34 --- WARNING: Key "accessibility.moreLetters" used with multiple values. Value "more: letters" kept. Value "accessibility.moreLetters" ignored.
+2025-02-17 19:41:34 --- WARNING: Key "accessibility.space" used with multiple values. Value "space" kept. Value "accessibility.space" ignored.
+2025-02-17 19:41:34 --- WARNING: Key "accessibility.nextKeyboard" used with multiple values. Value "next keyboard" kept. Value "accessibility.nextKeyboard" ignored.
+--- xcodebuild: WARNING: HostingApp/en.lproj/InfoPlist.strings: File not found in the XLIFF
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "You can submit a request for support with one of the following options:")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "The %@ keyboard is currently not supported on this device.")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.shift")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.backspace")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.moreNumbers")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.moreLetters")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.space")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.nextKeyboard")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.moreSymbols")
+--- xcodebuild: WARNING: Keyboard/en.lproj/InfoPlist.strings: File not found in the XLIFF
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "Group")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "Name")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "Enabled")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "none given")
+2025-02-17 19:41:34 Writing
+2025-02-17 19:41:34 No translations to import for HostingApp/Settings.bundle/en.lproj/Root.strings
+2025-02-17 19:41:34 --- WARNING: Key "accessibility.moreSymbols" used with multiple values. Value "more: symbols" kept. Value "accessibility.moreSymbols" ignored.
+2025-02-17 19:41:34 --- WARNING: Key "accessibility.shift" used with multiple values. Value "shift" kept. Value "accessibility.shift" ignored.
+2025-02-17 19:41:34 --- WARNING: Key "accessibility.backspace" used with multiple values. Value "delete" kept. Value "accessibility.backspace" ignored.
+2025-02-17 19:41:34 --- WARNING: Key "accessibility.moreNumbers" used with multiple values. Value "more: numbers" kept. Value "accessibility.moreNumbers" ignored.
+2025-02-17 19:41:34 --- WARNING: Key "accessibility.moreLetters" used with multiple values. Value "more: letters" kept. Value "accessibility.moreLetters" ignored.
+2025-02-17 19:41:34 --- WARNING: Key "accessibility.space" used with multiple values. Value "space" kept. Value "accessibility.space" ignored.
+2025-02-17 19:41:34 --- WARNING: Key "accessibility.nextKeyboard" used with multiple values. Value "next keyboard" kept. Value "accessibility.nextKeyboard" ignored.
+Command line invocation:
+    /Applications/Xcode_16.2.app/Contents/Developer/usr/bin/xcodebuild -importLocalizations -project /Users/runner/work/giellakbd-ios/giellakbd-ios/LocalizationTools/../GiellaKeyboard.xcodeproj -localizationPath /var/folders/r4/ph658m2d3vs0vj00g75q0zyr0000gn/T/locales_to_import/smj.xcloc
+
+User defaults from command line:
+    IDEPackageSupportUseBuiltinSCM = YES
+
+Localization Import started for GiellaKeyboard project
+2025-02-17 19:41:35 Started import
+2025-02-17 19:41:35 Comparing
+2025-02-17 19:41:35 Checking for new localizations in the XLIFF for HostingApp/en.lproj/InfoPlist.strings...
+2025-02-17 19:41:35 Checking for new localizations in the xcloc for HostingApp/Images.xcassets...
+2025-02-17 19:41:35 Checking for new localizations in the XLIFF for HostingApp/Base.lproj/Localizable.strings...
+2025-02-17 19:41:35 Checking for new localizations in the XLIFF for HostingApp/Settings.bundle/en.lproj/Root.strings...
+2025-02-17 19:41:35 Checking for new localizations in the XLIFF for Keyboard/en.lproj/InfoPlist.strings...
+2025-02-17 19:41:35 --- WARNING: Key "accessibility.moreSymbols" used with multiple values. Value "more: symbols" kept. Value "accessibility.moreSymbols" ignored.
+2025-02-17 19:41:35 --- WARNING: Key "accessibility.shift" used with multiple values. Value "shift" kept. Value "accessibility.shift" ignored.
+2025-02-17 19:41:35 --- WARNING: Key "accessibility.backspace" used with multiple values. Value "delete" kept. Value "accessibility.backspace" ignored.
+2025-02-17 19:41:35 --- WARNING: Key "accessibility.moreNumbers" used with multiple values. Value "more: numbers" kept. Value "accessibility.moreNumbers" ignored.
+2025-02-17 19:41:35 --- WARNING: Key "accessibility.moreLetters" used with multiple values. Value "more: letters" kept. Value "accessibility.moreLetters" ignored.
+2025-02-17 19:41:35 --- WARNING: Key "accessibility.space" used with multiple values. Value "space" kept. Value "accessibility.space" ignored.
+2025-02-17 19:41:35 --- WARNING: Key "accessibility.nextKeyboard" used with multiple values. Value "next keyboard" kept. Value "accessibility.nextKeyboard" ignored.
+--- xcodebuild: WARNING: HostingApp/en.lproj/InfoPlist.strings: File not found in the XLIFF
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "You can submit a request for support with one of the following options:")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "The %@ keyboard is currently not supported on this device.")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.shift")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.backspace")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.moreNumbers")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.moreLetters")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.space")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.nextKeyboard")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.moreSymbols")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "Group")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "Name")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "Enabled")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "none given")
+--- xcodebuild: WARNING: Keyboard/en.lproj/InfoPlist.strings: File not found in the XLIFF
+2025-02-17 19:41:35 Writing
+2025-02-17 19:41:35 --- WARNING: Key "accessibility.moreSymbols" used with multiple values. Value "more: symbols" kept. Value "accessibility.moreSymbols" ignored.
+2025-02-17 19:41:35 --- WARNING: Key "accessibility.shift" used with multiple values. Value "shift" kept. Value "accessibility.shift" ignored.
+2025-02-17 19:41:35 --- WARNING: Key "accessibility.backspace" used with multiple values. Value "delete" kept. Value "accessibility.backspace" ignored.
+2025-02-17 19:41:35 --- WARNING: Key "accessibility.moreNumbers" used with multiple values. Value "more: numbers" kept. Value "accessibility.moreNumbers" ignored.
+2025-02-17 19:41:35 --- WARNING: Key "accessibility.moreLetters" used with multiple values. Value "more: letters" kept. Value "accessibility.moreLetters" ignored.
+2025-02-17 19:41:35 --- WARNING: Key "accessibility.space" used with multiple values. Value "space" kept. Value "accessibility.space" ignored.
+2025-02-17 19:41:35 --- WARNING: Key "accessibility.nextKeyboard" used with multiple values. Value "next keyboard" kept. Value "accessibility.nextKeyboard" ignored.
+2025-02-17 19:41:35 No translations to import for HostingApp/Settings.bundle/en.lproj/Root.strings
+Command line invocation:
+    /Applications/Xcode_16.2.app/Contents/Developer/usr/bin/xcodebuild -importLocalizations -project /Users/runner/work/giellakbd-ios/giellakbd-ios/LocalizationTools/../GiellaKeyboard.xcodeproj -localizationPath /var/folders/r4/ph658m2d3vs0vj00g75q0zyr0000gn/T/locales_to_import/smn.xcloc
+
+User defaults from command line:
+    IDEPackageSupportUseBuiltinSCM = YES
+
+Localization Import started for GiellaKeyboard project
+2025-02-17 19:41:36 Started import
+2025-02-17 19:41:36 Comparing
+2025-02-17 19:41:36 Checking for new localizations in the XLIFF for HostingApp/en.lproj/InfoPlist.strings...
+2025-02-17 19:41:36 Checking for new localizations in the xcloc for HostingApp/Images.xcassets...
+--- xcodebuild: WARNING: HostingApp/en.lproj/InfoPlist.strings: File not found in the XLIFF
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "You can submit a request for support with one of the following options:")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "The %@ keyboard is currently not supported on this device.")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.shift")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.backspace")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.moreNumbers")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.moreLetters")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "enableKeyboards")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.space")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.nextKeyboard")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.moreSymbols")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "Group")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "Name")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "Enabled")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "none given")
+--- xcodebuild: WARNING: Keyboard/en.lproj/InfoPlist.strings: File not found in the XLIFF
+2025-02-17 19:41:36 Checking for new localizations in the XLIFF for HostingApp/Base.lproj/Localizable.strings...
+2025-02-17 19:41:36 Checking for new localizations in the XLIFF for HostingApp/Settings.bundle/en.lproj/Root.strings...
+2025-02-17 19:41:36 Checking for new localizations in the XLIFF for Keyboard/en.lproj/InfoPlist.strings...
+2025-02-17 19:41:36 --- WARNING: Key "accessibility.moreSymbols" used with multiple values. Value "more: symbols" kept. Value "accessibility.moreSymbols" ignored.
+2025-02-17 19:41:36 --- WARNING: Key "accessibility.shift" used with multiple values. Value "shift" kept. Value "accessibility.shift" ignored.
+2025-02-17 19:41:36 Writing
+2025-02-17 19:41:36 --- WARNING: Key "accessibility.backspace" used with multiple values. Value "delete" kept. Value "accessibility.backspace" ignored.
+2025-02-17 19:41:36 --- WARNING: Key "accessibility.moreNumbers" used with multiple values. Value "more: numbers" kept. Value "accessibility.moreNumbers" ignored.
+2025-02-17 19:41:36 --- WARNING: Key "accessibility.moreLetters" used with multiple values. Value "more: letters" kept. Value "accessibility.moreLetters" ignored.
+2025-02-17 19:41:36 --- WARNING: Key "accessibility.space" used with multiple values. Value "space" kept. Value "accessibility.space" ignored.
+2025-02-17 19:41:36 --- WARNING: Key "accessibility.nextKeyboard" used with multiple values. Value "next keyboard" kept. Value "accessibility.nextKeyboard" ignored.
+2025-02-17 19:41:36 --- WARNING: Key "accessibility.moreSymbols" used with multiple values. Value "more: symbols" kept. Value "accessibility.moreSymbols" ignored.
+2025-02-17 19:41:36 --- WARNING: Key "accessibility.shift" used with multiple values. Value "shift" kept. Value "accessibility.shift" ignored.
+2025-02-17 19:41:36 --- WARNING: Key "accessibility.backspace" used with multiple values. Value "delete" kept. Value "accessibility.backspace" ignored.
+2025-02-17 19:41:36 --- WARNING: Key "accessibility.moreNumbers" used with multiple values. Value "more: numbers" kept. Value "accessibility.moreNumbers" ignored.
+2025-02-17 19:41:36 --- WARNING: Key "accessibility.moreLetters" used with multiple values. Value "more: letters" kept. Value "accessibility.moreLetters" ignored.
+2025-02-17 19:41:36 --- WARNING: Key "accessibility.space" used with multiple values. Value "space" kept. Value "accessibility.space" ignored.
+2025-02-17 19:41:36 --- WARNING: Key "accessibility.nextKeyboard" used with multiple values. Value "next keyboard" kept. Value "accessibility.nextKeyboard" ignored.
+2025-02-17 19:41:36 No translations to import for HostingApp/Settings.bundle/en.lproj/Root.strings
+Command line invocation:
+    /Applications/Xcode_16.2.app/Contents/Developer/usr/bin/xcodebuild -importLocalizations -project /Users/runner/work/giellakbd-ios/giellakbd-ios/LocalizationTools/../GiellaKeyboard.xcodeproj -localizationPath /var/folders/r4/ph658m2d3vs0vj00g75q0zyr0000gn/T/locales_to_import/sms.xcloc
+
+User defaults from command line:
+    IDEPackageSupportUseBuiltinSCM = YES
+
+Localization Import started for GiellaKeyboard project
+2025-02-17 19:41:37 Started import
+2025-02-17 19:41:37 Comparing
+2025-02-17 19:41:37 Checking for new localizations in the XLIFF for HostingApp/en.lproj/InfoPlist.strings...
+2025-02-17 19:41:37 Checking for new localizations in the xcloc for HostingApp/Images.xcassets...
+2025-02-17 19:41:37 Checking for new localizations in the XLIFF for HostingApp/Settings.bundle/en.lproj/Root.strings...
+2025-02-17 19:41:37 Checking for new localizations in the XLIFF for HostingApp/Base.lproj/Localizable.strings...
+2025-02-17 19:41:37 Checking for new localizations in the XLIFF for Keyboard/en.lproj/InfoPlist.strings...
+2025-02-17 19:41:37 --- WARNING: Key "accessibility.moreSymbols" used with multiple values. Value "more: symbols" kept. Value "accessibility.moreSymbols" ignored.
+2025-02-17 19:41:37 --- WARNING: Key "accessibility.shift" used with multiple values. Value "shift" kept. Value "accessibility.shift" ignored.
+2025-02-17 19:41:37 --- WARNING: Key "accessibility.backspace" used with multiple values. Value "delete" kept. Value "accessibility.backspace" ignored.
+2025-02-17 19:41:37 --- WARNING: Key "accessibility.moreNumbers" used with multiple values. Value "more: numbers" kept. Value "accessibility.moreNumbers" ignored.
+2025-02-17 19:41:37 --- WARNING: Key "accessibility.moreLetters" used with multiple values. Value "more: letters" kept. Value "accessibility.moreLetters" ignored.
+2025-02-17 19:41:37 --- WARNING: Key "accessibility.space" used with multiple values. Value "space" kept. Value "accessibility.space" ignored.
+2025-02-17 19:41:37 --- WARNING: Key "accessibility.nextKeyboard" used with multiple values. Value "next keyboard" kept. Value "accessibility.nextKeyboard" ignored.
+--- xcodebuild: WARNING: HostingApp/en.lproj/InfoPlist.strings: File not found in the XLIFF
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "You can submit a request for support with one of the following options:")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "The %@ keyboard is currently not supported on this device.")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.shift")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.backspace")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.moreNumbers")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.moreLetters")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.space")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.nextKeyboard")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "accessibility.moreSymbols")
+--- xcodebuild: WARNING: Keyboard/en.lproj/InfoPlist.strings: File not found in the XLIFF
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "Group")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "Name")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "Enabled")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "none given")
+2025-02-17 19:41:37 Writing
+2025-02-17 19:41:37 --- WARNING: Key "accessibility.moreSymbols" used with multiple values. Value "more: symbols" kept. Value "accessibility.moreSymbols" ignored.
+2025-02-17 19:41:37 --- WARNING: Key "accessibility.shift" used with multiple values. Value "shift" kept. Value "accessibility.shift" ignored.
+2025-02-17 19:41:37 --- WARNING: Key "accessibility.backspace" used with multiple values. Value "delete" kept. Value "accessibility.backspace" ignored.
+2025-02-17 19:41:37 --- WARNING: Key "accessibility.moreNumbers" used with multiple values. Value "more: numbers" kept. Value "accessibility.moreNumbers" ignored.
+2025-02-17 19:41:37 --- WARNING: Key "accessibility.moreLetters" used with multiple values. Value "more: letters" kept. Value "accessibility.moreLetters" ignored.
+2025-02-17 19:41:37 --- WARNING: Key "accessibility.space" used with multiple values. Value "space" kept. Value "accessibility.space" ignored.
+2025-02-17 19:41:37 --- WARNING: Key "accessibility.nextKeyboard" used with multiple values. Value "next keyboard" kept. Value "accessibility.nextKeyboard" ignored.
+2025-02-17 19:41:37 No translations to import for HostingApp/Settings.bundle/en.lproj/Root.strings
+Command line invocation:
+    /Applications/Xcode_16.2.app/Contents/Developer/usr/bin/xcodebuild -importLocalizations -project /Users/runner/work/giellakbd-ios/giellakbd-ios/LocalizationTools/../GiellaKeyboard.xcodeproj -localizationPath /var/folders/r4/ph658m2d3vs0vj00g75q0zyr0000gn/T/locales_to_import/sv.xcloc
+
+User defaults from command line:
+    IDEPackageSupportUseBuiltinSCM = YES
+
+Localization Import started for GiellaKeyboard project
+2025-02-17 19:41:38 Started import
+2025-02-17 19:41:38 Comparing
+2025-02-17 19:41:38 Checking for new localizations in the XLIFF for HostingApp/en.lproj/InfoPlist.strings...
+2025-02-17 19:41:38 Checking for new localizations in the xcloc for HostingApp/Images.xcassets...
+2025-02-17 19:41:38 Checking for new localizations in the XLIFF for HostingApp/Base.lproj/Localizable.strings...
+2025-02-17 19:41:38 --- WARNING: Key "accessibility.moreSymbols" used with multiple values. Value "more: symbols" kept. Value "accessibility.moreSymbols" ignored.
+2025-02-17 19:41:38 --- WARNING: Key "accessibility.shift" used with multiple values. Value "shift" kept. Value "accessibility.shift" ignored.
+2025-02-17 19:41:38 --- WARNING: Key "accessibility.backspace" used with multiple values. Value "delete" kept. Value "accessibility.backspace" ignored.
+2025-02-17 19:41:38 --- WARNING: Key "accessibility.moreNumbers" used with multiple values. Value "more: numbers" kept. Value "accessibility.moreNumbers" ignored.
+2025-02-17 19:41:38 --- WARNING: Key "accessibility.moreLetters" used with multiple values. Value "more: letters" kept. Value "accessibility.moreLetters" ignored.
+2025-02-17 19:41:38 --- WARNING: Key "accessibility.space" used with multiple values. Value "space" kept. Value "accessibility.space" ignored.
+2025-02-17 19:41:38 --- WARNING: Key "accessibility.nextKeyboard" used with multiple values. Value "next keyboard" kept. Value "accessibility.nextKeyboard" ignored.
+2025-02-17 19:41:38 Checking for new localizations in the XLIFF for HostingApp/Settings.bundle/en.lproj/Root.strings...
+2025-02-17 19:41:38 Checking for new localizations in the XLIFF for Keyboard/en.lproj/InfoPlist.strings...
+--- xcodebuild: WARNING: HostingApp/en.lproj/InfoPlist.strings: File not found in the XLIFF
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "You can submit a request for support with one of the following options:")
+--- xcodebuild: WARNING: HostingApp/Base.lproj/Localizable.strings: No translation found in the XLIFF (Key: "The %@ keyboard is currently not supported on this device.")
+--- xcodebuild: WARNING: Keyboard/en.lproj/InfoPlist.strings: File not found in the XLIFF
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "Group")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "Name")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "Enabled")
+--- xcodebuild: WARNING: HostingApp/Settings.bundle/en.lproj/Root.strings: No translation found in the XLIFF (Key: "none given")
+2025-02-17 19:41:38 Writing
+2025-02-17 19:41:38 No translations to import for HostingApp/Settings.bundle/en.lproj/Root.strings
+2025-02-17 19:41:38 --- WARNING: Key "accessibility.moreSymbols" used with multiple values. Value "more: symbols" kept. Value "accessibility.moreSymbols" ignored.
+2025-02-17 19:41:38 --- WARNING: Key "accessibility.shift" used with multiple values. Value "shift" kept. Value "accessibility.shift" ignored.
+2025-02-17 19:41:38 --- WARNING: Key "accessibility.backspace" used with multiple values. Value "delete" kept. Value "accessibility.backspace" ignored.
+2025-02-17 19:41:38 --- WARNING: Key "accessibility.moreNumbers" used with multiple values. Value "more: numbers" kept. Value "accessibility.moreNumbers" ignored.
+2025-02-17 19:41:38 --- WARNING: Key "accessibility.moreLetters" used with multiple values. Value "more: letters" kept. Value "accessibility.moreLetters" ignored.
+2025-02-17 19:41:38 --- WARNING: Key "accessibility.space" used with multiple values. Value "space" kept. Value "accessibility.space" ignored.
+2025-02-17 19:41:38 --- WARNING: Key "accessibility.nextKeyboard" used with multiple values. Value "next keyboard" kept. Value "accessibility.nextKeyboard" ignored.
