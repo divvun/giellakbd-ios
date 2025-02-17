@@ -60,10 +60,10 @@ jobs:
         (cd LocalizationTools && swift build)
 
         echo "PWD:"
-        ls -R "$PWD"
+        ls "$PWD"
 
         echo "github workspace:"
-        ls -R ${{ github.workspace }}
+        ls ${{ github.workspace }}
 
         echo "\n\n[*] Importing Strings - takes a minute. (output in import-strings.log)"
         (cd LocalizationTools && swift run LocalizationTools \
