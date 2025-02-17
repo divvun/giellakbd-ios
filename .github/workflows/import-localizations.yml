@@ -73,8 +73,8 @@ jobs:
 
     - name: Update new strings
       run: |-
-        git diff || (git add .)
         # git restore firefox-ios/Client.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
+        git diff || (git add HostingApp/*/*.lproj/* HostingApp/*.lproj/*)
 
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v7
