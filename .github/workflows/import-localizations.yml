@@ -1,0 +1,17 @@
+on:
+  workflow_dispatch:
+    inputs:
+      testString:
+        description: "testiiing"
+        required: true
+        default: 'testing check 1 2'
+
+jobs:
+  log-input:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "test string is: $TEST
+        env:
+          TEST: ${{ inputs.testString }}
+
