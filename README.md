@@ -49,6 +49,10 @@ i18n-eller generate swift Support/Strings/en.yaml Support/Strings/*.yaml -o Host
 
 If you add a new locale, please open an issue to have it added to the language list inside the app.
 
+## Localization
+
+Localization is automated via [Mozilla Pontoon](https://pontoon.mozilla.org/) and GitHub Actions. Translators use Pontoon to localize the strings in the app, which are synced automatically to the [giellakbd-ios-l10n repo](https://github.com/divvun/giellakbd-ios-l10n). A GitHub Action periodically imports new strings found in the giellakbd-ios-l10n into the Xcode project in this repo using [divvun/LocalizationTools](https://github.com/divvun/LocalizationTools). Likewise, a separate GitHub Action in the giellakbd-ios-l10n repo preiodically checks for any new strings added by a developer in the Xcode project and imports them into giellakbd-ios-l10n so they show up in Pontoon.
+
 ## Keyboard layouts
 
 This repo does not include any keyboard layouts. It is intended to be used as a template for [kbdgen](https://github.com/divvun/kbdgen), which consumes among other things this codebase, as well as layouts as listed in e.g. [divvun-keyboard](https://github.com/divvun/divvun-keyboard) to produce the actual keyboard app. The keyboard layout specifications are found in the [GiellaLT](https://github.com/giellalt?q=keyboard-&type=&language=) organisation.
