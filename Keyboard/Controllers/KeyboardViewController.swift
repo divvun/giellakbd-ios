@@ -285,6 +285,7 @@ open class KeyboardViewController: UIInputViewController {
         let notSupportedLabel = UILabel()
         let notSupported = String(format: NSLocalizedString("The %@ keyboard is currently not supported on this device.", comment: ""), keyboardDefinition.name)
         let submitRequest = NSLocalizedString("You can submit a request for support with one of the following options:", comment: "")
+        let testString = NSLocalizedString("TEST String - delete me", comment: "Comment for test string")
         notSupportedLabel.text = "\(notSupported)\n\(submitRequest)"
         notSupportedLabel.textAlignment = .center
         notSupportedLabel.lineBreakMode = .byWordWrapping
