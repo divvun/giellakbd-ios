@@ -1,39 +1,138 @@
+/* (No Comment) */
 "about" = "Tietoja näppäimistösovelluksesta";
+
+/* Spoken by VoiceOver when an element is selected */
+"accessibility.backspace" = "askelpalautin";
+
+/* Spoken by VoiceOver when an element is selected */
+"accessibility.moreLetters" = "enemmän: kirjaimia";
+
+/* Spoken by VoiceOver when an element is selected */
+"accessibility.moreNumbers" = "enemmän: numeroita";
+
+/* Spoken by VoiceOver when an element is selected */
+"accessibility.moreSymbols" = "enemmän: symboleja";
+
+/* Spoken by VoiceOver when an element is selected */
+"accessibility.nextKeyboard" = "seuraava näppäimistö";
+
+/* Spoken by VoiceOver when an element is selected */
+"accessibility.shift" = "vaihto";
+
+/* Spoken by VoiceOver when an element is selected */
+"accessibility.space" = "väli";
+
+/* (No Comment) */
 "add" = "Lisää";
+
+/* (No Comment) */
 "addNewKeyboard" = "Lisää uusi näppäimistö…";
+
+/* (No Comment) */
 "addWord" = "Lisää sana";
+
+/* (No Comment) */
 "addWordMessage" = "Tätä sanaa ehdotetaan oikolukubannerissa samankaltaisille syötteille";
+
+/* (No Comment) */
 "allowFullAccess" = "Salli kaikki oikeudet";
+
+/* (No Comment) */
 "attributions" = "Attribuutiot";
+
+/* (No Comment) */
 "block" = "Estä";
+
+/* (No Comment) */
 "blocked" = "Estetyt sanat";
+
+/* (No Comment) */
 "cancel" = "Peru";
+
+/* (No Comment) */
 "contextsFor" = "Kontekstit sanalle \"%1$@\"";
+
+/* (No Comment) */
 "delete" = "Poista";
+
+/* (No Comment) */
 "detected" = "Tunnistetut sanat";
+
+/* (No Comment) */
 "downloading" = "Ladataan pakettia \"%1$@\"…";
+
+/* (No Comment) */
 "enableKeyboards" = "Enable the keyboards that you want to use.";
+
+/* (No Comment) */
 "enableTapSoundsPlain" = "Jos haluat näppäinäänet käyttöön, paina nappia %0$@ ja vaihda asetusta %1$@.";
+
+/* (No Comment) */
 "general" = "General";
+
+/* (No Comment) */
 "installingPackages" = "Asennetaan paketteja…";
+
+/* (No Comment) */
 "installingSpellers" = "Asennetaan oikaisulukimia…";
+
+/* (No Comment) */
 "keyboard" = "Näppäimistö";
+
+/* (No Comment) */
 "keyboards" = "Näppäimistöt";
+
+/* (No Comment) */
 "language" = "Appikieli";
+
+/* (No Comment) */
 "layouts" = "Asetelmat";
+
+/* (No Comment) */
 "localeSjd" = "Kiltinänsaame";
+
+/* (No Comment) */
 "noUserWords" = "Omia sanoja ei ole vielä.";
+
+/* (No Comment) */
 "noUserWordsDescription" = "Sanat joita oikoluku ei tunnista ja joita käytetään usein näkyvät täällä.";
+
+/* (No Comment) */
 "openAppPlain" = "Avaa sovellus %1$@";
+
+/* (No Comment) */
 "openSettings" = "Avaa asetukset";
+
+/* (No Comment) */
 "save" = "Tallenna";
-"setUp" = "Aseta %1$@";
-"settingUp" = "Asetetaan";
+
+/* (No Comment) */
 "settings" = "Asetukset";
+
+/* (No Comment) */
+"settingUp" = "Asetetaan";
+
+/* (No Comment) */
+"setUp" = "Aseta %1$@";
+
+/* (No Comment) */
 "skip" = "Ohita";
+
+/* (No Comment) */
 "tapPlain" = "Paina %1$@";
+
+/* (No Comment) */
 "unblock" = "Poista estot";
+
+/* (No Comment) */
 "userDefined" = "Omat sanat";
+
+/* (No Comment) */
 "userDictionary" = "Oma sanakirja";
+
+/* (No Comment) */
 "whenYouHaveFinished" = "Palaa takaisin tähän sovellukseen lopetettuasi.";
+
+/* (No Comment) */
 "word" = "Sana";
+

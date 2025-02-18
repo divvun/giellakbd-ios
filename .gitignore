@@ -7,3 +7,4 @@ dicts.bundle
 DerivedData/
 Pods/
 *.xcworkspace/
+import-strings.log

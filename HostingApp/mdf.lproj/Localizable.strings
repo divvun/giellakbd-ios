@@ -1,39 +1,117 @@
+/* (No Comment) */
 "about" = "About";
+
+/* (No Comment) */
 "add" = "Путомс";
+
+/* (No Comment) */
 "addNewKeyboard" = "Путомс од сёрмадомпувнят…";
+
+/* (No Comment) */
 "addWord" = "Поладомс вал";
+
+/* (No Comment) */
 "addWordMessage" = "Омбоцеда сяка пувнятнень люпштамста тя валсь кармай кочкафок валкяльксс.";
+
+/* (No Comment) */
 "allowFullAccess" = "Макомс сембе ширдень панжема";
+
+/* (No Comment) */
 "attributions" = "Атрибутт";
+
+/* (No Comment) */
 "block" = "Пякстамс";
+
+/* (No Comment) */
 "blocked" = "Пякстаф";
+
+/* (No Comment) */
 "cancel" = "Мрдафтомс";
+
+/* (No Comment) */
 "contextsFor" = "\"%1$@\" валть контекстонза";
+
+/* (No Comment) */
 "delete" = "Нардамс";
+
+/* (No Comment) */
 "detected" = "Фатяф";
+
+/* (No Comment) */
 "downloading" = "Таргама \"%1$@\"…";
+
+/* (No Comment) */
 "enableKeyboards" = "Enable the keyboards that you want to use.";
+
+/* (No Comment) */
 "enableTapSoundsPlain" = "Кда мяленте марямс пувнянь токамста вайгяль, сави люпштамс %0$@ и кочкамс %1$@.";
+
+/* (No Comment) */
 "general" = "Марстонь";
+
+/* (No Comment) */
 "installingPackages" = "Пакетонь арафтома…";
+
+/* (No Comment) */
 "installingSpellers" = "Сёрмадомань тевонь видеста арафтома…";
+
+/* (No Comment) */
 "keyboard" = "Сёрмапувнят";
+
+/* (No Comment) */
 "keyboards" = "Сембе сёрмадомпувнятне";
+
+/* (No Comment) */
 "language" = "Кяль";
+
+/* (No Comment) */
 "layouts" = "Пувнянь арафтомат";
+
+/* (No Comment) */
 "localeSjd" = "Кильдинонь Саам";
+
+/* (No Comment) */
 "noUserWords" = "Сёрмадыхнень путфкссна нинге аш.";
+
+/* (No Comment) */
 "noUserWordsDescription" = "Тяса эвондайхть валхт, конат апак петть и аф васьфневихть валксса.";
+
+/* (No Comment) */
 "openAppPlain" = "Панжесть %1$@ сёрмаповонь программань полатксть";
+
+/* (No Comment) */
 "openSettings" = "Панжесть арафтоматнень";
+
+/* (No Comment) */
 "save" = "Ванфтомс";
-"setUp" = "Арафтомс %1$@";
-"settingUp" = "Арафтома";
+
+/* (No Comment) */
 "settings" = "Арафтомат";
+
+/* (No Comment) */
+"settingUp" = "Арафтома";
+
+/* (No Comment) */
+"setUp" = "Арафтомс %1$@";
+
+/* (No Comment) */
 "skip" = "Нолдамс";
+
+/* (No Comment) */
 "tapPlain" = "Люпштамс %1$@";
+
+/* (No Comment) */
 "unblock" = "панжемс";
+
+/* (No Comment) */
 "userDefined" = "Сёрмадыень тефт";
+
+/* (No Comment) */
 "userDictionary" = "Сёрмадыень валкс";
+
+/* (No Comment) */
 "whenYouHaveFinished" = "Мзярда шумордасасть, мрдада тя сёрмаповонь программань полатксти, штоба сяда тов тевонь поладома.";
+
+/* (No Comment) */
 "word" = "Вал";
+

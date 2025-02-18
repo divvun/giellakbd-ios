@@ -1,39 +1,117 @@
+/* (No Comment) */
 "about" = "Сёрмаповонь программадонть";
+
+/* (No Comment) */
 "add" = "Путомс";
+
+/* (No Comment) */
 "addNewKeyboard" = "Путомс од сёрмаповт…";
+
+/* (No Comment) */
 "addWord" = "Поладомс вал";
+
+/* (No Comment) */
 "addWordMessage" = "Омбоцеде секе повнетнень лепштямсто те валоськак ливтеви кочкамкс валкаркскес.";
+
+/* (No Comment) */
 "allowFullAccess" = "Максомс весе видечитнень";
+
+/* (No Comment) */
 "attributions" = "Аттрибутт";
+
+/* (No Comment) */
 "block" = "Саймес саемс";
+
+/* (No Comment) */
 "blocked" = "Саймес саезь";
+
+/* (No Comment) */
 "cancel" = "Лоткавтомс";
+
+/* (No Comment) */
 "contextsFor" = "\"%1$@\" валонть контекстэнзэ";
+
+/* (No Comment) */
 "delete" = "Нардамс";
+
+/* (No Comment) */
 "detected" = "Редязь";
+
+/* (No Comment) */
 "downloading" = "Тарги \"%1$@\"…";
+
+/* (No Comment) */
 "enableKeyboards" = "Enable the keyboards that you want to use.";
+
+/* (No Comment) */
 "enableTapSoundsPlain" = "Мелеть сайтянзат марямс повнень токамо гайть, сави токамс %0$@ ды кочкамс %1$@.";
+
+/* (No Comment) */
 "general" = "Вейсэнь";
+
+/* (No Comment) */
 "installingPackages" = "Аравты пакеттнэсэ…";
+
+/* (No Comment) */
 "installingSpellers" = "Аравты видестэ сёрмадома тевнеть…";
+
+/* (No Comment) */
 "keyboard" = "Сёрмаповт";
+
+/* (No Comment) */
 "keyboards" = "Весе сёрмаповт";
+
+/* (No Comment) */
 "language" = "Кель";
+
+/* (No Comment) */
 "layouts" = "Повлувт";
+
+/* (No Comment) */
 "localeSjd" = "Кильдинэнь саам";
+
+/* (No Comment) */
 "noUserWords" = "Сёрмадыцянть эсензэ путовксонзо зярс арасть.";
+
+/* (No Comment) */
 "noUserWordsDescription" = "Сёрмадомсто валт, конатне лиядыть апак вите ды сынсь а вастневить валкссонть, совавтовить тезэнь.";
+
+/* (No Comment) */
 "openAppPlain" = "Панжомс %1$@ сёрмаповонь программанть";
+
+/* (No Comment) */
 "openSettings" = "Панжомс аравтомкатнень";
+
+/* (No Comment) */
 "save" = "Ванстомс";
-"setUp" = "Аравтомс %1$@";
-"settingUp" = "Аравтови";
+
+/* (No Comment) */
 "settings" = "Аравтомкат";
+
+/* (No Comment) */
+"settingUp" = "Аравтови";
+
+/* (No Comment) */
+"setUp" = "Аравтомс %1$@";
+
+/* (No Comment) */
 "skip" = "Ютамс вакска";
+
+/* (No Comment) */
 "tapPlain" = "Токамс %1$@";
+
+/* (No Comment) */
 "unblock" = "Саемс сайместэ";
+
+/* (No Comment) */
 "userDefined" = "Сёрмадыцянсеть";
+
+/* (No Comment) */
 "userDictionary" = "Сёрмадыцянь валкс";
+
+/* (No Comment) */
 "whenYouHaveFinished" = "Зярдо весе аравтовсь, велявтта мекев те сёрмаповонь программантень тевень поладомга.";
+
+/* (No Comment) */
 "word" = "Вал";
+

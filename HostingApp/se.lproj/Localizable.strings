@@ -1,39 +1,138 @@
+/* (No Comment) */
 "about" = "Boallobeavddeprográmma birra";
+
+/* Spoken by VoiceOver when an element is selected */
+"accessibility.backspace" = "mudde";
+
+/* Spoken by VoiceOver when an element is selected */
+"accessibility.moreLetters" = "lasi: bustávat";
+
+/* Spoken by VoiceOver when an element is selected */
+"accessibility.moreNumbers" = "lasi: logut";
+
+/* Spoken by VoiceOver when an element is selected */
+"accessibility.moreSymbols" = "lasi: symbola";
+
+/* Spoken by VoiceOver when an element is selected */
+"accessibility.nextKeyboard" = "boahtte boallobeavdi";
+
+/* Spoken by VoiceOver when an element is selected */
+"accessibility.shift" = "molsso";
+
+/* Spoken by VoiceOver when an element is selected */
+"accessibility.space" = "gaska";
+
+/* (No Comment) */
 "add" = "Lasit";
+
+/* (No Comment) */
 "addNewKeyboard" = "Lasit ođđa boallobeavddi …";
+
+/* (No Comment) */
 "addWord" = "Lasit sáni";
+
+/* (No Comment) */
 "addWordMessage" = "Dát sátni ihtá evttohussan go čálát sullasaš sániid";
+
+/* (No Comment) */
 "allowFullAccess" = "Atte dievaslaš beassan dán áppii";
+
+/* (No Comment) */
 "attributions" = "Eará gáldut";
+
+/* (No Comment) */
 "block" = "Cakka sáni";
+
+/* (No Comment) */
 "blocked" = "Caggon sánit";
+
+/* (No Comment) */
 "cancel" = "Gaskkalduhte";
+
+/* (No Comment) */
 "contextsFor" = "”%1$@” konteavsttat";
+
+/* (No Comment) */
 "delete" = "Sihko";
+
+/* (No Comment) */
 "detected" = "Áicon sánit";
+
+/* (No Comment) */
 "downloading" = "Viežžamin ”%1$@” …";
+
+/* (No Comment) */
 "enableKeyboards" = "Enable the keyboards that you want to use.";
+
+/* (No Comment) */
 "enableTapSoundsPlain" = "Jus háliidat gullat jienaid go coahkkalat boallobeavddi, de coahkkal %0$@ ja bija johtui %1$@.";
+
+/* (No Comment) */
 "general" = "Oppalaš";
+
+/* (No Comment) */
 "installingPackages" = "Sajáiduhttimin páhkaid …";
+
+/* (No Comment) */
 "installingSpellers" = "Sajáiduhttimin čállindárkkisteddjiid …";
+
+/* (No Comment) */
 "keyboard" = "Boallobeavdi";
+
+/* (No Comment) */
 "keyboards" = "Boallobeavddit";
+
+/* (No Comment) */
 "language" = "Áppagiella";
+
+/* (No Comment) */
 "layouts" = "Hámuhusat";
+
+/* (No Comment) */
 "localeSjd" = "Gielddasámegiella";
+
+/* (No Comment) */
 "noUserWords" = "Iežat sátnelistu ain guoros.";
+
+/* (No Comment) */
 "noUserWordsDescription" = "Sánit maid čállindárkkisteaddji ii dovdda, ja maid dávjá geavahat, lasihuvvojit deike.";
+
+/* (No Comment) */
 "openAppPlain" = "Raba %1$@-áppa";
+
+/* (No Comment) */
 "openSettings" = "Raba heivehusaid";
+
+/* (No Comment) */
 "save" = "Vurke";
-"setUp" = "Heivet %1$@";
-"settingUp" = "Heiveheamen";
+
+/* (No Comment) */
 "settings" = "Heivehusat";
+
+/* (No Comment) */
+"settingUp" = "Heiveheamen";
+
+/* (No Comment) */
+"setUp" = "Heivet %1$@";
+
+/* (No Comment) */
 "skip" = "Guođe";
+
+/* (No Comment) */
 "tapPlain" = "Coahkkal %1$@";
+
+/* (No Comment) */
 "unblock" = "Ale cakka sáni šat";
+
+/* (No Comment) */
 "userDefined" = "Lasihuvvon";
+
+/* (No Comment) */
 "userDictionary" = "Iežat sánit";
+
+/* (No Comment) */
 "whenYouHaveFinished" = "Go leat geargan, máhcat dán áppii ja joatkke barggu.";
+
+/* (No Comment) */
 "word" = "sátni";
+

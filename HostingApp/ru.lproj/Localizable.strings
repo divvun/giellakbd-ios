@@ -1,39 +1,117 @@
+/* (No Comment) */
 "about" = "О клавиатуре";
+
+/* (No Comment) */
 "add" = "Добавить";
+
+/* (No Comment) */
 "addNewKeyboard" = "Добавить новую клавиатуру";
+
+/* (No Comment) */
 "addWord" = "Добавить слово";
+
+/* (No Comment) */
 "addWordMessage" = "Это слово будет предложено в рекомендациях для похожего ввода.";
+
+/* (No Comment) */
 "allowFullAccess" = "Разрешить полный доступ";
+
+/* (No Comment) */
 "attributions" = "Дополнительные источники";
+
+/* (No Comment) */
 "block" = "Заблокировать";
+
+/* (No Comment) */
 "blocked" = "Заблокировано";
+
+/* (No Comment) */
 "cancel" = "Отмена";
+
+/* (No Comment) */
 "contextsFor" = "\"%1$@\" в контексте";
+
+/* (No Comment) */
 "delete" = "Удалить";
+
+/* (No Comment) */
 "detected" = "Удалено";
+
+/* (No Comment) */
 "downloading" = "Скачивание \"%1$@\"…";
+
+/* (No Comment) */
 "enableKeyboards" = "Включить клавиатуры, которые вы хотите использовать.";
+
+/* (No Comment) */
 "enableTapSoundsPlain" = "Чтобы включить проверку орфографии, обновление и звуки клавиатуры, нажмите %1$@.";
+
+/* (No Comment) */
 "general" = "Основные";
+
+/* (No Comment) */
 "installingPackages" = "Установка пакетов...";
+
+/* (No Comment) */
 "installingSpellers" = "Установка орфографических подсказок...";
+
+/* (No Comment) */
 "keyboard" = "Клавиатура";
+
+/* (No Comment) */
 "keyboards" = "Клавиатуры";
+
+/* (No Comment) */
 "language" = "Язык приложения";
+
+/* (No Comment) */
 "layouts" = "Макеты";
+
+/* (No Comment) */
 "localeSjd" = "Кильдин Сами";
+
+/* (No Comment) */
 "noUserWords" = "Созданных пользователем слов пока нет.";
+
+/* (No Comment) */
 "noUserWordsDescription" = "Здесь появятся слова, которые не были исправлены и отсутствуют во встроенном словаре.";
+
+/* (No Comment) */
 "openAppPlain" = "Открыть %1$@";
+
+/* (No Comment) */
 "openSettings" = "Открыть Настройки";
+
+/* (No Comment) */
 "save" = "Сохранить";
-"setUp" = "Настроить %1$@";
-"settingUp" = "Настройка";
+
+/* (No Comment) */
 "settings" = "Настройки";
+
+/* (No Comment) */
+"settingUp" = "Настройка";
+
+/* (No Comment) */
+"setUp" = "Настроить %1$@";
+
+/* (No Comment) */
 "skip" = "Пропустить";
+
+/* (No Comment) */
 "tapPlain" = "Нажать %1$@";
+
+/* (No Comment) */
 "unblock" = "Разблокировать";
+
+/* (No Comment) */
 "userDefined" = "Мои слова";
+
+/* (No Comment) */
 "userDictionary" = "Мой словарь";
+
+/* (No Comment) */
 "whenYouHaveFinished" = "Когда вы закончите, вернитесь в приложение, чтобы продолжить.";
+
+/* (No Comment) */
 "word" = "Слово";
+

@@ -1,0 +1,86 @@
+name: "Import Localizations"
+on:
+  # schedule:
+  #   - cron: '0 11 * * 1'
+  push:
+  workflow_dispatch:
+    inputs:
+      branchName:
+        description: 'Branch used as target for automation'
+        required: true
+        default: 'main'
+jobs:
+  build:
+    runs-on: macos-15
+    strategy:
+      max-parallel: 4
+      matrix:
+        xcode: ["16.2"]
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        persist-credentials: false
+        token: ${{ secrets.GITHUB_TOKEN }}
+        ref: ${{ github.event.inputs.branchName }}
+
+    - name: Select Xcode ${{ matrix.xcode }}
+      run: sudo xcode-select -s /Applications/Xcode_${{ matrix.xcode }}.app
+
+    - name: Get PR info
+      run: |
+        current_date=$(date +"%Y-%m-%d")
+        # Use 'main' when triggered via cron
+        current_branch=${{ github.event.inputs.branchName || 'main' }}
+        echo "current_date=$current_date" >> $GITHUB_ENV
+        if [[ $current_branch == 'main' ]]; then
+          echo "branch_name=string-import-$current_date" >> $GITHUB_ENV
+          echo "pr_title=Import localizations $current_date" >> $GITHUB_ENV
+          echo "pr_body=This automated PR imports string changes" >> $GITHUB_ENV
+        else
+          # version: v105.0 -> v105
+          version=${current_branch%??}
+          echo "branch_name=string-import-$current_branch-$current_date" >> $GITHUB_ENV
+          echo "pr_title=[$version]: Import localizations $current_date" >> $GITHUB_ENV
+          echo "pr_body=This automated PR imports string changes into branch '$current_branch'" >> $GITHUB_ENV
+        fi
+
+    - name: Run script to import strings
+      run: |
+        echo "\n\n[*] Cloning required repo to import strings"
+
+        if [ -d "LocalizationTools" ] || [ -d "giellakbd-ios-l10n" ]; then
+            rm -rf LocalizationTools
+            rm -rf giellakbd-ios-l10n
+        fi
+
+        git clone --depth 1 https://github.com/divvun/LocalizationTools.git || exit 1
+        git clone --depth 1 https://github.com/divvun/giellakbd-ios-l10n || exit 1
+
+        echo "\n\n[*] Building tools/Localizations"
+        (cd LocalizationTools && swift build)
+
+        echo "\n\n[*] Importing Strings - takes a minute. (output in import-strings.log)"
+        (cd LocalizationTools && swift run LocalizationTools \
+          --import \
+          --project-path "$PWD/../GiellaKeyboard.xcodeproj" \
+          --l10n-project-path "$PWD/../giellakbd-ios-l10n") > import-strings.log 2>&1
+
+        echo "\n\n[!] Strings have been imported. You can now create a PR."
+
+        echo "\n\n[*] Clean up cloned repos"
+        rm -rf LocalizationTools
+        rm -rf giellakbd-ios-l10n
+
+    - name: Update new strings
+      run: |-
+        git diff || (git add HostingApp/*/*.lproj/* HostingApp/*.lproj/*)
+        # git restore GiellaKeyboard.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
+
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v7
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: ${{ env.pr_title }}
+        title: "Import Localizations ${{ env.current_date }}"
+        branch: ${{ env.branch_name }}
+        body: ${{ env.pr_body }}

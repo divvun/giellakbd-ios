@@ -1,39 +1,117 @@
+/* (No Comment) */
 "about" = "Båaloebuertieprogrammen bïjre";
+
+/* (No Comment) */
 "add" = "Lissehth";
+
+/* (No Comment) */
 "addNewKeyboard" = "Lissedh orre båaloebuertiem …";
+
+/* (No Comment) */
 "addWord" = "Lissedh baakoem";
+
+/* (No Comment) */
 "addWordMessage" = "Daate baakoe jeajhta evtiehtassene gosse tjaalah seamma-laaketje baakoeh.";
+
+/* (No Comment) */
 "allowFullAccess" = "Vedtih gaajhkh luehpieh dan appese";
+
+/* (No Comment) */
 "attributions" = "Jeatjah gaaltijh";
+
+/* (No Comment) */
 "block" = "Hööpth baakoem";
+
+/* (No Comment) */
 "blocked" = "Hööpteme baakoeh";
+
+/* (No Comment) */
 "cancel" = "Orrijidh";
+
+/* (No Comment) */
 "contextsFor" = "\"%1$@\" kontekste";
+
+/* (No Comment) */
 "delete" = "Sliejhth";
+
+/* (No Comment) */
 "detected" = "Aajhtseme";
+
+/* (No Comment) */
 "downloading" = "\"%1$@\" veedtjeminie …";
+
+/* (No Comment) */
 "enableKeyboards" = "Enable the keyboards that you want to use.";
+
+/* (No Comment) */
 "enableTapSoundsPlain" = "Jis båaloebuertietjoejem sïjhth govledh, dellie diedtah %0$@ jïh baajh %1$@.";
+
+/* (No Comment) */
 "general" = "Sïejhme";
+
+/* (No Comment) */
 "installingPackages" = "Måadtoestidh paahkah …";
+
+/* (No Comment) */
 "installingSpellers" = "Mådtoestidh tjaelemestaeriedimmiem …";
+
+/* (No Comment) */
 "keyboard" = "Båaloebuertie";
+
+/* (No Comment) */
 "keyboards" = "Båaloebuertieh";
+
+/* (No Comment) */
 "language" = "Appegïele";
+
+/* (No Comment) */
 "layouts" = "Hammoeh";
+
+/* (No Comment) */
 "localeSjd" = "Gielddasaemien";
+
+/* (No Comment) */
 "noUserWords" = "Jïjtjedh baakoelæstoeh annje gåaroes.";
+
+/* (No Comment) */
 "noUserWordsDescription" = "Baakoeh maam staeriedimmiedirrege ij damth, men maam datne damtaj provhkh,  jijhtieh daase.";
+
+/* (No Comment) */
 "openAppPlain" = "Rïhpesh %1$@-appem";
+
+/* (No Comment) */
 "openSettings" = "Rïhpesh sjïehtesjimmim";
+
+/* (No Comment) */
 "save" = "Vöörhkh";
-"setUp" = "Sjïehtedh %1$@";
-"settingUp" = "Sjïehtediminie";
+
+/* (No Comment) */
 "settings" = "Sjïehtesjidh";
+
+/* (No Comment) */
+"settingUp" = "Sjïehtediminie";
+
+/* (No Comment) */
+"setUp" = "Sjïehtedh %1$@";
+
+/* (No Comment) */
 "skip" = "Baajh årrodh";
+
+/* (No Comment) */
 "tapPlain" = "Dïedtelh %1$@";
+
+/* (No Comment) */
 "unblock" = "Ollh-hööpth";
+
+/* (No Comment) */
 "userDefined" = "Datne lissiehtamme";
+
+/* (No Comment) */
 "userDictionary" = "Jïjtjedh baakoeh";
+
+/* (No Comment) */
 "whenYouHaveFinished" = "Gosse galkeme, dellie bååstede dan appese barkojne jåerhkh.";
+
+/* (No Comment) */
 "word" = "Baakoe";
+

@@ -1,38 +1,114 @@
+/* (No Comment) */
 "about" = "About";
+
+/* (No Comment) */
 "add" = "Add";
+
+/* (No Comment) */
 "addNewKeyboard" = "Add New Keyboard…";
+
+/* (No Comment) */
 "addWord" = "Add Word";
+
+/* (No Comment) */
 "addWordMessage" = "This word will be suggested in the spelling banner for similar input.";
+
+/* (No Comment) */
 "allowFullAccess" = "Allow Full Access";
+
+/* (No Comment) */
 "attributions" = "Attributions";
+
+/* (No Comment) */
 "block" = "Block";
+
+/* (No Comment) */
 "blocked" = "Blocked";
+
+/* (No Comment) */
 "cancel" = "Cancel";
+
+/* (No Comment) */
 "contextsFor" = "Contexts for \"%1$@\"";
+
+/* (No Comment) */
 "delete" = "Delete";
+
+/* (No Comment) */
 "detected" = "Detected";
+
+/* (No Comment) */
 "downloading" = "Downloading \"%1$@\"…";
+
+/* (No Comment) */
 "enableTapSoundsPlain" = "If you wish to enable key tap sounds, you must then tap %1$@ and toggle %2$@.";
+
+/* (No Comment) */
 "general" = "General";
+
+/* (No Comment) */
 "installingPackages" = "Installing packages…";
+
+/* (No Comment) */
 "installingSpellers" = "Installing Spellers…";
+
+/* (No Comment) */
 "keyboard" = "Keyboard";
+
+/* (No Comment) */
 "keyboards" = "Keyboards";
+
+/* (No Comment) */
 "language" = "Language";
+
+/* (No Comment) */
 "layouts" = "Layouts";
+
+/* (No Comment) */
 "localeSjd" = "Kildin Sami";
+
+/* (No Comment) */
 "noUserWords" = "No user-created words yet.";
+
+/* (No Comment) */
 "noUserWordsDescription" = "Words that are left uncorrected and are not in the built-in dictionary will appear here.";
+
+/* (No Comment) */
 "openAppPlain" = "Open the %1$@ app";
+
+/* (No Comment) */
 "openSettings" = "Open Settings";
+
+/* (No Comment) */
 "save" = "Save";
-"setUp" = "Set Up %1$@";
-"settingUp" = "Setting Up";
+
+/* (No Comment) */
 "settings" = "Settings";
+
+/* (No Comment) */
+"settingUp" = "Setting Up";
+
+/* (No Comment) */
+"setUp" = "Set Up %1$@";
+
+/* (No Comment) */
 "skip" = "Skip";
+
+/* (No Comment) */
 "tapPlain" = "Tap %1$@";
+
+/* (No Comment) */
 "unblock" = "Unblock";
+
+/* (No Comment) */
 "userDefined" = "User-Defined";
+
+/* (No Comment) */
 "userDictionary" = "User Dictionary";
+
+/* (No Comment) */
 "whenYouHaveFinished" = "When you have finished, return to this app to continue.";
+
+/* (No Comment) */
 "word" = "Word";
+
