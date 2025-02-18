@@ -1,7 +1,7 @@
 name: "Import Localizations"
 on:
-  # schedule:
-  #   - cron: '0 11 * * 1'
+  schedule:
+    - cron: "5 6 * * 1-5" # Monday to Friday at 6:05 UTC
   workflow_dispatch:
     inputs:
       branchName:
