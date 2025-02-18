@@ -121,6 +121,9 @@
 /* (No Comment) */
 "tapPlain" = "Tryck %1$@";
 
+/* Comment for test string */
+"TEST String - delete me" = "TEST in Svenska! - delete me";
+
 /* (No Comment) */
 "unblock" = "Ta bort spärr";
 
