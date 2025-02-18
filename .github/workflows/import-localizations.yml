@@ -2,7 +2,6 @@ name: "Import Localizations"
 on:
   # schedule:
   #   - cron: '0 11 * * 1'
-  push:
   workflow_dispatch:
     inputs:
       branchName:
@@ -35,13 +34,13 @@ jobs:
         if [[ $current_branch == 'main' ]]; then
           echo "branch_name=string-import-$current_date" >> $GITHUB_ENV
           echo "pr_title=Import localizations $current_date" >> $GITHUB_ENV
-          echo "pr_body=This automated PR imports string changes" >> $GITHUB_ENV
+          echo "pr_body=This automated PR imports string changes from [giellakbd-ios-l10n](https://github.com/divvun/giellakbd-ios-l10n)" >> $GITHUB_ENV
         else
           # version: v105.0 -> v105
           version=${current_branch%??}
           echo "branch_name=string-import-$current_branch-$current_date" >> $GITHUB_ENV
           echo "pr_title=[$version]: Import localizations $current_date" >> $GITHUB_ENV
-          echo "pr_body=This automated PR imports string changes into branch '$current_branch'" >> $GITHUB_ENV
+          echo "pr_body=This automated PR imports string changes from [giellakbd-ios-l10n](https://github.com/divvun/giellakbd-ios-l10n) into branch '$current_branch'" >> $GITHUB_ENV
         fi
 
     - name: Run script to import strings
