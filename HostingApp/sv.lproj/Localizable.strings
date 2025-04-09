@@ -121,6 +121,9 @@
 /* (No Comment) */
 "tapPlain" = "Tryck %1$@";
 
+/* Shown inside the keyboard view when keyboard doesn't support current device */
+"The %@ keyboard is currently not supported on this device." = "%@-tangentbordet har inget stöd på denna apparaten just nu.";
+
 /* (No Comment) */
 "unblock" = "Ta bort spärr";
 
@@ -135,4 +138,7 @@
 
 /* (No Comment) */
 "word" = "ord";
+
+/* Shown inside the keyboard view when keyboard doesn't support current device */
+"You can submit a request for support with one of the following options:" = "Du kan be om stöd via ett av fölgjande alternativ:";
 
