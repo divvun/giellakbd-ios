@@ -40,6 +40,10 @@ extension UIUserInterfaceIdiom {
             return "UIUserInterfaceIdiom.tv"
         case .carPlay:
             return "UIUserInterfaceIdiom.carPlay"
+        case .mac:
+            return "UIUserInterfaceIdiom.mac"
+        case .vision:
+            return "UIUserInterfaceIdiom.vision"
         @unknown default:
             return "UIUserInterfaceIdiom.<unknown>"
         }
