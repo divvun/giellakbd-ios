@@ -2,7 +2,7 @@
 #import <Foundation/Foundation.h>
 
 // This tire fire of code runs before absolutely anything else, guaranteeing that Sentry can init.
-__attribute__((constructor)) static void init_sentry() {
+__attribute__((constructor)) static void init_sentry(void) {
     NSLog(@"Running Sentry init");
     
     NSError *error = nil;
