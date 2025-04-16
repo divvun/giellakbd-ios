@@ -160,7 +160,7 @@ extension SpellBanner: SpellBannerViewDelegate {
     }
 }
 
-final class SuggestionOperation: Operation {
+final class SuggestionOperation: Operation, @unchecked Sendable {
     weak var userDictionary: UserDictionary?
     weak var speller: Speller?
     let word: String
