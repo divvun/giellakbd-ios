@@ -13,7 +13,7 @@ target 'HostingApp' do
   pod 'Sentry', '=7.3.0'
   pod 'SwiftLint'
   pod 'SQLite.swift', '~> 0.15.3'
-  pod 'PahkatClient', :http => "https://github.com/divvun/pahkat-client-sdk-swift/releases/download/v0.2.1/cargo-pod.tgz"
+  pod 'PahkatClient', :http => "https://github.com/divvun/pahkat-client-sdk-swift/releases/download/v0.2.2/cargo-pod.tgz"
 end
 
 target 'HostingAppTests' do

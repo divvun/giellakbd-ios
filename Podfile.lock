@@ -11,8 +11,8 @@ PODS:
   - SwiftLint (0.59.1)
 
 DEPENDENCIES:
-  - "DivvunSpell (from `{:http=>\"https://github.com/divvun/divvunspell-sdk-swift/releases/download/v1.0.0-beta.4/cargo-pod.tgz\"}`)"
-  - "PahkatClient (from `{:http=>\"https://github.com/divvun/pahkat-client-sdk-swift/releases/download/v0.2.1/cargo-pod.tgz\"}`)"
+  - "DivvunSpell (from `{:http=>\"https://github.com/divvun/divvunspell-sdk-swift/releases/download/v1.0.0-beta.5/cargo-pod.tgz\"}`)"
+  - "PahkatClient (from `{:http=>\"https://github.com/divvun/pahkat-client-sdk-swift/releases/download/v0.2.2/cargo-pod.tgz\"}`)"
   - RxSwift (~> 5.1.1)
   - Sentry (~> 8.49.2)
   - SQLite.swift (~> 0.15.3)
@@ -29,21 +29,22 @@ EXTERNAL SOURCES:
   DivvunSpell:
     :http: https://github.com/divvun/divvunspell-sdk-swift/releases/download/v1.0.0-beta.4/cargo-pod.tgz
   PahkatClient:
-    :http: https://github.com/divvun/pahkat-client-sdk-swift/releases/download/v0.2.1/cargo-pod.tgz
+    :http: https://github.com/divvun/pahkat-client-sdk-swift/releases/download/v0.2.2/cargo-pod.tgz
 
 CHECKOUT OPTIONS:
   DivvunSpell:
     :http: https://github.com/divvun/divvunspell-sdk-swift/releases/download/v1.0.0-beta.4/cargo-pod.tgz
   PahkatClient:
-    :http: https://github.com/divvun/pahkat-client-sdk-swift/releases/download/v0.2.1/cargo-pod.tgz
+    :http: https://github.com/divvun/pahkat-client-sdk-swift/releases/download/v0.2.2/cargo-pod.tgz
 
 SPEC CHECKSUMS:
-  DivvunSpell: aacb77a377dbda67ddc76dcc254bc8b78157fc4b
-  PahkatClient: 8f79a254f8240548772b0ecfc838b36ed15ab2a3
+  DivvunSpell: 4003ce81da721c40f76b14107c2d8ce9206ec4b8
+  PahkatClient: ad2bd885d99970f24b949f1909ca15edaa42b321
   RxSwift: 915abbdfb62214aa89ccd0b194d44fb478019b27
   Sentry: 47021097466aa130802420d485a34da445963d99
   SQLite.swift: 8d054987f02728cc912b0eb5a9659650573a65a2
-  SwiftLint: c1de071d9d08c8aba837545f6254315bc900e211
-PODFILE CHECKSUM: 702c24125a7fc26a8f0b99b70b3cbe4ec046d607
+  SwiftLint: 3d48e2fb2a3468fdaccf049e5e755df22fb40c2c
+
+PODFILE CHECKSUM: 712de0cc41e30a011a314316e033372f64d8c6f3
 
 COCOAPODS: 1.16.2
