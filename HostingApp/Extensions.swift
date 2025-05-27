@@ -173,6 +173,24 @@ extension Strings {
             return nil
         }
 
+        // Locales for which localizedString(forLanguageCode:) returns an English string instead of the desired autonym
+        enum UntranslatedLocales: String, CaseIterable {
+            case smj, mdf, sms, sma
+
+            var languageName: String {
+                switch self {
+                case .smj: return "julevsámegiella"
+                case .mdf: return "мокшень кяль"
+                case .sms: return "nuõrttsääʹmǩiõll"
+                case .sma: return "åarjelsaemien gïele"
+                }
+            }
+        }
+
+        if let untranslatedLocale = UntranslatedLocales(rawValue: languageCode) {
+            return untranslatedLocale.languageName
+        }
+
         if let languageName = locale.localizedString(forLanguageCode: languageCode), languageName != languageCode {
             return languageName
         }
