@@ -556,7 +556,7 @@ open class KeyboardViewController: UIInputViewController {
         // The app is about to change the document's contents. Perform any preparation here.
     }
 
-    private let nonCapitalizingPunctuation: [Character] = [",", ":"]
+    private let nonCapitalizingPunctuation: Set<Character> = [",", ":", "\""]
 
     private func updateCapitalization() {
         let proxy = textDocumentProxy
