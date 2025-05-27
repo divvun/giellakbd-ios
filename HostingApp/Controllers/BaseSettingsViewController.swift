@@ -30,6 +30,12 @@ class BaseSettingsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(DisclosureCell.self)
+        enableSwipeToGoBackGesture()
+    }
+
+    private func enableSwipeToGoBackGesture() {
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
