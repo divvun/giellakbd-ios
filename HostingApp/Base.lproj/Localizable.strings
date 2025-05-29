@@ -38,6 +38,9 @@
 "whenYouHaveFinished" = "When you have finished, return to this app to continue.";
 "word" = "Word";
 
+/* Shown in the keyboard banner when a speller is available */
+"Speller available. Tap to install." = "Speller available. Tap to install.";
+
 /* Spoken by VoiceOver when an element is selected */
 "accessibility.space" = "space";
 
