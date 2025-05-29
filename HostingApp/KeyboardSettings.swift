@@ -32,6 +32,11 @@ final class KeyboardSettings {
         set { defaults.set(newValue, forKey: "firstLoad") }
     }
 
+    static var isAutoCapitalizeEnabled: Bool {
+        get { return defaults.bool(forKey: "isAutoCaptializeEnabled") }
+        set { defaults.set(newValue, forKey: "isAutoCaptializeEnabled") }
+    }
+
     static var isKeySoundEnabled: Bool {
         get { return defaults.bool(forKey: "isKeySoundEnabled") }
         set { defaults.set(newValue, forKey: "isKeySoundEnabled") }

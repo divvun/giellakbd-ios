@@ -12,6 +12,16 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
+			<string>Auto-Capitalization</string>
+			<key>Key</key>
+			<string>isAutoCaptializeEnabled</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
 			<string>Enable Key Sounds</string>
 			<key>Key</key>
 			<string>isKeySoundEnabled</string>

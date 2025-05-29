@@ -236,6 +236,7 @@ open class KeyboardViewController: UIInputViewController {
 
     open override func viewDidAppear(_ animated: Bool) {
         Audio.checkIfSoundEnabled()
+        updateNoncapitalizingPunctuation()
     }
 
     private func setupKeyboard() {
@@ -248,6 +249,15 @@ open class KeyboardViewController: UIInputViewController {
 
         deadKeyHandler = DeadKeyHandler(keyboard: keyboardDefinition)
         setupKeyboardView(keyboardDefinition, withBanner: showsBanner)
+    }
+
+    private func updateNoncapitalizingPunctuation() {
+        let period: Character = "."
+        if KeyboardSettings.isAutoCapitalizeEnabled {
+            nonCapitalizingPunctuation.remove(period)
+        } else {
+            nonCapitalizingPunctuation.insert(period)
+        }
     }
 
     private func loadKeyboardDefinition() -> KeyboardDefinition {
@@ -557,7 +567,7 @@ open class KeyboardViewController: UIInputViewController {
         // The app is about to change the document's contents. Perform any preparation here.
     }
 
-    private let nonCapitalizingPunctuation: Set<Character> = [",", ":", "\""]
+    private var nonCapitalizingPunctuation: Set<Character> = [",", ":", "\""]
 
     private func updateCapitalization() {
         let proxy = textDocumentProxy
