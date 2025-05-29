@@ -3,23 +3,23 @@ import AVFoundation
 
 public final class Audio {
     private static var isSoundEnabled: Bool = KeyboardSettings.isKeySoundEnabled
-    private static let clickSound: SystemSoundID = 1123
-    private static let deleteSound: SystemSoundID = 1155
-    private static let modifierSound: SystemSoundID = 1156
 
     public static func checkIfSoundEnabled() {
         isSoundEnabled = KeyboardSettings.isKeySoundEnabled
     }
 
     public static func playClickSound() {
+        let clickSound: SystemSoundID = 1123
         play(systemSound: clickSound)
     }
 
     public static func playModifierSound() {
+        let modifierSound: SystemSoundID = 1156
         play(systemSound: modifierSound)
     }
 
     public static func playDeleteSound() {
+        let deleteSound: SystemSoundID = 1155
         play(systemSound: deleteSound)
     }
 

@@ -5,7 +5,7 @@
 	<key>StringsTable</key>
 	<string>Root</string>
 	<key>ApplicationGroupContainerIdentifier</key>
-	<string>group.giellakbd</string>
+	<string>group.no.divvun.GiellaKeyboardTest</string>
 	<key>PreferenceSpecifiers</key>
 	<array>
 		<dict>

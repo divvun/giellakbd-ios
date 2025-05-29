@@ -172,9 +172,6 @@ open class KeyboardViewController: UIInputViewController {
     }()
 
     open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        // This could have changed, so we hook here.
-        Audio.checkIfSoundEnabled()
-
         DispatchQueue.main.async {
             self.updateHeightConstraint()
         }
@@ -235,6 +232,10 @@ open class KeyboardViewController: UIInputViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
         setupKeyboard()
+    }
+
+    open override func viewDidAppear(_ animated: Bool) {
+        Audio.checkIfSoundEnabled()
     }
 
     private func setupKeyboard() {
