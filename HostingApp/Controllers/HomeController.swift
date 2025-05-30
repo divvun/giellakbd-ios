@@ -44,7 +44,11 @@ final class HomeController: ViewController<HomeView>, HideNavBar {
                 DispatchQueue.global(qos: .userInitiated).async {
                     pahkat.checkForSpellerUpdates(logger: { [weak self] message in
                         print(message)
-                        self?.setProgress(value: message)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150), execute: { [weak self] in
+                            if let self = self, self.doingPahkat {
+                                self.setProgress(value: message)
+                            }
+                        })
                     }).subscribe(onSuccess: { [weak self] _ in
                         self?.hideProgress()
                     }, onError: { [weak self] error in
