@@ -92,6 +92,7 @@ final internal class KeyboardView: UIView,
     }
 
     private var keyboardButtonExtraButton: UIButton?
+    private let hapticFeedback = UIImpactFeedbackGenerator(style: .light)
 
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -287,6 +288,8 @@ final internal class KeyboardView: UIView,
     // MARK: - LongPressOverlayDelegate
 
     func longpress(didCreateOverlayContentView contentView: UIView) {
+        hapticFeedback.impactOccurred()
+
         if overlays.first?.value.overlayContentView == nil {
             if let activeKey = activeKey {
                 showOverlay(forKeyAtIndexPath: activeKey.indexPath)
@@ -450,6 +453,7 @@ final internal class KeyboardView: UIView,
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with _: UIEvent?) {
+        hapticFeedback.prepare()
         // Forward to longpress controller?
         if let longpressController = self.longpressController, let touch = touches.first {
             longpressController.touchesBegan(touch.location(in: collectionView))
