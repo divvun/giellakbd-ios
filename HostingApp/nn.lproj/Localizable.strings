@@ -118,6 +118,9 @@
 /* (No Comment) */
 "skip" = "Hopp over";
 
+/* Shown in the keyboard banner when a speller is available */
+"Speller available. Tap to install." = "Stavekontroll tilgjengeleg. Trykk for å installera.";
+
 /* (No Comment) */
 "tapPlain" = "Rør %1$@";
 
