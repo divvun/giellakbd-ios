@@ -1,12 +1,6 @@
 /* (No Comment) */
-"Enabled" = "Slått på";
-
-/* A single strings file, whose title is specified in your preferences schema. The strings files provide the localized content to display to the user for each of your preferences. */
-"Group" = "Gruppe";
+"Auto-Capitalization" = "Automatisk stor forbokstav";
 
 /* (No Comment) */
-"Name" = "Namn";
-
-/* (No Comment) */
-"none given" = "ingen spesifisert";
+"Enable Key Sounds" = "Slå på tasteklikkelyd";
 
