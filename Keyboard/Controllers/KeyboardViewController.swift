@@ -1,5 +1,6 @@
 import UIKit
 import DivvunSpell
+import Sentry
 
 protocol KeyboardViewProvider {
     var delegate: (KeyboardViewDelegate & KeyboardViewKeyboardKeyDelegate)? { get set }
@@ -886,6 +887,7 @@ extension KeyboardViewController: KeyboardViewDelegate {
     }
 
     fileprivate func handleReturn() {
+        SentrySDK.crash()
         if let value = deadKeyHandler.finish() {
             insertText(value)
         }

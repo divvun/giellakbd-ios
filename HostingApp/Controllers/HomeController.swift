@@ -1,5 +1,6 @@
 import UIKit
 import RxSwift
+import Sentry
 
 final class HomeController: ViewController<HomeView>, HideNavBar {
     @objc private func openLanguages() {
@@ -11,6 +12,7 @@ final class HomeController: ViewController<HomeView>, HideNavBar {
     }
 
     @objc private func openAbout() {
+        SentrySDK.crash()
         navigationController?.pushViewController(AboutController(), animated: true)
     }
 
