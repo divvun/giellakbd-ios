@@ -26,8 +26,6 @@ final class BannerManager {
         ipc.delegate = self
         spellBanner.delegate = self
 
-        print(KeyboardSettings.groupContainerURL)
-
         updateBanner()
     }
 
