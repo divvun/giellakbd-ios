@@ -315,19 +315,14 @@ func traitsAreLogicallyIPad(traitCollection: UITraitCollection) -> Bool {
 
 class URLOpener {
     // App extensions don't have access to UIApplication.shared. Do an ugly song and dance to work around this.
-    @discardableResult
-    @objc func aggresivelyOpenURL(_ url: URL, responder: UIResponder?) -> Bool {
+    @objc func aggressivelyOpenURL(_ url: URL, responder: UIResponder?) {
         var responder = responder
         while responder != nil {
             if let application = responder as? UIApplication {
-                return application.perform(#selector(openURL(_:)), with: url) != nil
+                application.open(url, options: [:], completionHandler: nil)
+                return
             }
             responder = responder?.next
         }
-        return false
-    }
-
-    @objc private func openURL(_ url: URL) {
-        // Shamefully appease compiler for above function
     }
 }

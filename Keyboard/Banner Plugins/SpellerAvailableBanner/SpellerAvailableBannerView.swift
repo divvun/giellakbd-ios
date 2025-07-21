@@ -36,7 +36,7 @@ final class SpellerAvailableBannerView: UIView, BannerView {
             return
         }
         let url = URL(string: "\(urlScheme)://openFromBanner")!
-        URLOpener().aggresivelyOpenURL(url, responder: self)
+        URLOpener().aggressivelyOpenURL(url, responder: self)
     }
 
     func updateTheme(_ theme: ThemeType) {

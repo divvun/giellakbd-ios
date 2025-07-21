@@ -736,7 +736,7 @@ open class KeyboardViewController: UIInputViewController {
             return
         }
 
-        URLOpener().aggresivelyOpenURL(url, responder: self)
+        URLOpener().aggressivelyOpenURL(url, responder: self)
     }
 
     @objc private func githubIssueButtonTapped() {
@@ -750,7 +750,7 @@ open class KeyboardViewController: UIInputViewController {
             return
         }
 
-        URLOpener().aggresivelyOpenURL(url, responder: self)
+        URLOpener().aggressivelyOpenURL(url, responder: self)
     }
 
 }
