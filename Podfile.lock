@@ -2,9 +2,9 @@ PODS:
   - DivvunSpell (1.0.0-beta.5)
   - PahkatClient (0.2.3)
   - RxSwift (5.1.3)
-  - Sentry (8.53.2):
-    - Sentry/Core (= 8.53.2)
-  - Sentry/Core (8.53.2)
+  - Sentry (8.53.1):
+    - Sentry/Core (= 8.53.1)
+  - Sentry/Core (8.53.1)
   - SQLite.swift (0.15.4):
     - SQLite.swift/standard (= 0.15.4)
   - SQLite.swift/standard (0.15.4)
@@ -14,7 +14,7 @@ DEPENDENCIES:
   - "DivvunSpell (from `{http: \"https://github.com/divvun/divvunspell-sdk-swift/releases/download/v1.0.0-beta.5/cargo-pod.tgz\"}`)"
   - "PahkatClient (from `{http: \"https://github.com/divvun/pahkat-client-sdk-swift/releases/download/v0.2.3/cargo-pod.tgz\"}`)"
   - RxSwift (~> 5.1.1)
-  - Sentry (~> 8.53.2)
+  - Sentry (= 8.53.1)
   - SQLite.swift (~> 0.15.3)
   - SwiftLint
 
@@ -41,10 +41,10 @@ SPEC CHECKSUMS:
   DivvunSpell: 4003ce81da721c40f76b14107c2d8ce9206ec4b8
   PahkatClient: dcbcde9d2facf59046846dac5badc8dd08038408
   RxSwift: 915abbdfb62214aa89ccd0b194d44fb478019b27
-  Sentry: 59993bffde4a1ac297ba6d268dc4bbce068d7c1b
+  Sentry: 1e4e974d45f09d153af4b30b42acfb1c79e957d3
   SQLite.swift: a107c734115fea616a4ad31371d39f1637e8de56
   SwiftLint: 3d48e2fb2a3468fdaccf049e5e755df22fb40c2c
 
-PODFILE CHECKSUM: baab480299dcc420a29162fbe8a7501a1a2bf6a7
+PODFILE CHECKSUM: 5083aa3062e22c088b6da354fd6afd8d431cfa9a
 
 COCOAPODS: 1.16.2
