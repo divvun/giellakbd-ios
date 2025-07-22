@@ -10,6 +10,10 @@ final class HomeController: ViewController<HomeView>, HideNavBar {
         navigationController?.pushViewController(InstructionsController(), animated: true)
     }
 
+    @objc private func openKeyboardSettings() {
+        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+    }
+
     @objc private func openAbout() {
         navigationController?.pushViewController(AboutController(), animated: true)
     }
@@ -77,6 +81,7 @@ final class HomeController: ViewController<HomeView>, HideNavBar {
         contentView.langButton.addTarget(self, action: #selector(openLanguages), for: [.touchUpInside])
         contentView.langButton2.addTarget(self, action: #selector(openLanguages), for: [.touchUpInside])
         contentView.helpButton.addTarget(self, action: #selector(openInstructions), for: [.touchUpInside])
+        contentView.keyboardSettingsButton.addTarget(self, action: #selector(openKeyboardSettings), for: [.touchUpInside])
         contentView.aboutButton.addTarget(self, action: #selector(openAbout), for: [.touchUpInside])
         contentView.testingButton.addTarget(self, action: #selector(openTesting), for: [.touchUpInside])
         contentView.settingsButton.addTarget(self, action: #selector(openSettings), for: [.touchUpInside])
