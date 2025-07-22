@@ -272,6 +272,8 @@ final internal class KeyboardView: UIView,
     }
 
     func removeOverlay(forKey key: KeyDefinition) {
+        ghostKeyView?.removeFromSuperview()
+        ghostKeyView = nil
         overlays[key.type]?.removeFromSuperview()
         overlays[key.type] = nil
     }
@@ -398,6 +400,7 @@ final internal class KeyboardView: UIView,
 
     var keyTriggerTiming: KeyTriggerTiming?
     var keyRepeatTimer: Timer?
+    var dismissOverlayTimer: Timer?
 
     struct ActiveKey: Hashable {
         static func == (lhs: KeyboardView.ActiveKey, rhs: KeyboardView.ActiveKey) -> Bool {
@@ -414,13 +417,18 @@ final internal class KeyboardView: UIView,
 
     var activeKey: ActiveKey? {
         willSet {
+            dismissOverlayTimer?.invalidate()
+            dismissOverlayTimer = nil
+
             if let activeKey = activeKey,
                 let cell = collectionView.cellForItem(at: activeKey.indexPath) as? KeyCell,
                 newValue?.indexPath != activeKey.indexPath {
                 cell.keyView?.active = false
             }
-            if newValue == nil, activeKey != nil {
-                removeAllOverlays()
+            if newValue == nil, let activeKey = activeKey {
+                dismissOverlayTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false, block: { _ in
+                    self.removeOverlay(forKey: activeKey.key)
+                })
                 keyRepeatTimer?.invalidate()
                 keyRepeatTimer = nil
             }
@@ -490,6 +498,10 @@ final internal class KeyboardView: UIView,
                         }
                     }
                     keyTriggerTiming = KeyTriggerTiming(time: timeInterval, key: key)
+                }
+
+                if !key.type.isInputKey {
+                    removeAllOverlays()
                 }
 
                 if key.type.triggersOnTouchDown {
