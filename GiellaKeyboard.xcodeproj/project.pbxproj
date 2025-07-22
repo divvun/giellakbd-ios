@@ -12,7 +12,6 @@
 		4E807DC119461DC700D875D1 /* Keyboard.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 4E807DB919461DC700D875D1 /* Keyboard.appex */; };
 		4EF16F9619D255030076AFCB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4EF16F9319D255030076AFCB /* Images.xcassets */; };
 		4EF16F9B19D2550D0076AFCB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF16F9A19D2550D0076AFCB /* AppDelegate.swift */; };
-		9904409223F84BDC0063064E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9904409123F84BDC0063064E /* SettingsViewController.swift */; };
 		9904409523FAC0C50063064E /* DisclosureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9904409423FAC0C50063064E /* DisclosureCell.swift */; };
 		9904409B23FBDC200063064E /* KeyboardLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9904409A23FBDC200063064E /* KeyboardLocale.swift */; };
 		9904409D23FBE63F0063064E /* KeyboardLocalesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9904409C23FBE63F0063064E /* KeyboardLocalesViewController.swift */; };
@@ -199,7 +198,6 @@
 		4EF16F9A19D2550D0076AFCB /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		549B2102C1A10ADC0210F4A0 /* Pods_BaseKeyboard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BaseKeyboard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		918C979CC29BFB0258458332 /* Pods-BaseKeyboard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaseKeyboard.release.xcconfig"; path = "Target Support Files/Pods-BaseKeyboard/Pods-BaseKeyboard.release.xcconfig"; sourceTree = "<group>"; };
-		9904409123F84BDC0063064E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		9904409423FAC0C50063064E /* DisclosureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclosureCell.swift; sourceTree = "<group>"; };
 		9904409A23FBDC200063064E /* KeyboardLocale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardLocale.swift; sourceTree = "<group>"; };
 		9904409C23FBE63F0063064E /* KeyboardLocalesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardLocalesViewController.swift; sourceTree = "<group>"; };
@@ -609,7 +607,6 @@
 				C65430B31EC94BF0007FC053 /* LanguagesController.swift */,
 				C6B638451EDF94CA00A6ECB2 /* AboutController.swift */,
 				C691A0E623682C8B00085AC3 /* TestingController.swift */,
-				9904409123F84BDC0063064E /* SettingsViewController.swift */,
 				99989FB92417CFBA00EF8CD3 /* BaseSettingsViewController.swift */,
 				9904409C23FBE63F0063064E /* KeyboardLocalesViewController.swift */,
 			);
@@ -1053,7 +1050,6 @@
 				C676AD5F1EC985EB00523FF3 /* Strings.swift in Sources */,
 				C655E85A1EC558D000B12BE4 /* HomeController.swift in Sources */,
 				99DA1847240D1010003E7353 /* UserDictionaryService.swift in Sources */,
-				9904409223F84BDC0063064E /* SettingsViewController.swift in Sources */,
 				C66222352940B953005AE505 /* UIDeviceExtensions.swift in Sources */,
 				C662223A2940B953005AE505 /* Screen.swift in Sources */,
 				C6A2E01F1EDFAAA2006BAB69 /* AboutView.swift in Sources */,

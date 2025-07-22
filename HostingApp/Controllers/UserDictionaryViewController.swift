@@ -68,6 +68,7 @@ final class UserDictionaryViewController: ViewController<UserDictionaryView> {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(willEnterForeground),
                                                name: .HostingAppWillEnterForeground, object: nil)
+        enableSwipeToGoBackGesture()
     }
 
     @objc private func willEnterForeground() {
@@ -88,7 +89,7 @@ final class UserDictionaryViewController: ViewController<UserDictionaryView> {
     }
 
     private func setupNavBar() {
-        title = Strings.userDictionary
+        title = NSLocalizedString("My Words", comment: "")
         let plusButton = UIBarButtonItem.init(barButtonSystemItem: .add, target: self, action: #selector(showAddWordAlert))
         navigationItem.rightBarButtonItem = plusButton
     }

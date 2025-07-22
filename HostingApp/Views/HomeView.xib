@@ -151,9 +151,9 @@
                 <outlet property="langButton2" destination="lrn-yX-PE1" id="Vk3-nf-LA1"/>
                 <outlet property="layoutsButton" destination="bA9-vt-xCz" id="1Gd-TH-grp"/>
                 <outlet property="mainStack" destination="9Ne-rM-V7i" id="vFY-BX-RRp"/>
+                <outlet property="personalDictionary" destination="hdS-2z-RlR" id="LZv-BX-4Ri"/>
                 <outlet property="progressLabel" destination="vRs-gb-JZU" id="lOV-lC-lCV"/>
                 <outlet property="progressView" destination="zaG-2N-iWd" id="Wq2-SI-AOr"/>
-                <outlet property="settingsButton" destination="hdS-2z-RlR" id="LZv-BX-4Ri"/>
                 <outlet property="testingButton" destination="NQY-9A-SWq" id="hon-8d-3VN"/>
                 <outlet property="titleLabel" destination="2eI-bM-tyI" id="cBJ-Rp-SQH"/>
             </connections>

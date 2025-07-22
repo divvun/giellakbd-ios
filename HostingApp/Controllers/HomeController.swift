@@ -23,7 +23,18 @@ final class HomeController: ViewController<HomeView>, HideNavBar {
     }
 
     @objc private func openSettings() {
-        navigationController?.pushViewController(SettingsViewController(), animated: true)
+        let destination: UIViewController
+        let locales = KeyboardLocale.allLocales
+
+        if locales.isEmpty {
+            fatalError()
+        } else if locales.count == 1, let locale = locales.first {
+            destination = UserDictionaryViewController(keyboardLocale: locale)
+        } else {
+            destination = KeyboardLocalesViewController()
+        }
+
+        navigationController?.pushViewController(destination, animated: true)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -84,16 +95,16 @@ final class HomeController: ViewController<HomeView>, HideNavBar {
         contentView.keyboardSettingsButton.addTarget(self, action: #selector(openKeyboardSettings), for: [.touchUpInside])
         contentView.aboutButton.addTarget(self, action: #selector(openAbout), for: [.touchUpInside])
         contentView.testingButton.addTarget(self, action: #selector(openTesting), for: [.touchUpInside])
-        contentView.settingsButton.addTarget(self, action: #selector(openSettings), for: [.touchUpInside])
+        contentView.personalDictionary.addTarget(self, action: #selector(openSettings), for: [.touchUpInside])
 
         // Currently settings only has user dictionary, hide if not enabled
         if !FeatureFlag.userDictionary {
-            contentView.settingsButton.isHidden = true
+            contentView.personalDictionary.isHidden = true
         }
 
         // Settings button must not show with no keyboards enabled
         if KeyboardLocale.enabledLocales.isEmpty {
-            contentView.settingsButton.isHidden = true
+            contentView.personalDictionary.isHidden = true
         }
     }
 

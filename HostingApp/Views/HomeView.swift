@@ -21,7 +21,7 @@ final class HomeView: UIView, Nibbable {
     @IBOutlet var keyboardSettingsButton: MenuButton!
     @IBOutlet var aboutButton: MenuButton!
     @IBOutlet var testingButton: MenuButton!
-    @IBOutlet var settingsButton: MenuButton!
+    @IBOutlet var personalDictionary: MenuButton!
 
     @IBOutlet var mainStack: UIStackView?
     @IBOutlet var configStack: UIStackView?
@@ -37,7 +37,7 @@ final class HomeView: UIView, Nibbable {
         layoutsButton.setTitle(Strings.layouts, for: [])
         aboutButton.setTitle(Strings.about, for: [])
         keyboardSettingsButton.setTitle(NSLocalizedString("Keyboard Settings", comment: "Keyboard settings button title"), for: [])
-        settingsButton.setTitle(Strings.settings, for: [])
+        personalDictionary.setTitle(NSLocalizedString("My Words", comment: ""), for: [])
         installingSpellersLabel.text = Strings.installingSpellers
     }
 }

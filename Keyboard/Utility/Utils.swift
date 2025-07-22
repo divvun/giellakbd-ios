@@ -181,6 +181,13 @@ extension UIView {
     }
 }
 
+extension UIViewController {
+    func enableSwipeToGoBackGesture() {
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+    }
+}
+
 public extension UIColor {
     // FIXME: is there a cleaner way to do this?
     // swiftlint:disable:next large_tuple
