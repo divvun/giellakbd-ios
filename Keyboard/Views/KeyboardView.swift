@@ -835,6 +835,8 @@ final class GhostKeyView: UIView {
         contentView.centerYAnchor.constraint(equalTo: self.centerYAnchor).enable(priority: .required)
         contentView.widthAnchor.constraint(equalToConstant: contentView.frame.width).enable(priority: .required)
         contentView.heightAnchor.constraint(equalToConstant: contentView.frame.height).enable(priority: .required)
+
+        isUserInteractionEnabled = false
     }
 
     required init?(coder: NSCoder) {
