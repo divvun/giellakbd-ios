@@ -145,6 +145,15 @@ public enum KeyType: Codable, Hashable {
             return true
         }
     }
+
+    var isInputKey: Bool {
+        switch self {
+        case .input:
+            return true
+        default:
+            return false
+        }
+    }
 }
 
 public struct KeyDefinition: Codable {
