@@ -586,7 +586,10 @@ final internal class KeyboardView: UIView,
             }
         }
 
-        activeKey = nil
+        // Ensuring not already nil fixes a glitch where the overlay isn't dismissed when user taps two keys nearly simultaneously
+        if activeKey != nil {
+            activeKey = nil
+        }
     }
 
     private func showKeyboardModeOverlay(_ longpressGestureRecognizer: UILongPressGestureRecognizer, key: KeyDefinition) {
