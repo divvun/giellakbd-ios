@@ -426,8 +426,8 @@ final internal class KeyboardView: UIView,
                 cell.keyView?.active = false
             }
             if newValue == nil, let activeKey = activeKey {
-                dismissOverlayTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false, block: { _ in
-                    self.removeOverlay(forKey: activeKey.key)
+                dismissOverlayTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false, block: { [weak self] _ in
+                    self?.removeOverlay(forKey: activeKey.key)
                 })
                 keyRepeatTimer?.invalidate()
                 keyRepeatTimer = nil
