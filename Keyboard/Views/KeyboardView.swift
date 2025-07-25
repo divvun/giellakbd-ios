@@ -567,6 +567,7 @@ final internal class KeyboardView: UIView,
         // Forward to longpress controller?
         if let longpressController = self.longpressController, let touch = touches.first {
             longpressController.touchesEnded(touch.location(in: collectionView))
+            removeAllOverlays()
             activeKey = nil
 
             return
