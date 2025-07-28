@@ -24,7 +24,7 @@ final class HomeController: ViewController<HomeView>, HideNavBar {
 
     @objc private func openSettings() {
         let destination: UIViewController
-        let locales = KeyboardLocale.allLocales
+        let locales = KeyboardLocale.enabledLocales
 
         if locales.count == 1, let locale = locales.first {
             destination = UserDictionaryViewController(keyboardLocale: locale)
