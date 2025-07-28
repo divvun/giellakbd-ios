@@ -3,7 +3,7 @@ import UIKit
 final class KeyboardLocalesViewController: BaseSettingsViewController, SettingsController {
 
     override func rows() -> [Row] {
-        self.title = Strings.userDictionary
+        self.title = NSLocalizedString("My Words", comment: "")
 
         var rows: [Row] = []
 
