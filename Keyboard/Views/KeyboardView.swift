@@ -209,10 +209,8 @@ final internal class KeyboardView: UIView,
 
     private func showOverlay(forKeyAtIndexPath indexPath: IndexPath) {
         guard let keyCell = collectionView.cellForItem(at: indexPath) as? KeyCell,
-            let keyView = keyCell.keyView else {
-            return
-        }
-        if !ensureValidKeyView(at: indexPath) {
+              let keyView = keyCell.keyView,
+              ensureValidKeyView(at: indexPath) else {
             return
         }
         let key = currentPage[indexPath.section][indexPath.row]
