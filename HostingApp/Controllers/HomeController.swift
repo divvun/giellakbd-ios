@@ -26,9 +26,7 @@ final class HomeController: ViewController<HomeView>, HideNavBar {
         let destination: UIViewController
         let locales = KeyboardLocale.allLocales
 
-        if locales.isEmpty {
-            fatalError()
-        } else if locales.count == 1, let locale = locales.first {
+        if locales.count == 1, let locale = locales.first {
             destination = UserDictionaryViewController(keyboardLocale: locale)
         } else {
             destination = KeyboardLocalesViewController()
