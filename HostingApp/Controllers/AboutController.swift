@@ -5,5 +5,6 @@ final class AboutController: ViewController<AboutView> {
         super.viewDidLoad()
 
         title = Strings.about
+        enableSwipeToGoBackGesture()
     }
 }
