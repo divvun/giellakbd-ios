@@ -166,7 +166,8 @@ open class KeyboardViewController: UIInputViewController {
         }
     }
 
-    private lazy var baseTheme: _Theme = { Theme(traits: self.traitCollection) }()
+    private lazy var deviceContext: DeviceContext = { DeviceContext.current() }()
+    private lazy var baseTheme: Theme = { Theme.create(for: self.deviceContext) }()
     private(set) lazy var theme: ThemeType = {
         baseTheme.select(traits: self.traitCollection)
     }()
