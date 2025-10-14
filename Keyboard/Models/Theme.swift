@@ -394,9 +394,14 @@ private struct ThemeFactory {
                 ? UIColor(r: 136, g: 138, b: 141)
                 : .clear
 
+            // iOS 26: Special keys use white background like regular keys
+            let specialKeyColor = style.isLegacy
+                ? UIColor(r: 171, g: 177, b: 186)
+                : .white
+
             return Colors(
                 regularKey: .white,
-                specialKey: UIColor(r: 171, g: 177, b: 186),
+                specialKey: specialKeyColor,
                 popup: .white,
                 background: UIColor(r: 209, g: 212, b: 217, a: 0.0),
                 text: .black,
