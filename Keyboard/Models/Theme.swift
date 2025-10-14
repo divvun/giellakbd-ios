@@ -127,7 +127,13 @@ struct Theme {
         }
     }
 
-    static func create(for device: DeviceContext) -> Theme {
+    /// Create a theme for the current device
+    static func forCurrentDevice() -> Theme {
+        return forDevice(DeviceContext.current())
+    }
+
+    /// Create a theme for a specific device context (useful for testing)
+    static func forDevice(_ device: DeviceContext) -> Theme {
         return Theme(
             light: ThemeFactory.make(.light, device: device),
             dark: ThemeFactory.make(.dark, device: device),
