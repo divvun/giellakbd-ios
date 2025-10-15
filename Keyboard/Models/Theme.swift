@@ -369,9 +369,18 @@ private struct ThemeFactory {
                 ? UIColor(r: 103, g: 106, b: 110, a: 0.5)
                 : .clear
 
+            let regularKey = style.isLegacy
+                ? UIColor.lightGray.withAlphaComponent(0.4)
+                : UIColor(r: 61, g: 61, b: 61)
+
+            // iOS 26: Special keys use same color as regular keys
+            let specialKey = style.isLegacy
+                ? UIColor.gray.withAlphaComponent(0.3)
+                : regularKey
+
             return Colors(
-                regularKey: UIColor.lightGray.withAlphaComponent(0.4),
-                specialKey: UIColor.gray.withAlphaComponent(0.3),
+                regularKey: regularKey,
+                specialKey: specialKey,
                 popup: UIColor(r: 109, g: 109, b: 109),
                 background: .clear,
                 text: .white,
@@ -379,8 +388,8 @@ private struct ThemeFactory {
                 border: .clear,
                 specialKeyBorder: .clear,
                 keyShadow: keyShadow,
-                shiftActive: UIColor(r: 214, g: 220, b: 208),
-                shiftTint: .black,
+                shiftActive: specialKey,
+                shiftTint: .white,
                 popupBorder: .clear,
                 active: UIColor(r: 31, g: 126, b: 249),
                 activeText: .white,
