@@ -376,11 +376,15 @@ private struct ThemeFactory {
             let specialKey = style.isLegacy
                 ? UIColor.gray.withAlphaComponent(0.3)
                 : regularKey
+            
+            let popup = style.isLegacy
+                ? UIColor(r: 109, g: 109, b: 109)
+                : regularKey
 
             return Colors(
                 regularKey: regularKey,
                 specialKey: specialKey,
-                popup: UIColor(r: 109, g: 109, b: 109),
+                popup: popup,
                 background: .clear,
                 text: .white,
                 inactiveText: .lightGray,
