@@ -409,6 +409,10 @@ private struct ThemeFactory {
             let specialKeyColor = style.isLegacy
                 ? UIColor(r: 171, g: 177, b: 186)
                 : .white
+            
+            let popupBorder = style.isLegacy
+                ? UIColor(hue: 0.595, saturation: 0.04, brightness: 0.65, alpha: 1.0)
+                : .clear
 
             return Colors(
                 regularKey: .white,
@@ -422,7 +426,7 @@ private struct ThemeFactory {
                 keyShadow: keyShadow,
                 shiftActive: .white,
                 shiftTint: .black,
-                popupBorder: UIColor(hue: 0.595, saturation: 0.04, brightness: 0.65, alpha: 1.0),
+                popupBorder: popupBorder,
                 active: UIColor(r: 31, g: 126, b: 249),
                 activeText: .white,
                 altKeyText: device.screenInches >= 11 ? UIColor.black : UIColor(white: 0.0, alpha: 0.3),
