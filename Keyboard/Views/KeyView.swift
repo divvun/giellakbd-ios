@@ -22,6 +22,7 @@ final class KeyView: UIView {
 
     private var fontSize: CGFloat = 0.0
     private var altFontSize: CGFloat = 0.0
+    private let screenInches = UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches
 
     var swipeLayoutConstraint: NSLayoutConstraint?
 

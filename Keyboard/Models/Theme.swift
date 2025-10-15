@@ -364,7 +364,6 @@ private struct ThemeFactory {
 
     private static func makeColors(for style: ThemeStyle, device: DeviceContext) -> Colors {
         if style.isDark {
-            // iOS 26 uses flatter design with no/minimal shadows
             let keyShadow = style.isLegacy
                 ? UIColor(r: 103, g: 106, b: 110, a: 0.5)
                 : .clear
@@ -398,12 +397,11 @@ private struct ThemeFactory {
                 bannerText: UIColor(r: 233, g: 233, b: 233)
             )
         } else {
-            // iOS 26 uses flatter design with no shadows
             let keyShadow = style.isLegacy
                 ? UIColor(r: 136, g: 138, b: 141)
                 : .clear
 
-            // iOS 26: Special keys use white background like regular keys
+            // iOS 26: Special keys look the same as regular keys
             let specialKeyColor = style.isLegacy
                 ? UIColor(r: 171, g: 177, b: 186)
                 : .white
@@ -428,33 +426,5 @@ private struct ThemeFactory {
                 bannerText: UIColor(r: 21, g: 21, b: 21)
             )
         }
-    }
-}
-
-// MARK: - Utilities
-
-// iOS version detection
-struct iOSVersion {
-    static var current: OperatingSystemVersion {
-        return ProcessInfo.processInfo.operatingSystemVersion
-    }
-
-    static var majorVersion: Int {
-        return current.majorVersion
-    }
-
-    static var isIOS26OrNewer: Bool {
-        return majorVersion >= 26
-    }
-}
-
-// Global screen size utility for backward compatibility
-let screenInches = UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches
-
-// MARK: - Convenience
-
-extension UIColor {
-    convenience init(r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat = 1.0) {
-        self.init(red: r/255.0, green: g/255.0, blue: b/255.0, alpha: a)
     }
 }
