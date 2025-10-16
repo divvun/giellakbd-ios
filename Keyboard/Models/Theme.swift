@@ -148,7 +148,7 @@ struct Theme {
 private struct ThemeFactory {
     static func make(_ style: ThemeStyle, device: DeviceContext) -> ThemeConfiguration {
         let metrics = makeMetrics(for: device, legacy: style.isLegacy)
-        let fonts = makeFonts(for: device)
+        let fonts = makeFonts(for: device, legacy: style.isLegacy)
         let colors = makeColors(for: style, device: device)
 
         return ThemeConfiguration(
@@ -305,7 +305,7 @@ private struct ThemeFactory {
         let banner: UIFont
     }
 
-    private static func makeFonts(for device: DeviceContext) -> Fonts {
+    private static func makeFonts(for device: DeviceContext, legacy: Bool) -> Fonts {
         if device.isPad {
             let altKeySize: CGFloat = device.isSmallOrMediumLandscape ? 16.0 : 13.0
             let lowerKey: UIFont = {
@@ -329,8 +329,12 @@ private struct ThemeFactory {
             )
         } else {
             let altKeySize: CGFloat = 13.0
+            let lowerKey = legacy
+                ? UIFont.systemFont(ofSize: 25.0, weight: .light)
+                : UIFont.systemFont(ofSize: 25.0)
+            
             return Fonts(
-                lowerKey: UIFont.systemFont(ofSize: 25.0, weight: .light),
+                lowerKey: lowerKey,
                 capitalKey: UIFont.systemFont(ofSize: 22.0),
                 modifierKeySize: 16.0,
                 altKeySize: altKeySize,
