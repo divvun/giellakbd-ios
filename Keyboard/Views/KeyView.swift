@@ -207,7 +207,32 @@ final class KeyView: UIView {
         contentView = labelContainer
     }
 
-    private func image(named name: String, traits: UITraitCollection, tintColor: UIColor) {
+    // Load image as SF Symbol and fallback to assets
+    private func loadImage(named name: String, traits: UITraitCollection) -> UIImage? {
+        // Map asset names to SF Symbol names with appropriate sizing
+        let sfSymbolInfo: (name: String, pointSize: CGFloat)? = {
+            switch name {
+            case "backspace": return ("delete.backward", 20.0)
+            case "globe": return ("globe", 20.0)
+            case "return": return ("return", 20.0)
+            case "shift": return ("shift", 20.0)
+            case "shift-filled": return ("shift.fill", 20.0)
+            case "close-keyboard-ipad": return ("keyboard.chevron.compact.down", 17.0)
+            default: return nil
+            }
+        }()
+
+        // Try SF Symbols first (iOS 13+)
+        if #available(iOS 13.0, *),
+           let symbolInfo = sfSymbolInfo,
+           traits.userInterfaceIdiom == .phone { // TODO: remove this when supporting iPad
+            let config = UIImage.SymbolConfiguration(pointSize: symbolInfo.pointSize, weight: .regular, scale: .medium)
+            if let symbolImage = UIImage(systemName: symbolInfo.name, withConfiguration: config) {
+                return symbolImage
+            }
+        }
+
+        // Fallback to asset catalog
         var image = UIImage(named: name, in: Bundle.top, compatibleWith: traits)
         if image == nil {
             // If we get here, we're probably being run as an iPhone app on the iPad.
@@ -215,17 +240,38 @@ final class KeyView: UIView {
             image = UIImage(named: name + "-fallback", in: Bundle.top, compatibleWith: traits)
         }
 
+        return image
+    }
+
+    private func image(named name: String, traits: UITraitCollection, tintColor: UIColor) {
+        let image = loadImage(named: name, traits: traits)
+
+        // Create a container view to control sizing
+        let container = UIView()
+        container.translatesAutoresizingMaskIntoConstraints = false
+
         imageView = UIImageView()
         if let imageView = self.imageView {
-            self.imageView?.translatesAutoresizingMaskIntoConstraints = false
-
+            imageView.translatesAutoresizingMaskIntoConstraints = false
             imageView.image = image
             imageView.contentMode = .center
             imageView.tintColor = tintColor
 
-            addSubview(imageView)
+            // Prevent image from affecting layout size
+            imageView.setContentHuggingPriority(.defaultLow, for: .vertical)
+            imageView.setContentHuggingPriority(.defaultLow, for: .horizontal)
+            imageView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+            imageView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
-            contentView = imageView
+            container.addSubview(imageView)
+
+            // Center imageView in container without affecting container size
+            imageView.centerXAnchor.constraint(equalTo: container.centerXAnchor).isActive = true
+            imageView.centerYAnchor.constraint(equalTo: container.centerYAnchor).isActive = true
+
+            addSubview(container)
+
+            contentView = container
         }
     }
 
