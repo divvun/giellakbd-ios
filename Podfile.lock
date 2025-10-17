@@ -8,7 +8,7 @@ PODS:
   - SQLite.swift (0.15.4):
     - SQLite.swift/standard (= 0.15.4)
   - SQLite.swift/standard (0.15.4)
-  - SwiftLint (0.61.0)
+  - SwiftLint (0.62.1)
 
 DEPENDENCIES:
   - "DivvunSpell (from `{http: \"https://github.com/divvun/divvunspell-sdk-swift/releases/download/v1.0.0-beta.5/cargo-pod.tgz\"}`)"
@@ -43,7 +43,7 @@ SPEC CHECKSUMS:
   RxSwift: 915abbdfb62214aa89ccd0b194d44fb478019b27
   Sentry: 1e4e974d45f09d153af4b30b42acfb1c79e957d3
   SQLite.swift: a107c734115fea616a4ad31371d39f1637e8de56
-  SwiftLint: bf6da11a31c6644a0bbb27f4fa15fd9636db00b3
+  SwiftLint: 6a9eb020853558a7eaf00f655636b5d6ad15bd02
 
 PODFILE CHECKSUM: 5083aa3062e22c088b6da354fd6afd8d431cfa9a
 
