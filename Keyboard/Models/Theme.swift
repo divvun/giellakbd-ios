@@ -228,8 +228,13 @@ private struct ThemeFactory {
         let keyCornerRadius: CGFloat = legacy ? 5.0 : 10.0
 
         let keyVerticalMargin: CGFloat = {
-            // Simplified - in production you'd check device model via UIDevice.current.dc.deviceModel
-            device.isLandscape ? 3.5 : 6.0
+            if legacy {
+                // Legacy iOS uses larger vertical margins
+                return device.isLandscape ? 3.5 : 6.0
+            } else {
+                // iOS 26 uses smaller vertical margins for taller keys with less spacing
+                return device.isLandscape ? 3.5 : 5.5
+            }
         }()
 
         let bannerHeight: CGFloat = 48.0 // Simplified - could check for smaller devices
