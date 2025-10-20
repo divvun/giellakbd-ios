@@ -312,11 +312,7 @@ final class KeyView: UIView {
         case let .spacebar(string):
             text(string, page: page)
         case let .returnkey(string):
-            if screenInches >= 11 {
-                image(named: "return", traits: traits)
-            } else {
-                text(string, page: page)
-            }
+            setupReturnKey(page, traits, string)
         case .symbols:
             setupSymbols(page, traits)
         case .keyboardMode:
@@ -350,6 +346,18 @@ final class KeyView: UIView {
         }
     }
 
+    private func setupReturnKey(_ page: KeyboardPage, _ traits: UITraitCollection, _ string: String) {
+        if iOSVersion.isIOS26OrNewer {
+            image(named: "return", traits: traits)
+        } else {
+            if traits.userInterfaceIdiom == .pad, screenInches >= 11 {
+                text(string, page: page)
+            } else {
+                image(named: "return", traits: traits)
+            }
+        }
+            
+    }
     private func setupSymbols(_ page: KeyboardPage, _ traits: UITraitCollection) {
         if case .symbols1 = page {
             text("ABC", page: page)
