@@ -166,14 +166,27 @@ open class KeyboardViewController: UIInputViewController {
         }
     }
 
-    private lazy var baseTheme: Theme = { Theme.forCurrentDevice() }()
     private(set) lazy var theme: ThemeType = {
-        baseTheme.select(traits: self.traitCollection)
+        Theme.forCurrentDevice().select(traits: self.traitCollection)
     }()
 
     open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        DispatchQueue.main.async {
+        coordinator.animate { [weak self] _ in
+            // moving the height updating here causes a new type of jank
+            // where there's a black box under the keyboard before it corrects
+        } completion: { [weak self] _ in
+            guard let self = self else { return }
+            // Regenerate theme with new device context (portrait/landscape)
+            self.theme = Theme.forCurrentDevice().select(traits: self.traitCollection)
+            
+            // Update all views with the new theme
+            self.updateAfterThemeChange()
+            self.bannerManager?.updateTheme(self.theme)
+            if self.keyboardView != nil {
+                self.keyboardView.updateTheme(theme: self.theme)
+            }
             self.updateHeightConstraint()
+            self.view.layoutIfNeeded()
         }
     }
 
@@ -650,7 +663,7 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     private func checkDarkMode(traits: UITraitCollection) {
-        let newTheme = baseTheme.select(traits: traits)
+        let newTheme = Theme.forCurrentDevice().select(traits: traits)
 
         if theme.appearance != newTheme.appearance {
             theme = newTheme
