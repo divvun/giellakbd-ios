@@ -15,7 +15,7 @@ final class BannerManager {
     private var currentBanner: Banner?
     private let ipc = IPC()
 
-    init(view: UIView, theme: ThemeType, delegate: BannerManagerDelegate?) {
+    init(view: UIView, theme: Theme, delegate: BannerManagerDelegate?) {
         self.view = view
         self.delegate = delegate
 
@@ -60,7 +60,7 @@ final class BannerManager {
         spellBanner.updateSuggestions(newContext)
     }
 
-    public func updateTheme(_ theme: ThemeType) {
+    public func updateTheme(_ theme: Theme) {
         spellBanner.updateTheme(theme)
     }
 }

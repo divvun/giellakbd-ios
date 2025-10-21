@@ -4,7 +4,7 @@ final class KeyOverlayView: UIView {
     private class KeyOverlayShadowView: UIView {}
 
     private let ghostKeyView: GhostKeyView
-    private let theme: ThemeType
+    private let theme: Theme
 
     // This view is what contains the character (or collection of characters) above the key that
     // has been tapped. We then later draw curves to make it appear connected to the tapped key.
@@ -13,7 +13,7 @@ final class KeyOverlayView: UIView {
 
     private var path: CGPath!
 
-    init(ghostKeyView: GhostKeyView, key: KeyDefinition, theme: ThemeType) {
+    init(ghostKeyView: GhostKeyView, key: KeyDefinition, theme: Theme) {
         self.ghostKeyView = ghostKeyView
 
         self.theme = theme

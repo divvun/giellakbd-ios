@@ -2,5 +2,5 @@ import Foundation
 
 protocol Banner: AnyObject {
     var view: UIView { get }
-    func updateTheme(_ theme: ThemeType)
+    func updateTheme(_ theme: Theme)
 }

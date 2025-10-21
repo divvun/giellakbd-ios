@@ -1,12 +1,9 @@
 import Foundation
 import UIKit
 
-// MARK: - Theme Configuration
+// MARK: - Theme
 
-// Backward compatibility typealias
-typealias ThemeType = ThemeConfiguration
-
-struct ThemeConfiguration {
+struct Theme {
     // Colors
     let appearance: UIKeyboardAppearance
     let regularKeyColor: UIColor
@@ -55,6 +52,27 @@ struct ThemeConfiguration {
     let altLabelTopAnchorConstant: CGFloat
     let altLabelBottomAnchorConstant: CGFloat
     let popupLongpressKeysPerRow: Int
+
+    // MARK: - Static Factory Methods
+
+    /// Get the current theme for the given trait collection
+    /// This is the main entry point for creating themes
+    static func current(for traits: UITraitCollection) -> Theme {
+        let device = DeviceContext.current()
+        let isDark = traits.userInterfaceStyle == .dark
+        let isLegacy = !iOSVersion.isIOS26OrNewer
+
+        let style: ThemeStyle = {
+            switch (isDark, isLegacy) {
+            case (true, true): return .legacyDark
+            case (true, false): return .dark
+            case (false, true): return .legacyLight
+            case (false, false): return .light
+            }
+        }()
+
+        return ThemeFactory.make(style, device: device)
+    }
 }
 
 // MARK: - Device Context
@@ -103,55 +121,16 @@ enum ThemeStyle {
     }
 }
 
-// MARK: - Theme
-
-struct Theme {
-    let light: ThemeConfiguration
-    let dark: ThemeConfiguration
-    let legacyLight: ThemeConfiguration
-    let legacyDark: ThemeConfiguration
-
-    /// Select theme configuration based on traits and optionally override iOS version detection
-    /// - Parameters:
-    ///   - traits: The UITraitCollection to determine light/dark mode
-    ///   - useLegacy: Optional override. If nil (default), auto-detects iOS version. If true/false, forces legacy/modern theme.
-    func select(traits: UITraitCollection, useLegacy: Bool? = nil) -> ThemeConfiguration {
-        let isDark = traits.userInterfaceStyle == .dark
-        let shouldUseLegacy = useLegacy ?? !iOSVersion.isIOS26OrNewer
-
-        switch (isDark, shouldUseLegacy) {
-        case (true, true): return legacyDark
-        case (true, false): return dark
-        case (false, true): return legacyLight
-        case (false, false): return light
-        }
-    }
-
-    /// Create a theme for the current device
-    static func forCurrentDevice() -> Theme {
-        return forDevice(DeviceContext.current())
-    }
-
-    /// Create a theme for a specific device context (useful for testing)
-    static func forDevice(_ device: DeviceContext) -> Theme {
-        return Theme(
-            light: ThemeFactory.make(.light, device: device),
-            dark: ThemeFactory.make(.dark, device: device),
-            legacyLight: ThemeFactory.make(.legacyLight, device: device),
-            legacyDark: ThemeFactory.make(.legacyDark, device: device)
-        )
-    }
-}
 
 // MARK: - Theme Factory
 
 private struct ThemeFactory {
-    static func make(_ style: ThemeStyle, device: DeviceContext) -> ThemeConfiguration {
+    static func make(_ style: ThemeStyle, device: DeviceContext) -> Theme {
         let metrics = makeMetrics(for: device, legacy: style.isLegacy)
         let fonts = makeFonts(for: device, legacy: style.isLegacy)
         let colors = makeColors(for: style, device: device)
 
-        return ThemeConfiguration(
+        return Theme(
             // Colors
             appearance: style.isDark ? .dark : .light,
             regularKeyColor: colors.regularKey,

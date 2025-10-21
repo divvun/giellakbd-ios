@@ -70,7 +70,7 @@ class LongPressOverlayController: NSObject,
     private let deadZone: CGFloat = 20.0
 
     private let key: KeyDefinition
-    private let theme: ThemeType
+    private let theme: Theme
     let longpressValues: [KeyDefinition]
 
     private var baselinePoint: CGPoint?
@@ -89,7 +89,7 @@ class LongPressOverlayController: NSObject,
     weak var delegate: LongPressOverlayDelegate?
     private let labelFont: UIFont
 
-    init(key: KeyDefinition, page: KeyboardPage, theme: ThemeType, longpressValues: [KeyDefinition]) {
+    init(key: KeyDefinition, page: KeyboardPage, theme: Theme, longpressValues: [KeyDefinition]) {
         self.key = key
         self.theme = theme
         self.longpressValues = longpressValues
@@ -313,14 +313,14 @@ class LongPressOverlayController: NSObject,
 //            }
 //        }
 
-        func select(theme: ThemeType) {
+        func select(theme: Theme) {
             label.textColor = theme.activeTextColor
             label.backgroundColor = theme.activeColor
             imageView.tintColor = theme.activeTextColor
             isSelectedKey = true
         }
 
-        func deselect(theme: ThemeType) {
+        func deselect(theme: Theme) {
             label.textColor = theme.textColor
             label.backgroundColor = theme.popupColor
             imageView.tintColor = theme.textColor
@@ -345,7 +345,7 @@ class LongPressOverlayController: NSObject,
             label.fill(superview: self)
         }
 
-        func configure(theme: ThemeType) {
+        func configure(theme: Theme) {
             label.layer.cornerRadius = theme.keyCornerRadius
             imageView.tintColor = theme.textColor
         }

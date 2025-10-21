@@ -11,7 +11,7 @@ final class SpellBannerCell: UICollectionViewCell {
         super.init(frame: frame)
     }
 
-    func configure(theme: ThemeType) {
+    func configure(theme: Theme) {
         isHidden = false
         contentView.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.translatesAutoresizingMaskIntoConstraints = false

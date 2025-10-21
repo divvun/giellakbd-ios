@@ -38,7 +38,7 @@ final class SplitKeyboardView: KeyboardViewProvider {
         }
     }
 
-    func updateTheme(theme: ThemeType) {
+    func updateTheme(theme: Theme) {
         leftKeyboardView.updateTheme(theme: theme)
         rightKeyboardView.updateTheme(theme: theme)
     }
@@ -59,7 +59,7 @@ final class SplitKeyboardView: KeyboardViewProvider {
     var leftKeyboardView: KeyboardView
     var rightKeyboardView: KeyboardView
 
-    required init(definition: KeyboardDefinition, theme: ThemeType) {
+    required init(definition: KeyboardDefinition, theme: Theme) {
         guard let layout = definition.currentDeviceLayout else {
             fatalError("Keyboard definition must have a layout.")
         }

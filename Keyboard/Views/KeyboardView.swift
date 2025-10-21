@@ -25,7 +25,7 @@ final internal class KeyboardView: UIView,
 // swiftlint:enable all
     private static let pauseBeforeRepeatTimeInterval: TimeInterval = 0.5
     private static let keyRepeatTimeInterval: TimeInterval = 0.1
-    private var theme: ThemeType
+    private var theme: Theme
 
     private let definition: KeyboardDefinition
 
@@ -104,7 +104,7 @@ final internal class KeyboardView: UIView,
         return recognizer
     }()
 
-    required init(definition: KeyboardDefinition, theme: ThemeType) {
+    required init(definition: KeyboardDefinition, theme: Theme) {
         self.definition = definition
         self.theme = theme
 
@@ -132,7 +132,7 @@ final internal class KeyboardView: UIView,
         isMultipleTouchEnabled = true
     }
 
-    func updateTheme(theme: ThemeType) {
+    func updateTheme(theme: Theme) {
         self.theme = theme
         update()
     }
@@ -786,7 +786,7 @@ final internal class KeyboardView: UIView,
             contentView.fill(superview: self)
         }
 
-        func configure(page: KeyboardPage, key: KeyDefinition, theme: ThemeType, traits: UITraitCollection) {
+        func configure(page: KeyboardPage, key: KeyDefinition, theme: Theme, traits: UITraitCollection) {
             contentView.subviews.forEach { view in
                 view.removeFromSuperview()
             }

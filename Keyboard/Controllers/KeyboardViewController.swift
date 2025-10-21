@@ -6,14 +6,14 @@ protocol KeyboardViewProvider {
 
     var page: BaseKeyboard.KeyboardPage { get set }
 
-    func updateTheme(theme: ThemeType)
+    func updateTheme(theme: Theme)
 
     func update()
 
     var topAnchor: NSLayoutYAxisAnchor { get }
     var heightAnchor: NSLayoutDimension { get }
 
-    init(definition: KeyboardDefinition, theme: ThemeType)
+    init(definition: KeyboardDefinition, theme: Theme)
 
     func remove()
 }
@@ -166,8 +166,8 @@ open class KeyboardViewController: UIInputViewController {
         }
     }
 
-    private(set) lazy var theme: ThemeType = {
-        Theme.forCurrentDevice().select(traits: self.traitCollection)
+    private(set) lazy var theme: Theme = {
+        Theme.current(for: self.traitCollection)
     }()
 
     open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -177,8 +177,8 @@ open class KeyboardViewController: UIInputViewController {
         } completion: { [weak self] _ in
             guard let self = self else { return }
             // Regenerate theme with new device context (portrait/landscape)
-            self.theme = Theme.forCurrentDevice().select(traits: self.traitCollection)
-            
+            self.theme = Theme.current(for: self.traitCollection)
+
             // Update all views with the new theme
             self.updateAfterThemeChange()
             self.bannerManager?.updateTheme(self.theme)
@@ -663,7 +663,7 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     private func checkDarkMode(traits: UITraitCollection) {
-        let newTheme = Theme.forCurrentDevice().select(traits: traits)
+        let newTheme = Theme.current(for: traits)
 
         if theme.appearance != newTheme.appearance {
             theme = newTheme

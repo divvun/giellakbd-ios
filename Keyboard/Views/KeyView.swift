@@ -1,7 +1,7 @@
 
 final class KeyView: UIView {
     private let key: KeyDefinition
-    private let theme: ThemeType
+    private let theme: Theme
 
     public var contentView: UIView!
 
@@ -279,7 +279,7 @@ final class KeyView: UIView {
         image(named: name, traits: traits, tintColor: theme.textColor)
     }
 
-    init(page: KeyboardPage, key: KeyDefinition, theme: ThemeType, traits: UITraitCollection) {
+    init(page: KeyboardPage, key: KeyDefinition, theme: Theme, traits: UITraitCollection) {
         self.key = key
         self.theme = theme
 
@@ -305,7 +305,7 @@ final class KeyView: UIView {
         contentView.backgroundColor = backgroundColor(for: key, page: page)
     }
 
-    private func setupContentView(_ key: KeyDefinition, _ page: KeyboardPage, _ traits: UITraitCollection, _ theme: ThemeType) {
+    private func setupContentView(_ key: KeyDefinition, _ page: KeyboardPage, _ traits: UITraitCollection, _ theme: Theme) {
         switch key.type {
         case let .input(string, alt):
             input(string: string, alt: alt, page: page)
@@ -382,7 +382,7 @@ final class KeyView: UIView {
         }
     }
 
-    private func setupShift(_ page: KeyboardPage, _ traits: UITraitCollection, _ theme: ThemeType) {
+    private func setupShift(_ page: KeyboardPage, _ traits: UITraitCollection, _ theme: Theme) {
         switch page {
         case .shifted, .capslock:
             image(named: "shift-filled", traits: traits, tintColor: theme.shiftTintColor)
