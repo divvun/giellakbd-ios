@@ -117,7 +117,7 @@ public enum KeyType: Codable, Hashable {
 
     var triggersOnTouchDown: Bool {
         switch self {
-        case .shift, .backspace, .symbols:
+        case .shift, .backspace, .symbols, .shiftSymbols:
             return true
         default:
             return false

@@ -508,7 +508,13 @@ final internal class KeyboardView: UIView,
                     }
                 }
 
-                if key.type.triggersOnTouchUp || key.type.supportsRepeatTrigger {
+                // Set activeKey for highlighting. Exclude symbols and shiftSymbols keys.
+                let isSymbolsKey = key.type == .symbols || key.type == .shiftSymbols
+                let shouldSetActiveKey = (key.type.triggersOnTouchUp ||
+                                         key.type.supportsRepeatTrigger ||
+                                         key.type.triggersOnTouchDown) && !isSymbolsKey
+
+                if shouldSetActiveKey {
                     activeKey = ActiveKey(key: key, indexPath: indexPath)
                 }
             }
