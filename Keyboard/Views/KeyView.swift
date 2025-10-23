@@ -31,12 +31,18 @@ final class KeyView: UIView {
     var active: Bool = false {
         didSet {
             if let contentView = self.contentView {
-                let activeColor = key.type.isSpecialKeyStyle
-                    ? theme.regularKeyColor
-                    : theme.specialKeyColor
                 let regularColor = key.type.isSpecialKeyStyle
                     ? theme.specialKeyColor
                     : theme.regularKeyColor
+
+                let activeColor: UIColor
+                if iOSVersion.isIOS26OrNewer {
+                    activeColor = theme.activeColor
+                } else {
+                    activeColor = key.type.isSpecialKeyStyle
+                        ? theme.regularKeyColor
+                        : theme.specialKeyColor
+                }
 
                 contentView.backgroundColor = active
                     ? activeColor

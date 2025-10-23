@@ -351,6 +351,8 @@ private struct ThemeFactory {
     }
 
     private static func makeColors(for style: ThemeStyle, device: DeviceContext) -> Colors {
+        let blueLegacy = UIColor(r: 31, g: 126, b: 249)
+        
         if style.isDark {
             let keyShadow = style.isLegacy
                 ? UIColor(r: 103, g: 106, b: 110, a: 0.5)
@@ -369,6 +371,10 @@ private struct ThemeFactory {
                 ? UIColor(r: 109, g: 109, b: 109)
                 : regularKey
 
+            let activeKeyColor = style.isLegacy
+                ? blueLegacy
+                : UIColor(r: 0, g: 145, b: 255)
+
             return Colors(
                 regularKey: regularKey,
                 specialKey: specialKey,
@@ -382,7 +388,7 @@ private struct ThemeFactory {
                 shiftActive: specialKey,
                 shiftTint: .white,
                 popupBorder: .clear,
-                active: UIColor(r: 31, g: 126, b: 249),
+                active: activeKeyColor,
                 activeText: .white,
                 altKeyText: device.screenInches > 10 ? UIColor.white : UIColor.lightGray,
                 bannerSeparator: UIColor(r: 56, g: 56, b: 57),
@@ -402,6 +408,10 @@ private struct ThemeFactory {
                 ? UIColor(hue: 0.595, saturation: 0.04, brightness: 0.65, alpha: 1.0)
                 : .clear
 
+            let activeKeyColor = style.isLegacy
+                ? blueLegacy
+                : UIColor(r: 0, g: 136, b: 255)
+
             return Colors(
                 regularKey: .white,
                 specialKey: specialKeyColor,
@@ -415,7 +425,7 @@ private struct ThemeFactory {
                 shiftActive: .white,
                 shiftTint: .black,
                 popupBorder: popupBorder,
-                active: UIColor(r: 31, g: 126, b: 249),
+                active: activeKeyColor,
                 activeText: .white,
                 altKeyText: device.screenInches >= 11 ? UIColor.black : UIColor(white: 0.0, alpha: 0.3),
                 bannerSeparator: UIColor(r: 188, g: 191, b: 195),
