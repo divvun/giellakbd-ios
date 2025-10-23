@@ -20,6 +20,7 @@ struct Theme {
     let popupBorderColor: UIColor
     let activeColor: UIColor
     let activeTextColor: UIColor
+    let longPressActiveColor: UIColor
     let altKeyTextColor: UIColor
 
     // Metrics
@@ -147,6 +148,7 @@ private struct ThemeFactory {
             popupBorderColor: colors.popupBorder,
             activeColor: colors.active,
             activeTextColor: colors.activeText,
+            longPressActiveColor: colors.longPressActive,
             altKeyTextColor: colors.altKeyText,
 
             // Metrics
@@ -345,6 +347,7 @@ private struct ThemeFactory {
         let popupBorder: UIColor
         let active: UIColor
         let activeText: UIColor
+        let longPressActive: UIColor
         let altKeyText: UIColor
         let bannerSeparator: UIColor
         let bannerText: UIColor
@@ -373,6 +376,10 @@ private struct ThemeFactory {
 
             let activeKeyColor = style.isLegacy
                 ? blueLegacy
+                : UIColor(r: 38, g: 38, b: 38)
+            
+            let longPressActive = style.isLegacy
+                ? blueLegacy
                 : UIColor(r: 0, g: 145, b: 255)
 
             return Colors(
@@ -390,6 +397,7 @@ private struct ThemeFactory {
                 popupBorder: .clear,
                 active: activeKeyColor,
                 activeText: .white,
+                longPressActive: longPressActive,
                 altKeyText: device.screenInches > 10 ? UIColor.white : UIColor.lightGray,
                 bannerSeparator: UIColor(r: 56, g: 56, b: 57),
                 bannerText: UIColor(r: 233, g: 233, b: 233)
@@ -410,6 +418,10 @@ private struct ThemeFactory {
 
             let activeKeyColor = style.isLegacy
                 ? blueLegacy
+                : UIColor(r: 231, g: 232, b: 236)
+            
+            let longPressActive = style.isLegacy
+                ? blueLegacy
                 : UIColor(r: 0, g: 136, b: 255)
 
             return Colors(
@@ -427,6 +439,7 @@ private struct ThemeFactory {
                 popupBorder: popupBorder,
                 active: activeKeyColor,
                 activeText: .white,
+                longPressActive: longPressActive,
                 altKeyText: device.screenInches >= 11 ? UIColor.black : UIColor(white: 0.0, alpha: 0.3),
                 bannerSeparator: UIColor(r: 188, g: 191, b: 195),
                 bannerText: UIColor(r: 21, g: 21, b: 21)
