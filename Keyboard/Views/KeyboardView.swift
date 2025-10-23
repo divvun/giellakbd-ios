@@ -738,6 +738,15 @@ final internal class KeyboardView: UIView,
         if key.type == .keyboard {
             keyboardButtonFrame = cell.frame
         }
+
+        // Ensure cell active state matches current activeKey
+        if let keyCell = cell as? KeyCell,
+           let activeKey = activeKey,
+           activeKey.indexPath == indexPath {
+            keyCell.keyView?.active = true
+        } else if let keyCell = cell as? KeyCell {
+            keyCell.keyView?.active = false
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
