@@ -51,6 +51,14 @@ Localization is automated via [Mozilla Pontoon](https://pontoon.mozilla.org/) an
 
 This repo does not include any keyboard layouts. It is intended to be used as a template for [kbdgen](https://github.com/divvun/kbdgen), which consumes among other things this codebase, as well as layouts as listed in e.g. [divvun-keyboard](https://github.com/divvun/divvun-keyboard) to produce the actual keyboard app. The keyboard layout specifications are found in the [GiellaLT](https://github.com/giellalt?q=keyboard-&type=&language=) organisation.
 
+## Testing
+
+Tests require a `se.bhfst` file inside the `dicts.bundle`. If this is missing for you, do this:
+
+1. cd giellakbd-ios
+1. `mkdir dicts.bundle`
+3. [Download the mobile sme speller](https://pahkat.uit.no/main/download/speller-sme?platform=mobile) and extract the `se.bhfst` into the `dicts.bundle` you just created
+
 ## Deploying
 
 Builds can be deployed using the [divvun-keyboard repo](https://github.com/divvun/divvun-keyboard)

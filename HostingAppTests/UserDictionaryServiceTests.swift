@@ -136,26 +136,30 @@ final class UserDictionaryServiceTests: XCTestCase {
         XCTAssertEqual("de", contexts.first?.secondAfter)
     }
 
-    func test_both_words_after_should_be_saved_when_typed_after_new_single_character_word() {
-        let sut = makeSUT()
-        let context1 = WordContext(word: "j")
-        let context2 = WordContext(firstBefore: "j", word: "ba")
-        let context3 = WordContext(secondBefore: "j", firstBefore: "ba", word: "de")
-        let context4 = WordContext(secondBefore: "ba", firstBefore: "de", word: "")
-
-        sut.updateContext(context1)
-        sut.updateContext(context2)
-        sut.updateContext(context3)
-        sut.updateContext(context4)
-
-        let contexts = userDictionary.getContexts(for: "j")
-        XCTAssertEqual(1, contexts.count)
-        XCTAssertNil(contexts.first?.secondBefore)
-        XCTAssertNil(contexts.first?.firstBefore)
-        XCTAssertEqual("j", contexts.first?.word)
-        XCTAssertEqual("ba", contexts.first?.firstAfter)
-        XCTAssertEqual("de", contexts.first?.secondAfter)
-    }
+    // This test is currently invalid because, at the time of this writing, the se.bhfst speller will
+    // always suggest a single typed character as the default selection.
+    // To verify this, open the keyboard and type a letter. The spell banner should show that letter as
+    // the **bolded** option.
+//    func test_both_words_after_should_be_saved_when_typed_after_new_single_character_word() {
+//        let sut = makeSUT()
+//        let context1 = WordContext(word: "j")
+//        let context2 = WordContext(firstBefore: "j", word: "ba")
+//        let context3 = WordContext(secondBefore: "j", firstBefore: "ba", word: "de")
+//        let context4 = WordContext(secondBefore: "ba", firstBefore: "de", word: "")
+//
+//        sut.updateContext(context1)
+//        sut.updateContext(context2)
+//        sut.updateContext(context3)
+//        sut.updateContext(context4)
+//
+//        let contexts = userDictionary.getContexts(for: "j")
+//        XCTAssertEqual(1, contexts.count)
+//        XCTAssertNil(contexts.first?.secondBefore)
+//        XCTAssertNil(contexts.first?.firstBefore)
+//        XCTAssertEqual("j", contexts.first?.word)
+//        XCTAssertEqual("ba", contexts.first?.firstAfter)
+//        XCTAssertEqual("de", contexts.first?.secondAfter)
+//    }
 
     func test_word_before_and_after_should_remain_after_entering_second_after_word() {
         let sut = makeSUT()
@@ -206,34 +210,34 @@ final class UserDictionaryServiceTests: XCTestCase {
         XCTAssertNil(contexts.first?.secondAfter)
     }
 
-//    private func makeSUT() -> UserDictionaryService {
-//        let archive: SpellerArchive
-//        guard let bundle = Bundle.top.url(forResource: "dicts", withExtension: "bundle") else {
-//            fatalError("No dict bundle found; BHFST not loaded.")
-//        }
-//
-//        let lang = "se"
-//        let path = bundle.appendingPathComponent("\(lang).bhfst")
-//
-//        if !FileManager.default.fileExists(atPath: path.path) {
-//            let message = "No speller at: \(path)\n Important: In order to run tests,"
-//            + " you must have an 'se.bhfst' file installed in 'dicts.bundle'"
-//            fatalError(message)
-//        }
-//
-//        do {
-//            archive = try SpellerArchive.open(path: path.path)
-//            print("DivvunSpell loaded!")
-//        } catch {
-//            fatalError("Couldn't load archive")
-//        }
-//
-//        do {
-//            let speller = try archive.speller()
-//            return UserDictionaryService(speller: speller, locale: defaultLocale)
-//        } catch {
-//            fatalError("DivvunSpell UserDictionaryService **not** loaded.")
-//        }
-//    }
+    private func makeSUT() -> UserDictionaryService {
+        let archive: SpellerArchive
+        guard let bundle = Bundle(for: type(of: self)).url(forResource: "dicts", withExtension: "bundle") else {
+            fatalError("No dict bundle found; BHFST not loaded.")
+        }
+
+        let lang = "se"
+        let path = bundle.appendingPathComponent("\(lang).bhfst")
+
+        if !FileManager.default.fileExists(atPath: path.path) {
+            let message = "No speller at: \(path)\n Important: In order to run tests,"
+            + " you must have an 'se.bhfst' file installed in 'dicts.bundle'"
+            fatalError(message)
+        }
+
+        do {
+            archive = try SpellerArchive.open(path: path.path)
+            print("DivvunSpell loaded!")
+        } catch {
+            fatalError("Couldn't load archive")
+        }
+
+        do {
+            let speller = try archive.speller()
+            return UserDictionaryService(speller: speller, locale: defaultLocale)
+        } catch {
+            fatalError("DivvunSpell UserDictionaryService **not** loaded.")
+        }
+    }
 
 }
