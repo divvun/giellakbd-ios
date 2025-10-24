@@ -372,7 +372,7 @@ private struct ThemeFactory {
             
             let popup = style.isLegacy
                 ? UIColor(r: 109, g: 109, b: 109)
-                : regularKey
+                : UIColor(r: 83, g: 83, b: 83)
 
             let activeKeyColor = style.isLegacy
                 ? blueLegacy
