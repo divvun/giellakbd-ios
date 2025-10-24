@@ -79,6 +79,9 @@
 /* (No Comment) */
 "keyboard" = "Tastatur";
 
+/* Keyboard settings button title */
+"Keyboard Settings" = "Tastaturinnstillingar";
+
 /* (No Comment) */
 "keyboards" = "Tastatur";
 
@@ -90,6 +93,9 @@
 
 /* (No Comment) */
 "localeSjd" = "Kildinsamisk";
+
+/* No comment provided by engineer. */
+"My Words" = "Orda mine";
 
 /* (No Comment) */
 "noUserWords" = "Ingen eigne ord enno.";
