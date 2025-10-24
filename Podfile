@@ -1,4 +1,4 @@
-platform :ios, '12.4'
+platform :ios, '13.0'
 use_frameworks!
 
 target 'BaseKeyboard' do
@@ -26,7 +26,7 @@ post_install do |installer|
     target.build_configurations.each do |config|
 #      config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = `uname -m`
       config.build_settings['ENABLE_BITCODE'] = 'NO'
-      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.4'
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
       config.build_settings['ARCHS'] = '$(ARCHS_STANDARD_64_BIT)'
       config.build_settings['SUPPORTS_MACCATALYST'] = 'NO'
     end
