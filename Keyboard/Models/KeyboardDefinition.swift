@@ -1,4 +1,5 @@
 import UIKit
+import DeviceKit
 
 public indirect enum TransformTree: Codable {
     case tree([String: TransformTree])
@@ -63,7 +64,7 @@ enum DeviceVariant: String, Decodable {
 
     static func from(traits: UITraitCollection) -> DeviceVariant {
         if traitsAreLogicallyIPad(traitCollection: traits) {
-            if (UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches) < 12.0 {
+            if UIScreen.sizeInches < 12.0 {
                 return .ipad9in
             } else {
                 return .ipad12in

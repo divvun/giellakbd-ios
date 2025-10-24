@@ -72,20 +72,6 @@
 		C655E8561EC5559200B12BE4 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C655E8551EC5559200B12BE4 /* HomeView.swift */; };
 		C655E85A1EC558D000B12BE4 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C655E8591EC558D000B12BE4 /* HomeController.swift */; };
 		C655E85D1EC55D0800B12BE4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C655E85B1EC55D0800B12BE4 /* Localizable.strings */; };
-		C66222342940B953005AE505 /* DeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C662222D2940B953005AE505 /* DeviceModel.swift */; };
-		C66222352940B953005AE505 /* UIDeviceExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C662222E2940B953005AE505 /* UIDeviceExtensions.swift */; };
-		C66222362940B953005AE505 /* DeviceFamily.swift in Sources */ = {isa = PBXBuildFile; fileRef = C662222F2940B953005AE505 /* DeviceFamily.swift */; };
-		C66222372940B953005AE505 /* System.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66222302940B953005AE505 /* System.swift */; };
-		C66222382940B953005AE505 /* Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66222312940B953005AE505 /* Identifier.swift */; };
-		C66222392940B953005AE505 /* UIDeviceComplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66222322940B953005AE505 /* UIDeviceComplete.swift */; };
-		C662223A2940B953005AE505 /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66222332940B953005AE505 /* Screen.swift */; };
-		C662223B2940B959005AE505 /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66222332940B953005AE505 /* Screen.swift */; };
-		C662223C2940B959005AE505 /* DeviceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C662222D2940B953005AE505 /* DeviceModel.swift */; };
-		C662223D2940B959005AE505 /* UIDeviceComplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66222322940B953005AE505 /* UIDeviceComplete.swift */; };
-		C662223E2940B959005AE505 /* UIDeviceExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C662222E2940B953005AE505 /* UIDeviceExtensions.swift */; };
-		C662223F2940B959005AE505 /* DeviceFamily.swift in Sources */ = {isa = PBXBuildFile; fileRef = C662222F2940B953005AE505 /* DeviceFamily.swift */; };
-		C66222402940B959005AE505 /* Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66222312940B953005AE505 /* Identifier.swift */; };
-		C66222412940B959005AE505 /* System.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66222302940B953005AE505 /* System.swift */; };
 		C6629244254B302000620D6F /* FeatureFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6629243254B302000620D6F /* FeatureFlag.swift */; };
 		C6629251254B319D00620D6F /* FeatureFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6629243254B302000620D6F /* FeatureFlag.swift */; };
 		C676AD5B1EC9679000523FF3 /* InstructionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C676AD5A1EC9679000523FF3 /* InstructionsController.swift */; };
@@ -258,13 +244,6 @@
 		C655E8551EC5559200B12BE4 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		C655E8591EC558D000B12BE4 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		C655E85C1EC55D0800B12BE4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = HostingApp/Base.lproj/Localizable.strings; sourceTree = "<group>"; };
-		C662222D2940B953005AE505 /* DeviceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceModel.swift; sourceTree = "<group>"; };
-		C662222E2940B953005AE505 /* UIDeviceExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIDeviceExtensions.swift; sourceTree = "<group>"; };
-		C662222F2940B953005AE505 /* DeviceFamily.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceFamily.swift; sourceTree = "<group>"; };
-		C66222302940B953005AE505 /* System.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = System.swift; sourceTree = "<group>"; };
-		C66222312940B953005AE505 /* Identifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Identifier.swift; sourceTree = "<group>"; };
-		C66222322940B953005AE505 /* UIDeviceComplete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIDeviceComplete.swift; sourceTree = "<group>"; };
-		C66222332940B953005AE505 /* Screen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
 		C6629243254B302000620D6F /* FeatureFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlag.swift; sourceTree = "<group>"; };
 		C676AD5A1EC9679000523FF3 /* InstructionsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionsController.swift; sourceTree = "<group>"; };
 		C676AD5E1EC985EB00523FF3 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
@@ -581,23 +560,8 @@
 		C66222282940B722005AE505 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				C662222C2940B921005AE505 /* UIDeviceComplete */,
 			);
 			path = Shared;
-			sourceTree = "<group>";
-		};
-		C662222C2940B921005AE505 /* UIDeviceComplete */ = {
-			isa = PBXGroup;
-			children = (
-				C662222F2940B953005AE505 /* DeviceFamily.swift */,
-				C662222D2940B953005AE505 /* DeviceModel.swift */,
-				C66222312940B953005AE505 /* Identifier.swift */,
-				C66222332940B953005AE505 /* Screen.swift */,
-				C66222302940B953005AE505 /* System.swift */,
-				C66222322940B953005AE505 /* UIDeviceComplete.swift */,
-				C662222E2940B953005AE505 /* UIDeviceExtensions.swift */,
-			);
-			path = UIDeviceComplete;
 			sourceTree = "<group>";
 		};
 		C676AD621EC98C0F00523FF3 /* Controllers */ = {
@@ -942,6 +906,7 @@
 				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
 				"${BUILT_PRODUCTS_DIR}/Sentry/Sentry.framework",
 				"${BUILT_PRODUCTS_DIR}/PahkatClient/PahkatClient.framework",
+				"${BUILT_PRODUCTS_DIR}/DeviceKit/DeviceKit.framework",
 				"${BUILT_PRODUCTS_DIR}/DivvunSpell/DivvunSpell.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 			);
@@ -950,6 +915,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sentry.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PahkatClient.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DeviceKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DivvunSpell.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 			);
@@ -1028,9 +994,7 @@
 			files = (
 				99989FBA2417CFBA00EF8CD3 /* BaseSettingsViewController.swift in Sources */,
 				9904409523FAC0C50063064E /* DisclosureCell.swift in Sources */,
-				C66222342940B953005AE505 /* DeviceModel.swift in Sources */,
 				C676AD5B1EC9679000523FF3 /* InstructionsController.swift in Sources */,
-				C66222362940B953005AE505 /* DeviceFamily.swift in Sources */,
 				99989FB72417990E00EF8CD3 /* UserDictionary+Test.swift in Sources */,
 				C6B638441EDF81B200A6ECB2 /* SimpleButton.swift in Sources */,
 				C63EE0FF2361D86800A1E15A /* MenuButton.swift in Sources */,
@@ -1042,20 +1006,15 @@
 				C655E8541EC5551100B12BE4 /* Extensions.swift in Sources */,
 				C691A0E723682C8B00085AC3 /* TestingController.swift in Sources */,
 				C65430B41EC94BF0007FC053 /* LanguagesController.swift in Sources */,
-				C66222392940B953005AE505 /* UIDeviceComplete.swift in Sources */,
-				C66222382940B953005AE505 /* Identifier.swift in Sources */,
 				999790AC23F2B4E8003F7885 /* UserDictionaryViewController.swift in Sources */,
 				999790BA23F40E4F003F7885 /* WordContext.swift in Sources */,
 				999790B623F2F536003F7885 /* WordContextView.swift in Sources */,
 				C65430B01EC94BC7007FC053 /* InstructionsView.swift in Sources */,
 				4EF16F9B19D2550D0076AFCB /* AppDelegate.swift in Sources */,
 				997021052416DF8C00A81A27 /* KeyboardLocale+AllLocales.swift in Sources */,
-				C66222372940B953005AE505 /* System.swift in Sources */,
 				C676AD5F1EC985EB00523FF3 /* Strings.swift in Sources */,
 				C655E85A1EC558D000B12BE4 /* HomeController.swift in Sources */,
 				99DA1847240D1010003E7353 /* UserDictionaryService.swift in Sources */,
-				C66222352940B953005AE505 /* UIDeviceExtensions.swift in Sources */,
-				C662223A2940B953005AE505 /* Screen.swift in Sources */,
 				C6A2E01F1EDFAAA2006BAB69 /* AboutView.swift in Sources */,
 				9904409B23FBDC200063064E /* KeyboardLocale.swift in Sources */,
 				C6996B5722FC2C93007EBC3D /* Utils.swift in Sources */,
@@ -1093,7 +1052,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				997550B723EAC631004ED6A5 /* UserDictionary.swift in Sources */,
-				C66222402940B959005AE505 /* Identifier.swift in Sources */,
 				99DD30F623E307430065E8D8 /* Audio.swift in Sources */,
 				C6996B5322FB06FA007EBC3D /* DeadKeyHandler.swift in Sources */,
 				C6996B5E22FC3257007EBC3D /* SpellBanner.swift in Sources */,
@@ -1101,17 +1059,13 @@
 				C6996B5C22FC2D3E007EBC3D /* CursorContext.swift in Sources */,
 				C6996B5A22FC2CC7007EBC3D /* SystemKeys.swift in Sources */,
 				C6F249461F736E1400840F2B /* KeyboardDefinition.swift in Sources */,
-				C662223D2940B959005AE505 /* UIDeviceComplete.swift in Sources */,
 				99460238243B27140027C1CC /* InputContext.swift in Sources */,
 				99074EE82422383700075480 /* SpellBannerFlowLayout.swift in Sources */,
-				C662223E2940B959005AE505 /* UIDeviceExtensions.swift in Sources */,
 				C6629251254B319D00620D6F /* FeatureFlag.swift in Sources */,
 				C6F249471F736E1A00840F2B /* KeyboardViewController.swift in Sources */,
 				999C30172428E91000E127A6 /* BannerView.swift in Sources */,
 				C61829B8254225B100620D6F /* KeyboardLocale+AllLocales.swift in Sources */,
 				99DA184424095AF0003E7353 /* UserDictionaryService.swift in Sources */,
-				C66222412940B959005AE505 /* System.swift in Sources */,
-				C662223B2940B959005AE505 /* Screen.swift in Sources */,
 				C649D3D4234B7C8000EF4273 /* KeyView.swift in Sources */,
 				991EE55023D9AB4700DC3677 /* ViewDebugger.swift in Sources */,
 				FDAF59AF22F9CD0700F7C9FC /* KeyOverlayView.swift in Sources */,
@@ -1121,7 +1075,6 @@
 				FDAF59A522F9CCE100F7C9FC /* Theme.swift in Sources */,
 				999C30132428E6C000E127A6 /* UpdateBanner.swift in Sources */,
 				99094698243674F20070AEB6 /* SpellerAvailableBanner.swift in Sources */,
-				C662223F2940B959005AE505 /* DeviceFamily.swift in Sources */,
 				99074EEB2422387A00075480 /* SpellBannerSeparatorView.swift in Sources */,
 				99074EE4242230F000075480 /* SpellBannerCell.swift in Sources */,
 				99C4E56724320F49005F8C8A /* IPC.swift in Sources */,
@@ -1130,7 +1083,6 @@
 				999C30152428E70600E127A6 /* UpdateBannerView.swift in Sources */,
 				FDBD09C52333A56800303152 /* SplitKeyboard.swift in Sources */,
 				99074EF62423AAA300075480 /* SpellBannerView.swift in Sources */,
-				C662223C2940B959005AE505 /* DeviceModel.swift in Sources */,
 				99074EF224224B4400075480 /* Banner.swift in Sources */,
 				9930BD90243CD2BF00C0EF7F /* FolderWatcher.swift in Sources */,
 				FDAF59A922F9CCF200F7C9FC /* LongPressController.swift in Sources */,

@@ -1,3 +1,5 @@
+import UIKit
+import DeviceKit
 
 final class KeyView: UIView {
     private let key: KeyDefinition
@@ -22,7 +24,7 @@ final class KeyView: UIView {
 
     private var fontSize: CGFloat = 0.0
     private var altFontSize: CGFloat = 0.0
-    private let screenInches = UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches
+    private let screenInches = UIScreen.sizeInches
 
     var swipeLayoutConstraint: NSLayoutConstraint?
 
@@ -125,7 +127,7 @@ final class KeyView: UIView {
         alternateLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         alternateLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
 
-        if self.isLogicallyIPad && (UIDevice.current.dc.screenSize.sizeInches ?? 0.0) > 12 {
+        if self.isLogicallyIPad && (Device.current.diagonal ?? 0.0) > 12 {
             switch page {
             case .shifted, .capslock, .symbols1, .symbols2:
                 alternateLabel.font = theme.capitalKeyFont
@@ -370,7 +372,7 @@ final class KeyView: UIView {
         } else if case .symbols2 = page {
             text("ABC", page: page)
         } else {
-            if traits.userInterfaceIdiom == .pad && UIDevice.current.dc.deviceFamily == .iPad {
+            if traits.userInterfaceIdiom == .pad && Device.current.isPad {
                 text(".?123", page: page)
             } else {
                 text("123", page: page)
@@ -398,8 +400,8 @@ final class KeyView: UIView {
     }
 
     private func setupComma(_ traits: UITraitCollection, _ page: KeyboardPage) {
-        if UIDevice.current.dc.isIpad && traits.userInterfaceIdiom == .pad {
-            if (UIDevice.current.dc.screenSize.sizeInches ?? 0) < 12.0 {
+        if Device.current.isPad && traits.userInterfaceIdiom == .pad {
+            if (Device.current.diagonal ?? 0) < 12.0 {
                 input(string: ",", alt: "!", page: page)
             } else {
                 input(string: ",", alt: ";", page: page)
@@ -410,8 +412,8 @@ final class KeyView: UIView {
     }
 
     private func setupFullStop(_ traits: UITraitCollection, _ page: KeyboardPage) {
-        if UIDevice.current.dc.isIpad && traits.userInterfaceIdiom == .pad {
-            if (UIDevice.current.dc.screenSize.sizeInches ?? 0) < 12.0 {
+        if Device.current.isPad && traits.userInterfaceIdiom == .pad {
+            if (Device.current.diagonal ?? 0) < 12.0 {
                 input(string: ".", alt: "?", page: page)
             } else {
                 input(string: ".", alt: ":", page: page)

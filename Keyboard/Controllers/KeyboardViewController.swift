@@ -1,5 +1,6 @@
 import UIKit
 import DivvunSpell
+import DeviceKit
 
 protocol KeyboardViewProvider {
     var delegate: (KeyboardViewDelegate & KeyboardViewKeyboardKeyDelegate)? { get set }
@@ -67,47 +68,40 @@ open class KeyboardViewController: UIInputViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // Helper method for testing - calculates landscape height for a given device
-    static func landscapeHeight(
-        deviceFamily: DeviceFamily,
-        deviceModel: DeviceModel,
-        traitCollection: UITraitCollection,
-        portraitHeight: CGFloat,
-        landscapeDeviceHeight: CGFloat,
-        sizeInches: Double
-    ) -> CGFloat {
-        switch deviceFamily {
-        case .iPad:
-            if traitCollection.userInterfaceIdiom == .phone {
+    private var landscapeHeight: CGFloat {
+        if Device.current.isPad {
+            if self.traitCollection.userInterfaceIdiom == .phone {
                 // Hardcode because the device lies about the height
                 return portraitHeight - 56
             }
 
-            switch deviceModel {
+            switch Device.current {
             case .iPadMini2, .iPadMini3, .iPadMini4, .iPadMini5:
                 return 400.0
-            case .iPadThirdGen, .iPadFourthGen, .iPadFifthGen, .iPadSixthGen, .iPadAir, .iPadAir2, .iPadPro9_7Inch:
+            case .iPad3, .iPad4, .iPad5, .iPad6, .iPadAir, .iPadAir2, .iPadPro9Inch:
                 return 353.0
-            case .iPadAir3, .iPadPro10_5Inch:
+            case .iPadAir3, .iPadPro10Inch:
                 return 405.0
             case .iPadPro11Inch:
                 return 405.0
-            case .iPadPro12_9Inch, .iPadPro12_9Inch_SecondGen, .iPadPro12_9Inch_ThirdGen, .iPadPro12_9Inch_FourthGen, .iPadPro12_9Inch_FifthGen, .iPadPro12_9Inch_SixthGen:
+            case .iPadPro12Inch, .iPadPro12Inch2, .iPadPro12Inch3, .iPadPro12Inch4, .iPadPro12Inch5, .iPadPro12Inch6:
                 return 426.0
             default:
+                let sizeInches = UIScreen.sizeInches
+
                 if sizeInches < 11 {
                     return landscapeDeviceHeight / 2.0
                 }
 
                 return landscapeDeviceHeight / 2.0 - 120
             }
-        case .iPhone, .iPod:
-            switch deviceModel {
-            case .iPhone5S, .iPhone5C, .iPhoneSE, .iPodTouchSeventhGen:
+        } else if Device.current.isPhone || Device.current.isPod {
+            switch Device.current {
+            case .iPhone5s, .iPhone5c, .iPhoneSE, .iPodTouch7:
                 return 203.0
-            case .iPhone6, .iPhone6S, .iPhone7, .iPhone8:
+            case .iPhone6, .iPhone6s, .iPhone7, .iPhone8:
                 return 203.0
-            case .iPhone6Plus, .iPhone6SPlus, .iPhone7Plus, .iPhone8Plus:
+            case .iPhone6Plus, .iPhone6sPlus, .iPhone7Plus, .iPhone8Plus:
                 return 203.0
             case .iPhone11, .iPhoneXR:
                 return 190.0
@@ -118,34 +112,19 @@ open class KeyboardViewController: UIInputViewController {
             default:
                 return portraitHeight - 56
             }
-        default:
+        } else {
             return portraitHeight - 56
         }
     }
 
-    private var landscapeHeight: CGFloat {
-        return KeyboardViewController.landscapeHeight(
-            deviceFamily: UIDevice.current.dc.deviceFamily,
-            deviceModel: UIDevice.current.dc.deviceModel,
-            traitCollection: self.traitCollection,
-            portraitHeight: self.portraitHeight,
-            landscapeDeviceHeight: landscapeDeviceHeight,
-            sizeInches: UIDevice.current.dc.screenSize.sizeInches ?? 12.9
-        )
-    }
-
-    // Helper method for testing - calculates portrait height for a given device
-    static func portraitHeight(
-        deviceFamily: DeviceFamily,
-        deviceModel: DeviceModel,
-        traitCollection: UITraitCollection,
-        portraitDeviceHeight: CGFloat,
-        sizeInches: Double
-    ) -> CGFloat {
-        switch deviceFamily {
-        case .iPad:
-            if traitCollection.userInterfaceIdiom == .phone
-                || !traitsAreLogicallyIPad(traitCollection: traitCollection) {
+    private var portraitHeight: CGFloat {
+        let sizeInches = UIScreen.sizeInches
+        print("Size inches: \(sizeInches)")
+        print("Device type: \(Device.current)")
+        print("Device size: \(Device.current.diagonal)")
+        if Device.current.isPad {
+            if self.traitCollection.userInterfaceIdiom == .phone
+                || !traitsAreLogicallyIPad(traitCollection: self.traitCollection) {
                 // Hardcode because the device lies about the height
                 if sizeInches <= 11 {
                     return 258.0
@@ -165,14 +144,14 @@ open class KeyboardViewController: UIInputViewController {
             }
 
             return portraitDeviceHeight / 4.0
-        case .iPhone, .iPod:
+        } else if Device.current.isPhone || Device.current.isPod {
             // https://iosref.com/res/
-            switch deviceModel {
-            case .iPhone5S, .iPhone5C, .iPhoneSE, .iPodTouchSeventhGen:
+            switch Device.current {
+            case .iPhone5s, .iPhone5c, .iPhoneSE, .iPodTouch7:
                 return 254.0
-            case .iPhone6, .iPhone6S, .iPhone7, .iPhone8:
+            case .iPhone6, .iPhone6s, .iPhone7, .iPhone8:
                 return 262.0
-            case .iPhone6Plus, .iPhone6SPlus, .iPhone7Plus, .iPhone8Plus:
+            case .iPhone6Plus, .iPhone6sPlus, .iPhone7Plus, .iPhone8Plus:
                 return 272.0
             case .iPhone11, .iPhoneXR:
                 return 272.0
@@ -183,7 +162,7 @@ open class KeyboardViewController: UIInputViewController {
             default:
                 return 262.0
             }
-        default:
+        } else {
             return portraitDeviceHeight / 3.0
         }
     }
@@ -240,15 +219,15 @@ open class KeyboardViewController: UIInputViewController {
 
         // Ordinarily a keyboard has 4 rows, iPad 12 inch+ has 5. Some have more. We calculate for that.
         let rowCount = CGFloat(layout.normal.count)
-        let normalRowCount: CGFloat = (UIDevice.current.dc.screenSize.sizeInches ?? 0.0) >= 12.0
+        let normalRowCount: CGFloat = (Device.current.diagonal ?? 0.0) >= 12.0
             ? 5.0
             : 4.0
         let rowHeight = preferredHeight / normalRowCount
         preferredHeight = rowHeight * rowCount
-        
+
         // Some keyboards are more than 4 rows, and on 9" iPads they take up
         // almost the whole screen in landscape unless we shave off some pixels
-        let screenSize = UIDevice.current.dc.screenSize.sizeInches ?? 12
+        let screenSize = Device.current.diagonal ?? 12
         let isLandscape = UIScreen.main.isDeviceLandscape
         if screenSize < 11 && rowCount > 4 && isLandscape {
             preferredHeight -= 40
@@ -258,6 +237,7 @@ open class KeyboardViewController: UIInputViewController {
              preferredHeight -= theme.bannerHeight
         }
 
+        print("preferredHeight: \(preferredHeight)")
         return preferredHeight
     }
 

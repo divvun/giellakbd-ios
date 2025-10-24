@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import DeviceKit
 
 // MARK: - Theme
 
@@ -90,10 +91,9 @@ struct DeviceContext {
     var isSmallOrMediumLandscape: Bool { isPad && screenInches < 11 && isLandscape }
 
     static func current() -> DeviceContext {
-        let screenInches = UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches
         return DeviceContext(
             idiom: UIDevice.current.userInterfaceIdiom,
-            screenInches: screenInches,
+            screenInches: UIScreen.sizeInches,
             isLandscape: UIScreen.main.isDeviceLandscape
         )
     }

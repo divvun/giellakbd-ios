@@ -7,6 +7,7 @@ target 'BaseKeyboard' do
   pod 'SwiftLint'
   pod 'SQLite.swift', '~> 0.15.3'
   pod 'RxSwift', '~> 5.1.1'
+  pod 'DeviceKit', '~> 5.7'
 end
 
 target 'HostingApp' do

@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import DeviceKit
 
 final class SystemKeys {
     static func systemKeyRowsForCurrentDevice(spaceName: String,
@@ -10,9 +11,8 @@ final class SystemKeys {
         let isIPad = traitsAreLogicallyIPad(traitCollection: traits)
 
         // Left side of space bar
-        if !UIDevice.current.dc.deviceModel.hasNotch {
-
-            if isIPad && (UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches) >= 11.0 {
+        if !Device.current.hasSensorHousing {
+            if isIPad && UIScreen.sizeInches >= 11.0 {
                 keys.append(KeyDefinition(type: .keyboard, size: CGSize(width: 1.25, height: 1.0)))
                 keys.append(KeyDefinition(type: .symbols, size: CGSize(width: 1.25, height: 1.0)))
             } else {

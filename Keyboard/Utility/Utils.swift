@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import DeviceKit
 
 struct iOSVersion {
     static var current: OperatingSystemVersion {
@@ -230,6 +231,13 @@ extension UIScreen {
         let size = self.bounds.size
         return size.width > size.height
     }
+    
+    public static var maxSupportedInches: Double { 12.9 }
+    
+    public static var sizeInches: Double {
+        // Default to maxSupportedInches for legacy reasons
+        Device.current.diagonal > 0 ? Device.current.diagonal : UIScreen.maxSupportedInches
+    }
 }
 
 let str1 = "containing"
@@ -314,7 +322,7 @@ func isBeingRunFromTests() -> Bool {
 }
 
 func traitsAreLogicallyIPad(traitCollection: UITraitCollection) -> Bool {
-    return UIDevice.current.dc.deviceFamily == .iPad
+    return Device.current.isPad
         && traitCollection.userInterfaceIdiom == .pad
         && traitCollection.horizontalSizeClass == .regular
 }
