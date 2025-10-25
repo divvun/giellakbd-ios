@@ -172,8 +172,8 @@ open class KeyboardViewController: UIInputViewController {
     }()
 
     open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        coordinator.animate { [weak self] _ in
-            // moving the height updating here causes a new type of jank
+        coordinator.animate { _ in
+            // moving the height updating here causes jank
             // where there's a black box under the keyboard before it corrects
         } completion: { [weak self] _ in
             guard let self = self else { return }
