@@ -20,6 +20,7 @@ end
 target 'HostingAppTests' do
   pod 'SQLite.swift', '~> 0.15.3'
   pod 'DivvunSpell', :http => "https://github.com/divvun/divvunspell-sdk-swift/releases/download/v1.0.0-beta.5/cargo-pod.tgz"
+  pod 'DeviceKit', '~> 5.7'
 end
 
 post_install do |installer|

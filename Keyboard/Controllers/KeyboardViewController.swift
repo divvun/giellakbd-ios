@@ -68,14 +68,21 @@ open class KeyboardViewController: UIInputViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private var landscapeHeight: CGFloat {
-        if Device.current.isPad {
-            if self.traitCollection.userInterfaceIdiom == .phone {
+    // Helper method for testing - calculates landscape height for a given device
+    static func landscapeHeight(
+        for device: Device,
+        traitCollection: UITraitCollection,
+        portraitHeight: CGFloat,
+        landscapeDeviceHeight: CGFloat,
+        sizeInches: Double
+    ) -> CGFloat {
+        if device.isPad {
+            if traitCollection.userInterfaceIdiom == .phone {
                 // Hardcode because the device lies about the height
                 return portraitHeight - 56
             }
 
-            switch Device.current {
+            switch device {
             case .iPadMini2, .iPadMini3, .iPadMini4, .iPadMini5:
                 return 400.0
             case .iPad3, .iPad4, .iPad5, .iPad6, .iPadAir, .iPadAir2, .iPadPro9Inch:
@@ -87,16 +94,14 @@ open class KeyboardViewController: UIInputViewController {
             case .iPadPro12Inch, .iPadPro12Inch2, .iPadPro12Inch3, .iPadPro12Inch4, .iPadPro12Inch5, .iPadPro12Inch6:
                 return 426.0
             default:
-                let sizeInches = UIScreen.sizeInches
-
                 if sizeInches < 11 {
                     return landscapeDeviceHeight / 2.0
                 }
 
                 return landscapeDeviceHeight / 2.0 - 120
             }
-        } else if Device.current.isPhone || Device.current.isPod {
-            switch Device.current {
+        } else if device.isPhone || device.isPod {
+            switch device {
             case .iPhone5s, .iPhone5c, .iPhoneSE, .iPodTouch7:
                 return 203.0
             case .iPhone6, .iPhone6s, .iPhone7, .iPhone8:
@@ -117,14 +122,26 @@ open class KeyboardViewController: UIInputViewController {
         }
     }
 
-    private var portraitHeight: CGFloat {
-        let sizeInches = UIScreen.sizeInches
-        print("Size inches: \(sizeInches)")
-        print("Device type: \(Device.current)")
-        print("Device size: \(Device.current.diagonal)")
-        if Device.current.isPad {
-            if self.traitCollection.userInterfaceIdiom == .phone
-                || !traitsAreLogicallyIPad(traitCollection: self.traitCollection) {
+    private var landscapeHeight: CGFloat {
+        return KeyboardViewController.landscapeHeight(
+            for: Device.current,
+            traitCollection: self.traitCollection,
+            portraitHeight: self.portraitHeight,
+            landscapeDeviceHeight: landscapeDeviceHeight,
+            sizeInches: UIScreen.sizeInches
+        )
+    }
+
+    // Helper method for testing - calculates portrait height for a given device
+    static func portraitHeight(
+        for device: Device,
+        traitCollection: UITraitCollection,
+        portraitDeviceHeight: CGFloat,
+        sizeInches: Double
+    ) -> CGFloat {
+        if device.isPad {
+            if traitCollection.userInterfaceIdiom == .phone
+                || traitCollection.horizontalSizeClass != .regular {
                 // Hardcode because the device lies about the height
                 if sizeInches <= 11 {
                     return 258.0
@@ -144,9 +161,9 @@ open class KeyboardViewController: UIInputViewController {
             }
 
             return portraitDeviceHeight / 4.0
-        } else if Device.current.isPhone || Device.current.isPod {
+        } else if device.isPhone || device.isPod {
             // https://iosref.com/res/
-            switch Device.current {
+            switch device {
             case .iPhone5s, .iPhone5c, .iPhoneSE, .iPodTouch7:
                 return 254.0
             case .iPhone6, .iPhone6s, .iPhone7, .iPhone8:
@@ -168,11 +185,12 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     private var portraitHeight: CGFloat {
-        let sizeInches = UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches
+        let sizeInches = UIScreen.sizeInches
         print("Size inches: \(sizeInches)")
+        print("Device type: \(Device.current)")
+        print("Device size: \(Device.current.diagonal)")
         return KeyboardViewController.portraitHeight(
-            deviceFamily: UIDevice.current.dc.deviceFamily,
-            deviceModel: UIDevice.current.dc.deviceModel,
+            for: Device.current,
             traitCollection: self.traitCollection,
             portraitDeviceHeight: portraitDeviceHeight,
             sizeInches: sizeInches
