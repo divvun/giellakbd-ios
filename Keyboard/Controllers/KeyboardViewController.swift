@@ -167,18 +167,6 @@ open class KeyboardViewController: UIInputViewController {
         }
     }
 
-    private var portraitHeight: CGFloat {
-        let sizeInches = UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches
-        print("Size inches: \(sizeInches)")
-        return KeyboardViewController.portraitHeight(
-            deviceFamily: UIDevice.current.dc.deviceFamily,
-            deviceModel: UIDevice.current.dc.deviceModel,
-            traitCollection: self.traitCollection,
-            portraitDeviceHeight: portraitDeviceHeight,
-            sizeInches: sizeInches
-        )
-    }
-
     private(set) lazy var theme: Theme = {
         Theme.current(for: self.traitCollection)
     }()
