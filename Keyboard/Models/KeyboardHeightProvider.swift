@@ -33,9 +33,7 @@ struct KeyboardHeightProvider {
         case .size6_9:
             return KeyboardHeight(portrait: 272, landscape: 206)
         case .size7_9:
-            // TODO: check
-            // iPad Mini 2/3/4/5
-            return KeyboardHeight(portrait: 314, landscape: 400)
+            return KeyboardHeight(portrait: 318, landscape: 404)
         case .size8_3:
             // TODO: check
             // iPad Mini 6
