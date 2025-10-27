@@ -58,6 +58,7 @@
 		99DA1846240D09B5003E7353 /* UserDictionaryServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA1845240D09B5003E7353 /* UserDictionaryServiceTests.swift */; };
 		99DA1847240D1010003E7353 /* UserDictionaryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA184224095AD0003E7353 /* UserDictionaryService.swift */; };
 		99DD30F623E307430065E8D8 /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DD30F423E3059C0065E8D8 /* Audio.swift */; };
+		B25493F72EAF79E400F7FB64 /* KeyboardHeightProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25493F62EAF79DA00F7FB64 /* KeyboardHeightProvider.swift */; };
 		B2993E132EABC4FA00CA493D /* dicts.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B2993E122EABC4FA00CA493D /* dicts.bundle */; };
 		C61829B8254225B100620D6F /* KeyboardLocale+AllLocales.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997021042416DF8C00A81A27 /* KeyboardLocale+AllLocales.swift */; };
 		C63EE0FF2361D86800A1E15A /* MenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63EE0FE2361D86800A1E15A /* MenuButton.swift */; };
@@ -225,6 +226,7 @@
 		99DA1845240D09B5003E7353 /* UserDictionaryServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionaryServiceTests.swift; sourceTree = "<group>"; };
 		99DD30F423E3059C0065E8D8 /* Audio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
 		9C51EB456E98876CB8BCC6AE /* Pods-HostingAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HostingAppTests.release.xcconfig"; path = "Target Support Files/Pods-HostingAppTests/Pods-HostingAppTests.release.xcconfig"; sourceTree = "<group>"; };
+		B25493F62EAF79DA00F7FB64 /* KeyboardHeightProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHeightProvider.swift; sourceTree = "<group>"; };
 		B2993E122EABC4FA00CA493D /* dicts.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = dicts.bundle; sourceTree = "<group>"; };
 		BE1EF09E62E0EF6B44F243E2 /* Pods-BaseKeyboard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaseKeyboard.debug.xcconfig"; path = "Target Support Files/Pods-BaseKeyboard/Pods-BaseKeyboard.debug.xcconfig"; sourceTree = "<group>"; };
 		C2E22B38A38E2FF1A8DD92DD /* Pods-HostingApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HostingApp.release.xcconfig"; path = "Target Support Files/Pods-HostingApp/Pods-HostingApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -341,6 +343,7 @@
 		4E6AEE5019D2486900931E8F /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				B25493F62EAF79DA00F7FB64 /* KeyboardHeightProvider.swift */,
 				C6EA31C021AF17CE0014F3B6 /* KeyboardDefinitions.json */,
 				C6DCFDD51EB0787A00FABC11 /* KeyboardDefinition.swift */,
 				FDAF59A322F9CCE100F7C9FC /* KeyDefinition.swift */,
@@ -1064,6 +1067,7 @@
 				C6629251254B319D00620D6F /* FeatureFlag.swift in Sources */,
 				C6F249471F736E1A00840F2B /* KeyboardViewController.swift in Sources */,
 				999C30172428E91000E127A6 /* BannerView.swift in Sources */,
+				B25493F72EAF79E400F7FB64 /* KeyboardHeightProvider.swift in Sources */,
 				C61829B8254225B100620D6F /* KeyboardLocale+AllLocales.swift in Sources */,
 				99DA184424095AF0003E7353 /* UserDictionaryService.swift in Sources */,
 				C649D3D4234B7C8000EF4273 /* KeyView.swift in Sources */,
