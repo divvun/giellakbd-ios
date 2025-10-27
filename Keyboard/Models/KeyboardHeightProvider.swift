@@ -47,13 +47,9 @@ struct KeyboardHeightProvider {
         case .size11_0:
             return KeyboardHeight(portrait: 318, landscape: 404)
         case .size12_9:
-            // TODO: check
-            // iPad Pro 12.9" (all generations)
-            return KeyboardHeight(portrait: 384, landscape: 426)
+            return KeyboardHeight(portrait: 384, landscape: 476)
         case .size13_0:
-            // TODO: check
-            // iPad Pro 13" (M4)
-            return KeyboardHeight(portrait: 384, landscape: 426)
+            return KeyboardHeight(portrait: 384, landscape: 476)
         }
     }
 }
