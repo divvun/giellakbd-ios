@@ -17,9 +17,8 @@ struct KeyboardHeightProvider {
             // iPhone 6/6s/7/8, SE (2nd/3rd gen)
             return KeyboardHeight(portrait: 262, landscape: 208)
         case .size5_4:
-            // TODO: check
             // iPhone 12/13/14 mini
-            return KeyboardHeight(portrait: 272, landscape: 203)
+            return KeyboardHeight(portrait: 272, landscape: 198)
         case .size5_5:
             // iPhone 6/6s/7/8 Plus
             return KeyboardHeight(portrait: 272, landscape: 208)
