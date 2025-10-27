@@ -32,9 +32,8 @@ struct KeyboardHeightProvider {
             // iPhone 14/15 Pro
             return KeyboardHeight(portrait: 262, landscape: 206)
         case .size6_5:
-            // TODO: check
-            // iPhone XS Max/11 Pro Max
-            return KeyboardHeight(portrait: 272, landscape: 190)
+            // This is correct for iPhone Air, but slightly too short in portrait and too tall in landscape on iPhone 11 Pro Max and presumably iPhone XS Max.
+            return KeyboardHeight(portrait: 262, landscape: 206)
         case .size6_7:
             // TODO: check
             // iPhone 12/13/14/15 Pro Max
