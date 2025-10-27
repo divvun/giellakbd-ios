@@ -26,9 +26,8 @@ struct KeyboardHeightProvider {
             // iPhone X/XS/11 Pro
             return KeyboardHeight(portrait: 262, landscape: 196)
         case .size6_1:
-            // TODO: check
             // iPhone 11/XR/12/13/14/15 (base models)
-            return KeyboardHeight(portrait: 272, landscape: 190)
+            return KeyboardHeight(portrait: 262, landscape: 206)
         case .size6_3:
             // TODO: check
             // iPhone 14/15 Pro
