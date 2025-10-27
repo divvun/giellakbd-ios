@@ -41,9 +41,7 @@ struct KeyboardHeightProvider {
         case .size10_2:
             return KeyboardHeight(portrait: 318, landscape: 404)
         case .size10_5:
-            // TODO: check
-            // iPad Air 3, iPad Pro 10.5"
-            return KeyboardHeight(portrait: 314, landscape: 405)
+            return KeyboardHeight(portrait: 318, landscape: 404)
         case .size10_9:
             // TODO: check
             // iPad 10, iPad Air 4/5
