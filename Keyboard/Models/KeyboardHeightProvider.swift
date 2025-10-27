@@ -7,79 +7,89 @@ struct KeyboardHeightProvider {
     static func height(for diagonal: Double) -> KeyboardHeight {
         guard let screenSize = ScreenSize(diagonal: diagonal) else {
             // Fallback for unknown sizes
-            // TODO: remove this when done testing
-            fatalError("Unknown screen size")
-//            return KeyboardHeight(portrait: 262, landscape: 0)
+            return KeyboardHeight(portrait: 262, landscape: 203)
         }
-        
+
+        print("CURRENT screen size: \(screenSize)")
+
         switch screenSize {
-        case .size3_5:
-            // TODO: check
-            return KeyboardHeight(portrait: 0, landscape: 0)
-        case .size4:
-            // TODO: check
-            return KeyboardHeight(portrait: 254, landscape: 0)
         case .size4_7:
             // TODO: check
-            return KeyboardHeight(portrait: 262, landscape: 0)
+            // iPhone 6/6s/7/8, SE (2nd/3rd gen)
+            return KeyboardHeight(portrait: 262, landscape: 203)
         case .size5_4:
             // TODO: check
-            return KeyboardHeight(portrait: 0, landscape: 0)
+            // iPhone 12/13/14 mini
+            return KeyboardHeight(portrait: 272, landscape: 203)
         case .size5_5:
-            // TODO: check
-            return KeyboardHeight(portrait: 272, landscape: 0)
+            // iPhone 6/6s/7/8 Plus
+            return KeyboardHeight(portrait: 272, landscape: 208)
         case .size5_8:
             // TODO: check
-            return KeyboardHeight(portrait: 262, landscape: 0)
+            // iPhone X/XS/11 Pro
+            return KeyboardHeight(portrait: 262, landscape: 190)
         case .size6_1:
             // TODO: check
-            return KeyboardHeight(portrait: 272, landscape: 0)
+            // iPhone 11/XR/12/13/14/15 (base models)
+            return KeyboardHeight(portrait: 272, landscape: 190)
         case .size6_3:
             // TODO: check
-            return KeyboardHeight(portrait: 272, landscape: 0)
+            // iPhone 14/15 Pro
+            return KeyboardHeight(portrait: 272, landscape: 190)
         case .size6_5:
             // TODO: check
-            return KeyboardHeight(portrait: 0, landscape: 0)
+            // iPhone XS Max/11 Pro Max
+            return KeyboardHeight(portrait: 272, landscape: 190)
         case .size6_7:
             // TODO: check
-            return KeyboardHeight(portrait: 272, landscape: 0)
+            // iPhone 12/13/14/15 Pro Max
+            return KeyboardHeight(portrait: 272, landscape: 190)
         case .size6_9:
             // TODO: check
-            return KeyboardHeight(portrait: 272, landscape: 0)
+            // iPhone 15 Plus/Pro Max (larger models)
+            return KeyboardHeight(portrait: 272, landscape: 190)
         case .size7_9:
             // TODO: check
-            return KeyboardHeight(portrait: 0, landscape: 0)
+            // iPad Mini 2/3/4/5
+            return KeyboardHeight(portrait: 314, landscape: 400)
         case .size8_3:
             // TODO: check
-            return KeyboardHeight(portrait: 0, landscape: 0)
+            // iPad Mini 6
+            return KeyboardHeight(portrait: 314, landscape: 400)
         case .size9_7:
             // TODO: check
-            return KeyboardHeight(portrait: 0, landscape: 0)
+            // iPad 3/4/5/6, iPad Air/Air 2, iPad Pro 9.7"
+            return KeyboardHeight(portrait: 314, landscape: 353)
         case .size10_2:
             // TODO: check
-            return KeyboardHeight(portrait: 0, landscape: 0)
+            // iPad 7/8/9
+            return KeyboardHeight(portrait: 314, landscape: 353)
         case .size10_5:
             // TODO: check
-            return KeyboardHeight(portrait: 0, landscape: 0)
+            // iPad Air 3, iPad Pro 10.5"
+            return KeyboardHeight(portrait: 314, landscape: 405)
         case .size10_9:
             // TODO: check
-            return KeyboardHeight(portrait: 0, landscape: 0)
+            // iPad 10, iPad Air 4/5
+            return KeyboardHeight(portrait: 314, landscape: 405)
         case .size11_0:
             // TODO: check
-            return KeyboardHeight(portrait: 0, landscape: 0)
+            // iPad Pro 11" (all generations)
+            return KeyboardHeight(portrait: 314, landscape: 405)
         case .size12_9:
             // TODO: check
-            return KeyboardHeight(portrait: 0, landscape: 0)
+            // iPad Pro 12.9" (all generations)
+            return KeyboardHeight(portrait: 384, landscape: 426)
         case .size13_0:
             // TODO: check
-            return KeyboardHeight(portrait: 0, landscape: 0)
+            // iPad Pro 13" (M4)
+            return KeyboardHeight(portrait: 384, landscape: 426)
         }
     }
 }
 
 enum ScreenSize: Double, CaseIterable {
-    case size3_5 = 3.5
-    case size4 = 4
+    // 3.5- and 4-inch devices are not supported; they are not compatible with iOS 13
     case size4_7 = 4.7
     case size5_4 = 5.4
     case size5_5 = 5.5
