@@ -38,9 +38,8 @@ struct KeyboardHeightProvider {
             // iPhone 12/13/14/15 Pro Max
             return KeyboardHeight(portrait: 272, landscape: 206)
         case .size6_9:
-            // TODO: check
             // iPhone 15 Plus/Pro Max (larger models)
-            return KeyboardHeight(portrait: 272, landscape: 190)
+            return KeyboardHeight(portrait: 272, landscape: 206)
         case .size7_9:
             // TODO: check
             // iPad Mini 2/3/4/5
