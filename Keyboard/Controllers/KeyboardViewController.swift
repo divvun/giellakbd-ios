@@ -175,26 +175,6 @@ open class KeyboardViewController: UIInputViewController {
         Theme.current(for: self.traitCollection)
     }()
 
-    open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        coordinator.animate { _ in
-            // moving the height updating here causes jank
-            // where there's a black box under the keyboard before it corrects
-        } completion: { [weak self] _ in
-            guard let self = self else { return }
-            // Regenerate theme with new device context (portrait/landscape)
-            self.theme = Theme.current(for: self.traitCollection)
-
-            // Update all views with the new theme
-            self.updateAfterThemeChange()
-            self.bannerManager?.updateTheme(self.theme)
-            if self.keyboardView != nil {
-                self.keyboardView.updateTheme(theme: self.theme)
-            }
-            self.updateHeightConstraint()
-            self.view.layoutIfNeeded()
-        }
-    }
-
     private var preferredHeight: CGFloat {
         var preferredHeight: CGFloat
 
@@ -231,6 +211,26 @@ open class KeyboardViewController: UIInputViewController {
 
         print("preferredHeight: \(preferredHeight)")
         return preferredHeight
+    }
+
+    open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        coordinator.animate { _ in
+            // moving the height updating here causes jank
+            // where there's a black box under the keyboard before it corrects
+        } completion: { [weak self] _ in
+            guard let self = self else { return }
+            // Regenerate theme with new device context (portrait/landscape)
+            self.theme = Theme.current(for: self.traitCollection)
+
+            // Update all views with the new theme
+            self.updateAfterThemeChange()
+            self.bannerManager?.updateTheme(self.theme)
+            if self.keyboardView != nil {
+                self.keyboardView.updateTheme(theme: self.theme)
+            }
+            self.updateHeightConstraint()
+            self.view.layoutIfNeeded()
+        }
     }
 
     private func initHeightConstraint() {
