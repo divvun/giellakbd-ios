@@ -32,8 +32,6 @@ struct KeyboardHeightProvider {
             return KeyboardHeight(portrait: 262, landscape: 203)
         }
 
-        print("CURRENT screen size: \(screenSize)")
-
         switch screenSize {
         case .size4_7:
             return KeyboardHeight(portrait: 262, landscape: 208)
