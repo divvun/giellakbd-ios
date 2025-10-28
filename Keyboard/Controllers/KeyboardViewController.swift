@@ -69,106 +69,24 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     private var landscapeHeight: CGFloat {
-        return KeyboardHeightProvider.height(for: Device.current).landscape
-
-        if Device.current.isPad {
-            if self.traitCollection.userInterfaceIdiom == .phone {
-                // Hardcode because the device lies about the height
-                return portraitHeight - 56
-            }
-
-            switch Device.current {
-            case .iPadMini2, .iPadMini3, .iPadMini4, .iPadMini5:
-                return 400.0
-            case .iPad3, .iPad4, .iPad5, .iPad6, .iPadAir, .iPadAir2, .iPadPro9Inch:
-                return 353.0
-            case .iPadAir3, .iPadPro10Inch:
-                return 405.0
-            case .iPadPro11Inch:
-                return 405.0
-            case .iPadPro12Inch, .iPadPro12Inch2, .iPadPro12Inch3, .iPadPro12Inch4, .iPadPro12Inch5, .iPadPro12Inch6:
-                return 426.0
-            default:
-                let sizeInches = UIScreen.sizeInches
-
-                if sizeInches < 11 {
-                    return landscapeDeviceHeight / 2.0
-                }
-
-                return landscapeDeviceHeight / 2.0 - 120
-            }
-        } else if Device.current.isPhone || Device.current.isPod {
-            switch Device.current {
-            case .iPhone5s, .iPhone5c, .iPhoneSE, .iPodTouch7:
-                return 203.0
-            case .iPhone6, .iPhone6s, .iPhone7, .iPhone8:
-                return 203.0
-            case .iPhone6Plus, .iPhone6sPlus, .iPhone7Plus, .iPhone8Plus:
-                return 203.0
-            case .iPhone11, .iPhoneXR:
-                return 190.0
-            case .iPhoneX, .iPhoneXS, .iPhone11Pro:
-                return 190.0
-            case .iPhoneXSMax, .iPhone11ProMax:
-                return 190.0
-            default:
-                return portraitHeight - 56
-            }
-        } else {
+        // Special case: iPad running in iPhone compatibility mode
+        if Device.current.isPad && traitCollection.userInterfaceIdiom == .phone {
             return portraitHeight - 56
         }
+
+        return KeyboardHeightProvider.height(for: Device.current).landscape
     }
 
     private var portraitHeight: CGFloat {
-        return KeyboardHeightProvider.height(for: Device.current).portrait
-
-        let sizeInches = UIScreen.sizeInches
-        print("Size inches: \(sizeInches)")
-        print("Device type: \(Device.current)")
-        print("Device size: \(Device.current.diagonal)")
-        if Device.current.isPad {
-            if self.traitCollection.userInterfaceIdiom == .phone
-                || !traitsAreLogicallyIPad(traitCollection: self.traitCollection) {
-                // Hardcode because the device lies about the height
-                if sizeInches <= 11 {
-                    return 258.0
-                } else {
-                    return 328.0
-                }
-            }
-
-            // Smol iPads and 9 inch iPad Pro
-            if sizeInches < 12 {
-                return 314.0
-            }
-
-            // iPads from 11 to 13 inches
-            if sizeInches < 13 {
-                return 384.0
-            }
-
-            return portraitDeviceHeight / 4.0
-        } else if Device.current.isPhone || Device.current.isPod {
-            // https://iosref.com/res/
-            switch Device.current {
-            case .iPhone5s, .iPhone5c, .iPhoneSE, .iPodTouch7:
-                return 254.0
-            case .iPhone6, .iPhone6s, .iPhone7, .iPhone8:
-                return 262.0
-            case .iPhone6Plus, .iPhone6sPlus, .iPhone7Plus, .iPhone8Plus:
-                return 272.0
-            case .iPhone11, .iPhoneXR:
-                return 272.0
-            case .iPhoneX, .iPhoneXS, .iPhone11Pro:
-                return 262.0
-            case .iPhoneXSMax, .iPhone11ProMax:
-                return 272.0
-            default:
-                return 262.0
-            }
-        } else {
-            return portraitDeviceHeight / 3.0
+        // Special case: iPad running in iPhone compatibility mode
+        if Device.current.isPad &&
+           (traitCollection.userInterfaceIdiom == .phone ||
+            !traitsAreLogicallyIPad(traitCollection: traitCollection)) {
+            let sizeInches = UIScreen.sizeInches
+            return sizeInches <= 11 ? 258 : 328
         }
+
+        return KeyboardHeightProvider.height(for: Device.current).portrait
     }
 
     private(set) lazy var theme: Theme = {
