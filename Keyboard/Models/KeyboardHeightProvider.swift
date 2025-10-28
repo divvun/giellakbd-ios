@@ -43,33 +43,15 @@ struct KeyboardHeightProvider {
             return KeyboardHeight(portrait: 272, landscape: 208)
         case .size5_8:
             return KeyboardHeight(portrait: 262, landscape: 196)
-        case .size6_1:
+        case .size6_1, .size6_3, .size6_5:
             return KeyboardHeight(portrait: 262, landscape: 206)
-        case .size6_3:
-            return KeyboardHeight(portrait: 262, landscape: 206)
-        case .size6_5:
-            return KeyboardHeight(portrait: 262, landscape: 206)
-        case .size6_7:
+        case .size6_7, .size6_9:
             return KeyboardHeight(portrait: 272, landscape: 206)
-        case .size6_9:
-            return KeyboardHeight(portrait: 272, landscape: 206)
-        case .size7_9:
-            return KeyboardHeight(portrait: 318, landscape: 404)
-        case .size8_3:
-            return KeyboardHeight(portrait: 318, landscape: 404)
-        case .size9_7:
-            return KeyboardHeight(portrait: 318, landscape: 404)
-        case .size10_2:
-            return KeyboardHeight(portrait: 318, landscape: 404)
-        case .size10_5:
+        case .size7_9, .size8_3, .size9_7, .size10_2, .size10_5, .size11_0:
             return KeyboardHeight(portrait: 318, landscape: 404)
         case .size10_9:
             return KeyboardHeight(portrait: 314, landscape: 398)
-        case .size11_0:
-            return KeyboardHeight(portrait: 318, landscape: 404)
-        case .size12_9:
-            return KeyboardHeight(portrait: 384, landscape: 476)
-        case .size13_0:
+        case .size12_9, .size13_0:
             return KeyboardHeight(portrait: 384, landscape: 476)
         }
     }
