@@ -69,7 +69,7 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     private var landscapeHeight: CGFloat {
-        return KeyboardHeightProvider.height(for: Device.current.diagonal).landscape
+        return KeyboardHeightProvider.height(for: Device.current).landscape
 
         if Device.current.isPad {
             if self.traitCollection.userInterfaceIdiom == .phone {
@@ -120,7 +120,7 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     private var portraitHeight: CGFloat {
-        return KeyboardHeightProvider.height(for: Device.current.diagonal).portrait
+        return KeyboardHeightProvider.height(for: Device.current).portrait
 
         let sizeInches = UIScreen.sizeInches
         print("Size inches: \(sizeInches)")

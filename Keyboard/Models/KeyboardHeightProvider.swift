@@ -1,10 +1,32 @@
+import DeviceKit
+
 struct KeyboardHeight {
     let portrait: CGFloat
     let landscape: CGFloat
 }
 
 struct KeyboardHeightProvider {
-    static func height(for diagonal: Double) -> KeyboardHeight {
+    static func height(for device: Device) -> KeyboardHeight {
+        if let override = override(for: device) {
+            return override
+        }
+
+        return height(forDiagonal: device.diagonal)
+    }
+
+    /// Device-specific overrides for devices that need different heights than their diagonal peers
+    private static func override(for device: Device) -> KeyboardHeight? {
+        switch device {
+        case .simulator(let inner):
+            return override(for: inner)
+        case .iPhoneXSMax, .iPhone11ProMax:
+            return KeyboardHeight(portrait: 272, landscape: 196)
+        default:
+            return nil
+        }
+    }
+
+    private static func height(forDiagonal diagonal: Double) -> KeyboardHeight {
         guard let screenSize = ScreenSize(diagonal: diagonal) else {
             // Fallback for unknown sizes
             return KeyboardHeight(portrait: 262, landscape: 203)
@@ -26,7 +48,6 @@ struct KeyboardHeightProvider {
         case .size6_3:
             return KeyboardHeight(portrait: 262, landscape: 206)
         case .size6_5:
-            // This is correct for iPhone Air, but slightly too short in portrait and too tall in landscape on iPhone 11 Pro Max and presumably iPhone XS Max, whose values are (272, 190).
             return KeyboardHeight(portrait: 262, landscape: 206)
         case .size6_7:
             return KeyboardHeight(portrait: 272, landscape: 206)
@@ -54,7 +75,7 @@ struct KeyboardHeightProvider {
     }
 }
 
-enum ScreenSize: Double, CaseIterable {
+enum ScreenSize: Double {
     // 3.5- and 4-inch devices are not supported; they are not compatible with iOS 13
     case size4_7 = 4.7
     case size5_4 = 5.4
