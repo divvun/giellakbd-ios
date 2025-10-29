@@ -26,16 +26,6 @@ enum KeyboardMode {
     case right
 }
 
-private let portraitDeviceHeight: CGFloat = {
-    let size = UIScreen.main.bounds.size
-    return max(size.height, size.width)
-}()
-
-private let landscapeDeviceHeight: CGFloat = {
-    let size = UIScreen.main.bounds.size
-    return min(size.height, size.width)
-}()
-
 open class KeyboardViewController: UIInputViewController {
     @IBOutlet var nextKeyboardButton: UIButton!
     private var keyboardContainer: UIView!
@@ -73,39 +63,26 @@ open class KeyboardViewController: UIInputViewController {
     }()
 
     private var preferredHeight: CGFloat {
-        let heights: KeyboardHeight = KeyboardHeightProvider.height(for: Device.current, traitCollection: traitCollection)
-
-        var preferredHeight = UIScreen.main.isDeviceLandscape
-            ? heights.landscape
-            : heights.portrait
+        let isLandscape = UIScreen.main.isDeviceLandscape
 
         guard let layout = keyboardDefinition.currentDeviceLayout else {
             // this can happen if for instance we're on iPad and there's no iPad layout for this particular keyboard
-            return preferredHeight
+            return KeyboardHeightProvider.height(for: Device.current, traitCollection: traitCollection, isLandscape: isLandscape)
         }
 
-        // Ordinarily a keyboard has 4 rows, iPad 12 inch+ has 5. Some have more. We calculate for that.
-        let rowCount = CGFloat(layout.normal.count)
-        let normalRowCount: CGFloat = (Device.current.diagonal ?? 0.0) >= 12.0
-            ? 5.0
-            : 4.0
-        let rowHeight = preferredHeight / normalRowCount
-        preferredHeight = rowHeight * rowCount
-
-        // Some keyboards are more than 4 rows, and on 9" iPads they take up
-        // almost the whole screen in landscape unless we shave off some pixels
-        let screenSize = Device.current.diagonal ?? 12
-        let isLandscape = UIScreen.main.isDeviceLandscape
-        if screenSize < 11 && rowCount > 4 && isLandscape {
-            preferredHeight -= 40
-        }
+        var height = KeyboardHeightProvider.adjustedHeight(
+            for: Device.current,
+            traitCollection: traitCollection,
+            isLandscape: isLandscape,
+            rowCount: layout.normal.count
+        )
 
         if !bannerVisible {
-             preferredHeight -= theme.bannerHeight
+            height -= theme.bannerHeight
         }
 
-        print("preferredHeight: \(preferredHeight)")
-        return preferredHeight
+        print("preferredHeight: \(height)")
+        return height
     }
 
     open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
