@@ -327,6 +327,12 @@ func traitsAreLogicallyIPad(traitCollection: UITraitCollection) -> Bool {
         && traitCollection.horizontalSizeClass == .regular
 }
 
+func isIPhoneAppRunningOnIPad(traitCollection: UITraitCollection) -> Bool {
+    Device.current.isPad &&
+    (traitCollection.userInterfaceIdiom == .phone
+     || !traitsAreLogicallyIPad(traitCollection: traitCollection))
+}
+
 class URLOpener {
     // App extensions don't have access to UIApplication.shared. Do an ugly song and dance to work around this.
     @objc func aggressivelyOpenURL(_ url: URL, responder: UIResponder?) {

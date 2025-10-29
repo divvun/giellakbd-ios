@@ -68,27 +68,6 @@ open class KeyboardViewController: UIInputViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private var landscapeHeight: CGFloat {
-        // Special case: iPad running in iPhone compatibility mode
-        if Device.current.isPad && traitCollection.userInterfaceIdiom == .phone {
-            return portraitHeight - 56
-        }
-
-        return KeyboardHeightProvider.height(for: Device.current).landscape
-    }
-
-    private var portraitHeight: CGFloat {
-        // Special case: iPad running in iPhone compatibility mode
-        if Device.current.isPad &&
-           (traitCollection.userInterfaceIdiom == .phone ||
-            !traitsAreLogicallyIPad(traitCollection: traitCollection)) {
-            let sizeInches = UIScreen.sizeInches
-            return sizeInches <= 11 ? 258 : 328
-        }
-
-        return KeyboardHeightProvider.height(for: Device.current).portrait
-    }
-
     private(set) lazy var theme: Theme = {
         Theme.current(for: self.traitCollection)
     }()
@@ -96,10 +75,12 @@ open class KeyboardViewController: UIInputViewController {
     private var preferredHeight: CGFloat {
         var preferredHeight: CGFloat
 
+        let heights: KeyboardHeight = KeyboardHeightProvider.height(for: Device.current, traitCollection: traitCollection)
+
         if UIScreen.main.isDeviceLandscape {
-            preferredHeight = landscapeHeight
+            preferredHeight = heights.landscape
         } else {
-            preferredHeight = portraitHeight
+            preferredHeight = heights.portrait
         }
 
         guard let layout = keyboardDefinition.currentDeviceLayout else {

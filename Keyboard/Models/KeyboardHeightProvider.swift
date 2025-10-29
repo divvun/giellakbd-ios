@@ -1,4 +1,5 @@
 import DeviceKit
+import UIKit
 
 struct KeyboardHeight {
     let portrait: CGFloat
@@ -6,11 +7,21 @@ struct KeyboardHeight {
 }
 
 struct KeyboardHeightProvider {
-    static func height(for device: Device) -> KeyboardHeight {
+    static func height(for device: Device, traitCollection: UITraitCollection) -> KeyboardHeight {
+        // Special case: iPhone app running on iPad in compatibility mode
+        if isIPhoneAppRunningOnIPad(traitCollection: traitCollection) {
+            let sizeInches = UIScreen.sizeInches
+            let portrait = sizeInches <= 11 ? 258.0 : 328.0
+            let landscape = portrait - 56
+            return KeyboardHeight(portrait: portrait, landscape: landscape)
+        }
+
+        // Check device-specific overrides
         if let override = override(for: device) {
             return override
         }
 
+        // Fall back to diagonal-based lookup
         return height(forDiagonal: device.diagonal)
     }
 
