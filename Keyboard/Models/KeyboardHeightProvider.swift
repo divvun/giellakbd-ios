@@ -1,10 +1,7 @@
 import DeviceKit
 import UIKit
 
-struct KeyboardHeight {
-    let portrait: CGFloat
-    let landscape: CGFloat
-}
+typealias KeyboardHeight = (portrait: CGFloat, landscape: CGFloat)
 
 struct KeyboardHeightProvider {
     static func height(for device: Device, traitCollection: UITraitCollection) -> KeyboardHeight {
@@ -13,7 +10,7 @@ struct KeyboardHeightProvider {
             let sizeInches = UIScreen.sizeInches
             let portrait = sizeInches <= 11 ? 258.0 : 328.0
             let landscape = portrait - 56
-            return KeyboardHeight(portrait: portrait, landscape: landscape)
+            return (portrait: portrait, landscape: landscape)
         }
 
         // Check device-specific overrides
@@ -31,7 +28,7 @@ struct KeyboardHeightProvider {
         case .simulator(let inner):
             return override(for: inner)
         case .iPhoneXSMax, .iPhone11ProMax:
-            return KeyboardHeight(portrait: 272, landscape: 196)
+            return (portrait: 272, landscape: 196)
         default:
             return nil
         }
@@ -40,28 +37,28 @@ struct KeyboardHeightProvider {
     private static func height(forDiagonal diagonal: Double) -> KeyboardHeight {
         guard let screenSize = ScreenSize(diagonal: diagonal) else {
             // Fallback for unknown sizes
-            return KeyboardHeight(portrait: 262, landscape: 203)
+            return (portrait: 262, landscape: 203)
         }
 
         switch screenSize {
         case .size4_7:
-            return KeyboardHeight(portrait: 262, landscape: 208)
+            return (portrait: 262, landscape: 208)
         case .size5_4:
-            return KeyboardHeight(portrait: 272, landscape: 198)
+            return (portrait: 272, landscape: 198)
         case .size5_5:
-            return KeyboardHeight(portrait: 272, landscape: 208)
+            return (portrait: 272, landscape: 208)
         case .size5_8:
-            return KeyboardHeight(portrait: 262, landscape: 196)
+            return (portrait: 262, landscape: 196)
         case .size6_1, .size6_3, .size6_5:
-            return KeyboardHeight(portrait: 262, landscape: 206)
+            return (portrait: 262, landscape: 206)
         case .size6_7, .size6_9:
-            return KeyboardHeight(portrait: 272, landscape: 206)
+            return (portrait: 272, landscape: 206)
         case .size7_9, .size8_3, .size9_7, .size10_2, .size10_5, .size11_0:
-            return KeyboardHeight(portrait: 318, landscape: 404)
+            return (portrait: 318, landscape: 404)
         case .size10_9:
-            return KeyboardHeight(portrait: 314, landscape: 398)
+            return (portrait: 314, landscape: 398)
         case .size12_9, .size13_0:
-            return KeyboardHeight(portrait: 384, landscape: 476)
+            return (portrait: 384, landscape: 476)
         }
     }
 }
