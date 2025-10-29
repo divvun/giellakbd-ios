@@ -14,10 +14,40 @@ private let landscapeDeviceHeight: CGFloat = {
 }()
 
 struct KeyboardHeightProvider {
-    static func height(for device: Device, traitCollection: UITraitCollection, isLandscape: Bool) -> CGFloat {
-        let heights = self.height(for: device, traitCollection: traitCollection)
-        return isLandscape ? heights.landscape : heights.portrait
+    /// Returns keyboard height for a given device and orientation, optionally adjusted for custom row counts
+    static func height(
+        for device: Device,
+        traitCollection: UITraitCollection,
+        isLandscape: Bool,
+        rowCount: Int? = nil
+    ) -> CGFloat {
+        let heights = heights(for: device, traitCollection: traitCollection)
+        let baseHeight = isLandscape ? heights.landscape : heights.portrait
+        let diagonal = device.diagonal
+
+        guard let rowCount = rowCount, diagonal > 0 else {
+            return baseHeight
+        }
+
+        // Adjust for custom row count
+        // Ordinarily a keyboard has 4 rows, iPad 12 inch+ has 5. Some have more. We calculate for that.
+        let normalRowCount: CGFloat = diagonal >= 12.0 ? 5.0 : 4.0
+        let rowHeight = baseHeight / normalRowCount
+        var adjustedHeight = rowHeight * CGFloat(rowCount)
+
+        // Some keyboards are more than 4 rows, and on small iPads they take up
+        // almost the whole screen in landscape unless we shave off some pixels
+        if diagonal < 11, rowCount > 4, isLandscape {
+            adjustedHeight -= 40
+        }
+
+        return adjustedHeight
     }
+
+    private static func heights(for device: Device, traitCollection: UITraitCollection) -> KeyboardHeight {
+//        print("portraitDeviceHeight: \(portraitDeviceHeight)")
+//        print("landscapeDeviceHeight: \(landscapeDeviceHeight)")
+//        print("diagonal: \(Device.current.diagonal)")
 
         // Special case: iPhone app running on iPad in compatibility mode
         if isIPhoneAppRunningOnIPad(traitCollection: traitCollection) {
@@ -38,38 +68,6 @@ struct KeyboardHeightProvider {
         }
 
         return fallbackHeight(for: device)
-    }
-
-    /// Returns keyboard height adjusted for custom row counts and device-specific constraints
-    static func adjustedHeight(
-        for device: Device,
-        traitCollection: UITraitCollection,
-        isLandscape: Bool,
-        rowCount: Int
-    ) -> CGFloat {
-        let heights = height(for: device, traitCollection: traitCollection)
-        let baseHeight = isLandscape ? heights.landscape : heights.portrait
-        let diagonal = device.diagonal
-
-        guard diagonal > 0 else {
-            // Can't adjust for row count without knowing diagonal
-            return baseHeight
-        }
-
-        // Adjust for row count
-        // Ordinarily a keyboard has 4 rows, iPad 12 inch+ has 5. Some have more. We calculate for that.
-        let normalRowCount: CGFloat = diagonal >= 12.0
-            ? 5.0
-            : 4.0
-        var adjustedHeight = baseHeight / normalRowCount * CGFloat(rowCount)
-
-        // Some keyboards are more than 4 rows, and on small iPads they take up
-        // almost the whole screen in landscape unless we shave off some pixels
-        if diagonal < 11, rowCount > 4, isLandscape {
-            adjustedHeight -= 40
-        }
-
-        return adjustedHeight
     }
 
     /// Device-specific overrides for devices that need different heights than their diagonal peers

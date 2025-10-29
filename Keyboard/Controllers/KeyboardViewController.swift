@@ -65,16 +65,11 @@ open class KeyboardViewController: UIInputViewController {
     private var preferredHeight: CGFloat {
         let isLandscape = UIScreen.main.isDeviceLandscape
 
-        guard let layout = keyboardDefinition.currentDeviceLayout else {
-            // this can happen if for instance we're on iPad and there's no iPad layout for this particular keyboard
-            return KeyboardHeightProvider.height(for: Device.current, traitCollection: traitCollection, isLandscape: isLandscape)
-        }
-
-        var height = KeyboardHeightProvider.adjustedHeight(
+        var height = KeyboardHeightProvider.height(
             for: Device.current,
             traitCollection: traitCollection,
             isLandscape: isLandscape,
-            rowCount: layout.normal.count
+            rowCount: keyboardDefinition.currentDeviceLayout?.normal.count
         )
 
         if !bannerVisible {
