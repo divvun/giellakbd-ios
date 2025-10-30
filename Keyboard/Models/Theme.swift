@@ -86,9 +86,9 @@ struct DeviceContext {
 
     var isPhone: Bool { idiom == .phone }
     var isPad: Bool { idiom == .pad }
-    var isLargeiPad: Bool { isPad && screenInches >= 11 }
+    var isLargeiPad: Bool { isPad && screenInches > 11 }
     var isLargeLandscape: Bool { isLargeiPad && isLandscape }
-    var isSmallOrMediumLandscape: Bool { isPad && screenInches < 11 && isLandscape }
+    var isSmallOrMediumLandscape: Bool { isPad && screenInches <= 11 && isLandscape }
 
     static func current() -> DeviceContext {
         return DeviceContext(
