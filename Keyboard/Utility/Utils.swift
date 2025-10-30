@@ -232,7 +232,7 @@ extension UIScreen {
         return size.width > size.height
     }
     
-    public static var maxSupportedInches: Double { 12.9 }
+    public static var maxSupportedInches: Double { 13.0 }
     
     public static var sizeInches: Double {
         // Default to maxSupportedInches for legacy reasons
