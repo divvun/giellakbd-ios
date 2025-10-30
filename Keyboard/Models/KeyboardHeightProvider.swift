@@ -1,4 +1,5 @@
 import DeviceKit
+import Sentry
 import UIKit
 
 typealias KeyboardHeight = (portrait: CGFloat, landscape: CGFloat)
@@ -93,6 +94,12 @@ struct KeyboardHeightProvider {
     }
 
     private static func nearestScreenSize(to diagonal: Double, maxDistance: Double = 0.2) -> ScreenSize? {
+        // Notify about unrecognized screen size
+        SentrySDK.capture(message: "Unrecognized device screen size: \(diagonal)\"") { scope in
+            scope.setLevel(.warning)
+            scope.setContext(value: ["diagonal": diagonal], key: "screen_size")
+        }
+
         // Find nearest known size by calculating distance for each
         guard let nearest = ScreenSize.allCases.min(by: { size1, size2 in
             let distance1 = abs(size1.rawValue - diagonal)
