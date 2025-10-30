@@ -127,7 +127,7 @@ final class KeyView: UIView {
         alternateLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         alternateLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
 
-        if self.isLogicallyIPad && (Device.current.diagonal ?? 0.0) > 12 {
+        if self.isLogicallyIPad && Device.current.diagonal > 12 {
             switch page {
             case .shifted, .capslock, .symbols1, .symbols2:
                 alternateLabel.font = theme.capitalKeyFont
@@ -401,7 +401,7 @@ final class KeyView: UIView {
 
     private func setupComma(_ traits: UITraitCollection, _ page: KeyboardPage) {
         if Device.current.isPad && traits.userInterfaceIdiom == .pad {
-            if (Device.current.diagonal ?? 0) < 12.0 {
+            if Device.current.diagonal < 12.0 {
                 input(string: ",", alt: "!", page: page)
             } else {
                 input(string: ",", alt: ";", page: page)
@@ -413,7 +413,7 @@ final class KeyView: UIView {
 
     private func setupFullStop(_ traits: UITraitCollection, _ page: KeyboardPage) {
         if Device.current.isPad && traits.userInterfaceIdiom == .pad {
-            if (Device.current.diagonal ?? 0) < 12.0 {
+            if Device.current.diagonal < 12.0 {
                 input(string: ".", alt: "?", page: page)
             } else {
                 input(string: ".", alt: ":", page: page)
