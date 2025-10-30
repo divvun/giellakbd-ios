@@ -3,17 +3,17 @@ import UIKit
 
 typealias KeyboardHeight = (portrait: CGFloat, landscape: CGFloat)
 
-private let portraitDeviceHeight: CGFloat = {
-    let size = UIScreen.main.bounds.size
-    return max(size.height, size.width)
-}()
-
-private let landscapeDeviceHeight: CGFloat = {
-    let size = UIScreen.main.bounds.size
-    return min(size.height, size.width)
-}()
-
 struct KeyboardHeightProvider {
+    private static let portraitDeviceHeight: CGFloat = {
+        let size = UIScreen.main.bounds.size
+        return max(size.height, size.width)
+    }()
+
+    private static let landscapeDeviceHeight: CGFloat = {
+        let size = UIScreen.main.bounds.size
+        return min(size.height, size.width)
+    }()
+
     /// Returns keyboard height for a given device and orientation, optionally adjusted for custom row counts
     static func height(
         for device: Device,
@@ -54,7 +54,7 @@ struct KeyboardHeightProvider {
         }
 
         // Check device-specific overrides
-        if let override = override(for: device) {
+        if let override = deviceOverride(for: device) {
             return override
         }
 
@@ -67,10 +67,10 @@ struct KeyboardHeightProvider {
     }
 
     /// Device-specific overrides for devices that need different heights than their diagonal peers
-    private static func override(for device: Device) -> KeyboardHeight? {
+    private static func deviceOverride(for device: Device) -> KeyboardHeight? {
         switch device {
         case .simulator(let inner):
-            return override(for: inner)
+            return deviceOverride(for: inner)
         case .iPhoneXSMax, .iPhone11ProMax:
             return (portrait: 272, landscape: 196)
         default:
@@ -113,6 +113,8 @@ struct KeyboardHeightProvider {
         return nearest
     }
 
+    /// Heights for screen sizes that have been tested.
+    /// New values should be added here as new devices are released.
     private static func heightForScreenSize(_ screenSize: ScreenSize) -> KeyboardHeight {
         switch screenSize {
         case .size4_7:
@@ -152,6 +154,8 @@ struct KeyboardHeightProvider {
     }
 }
 
+/// Exhaustive list of the device sizes we support and have tested.
+/// New device sizes will need to be added here as they become available.
 enum ScreenSize: Double, CaseIterable {
     // 3.5- and 4-inch devices are not supported; they are not compatible with iOS 13
     case size4_7 = 4.7
