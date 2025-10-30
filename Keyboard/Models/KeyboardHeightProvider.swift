@@ -45,10 +45,6 @@ struct KeyboardHeightProvider {
     }
 
     private static func heights(for device: Device, traitCollection: UITraitCollection) -> KeyboardHeight {
-//        print("portraitDeviceHeight: \(portraitDeviceHeight)")
-//        print("landscapeDeviceHeight: \(landscapeDeviceHeight)")
-//        print("diagonal: \(Device.current.diagonal)")
-
         // Special case: iPhone app running on iPad in compatibility mode
         if isIPhoneAppRunningOnIPad(traitCollection: traitCollection) {
             let sizeInches = UIScreen.sizeInches
@@ -83,10 +79,41 @@ struct KeyboardHeightProvider {
     }
 
     private static func height(forDiagonal diagonal: Double) -> KeyboardHeight? {
-        guard let screenSize = ScreenSize(diagonal: diagonal) else {
+        // Try exact match first
+        if let screenSize = ScreenSize(diagonal: diagonal) {
+            return heightForScreenSize(screenSize)
+        }
+
+        // Try nearest neighbor if close enough
+        if let nearest = nearestScreenSize(to: diagonal) {
+            return heightForScreenSize(nearest)
+        }
+
+        return nil
+    }
+
+    private static func nearestScreenSize(to diagonal: Double, maxDistance: Double = 0.2) -> ScreenSize? {
+        // Find nearest known size by calculating distance for each
+        guard let nearest = ScreenSize.allCases.min(by: { size1, size2 in
+            let distance1 = abs(size1.rawValue - diagonal)
+            let distance2 = abs(size2.rawValue - diagonal)
+            return distance1 < distance2
+        }) else {
             return nil
         }
 
+        // Only use nearest match if it's close enough
+        let distance = abs(nearest.rawValue - diagonal)
+        guard distance <= maxDistance else {
+            print("⚠️ Unknown screen size: \(diagonal)\" - nearest match \(nearest.rawValue)\" is too far (\(distance)\")")
+            return nil
+        }
+
+        print("⚠️ Unknown screen size: \(diagonal)\" - using nearest match: \(nearest.rawValue)\"")
+        return nearest
+    }
+
+    private static func heightForScreenSize(_ screenSize: ScreenSize) -> KeyboardHeight {
         switch screenSize {
         case .size4_7:
             return (portrait: 262, landscape: 208)
@@ -125,7 +152,7 @@ struct KeyboardHeightProvider {
     }
 }
 
-enum ScreenSize: Double {
+enum ScreenSize: Double, CaseIterable {
     // 3.5- and 4-inch devices are not supported; they are not compatible with iOS 13
     case size4_7 = 4.7
     case size5_4 = 5.4
@@ -145,7 +172,7 @@ enum ScreenSize: Double {
     case size11_0 = 11.0
     case size12_9 = 12.9
     case size13_0 = 13.0
-    
+
     init?(diagonal: Double) {
         self.init(rawValue: diagonal)
     }
