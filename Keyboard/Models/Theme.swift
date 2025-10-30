@@ -248,13 +248,15 @@ private struct ThemeFactory {
         let keyHorizontalMargin: CGFloat = {
             if device.isLargeLandscape { return 4.0 }
             else if device.isSmallOrMediumLandscape { return 7.0 }
-            else { return 5.0 }
+            else if device.isLargeiPad { return 3.0 } // Large iPad in portrait
+            else { return 5.0 } // Small/medium iPad in portrait
         }()
 
         let keyVerticalMargin: CGFloat = {
             if device.isLargeLandscape { return 4.0 }
             else if device.isSmallOrMediumLandscape { return 6.0 }
-            else { return 5.0 }
+            else if device.isLargeiPad { return 3.5 } // Large iPad in portrait
+            else { return 5.0 } // Small/medium iPad in portrait
         }()
 
         let altLabelTop: CGFloat = {
