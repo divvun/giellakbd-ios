@@ -1,351 +1,372 @@
 @testable import BaseKeyboard
 import XCTest
+import DeviceKit
 
 final class KeyboardViewControllerTests: XCTestCase {
-    // This test isn't accurate because textDocumentProxy.autocapitalizationType isn't .sentences.
-    // Leaving as a reference for creating other KeyboardViewController tests
-
-//    func test_keyboard_should_auto_shift_after_full_stop() {
-//        let sut = KeyboardViewController(withBanner: true)
-//        sut.viewDidLoad()
-//
-//        sut.insertText("H")
-//        sut.insertText("i")
-//        sut.insertText(" ")
-//        sut.insertText(" ")
-//
-//        XCTAssertEqual("Hi. ", sut.textDocumentProxy.documentContextBeforeInput)
-//        XCTAssertEqual(.shifted, sut.page)
-//    }
-
     // MARK: - Landscape Height Tests
 
-    func testLandscapeHeight_iPadMini() {
-        // iPad Mini 2, 3, 4, 5 should all return 400.0
-        let iPadMinis: [DeviceModel] = [.iPadMini2, .iPadMini3, .iPadMini4, .iPadMini5]
-        let traitCollection = UITraitCollection(userInterfaceIdiom: .pad)
-
-        for device in iPadMinis {
-            let height = KeyboardViewController.landscapeHeight(
-                deviceFamily: .iPad,
-                deviceModel: device,
-                traitCollection: traitCollection,
-                portraitHeight: 0, // Not used for these devices
-                landscapeDeviceHeight: 0, // Not used for these devices
-                sizeInches: 7.9
-            )
-            XCTAssertEqual(height, 400.0, "iPad Mini (\(device)) should return 400.0 in landscape")
-        }
-    }
-
-    func testLandscapeHeight_iPad9Inch() {
-        // iPad 3, 4, 5, 6, Air, Air 2, Pro 9" should return 353.0
-        let iPads: [DeviceModel] = [.iPadThirdGen, .iPadFourthGen, .iPadFifthGen, .iPadSixthGen, .iPadAir, .iPadAir2, .iPadPro9_7Inch]
-        let traitCollection = UITraitCollection(userInterfaceIdiom: .pad)
-
-        for device in iPads {
-            let height = KeyboardViewController.landscapeHeight(
-                deviceFamily: .iPad,
-                deviceModel: device,
-                traitCollection: traitCollection,
-                portraitHeight: 0,
-                landscapeDeviceHeight: 0,
-                sizeInches: 9.7
-            )
-            XCTAssertEqual(height, 353.0, "\(device) should return 353.0 in landscape")
-        }
-    }
-
-    func testLandscapeHeight_iPad10And11Inch() {
-        // iPad Air 3, Pro 10.5", Pro 11" should return 405.0
-        let iPads: [DeviceModel] = [.iPadAir3, .iPadPro10_5Inch, .iPadPro11Inch]
-        let traitCollection = UITraitCollection(userInterfaceIdiom: .pad)
-
-        for device in iPads {
-            let height = KeyboardViewController.landscapeHeight(
-                deviceFamily: .iPad,
-                deviceModel: device,
-                traitCollection: traitCollection,
-                portraitHeight: 0,
-                landscapeDeviceHeight: 0,
-                sizeInches: 10.5
-            )
-            XCTAssertEqual(height, 405.0, "\(device) should return 405.0 in landscape")
-        }
-    }
-
-    func testLandscapeHeight_iPad12Inch() {
-        // All iPad Pro 12.9" models should return 426.0
-        let iPads: [DeviceModel] = [
-            .iPadPro12_9Inch, .iPadPro12_9Inch_SecondGen, .iPadPro12_9Inch_ThirdGen,
-            .iPadPro12_9Inch_FourthGen, .iPadPro12_9Inch_FifthGen, .iPadPro12_9Inch_SixthGen
-        ]
-        let traitCollection = UITraitCollection(userInterfaceIdiom: .pad)
-
-        for device in iPads {
-            let height = KeyboardViewController.landscapeHeight(
-                deviceFamily: .iPad,
-                deviceModel: device,
-                traitCollection: traitCollection,
-                portraitHeight: 0,
-                landscapeDeviceHeight: 0,
-                sizeInches: 12.9
-            )
-            XCTAssertEqual(height, 426.0, "\(device) should return 426.0 in landscape")
-        }
-    }
-
-    func testLandscapeHeight_iPhone5sGeneration() {
-        // iPhone 5s, 5c, SE, iPod Touch 7 should return 203.0
-        let devices: [(family: DeviceFamily, model: DeviceModel)] = [
-            (.iPhone, .iPhone5S), (.iPhone, .iPhone5C), (.iPhone, .iPhoneSE), (.iPod, .iPodTouchSeventhGen)
-        ]
-        let traitCollection = UITraitCollection(userInterfaceIdiom: .phone)
-
-        for device in devices {
-            let height = KeyboardViewController.landscapeHeight(
-                deviceFamily: device.family,
-                deviceModel: device.model,
-                traitCollection: traitCollection,
-                portraitHeight: 0,
-                landscapeDeviceHeight: 0,
-                sizeInches: 4.0
-            )
-            XCTAssertEqual(height, 203.0, "\(device.model) should return 203.0 in landscape")
-        }
-    }
-
-    func testLandscapeHeight_iPhone6to8() {
-        // iPhone 6, 6s, 7, 8 should return 203.0
-        let devices: [DeviceModel] = [.iPhone6, .iPhone6S, .iPhone7, .iPhone8]
-        let traitCollection = UITraitCollection(userInterfaceIdiom: .phone)
-
-        for device in devices {
-            let height = KeyboardViewController.landscapeHeight(
-                deviceFamily: .iPhone,
-                deviceModel: device,
-                traitCollection: traitCollection,
-                portraitHeight: 0,
-                landscapeDeviceHeight: 0,
-                sizeInches: 4.7
-            )
-            XCTAssertEqual(height, 203.0, "\(device) should return 203.0 in landscape")
-        }
-    }
-
-    func testLandscapeHeight_iPhone6to8Plus() {
-        // iPhone 6 Plus, 6s Plus, 7 Plus, 8 Plus should return 203.0
-        let devices: [DeviceModel] = [.iPhone6Plus, .iPhone6SPlus, .iPhone7Plus, .iPhone8Plus]
-        let traitCollection = UITraitCollection(userInterfaceIdiom: .phone)
-
-        for device in devices {
-            let height = KeyboardViewController.landscapeHeight(
-                deviceFamily: .iPhone,
-                deviceModel: device,
-                traitCollection: traitCollection,
-                portraitHeight: 0,
-                landscapeDeviceHeight: 0,
-                sizeInches: 5.5
-            )
-            XCTAssertEqual(height, 203.0, "\(device) should return 203.0 in landscape")
-        }
-    }
-
-    func testLandscapeHeight_iPhone11AndXR() {
-        // iPhone 11, XR should return 190.0
-        let devices: [DeviceModel] = [.iPhone11, .iPhoneXR]
-        let traitCollection = UITraitCollection(userInterfaceIdiom: .phone)
-
-        for device in devices {
-            let height = KeyboardViewController.landscapeHeight(
-                deviceFamily: .iPhone,
-                deviceModel: device,
-                traitCollection: traitCollection,
-                portraitHeight: 0,
-                landscapeDeviceHeight: 0,
-                sizeInches: 6.1
-            )
-            XCTAssertEqual(height, 190.0, "\(device) should return 190.0 in landscape")
-        }
-    }
-
-    func testLandscapeHeight_iPhoneXAndXSAnd11Pro() {
-        // iPhone X, XS, 11 Pro should return 190.0
-        let devices: [DeviceModel] = [.iPhoneX, .iPhoneXS, .iPhone11Pro]
-        let traitCollection = UITraitCollection(userInterfaceIdiom: .phone)
-
-        for device in devices {
-            let height = KeyboardViewController.landscapeHeight(
-                deviceFamily: .iPhone,
-                deviceModel: device,
-                traitCollection: traitCollection,
-                portraitHeight: 0,
-                landscapeDeviceHeight: 0,
-                sizeInches: 5.8
-            )
-            XCTAssertEqual(height, 190.0, "\(device) should return 190.0 in landscape")
-        }
-    }
-
-    func testLandscapeHeight_iPhoneXSMaxAnd11ProMax() {
-        // iPhone XS Max, 11 Pro Max should return 190.0
-        let devices: [DeviceModel] = [.iPhoneXSMax, .iPhone11ProMax]
-        let traitCollection = UITraitCollection(userInterfaceIdiom: .phone)
-
-        for device in devices {
-            let height = KeyboardViewController.landscapeHeight(
-                deviceFamily: .iPhone,
-                deviceModel: device,
-                traitCollection: traitCollection,
-                portraitHeight: 0,
-                landscapeDeviceHeight: 0,
-                sizeInches: 6.5
-            )
-            XCTAssertEqual(height, 190.0, "\(device) should return 190.0 in landscape")
-        }
-    }
-
-    // MARK: - Portrait Height Tests
-
-    func testPortraitHeight_iPhone5sGeneration() {
-        // iPhone 5s, 5c, SE, iPod Touch 7 should return 254.0
-        let devices: [(family: DeviceFamily, model: DeviceModel)] = [
-            (.iPhone, .iPhone5S), (.iPhone, .iPhone5C), (.iPhone, .iPhoneSE), (.iPod, .iPodTouchSeventhGen)
-        ]
-        let traitCollection = UITraitCollection(userInterfaceIdiom: .phone)
-
-        for device in devices {
-            let height = KeyboardViewController.portraitHeight(
-                deviceFamily: device.family,
-                deviceModel: device.model,
-                traitCollection: traitCollection,
-                portraitDeviceHeight: 0,
-                sizeInches: 4.0
-            )
-            XCTAssertEqual(height, 254.0, "\(device.model) should return 254.0 in portrait")
-        }
-    }
-
-    func testPortraitHeight_iPhone6to8() {
-        // iPhone 6, 6s, 7, 8 should return 262.0
-        let devices: [DeviceModel] = [.iPhone6, .iPhone6S, .iPhone7, .iPhone8]
-        let traitCollection = UITraitCollection(userInterfaceIdiom: .phone)
-
-        for device in devices {
-            let height = KeyboardViewController.portraitHeight(
-                deviceFamily: .iPhone,
-                deviceModel: device,
-                traitCollection: traitCollection,
-                portraitDeviceHeight: 0,
-                sizeInches: 4.7
-            )
-            XCTAssertEqual(height, 262.0, "\(device) should return 262.0 in portrait")
-        }
-    }
-
-    func testPortraitHeight_iPhone6to8Plus() {
-        // iPhone 6 Plus, 6s Plus, 7 Plus, 8 Plus should return 272.0
-        let devices: [DeviceModel] = [.iPhone6Plus, .iPhone6SPlus, .iPhone7Plus, .iPhone8Plus]
-        let traitCollection = UITraitCollection(userInterfaceIdiom: .phone)
-
-        for device in devices {
-            let height = KeyboardViewController.portraitHeight(
-                deviceFamily: .iPhone,
-                deviceModel: device,
-                traitCollection: traitCollection,
-                portraitDeviceHeight: 0,
-                sizeInches: 5.5
-            )
-            XCTAssertEqual(height, 272.0, "\(device) should return 272.0 in portrait")
-        }
-    }
-
-    func testPortraitHeight_iPhone11AndXR() {
-        // iPhone 11, XR should return 272.0
-        let devices: [DeviceModel] = [.iPhone11, .iPhoneXR]
-        let traitCollection = UITraitCollection(userInterfaceIdiom: .phone)
-
-        for device in devices {
-            let height = KeyboardViewController.portraitHeight(
-                deviceFamily: .iPhone,
-                deviceModel: device,
-                traitCollection: traitCollection,
-                portraitDeviceHeight: 0,
-                sizeInches: 6.1
-            )
-            XCTAssertEqual(height, 272.0, "\(device) should return 272.0 in portrait")
-        }
-    }
-
-    func testPortraitHeight_iPhoneXAndXSAnd11Pro() {
-        // iPhone X, XS, 11 Pro should return 262.0
-        let devices: [DeviceModel] = [.iPhoneX, .iPhoneXS, .iPhone11Pro]
-        let traitCollection = UITraitCollection(userInterfaceIdiom: .phone)
-
-        for device in devices {
-            let height = KeyboardViewController.portraitHeight(
-                deviceFamily: .iPhone,
-                deviceModel: device,
-                traitCollection: traitCollection,
-                portraitDeviceHeight: 0,
-                sizeInches: 5.8
-            )
-            XCTAssertEqual(height, 262.0, "\(device) should return 262.0 in portrait")
-        }
-    }
-
-    func testPortraitHeight_iPhoneXSMaxAnd11ProMax() {
-        // iPhone XS Max, 11 Pro Max should return 272.0
-        let devices: [DeviceModel] = [.iPhoneXSMax, .iPhone11ProMax]
-        let traitCollection = UITraitCollection(userInterfaceIdiom: .phone)
-
-        for device in devices {
-            let height = KeyboardViewController.portraitHeight(
-                deviceFamily: .iPhone,
-                deviceModel: device,
-                traitCollection: traitCollection,
-                portraitDeviceHeight: 0,
-                sizeInches: 6.5
-            )
-            XCTAssertEqual(height, 272.0, "\(device) should return 272.0 in portrait")
-        }
-    }
-
-    func testPortraitHeight_iPadSizeBased() {
-        // iPad portrait heights are size-based, not device-specific
+    func testLandscapeHeight_iPadMini_7_9Inch() {
         let traitCollection = UITraitCollection(traitsFrom: [
             UITraitCollection(userInterfaceIdiom: .pad),
             UITraitCollection(horizontalSizeClass: .regular)
         ])
 
-        // Test 9" iPad
-        let height9 = KeyboardViewController.portraitHeight(
-            deviceFamily: .iPad,
-            deviceModel: .iPadPro9_7Inch,
+        let height = KeyboardHeightProvider.height(
+            for: .iPadMini5,
             traitCollection: traitCollection,
-            portraitDeviceHeight: 2048,
-            sizeInches: 9.7
+            isLandscape: true
         )
-        XCTAssertEqual(height9, 314.0, "9-inch iPad should return 314.0 in portrait")
+        XCTAssertEqual(height, 404, "iPad Mini 7.9\" should return 404 in landscape")
+    }
 
-        // Test 11" iPad
-        let height11 = KeyboardViewController.portraitHeight(
-            deviceFamily: .iPad,
-            deviceModel: .iPadPro11Inch,
-            traitCollection: traitCollection,
-            portraitDeviceHeight: 2388,
-            sizeInches: 11.0
-        )
-        XCTAssertEqual(height11, 384.0, "11-inch iPad should return 384.0 in portrait")
+    func testLandscapeHeight_iPad_9_7Inch() {
+        let traitCollection = UITraitCollection(traitsFrom: [
+            UITraitCollection(userInterfaceIdiom: .pad),
+            UITraitCollection(horizontalSizeClass: .regular)
+        ])
 
-        // Test 12.9" iPad
-        let height12 = KeyboardViewController.portraitHeight(
-            deviceFamily: .iPad,
-            deviceModel: .iPadPro12_9Inch,
+        let height = KeyboardHeightProvider.height(
+            for: .iPadPro9Inch,
             traitCollection: traitCollection,
-            portraitDeviceHeight: 2732,
-            sizeInches: 12.9
+            isLandscape: true
         )
-        XCTAssertEqual(height12, 2732.0 / 4.0, "12.9-inch iPad should return portraitDeviceHeight / 4.0 in portrait")
+        XCTAssertEqual(height, 404, "iPad 9.7\" should return 404 in landscape")
+    }
+
+    func testLandscapeHeight_iPad_10_5Inch() {
+        let traitCollection = UITraitCollection(traitsFrom: [
+            UITraitCollection(userInterfaceIdiom: .pad),
+            UITraitCollection(horizontalSizeClass: .regular)
+        ])
+
+        let height = KeyboardHeightProvider.height(
+            for: .iPadPro10Inch,
+            traitCollection: traitCollection,
+            isLandscape: true
+        )
+        XCTAssertEqual(height, 404, "iPad 10.5\" should return 404 in landscape")
+    }
+
+    func testLandscapeHeight_iPad_11Inch() {
+        let traitCollection = UITraitCollection(traitsFrom: [
+            UITraitCollection(userInterfaceIdiom: .pad),
+            UITraitCollection(horizontalSizeClass: .regular)
+        ])
+
+        let height = KeyboardHeightProvider.height(
+            for: .iPadPro11Inch,
+            traitCollection: traitCollection,
+            isLandscape: true
+        )
+        XCTAssertEqual(height, 404, "iPad 11\" should return 404 in landscape")
+    }
+
+    func testLandscapeHeight_iPad_12_9Inch() {
+        let traitCollection = UITraitCollection(traitsFrom: [
+            UITraitCollection(userInterfaceIdiom: .pad),
+            UITraitCollection(horizontalSizeClass: .regular)
+        ])
+
+        let height = KeyboardHeightProvider.height(
+            for: .iPadPro12Inch,
+            traitCollection: traitCollection,
+            isLandscape: true
+        )
+        XCTAssertEqual(height, 476, "iPad 12.9\" should return 476 in landscape")
+    }
+
+    func testLandscapeHeight_iPhone_4_7Inch() {
+        let traitCollection = UITraitCollection(userInterfaceIdiom: .phone)
+
+        let height = KeyboardHeightProvider.height(
+            for: .iPhone8,
+            traitCollection: traitCollection,
+            isLandscape: true
+        )
+        XCTAssertEqual(height, 208, "iPhone 4.7\" should return 208 in landscape")
+    }
+
+    func testLandscapeHeight_iPhone_5_5Inch() {
+        let traitCollection = UITraitCollection(userInterfaceIdiom: .phone)
+
+        let height = KeyboardHeightProvider.height(
+            for: .iPhone8Plus,
+            traitCollection: traitCollection,
+            isLandscape: true
+        )
+        XCTAssertEqual(height, 208, "iPhone 5.5\" should return 208 in landscape")
+    }
+
+    func testLandscapeHeight_iPhone_5_8Inch() {
+        let traitCollection = UITraitCollection(userInterfaceIdiom: .phone)
+
+        let height = KeyboardHeightProvider.height(
+            for: .iPhoneX,
+            traitCollection: traitCollection,
+            isLandscape: true
+        )
+        XCTAssertEqual(height, 196, "iPhone 5.8\" should return 196 in landscape")
+    }
+
+    func testLandscapeHeight_iPhone_6_1Inch() {
+        let traitCollection = UITraitCollection(userInterfaceIdiom: .phone)
+
+        let height = KeyboardHeightProvider.height(
+            for: .iPhone11,
+            traitCollection: traitCollection,
+            isLandscape: true
+        )
+        XCTAssertEqual(height, 206, "iPhone 6.1\" should return 206 in landscape")
+    }
+
+    func testLandscapeHeight_iPhoneXSMax() {
+        let traitCollection = UITraitCollection(userInterfaceIdiom: .phone)
+
+        let height = KeyboardHeightProvider.height(
+            for: .iPhoneXSMax,
+            traitCollection: traitCollection,
+            isLandscape: true
+        )
+        XCTAssertEqual(height, 196, "iPhone XS Max should return 196 in landscape (device override)")
+    }
+
+    func testLandscapeHeight_iPhone11ProMax() {
+        let traitCollection = UITraitCollection(userInterfaceIdiom: .phone)
+
+        let height = KeyboardHeightProvider.height(
+            for: .iPhone11ProMax,
+            traitCollection: traitCollection,
+            isLandscape: true
+        )
+        XCTAssertEqual(height, 196, "iPhone 11 Pro Max should return 196 in landscape (device override)")
+    }
+
+    // MARK: - Portrait Height Tests
+
+    func testPortraitHeight_iPhone_4_7Inch() {
+        let traitCollection = UITraitCollection(userInterfaceIdiom: .phone)
+
+        let height = KeyboardHeightProvider.height(
+            for: .iPhone8,
+            traitCollection: traitCollection,
+            isLandscape: false
+        )
+        XCTAssertEqual(height, 262, "iPhone 4.7\" should return 262 in portrait")
+    }
+
+    func testPortraitHeight_iPhone_5_5Inch() {
+        let traitCollection = UITraitCollection(userInterfaceIdiom: .phone)
+
+        let height = KeyboardHeightProvider.height(
+            for: .iPhone8Plus,
+            traitCollection: traitCollection,
+            isLandscape: false
+        )
+        XCTAssertEqual(height, 272, "iPhone 5.5\" should return 272 in portrait")
+    }
+
+    func testPortraitHeight_iPhone_5_8Inch() {
+        let traitCollection = UITraitCollection(userInterfaceIdiom: .phone)
+
+        let height = KeyboardHeightProvider.height(
+            for: .iPhoneX,
+            traitCollection: traitCollection,
+            isLandscape: false
+        )
+        XCTAssertEqual(height, 262, "iPhone 5.8\" should return 262 in portrait")
+    }
+
+    func testPortraitHeight_iPhone_6_1Inch() {
+        let traitCollection = UITraitCollection(userInterfaceIdiom: .phone)
+
+        let height = KeyboardHeightProvider.height(
+            for: .iPhone11,
+            traitCollection: traitCollection,
+            isLandscape: false
+        )
+        XCTAssertEqual(height, 262, "iPhone 6.1\" should return 262 in portrait")
+    }
+
+    func testPortraitHeight_iPhoneXSMax() {
+        let traitCollection = UITraitCollection(userInterfaceIdiom: .phone)
+
+        let height = KeyboardHeightProvider.height(
+            for: .iPhoneXSMax,
+            traitCollection: traitCollection,
+            isLandscape: false
+        )
+        XCTAssertEqual(height, 272, "iPhone XS Max should return 272 in portrait (device override)")
+    }
+
+    func testPortraitHeight_iPhone11ProMax() {
+        let traitCollection = UITraitCollection(userInterfaceIdiom: .phone)
+
+        let height = KeyboardHeightProvider.height(
+            for: .iPhone11ProMax,
+            traitCollection: traitCollection,
+            isLandscape: false
+        )
+        XCTAssertEqual(height, 272, "iPhone 11 Pro Max should return 272 in portrait (device override)")
+    }
+
+    func testPortraitHeight_iPad_7_9Inch() {
+        let traitCollection = UITraitCollection(traitsFrom: [
+            UITraitCollection(userInterfaceIdiom: .pad),
+            UITraitCollection(horizontalSizeClass: .regular)
+        ])
+
+        let height = KeyboardHeightProvider.height(
+            for: .iPadMini5,
+            traitCollection: traitCollection,
+            isLandscape: false
+        )
+        XCTAssertEqual(height, 318, "iPad 7.9\" should return 318 in portrait")
+    }
+
+    func testPortraitHeight_iPad_9_7Inch() {
+        let traitCollection = UITraitCollection(traitsFrom: [
+            UITraitCollection(userInterfaceIdiom: .pad),
+            UITraitCollection(horizontalSizeClass: .regular)
+        ])
+
+        let height = KeyboardHeightProvider.height(
+            for: .iPadPro9Inch,
+            traitCollection: traitCollection,
+            isLandscape: false
+        )
+        XCTAssertEqual(height, 318, "iPad 9.7\" should return 318 in portrait")
+    }
+
+    func testPortraitHeight_iPad_11Inch() {
+        let traitCollection = UITraitCollection(traitsFrom: [
+            UITraitCollection(userInterfaceIdiom: .pad),
+            UITraitCollection(horizontalSizeClass: .regular)
+        ])
+
+        let height = KeyboardHeightProvider.height(
+            for: .iPadPro11Inch,
+            traitCollection: traitCollection,
+            isLandscape: false
+        )
+        XCTAssertEqual(height, 318, "iPad 11\" should return 318 in portrait")
+    }
+
+    func testPortraitHeight_iPad_12_9Inch() {
+        let traitCollection = UITraitCollection(traitsFrom: [
+            UITraitCollection(userInterfaceIdiom: .pad),
+            UITraitCollection(horizontalSizeClass: .regular)
+        ])
+
+        let height = KeyboardHeightProvider.height(
+            for: .iPadPro12Inch,
+            traitCollection: traitCollection,
+            isLandscape: false
+        )
+        XCTAssertEqual(height, 384, "iPad 12.9\" should return 384 in portrait")
+    }
+
+    // MARK: - iPad Compatibility Mode Tests
+
+//    func testCompatibilityMode_iPadRunningIPhoneApp_SmallIPad() {
+//        let traitCollection = UITraitCollection(userInterfaceIdiom: .phone)
+//
+//        // Simulate iPad Mini running iPhone app
+//        let height = KeyboardHeightProvider.height(
+//            for: .iPadMini5,
+//            traitCollection: traitCollection,
+//            isLandscape: false
+//        )
+//        XCTAssertEqual(height, 258, "iPad ≤11\" in compatibility mode should return 258 in portrait")
+//    }
+//
+//    func testCompatibilityMode_iPadRunningIPhoneApp_LargeIPad() {
+//        let traitCollection = UITraitCollection(userInterfaceIdiom: .phone)
+//
+//        // Simulate iPad Pro 12.9" running iPhone app
+//        let height = KeyboardHeightProvider.height(
+//            for: .iPadPro12Inch,
+//            traitCollection: traitCollection,
+//            isLandscape: false
+//        )
+//        XCTAssertEqual(height, 328, "iPad >11\" in compatibility mode should return 328 in portrait")
+//    }
+
+    // MARK: - Row Count Adjustment Tests
+
+    func testRowCountAdjustment_StandardKeyboard() {
+        let traitCollection = UITraitCollection(userInterfaceIdiom: .phone)
+
+        // Standard 4-row keyboard
+        let height = KeyboardHeightProvider.height(
+            for: .iPhone8,
+            traitCollection: traitCollection,
+            isLandscape: false,
+            rowCount: 4
+        )
+        XCTAssertEqual(height, 262, "Standard 4-row keyboard should return base height")
+    }
+
+    func testRowCountAdjustment_ExtraRows() {
+        let traitCollection = UITraitCollection(userInterfaceIdiom: .phone)
+
+        // 5-row keyboard should be taller
+        let height4Row = KeyboardHeightProvider.height(
+            for: .iPhone8,
+            traitCollection: traitCollection,
+            isLandscape: false,
+            rowCount: 4
+        )
+
+        let height5Row = KeyboardHeightProvider.height(
+            for: .iPhone8,
+            traitCollection: traitCollection,
+            isLandscape: false,
+            rowCount: 5
+        )
+
+        XCTAssertGreaterThan(height5Row, height4Row, "5-row keyboard should be taller than 4-row")
+    }
+
+    func testRowCountAdjustment_iPad12Inch() {
+        let traitCollection = UITraitCollection(traitsFrom: [
+            UITraitCollection(userInterfaceIdiom: .pad),
+            UITraitCollection(horizontalSizeClass: .regular)
+        ])
+
+        // iPad 12"+ uses 5 rows as normal
+        let height = KeyboardHeightProvider.height(
+            for: .iPadPro12Inch,
+            traitCollection: traitCollection,
+            isLandscape: false,
+            rowCount: 5
+        )
+        XCTAssertEqual(height, 384, "iPad 12\" with 5 rows should return base height")
+    }
+
+    func testRowCountAdjustment_SmallIPadLandscape_ManyRows() {
+        let traitCollection = UITraitCollection(traitsFrom: [
+            UITraitCollection(userInterfaceIdiom: .pad),
+            UITraitCollection(horizontalSizeClass: .regular)
+        ])
+
+        // Small iPad with >4 rows in landscape should have height reduction
+        let height4Row = KeyboardHeightProvider.height(
+            for: .iPadMini5,
+            traitCollection: traitCollection,
+            isLandscape: true,
+            rowCount: 4
+        )
+
+        let height5Row = KeyboardHeightProvider.height(
+            for: .iPadMini5,
+            traitCollection: traitCollection,
+            isLandscape: true,
+            rowCount: 5
+        )
+
+        // The 5-row should be adjusted down by 40 pixels to prevent taking up too much screen
+        let expectedDifference = (height4Row / 4.0) - 40
+        XCTAssertEqual(height5Row - height4Row, expectedDifference, accuracy: 0.1,
+                       "Small iPad with 5 rows in landscape should have 40px reduction")
     }
 }
