@@ -4,7 +4,8 @@ An open source reimplementation of Apple's native iOS keyboard with a specific f
 
 ## Building & Running
 
-##### Note: the first build will take a while
+> [!NOTE]
+> The first build will take a while
 
 1. [Install Cocoapods](https://cocoapods.org/)
 2. `pod install`. This may fail. If it does - see rexml solution below
