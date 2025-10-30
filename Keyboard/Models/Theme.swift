@@ -260,13 +260,13 @@ private struct ThemeFactory {
         }()
 
         let altLabelTop: CGFloat = {
-            if device.isLargeiPad { return 0.0 }
+            if device.isLargeiPad { return 3.0 } // More spacing from top edge
             else if device.isSmallOrMediumLandscape { return 4.0 }
             else { return 5.0 }
         }()
 
         let altLabelBottom: CGFloat = {
-            if device.isLargeiPad { return -3.0 }
+            if device.isLargeiPad { return -3.0 } // More spacing from bottom
             else if device.isSmallOrMediumLandscape { return -5.0 }
             else { return -4.0 }
         }()
