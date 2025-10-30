@@ -400,7 +400,7 @@ private struct ThemeFactory {
                 active: activeKeyColor,
                 activeText: .white,
                 longPressActive: longPressActive,
-                altKeyText: device.screenInches > 10 ? UIColor.white : UIColor.lightGray,
+                altKeyText: device.screenInches > 11 ? UIColor.white : UIColor.lightGray,
                 bannerSeparator: UIColor(r: 56, g: 56, b: 57),
                 bannerText: UIColor(r: 233, g: 233, b: 233)
             )
@@ -442,7 +442,7 @@ private struct ThemeFactory {
                 active: activeKeyColor,
                 activeText: .white,
                 longPressActive: longPressActive,
-                altKeyText: device.screenInches >= 11 ? UIColor.black : UIColor(white: 0.0, alpha: 0.3),
+                altKeyText: device.screenInches > 11 ? UIColor.black : UIColor(white: 0.0, alpha: 0.3),
                 bannerSeparator: UIColor(r: 188, g: 191, b: 195),
                 bannerText: UIColor(r: 21, g: 21, b: 21)
             )
