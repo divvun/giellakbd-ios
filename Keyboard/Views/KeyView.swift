@@ -251,16 +251,8 @@ final class KeyView: UIView {
             }
         }
 
-        // Fallback to asset catalog
-        guard let image = UIImage(named: name, in: Bundle.top, compatibleWith: traits) else {
-            print("No matching image found for \(name). Falling back.")
-            // If we get here, we're probably being run as an iPhone app on the iPad.
-            // In this scenario for whatever reason we must use an image asset file that contains only one universal image
-            return UIImage(named: name + "-fallback", in: Bundle.top, compatibleWith: traits)
-        }
-
         print("Using asset image for \(name)")
-        return image
+        return UIImage(named: name, in: Bundle.top, compatibleWith: traits)
     }
 
     private func image(named name: String, traits: UITraitCollection, tintColor: UIColor) {
