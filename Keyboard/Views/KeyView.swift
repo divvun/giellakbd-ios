@@ -215,48 +215,11 @@ final class KeyView: UIView {
         contentView = labelContainer
     }
 
-    // Load image as SF Symbol and fallback to assets
-    private func loadImage(named name: String, traits: UITraitCollection) -> UIImage? {
-        // Determine appropriate point size based on device
-        let basePointSize: CGFloat = {
-            if isLogicallyIPad {
-                return 24.0 // Larger for iPad
-            } else {
-                return 20.0 // Standard for iPhone
-            }
-        }()
-
-        // Map asset names to SF Symbol names with appropriate sizing
-        let sfSymbolInfo: (name: String, pointSize: CGFloat)? = {
-            switch name {
-            case "backspace": return ("delete.backward", basePointSize)
-            case "globe": return ("globe", basePointSize)
-            case "return": return ("return", basePointSize)
-            case "shift": return ("shift", basePointSize)
-            case "shift-filled": return ("shift.fill", basePointSize)
-            case "tab": return ("arrow.right.to.line", basePointSize)
-            case "caps": return ("capslock", basePointSize)
-            case "close-keyboard-ipad":
-                let chevronSize: CGFloat = isLogicallyIPad ? 20.0 : 17.0
-                return ("keyboard.chevron.compact.down", chevronSize)
-            default: return nil
-            }
-        }()
-
-        if let symbolInfo = sfSymbolInfo {
-            let config = UIImage.SymbolConfiguration(pointSize: symbolInfo.pointSize, weight: .regular, scale: .medium)
-            if let symbolImage = UIImage(systemName: symbolInfo.name, withConfiguration: config) {
-                print("Using system image for \(name)")
-                return symbolImage
-            }
-        }
-
-        print("Using asset image for \(name)")
-        return UIImage(named: name, in: Bundle.top, compatibleWith: traits)
-    }
-
-    private func image(named name: String, traits: UITraitCollection, tintColor: UIColor) {
-        let image = loadImage(named: name, traits: traits)
+    private func sfSymbol(named symbolName: String, traits: UITraitCollection, tintColor: UIColor) {
+        let isIPad = traitsAreLogicallyIPad(traitCollection: traits)
+        let pointSize: CGFloat = isIPad ? 21.0 : 17.0
+        let config = UIImage.SymbolConfiguration(pointSize: pointSize, weight: .regular, scale: .medium)
+        let image = UIImage(systemName: symbolName, withConfiguration: config)
 
         // Create a container view to control sizing
         let container = UIView()
@@ -287,8 +250,8 @@ final class KeyView: UIView {
         }
     }
 
-    private func image(named name: String, traits: UITraitCollection) {
-        image(named: name, traits: traits, tintColor: theme.textColor)
+    private func sfSymbol(named symbolName: String, traits: UITraitCollection, useChevronSize: Bool = false) {
+        sfSymbol(named: symbolName, traits: traits, tintColor: theme.textColor)
     }
 
     init(page: KeyboardPage, key: KeyDefinition, theme: Theme, traits: UITraitCollection) {
@@ -328,11 +291,11 @@ final class KeyView: UIView {
         case .symbols:
             setupSymbols(page, traits)
         case .keyboardMode:
-            image(named: "close-keyboard-ipad", traits: traits)
+            sfSymbol(named: "keyboard.chevron.compact.down", traits: traits, useChevronSize: true)
         case .backspace:
-            image(named: "backspace", traits: traits)
+            sfSymbol(named: "delete.backward", traits: traits)
         case .keyboard:
-            image(named: "globe", traits: traits)
+            sfSymbol(named: "globe", traits: traits)
         case .shift:
             setupShift(page, traits, theme)
         case .shiftSymbols:
@@ -352,23 +315,23 @@ final class KeyView: UIView {
         case .fullStop:
             setupFullStop(traits, page)
         case .caps:
-            image(named: "caps", traits: traits)
+            sfSymbol(named: "capslock", traits: traits)
         case .tab:
-            image(named: "tab", traits: traits)
+            sfSymbol(named: "arrow.right.to.line", traits: traits)
         }
     }
 
     private func setupReturnKey(_ page: KeyboardPage, _ traits: UITraitCollection, _ string: String) {
         if iOSVersion.isIOS26OrNewer {
-            image(named: "return", traits: traits)
+            sfSymbol(named: "return", traits: traits)
         } else {
             if traits.userInterfaceIdiom == .pad, screenInches >= 11 {
                 text(string, page: page)
             } else {
-                image(named: "return", traits: traits)
+                sfSymbol(named: "return", traits: traits)
             }
         }
-            
+
     }
     private func setupSymbols(_ page: KeyboardPage, _ traits: UITraitCollection) {
         if case .symbols1 = page {
@@ -390,16 +353,16 @@ final class KeyView: UIView {
         } else if case .symbols2 = page {
             text("123", page: page)
         } else {
-            image(named: "shift", traits: traits)
+            sfSymbol(named: "shift", traits: traits)
         }
     }
 
     private func setupShift(_ page: KeyboardPage, _ traits: UITraitCollection, _ theme: Theme) {
         switch page {
         case .shifted, .capslock:
-            image(named: "shift-filled", traits: traits, tintColor: theme.shiftTintColor)
+            sfSymbol(named: "shift.fill", traits: traits, tintColor: theme.shiftTintColor)
         default:
-            image(named: "shift", traits: traits)
+            sfSymbol(named: "shift", traits: traits)
         }
     }
 

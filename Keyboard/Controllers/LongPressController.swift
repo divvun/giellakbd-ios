@@ -250,6 +250,7 @@ class LongPressOverlayController: NSObject,
             cell.imageView.image = UIImage(named: imageName, in: Bundle.top, compatibleWith: collectionView.traitCollection)
         }
 
+        // SF Symbols doesn't provide a split keyboard icon. Use our own images.
         if case let .input(string, _) = key.type {
             cell.label.text = string
             cell.imageView.image = nil
