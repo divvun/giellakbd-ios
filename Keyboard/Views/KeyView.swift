@@ -216,10 +216,7 @@ final class KeyView: UIView {
     }
 
     private func sfSymbol(named symbolName: String, traits: UITraitCollection, tintColor: UIColor) {
-        let isIPad = traitsAreLogicallyIPad(traitCollection: traits)
-        let pointSize: CGFloat = isIPad ? 21.0 : 17.0
-        let config = UIImage.SymbolConfiguration(pointSize: pointSize, weight: .regular, scale: .medium)
-        let image = UIImage(systemName: symbolName, withConfiguration: config)
+        let image = UIImage(systemName: symbolName, withConfiguration: theme.sfSymbolConfiguration)
 
         // Create a container view to control sizing
         let container = UIView()
@@ -250,7 +247,7 @@ final class KeyView: UIView {
         }
     }
 
-    private func sfSymbol(named symbolName: String, traits: UITraitCollection, useChevronSize: Bool = false) {
+    private func sfSymbol(named symbolName: String, traits: UITraitCollection) {
         sfSymbol(named: symbolName, traits: traits, tintColor: theme.textColor)
     }
 
@@ -291,7 +288,7 @@ final class KeyView: UIView {
         case .symbols:
             setupSymbols(page, traits)
         case .keyboardMode:
-            sfSymbol(named: "keyboard.chevron.compact.down", traits: traits, useChevronSize: true)
+            sfSymbol(named: "keyboard.chevron.compact.down", traits: traits)
         case .backspace:
             sfSymbol(named: "delete.backward", traits: traits)
         case .keyboard:

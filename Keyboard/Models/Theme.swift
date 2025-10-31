@@ -42,6 +42,9 @@ struct Theme {
     let popupLongpressCapitalKeyFont: UIFont
     let bannerFont: UIFont
 
+    // SF Symbols
+    let sfSymbolConfiguration: UIImage.SymbolConfiguration
+
     // Banner
     let bannerBackgroundColor: UIColor
     let bannerSeparatorColor: UIColor
@@ -169,6 +172,9 @@ private struct ThemeFactory {
             popupLongpressCapitalKeyFont: fonts.capitalKey,
             bannerFont: fonts.banner,
 
+            // SF Symbols
+            sfSymbolConfiguration: metrics.sfSymbolConfiguration,
+
             // Banner
             bannerBackgroundColor: colors.background,
             bannerSeparatorColor: colors.bannerSeparator,
@@ -194,6 +200,7 @@ private struct ThemeFactory {
         let altLabelTop: CGFloat
         let altLabelBottom: CGFloat
         let popupLongpressKeysPerRow: Int
+        let sfSymbolConfiguration: UIImage.SymbolConfiguration
     }
 
     private static func makeMetrics(for device: DeviceContext, legacy: Bool) -> Metrics {
@@ -220,6 +227,11 @@ private struct ThemeFactory {
 
         let bannerHeight: CGFloat = 48.0 // Simplified - could check for smaller devices
 
+        let sfSymbolConfiguration = UIImage.SymbolConfiguration(
+            pointSize: device.isLandscape ? 19 : 20,
+            weight: .regular
+        )
+
         return Metrics(
             keyCornerRadius: keyCornerRadius,
             keyHorizontalMargin: 3.0,
@@ -227,7 +239,8 @@ private struct ThemeFactory {
             bannerHeight: bannerHeight,
             altLabelTop: 0.0,
             altLabelBottom: 0.0,
-            popupLongpressKeysPerRow: 10
+            popupLongpressKeysPerRow: 10,
+            sfSymbolConfiguration: sfSymbolConfiguration
         )
     }
 
@@ -271,6 +284,11 @@ private struct ThemeFactory {
             else { return -4.0 }
         }()
 
+        let sfSymbolConfiguration = UIImage.SymbolConfiguration(
+            pointSize: device.isLandscape ? 24 : 21,
+            weight: .light
+        )
+
         return Metrics(
             keyCornerRadius: keyCornerRadius,
             keyHorizontalMargin: keyHorizontalMargin,
@@ -278,7 +296,8 @@ private struct ThemeFactory {
             bannerHeight: 55.0,
             altLabelTop: altLabelTop,
             altLabelBottom: altLabelBottom,
-            popupLongpressKeysPerRow: 4
+            popupLongpressKeysPerRow: 4,
+            sfSymbolConfiguration: sfSymbolConfiguration
         )
     }
 
