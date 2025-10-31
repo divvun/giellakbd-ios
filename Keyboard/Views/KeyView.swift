@@ -217,37 +217,49 @@ final class KeyView: UIView {
 
     // Load image as SF Symbol and fallback to assets
     private func loadImage(named name: String, traits: UITraitCollection) -> UIImage? {
+        // Determine appropriate point size based on device
+        let basePointSize: CGFloat = {
+            if isLogicallyIPad {
+                return 24.0 // Larger for iPad
+            } else {
+                return 20.0 // Standard for iPhone
+            }
+        }()
+
         // Map asset names to SF Symbol names with appropriate sizing
         let sfSymbolInfo: (name: String, pointSize: CGFloat)? = {
             switch name {
-            case "backspace": return ("delete.backward", 20.0)
-            case "globe": return ("globe", 20.0)
-            case "return": return ("return", 20.0)
-            case "shift": return ("shift", 20.0)
-            case "shift-filled": return ("shift.fill", 20.0)
-            case "close-keyboard-ipad": return ("keyboard.chevron.compact.down", 17.0)
+            case "backspace": return ("delete.backward", basePointSize)
+            case "globe": return ("globe", basePointSize)
+            case "return": return ("return", basePointSize)
+            case "shift": return ("shift", basePointSize)
+            case "shift-filled": return ("shift.fill", basePointSize)
+            case "tab": return ("arrow.right.to.line", basePointSize)
+            case "caps": return ("capslock", basePointSize)
+            case "close-keyboard-ipad":
+                let chevronSize: CGFloat = isLogicallyIPad ? 20.0 : 17.0
+                return ("keyboard.chevron.compact.down", chevronSize)
             default: return nil
             }
         }()
 
-        // Try SF Symbols first (iOS 13+)
-        if #available(iOS 13.0, *),
-           let symbolInfo = sfSymbolInfo,
-           traits.userInterfaceIdiom == .phone { // TODO: remove this when supporting iPad
+        if let symbolInfo = sfSymbolInfo {
             let config = UIImage.SymbolConfiguration(pointSize: symbolInfo.pointSize, weight: .regular, scale: .medium)
             if let symbolImage = UIImage(systemName: symbolInfo.name, withConfiguration: config) {
+                print("Using system image for \(name)")
                 return symbolImage
             }
         }
 
         // Fallback to asset catalog
-        var image = UIImage(named: name, in: Bundle.top, compatibleWith: traits)
-        if image == nil {
+        guard let image = UIImage(named: name, in: Bundle.top, compatibleWith: traits) else {
+            print("No matching image found for \(name). Falling back.")
             // If we get here, we're probably being run as an iPhone app on the iPad.
             // In this scenario for whatever reason we must use an image asset file that contains only one universal image
-            image = UIImage(named: name + "-fallback", in: Bundle.top, compatibleWith: traits)
+            return UIImage(named: name + "-fallback", in: Bundle.top, compatibleWith: traits)
         }
 
+        print("Using asset image for \(name)")
         return image
     }
 
