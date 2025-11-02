@@ -60,6 +60,8 @@
 		99DD30F623E307430065E8D8 /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DD30F423E3059C0065E8D8 /* Audio.swift */; };
 		B25493F72EAF79E400F7FB64 /* KeyboardHeightProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25493F62EAF79DA00F7FB64 /* KeyboardHeightProvider.swift */; };
 		B2993E132EABC4FA00CA493D /* dicts.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B2993E122EABC4FA00CA493D /* dicts.bundle */; };
+		B2D88A8A2EB75A16002B04A2 /* DeviceContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D88A892EB75A16002B04A2 /* DeviceContext.swift */; };
+		B2D88A8B2EB75A5A002B04A2 /* DeviceContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D88A892EB75A16002B04A2 /* DeviceContext.swift */; };
 		C61829B8254225B100620D6F /* KeyboardLocale+AllLocales.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997021042416DF8C00A81A27 /* KeyboardLocale+AllLocales.swift */; };
 		C63EE0FF2361D86800A1E15A /* MenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63EE0FE2361D86800A1E15A /* MenuButton.swift */; };
 		C63EE1012362F7E500A1E15A /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C63EE1002362F7E500A1E15A /* Settings.bundle */; };
@@ -228,6 +230,7 @@
 		9C51EB456E98876CB8BCC6AE /* Pods-HostingAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HostingAppTests.release.xcconfig"; path = "Target Support Files/Pods-HostingAppTests/Pods-HostingAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		B25493F62EAF79DA00F7FB64 /* KeyboardHeightProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHeightProvider.swift; sourceTree = "<group>"; };
 		B2993E122EABC4FA00CA493D /* dicts.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = dicts.bundle; sourceTree = "<group>"; };
+		B2D88A892EB75A16002B04A2 /* DeviceContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceContext.swift; sourceTree = "<group>"; };
 		BE1EF09E62E0EF6B44F243E2 /* Pods-BaseKeyboard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BaseKeyboard.debug.xcconfig"; path = "Target Support Files/Pods-BaseKeyboard/Pods-BaseKeyboard.debug.xcconfig"; sourceTree = "<group>"; };
 		C2E22B38A38E2FF1A8DD92DD /* Pods-HostingApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HostingApp.release.xcconfig"; path = "Target Support Files/Pods-HostingApp/Pods-HostingApp.release.xcconfig"; sourceTree = "<group>"; };
 		C610DA4720D3E40E00C84945 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = HostingApp/fi.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -343,6 +346,7 @@
 		4E6AEE5019D2486900931E8F /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				B2D88A892EB75A16002B04A2 /* DeviceContext.swift */,
 				B25493F62EAF79DA00F7FB64 /* KeyboardHeightProvider.swift */,
 				C6EA31C021AF17CE0014F3B6 /* KeyboardDefinitions.json */,
 				C6DCFDD51EB0787A00FABC11 /* KeyboardDefinition.swift */,
@@ -1004,6 +1008,7 @@
 				9930BD8F243CD2BF00C0EF7F /* FolderWatcher.swift in Sources */,
 				997550B623EAC631004ED6A5 /* UserDictionary.swift in Sources */,
 				999790B223F2F484003F7885 /* WordContextViewController.swift in Sources */,
+				B2D88A8B2EB75A5A002B04A2 /* DeviceContext.swift in Sources */,
 				99C4E5642431E89A005F8C8A /* PahkatWrapper.swift in Sources */,
 				C6629244254B302000620D6F /* FeatureFlag.swift in Sources */,
 				C655E8541EC5551100B12BE4 /* Extensions.swift in Sources */,
@@ -1077,6 +1082,7 @@
 				FDAF59A722F9CCE100F7C9FC /* KeyDefinition.swift in Sources */,
 				999C3019242A3FCF00E127A6 /* DownloadSimulator.swift in Sources */,
 				FDAF59A522F9CCE100F7C9FC /* Theme.swift in Sources */,
+				B2D88A8A2EB75A16002B04A2 /* DeviceContext.swift in Sources */,
 				999C30132428E6C000E127A6 /* UpdateBanner.swift in Sources */,
 				99094698243674F20070AEB6 /* SpellerAvailableBanner.swift in Sources */,
 				99074EEB2422387A00075480 /* SpellBannerSeparatorView.swift in Sources */,

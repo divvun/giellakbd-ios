@@ -9,10 +9,11 @@ final class SystemKeys {
         var keys = [KeyDefinition]()
 
         let isIPad = traitsAreLogicallyIPad(traitCollection: traits)
+        let device = DeviceContext.current()
 
         // Left side of space bar
         if !Device.current.hasSensorHousing {
-            if isIPad && UIScreen.sizeInches >= 11.0 {
+            if isIPad && device.isLargeIPad {
                 keys.append(KeyDefinition(type: .keyboard, size: CGSize(width: 1.25, height: 1.0)))
                 keys.append(KeyDefinition(type: .symbols, size: CGSize(width: 1.25, height: 1.0)))
             } else {

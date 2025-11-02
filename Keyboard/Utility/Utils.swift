@@ -321,18 +321,6 @@ func isBeingRunFromTests() -> Bool {
     return ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
 }
 
-func traitsAreLogicallyIPad(traitCollection: UITraitCollection) -> Bool {
-    return Device.current.isPad
-        && traitCollection.userInterfaceIdiom == .pad
-        && traitCollection.horizontalSizeClass == .regular
-}
-
-func isIPhoneAppRunningOnIPad(traitCollection: UITraitCollection) -> Bool {
-    Device.current.isPad &&
-    (traitCollection.userInterfaceIdiom == .phone
-     || !traitsAreLogicallyIPad(traitCollection: traitCollection))
-}
-
 class URLOpener {
     // App extensions don't have access to UIApplication.shared. Do an ugly song and dance to work around this.
     @objc func aggressivelyOpenURL(_ url: URL, responder: UIResponder?) {

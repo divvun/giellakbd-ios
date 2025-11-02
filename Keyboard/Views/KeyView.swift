@@ -24,7 +24,7 @@ final class KeyView: UIView {
 
     private var fontSize: CGFloat = 0.0
     private var altFontSize: CGFloat = 0.0
-    private let screenInches = UIScreen.sizeInches
+    private let device = DeviceContext.current()
 
     var swipeLayoutConstraint: NSLayoutConstraint?
 
@@ -127,7 +127,7 @@ final class KeyView: UIView {
         alternateLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         alternateLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
 
-        if self.isLogicallyIPad && Device.current.diagonal > 12 {
+        if self.isLogicallyIPad && device.isLargeIPad {
             switch page {
             case .shifted, .capslock, .symbols1, .symbols2:
                 alternateLabel.font = theme.capitalKeyFont
@@ -322,7 +322,7 @@ final class KeyView: UIView {
         if iOSVersion.isIOS26OrNewer {
             sfSymbol(named: "return", traits: traits)
         } else {
-            if traits.userInterfaceIdiom == .pad, screenInches >= 11 {
+            if device.isLargeIPad {
                 text(string, page: page)
             } else {
                 sfSymbol(named: "return", traits: traits)
@@ -336,7 +336,7 @@ final class KeyView: UIView {
         } else if case .symbols2 = page {
             text("ABC", page: page)
         } else {
-            if traits.userInterfaceIdiom == .pad && Device.current.isPad {
+            if device.isPad {
                 text(".?123", page: page)
             } else {
                 text("123", page: page)
@@ -364,11 +364,11 @@ final class KeyView: UIView {
     }
 
     private func setupComma(_ traits: UITraitCollection, _ page: KeyboardPage) {
-        if Device.current.isPad && traits.userInterfaceIdiom == .pad {
-            if Device.current.diagonal < 12.0 {
-                input(string: ",", alt: "!", page: page)
-            } else {
+        if device.isPad {
+            if device.isLargeIPad {
                 input(string: ",", alt: ";", page: page)
+            } else {
+                input(string: ",", alt: "!", page: page)
             }
         } else {
             input(string: ",", alt: nil, page: page)
@@ -376,11 +376,11 @@ final class KeyView: UIView {
     }
 
     private func setupFullStop(_ traits: UITraitCollection, _ page: KeyboardPage) {
-        if Device.current.isPad && traits.userInterfaceIdiom == .pad {
-            if Device.current.diagonal < 12.0 {
-                input(string: ".", alt: "?", page: page)
-            } else {
+        if device.isPad {
+            if device.isLargeIPad {
                 input(string: ".", alt: ":", page: page)
+            } else {
+                input(string: ".", alt: "?", page: page)
             }
         } else {
             input(string: ".", alt: nil, page: page)

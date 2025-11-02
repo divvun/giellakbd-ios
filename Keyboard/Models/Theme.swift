@@ -80,28 +80,6 @@ struct Theme {
     }
 }
 
-// MARK: - Device Context
-
-struct DeviceContext {
-    let idiom: UIUserInterfaceIdiom
-    let screenInches: CGFloat
-    let isLandscape: Bool
-
-    var isPhone: Bool { idiom == .phone }
-    var isPad: Bool { idiom == .pad }
-    var isLargeiPad: Bool { isPad && screenInches > 11 }
-    var isLargeLandscape: Bool { isLargeiPad && isLandscape }
-    var isSmallOrMediumLandscape: Bool { isPad && screenInches <= 11 && isLandscape }
-
-    static func current() -> DeviceContext {
-        return DeviceContext(
-            idiom: UIDevice.current.userInterfaceIdiom,
-            screenInches: UIScreen.sizeInches,
-            isLandscape: UIScreen.main.isDeviceLandscape
-        )
-    }
-}
-
 // MARK: - Theme Variants
 
 enum ThemeStyle {
@@ -261,25 +239,25 @@ private struct ThemeFactory {
         let keyHorizontalMargin: CGFloat = {
             if device.isLargeLandscape { return 4.0 }
             else if device.isSmallOrMediumLandscape { return 7.0 }
-            else if device.isLargeiPad { return 3.0 } // Large iPad in portrait
+            else if device.isLargeIPad { return 3.0 } // Large iPad in portrait
             else { return 5.0 } // Small/medium iPad in portrait
         }()
 
         let keyVerticalMargin: CGFloat = {
             if device.isLargeLandscape { return 4.0 }
             else if device.isSmallOrMediumLandscape { return 6.0 }
-            else if device.isLargeiPad { return 3.5 } // Large iPad in portrait
+            else if device.isLargeIPad { return 3.5 } // Large iPad in portrait
             else { return 5.0 } // Small/medium iPad in portrait
         }()
 
         let altLabelTop: CGFloat = {
-            if device.isLargeiPad { return 3.0 } // More spacing from top edge
+            if device.isLargeIPad { return 3.0 } // More spacing from top edge
             else if device.isSmallOrMediumLandscape { return 4.0 }
             else { return 5.0 }
         }()
 
         let altLabelBottom: CGFloat = {
-            if device.isLargeiPad { return -3.0 } // More spacing from bottom
+            if device.isLargeIPad { return -3.0 } // More spacing from bottom
             else if device.isSmallOrMediumLandscape { return -5.0 }
             else { return -4.0 }
         }()
@@ -419,7 +397,7 @@ private struct ThemeFactory {
                 active: activeKeyColor,
                 activeText: .white,
                 longPressActive: longPressActive,
-                altKeyText: device.screenInches > 11 ? UIColor.white : UIColor.lightGray,
+                altKeyText: device.isLargeIPad ? UIColor.white : UIColor.lightGray,
                 bannerSeparator: UIColor(r: 56, g: 56, b: 57),
                 bannerText: UIColor(r: 233, g: 233, b: 233)
             )
@@ -461,7 +439,7 @@ private struct ThemeFactory {
                 active: activeKeyColor,
                 activeText: .white,
                 longPressActive: longPressActive,
-                altKeyText: device.screenInches > 11 ? UIColor.black : UIColor(white: 0.0, alpha: 0.3),
+                altKeyText: device.isLargeIPad ? UIColor.black : UIColor(white: 0.0, alpha: 0.3),
                 bannerSeparator: UIColor(r: 188, g: 191, b: 195),
                 bannerText: UIColor(r: 21, g: 21, b: 21)
             )
