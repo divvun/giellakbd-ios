@@ -185,7 +185,7 @@ class LongPressOverlayController: NSObject,
             return CGPoint(x: x, y: y)
         }
 
-        // Define a box in which touches to cause selection in the long press popup.
+        // Define a box in which touches cause selection in the long press popup.
         // Touches outside of this box will deselect keys in the popup.
         let selectionBox: CGRect = collectionView.frame.insetBy(dx: -cellSize.width, dy: -cellSize.height)
 
