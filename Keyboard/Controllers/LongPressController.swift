@@ -160,7 +160,7 @@ class LongPressOverlayController: NSObject,
             let bounds = collectionView.bounds
             let halfWidth = cellSize.width / 2.0
             let halfHeight = cellSize.height / 2.0
-            let heightOffset: CGFloat = collectionView.isLogicallyIPad ? 0 : -halfHeight
+            let heightOffset: CGFloat = collectionView.shouldUseiPadLayout ? 0 : -halfHeight
 
             var x = point.x
             let minX = bounds.minX

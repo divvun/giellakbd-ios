@@ -176,8 +176,8 @@ extension UIView {
         centerYAnchor.constraint(equalTo: other.centerYAnchor).isActive = true
     }
 
-    var isLogicallyIPad: Bool {
-        return traitsAreLogicallyIPad(traitCollection: self.traitCollection)
+    var shouldUseiPadLayout: Bool {
+        return shouldUseIPadLayout(traitCollection: self.traitCollection)
     }
 }
 

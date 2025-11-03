@@ -339,7 +339,7 @@ final internal class KeyboardView: UIView,
         longpressController = nil
         currentlyLongpressedKey = nil
         collectionView.alpha = 1.0
-        if isLogicallyIPad, let activeKey = activeKey {
+        if shouldUseiPadLayout, let activeKey = activeKey {
             switch activeKey.key.type {
             case .spacebar(name: _):
                 break
@@ -442,7 +442,7 @@ final internal class KeyboardView: UIView,
                 let cell = collectionView.cellForItem(at: activeKey.indexPath) as? KeyCell,
                 activeKey.indexPath != oldValue?.indexPath {
                 cell.keyView?.active = true
-                if case .input = activeKey.key.type, !self.isLogicallyIPad {
+                if case .input = activeKey.key.type, !shouldUseiPadLayout {
                     showOverlay(forKeyAtIndexPath: activeKey.indexPath)
                 }
             }
@@ -607,7 +607,7 @@ final internal class KeyboardView: UIView,
     }
 
     private func keyboardModeDefinitions() -> [KeyDefinition] {
-        if isLogicallyIPad {
+        if shouldUseiPadLayout {
             return [
                 KeyDefinition(type: .sideKeyboardLeft),
                 KeyDefinition(type: .normalKeyboard),
@@ -694,7 +694,7 @@ final internal class KeyboardView: UIView,
             return nil
         }
 
-        if isLogicallyIPad == false {
+        if shouldUseiPadLayout == false {
             let originalKey = KeyDefinition(type: .input(key: key, alternate: nil))
             if keys.contains(where: { (keyDefinition) -> Bool in
                 keyDefinition.type == originalKey.type

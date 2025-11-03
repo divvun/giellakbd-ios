@@ -49,20 +49,11 @@ struct DeviceContext {
 // MARK: - Trait Collection Helpers
 
 /// Check if trait collection represents a true iPad app (not iPhone app on iPad)
-func traitsAreLogicallyIPad(traitCollection: UITraitCollection) -> Bool {
-    Device.current.isPad
-        && traitCollection.userInterfaceIdiom == .pad
-        && traitCollection.horizontalSizeClass == .regular
+func shouldUseIPadLayout(traitCollection: UITraitCollection) -> Bool {
+    Device.current.isPad && traitCollection.userInterfaceIdiom == .pad
 }
 
 /// Check if this is an iPhone app running on iPad in compatibility mode
-func isIPhoneAppRunningOnIPad(device: Device, traitCollection: UITraitCollection) -> Bool {
-    device.isPad &&
-    (traitCollection.userInterfaceIdiom == .phone
-     || !traitsAreLogicallyIPad(traitCollection: traitCollection))
-}
-
-/// Convenience overload that uses current device
 func isIPhoneAppRunningOnIPad(traitCollection: UITraitCollection) -> Bool {
-    isIPhoneAppRunningOnIPad(device: Device.current, traitCollection: traitCollection)
+    Device.current.isPad && traitCollection.userInterfaceIdiom == .phone
 }

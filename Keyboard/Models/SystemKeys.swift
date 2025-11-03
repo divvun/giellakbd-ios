@@ -8,19 +8,19 @@ final class SystemKeys {
                                               traits: UITraitCollection) -> [KeyDefinition] {
         var keys = [KeyDefinition]()
 
-        let isIPad = traitsAreLogicallyIPad(traitCollection: traits)
+        let shouldUseIPadLayout = shouldUseIPadLayout(traitCollection: traits)
         let device = DeviceContext.current()
 
         // Left side of space bar
         if !Device.current.hasSensorHousing {
-            if isIPad && device.isLargeIPad {
+            if shouldUseIPadLayout && device.isLargeIPad {
                 keys.append(KeyDefinition(type: .keyboard, size: CGSize(width: 1.25, height: 1.0)))
                 keys.append(KeyDefinition(type: .symbols, size: CGSize(width: 1.25, height: 1.0)))
             } else {
                 keys.append(KeyDefinition(type: .symbols, size: CGSize(width: 1.25, height: 1.0)))
                 keys.append(KeyDefinition(type: .keyboard, size: CGSize(width: 1.25, height: 1.0)))
             }
-        } else if !isIPad {
+        } else if !shouldUseIPadLayout {
             keys.append(KeyDefinition(type: .symbols, size: CGSize(width: 2.5, height: 1.0)))
         } else {
             keys.append(KeyDefinition(type: .symbols))
@@ -28,7 +28,7 @@ final class SystemKeys {
         keys.append(KeyDefinition(type: .spacebar(name: spaceName), size: CGSize(width: 5.0, height: 1.0)))
 
         // Right of spacebar
-        if isIPad {
+        if shouldUseIPadLayout {
             keys.append(KeyDefinition(type: .symbols, size: CGSize(width: 1.25, height: 1.0)))
             keys.append(KeyDefinition(type: .keyboardMode, size: CGSize(width: 1.25, height: 1.0)))
         } else {

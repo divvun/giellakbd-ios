@@ -127,7 +127,7 @@ final class KeyView: UIView {
         alternateLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         alternateLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
 
-        if self.isLogicallyIPad && device.isLargeIPad {
+        if shouldUseiPadLayout && device.isLargeIPad {
             switch page {
             case .shifted, .capslock, .symbols1, .symbols2:
                 alternateLabel.font = theme.capitalKeyFont

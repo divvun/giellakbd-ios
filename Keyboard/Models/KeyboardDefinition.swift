@@ -63,7 +63,7 @@ enum DeviceVariant: String, Decodable {
     case iphone = "iphone"
 
     static func from(traits: UITraitCollection) -> DeviceVariant {
-        if traitsAreLogicallyIPad(traitCollection: traits) {
+        if shouldUseIPadLayout(traitCollection: traits) {
             if UIScreen.sizeInches < 12.0 {
                 return .ipad9in
             } else {
