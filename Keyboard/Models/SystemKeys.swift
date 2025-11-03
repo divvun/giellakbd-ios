@@ -12,7 +12,7 @@ final class SystemKeys {
         let device = DeviceContext.current()
 
         // Left side of space bar
-        if !Device.current.hasSensorHousing {
+        if !device.hasSensorHousing {
             if shouldUseIPadLayout && device.isLargeIPad {
                 keys.append(KeyDefinition(type: .keyboard, size: CGSize(width: 1.25, height: 1.0)))
                 keys.append(KeyDefinition(type: .symbols, size: CGSize(width: 1.25, height: 1.0)))

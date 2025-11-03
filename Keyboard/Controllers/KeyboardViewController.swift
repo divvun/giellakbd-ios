@@ -63,12 +63,9 @@ open class KeyboardViewController: UIInputViewController {
     }()
 
     private var preferredHeight: CGFloat {
-        let isLandscape = UIScreen.main.isDeviceLandscape
-
         var height = KeyboardHeightProvider.height(
-            for: Device.current,
+            for: DeviceContext.current(),
             traitCollection: traitCollection,
-            isLandscape: isLandscape,
             rowCount: keyboardDefinition.currentDeviceLayout?.normal.count
         )
 

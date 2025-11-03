@@ -231,13 +231,6 @@ extension UIScreen {
         let size = self.bounds.size
         return size.width > size.height
     }
-    
-    public static var maxSupportedInches: Double { 13.0 }
-    
-    public static var sizeInches: Double {
-        // Default to maxSupportedInches for legacy reasons
-        Device.current.diagonal > 0 ? Device.current.diagonal : UIScreen.maxSupportedInches
-    }
 }
 
 let str1 = "containing"

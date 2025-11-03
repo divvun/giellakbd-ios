@@ -17,54 +17,52 @@ struct KeyboardHeightProvider {
 
     /// Returns keyboard height for a given device and orientation, optionally adjusted for custom row counts
     static func height(
-        for device: Device,
+        for deviceContext: DeviceContext,
         traitCollection: UITraitCollection,
-        isLandscape: Bool,
         rowCount: Int? = nil
     ) -> CGFloat {
-        let heights = heights(for: device, traitCollection: traitCollection)
+        let heights = heights(for: deviceContext, traitCollection: traitCollection)
+        let isLandscape = deviceContext.isLandscape
         let baseHeight = isLandscape ? heights.landscape : heights.portrait
-        let diagonal = device.diagonal
 
-        guard let rowCount = rowCount, diagonal > 0 else {
+        guard let rowCount = rowCount else {
             return baseHeight
         }
 
         // Adjust for custom row count
         // Ordinarily a keyboard has 4 rows, iPad 12 inch+ has 5. Some have more. We calculate for that.
-        let device = DeviceContext.current()
-        let normalRowCount: CGFloat = device.isLargeIPad ? 5.0 : 4.0
+        let normalRowCount: CGFloat = deviceContext.isLargeIPad ? 5.0 : 4.0
         let rowHeight = baseHeight / normalRowCount
         var adjustedHeight = rowHeight * CGFloat(rowCount)
 
         // Some keyboards are more than 4 rows, and on small iPads they take up
         // almost the whole screen in landscape unless we shave off some pixels
-        if !device.isLargeIPad, rowCount > 4, isLandscape {
+        if !deviceContext.isLargeIPad, rowCount > 4, isLandscape {
             adjustedHeight -= 40
         }
 
         return adjustedHeight
     }
 
-    private static func heights(for device: Device, traitCollection: UITraitCollection) -> KeyboardHeight {
+    private static func heights(for deviceContext: DeviceContext, traitCollection: UITraitCollection) -> KeyboardHeight {
         // Special case: iPhone app running on iPad in compatibility mode
         if isIPhoneAppRunningOnIPad(traitCollection: traitCollection) {
-            let portrait: CGFloat = DeviceContext.current().isLargeIPad ? 328 : 258
+            let portrait: CGFloat = deviceContext.isLargeIPad ? 328 : 258
             let landscape = portrait - 56
             return (portrait: portrait, landscape: landscape)
         }
 
         // Check device-specific overrides
-        if let override = deviceOverride(for: device) {
+        if let override = deviceOverride(for: deviceContext.device) {
             return override
         }
 
         // Try diagonal-based lookup
-        if let height = height(forDiagonal: device.diagonal) {
+        if let height = height(forDiagonal: deviceContext.device.diagonal) {
             return height
         }
 
-        return fallbackHeight(for: device)
+        return fallbackHeight(for: deviceContext)
     }
 
     /// Device-specific overrides for devices that need different heights than their diagonal peers
@@ -145,11 +143,11 @@ struct KeyboardHeightProvider {
         }
     }
 
-    private static func fallbackHeight(for device: Device) -> KeyboardHeight {
-        if device.isPad {
+    private static func fallbackHeight(for deviceContext: DeviceContext) -> KeyboardHeight {
+        if deviceContext.isPad {
             let landscape = landscapeDeviceHeight / 2.0 - 70
             return (portrait: 384, landscape: landscape)
-        } else if device.isPhone {
+        } else if deviceContext.isPhone {
             return (portrait: 262, landscape: 203)
         } else {
             // Should never get here

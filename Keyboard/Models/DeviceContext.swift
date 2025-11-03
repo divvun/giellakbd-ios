@@ -1,15 +1,28 @@
 import DeviceKit
 import UIKit
 
+/// Centralized source of truth for device type, size, and orientation detection
+/// Wraps DeviceKit's Device to provide additional computed properties
 struct DeviceContext {
-    let idiom: UIUserInterfaceIdiom
-    let screenInches: CGFloat
+    let device: Device
     let isLandscape: Bool
 
-    // MARK: - Basic Device Type
+    // MARK: - Device Property Accessors
 
-    var isPhone: Bool { idiom == .phone }
-    var isPad: Bool { idiom == .pad }
+    /// Access to underlying DeviceKit device for advanced features
+    var isPad: Bool { device.isPad }
+    var isPhone: Bool { device.isPhone }
+    var hasSensorHousing: Bool { device.hasSensorHousing }
+
+    /// Screen diagonal size in inches, with fallback for unknown devices
+    var screenInches: CGFloat {
+        // Default to maxSupportedInches for legacy reasons
+        // TODO: this could be improved to guess screen size based on device bounds
+        let maxSupportedInches = 13.0
+        return device.diagonal > 0
+            ? device.diagonal
+            : maxSupportedInches
+    }
 
     // MARK: - iPad Size Categories
 
@@ -39,8 +52,7 @@ struct DeviceContext {
 
     static func current() -> DeviceContext {
         DeviceContext(
-            idiom: UIDevice.current.userInterfaceIdiom,
-            screenInches: UIScreen.sizeInches,
+            device: Device.current,
             isLandscape: UIScreen.main.isDeviceLandscape
         )
     }
