@@ -76,7 +76,7 @@ struct Theme {
             }
         }()
 
-        return ThemeFactory.make(style, device: device)
+        return ThemeFactory.make(style, device: device, traits: traits)
     }
 }
 
@@ -107,9 +107,9 @@ enum ThemeStyle {
 // MARK: - Theme Factory
 
 private struct ThemeFactory {
-    static func make(_ style: ThemeStyle, device: DeviceContext) -> Theme {
-        let metrics = makeMetrics(for: device, legacy: style.isLegacy)
-        let fonts = makeFonts(for: device, legacy: style.isLegacy)
+    static func make(_ style: ThemeStyle, device: DeviceContext, traits: UITraitCollection) -> Theme {
+        let metrics = makeMetrics(for: device, traits: traits, legacy: style.isLegacy)
+        let fonts = makeFonts(for: device, traits: traits, legacy: style.isLegacy)
         let colors = makeColors(for: style, device: device)
 
         return Theme(
@@ -181,8 +181,8 @@ private struct ThemeFactory {
         let sfSymbolConfiguration: UIImage.SymbolConfiguration
     }
 
-    private static func makeMetrics(for device: DeviceContext, legacy: Bool) -> Metrics {
-        if device.isPad {
+    private static func makeMetrics(for device: DeviceContext, traits: UITraitCollection, legacy: Bool) -> Metrics {
+        if shouldUseIPadLayout(traitCollection: traits) {
             return makeiPadMetrics(for: device, legacy: legacy)
         } else {
             return makeiPhoneMetrics(for: device, legacy: legacy)
@@ -290,8 +290,8 @@ private struct ThemeFactory {
         let banner: UIFont
     }
 
-    private static func makeFonts(for device: DeviceContext, legacy: Bool) -> Fonts {
-        if device.isPad {
+    private static func makeFonts(for device: DeviceContext, traits: UITraitCollection, legacy: Bool) -> Fonts {
+        if shouldUseIPadLayout(traitCollection: traits) {
             let altKeySize: CGFloat = device.isSmallOrMediumLandscape ? 16.0 : 13.0
             let lowerKey: UIFont = {
                 (device.isLargeLandscape || device.isSmallOrMediumLandscape)
