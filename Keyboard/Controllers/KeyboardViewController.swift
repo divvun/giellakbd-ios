@@ -213,15 +213,19 @@ open class KeyboardViewController: UIInputViewController {
         vstack.widthAnchor.constraint(equalTo: keyboardContainer.widthAnchor, multiplier: 0.9).enable()
 
         if needsInputModeSwitchKey {
+            let symbolConfig = UIImage.SymbolConfiguration(pointSize: 24, weight: .regular)
+            let globeImage = UIImage(systemName: "globe", withConfiguration: symbolConfig)
+
             let globeButton = UIButton()
             keyboardContainer.addSubview(globeButton)
-            let globeImage = UIImage(named: "globe", in: Bundle.top, compatibleWith: self.traitCollection)
             globeButton.setImage(globeImage, for: .normal)
             globeButton.backgroundColor = .clear
             globeButton.tintColor = theme.textColor
             globeButton.isAccessibilityElement = true
             globeButton.accessibilityLabel = NSLocalizedString("accessibility.nextKeyboard", comment: "")
             globeButton.translatesAutoresizingMaskIntoConstraints = false
+            globeButton.widthAnchor.constraint(equalToConstant: 44).enable()
+            globeButton.heightAnchor.constraint(equalToConstant: 44).enable()
             globeButton.bottomAnchor.constraint(equalTo: keyboardContainer.bottomAnchor, constant: -10).enable()
             globeButton.leftAnchor.constraint(equalTo: keyboardContainer.leftAnchor, constant: 10).enable()
             globeButton.addTarget(self, action: #selector(handleInputModeList(from:with:)), for: .allTouchEvents)
