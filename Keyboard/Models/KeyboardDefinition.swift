@@ -64,10 +64,10 @@ enum DeviceVariant: String, Decodable {
 
     static func from(traits: UITraitCollection) -> DeviceVariant {
         if shouldUseIPadLayout(traitCollection: traits) {
-            if UIScreen.sizeInches < 12.0 {
-                return .ipad9in
-            } else {
+            if DeviceContext.current().isLargeIPad {
                 return .ipad12in
+            } else {
+                return .ipad9in
             }
         } else {
             return .iphone
