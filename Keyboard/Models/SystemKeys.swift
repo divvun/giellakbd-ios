@@ -9,7 +9,7 @@ final class SystemKeys {
         var keys = [KeyDefinition]()
 
         let shouldUseIPadLayout = shouldUseIPadLayout(traitCollection: traits)
-        let device = DeviceContext.current()
+        let device = DeviceContext.current
 
         // Left side of space bar
         if !device.hasSensorHousing {

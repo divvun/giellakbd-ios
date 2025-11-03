@@ -50,7 +50,7 @@ struct DeviceContext {
 
     // MARK: - Factory
 
-    static func current() -> DeviceContext {
+    static var current: DeviceContext {
         DeviceContext(
             device: Device.current,
             isLandscape: UIScreen.main.isDeviceLandscape

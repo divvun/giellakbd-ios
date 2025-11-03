@@ -63,7 +63,7 @@ struct Theme {
     /// Get the current theme for the given trait collection
     /// This is the main entry point for creating themes
     static func current(for traits: UITraitCollection) -> Theme {
-        let device = DeviceContext.current()
+        let device = DeviceContext.current
         let isDark = traits.userInterfaceStyle == .dark
         let isLegacy = !iOSVersion.isIOS26OrNewer
 
