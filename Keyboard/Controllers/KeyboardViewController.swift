@@ -72,7 +72,6 @@ open class KeyboardViewController: UIInputViewController {
             height -= theme.bannerHeight
         }
 
-        print("preferredHeight: \(height)")
         return height
     }
 
