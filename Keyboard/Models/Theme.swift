@@ -181,7 +181,7 @@ private struct ThemeFactory {
     }
 
     private static func makeMetrics(for device: DeviceContext, traits: UITraitCollection, legacy: Bool) -> Metrics {
-        if shouldUseIPadLayout(traitCollection: traits) {
+        if device.shouldUseIPadLayout(traitCollection: traits) {
             return makeiPadMetrics(for: device, legacy: legacy)
         } else {
             return makeiPhoneMetrics(for: device, legacy: legacy)
@@ -290,7 +290,7 @@ private struct ThemeFactory {
     }
 
     private static func makeFonts(for device: DeviceContext, traits: UITraitCollection, legacy: Bool) -> Fonts {
-        if shouldUseIPadLayout(traitCollection: traits) {
+        if device.shouldUseIPadLayout(traitCollection: traits) {
             let altKeySize: CGFloat = device.isSmallOrMediumLandscape ? 16.0 : 13.0
             let lowerKey: UIFont = {
                 (device.isLargeLandscape || device.isSmallOrMediumLandscape)

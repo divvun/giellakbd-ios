@@ -176,7 +176,7 @@ extension UIView {
     }
 
     var shouldUseiPadLayout: Bool {
-        return shouldUseIPadLayout(traitCollection: self.traitCollection)
+        return DeviceContext.current.shouldUseIPadLayout(traitCollection: self.traitCollection)
     }
 }
 

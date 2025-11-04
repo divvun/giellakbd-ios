@@ -45,7 +45,7 @@ struct KeyboardHeightProvider {
 
     private static func heights(for deviceContext: DeviceContext, traitCollection: UITraitCollection) -> KeyboardHeight {
         // Special case: iPhone app running on iPad in compatibility mode
-        if isIPhoneAppRunningOnIPad(traitCollection: traitCollection) {
+        if deviceContext.isIPhoneAppRunningOnIPad(traitCollection: traitCollection) {
             let portrait: CGFloat = deviceContext.isLargeIPad ? 328 : 258
             let landscape = portrait - 56
             return (portrait: portrait, landscape: landscape)

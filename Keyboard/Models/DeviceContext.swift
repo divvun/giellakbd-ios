@@ -9,12 +9,10 @@ struct DeviceContext {
 
     // MARK: - Device Property Accessors
 
-    /// Access to underlying DeviceKit device for advanced features
     var isPad: Bool { device.isPad }
     var isPhone: Bool { device.isPhone }
     var hasSensorHousing: Bool { device.hasSensorHousing }
 
-    /// Screen diagonal size in inches, with fallback for unknown devices
     var screenInches: CGFloat {
         // Default to maxSupportedInches for legacy reasons
         // TODO: this could be improved to guess screen size based on device bounds
@@ -48,6 +46,18 @@ struct DeviceContext {
         (isMiniIPad || isMediumIPad) && isLandscape
     }
 
+    // MARK: - Trait Collection Helpers
+
+    /// Check if trait collection represents a true iPad app (not iPhone app on iPad)
+    func shouldUseIPadLayout(traitCollection: UITraitCollection) -> Bool {
+        isPad && traitCollection.userInterfaceIdiom == .pad
+    }
+
+    /// Check if this is an iPhone app running on iPad in compatibility mode
+    func isIPhoneAppRunningOnIPad(traitCollection: UITraitCollection) -> Bool {
+        isPad && traitCollection.userInterfaceIdiom == .phone
+    }
+
     // MARK: - Factory
 
     static var current: DeviceContext {
@@ -56,16 +66,4 @@ struct DeviceContext {
             isLandscape: UIScreen.main.isDeviceLandscape
         )
     }
-}
-
-// MARK: - Trait Collection Helpers
-
-/// Check if trait collection represents a true iPad app (not iPhone app on iPad)
-func shouldUseIPadLayout(traitCollection: UITraitCollection) -> Bool {
-    Device.current.isPad && traitCollection.userInterfaceIdiom == .pad
-}
-
-/// Check if this is an iPhone app running on iPad in compatibility mode
-func isIPhoneAppRunningOnIPad(traitCollection: UITraitCollection) -> Bool {
-    Device.current.isPad && traitCollection.userInterfaceIdiom == .phone
 }
