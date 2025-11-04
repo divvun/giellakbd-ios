@@ -5,7 +5,7 @@ final class SpellerAvailableBannerView: UIView, BannerView {
     private let label = UILabel()
     private let activityIndicator = UIActivityIndicatorView()
 
-    init(theme: ThemeType) {
+    init(theme: Theme) {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
         setupView()
@@ -39,7 +39,7 @@ final class SpellerAvailableBannerView: UIView, BannerView {
         URLOpener().aggressivelyOpenURL(url, responder: self)
     }
 
-    func updateTheme(_ theme: ThemeType) {
+    func updateTheme(_ theme: Theme) {
 
     }
 

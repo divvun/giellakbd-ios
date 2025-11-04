@@ -1,14 +1,17 @@
 import Foundation
 import UIKit
 
-extension UIDevice {
-    public var systemMajorVersion: Int {
-        let systemVersion = UIDevice.current.systemVersion
-        guard let majorVersionSubstring = systemVersion.split(separator: ".").first,
-            let majorVersion = Int(majorVersionSubstring) else {
-            return -1
-        }
-        return majorVersion
+struct iOSVersion {
+    static var current: OperatingSystemVersion {
+        return ProcessInfo.processInfo.operatingSystemVersion
+    }
+
+    static var majorVersion: Int {
+        return current.majorVersion
+    }
+
+    static var isIOS26OrNewer: Bool {
+        return majorVersion >= 26
     }
 }
 
@@ -154,12 +157,8 @@ extension Substring {
 }
 
 extension UIColor {
-    //swiftlint:disable:next identifier_name
-    convenience init(r: Int, g: Int, b: Int, a: Double = 1) {
-        self.init(red: CGFloat(r) / CGFloat(255),
-                  green: CGFloat(g) / CGFloat(255),
-                  blue: CGFloat(b) / CGFloat(255),
-                  alpha: CGFloat(a))
+    convenience init(r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat = 1.0) {
+        self.init(red: r/255.0, green: g/255.0, blue: b/255.0, alpha: a)
     }
 }
 
@@ -176,8 +175,8 @@ extension UIView {
         centerYAnchor.constraint(equalTo: other.centerYAnchor).isActive = true
     }
 
-    var isLogicallyIPad: Bool {
-        return traitsAreLogicallyIPad(traitCollection: self.traitCollection)
+    var shouldUseiPadLayout: Bool {
+        return DeviceContext.current.shouldUseIPadLayout(traitCollection: self.traitCollection)
     }
 }
 
@@ -312,12 +311,6 @@ extension Bundle {
 
 func isBeingRunFromTests() -> Bool {
     return ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
-}
-
-func traitsAreLogicallyIPad(traitCollection: UITraitCollection) -> Bool {
-    return UIDevice.current.dc.deviceFamily == .iPad
-        && traitCollection.userInterfaceIdiom == .pad
-        && traitCollection.horizontalSizeClass == .regular
 }
 
 class URLOpener {

@@ -70,7 +70,7 @@ class LongPressOverlayController: NSObject,
     private let deadZone: CGFloat = 20.0
 
     private let key: KeyDefinition
-    private let theme: ThemeType
+    private let theme: Theme
     let longpressValues: [KeyDefinition]
 
     private var baselinePoint: CGPoint?
@@ -89,7 +89,7 @@ class LongPressOverlayController: NSObject,
     weak var delegate: LongPressOverlayDelegate?
     private let labelFont: UIFont
 
-    init(key: KeyDefinition, page: KeyboardPage, theme: ThemeType, longpressValues: [KeyDefinition]) {
+    init(key: KeyDefinition, page: KeyboardPage, theme: Theme, longpressValues: [KeyDefinition]) {
         self.key = key
         self.theme = theme
         self.longpressValues = longpressValues
@@ -160,7 +160,7 @@ class LongPressOverlayController: NSObject,
             let bounds = collectionView.bounds
             let halfWidth = cellSize.width / 2.0
             let halfHeight = cellSize.height / 2.0
-            let heightOffset: CGFloat = collectionView.isLogicallyIPad ? 0 : -halfHeight
+            let heightOffset: CGFloat = collectionView.shouldUseiPadLayout ? 0 : -halfHeight
 
             var x = point.x
             let minX = bounds.minX
@@ -185,7 +185,7 @@ class LongPressOverlayController: NSObject,
             return CGPoint(x: x, y: y)
         }
 
-        // Define a box in which touches to cause selection in the long press popup.
+        // Define a box in which touches cause selection in the long press popup.
         // Touches outside of this box will deselect keys in the popup.
         let selectionBox: CGRect = collectionView.frame.insetBy(dx: -cellSize.width, dy: -cellSize.height)
 
@@ -250,6 +250,7 @@ class LongPressOverlayController: NSObject,
             cell.imageView.image = UIImage(named: imageName, in: Bundle.top, compatibleWith: collectionView.traitCollection)
         }
 
+        // SF Symbols doesn't provide a split keyboard icon. Use our own images.
         if case let .input(string, _) = key.type {
             cell.label.text = string
             cell.imageView.image = nil
@@ -313,14 +314,14 @@ class LongPressOverlayController: NSObject,
 //            }
 //        }
 
-        func select(theme: ThemeType) {
+        func select(theme: Theme) {
             label.textColor = theme.activeTextColor
-            label.backgroundColor = theme.activeColor
+            label.backgroundColor = theme.longPressActiveColor
             imageView.tintColor = theme.activeTextColor
             isSelectedKey = true
         }
 
-        func deselect(theme: ThemeType) {
+        func deselect(theme: Theme) {
             label.textColor = theme.textColor
             label.backgroundColor = theme.popupColor
             imageView.tintColor = theme.textColor
@@ -345,7 +346,7 @@ class LongPressOverlayController: NSObject,
             label.fill(superview: self)
         }
 
-        func configure(theme: ThemeType) {
+        func configure(theme: Theme) {
             label.layer.cornerRadius = theme.keyCornerRadius
             imageView.tintColor = theme.textColor
         }

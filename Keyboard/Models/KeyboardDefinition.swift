@@ -62,11 +62,12 @@ enum DeviceVariant: String, Decodable {
     case iphone = "iphone"
 
     static func from(traits: UITraitCollection) -> DeviceVariant {
-        if traitsAreLogicallyIPad(traitCollection: traits) {
-            if (UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches) < 12.0 {
-                return .ipad9in
-            } else {
+        let device = DeviceContext.current
+        if device.shouldUseIPadLayout(traitCollection: traits) {
+            if device.isLargeIPad {
                 return .ipad12in
+            } else {
+                return .ipad9in
             }
         } else {
             return .iphone

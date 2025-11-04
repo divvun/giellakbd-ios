@@ -2,10 +2,10 @@
 
 An open source reimplementation of Apple's native iOS keyboard with a specific focus on support for localised keyboards and support for minority and indigenous languages.
 
-
 ## Building & Running
 
-##### Note: the first build will take a while.
+> [!NOTE]
+> The first build will take a while
 
 1. [Install Cocoapods](https://cocoapods.org/)
 2. `pod install`. This may fail. If it does - see rexml solution below
@@ -17,7 +17,6 @@ An open source reimplementation of Apple's native iOS keyboard with a specific f
 8. Tap and hold the globe button in the bottom left corner of the keyboard and select "Template Keyboard"
 9. Done. You should now see the Divvun nordsamisk keyboard
 
-
 ### rexml
 
 Macos ships with a "broken" version of rexml.
@@ -28,7 +27,6 @@ If you error is "REXML::ParseException - #<TypeError: wrong argument type String
 sudo gem install rexml -v 3.2.6
 sudo gem uninstall rexml -v 3.2.9
 ```
-
 
 ## Sentry
 
@@ -51,6 +49,14 @@ Localization is automated via [Mozilla Pontoon](https://pontoon.mozilla.org/) an
 
 This repo does not include any keyboard layouts. It is intended to be used as a template for [kbdgen](https://github.com/divvun/kbdgen), which consumes among other things this codebase, as well as layouts as listed in e.g. [divvun-keyboard](https://github.com/divvun/divvun-keyboard) to produce the actual keyboard app. The keyboard layout specifications are found in the [GiellaLT](https://github.com/giellalt?q=keyboard-&type=&language=) organisation.
 
+## Testing
+
+Tests require a `se.bhfst` file inside the `dicts.bundle`. If this is missing for you, do this:
+
+1. cd giellakbd-ios
+1. `mkdir dicts.bundle`
+3. [Download the mobile sme speller](https://pahkat.uit.no/main/download/speller-sme?platform=mobile) and extract the `se.bhfst` into the `dicts.bundle` you just created
+
 ## Deploying
 
 Builds can be deployed using the [divvun-keyboard repo](https://github.com/divvun/divvun-keyboard)
@@ -59,8 +65,7 @@ Builds can be deployed using the [divvun-keyboard repo](https://github.com/divvu
 
 `giellakbd-ios` is licensed under either of
 
- * Apache License, Version 2.0, ([LICENSE-APACHE](LICENSE-APACHE) or http://www.apache.org/licenses/LICENSE-2.0)
- * MIT license ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
+* Apache License, Version 2.0, ([LICENSE-APACHE](LICENSE-APACHE) or <http://www.apache.org/licenses/LICENSE-2.0>)
+* MIT license ([LICENSE-MIT](LICENSE-MIT) or <http://opensource.org/licenses/MIT>)
 
 at your option.
-

@@ -6,14 +6,14 @@ protocol KeyboardViewProvider {
 
     var page: BaseKeyboard.KeyboardPage { get set }
 
-    func updateTheme(theme: ThemeType)
+    func updateTheme(theme: Theme)
 
     func update()
 
     var topAnchor: NSLayoutYAxisAnchor { get }
     var heightAnchor: NSLayoutDimension { get }
 
-    init(definition: KeyboardDefinition, theme: ThemeType)
+    init(definition: KeyboardDefinition, theme: Theme)
 
     func remove()
 }
@@ -24,16 +24,6 @@ enum KeyboardMode {
     case left
     case right
 }
-
-private let portraitDeviceHeight: CGFloat = {
-    let size = UIScreen.main.bounds.size
-    return max(size.height, size.width)
-}()
-
-private let landscapeDeviceHeight: CGFloat = {
-    let size = UIScreen.main.bounds.size
-    return min(size.height, size.width)
-}()
 
 open class KeyboardViewController: UIInputViewController {
     @IBOutlet var nextKeyboardButton: UIButton!
@@ -67,151 +57,42 @@ open class KeyboardViewController: UIInputViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private var landscapeHeight: CGFloat {
-        switch UIDevice.current.dc.deviceFamily {
-        case .iPad:
-            if self.traitCollection.userInterfaceIdiom == .phone {
-                // Hardcode because the device lies about the height
-                return portraitHeight - 56
-            }
-
-            switch UIDevice.current.dc.deviceModel {
-            case .iPadMini2, .iPadMini3, .iPadMini4, .iPadMini5:
-                return 400.0
-            case .iPadThirdGen, .iPadFourthGen, .iPadFifthGen, .iPadSixthGen, .iPadAir, .iPadAir2, .iPadPro9_7Inch:
-                return 353.0
-            case .iPadAir3, .iPadPro10_5Inch:
-                return 405.0
-            case .iPadPro11Inch:
-                return 405.0
-            case .iPadPro12_9Inch, .iPadPro12_9Inch_SecondGen, .iPadPro12_9Inch_ThirdGen, .iPadPro12_9Inch_FourthGen, .iPadPro12_9Inch_FifthGen, .iPadPro12_9Inch_SixthGen:
-                return 426.0
-            default:
-                let sizeInches = UIDevice.current.dc.screenSize.sizeInches ?? 12.9
-
-                if sizeInches < 11 {
-                    return landscapeDeviceHeight / 2.0
-                }
-
-                return landscapeDeviceHeight / 2.0 - 120
-            }
-        case .iPhone, .iPod:
-            switch UIDevice.current.dc.deviceModel {
-            case .iPhone5S, .iPhone5C, .iPhoneSE, .iPodTouchSeventhGen:
-                return 203.0
-            case .iPhone6, .iPhone6S, .iPhone7, .iPhone8:
-                return 203.0
-            case .iPhone6Plus, .iPhone6SPlus, .iPhone7Plus, .iPhone8Plus:
-                return 203.0
-            case .iPhone11, .iPhoneXR:
-                return 190.0
-            case .iPhoneX, .iPhoneXS, .iPhone11Pro:
-                return 190.0
-            case .iPhoneXSMax, .iPhone11ProMax:
-                return 190.0
-            default:
-                return portraitHeight - 56
-            }
-        default:
-            return portraitHeight - 56
-        }
-    }
-
-    private var portraitHeight: CGFloat {
-        let sizeInches = UIDevice.current.dc.screenSize.sizeInches ?? Screen.maxSupportedInches
-        print("Size inches: \(sizeInches)")
-        switch UIDevice.current.dc.deviceFamily {
-        case .iPad:
-            if self.traitCollection.userInterfaceIdiom == .phone
-                || !traitsAreLogicallyIPad(traitCollection: self.traitCollection) {
-                // Hardcode because the device lies about the height
-                if sizeInches <= 11 {
-                    return 258.0
-                } else {
-                    return 328.0
-                }
-            }
-
-            // Smol iPads and 9 inch iPad Pro
-            if sizeInches < 12 {
-                return 314.0
-            }
-
-            // iPads from 11 to 13 inches
-            if sizeInches < 13 {
-                return 384.0
-            }
-
-            return portraitDeviceHeight / 4.0
-        case .iPhone, .iPod:
-            // https://iosref.com/res/
-            switch UIDevice.current.dc.deviceModel {
-            case .iPhone5S, .iPhone5C, .iPhoneSE, .iPodTouchSeventhGen:
-                return 254.0
-            case .iPhone6, .iPhone6S, .iPhone7, .iPhone8:
-                return 262.0
-            case .iPhone6Plus, .iPhone6SPlus, .iPhone7Plus, .iPhone8Plus:
-                return 272.0
-            case .iPhone11, .iPhoneXR:
-                return 272.0
-            case .iPhoneX, .iPhoneXS, .iPhone11Pro:
-                return 262.0
-            case .iPhoneXSMax, .iPhone11ProMax:
-                return 272.0
-            default:
-                return 262.0
-            }
-        default:
-            return portraitDeviceHeight / 3.0
-        }
-    }
-
-    private lazy var baseTheme: _Theme = { Theme(traits: self.traitCollection) }()
-    private(set) lazy var theme: ThemeType = {
-        baseTheme.select(traits: self.traitCollection)
+    private(set) lazy var theme: Theme = {
+        Theme.current(for: self.traitCollection)
     }()
 
-    open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        DispatchQueue.main.async {
-            self.updateHeightConstraint()
-        }
-    }
-
     private var preferredHeight: CGFloat {
-        var preferredHeight: CGFloat
-
-        if UIScreen.main.isDeviceLandscape {
-            preferredHeight = landscapeHeight
-        } else {
-            preferredHeight = portraitHeight
-        }
-
-        guard let layout = keyboardDefinition.currentDeviceLayout else {
-            // this can happen if for instance we're on iPad and there's no iPad layout for this particular keyboard
-            return preferredHeight
-        }
-
-        // Ordinarily a keyboard has 4 rows, iPad 12 inch+ has 5. Some have more. We calculate for that.
-        let rowCount = CGFloat(layout.normal.count)
-        let normalRowCount: CGFloat = (UIDevice.current.dc.screenSize.sizeInches ?? 0.0) >= 12.0
-            ? 5.0
-            : 4.0
-        let rowHeight = preferredHeight / normalRowCount
-        preferredHeight = rowHeight * rowCount
-        
-        // Some keyboards are more than 4 rows, and on 9" iPads they take up
-        // almost the whole screen in landscape unless we shave off some pixels
-        let screenSize = UIDevice.current.dc.screenSize.sizeInches ?? 12
-        let isLandscape = UIScreen.main.isDeviceLandscape
-        if screenSize < 11 && rowCount > 4 && isLandscape {
-            preferredHeight -= 40
-        }
+        var height = KeyboardHeightProvider.height(
+            for: DeviceContext.current,
+            traitCollection: traitCollection,
+            rowCount: keyboardDefinition.currentDeviceLayout?.normal.count
+        )
 
         if !bannerVisible {
-             preferredHeight -= theme.bannerHeight
+            height -= theme.bannerHeight
         }
 
-        return preferredHeight
+        return height
+    }
+
+    open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        coordinator.animate { _ in
+            // moving the height updating here causes jank
+            // where there's a black box under the keyboard before it corrects
+        } completion: { [weak self] _ in
+            guard let self = self else { return }
+            // Regenerate theme with new device context (portrait/landscape)
+            self.theme = Theme.current(for: self.traitCollection)
+
+            // Update all views with the new theme
+            self.updateAfterThemeChange()
+            self.bannerManager?.updateTheme(self.theme)
+            if self.keyboardView != nil {
+                self.keyboardView.updateTheme(theme: self.theme)
+            }
+            self.updateHeightConstraint()
+            self.view.layoutIfNeeded()
+        }
     }
 
     private func initHeightConstraint() {
@@ -330,15 +211,19 @@ open class KeyboardViewController: UIInputViewController {
         vstack.widthAnchor.constraint(equalTo: keyboardContainer.widthAnchor, multiplier: 0.9).enable()
 
         if needsInputModeSwitchKey {
+            let symbolConfig = UIImage.SymbolConfiguration(pointSize: 24, weight: .regular)
+            let globeImage = UIImage(systemName: "globe", withConfiguration: symbolConfig)
+
             let globeButton = UIButton()
             keyboardContainer.addSubview(globeButton)
-            let globeImage = UIImage(named: "globe", in: Bundle.top, compatibleWith: self.traitCollection)
             globeButton.setImage(globeImage, for: .normal)
             globeButton.backgroundColor = .clear
             globeButton.tintColor = theme.textColor
             globeButton.isAccessibilityElement = true
             globeButton.accessibilityLabel = NSLocalizedString("accessibility.nextKeyboard", comment: "")
             globeButton.translatesAutoresizingMaskIntoConstraints = false
+            globeButton.widthAnchor.constraint(equalToConstant: 44).enable()
+            globeButton.heightAnchor.constraint(equalToConstant: 44).enable()
             globeButton.bottomAnchor.constraint(equalTo: keyboardContainer.bottomAnchor, constant: -10).enable()
             globeButton.leftAnchor.constraint(equalTo: keyboardContainer.leftAnchor, constant: 10).enable()
             globeButton.addTarget(self, action: #selector(handleInputModeList(from:with:)), for: .allTouchEvents)
@@ -650,7 +535,7 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     private func checkDarkMode(traits: UITraitCollection) {
-        let newTheme = baseTheme.select(traits: traits)
+        let newTheme = Theme.current(for: traits)
 
         if theme.appearance != newTheme.appearance {
             theme = newTheme

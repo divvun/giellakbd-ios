@@ -1,7 +1,8 @@
+import UIKit
 
 final class KeyView: UIView {
     private let key: KeyDefinition
-    private let theme: ThemeType
+    private let theme: Theme
 
     public var contentView: UIView!
 
@@ -22,6 +23,7 @@ final class KeyView: UIView {
 
     private var fontSize: CGFloat = 0.0
     private var altFontSize: CGFloat = 0.0
+    private let device = DeviceContext.current
 
     var swipeLayoutConstraint: NSLayoutConstraint?
 
@@ -30,12 +32,18 @@ final class KeyView: UIView {
     var active: Bool = false {
         didSet {
             if let contentView = self.contentView {
-                let activeColor = key.type.isSpecialKeyStyle
-                    ? theme.regularKeyColor
-                    : theme.specialKeyColor
                 let regularColor = key.type.isSpecialKeyStyle
                     ? theme.specialKeyColor
                     : theme.regularKeyColor
+
+                let activeColor: UIColor
+                if iOSVersion.isIOS26OrNewer {
+                    activeColor = theme.activeColor
+                } else {
+                    activeColor = key.type.isSpecialKeyStyle
+                        ? theme.regularKeyColor
+                        : theme.specialKeyColor
+                }
 
                 contentView.backgroundColor = active
                     ? activeColor
@@ -118,7 +126,7 @@ final class KeyView: UIView {
         alternateLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         alternateLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
 
-        if self.isLogicallyIPad && (UIDevice.current.dc.screenSize.sizeInches ?? 0.0) > 12 {
+        if shouldUseiPadLayout && device.isLargeIPad {
             switch page {
             case .shifted, .capslock, .symbols1, .symbols2:
                 alternateLabel.font = theme.capitalKeyFont
@@ -206,33 +214,43 @@ final class KeyView: UIView {
         contentView = labelContainer
     }
 
-    private func image(named name: String, traits: UITraitCollection, tintColor: UIColor) {
-        var image = UIImage(named: name, in: Bundle.top, compatibleWith: traits)
-        if image == nil {
-            // If we get here, we're probably being run as an iPhone app on the iPad.
-            // In this scenario for whatever reason we must use an image asset file that contains only one universal image
-            image = UIImage(named: name + "-fallback", in: Bundle.top, compatibleWith: traits)
-        }
+    private func sfSymbol(named symbolName: String, traits: UITraitCollection, tintColor: UIColor) {
+        let image = UIImage(systemName: symbolName, withConfiguration: theme.sfSymbolConfiguration)
+
+        // Create a container view to control sizing
+        let container = UIView()
+        container.translatesAutoresizingMaskIntoConstraints = false
 
         imageView = UIImageView()
         if let imageView = self.imageView {
-            self.imageView?.translatesAutoresizingMaskIntoConstraints = false
-
+            imageView.translatesAutoresizingMaskIntoConstraints = false
             imageView.image = image
             imageView.contentMode = .center
             imageView.tintColor = tintColor
 
-            addSubview(imageView)
+            // Prevent image from affecting layout size
+            imageView.setContentHuggingPriority(.defaultLow, for: .vertical)
+            imageView.setContentHuggingPriority(.defaultLow, for: .horizontal)
+            imageView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+            imageView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
-            contentView = imageView
+            container.addSubview(imageView)
+
+            // Center imageView in container without affecting container size
+            imageView.centerXAnchor.constraint(equalTo: container.centerXAnchor).isActive = true
+            imageView.centerYAnchor.constraint(equalTo: container.centerYAnchor).isActive = true
+
+            addSubview(container)
+
+            contentView = container
         }
     }
 
-    private func image(named name: String, traits: UITraitCollection) {
-        image(named: name, traits: traits, tintColor: theme.textColor)
+    private func sfSymbol(named symbolName: String, traits: UITraitCollection) {
+        sfSymbol(named: symbolName, traits: traits, tintColor: theme.textColor)
     }
 
-    init(page: KeyboardPage, key: KeyDefinition, theme: ThemeType, traits: UITraitCollection) {
+    init(page: KeyboardPage, key: KeyDefinition, theme: Theme, traits: UITraitCollection) {
         self.key = key
         self.theme = theme
 
@@ -258,26 +276,22 @@ final class KeyView: UIView {
         contentView.backgroundColor = backgroundColor(for: key, page: page)
     }
 
-    private func setupContentView(_ key: KeyDefinition, _ page: KeyboardPage, _ traits: UITraitCollection, _ theme: ThemeType) {
+    private func setupContentView(_ key: KeyDefinition, _ page: KeyboardPage, _ traits: UITraitCollection, _ theme: Theme) {
         switch key.type {
         case let .input(string, alt):
             input(string: string, alt: alt, page: page)
         case let .spacebar(string):
             text(string, page: page)
         case let .returnkey(string):
-            if screenInches >= 11 {
-                image(named: "return", traits: traits)
-            } else {
-                text(string, page: page)
-            }
+            setupReturnKey(page, traits, string)
         case .symbols:
             setupSymbols(page, traits)
         case .keyboardMode:
-            image(named: "close-keyboard-ipad", traits: traits)
+            sfSymbol(named: "keyboard.chevron.compact.down", traits: traits)
         case .backspace:
-            image(named: "backspace", traits: traits)
+            sfSymbol(named: "delete.backward", traits: traits)
         case .keyboard:
-            image(named: "globe", traits: traits)
+            sfSymbol(named: "globe", traits: traits)
         case .shift:
             setupShift(page, traits, theme)
         case .shiftSymbols:
@@ -297,19 +311,31 @@ final class KeyView: UIView {
         case .fullStop:
             setupFullStop(traits, page)
         case .caps:
-            image(named: "caps", traits: traits)
+            sfSymbol(named: "capslock", traits: traits)
         case .tab:
-            image(named: "tab", traits: traits)
+            sfSymbol(named: "arrow.right.to.line", traits: traits)
         }
     }
 
+    private func setupReturnKey(_ page: KeyboardPage, _ traits: UITraitCollection, _ string: String) {
+        if iOSVersion.isIOS26OrNewer {
+            sfSymbol(named: "return", traits: traits)
+        } else {
+            if device.isLargeIPad {
+                text(string, page: page)
+            } else {
+                sfSymbol(named: "return", traits: traits)
+            }
+        }
+
+    }
     private func setupSymbols(_ page: KeyboardPage, _ traits: UITraitCollection) {
         if case .symbols1 = page {
             text("ABC", page: page)
         } else if case .symbols2 = page {
             text("ABC", page: page)
         } else {
-            if traits.userInterfaceIdiom == .pad && UIDevice.current.dc.deviceFamily == .iPad {
+            if device.isPad {
                 text(".?123", page: page)
             } else {
                 text("123", page: page)
@@ -323,25 +349,25 @@ final class KeyView: UIView {
         } else if case .symbols2 = page {
             text("123", page: page)
         } else {
-            image(named: "shift", traits: traits)
+            sfSymbol(named: "shift", traits: traits)
         }
     }
 
-    private func setupShift(_ page: KeyboardPage, _ traits: UITraitCollection, _ theme: ThemeType) {
+    private func setupShift(_ page: KeyboardPage, _ traits: UITraitCollection, _ theme: Theme) {
         switch page {
         case .shifted, .capslock:
-            image(named: "shift-filled", traits: traits, tintColor: theme.shiftTintColor)
+            sfSymbol(named: "shift.fill", traits: traits, tintColor: theme.shiftTintColor)
         default:
-            image(named: "shift", traits: traits)
+            sfSymbol(named: "shift", traits: traits)
         }
     }
 
     private func setupComma(_ traits: UITraitCollection, _ page: KeyboardPage) {
-        if UIDevice.current.dc.isIpad && traits.userInterfaceIdiom == .pad {
-            if (UIDevice.current.dc.screenSize.sizeInches ?? 0) < 12.0 {
-                input(string: ",", alt: "!", page: page)
-            } else {
+        if device.isPad {
+            if device.isLargeIPad {
                 input(string: ",", alt: ";", page: page)
+            } else {
+                input(string: ",", alt: "!", page: page)
             }
         } else {
             input(string: ",", alt: nil, page: page)
@@ -349,11 +375,11 @@ final class KeyView: UIView {
     }
 
     private func setupFullStop(_ traits: UITraitCollection, _ page: KeyboardPage) {
-        if UIDevice.current.dc.isIpad && traits.userInterfaceIdiom == .pad {
-            if (UIDevice.current.dc.screenSize.sizeInches ?? 0) < 12.0 {
-                input(string: ".", alt: "?", page: page)
-            } else {
+        if device.isPad {
+            if device.isLargeIPad {
                 input(string: ".", alt: ":", page: page)
+            } else {
+                input(string: ".", alt: "?", page: page)
             }
         } else {
             input(string: ".", alt: nil, page: page)

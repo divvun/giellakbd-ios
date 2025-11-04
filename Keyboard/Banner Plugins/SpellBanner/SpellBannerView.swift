@@ -34,7 +34,7 @@ public protocol SpellBannerViewDelegate: AnyObject {
 public final class SpellBannerView: UIView, BannerView {
     weak public var delegate: SpellBannerViewDelegate?
 
-    private var theme: ThemeType
+    private var theme: Theme
     private let numberOfSuggestions = 3
     private var items: [SpellBannerItem?] = [SpellBannerItem]()
 
@@ -72,7 +72,7 @@ public final class SpellBannerView: UIView, BannerView {
         return flowLayout
     }
 
-    init(theme: ThemeType) {
+    init(theme: Theme) {
         self.theme = theme
         super.init(frame: .zero)
         backgroundColor = .clear
@@ -95,7 +95,7 @@ public final class SpellBannerView: UIView, BannerView {
         return collectionView
     }
 
-    func updateTheme(_ theme: ThemeType) {
+    func updateTheme(_ theme: Theme) {
         collectionView.removeFromSuperview()
         collectionView = makeCollectionView()
     }

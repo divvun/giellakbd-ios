@@ -57,7 +57,7 @@ public final class SpellBanner: Banner {
         return !hasSpeller || !databaseExists
     }
 
-    init(theme: ThemeType) {
+    init(theme: Theme) {
         self.bannerView = SpellBannerView(theme: theme)
         bannerView.delegate = self
         loadSpeller()
@@ -112,7 +112,7 @@ public final class SpellBanner: Banner {
     }
     
 
-    func updateTheme(_ theme: ThemeType) {
+    func updateTheme(_ theme: Theme) {
         bannerView.updateTheme(theme)
     }
 

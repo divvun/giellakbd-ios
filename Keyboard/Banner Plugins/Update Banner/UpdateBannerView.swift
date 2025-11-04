@@ -10,7 +10,7 @@ final class UpdateBannerView: UIView, BannerView {
         set { label.text = newValue }
     }
 
-    init(theme: ThemeType) {
+    init(theme: Theme) {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
         setupView()
@@ -41,7 +41,7 @@ final class UpdateBannerView: UIView, BannerView {
         activityIndicator.startAnimating()
     }
 
-    func updateTheme(_ theme: ThemeType) {
+    func updateTheme(_ theme: Theme) {
 
     }
 

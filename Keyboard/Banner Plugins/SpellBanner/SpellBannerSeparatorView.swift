@@ -3,9 +3,8 @@ import UIKit
 final class SpellBannerSeparatorView: UICollectionReusableView {
     // This is dirty. Ideally we'd get this from the theme already created and being passed around,
     // but since this view is initialized by the system, there seemed no elegant way to do that.
-    private lazy var baseTheme: _Theme = { Theme(traits: self.traitCollection) }()
-    private(set) lazy var theme: ThemeType = {
-        baseTheme.select(traits: self.traitCollection)
+    private(set) lazy var theme: Theme = {
+        Theme.current(for: self.traitCollection)
     }()
 
     private let separatorLine = UIView()
