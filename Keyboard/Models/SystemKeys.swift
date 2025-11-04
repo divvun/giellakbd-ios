@@ -1,6 +1,5 @@
 import Foundation
 import UIKit
-import DeviceKit
 
 final class SystemKeys {
     static func systemKeyRowsForCurrentDevice(spaceName: String,

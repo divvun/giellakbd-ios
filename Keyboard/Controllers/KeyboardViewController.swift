@@ -1,6 +1,5 @@
 import UIKit
 import DivvunSpell
-import DeviceKit
 
 protocol KeyboardViewProvider {
     var delegate: (KeyboardViewDelegate & KeyboardViewKeyboardKeyDelegate)? { get set }

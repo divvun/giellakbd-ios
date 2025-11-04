@@ -1,5 +1,4 @@
 import UIKit
-import DeviceKit
 
 final class KeyView: UIView {
     private let key: KeyDefinition

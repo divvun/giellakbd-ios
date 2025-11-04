@@ -1,6 +1,5 @@
-import DeviceKit
-import Sentry
 import UIKit
+import Sentry
 
 typealias KeyboardHeight = (portrait: CGFloat, landscape: CGFloat)
 
@@ -53,7 +52,7 @@ struct KeyboardHeightProvider {
         }
 
         // Check device-specific overrides
-        if let override = deviceOverride(for: deviceContext.device) {
+        if let override = deviceOverride(for: deviceContext) {
             return override
         }
 
@@ -66,10 +65,10 @@ struct KeyboardHeightProvider {
     }
 
     /// Device-specific overrides for devices that need different heights than their diagonal peers
-    private static func deviceOverride(for device: Device) -> KeyboardHeight? {
-        switch device {
+    private static func deviceOverride(for deviceContext: DeviceContext) -> KeyboardHeight? {
+        switch deviceContext.device {
         case .simulator(let inner):
-            return deviceOverride(for: inner)
+            return deviceOverride(for: DeviceContext(device: inner, isLandscape: deviceContext.isLandscape))
         case .iPhoneXSMax, .iPhone11ProMax:
             return (portrait: 272, landscape: 196)
         default:

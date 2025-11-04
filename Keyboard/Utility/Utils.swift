@@ -1,6 +1,5 @@
 import Foundation
 import UIKit
-import DeviceKit
 
 struct iOSVersion {
     static var current: OperatingSystemVersion {

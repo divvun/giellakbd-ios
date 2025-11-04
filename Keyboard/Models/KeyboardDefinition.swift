@@ -1,5 +1,4 @@
 import UIKit
-import DeviceKit
 
 public indirect enum TransformTree: Codable {
     case tree([String: TransformTree])

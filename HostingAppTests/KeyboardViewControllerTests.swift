@@ -1,6 +1,5 @@
 @testable import BaseKeyboard
 import XCTest
-import DeviceKit
 
 final class KeyboardViewControllerTests: XCTestCase {
     // MARK: - Landscape Height Tests
