@@ -9,7 +9,7 @@ PODS:
   - SQLite.swift (0.15.4):
     - SQLite.swift/standard (= 0.15.4)
   - SQLite.swift/standard (0.15.4)
-  - SwiftLint (0.62.1)
+  - SwiftLint (0.62.2)
 
 DEPENDENCIES:
   - DeviceKit (~> 5.7)
@@ -47,7 +47,7 @@ SPEC CHECKSUMS:
   RxSwift: 915abbdfb62214aa89ccd0b194d44fb478019b27
   Sentry: 1e4e974d45f09d153af4b30b42acfb1c79e957d3
   SQLite.swift: a107c734115fea616a4ad31371d39f1637e8de56
-  SwiftLint: 6a9eb020853558a7eaf00f655636b5d6ad15bd02
+  SwiftLint: f84fc7d844e9cde0dc4f5013af608a269e317aba
 
 PODFILE CHECKSUM: 5d747ab509ddfc17d951ab31f35fad0add4c14b2
 
