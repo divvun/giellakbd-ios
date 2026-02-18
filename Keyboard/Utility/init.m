@@ -12,8 +12,6 @@ __attribute__((constructor)) static void init_sentry(void) {
         [SentrySDK startWithConfigureOptions:^(SentryOptions *options) {
             options.dsn = dsn;
             options.debug = @YES; // Helpful to see what's going on
-            options.sessionReplay.onErrorSampleRate = 1.0;
-            options.sessionReplay.sessionSampleRate = 0.1;
         }];
 
         if (error != nil) {
