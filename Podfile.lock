@@ -3,13 +3,13 @@ PODS:
   - DivvunSpell (1.0.0-beta.5)
   - PahkatClient (0.2.3)
   - RxSwift (5.1.3)
-  - Sentry (8.58.2):
-    - Sentry/Core (= 8.58.2)
-  - Sentry/Core (8.58.2)
+  - Sentry (8.58.3):
+    - Sentry/Core (= 8.58.3)
+  - Sentry/Core (8.58.3)
   - SQLite.swift (0.15.5):
     - SQLite.swift/standard (= 0.15.5)
   - SQLite.swift/standard (0.15.5)
-  - SwiftLint (0.63.2)
+  - SwiftLint (0.65.0)
 
 DEPENDENCIES:
   - DeviceKit (~> 5.7)
@@ -45,9 +45,9 @@ SPEC CHECKSUMS:
   DivvunSpell: 4003ce81da721c40f76b14107c2d8ce9206ec4b8
   PahkatClient: dcbcde9d2facf59046846dac5badc8dd08038408
   RxSwift: 915abbdfb62214aa89ccd0b194d44fb478019b27
-  Sentry: de29b881e83bd91cf99a927f82f1fd86bfb39db2
+  Sentry: 108fdbb76299c4189af12246bf0308c09c278922
   SQLite.swift: c38c92f61436f1a4053029550edb1ef7caa2a2cd
-  SwiftLint: 4fa4a9b437ccc4fc72f6c0bc98556e8e9e05bccf
+  SwiftLint: c94465bc87831f3e16c52b3569f0626de50bd7da
 
 PODFILE CHECKSUM: c999362e05bbb13a5503303f0072a043ecc60786
 
