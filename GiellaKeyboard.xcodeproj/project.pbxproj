@@ -58,6 +58,8 @@
 		99DA1846240D09B5003E7353 /* UserDictionaryServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA1845240D09B5003E7353 /* UserDictionaryServiceTests.swift */; };
 		99DA1847240D1010003E7353 /* UserDictionaryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DA184224095AD0003E7353 /* UserDictionaryService.swift */; };
 		99DD30F623E307430065E8D8 /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DD30F423E3059C0065E8D8 /* Audio.swift */; };
+		B2040C432FF423D600D15208 /* Sentry-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = B2040C422FF423D600D15208 /* Sentry-Dynamic */; };
+		B2040C452FF4249D00D15208 /* Sentry-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = B2040C442FF4249D00D15208 /* Sentry-Dynamic */; };
 		B25493F72EAF79E400F7FB64 /* KeyboardHeightProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25493F62EAF79DA00F7FB64 /* KeyboardHeightProvider.swift */; };
 		B2993E132EABC4FA00CA493D /* dicts.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B2993E122EABC4FA00CA493D /* dicts.bundle */; };
 		B2D88A8A2EB75A16002B04A2 /* DeviceContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D88A892EB75A16002B04A2 /* DeviceContext.swift */; };
@@ -303,6 +305,7 @@
 			files = (
 				C6F249361F736DCE00840F2B /* BaseKeyboard.framework in Frameworks */,
 				453EF99058C866F6341DC9F2 /* Pods_HostingApp.framework in Frameworks */,
+				B2040C432FF423D600D15208 /* Sentry-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,6 +330,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E61E44D2910B076167B93B2 /* Pods_BaseKeyboard.framework in Frameworks */,
+				B2040C452FF4249D00D15208 /* Sentry-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -671,6 +675,9 @@
 				C6F249351F736DCE00840F2B /* PBXTargetDependency */,
 			);
 			name = HostingApp;
+			packageProductDependencies = (
+				B2040C422FF423D600D15208 /* Sentry-Dynamic */,
+			);
 			productName = HostingApp;
 			productReference = 4E807D9319461D9000D875D1 /* HostingApp.app */;
 			productType = "com.apple.product-type.application";
@@ -728,6 +735,9 @@
 			dependencies = (
 			);
 			name = BaseKeyboard;
+			packageProductDependencies = (
+				B2040C442FF4249D00D15208 /* Sentry-Dynamic */,
+			);
 			productName = BaseKeyboard;
 			productReference = C6F2492F1F736DCE00840F2B /* BaseKeyboard.framework */;
 			productType = "com.apple.product-type.framework";
@@ -796,6 +806,9 @@
 				ru,
 			);
 			mainGroup = 4E807D8A19461D9000D875D1;
+			packageReferences = (
+				B2040C412FF423D600D15208 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
+			);
 			productRefGroup = 4E807D9419461D9000D875D1 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -911,7 +924,6 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-HostingApp/Pods-HostingApp-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
-				"${BUILT_PRODUCTS_DIR}/Sentry/Sentry.framework",
 				"${BUILT_PRODUCTS_DIR}/PahkatClient/PahkatClient.framework",
 				"${BUILT_PRODUCTS_DIR}/DeviceKit/DeviceKit.framework",
 				"${BUILT_PRODUCTS_DIR}/DivvunSpell/DivvunSpell.framework",
@@ -920,7 +932,6 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sentry.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PahkatClient.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DeviceKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DivvunSpell.framework",
@@ -1650,6 +1661,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B2040C412FF423D600D15208 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/getsentry/sentry-cocoa.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 8.58.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B2040C422FF423D600D15208 /* Sentry-Dynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B2040C412FF423D600D15208 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = "Sentry-Dynamic";
+		};
+		B2040C442FF4249D00D15208 /* Sentry-Dynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B2040C412FF423D600D15208 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = "Sentry-Dynamic";
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4E807D8B19461D9000D875D1 /* Project object */;
 }
