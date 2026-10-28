@@ -1,12 +1,12 @@
 PODS:
-  - DeviceKit (5.8.0)
+  - DeviceKit (5.9.0)
   - DivvunSpell (1.0.0-beta.5)
   - PahkatClient (0.2.3)
   - RxSwift (5.1.3)
   - SQLite.swift (0.15.5):
     - SQLite.swift/standard (= 0.15.5)
   - SQLite.swift/standard (0.15.5)
-  - SwiftLint (0.65.0)
+  - SwiftLint (0.65.1)
 
 DEPENDENCIES:
   - DeviceKit (~> 5.7)
@@ -36,13 +36,13 @@ CHECKOUT OPTIONS:
     :http: https://github.com/divvun/pahkat-client-sdk-swift/releases/download/v0.2.3/cargo-pod.tgz
 
 SPEC CHECKSUMS:
-  DeviceKit: 57636054c827d171a22baa3fd320b65a70f3fda7
+  DeviceKit: 90a1ff9c523d856d52a85d3b6088cad30f6234ff
   DivvunSpell: 4003ce81da721c40f76b14107c2d8ce9206ec4b8
   PahkatClient: dcbcde9d2facf59046846dac5badc8dd08038408
   RxSwift: 915abbdfb62214aa89ccd0b194d44fb478019b27
   SQLite.swift: c38c92f61436f1a4053029550edb1ef7caa2a2cd
-  SwiftLint: c94465bc87831f3e16c52b3569f0626de50bd7da
+  SwiftLint: 7d51ad56923e88694cee5ca806dbbab30f85eaaa
 
 PODFILE CHECKSUM: c1220ece97f6f896a193389eddfbc419be1a141d
 
-COCOAPODS: 1.16.2
+COCOAPODS: 1.17.0
