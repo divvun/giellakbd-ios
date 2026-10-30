@@ -95,9 +95,6 @@ final class HomeController: ViewController<HomeView>, HideNavBar {
         contentView.testingButton.addTarget(self, action: #selector(openTesting), for: [.touchUpInside])
         contentView.personalDictionary.addTarget(self, action: #selector(openSettings), for: [.touchUpInside])
 
-        // The testing screen can deliberately crash the app to verify Sentry, so keep it out of App Store builds
-        contentView.testingButton.isHidden = !FeatureFlag.debugTesting
-
         // Currently settings only has user dictionary, hide if not enabled
         if !FeatureFlag.userDictionary {
             contentView.personalDictionary.isHidden = true
