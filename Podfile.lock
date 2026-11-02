@@ -1,5 +1,5 @@
 PODS:
-  - DeviceKit (5.9.0)
+  - DeviceKit (5.10.0)
   - DivvunSpell (1.0.0-beta.5)
   - PahkatClient (0.2.3)
   - RxSwift (5.1.3)
@@ -36,7 +36,7 @@ CHECKOUT OPTIONS:
     :http: https://github.com/divvun/pahkat-client-sdk-swift/releases/download/v0.2.3/cargo-pod.tgz
 
 SPEC CHECKSUMS:
-  DeviceKit: 90a1ff9c523d856d52a85d3b6088cad30f6234ff
+  DeviceKit: 37fc92e0e41f6b2586b510c4798e89d7b44d7bc4
   DivvunSpell: 4003ce81da721c40f76b14107c2d8ce9206ec4b8
   PahkatClient: dcbcde9d2facf59046846dac5badc8dd08038408
   RxSwift: 915abbdfb62214aa89ccd0b194d44fb478019b27
