@@ -61,8 +61,9 @@ struct Theme {
 
     /// Get the current theme for the given trait collection
     /// This is the main entry point for creating themes
-    static func current(for traits: UITraitCollection) -> Theme {
-        let device = DeviceContext.current
+    /// - Parameter device: The context for the screen the keyboard is on. Orientation-dependent sizes
+    ///   come from it, so pass `DeviceContext.current(in:)` when a view is available.
+    static func current(for traits: UITraitCollection, device: DeviceContext = .current) -> Theme {
         let isDark = traits.userInterfaceStyle == .dark
         let isLegacy = !iOSVersion.isIOS26OrNewer
 

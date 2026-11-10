@@ -4,15 +4,6 @@ import Sentry
 typealias KeyboardHeight = (portrait: CGFloat, landscape: CGFloat)
 
 struct KeyboardHeightProvider {
-    private static let portraitDeviceHeight: CGFloat = {
-        let size = UIScreen.main.bounds.size
-        return max(size.height, size.width)
-    }()
-
-    private static let landscapeDeviceHeight: CGFloat = {
-        let size = UIScreen.main.bounds.size
-        return min(size.height, size.width)
-    }()
 
     /// Returns keyboard height for a given device and orientation, optionally adjusted for custom row counts
     static func height(
@@ -68,7 +59,9 @@ struct KeyboardHeightProvider {
     private static func deviceOverride(for deviceContext: DeviceContext) -> KeyboardHeight? {
         switch deviceContext.device {
         case .simulator(let inner):
-            return deviceOverride(for: DeviceContext(device: inner, isLandscape: deviceContext.isLandscape))
+            return deviceOverride(for: DeviceContext(device: inner,
+                                                     isLandscape: deviceContext.isLandscape,
+                                                     screenSize: deviceContext.screenSize))
         case .iPhoneXSMax, .iPhone11ProMax:
             return (portrait: 272, landscape: 196)
         default:
@@ -143,6 +136,11 @@ struct KeyboardHeightProvider {
     }
 
     private static func fallbackHeight(for deviceContext: DeviceContext) -> KeyboardHeight {
+        // Screen extents of the display the keyboard is on, independent of orientation
+        let screenSize = deviceContext.screenSize
+        let portraitDeviceHeight = max(screenSize.height, screenSize.width)
+        let landscapeDeviceHeight = min(screenSize.height, screenSize.width)
+
         if deviceContext.isPad {
             let landscape = landscapeDeviceHeight / 2.0 - 70
             return (portrait: 384, landscape: landscape)

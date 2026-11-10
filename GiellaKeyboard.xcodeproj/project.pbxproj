@@ -242,7 +242,7 @@
 		99DA1845240D09B5003E7353 /* UserDictionaryServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionaryServiceTests.swift; sourceTree = "<group>"; };
 		99DD30F423E3059C0065E8D8 /* Audio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
 		9C51EB456E98876CB8BCC6AE /* Pods-HostingAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HostingAppTests.release.xcconfig"; path = "Target Support Files/Pods-HostingAppTests/Pods-HostingAppTests.release.xcconfig"; sourceTree = "<group>"; };
-		B216A74E30A3371E00FA2050 /* SystemKeysTests.swift */ = {isa = PBXFileReference; path = SystemKeysTests.swift; sourceTree = "<group>"; };
+		B216A74E30A3371E00FA2050 /* SystemKeysTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemKeysTests.swift; sourceTree = "<group>"; };
 		B25493F62EAF79DA00F7FB64 /* KeyboardHeightProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHeightProvider.swift; sourceTree = "<group>"; };
 		B2993E122EABC4FA00CA493D /* dicts.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = dicts.bundle; sourceTree = "<group>"; };
 		B2A808E9308918EE00A0D478 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };

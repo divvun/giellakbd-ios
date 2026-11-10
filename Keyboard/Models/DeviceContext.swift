@@ -6,6 +6,15 @@ import UIKit
 struct DeviceContext {
     let device: Device
     let isLandscape: Bool
+    /// Size of the screen the keyboard is on, in the current interface orientation.
+    /// `.zero` when unknown, which only happens in tests.
+    let screenSize: CGSize
+
+    init(device: Device, isLandscape: Bool, screenSize: CGSize = .zero) {
+        self.device = device
+        self.isLandscape = isLandscape
+        self.screenSize = screenSize
+    }
 
     // MARK: - Device Property Accessors
 
@@ -60,10 +69,23 @@ struct DeviceContext {
 
     // MARK: - Factory
 
-    static var current: DeviceContext {
-        DeviceContext(
+    /// The context for the screen `view` is currently shown on.
+    ///
+    /// Reads the view's window scene rather than `UIScreen.main`: on devices with more than one built-in
+    /// display, such as iPhone Duo, `UIScreen.main` stays on one display while the keyboard can be on another.
+    /// The scene's screen bounds follow the current interface orientation.
+    /// Falls back to `UIScreen.main` until the view is in a window.
+    static func current(in view: UIView?) -> DeviceContext {
+        let screenSize = view?.window?.windowScene?.screen.bounds.size ?? UIScreen.main.bounds.size
+        return DeviceContext(
             device: Device.current,
-            isLandscape: UIScreen.main.isDeviceLandscape
+            isLandscape: screenSize.width > screenSize.height,
+            screenSize: screenSize
         )
+    }
+
+    /// Context without a view. Prefer `current(in:)` whenever orientation or screen size matter.
+    static var current: DeviceContext {
+        current(in: nil)
     }
 }
