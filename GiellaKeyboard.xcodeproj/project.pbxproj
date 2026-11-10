@@ -61,6 +61,7 @@
 		B2040C432FF423D600D15208 /* Sentry-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = B2040C422FF423D600D15208 /* Sentry-Dynamic */; };
 		B2040C452FF4249D00D15208 /* Sentry-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = B2040C442FF4249D00D15208 /* Sentry-Dynamic */; };
 		B216A74F30A3371E00FA2050 /* SystemKeysTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B216A74E30A3371E00FA2050 /* SystemKeysTests.swift */; };
+		B216A75130A3605000FA2050 /* DuoKeyboardHeightTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B216A75030A3605000FA2050 /* DuoKeyboardHeightTests.swift */; };
 		B25493F72EAF79E400F7FB64 /* KeyboardHeightProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25493F62EAF79DA00F7FB64 /* KeyboardHeightProvider.swift */; };
 		B2993E132EABC4FA00CA493D /* dicts.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B2993E122EABC4FA00CA493D /* dicts.bundle */; };
 		B2A808EA308918EE00A0D478 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A808E9308918EE00A0D478 /* SceneDelegate.swift */; };
@@ -232,7 +233,8 @@
 		99DA1845240D09B5003E7353 /* UserDictionaryServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionaryServiceTests.swift; sourceTree = "<group>"; };
 		99DD30F423E3059C0065E8D8 /* Audio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
 		9C51EB456E98876CB8BCC6AE /* Pods-HostingAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HostingAppTests.release.xcconfig"; path = "Target Support Files/Pods-HostingAppTests/Pods-HostingAppTests.release.xcconfig"; sourceTree = "<group>"; };
-		B216A74E30A3371E00FA2050 /* SystemKeysTests.swift */ = {isa = PBXFileReference; path = SystemKeysTests.swift; sourceTree = "<group>"; };
+		B216A74E30A3371E00FA2050 /* SystemKeysTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemKeysTests.swift; sourceTree = "<group>"; };
+		B216A75030A3605000FA2050 /* DuoKeyboardHeightTests.swift */ = {isa = PBXFileReference; path = DuoKeyboardHeightTests.swift; sourceTree = "<group>"; };
 		B25493F62EAF79DA00F7FB64 /* KeyboardHeightProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHeightProvider.swift; sourceTree = "<group>"; };
 		B2993E122EABC4FA00CA493D /* dicts.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = dicts.bundle; sourceTree = "<group>"; };
 		B2A808E9308918EE00A0D478 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -499,6 +501,7 @@
 				99460239243B2BF80027C1CC /* KeyboardViewControllerTests.swift */,
 				990440A623FC14A30063064E /* Info.plist */,
 				B216A74E30A3371E00FA2050 /* SystemKeysTests.swift */,
+				B216A75030A3605000FA2050 /* DuoKeyboardHeightTests.swift */,
 			);
 			path = HostingAppTests;
 			sourceTree = "<group>";
@@ -1068,6 +1071,7 @@
 			files = (
 				B216A74F30A3371E00FA2050 /* SystemKeysTests.swift in Sources */,
 				990440A523FC14A30063064E /* UserDictionaryTests.swift in Sources */,
+				B216A75130A3605000FA2050 /* DuoKeyboardHeightTests.swift in Sources */,
 				9946023A243B2BF80027C1CC /* KeyboardViewControllerTests.swift in Sources */,
 				99DA1846240D09B5003E7353 /* UserDictionaryServiceTests.swift in Sources */,
 				99DA18412408294A003E7353 /* WordContextTests.swift in Sources */,

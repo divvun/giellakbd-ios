@@ -60,12 +60,20 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     private(set) lazy var theme: Theme = {
-        Theme.current(for: self.traitCollection)
+        Theme.current(for: self.traitCollection, device: self.deviceContext)
     }()
+
+    /// Device and screen geometry for the screen this keyboard is currently on.
+    private var deviceContext: DeviceContext {
+        DeviceContext.current(in: viewIfLoaded)
+    }
+
+    /// The screen size the current theme and height were computed for.
+    private var lastScreenSize: CGSize?
 
     private var preferredHeight: CGFloat {
         var height = KeyboardHeightProvider.height(
-            for: DeviceContext.current,
+            for: deviceContext,
             traitCollection: traitCollection,
             rowCount: keyboardDefinition.currentDeviceLayout?.normal.count
         )
@@ -82,19 +90,25 @@ open class KeyboardViewController: UIInputViewController {
             // moving the height updating here causes jank
             // where there's a black box under the keyboard before it corrects
         } completion: { [weak self] _ in
-            guard let self = self else { return }
-            // Regenerate theme with new device context (portrait/landscape)
-            self.theme = Theme.current(for: self.traitCollection)
-
-            // Update all views with the new theme
-            self.updateAfterThemeChange()
-            self.bannerManager?.updateTheme(self.theme)
-            if self.keyboardView != nil {
-                self.keyboardView.updateTheme(theme: self.theme)
-            }
-            self.updateHeightConstraint()
-            self.view.layoutIfNeeded()
+            self?.applyScreenGeometryChange()
         }
+    }
+
+    /// Regenerates the theme and height for the screen the keyboard is now on.
+    /// Runs after rotation and whenever the screen size changes, e.g. when iPhone Duo folds or unfolds.
+    private func applyScreenGeometryChange() {
+        let context = deviceContext
+        lastScreenSize = context.screenSize
+        theme = Theme.current(for: traitCollection, device: context)
+
+        // Update all views with the new theme
+        updateAfterThemeChange()
+        bannerManager?.updateTheme(theme)
+        if keyboardView != nil {
+            keyboardView.updateTheme(theme: theme)
+        }
+        updateHeightConstraint()
+        view.layoutIfNeeded()
     }
 
     private func initHeightConstraint() {
@@ -367,7 +381,15 @@ open class KeyboardViewController: UIInputViewController {
     open override func viewDidLayoutSubviews() {
         if isFirstRun {
             isFirstRun = false
+            lastScreenSize = deviceContext.screenSize
             initHeightConstraint()
+        } else if lastScreenSize != deviceContext.screenSize {
+            // The keyboard moved to a screen of a different size without a rotation transition, e.g. iPhone Duo
+            // folding or unfolding. Deferred so we don't trigger a layout pass from inside this one.
+            lastScreenSize = deviceContext.screenSize
+            DispatchQueue.main.async { [weak self] in
+                self?.applyScreenGeometryChange()
+            }
         }
 
         super.viewDidLayoutSubviews()
@@ -548,7 +570,7 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     private func checkDarkMode(traits: UITraitCollection) {
-        let newTheme = Theme.current(for: traits)
+        let newTheme = Theme.current(for: traits, device: deviceContext)
 
         if theme.appearance != newTheme.appearance {
             theme = newTheme
