@@ -25,7 +25,6 @@ final class AppNavControllerDelegate: NSObject, UINavigationControllerDelegate {
 final class AppDelegate: UIResponder, UIApplicationDelegate {
     weak static var instance: AppDelegate!
 
-    var window: UIWindow?
     var wantsKeyboardList = false
 
     let navController = UINavigationController(rootViewController: HomeController())
@@ -52,25 +51,22 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         // Migrate the databases
         UserDictionary.migrate()
 
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window!.rootViewController = navController
-        window!.makeKeyAndVisible()
+        // The window, the first-launch instructions push and launch URLs are handled by
+        // SceneDelegate once the window scene connects.
 
         let oneDay: Double = 60 * 60 * 24
         UIApplication.shared.setMinimumBackgroundFetchInterval(oneDay)
 
+        return true
+    }
+
+    /// Pushes the setup instructions the first time the app runs without the keyboard enabled.
+    /// Called by SceneDelegate after the window is on screen, matching the pre-scene launch order.
+    func showInstructionsOnFirstLaunchIfNeeded() {
         if !isKeyboardEnabled, KeyboardSettings.firstLoad {
             KeyboardSettings.firstLoad = false
             navController.pushViewController(InstructionsController(), animated: false)
         }
-
-        if let url = launchOptions?[UIApplication.LaunchOptionsKey.url] {
-            if let url = url as? URL {
-                parseUrl(url)
-            }
-        }
-
-        return true
     }
 
 //    func application(_ application: UIApplication,
@@ -79,20 +75,12 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 //        completionHandler(.newData)
 //    }
 
-    func applicationWillEnterForeground(_: UIApplication) {
-        // I'd gladly use .NSExtensionHostWillEnterForeground but it doesn't work
-        NotificationCenter.default.post(Notification(name: .HostingAppWillEnterForeground))
-    }
+    // Foreground transitions and URL opens are handled per scene in SceneDelegate.
 
     func parseUrl(_: URL) {
         guard Bundle.main.bundleIdentifier != nil else {
             return
         }
-    }
-
-    func application(_: UIApplication, open url: URL, options _: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        parseUrl(url)
-        return true
     }
 
 //    func application(_ application: UIApplication,
