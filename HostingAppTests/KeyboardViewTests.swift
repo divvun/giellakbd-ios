@@ -204,6 +204,6 @@ final class KeyboardViewTests: XCTestCase {
         }
         """
         let raw = try JSONDecoder().decode(RawKeyboardDefinition.self, from: Data(json.utf8))
-        return try KeyboardDefinition(fromRaw: raw, traits: traits)
+        return try KeyboardDefinition(fromRaw: raw, traits: traits, needsInputModeSwitchKey: false)
     }
 }

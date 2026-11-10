@@ -118,6 +118,6 @@ final class KeyViewShadowTests: XCTestCase {
         }
         """
         let raw = try JSONDecoder().decode(RawKeyboardDefinition.self, from: Data(json.utf8))
-        return try KeyboardDefinition(fromRaw: raw, traits: UITraitCollection(userInterfaceIdiom: .phone))
+        return try KeyboardDefinition(fromRaw: raw, traits: UITraitCollection(userInterfaceIdiom: .phone), needsInputModeSwitchKey: false)
     }
 }

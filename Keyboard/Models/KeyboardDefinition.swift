@@ -220,7 +220,7 @@ public struct KeyboardDefinition: Codable {
         return Set()
     }
 
-    init(fromRaw raw: RawKeyboardDefinition, traits: UITraitCollection) throws {
+    init(fromRaw raw: RawKeyboardDefinition, traits: UITraitCollection, needsInputModeSwitchKey: Bool) throws {
         let deviceVariant = DeviceVariant.from(traits: traits)
 
         self.name = raw.name
@@ -279,10 +279,34 @@ public struct KeyboardDefinition: Codable {
             self.currentDeviceLayout = Layout(normal: normal, shifted: shifted, symbols1: symbols1Converted, symbols2: symbols2Converted)
         }
 
-        currentDeviceLayout!.normal.platformize(page: .normal, spaceName: spaceName, returnName: returnName, traits: traits)
-        currentDeviceLayout!.shifted.platformize(page: .shifted, spaceName: spaceName, returnName: returnName, traits: traits)
-        currentDeviceLayout!.symbols1.platformize(page: .symbols1, spaceName: spaceName, returnName: returnName, traits: traits)
-        currentDeviceLayout!.symbols2.platformize(page: .symbols2, spaceName: spaceName, returnName: returnName, traits: traits)
+        currentDeviceLayout!.normal.platformize(
+            page: .normal,
+            spaceName: spaceName,
+            returnName: returnName,
+            traits: traits,
+            needsInputModeSwitchKey: needsInputModeSwitchKey
+        )
+        currentDeviceLayout!.shifted.platformize(
+            page: .shifted,
+            spaceName: spaceName,
+            returnName: returnName,
+            traits: traits,
+            needsInputModeSwitchKey: needsInputModeSwitchKey
+        )
+        currentDeviceLayout!.symbols1.platformize(
+            page: .symbols1,
+            spaceName: spaceName,
+            returnName: returnName,
+            traits: traits,
+            needsInputModeSwitchKey: needsInputModeSwitchKey
+        )
+        currentDeviceLayout!.symbols2.platformize(
+            page: .symbols2,
+            spaceName: spaceName,
+            returnName: returnName,
+            traits: traits,
+            needsInputModeSwitchKey: needsInputModeSwitchKey
+        )
     }
 
     private func keyDefinitionsFromRaw(_ rawKeyDefinitions: [[RawKeyDefinition]]) -> [[KeyDefinition]] {
