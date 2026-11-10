@@ -35,6 +35,8 @@ open class KeyboardViewController: UIInputViewController {
     private var deadKeyHandler: DeadKeyHandler!
     public private(set) var keyboardDefinition: KeyboardDefinition!
     private var keyboardMode: KeyboardMode = .normal
+    /// The `needsInputModeSwitchKey` value the current layout was built with.
+    private var layoutIncludesInputModeSwitchKey: Bool?
 
     private var bannerManager: BannerManager?
 
@@ -147,7 +149,11 @@ open class KeyboardViewController: UIInputViewController {
         do {
             let data = try String(contentsOf: path).data(using: .utf8)!
             let raws = try JSONDecoder().decode([RawKeyboardDefinition].self, from: data)
-            keyboardDefinitions = try raws.map { try KeyboardDefinition(fromRaw: $0, traits: self.traitCollection) }
+            let needsSwitchKey = needsInputModeSwitchKey
+            layoutIncludesInputModeSwitchKey = needsSwitchKey
+            keyboardDefinitions = try raws.map {
+                try KeyboardDefinition(fromRaw: $0, traits: self.traitCollection, needsInputModeSwitchKey: needsSwitchKey)
+            }
             print("keyboard definition locales: \(keyboardDefinitions.map { $0.locale })")
         } catch {
             fatalError("Error getting keyboard definitions from json file: \(error)")
@@ -372,6 +378,13 @@ open class KeyboardViewController: UIInputViewController {
 
         self.disablesDelayingGestureRecognizers = true
         checkDarkMode()
+
+        // needsInputModeSwitchKey isn't guaranteed to be accurate in viewDidLoad, where the layout is first built.
+        // Rebuild if it has changed so the globe key appears exactly when the system expects us to provide one.
+        if let layoutHasSwitchKey = layoutIncludesInputModeSwitchKey, layoutHasSwitchKey != needsInputModeSwitchKey {
+            setupKeyboard()
+            updateHeightConstraint()
+        }
     }
 
     private var application: UIApplication? {
