@@ -14,7 +14,7 @@ final class SpellBannerLoadingTests: XCTestCase {
         window = UIWindow(frame: CGRect(x: 0, y: 0, width: 390, height: 844))
         window.isHidden = false
         // The test host has no speller configured, so this initial load finds nothing.
-        sut = SpellBanner(theme: Theme.current(for: UITraitCollection(userInterfaceIdiom: .phone)))
+        sut = SpellBanner(theme: Theme.current(for: UITraitCollection(userInterfaceIdiom: .phone), device: .current))
     }
 
     override func tearDown() {

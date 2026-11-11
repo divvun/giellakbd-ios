@@ -11,7 +11,7 @@ final class KeyboardViewTests: XCTestCase {
         try super.setUpWithError()
         window = UIWindow(frame: CGRect(x: 0, y: 0, width: 390, height: 844))
         window.isHidden = false
-        sut = KeyboardView(definition: try makeDefinition(), theme: Theme.current(for: traits))
+        sut = KeyboardView(definition: try makeDefinition(), theme: Theme.current(for: traits, device: .current))
         // Size the view with Auto Layout, as the keyboard does, so size changes go through `bounds`.
         sut.translatesAutoresizingMaskIntoConstraints = false
         window.addSubview(sut)
@@ -78,7 +78,7 @@ final class KeyboardViewTests: XCTestCase {
 
     func test_updateTheme_rebuildsKeysOnSamePage() {
         let before = keyViewIDs()
-        sut.updateTheme(theme: Theme.current(for: traits))
+        sut.updateTheme(theme: Theme.current(for: traits, device: .current))
         layout()
         XCTAssertEqual(sut.page, .normal)
         XCTAssertTrue(Set(before).isDisjoint(with: keyViewIDs()))

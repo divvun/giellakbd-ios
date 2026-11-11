@@ -14,7 +14,7 @@ final class ThemeTests: XCTestCase {
                 ])
                 XCTAssertEqual(
                     Theme.appearance(for: traits),
-                    Theme.current(for: traits).appearance,
+                    Theme.current(for: traits, device: .current).appearance,
                     "idiom \(idiom.rawValue), style \(style.rawValue)"
                 )
             }
