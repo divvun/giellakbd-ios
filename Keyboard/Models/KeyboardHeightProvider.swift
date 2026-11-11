@@ -55,6 +55,10 @@ struct KeyboardHeightProvider {
         return fallbackHeight(for: deviceContext)
     }
 
+    /// Shortest screen side, in points, at or above which an iPhone Duo keyboard is on the inner display.
+    /// The outer display's short side is 466 pt and the inner display's is 669 pt.
+    private static let duoInnerDisplayMinShortSide: CGFloat = 600
+
     /// Device-specific overrides for devices that need different heights than their diagonal peers
     private static func deviceOverride(for deviceContext: DeviceContext) -> KeyboardHeight? {
         switch deviceContext.device {
@@ -68,7 +72,8 @@ struct KeyboardHeightProvider {
             // DeviceKit describes only the 5.4" outer display, which the diagonal table already handles.
             // The unfolded inner display is much larger: match the system keyboard's key area there
             // (253 pt portrait, 219 pt landscape) plus our 48 pt banner.
-            let isInnerDisplay = min(deviceContext.screenSize.width, deviceContext.screenSize.height) >= 600
+            let shortSide = min(deviceContext.screenSize.width, deviceContext.screenSize.height)
+            let isInnerDisplay = shortSide >= duoInnerDisplayMinShortSide
             return isInnerDisplay ? (portrait: 301, landscape: 267) : nil
         default:
             return nil
