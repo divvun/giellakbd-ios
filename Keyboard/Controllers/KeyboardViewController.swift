@@ -60,7 +60,11 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     private(set) lazy var theme: Theme = {
-        Theme.current(for: self.traitCollection, device: self.deviceContext)
+        // First built in viewDidLoad, before the view is in a window, so this may be UIScreen.main rather than
+        // the screen the keyboard ends up on. Recording it lets viewDidLayoutSubviews correct the theme.
+        let context = self.deviceContext
+        self.lastScreenSize = context.screenSize
+        return Theme.current(for: self.traitCollection, device: context)
     }()
 
     /// Device and screen geometry for the screen this keyboard is currently on.
@@ -382,11 +386,13 @@ open class KeyboardViewController: UIInputViewController {
     open override func viewDidLayoutSubviews() {
         if isFirstRun {
             isFirstRun = false
-            lastScreenSize = deviceContext.screenSize
             initHeightConstraint()
-        } else if lastScreenSize != deviceContext.screenSize {
-            // The keyboard moved to a screen of a different size without a rotation transition, e.g. iPhone Duo
-            // folding or unfolding. Deferred so we don't trigger a layout pass from inside this one.
+        }
+
+        if lastScreenSize != deviceContext.screenSize {
+            // The theme was built for a different screen size: either before the view was in a window, or the
+            // keyboard moved screens without a rotation transition, e.g. iPhone Duo folding or unfolding.
+            // Deferred so we don't trigger a layout pass from inside this one.
             lastScreenSize = deviceContext.screenSize
             DispatchQueue.main.async { [weak self] in
                 self?.applyScreenGeometryChange()
