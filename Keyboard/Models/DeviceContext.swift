@@ -20,7 +20,6 @@ struct DeviceContext {
 
     var isPad: Bool { device.isPad }
     var isPhone: Bool { device.isPhone }
-    var hasSensorHousing: Bool { device.hasSensorHousing }
 
     var screenInches: CGFloat {
         // Default to maxSupportedInches for legacy reasons
