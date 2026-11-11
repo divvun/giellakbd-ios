@@ -89,6 +89,7 @@ public final class SpellBannerView: UIView, BannerView {
         collectionView.backgroundColor = theme.bannerBackgroundColor
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.bounces = false
+        collectionView.hideEdgeEffects()
         collectionView.delegate = self
         collectionView.dataSource = self
 

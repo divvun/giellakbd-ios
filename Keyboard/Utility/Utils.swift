@@ -322,3 +322,16 @@ class URLOpener {
         }
     }
 }
+
+extension UIScrollView {
+    /// From iOS 26, scroll views blur and fade content near their edges. The keyboard's scroll views are small, with
+    /// content right against their edges, so this blurred the keys, popups and suggestions themselves.
+    func hideEdgeEffects() {
+        if #available(iOS 26.0, *) {
+            topEdgeEffect.isHidden = true
+            leftEdgeEffect.isHidden = true
+            bottomEdgeEffect.isHidden = true
+            rightEdgeEffect.isHidden = true
+        }
+    }
+}

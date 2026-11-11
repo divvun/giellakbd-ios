@@ -121,6 +121,7 @@ final internal class KeyboardView: UIView,
         collectionView.register(KeyCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView.isUserInteractionEnabled = false
         collectionView.isScrollEnabled = false
+        collectionView.hideEdgeEffects()
 
         addSubview(collectionView)
         collectionView.topAnchor.constraint(equalTo: topAnchor).enable()
