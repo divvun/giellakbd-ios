@@ -89,6 +89,14 @@ public final class SpellBannerView: UIView, BannerView {
         collectionView.backgroundColor = theme.bannerBackgroundColor
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.bounces = false
+        if #available(iOS 26.0, *) {
+            // Scroll views blur content near their edges from iOS 26. The banner is so short, and its first
+            // suggestion sits against the left edge, that this blurred the suggestions themselves.
+            collectionView.topEdgeEffect.isHidden = true
+            collectionView.leftEdgeEffect.isHidden = true
+            collectionView.bottomEdgeEffect.isHidden = true
+            collectionView.rightEdgeEffect.isHidden = true
+        }
         collectionView.delegate = self
         collectionView.dataSource = self
 
