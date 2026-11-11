@@ -34,18 +34,21 @@ struct SystemKeysTests {
         #expect(types(row) == [.symbols, .keyboard, .spacebar(name: "space"), .returnkey(name: "return")])
     }
 
-    @Test("Face ID iPhone relies on the system globe below the keyboard")
-    func faceIDiPhoneHidesGlobe() {
-        let row = bottomRow(device: DeviceContext(device: .iPhone17, isLandscape: false), traits: phoneTraits, needsInputModeSwitchKey: false)
-        #expect(!types(row).contains(.keyboard))
-        #expect(row.first?.type == .symbols)
-        #expect(row.first?.size.width == 2.5)
+    /// Covers Face ID iPhones, where the system draws the globe below the keyboard, and any device with only
+    /// one keyboard enabled. Both report `false`, and the device model must not change the result.
+    @Test("No globe key when the system doesn't ask for one, on Face ID and home button iPhones")
+    func hidesGlobeWhenNotNeeded() {
+        // Separate calls rather than an array of devices: the test target doesn't link DeviceKit,
+        // so it can't use DeviceKit.Device's type metadata.
+        expectNoGlobe(DeviceContext(device: .iPhone17, isLandscape: false), "Face ID iPhone")
+        expectNoGlobe(DeviceContext(device: .iPhoneSE3, isLandscape: false), "Home button iPhone")
     }
 
-    @Test("No globe key when only one keyboard is enabled")
-    func singleKeyboardHidesGlobe() {
-        let row = bottomRow(device: DeviceContext(device: .iPhoneSE3, isLandscape: false), traits: phoneTraits, needsInputModeSwitchKey: false)
-        #expect(!types(row).contains(.keyboard))
+    private func expectNoGlobe(_ device: DeviceContext, _ name: Comment) {
+        let row = bottomRow(device: device, traits: phoneTraits, needsInputModeSwitchKey: false)
+        #expect(!types(row).contains(.keyboard), name)
+        #expect(row.first?.type == .symbols, name)
+        #expect(row.first?.size.width == 2.5, name)
     }
 
     @Test("Home button iPhone shows a globe key")
