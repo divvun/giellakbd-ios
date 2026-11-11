@@ -104,9 +104,7 @@ open class KeyboardViewController: UIInputViewController {
         // Update all views with the new theme
         updateAfterThemeChange()
         bannerManager?.updateTheme(theme)
-        if keyboardView != nil {
-            keyboardView.updateTheme(theme: theme)
-        }
+        keyboardView?.updateTheme(theme: theme)
         updateHeightConstraint()
         view.layoutIfNeeded()
     }
