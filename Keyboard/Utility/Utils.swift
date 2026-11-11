@@ -225,13 +225,6 @@ extension NSLayoutConstraint {
     }
 }
 
-extension UIScreen {
-    var isDeviceLandscape: Bool {
-        let size = self.bounds.size
-        return size.width > size.height
-    }
-}
-
 let str1 = "containing"
 let str2 = "Bundle"
 
