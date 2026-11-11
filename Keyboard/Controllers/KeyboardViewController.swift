@@ -93,6 +93,7 @@ open class KeyboardViewController: UIInputViewController {
     private var isTransitioningSize = false
 
     open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
         isTransitioningSize = true
         coordinator.animate { _ in
             // moving the height updating here causes jank
