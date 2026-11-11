@@ -89,11 +89,16 @@ open class KeyboardViewController: UIInputViewController {
         return height
     }
 
+    /// True during a size transition such as a rotation, whose completion applies the new screen geometry.
+    private var isTransitioningSize = false
+
     open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        isTransitioningSize = true
         coordinator.animate { _ in
             // moving the height updating here causes jank
             // where there's a black box under the keyboard before it corrects
         } completion: { [weak self] _ in
+            self?.isTransitioningSize = false
             self?.applyScreenGeometryChange()
         }
     }
@@ -389,9 +394,11 @@ open class KeyboardViewController: UIInputViewController {
             initHeightConstraint()
         }
 
-        if lastScreenSize != deviceContext.screenSize {
+        if !isTransitioningSize, lastScreenSize != deviceContext.screenSize {
             // The theme was built for a different screen size: either before the view was in a window, or the
             // keyboard moved screens without a rotation transition, e.g. iPhone Duo folding or unfolding.
+            // Skipped mid-transition: updating the height during the animation leaves a black box under the
+            // keyboard, and the transition's completion applies the change anyway.
             // Deferred so we don't trigger a layout pass from inside this one.
             lastScreenSize = deviceContext.screenSize
             DispatchQueue.main.async { [weak self] in
