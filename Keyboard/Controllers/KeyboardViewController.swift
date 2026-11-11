@@ -266,9 +266,14 @@ open class KeyboardViewController: UIInputViewController {
         }
 
         if withBanner {
-            bannerContainerView = makeBannerContainerView()
+            // Reuse the banner container on a rebuild: the banner manager draws into it, so a new one would stay empty.
+            // Removing the previous keyboard view also removed its constraint to the banner, so anchor the new one.
+            let bannerContainer = bannerContainerView ?? makeBannerContainerView()
+            bannerContainerView = bannerContainer
+            bannerContainer.bottomAnchor.constraint(equalTo: keyboardView.topAnchor).enable()
+
             if bannerManager == nil {
-                bannerManager = BannerManager(view: bannerContainerView!, theme: theme, delegate: self)
+                bannerManager = BannerManager(view: bannerContainer, theme: theme, delegate: self)
             }
         } else {
             self.keyboardView.topAnchor.constraint(equalTo: keyboardContainer.topAnchor).enable()
@@ -366,8 +371,6 @@ open class KeyboardViewController: UIInputViewController {
         bannerContainer.heightAnchor.constraint(equalToConstant: theme.bannerHeight).enable()
         bannerContainer.leftAnchor.constraint(equalTo: keyboardContainer.leftAnchor).enable()
         bannerContainer.rightAnchor.constraint(equalTo: keyboardContainer.rightAnchor).enable()
-
-        bannerContainer.bottomAnchor.constraint(equalTo: keyboardView.topAnchor).enable()
         bannerContainer.topAnchor.constraint(equalTo: keyboardContainer.topAnchor).enable()
 
         bannerContainer.isHidden = false
