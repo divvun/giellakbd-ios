@@ -69,23 +69,9 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
-//    func application(_ application: UIApplication,
-//                     performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-//        // TODO: check for actual updates and install those instead
-//        completionHandler(.newData)
-//    }
-
-    // Foreground transitions and URL opens are handled per scene in SceneDelegate.
-
     func parseUrl(_: URL) {
         guard Bundle.main.bundleIdentifier != nil else {
             return
         }
     }
-
-//    func application(_ application: UIApplication,
-//                     handleEventsForBackgroundURLSession identifier: String,
-//                     completionHandler: @escaping () -> Void) {
-//        pahkat?.setBackgroundURLSessionCompletion(completionHandler)
-//    }
 }
