@@ -117,6 +117,7 @@ open class KeyboardViewController: UIInputViewController {
 
     open override func viewDidAppear(_ animated: Bool) {
         Audio.checkIfSoundEnabled()
+        KeyHaptics.checkIfEnabled()
         updateNoncapitalizingPunctuation()
     }
 
@@ -698,7 +699,7 @@ extension KeyboardViewController: KeyboardViewDelegate {
         }
     }
 
-    private func playSound(_ key: KeyDefinition) {
+    private func playKeyFeedback(_ key: KeyDefinition) {
         switch key.type {
         case .input, .comma, .fullStop, .tab:
             Audio.playClickSound()
@@ -709,6 +710,7 @@ extension KeyboardViewController: KeyboardViewDelegate {
         default:
             return
         }
+        KeyHaptics.playKeyPress()
     }
 
     func didSwipeKey(_ key: KeyDefinition) {
@@ -727,7 +729,7 @@ extension KeyboardViewController: KeyboardViewDelegate {
     }
 
     func didTriggerKey(_ key: KeyDefinition) {
-        playSound(key)
+        playKeyFeedback(key)
 
         switch key.type {
         case .comma:
@@ -816,6 +818,7 @@ extension KeyboardViewController: BannerManagerDelegate {
     func bannerDidProvideInput(banner: Banner, inputText: String) {
         if banner is SpellBanner {
             Audio.playClickSound()
+            KeyHaptics.playKeyPress()
             replaceSelected(with: inputText)
 
             // If the keyboard is not compounding, we add a space

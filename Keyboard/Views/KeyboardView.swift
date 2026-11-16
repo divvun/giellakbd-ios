@@ -460,6 +460,7 @@ final internal class KeyboardView: UIView,
 
     override func touchesBegan(_ touches: Set<UITouch>, with _: UIEvent?) {
         hapticFeedback.prepare()
+        KeyHaptics.prepare()
         // Forward to longpress controller?
         if let longpressController = self.longpressController, let touch = touches.first {
             longpressController.touchesBegan(touch.location(in: collectionView))

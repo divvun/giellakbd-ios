@@ -41,6 +41,11 @@ final class KeyboardSettings {
         get { return defaults.bool(forKey: "isKeySoundEnabled") }
         set { defaults.set(newValue, forKey: "isKeySoundEnabled") }
     }
+
+    static var isHapticFeedbackEnabled: Bool {
+        get { return defaults.bool(forKey: "isHapticFeedbackEnabled") }
+        set { defaults.set(newValue, forKey: "isHapticFeedbackEnabled") }
+    }
 }
 
 extension Bundle {
