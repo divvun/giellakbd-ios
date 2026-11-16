@@ -96,6 +96,7 @@ public final class SpellBannerView: UIView, BannerView {
     }
 
     func updateTheme(_ theme: Theme) {
+        self.theme = theme
         collectionView.removeFromSuperview()
         collectionView = makeCollectionView()
     }
