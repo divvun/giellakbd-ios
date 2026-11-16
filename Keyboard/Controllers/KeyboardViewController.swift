@@ -153,22 +153,42 @@ open class KeyboardViewController: UIInputViewController {
             fatalError("Error getting keyboard definitions from json file: \(error)")
         }
 
-        let kbdIndex: Int
         if isBeingRunFromTests() {
-            kbdIndex = 0
-        } else {
-            guard let index = Bundle.main.infoDictionary?["DivvunKeyboardIndex"] as? Int else {
-                fatalError("There was no DivvunKeyboardIndex")
-            }
+            return keyboardDefinitions[0]
+        }
+        return keyboardDefinitions[keyboardDefinitionIndex(locales: keyboardDefinitions.map { $0.locale })]
+    }
 
-            if index < 0 || index >= keyboardDefinitions.count {
-                fatalError("Invalid kbdIndex: \(index); count: \(keyboardDefinitions.count)")
-            }
+    /// The position of this extension's layout in `KeyboardDefinitions.json`.
+    ///
+    /// Each keyboard extension in an app shares the same `KeyboardDefinitions.json`. kbdgen sets the extension's
+    /// `PrimaryLanguage` to its layout's language tag, which is also the layout's `locale` in the JSON, so the layout is
+    /// found by matching the two. `DivvunKeyboardIndex` is a position in the JSON. It is only used when no layout matches,
+    /// because if kbdgen ever writes the JSON and the indices in different orders, every keyboard after the first
+    /// difference loads its neighbour's layout.
+    private func keyboardDefinitionIndex(locales: [String]) -> Int {
+        let info = Bundle.main.infoDictionary
+        let extensionAttributes = (info?["NSExtension"] as? [String: Any])?["NSExtensionAttributes"] as? [String: Any]
+        let primaryLanguage = extensionAttributes?["PrimaryLanguage"] as? String
+        let storedIndex = info?["DivvunKeyboardIndex"] as? Int
 
-            kbdIndex = index
+        let matches = locales.indices.filter { locales[$0] == primaryLanguage }
+        if matches.count > 1 {
+            fatalError("\(matches.count) keyboard definitions have the locale \(primaryLanguage ?? ""); locales: \(locales)")
+        }
+        if let match = matches.first {
+            if let storedIndex, storedIndex != match {
+                print("DivvunKeyboardIndex \(storedIndex) disagrees with the layout for \(primaryLanguage ?? "") at \(match); using \(match)")
+            }
+            return match
         }
 
-        return keyboardDefinitions[kbdIndex]
+        guard let storedIndex, locales.indices.contains(storedIndex) else {
+            fatalError("No keyboard definition for PrimaryLanguage \(primaryLanguage ?? "nil"), and DivvunKeyboardIndex " +
+                "\(storedIndex.map(String.init) ?? "nil") is not valid; locales: \(locales)")
+        }
+        print("No keyboard definition for PrimaryLanguage \(primaryLanguage ?? "nil"); using DivvunKeyboardIndex \(storedIndex)")
+        return storedIndex
     }
 
     private func setupKeyboardNotSupportedOnThisDeviceView() {
