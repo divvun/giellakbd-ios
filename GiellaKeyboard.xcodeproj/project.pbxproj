@@ -30,6 +30,7 @@
 		9930BD90243CD2BF00C0EF7F /* FolderWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9930BD8E243CD2BF00C0EF7F /* FolderWatcher.swift */; };
 		99460238243B27140027C1CC /* InputContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99460237243B27140027C1CC /* InputContext.swift */; };
 		9946023A243B2BF80027C1CC /* KeyboardViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99460239243B2BF80027C1CC /* KeyboardViewControllerTests.swift */; };
+		C0FFEE0000000000000000A2 /* KeyboardViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FFEE0000000000000000A1 /* KeyboardViewTests.swift */; };
 		9968D77E2BD684F900F7A4AC /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 9968D77D2BD684F900F7A4AC /* PrivacyInfo.xcprivacy */; };
 		997021052416DF8C00A81A27 /* KeyboardLocale+AllLocales.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997021042416DF8C00A81A27 /* KeyboardLocale+AllLocales.swift */; };
 		997550B623EAC631004ED6A5 /* UserDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997550B523EAC631004ED6A5 /* UserDictionary.swift */; };
@@ -207,6 +208,7 @@
 		9930BD8E243CD2BF00C0EF7F /* FolderWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderWatcher.swift; sourceTree = "<group>"; };
 		99460237243B27140027C1CC /* InputContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputContext.swift; sourceTree = "<group>"; };
 		99460239243B2BF80027C1CC /* KeyboardViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardViewControllerTests.swift; sourceTree = "<group>"; };
+		C0FFEE0000000000000000A1 /* KeyboardViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardViewTests.swift; sourceTree = "<group>"; };
 		9968D77D2BD684F900F7A4AC /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		997021042416DF8C00A81A27 /* KeyboardLocale+AllLocales.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyboardLocale+AllLocales.swift"; sourceTree = "<group>"; };
 		997550B523EAC631004ED6A5 /* UserDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionary.swift; sourceTree = "<group>"; };
@@ -492,6 +494,7 @@
 				99DA1845240D09B5003E7353 /* UserDictionaryServiceTests.swift */,
 				99DA18402408294A003E7353 /* WordContextTests.swift */,
 				99460239243B2BF80027C1CC /* KeyboardViewControllerTests.swift */,
+				C0FFEE0000000000000000A1 /* KeyboardViewTests.swift */,
 				990440A623FC14A30063064E /* Info.plist */,
 			);
 			path = HostingAppTests;
@@ -1061,6 +1064,7 @@
 			files = (
 				990440A523FC14A30063064E /* UserDictionaryTests.swift in Sources */,
 				9946023A243B2BF80027C1CC /* KeyboardViewControllerTests.swift in Sources */,
+				C0FFEE0000000000000000A2 /* KeyboardViewTests.swift in Sources */,
 				99DA1846240D09B5003E7353 /* UserDictionaryServiceTests.swift in Sources */,
 				99DA18412408294A003E7353 /* WordContextTests.swift in Sources */,
 			);

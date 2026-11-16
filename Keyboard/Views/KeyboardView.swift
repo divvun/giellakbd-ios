@@ -57,6 +57,8 @@ final internal class KeyboardView: UIView,
 
     public var page: KeyboardPage = .normal {
         didSet {
+            // Capitalization sets the page on every keystroke, usually to the page already showing.
+            guard page != oldValue else { return }
             update()
         }
     }
@@ -154,6 +156,8 @@ final internal class KeyboardView: UIView,
 
     override var bounds: CGRect {
         didSet {
+            // Key sizes only depend on the size; layout passes often set the same bounds again.
+            guard bounds.size != oldValue.size else { return }
             update()
         }
     }
