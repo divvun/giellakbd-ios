@@ -51,17 +51,12 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         // Migrate the databases
         UserDictionary.migrate()
 
-        // The window, the first-launch instructions push and launch URLs are handled by
-        // SceneDelegate once the window scene connects.
-
         let oneDay: Double = 60 * 60 * 24
         UIApplication.shared.setMinimumBackgroundFetchInterval(oneDay)
 
         return true
     }
 
-    /// Pushes the setup instructions the first time the app runs without the keyboard enabled.
-    /// Called by SceneDelegate after the window is on screen, matching the pre-scene launch order.
     func showInstructionsOnFirstLaunchIfNeeded() {
         if !isKeyboardEnabled, KeyboardSettings.firstLoad {
             KeyboardSettings.firstLoad = false

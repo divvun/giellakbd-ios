@@ -1,8 +1,5 @@
 import UIKit
 
-/// Scene-based life cycle for the hosting app.
-/// iOS 27 requires apps built with the iOS 27 SDK to adopt UIScene, otherwise they fail to launch.
-/// Process-level setup still lives in `AppDelegate`; this class owns the window and UI life-cycle events.
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
