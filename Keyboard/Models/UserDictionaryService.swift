@@ -11,6 +11,9 @@ final class UserDictionaryService {
     init(speller: Speller, locale: KeyboardLocale) {
         self.dictionary = UserDictionary(locale: locale)
         self.speller = speller
+        // Open the database now, while nothing else can see this service. It opens lazily, and context updates
+        // and suggestion lookups run on different background queues, so they could otherwise race to open it.
+        _ = dictionary.database
     }
 
     public func updateContext(_ context: WordContext) {
@@ -22,6 +25,12 @@ final class UserDictionaryService {
         currentContext = context
 
         saveOrUpdateContextIfNeeded()
+    }
+
+    /// The word being typed is about to be replaced, as when a suggestion is picked, so don't learn it. Otherwise
+    /// it changing into the replacement in one step would look like a finished word.
+    func discardCurrentWord() {
+        currentContext = nil
     }
 
     private func saveOrUpdateContextIfNeeded() {

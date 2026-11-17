@@ -95,8 +95,7 @@ public final class UserDictionary {
 
     public func getSuggestions(for input: String) -> [String] {
         return getDetectedAndUserDefinedWords()
-            .map { (word: $0, score: $0.levenshtein(input) ) }
-            .filter { $0.score < 4 }
+            .compactMap { word in word.levenshtein(input, maxDistance: 3).map { (word: word, score: $0) } }
             .sorted { $0.score < $1.score }
             .map { $0.word }
     }

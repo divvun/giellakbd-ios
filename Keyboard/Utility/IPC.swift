@@ -13,7 +13,7 @@ final class IPC {
         }
     }
 
-    private var folderWatcher: FolderWatcher?
+    private(set) var folderWatcher: FolderWatcher?
     private let ipcDirectory = KeyboardSettings.groupContainerURL
         .appendingPathComponent("ipc", isDirectory: true)
 

@@ -117,6 +117,7 @@ open class KeyboardViewController: UIInputViewController {
 
     open override func viewDidAppear(_ animated: Bool) {
         Audio.checkIfSoundEnabled()
+        KeyHaptics.checkIfEnabled()
         updateNoncapitalizingPunctuation()
     }
 
@@ -153,22 +154,42 @@ open class KeyboardViewController: UIInputViewController {
             fatalError("Error getting keyboard definitions from json file: \(error)")
         }
 
-        let kbdIndex: Int
         if isBeingRunFromTests() {
-            kbdIndex = 0
-        } else {
-            guard let index = Bundle.main.infoDictionary?["DivvunKeyboardIndex"] as? Int else {
-                fatalError("There was no DivvunKeyboardIndex")
-            }
+            return keyboardDefinitions[0]
+        }
+        return keyboardDefinitions[keyboardDefinitionIndex(locales: keyboardDefinitions.map { $0.locale })]
+    }
 
-            if index < 0 || index >= keyboardDefinitions.count {
-                fatalError("Invalid kbdIndex: \(index); count: \(keyboardDefinitions.count)")
-            }
+    /// The position of this extension's layout in `KeyboardDefinitions.json`.
+    ///
+    /// Each keyboard extension in an app shares the same `KeyboardDefinitions.json`. kbdgen sets the extension's
+    /// `PrimaryLanguage` to its layout's language tag, which is also the layout's `locale` in the JSON, so the layout is
+    /// found by matching the two. `DivvunKeyboardIndex` is a position in the JSON. It is only used when no layout matches,
+    /// because if kbdgen ever writes the JSON and the indices in different orders, every keyboard after the first
+    /// difference loads its neighbour's layout.
+    private func keyboardDefinitionIndex(locales: [String]) -> Int {
+        let info = Bundle.main.infoDictionary
+        let extensionAttributes = (info?["NSExtension"] as? [String: Any])?["NSExtensionAttributes"] as? [String: Any]
+        let primaryLanguage = extensionAttributes?["PrimaryLanguage"] as? String
+        let storedIndex = info?["DivvunKeyboardIndex"] as? Int
 
-            kbdIndex = index
+        let matches = locales.indices.filter { locales[$0] == primaryLanguage }
+        if matches.count > 1 {
+            fatalError("\(matches.count) keyboard definitions have the locale \(primaryLanguage ?? ""); locales: \(locales)")
+        }
+        if let match = matches.first {
+            if let storedIndex, storedIndex != match {
+                print("DivvunKeyboardIndex \(storedIndex) disagrees with the layout for \(primaryLanguage ?? "") at \(match); using \(match)")
+            }
+            return match
         }
 
-        return keyboardDefinitions[kbdIndex]
+        guard let storedIndex, locales.indices.contains(storedIndex) else {
+            fatalError("No keyboard definition for PrimaryLanguage \(primaryLanguage ?? "nil"), and DivvunKeyboardIndex " +
+                "\(storedIndex.map(String.init) ?? "nil") is not valid; locales: \(locales)")
+        }
+        print("No keyboard definition for PrimaryLanguage \(primaryLanguage ?? "nil"); using DivvunKeyboardIndex \(storedIndex)")
+        return storedIndex
     }
 
     private func setupKeyboardNotSupportedOnThisDeviceView() {
@@ -413,12 +434,9 @@ open class KeyboardViewController: UIInputViewController {
 
     func replaceSelected(with input: String) {
         do {
-            let ctx = try CursorContext.from(proxy: textDocumentProxy)
-            textDocumentProxy.adjustTextPosition(byCharacterOffset: ctx.current.1.count - Int(ctx.currentOffset))
-
-            for _ in 0 ..< ctx.current.1.count {
-                deleteBackward()
-            }
+            // Straight on the proxy rather than through `deleteBackward()`, so the input state (suggestions,
+            // the user dictionary, capitalisation) is only updated once, by `insertText`, not for every letter.
+            try textDocumentProxy.deleteCurrentWord()
             insertText(input)
         } catch let error {
             // Log and run
@@ -553,6 +571,11 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     private func checkDarkMode() {
+        // This runs on every keystroke. Building a theme recomputes every metric and colour,
+        // so only build one when the appearance has actually changed.
+        guard Theme.appearance(for: traitCollection) != theme.appearance else {
+            return
+        }
         self.checkDarkMode(traits: self.traitCollection)
     }
 
@@ -678,7 +701,7 @@ extension KeyboardViewController: KeyboardViewDelegate {
         }
     }
 
-    private func playSound(_ key: KeyDefinition) {
+    private func playKeyFeedback(_ key: KeyDefinition) {
         switch key.type {
         case .input, .comma, .fullStop, .tab:
             Audio.playClickSound()
@@ -689,6 +712,7 @@ extension KeyboardViewController: KeyboardViewDelegate {
         default:
             return
         }
+        KeyHaptics.playKeyPress()
     }
 
     func didSwipeKey(_ key: KeyDefinition) {
@@ -707,7 +731,7 @@ extension KeyboardViewController: KeyboardViewDelegate {
     }
 
     func didTriggerKey(_ key: KeyDefinition) {
-        playSound(key)
+        playKeyFeedback(key)
 
         switch key.type {
         case .comma:
@@ -796,12 +820,25 @@ extension KeyboardViewController: BannerManagerDelegate {
     func bannerDidProvideInput(banner: Banner, inputText: String) {
         if banner is SpellBanner {
             Audio.playClickSound()
+            KeyHaptics.playKeyPress()
             replaceSelected(with: inputText)
 
             // If the keyboard is not compounding, we add a space
             if !self.keyboardDefinition.features.contains(.compounding) {
                 insertText(" ")
             }
+        }
+    }
+}
+
+extension UITextDocumentProxy {
+    /// Deletes the whole word the cursor is in, even when the cursor is partway through it.
+    func deleteCurrentWord() throws {
+        let ctx = try CursorContext.from(proxy: self)
+        adjustTextPosition(byCharacterOffset: ctx.current.1.count - Int(ctx.currentOffset))
+
+        for _ in 0 ..< ctx.current.1.count {
+            deleteBackward()
         }
     }
 }

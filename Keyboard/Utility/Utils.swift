@@ -109,42 +109,45 @@ extension String {
     }
 
     public func levenshtein(_ other: String) -> Int {
-        let sCount = self.count
-        let oCount = other.count
+        levenshtein(other, maxDistance: .max)!
+    }
 
-        guard sCount != 0 else {
-            return oCount
+    /// The edit distance to `other`, or `nil` if it's more than `maxDistance`.
+    ///
+    /// Works on arrays of characters, as indexing a String by offset walks it from the start each time,
+    /// and keeps only two rows of the table. Gives up as soon as the distance must exceed `maxDistance`.
+    public func levenshtein(_ other: String, maxDistance: Int) -> Int? {
+        let source = Array(self)
+        let target = Array(other)
+
+        // Every extra character needs at least one insertion or deletion.
+        guard abs(source.count - target.count) <= maxDistance else {
+            return nil
+        }
+        guard !source.isEmpty, !target.isEmpty else {
+            return Swift.max(source.count, target.count)
         }
 
-        guard oCount != 0 else {
-            return sCount
-        }
+        var previous = Array(0...target.count)
+        var current = [Int](repeating: 0, count: target.count + 1)
 
-        let line: [Int]  = Array(repeating: 0, count: oCount + 1)
-        var mat: [[Int]] = Array(repeating: line, count: sCount + 1)
-
-        for i in 0...sCount {
-            mat[i][0] = i
-        }
-
-        for j in 0...oCount {
-            mat[0][j] = j
-        }
-
-        for j in 1...oCount {
-            for i in 1...sCount {
-                if self[i - 1] == other[j - 1] {
-                    mat[i][j] = mat[i - 1][j - 1]       // no operation
-                } else {
-                    let del = mat[i - 1][j] + 1         // deletion
-                    let ins = mat[i][j - 1] + 1         // insertion
-                    let sub = mat[i - 1][j - 1] + 1     // substitution
-                    mat[i][j] = min(min(del, ins), sub)
-                }
+        for i in 1...source.count {
+            current[0] = i
+            var rowMinimum = i
+            for j in 1...target.count {
+                let substitution = previous[j - 1] + (source[i - 1] == target[j - 1] ? 0 : 1)
+                current[j] = Swift.min(previous[j] + 1, current[j - 1] + 1, substitution)
+                rowMinimum = Swift.min(rowMinimum, current[j])
             }
+            // Later rows can't go below this row's smallest value.
+            if rowMinimum > maxDistance {
+                return nil
+            }
+            swap(&previous, &current)
         }
 
-        return mat[sCount][oCount]
+        let distance = previous[target.count]
+        return distance <= maxDistance ? distance : nil
     }
 }
 

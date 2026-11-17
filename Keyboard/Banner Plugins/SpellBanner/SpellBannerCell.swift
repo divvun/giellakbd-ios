@@ -1,60 +1,69 @@
 import UIKit
 
 final class SpellBannerCell: UICollectionViewCell {
-    private let titleLabel: UILabel
+    private let titleLabel = UILabel()
 
-    private var heightConstraint: NSLayoutConstraint?
-    private var widthConstraint: NSLayoutConstraint?
+    private var topConstraint: NSLayoutConstraint!
+    private var bottomConstraint: NSLayoutConstraint!
+    private var heightConstraint: NSLayoutConstraint!
 
     override init(frame: CGRect) {
-        titleLabel = UILabel(frame: frame)
         super.init(frame: frame)
-    }
+        topConstraint = titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor)
+        bottomConstraint = titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        heightConstraint = contentView.heightAnchor.constraint(equalToConstant: 0)
 
-    func configure(theme: Theme) {
-        isHidden = false
+        // Build the view hierarchy and constraints once. `configure(theme:)` runs on every reload,
+        // so anything it adds would pile up for as long as the keyboard is open.
         contentView.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.fill(superview: self)
         contentView.addSubview(titleLabel)
 
-        titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: theme.bannerVerticalMargin).enable()
-        titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,
-                                           constant: -theme.bannerVerticalMargin).enable()
+        topConstraint.isActive = true
+        bottomConstraint.isActive = true
         titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).enable()
-        titleLabel.font = theme.bannerFont
         titleLabel.textAlignment = .center
 
         backgroundColor = UIColor.white.withAlphaComponent(0.001)
-        titleLabel.textColor = theme.bannerTextColor
+    }
 
-        heightConstraint = contentView.heightAnchor.constraint(equalToConstant: 0)
+    func configure(theme: Theme) {
+        isHidden = false
+        topConstraint.constant = theme.bannerVerticalMargin
+        bottomConstraint.constant = -theme.bannerVerticalMargin
+        titleLabel.font = theme.bannerFont
+        titleLabel.textColor = theme.bannerTextColor
     }
 
     override func updateConstraints() {
         // Set width constraint to superview's width.
-        heightConstraint?.constant = superview?.bounds.height ?? 0
-        heightConstraint?.isActive = true
+        heightConstraint.constant = superview?.bounds.height ?? 0
+        heightConstraint.isActive = true
 
         super.updateConstraints()
     }
 
     func set(item: SpellBannerItem?) {
+        titleLabel.attributedText = Self.title(for: item)
+    }
+
+    /// The text shown for an item. Parts without a font of their own use the banner font.
+    static func title(for item: SpellBannerItem?) -> NSAttributedString {
         guard let item = item else {
-            titleLabel.attributedText = NSAttributedString(string: "")
-            return
+            return NSAttributedString(string: "")
         }
         switch item.title {
         case .humanInput(let x, let isCorrect):
             if isCorrect {
-                titleLabel.attributedText = "\"\(x)\"".bolden(substring: x)
+                return "\"\(x)\"".bolden(substring: x)
             } else {
-                titleLabel.attributedText = NSAttributedString(string: "\"\(x)\"")
+                return NSAttributedString(string: "\"\(x)\"")
             }
         case .normal(let x):
-            titleLabel.attributedText = NSAttributedString(string: x)
+            return NSAttributedString(string: x)
         case .correction(let x):
-            titleLabel.attributedText = x.bolden(substring: x)
+            return x.bolden(substring: x)
         }
     }
 

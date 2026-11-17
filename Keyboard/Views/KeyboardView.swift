@@ -57,6 +57,8 @@ final internal class KeyboardView: UIView,
 
     public var page: KeyboardPage = .normal {
         didSet {
+            // Capitalization sets the page on every keystroke, usually to the page already showing.
+            guard page != oldValue else { return }
             update()
         }
     }
@@ -154,6 +156,8 @@ final internal class KeyboardView: UIView,
 
     override var bounds: CGRect {
         didSet {
+            // Key sizes only depend on the size; layout passes often set the same bounds again.
+            guard bounds.size != oldValue.size else { return }
             update()
         }
     }
@@ -459,7 +463,9 @@ final internal class KeyboardView: UIView,
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with _: UIEvent?) {
-        hapticFeedback.prepare()
+        // Only the key-press haptic is prepared here, and only when it's on. Preparing keeps the Taptic Engine
+        // powered for a few seconds, which isn't worth it on every touch for the occasional long-press tap.
+        KeyHaptics.prepare()
         // Forward to longpress controller?
         if let longpressController = self.longpressController, let touch = touches.first {
             longpressController.touchesBegan(touch.location(in: collectionView))
