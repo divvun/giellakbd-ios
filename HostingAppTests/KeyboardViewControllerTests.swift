@@ -1,4 +1,5 @@
 @testable import BaseKeyboard
+import DeviceKit
 import XCTest
 
 final class KeyboardViewControllerTests: XCTestCase {
@@ -340,5 +341,51 @@ final class KeyboardViewControllerTests: XCTestCase {
         let expectedDifference = (height4Row / 4.0) - 40
         XCTAssertEqual(height5Row - height4Row, expectedDifference, accuracy: 0.1,
                        "Small iPad with 5 rows in landscape should have 40px reduction")
+    }
+}
+
+/// Unrecognised screen sizes are reported to Sentry so new devices get noticed, but the height is worked out on
+/// every layout, so reporting each time would send the same event over and over.
+final class UnrecognizedScreenSizeReportingTests: XCTestCase {
+    private let phone = UITraitCollection(userInterfaceIdiom: .phone)
+    private var reported: [Double] = []
+    private var originalReporter: ((Double) -> Void)!
+
+    override func setUp() {
+        super.setUp()
+        originalReporter = KeyboardHeightProvider.reportUnrecognizedScreenSize
+        KeyboardHeightProvider.reportUnrecognizedScreenSize = { [unowned self] in self.reported.append($0) }
+        KeyboardHeightProvider.reportedScreenSizes = []
+    }
+
+    override func tearDown() {
+        KeyboardHeightProvider.reportUnrecognizedScreenSize = originalReporter
+        KeyboardHeightProvider.reportedScreenSizes = []
+        super.tearDown()
+    }
+
+    func test_unknownDevice_isReportedOnce() {
+        for isLandscape in [false, true, false, true] {
+            _ = height(.unknown("iPhone99,1"), isLandscape: isLandscape)
+        }
+        XCTAssertEqual(reported, [-1])
+    }
+
+    func test_unknownDevice_stillGetsAHeightFromItsScreen_everyTime() {
+        let first = height(.unknown("iPhone99,1"))
+        XCTAssertGreaterThan(first, 0)
+        XCTAssertEqual(height(.unknown("iPhone99,1")), first)
+    }
+
+    func test_knownDevice_isNotReported() {
+        _ = height(.iPhone16)
+        _ = height(.iPadMini5)
+        XCTAssertEqual(reported, [])
+    }
+
+    private func height(_ device: Device, isLandscape: Bool = false) -> CGFloat {
+        let screen = isLandscape ? CGSize(width: 874, height: 402) : CGSize(width: 402, height: 874)
+        return KeyboardHeightProvider.height(for: DeviceContext(device: device, isLandscape: isLandscape, screenSize: screen),
+                                             traitCollection: phone)
     }
 }

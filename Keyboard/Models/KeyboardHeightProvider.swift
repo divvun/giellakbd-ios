@@ -83,11 +83,22 @@ struct KeyboardHeightProvider {
         return nil
     }
 
-    private static func nearestScreenSize(to diagonal: Double, maxDistance: Double = 0.2) -> ScreenSize? {
-        // Notify about unrecognized screen size
+    /// Sends an unrecognised screen diagonal to Sentry. Replaceable for tests.
+    static var reportUnrecognizedScreenSize: (Double) -> Void = { diagonal in
         SentrySDK.capture(message: "Unrecognized device screen size: \(diagonal)\"") { scope in
             scope.setLevel(.warning)
             scope.setContext(value: ["diagonal": diagonal], key: "screen_size")
+        }
+    }
+
+    /// Diagonals already reported by this keyboard process. Heights are worked out on every layout, so without this
+    /// the same event would be sent over and over. Only used on the main thread.
+    static var reportedScreenSizes = Set<Double>()
+
+    private static func nearestScreenSize(to diagonal: Double, maxDistance: Double = 0.2) -> ScreenSize? {
+        // Notify about unrecognized screen size, once per size
+        if reportedScreenSizes.insert(diagonal).inserted {
+            reportUnrecognizedScreenSize(diagonal)
         }
 
         // Find nearest known size by calculating distance for each
