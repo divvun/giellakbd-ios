@@ -29,6 +29,11 @@ public final class SpellBanner: Banner {
     /// Serial, so the user dictionary sees each context in order. Its writes go to SQLite, which is too slow
     /// to do on the main thread for every keystroke.
     private let dictionaryQueue = DispatchQueue(label: "SpellBanner.userDictionary", qos: .utility)
+    /// Serial, so if a speller is reloaded while an earlier load is still running, the later one wins.
+    /// User-initiated: suggestions can't appear until it finishes.
+    private let spellerLoadingQueue = DispatchQueue(label: "SpellBanner.spellerLoading", qos: .userInitiated)
+    /// Called on the main thread once a speller has loaded and is in use. For tests.
+    var spellerDidLoad: (() -> Void)?
 
     var view: UIView {
         bannerView
@@ -129,12 +134,18 @@ public final class SpellBanner: Banner {
     }
 
     public func loadSpeller() {
+        loadSpeller(from: spellerURL, locale: { KeyboardLocale.current })
+    }
+
+    func loadSpeller(from spellerURL: URL?, locale: @escaping () -> KeyboardLocale) {
         print("Loading speller…")
 
-        DispatchQueue.global(qos: .background).async {
+        // `speller` and `dictionaryService` are read on the main thread on every keystroke, so load on a
+        // background queue but only hand the results over on the main thread.
+        spellerLoadingQueue.async { [weak self] in
             print("Dispatching request to load speller…")
 
-            guard let spellerPath = self.spellerURL?.path else {
+            guard let spellerPath = spellerURL?.path else {
                 print("Unable to get spellerURL; BHFST not loaded")
                 return
             }
@@ -149,7 +160,6 @@ public final class SpellBanner: Banner {
             do {
                 let archive = try SpellerArchive.open(path: spellerPath)
                 speller = try archive.speller()
-                self.speller = speller
                 print("DivvunSpell loaded!")
             } catch let error {
                 SentrySDK.capture(error: error)
@@ -157,8 +167,16 @@ public final class SpellBanner: Banner {
                 return
             }
 
-            if FeatureFlag.userDictionary {
-                self.dictionaryService = UserDictionaryService(speller: speller, locale: KeyboardLocale.current)
+            // Created here, as it opens the user dictionary database.
+            let dictionaryService = FeatureFlag.userDictionary
+                ? UserDictionaryService(speller: speller, locale: locale())
+                : nil
+
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                self.speller = speller
+                self.dictionaryService = dictionaryService
+                self.spellerDidLoad?()
             }
         }
     }
