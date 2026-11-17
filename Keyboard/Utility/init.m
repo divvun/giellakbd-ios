@@ -11,7 +11,10 @@ __attribute__((constructor)) static void init_sentry(void) {
     if (dsn != nil) {
         [SentrySDK startWithConfigureOptions:^(SentryOptions *options) {
             options.dsn = dsn;
-            options.debug = @YES; // Helpful to see what's going on
+#if DEBUG
+            // Helpful to see what's going on, but logs heavily, so not in release builds.
+            options.debug = YES;
+#endif
         }];
 
         if (error != nil) {
