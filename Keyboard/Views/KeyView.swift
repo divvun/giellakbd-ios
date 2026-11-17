@@ -58,10 +58,7 @@ final class KeyView: UIView {
 
     var percentageAlternative: CGFloat = 0.0 {
         didSet {
-            let minValue = theme.altLabelTopAnchorConstant
-            let maxValue = frame.height / 6.5
-
-            swipeLayoutConstraint?.constant = minValue + (maxValue * percentageAlternative)
+            updateSwipeLayoutConstraint()
 
             if isSwipeKey {
                 let fontSizeDelta = fontSize - theme.modifierKeyFontSize
@@ -76,6 +73,14 @@ final class KeyView: UIView {
                 label.font = label.font.withSize(fontSize - fontSizeDelta * percentageAlternative)
             }
         }
+    }
+
+    /// How far the alt label has moved depends on the key's height, so this also needs redoing on layout.
+    private func updateSwipeLayoutConstraint() {
+        let minValue = theme.altLabelTopAnchorConstant
+        let maxValue = frame.height / 6.5
+
+        swipeLayoutConstraint?.constant = minValue + (maxValue * percentageAlternative)
     }
 
     private func configureKeyLabel(_ label: UILabel, page: KeyboardPage, text: String) {
@@ -274,8 +279,11 @@ final class KeyView: UIView {
             bottom: theme.keyVerticalMargin,
             right: theme.keyHorizontalMargin))
 
-        contentView.clipsToBounds = false
         contentView.backgroundColor = backgroundColor(for: key, page: page)
+        contentView.layer.borderWidth = 1.0
+        contentView.layer.borderColor = (key.type.isSpecialKeyStyle ? theme.specialKeyBorderColor : theme.borderColor).cgColor
+        contentView.layer.cornerRadius = theme.keyCornerRadius
+        contentView.clipsToBounds = true
     }
 
     private func setupContentView(_ key: KeyDefinition, _ page: KeyboardPage, _ traits: UITraitCollection, _ theme: Theme) {
@@ -402,19 +410,8 @@ final class KeyView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        updateSubviews()
-    }
-
-    func updateSubviews() {
-        let percentageAlternative = self.percentageAlternative
-        self.percentageAlternative = percentageAlternative
-
-        if let subview = contentView {
-            subview.layer.borderWidth = 1.0
-            subview.layer.borderColor = (key.type.isSpecialKeyStyle ? theme.specialKeyBorderColor : theme.borderColor).cgColor
-            subview.layer.cornerRadius = theme.keyCornerRadius
-            subview.clipsToBounds = true
-        }
+        // The key's shape and label styles are set when they change, so only the height-dependent part is left.
+        updateSwipeLayoutConstraint()
     }
 
     required init?(coder _: NSCoder) {
