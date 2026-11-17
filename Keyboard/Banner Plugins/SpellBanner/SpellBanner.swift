@@ -26,6 +26,9 @@ public final class SpellBanner: Banner {
         opQueue.maxConcurrentOperationCount = 1
         return opQueue
     }()
+    /// Serial, so the user dictionary sees each context in order. Its writes go to SQLite, which is too slow
+    /// to do on the main thread for every keystroke.
+    private let dictionaryQueue = DispatchQueue(label: "SpellBanner.userDictionary", qos: .utility)
 
     var view: UIView {
         bannerView
@@ -71,8 +74,12 @@ public final class SpellBanner: Banner {
 
     public func updateSuggestions(_ context: CursorContext) {
         if let delegate = delegate,
-            delegate.hasFullAccess {
-            dictionaryService?.updateContext(WordContext(cursorContext: context))
+            delegate.hasFullAccess,
+            let dictionaryService = dictionaryService {
+            let wordContext = WordContext(cursorContext: context)
+            dictionaryQueue.async {
+                dictionaryService.updateContext(wordContext)
+            }
         }
 
         let currentWord = context.current.1

@@ -11,6 +11,9 @@ final class UserDictionaryService {
     init(speller: Speller, locale: KeyboardLocale) {
         self.dictionary = UserDictionary(locale: locale)
         self.speller = speller
+        // Open the database now, while nothing else can see this service. It opens lazily, and context updates
+        // and suggestion lookups run on different background queues, so they could otherwise race to open it.
+        _ = dictionary.database
     }
 
     public func updateContext(_ context: WordContext) {
