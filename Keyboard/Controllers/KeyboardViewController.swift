@@ -574,6 +574,11 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     private func checkDarkMode() {
+        // This runs on every keystroke. Building a theme recomputes every metric and colour,
+        // so only build one when the appearance has actually changed.
+        guard Theme.appearance(for: traitCollection) != theme.appearance else {
+            return
+        }
         self.checkDarkMode(traits: self.traitCollection)
     }
 

@@ -445,3 +445,11 @@ private struct ThemeFactory {
         }
     }
 }
+
+extension Theme {
+    /// The appearance `current(for:)` would give a theme built for these traits, without building one.
+    /// Only the interface style decides it, so callers can check for a light/dark switch cheaply.
+    static func appearance(for traits: UITraitCollection) -> UIKeyboardAppearance {
+        traits.userInterfaceStyle == .dark ? .dark : .light
+    }
+}
