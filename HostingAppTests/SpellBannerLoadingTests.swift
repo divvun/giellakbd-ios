@@ -6,6 +6,8 @@ final class SpellBannerLoadingTests: XCTestCase {
     private let locale = KeyboardLocale(identifier: "se", languageName: "North Sámi")
     private var window: UIWindow!
     private var sut: SpellBanner!
+    /// Made-up words, so the speller doesn't know them. The picking test may add them to the shared user dictionary.
+    private let pickingWords = ["zorb", "zorp"]
 
     override func setUp() {
         super.setUp()
@@ -16,6 +18,7 @@ final class SpellBannerLoadingTests: XCTestCase {
     }
 
     override func tearDown() {
+        for word in pickingWords { sut.dictionaryService?.dictionary.removeWord(word) }
         sut.view.removeFromSuperview()
         sut = nil
         window = nil
@@ -50,6 +53,31 @@ final class SpellBannerLoadingTests: XCTestCase {
         wait(for: [loaded], timeout: 1)
     }
 
+    func test_pickingASuggestion_teachesTheUserDictionaryTheSuggestion_notTheTypo() throws {
+        try loadSpeller()
+        let dictionary = try XCTUnwrap(sut.dictionaryService?.dictionary)
+        for word in pickingWords { dictionary.removeWord(word) }
+        let delegate = PickingDelegate()
+        sut.delegate = delegate
+        // What the keyboard does after a suggestion is picked: the word is replaced, then a space is added.
+        delegate.onSelect = { suggestion in
+            self.sut.updateSuggestions(try! CursorContext.from(leftPart: suggestion, rightPart: ""))
+            self.sut.updateSuggestions(try! CursorContext.from(leftPart: suggestion + " ", rightPart: ""))
+        }
+
+        for length in 1...4 {
+            sut.updateSuggestions(try CursorContext.from(leftPart: String("zorb".prefix(length)), rightPart: ""))
+        }
+        sut.didSelectBannerItem(try XCTUnwrap(sut.view as? SpellBannerView),
+                                item: SpellBannerItem(title: .normal("zorp"), value: "zorp"))
+        sut.dictionaryQueue.sync {}
+
+        XCTAssertEqual(delegate.selected, ["zorp"])
+        XCTAssertFalse(dictionary.containsWord("zorb"))
+        XCTAssertTrue(dictionary.containsWord("zorp"))
+    }
+
+    // MARK: - Helpers
     // MARK: - Helpers
 
     private func spellerURL() throws -> URL {
@@ -86,5 +114,16 @@ final class SpellBannerLoadingTests: XCTestCase {
         return collectionView.indexPathsForVisibleItems.sorted().compactMap {
             collectionView.cellForItem(at: $0)?.contentView.subviews.compactMap { $0 as? UILabel }.first?.attributedText?.string
         }
+    }
+}
+
+private final class PickingDelegate: SpellBannerDelegate {
+    var hasFullAccess: Bool { true }
+    var selected: [String] = []
+    var onSelect: ((String) -> Void)?
+
+    func didSelectSuggestion(banner: SpellBanner, suggestion: String) {
+        selected.append(suggestion)
+        onSelect?(suggestion)
     }
 }

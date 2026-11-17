@@ -38,6 +38,7 @@
 		C0FFEE0000000000000000F2 /* FolderWatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FFEE0000000000000000F1 /* FolderWatcherTests.swift */; };
 		C0FFEE0000000000000000G2 /* SpellBannerLoadingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FFEE0000000000000000G1 /* SpellBannerLoadingTests.swift */; };
 		C0FFEE0000000000000000H2 /* UserDictionarySuggestionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FFEE0000000000000000H1 /* UserDictionarySuggestionTests.swift */; };
+		C0FFEE0000000000000000I2 /* ReplaceCurrentWordTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FFEE0000000000000000I1 /* ReplaceCurrentWordTests.swift */; };
 		9968D77E2BD684F900F7A4AC /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 9968D77D2BD684F900F7A4AC /* PrivacyInfo.xcprivacy */; };
 		997021052416DF8C00A81A27 /* KeyboardLocale+AllLocales.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997021042416DF8C00A81A27 /* KeyboardLocale+AllLocales.swift */; };
 		997550B623EAC631004ED6A5 /* UserDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997550B523EAC631004ED6A5 /* UserDictionary.swift */; };
@@ -223,6 +224,7 @@
 		C0FFEE0000000000000000F1 /* FolderWatcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderWatcherTests.swift; sourceTree = "<group>"; };
 		C0FFEE0000000000000000G1 /* SpellBannerLoadingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpellBannerLoadingTests.swift; sourceTree = "<group>"; };
 		C0FFEE0000000000000000H1 /* UserDictionarySuggestionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionarySuggestionTests.swift; sourceTree = "<group>"; };
+		C0FFEE0000000000000000I1 /* ReplaceCurrentWordTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplaceCurrentWordTests.swift; sourceTree = "<group>"; };
 		9968D77D2BD684F900F7A4AC /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		997021042416DF8C00A81A27 /* KeyboardLocale+AllLocales.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyboardLocale+AllLocales.swift"; sourceTree = "<group>"; };
 		997550B523EAC631004ED6A5 /* UserDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionary.swift; sourceTree = "<group>"; };
@@ -516,6 +518,7 @@
 				C0FFEE0000000000000000F1 /* FolderWatcherTests.swift */,
 				C0FFEE0000000000000000G1 /* SpellBannerLoadingTests.swift */,
 				C0FFEE0000000000000000H1 /* UserDictionarySuggestionTests.swift */,
+				C0FFEE0000000000000000I1 /* ReplaceCurrentWordTests.swift */,
 				990440A623FC14A30063064E /* Info.plist */,
 			);
 			path = HostingAppTests;
@@ -1093,6 +1096,7 @@
 				C0FFEE0000000000000000F2 /* FolderWatcherTests.swift in Sources */,
 				C0FFEE0000000000000000G2 /* SpellBannerLoadingTests.swift in Sources */,
 				C0FFEE0000000000000000H2 /* UserDictionarySuggestionTests.swift in Sources */,
+				C0FFEE0000000000000000I2 /* ReplaceCurrentWordTests.swift in Sources */,
 				99DA1846240D09B5003E7353 /* UserDictionaryServiceTests.swift in Sources */,
 				99DA18412408294A003E7353 /* WordContextTests.swift in Sources */,
 			);

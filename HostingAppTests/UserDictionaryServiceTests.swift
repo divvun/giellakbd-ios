@@ -210,6 +210,77 @@ final class UserDictionaryServiceTests: XCTestCase {
         XCTAssertNil(contexts.first?.secondAfter)
     }
 
+    // MARK: - Picking a suggestion
+
+    func test_pickingASuggestion_oneDeletionAtATime_learnsTheSuggestionButNotTheTypo() {
+        let sut = makeSUT()
+
+        typeWord("zorb", into: sut)
+        for word in ["zor", "zo", "z", ""] { // each deletion looks like the same word getting shorter
+            sut.updateContext(WordContext(word: word))
+        }
+        sut.updateContext(WordContext(word: "zorp"))
+        sut.updateContext(WordContext(firstBefore: "zorp", word: ""))
+
+        XCTAssertFalse(userDictionary.containsWord("zorb"))
+        XCTAssertTrue(userDictionary.containsWord("zorp"))
+    }
+
+    func test_replacingAWordInOneStep_learnsTheReplacedWord() {
+        let sut = makeSUT()
+
+        typeWord("zorb", into: sut)
+        sut.updateContext(WordContext(word: "zorp"))
+
+        // Without being told otherwise, a word changing into a different one looks like a finished word.
+        XCTAssertTrue(userDictionary.containsWord("zorb"))
+    }
+
+    func test_discardingTheCurrentWord_thenReplacingIt_learnsOnlyTheSuggestion() {
+        let sut = makeSUT()
+
+        typeWord("zorb", into: sut)
+        sut.discardCurrentWord()
+        sut.updateContext(WordContext(word: "zorp"))
+        sut.updateContext(WordContext(firstBefore: "zorp", word: ""))
+
+        XCTAssertFalse(userDictionary.containsWord("zorb"))
+        XCTAssertTrue(userDictionary.containsWord("zorp"))
+        XCTAssertFalse(userDictionary.containsWord(""))
+    }
+
+    func test_discardingTheCurrentWord_keepsTheWordBefore_andAddsTheSuggestionAfterIt() {
+        let sut = makeSUT()
+
+        typeWord("xxx", into: sut)
+        sut.updateContext(WordContext(firstBefore: "xxx", word: ""))
+        typeWord("zorb", firstBefore: "xxx", into: sut)
+        sut.discardCurrentWord()
+        sut.updateContext(WordContext(firstBefore: "xxx", word: "zorp"))
+        sut.updateContext(WordContext(secondBefore: "xxx", firstBefore: "zorp", word: ""))
+
+        XCTAssertEqual(userDictionary.getContexts(for: "xxx").first?.firstAfter, "zorp")
+        XCTAssertEqual(userDictionary.getContexts(for: "zorp").first?.firstBefore, "xxx")
+        XCTAssertFalse(userDictionary.containsWord("zorb"))
+    }
+
+    func test_discardingTheCurrentWord_whenNothingIsTyped_doesNothing() {
+        let sut = makeSUT()
+
+        sut.discardCurrentWord()
+        typeWord("hi", into: sut)
+        sut.updateContext(WordContext(firstBefore: "hi", word: ""))
+
+        XCTAssertTrue(userDictionary.containsWord("hi"))
+    }
+
+    /// Updates the context once per letter, the way typing does.
+    private func typeWord(_ word: String, firstBefore: String? = nil, into sut: UserDictionaryService) {
+        for length in 1...word.count {
+            sut.updateContext(WordContext(firstBefore: firstBefore, word: String(word.prefix(length))))
+        }
+    }
+
     private func makeSUT() -> UserDictionaryService {
         let archive: SpellerArchive
         guard let bundle = Bundle(for: type(of: self)).url(forResource: "dicts", withExtension: "bundle") else {

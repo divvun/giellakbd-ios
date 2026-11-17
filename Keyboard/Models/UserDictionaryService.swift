@@ -27,6 +27,12 @@ final class UserDictionaryService {
         saveOrUpdateContextIfNeeded()
     }
 
+    /// The word being typed is about to be replaced, as when a suggestion is picked, so don't learn it. Otherwise
+    /// it changing into the replacement in one step would look like a finished word.
+    func discardCurrentWord() {
+        currentContext = nil
+    }
+
     private func saveOrUpdateContextIfNeeded() {
         guard let saveCandidateContext = previousContext,
             let context = currentContext else {

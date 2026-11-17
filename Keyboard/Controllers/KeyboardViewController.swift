@@ -434,12 +434,9 @@ open class KeyboardViewController: UIInputViewController {
 
     func replaceSelected(with input: String) {
         do {
-            let ctx = try CursorContext.from(proxy: textDocumentProxy)
-            textDocumentProxy.adjustTextPosition(byCharacterOffset: ctx.current.1.count - Int(ctx.currentOffset))
-
-            for _ in 0 ..< ctx.current.1.count {
-                deleteBackward()
-            }
+            // Straight on the proxy rather than through `deleteBackward()`, so the input state (suggestions,
+            // the user dictionary, capitalisation) is only updated once, by `insertText`, not for every letter.
+            try textDocumentProxy.deleteCurrentWord()
             insertText(input)
         } catch let error {
             // Log and run
@@ -830,6 +827,18 @@ extension KeyboardViewController: BannerManagerDelegate {
             if !self.keyboardDefinition.features.contains(.compounding) {
                 insertText(" ")
             }
+        }
+    }
+}
+
+extension UITextDocumentProxy {
+    /// Deletes the whole word the cursor is in, even when the cursor is partway through it.
+    func deleteCurrentWord() throws {
+        let ctx = try CursorContext.from(proxy: self)
+        adjustTextPosition(byCharacterOffset: ctx.current.1.count - Int(ctx.currentOffset))
+
+        for _ in 0 ..< ctx.current.1.count {
+            deleteBackward()
         }
     }
 }

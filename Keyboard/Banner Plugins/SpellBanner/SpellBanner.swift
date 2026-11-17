@@ -17,7 +17,7 @@ protocol SpellBannerDelegate: AnyObject {
 
 public final class SpellBanner: Banner {
     weak var delegate: SpellBannerDelegate?
-    private var dictionaryService: UserDictionaryService?
+    private(set) var dictionaryService: UserDictionaryService?
     private var speller: Speller?
     private let bannerView: SpellBannerView
     private let opQueue: OperationQueue = {
@@ -28,7 +28,7 @@ public final class SpellBanner: Banner {
     }()
     /// Serial, so the user dictionary sees each context in order. Its writes go to SQLite, which is too slow
     /// to do on the main thread for every keystroke.
-    private let dictionaryQueue = DispatchQueue(label: "SpellBanner.userDictionary", qos: .utility)
+    let dictionaryQueue = DispatchQueue(label: "SpellBanner.userDictionary", qos: .utility)
     /// Serial, so if a speller is reloaded while an earlier load is still running, the later one wins.
     /// User-initiated: suggestions can't appear until it finishes.
     private let spellerLoadingQueue = DispatchQueue(label: "SpellBanner.spellerLoading", qos: .userInitiated)
@@ -184,6 +184,12 @@ public final class SpellBanner: Banner {
 
 extension SpellBanner: SpellBannerViewDelegate {
     public func didSelectBannerItem(_ banner: SpellBannerView, item: SpellBannerItem) {
+        // Before the delegate replaces the word, so the dictionary sees this before the replacement.
+        if let dictionaryService = dictionaryService {
+            dictionaryQueue.async {
+                dictionaryService.discardCurrentWord()
+            }
+        }
         delegate?.didSelectSuggestion(banner: self, suggestion: item.value)
         opQueue.cancelAllOperations()
         banner.clearSuggestions()
