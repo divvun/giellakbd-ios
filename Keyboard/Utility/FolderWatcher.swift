@@ -16,14 +16,21 @@ final class FolderWatcher {
         self.watchedFolderContents = getFolderContents(url: directory)
     }
 
+    deinit {
+        timer?.invalidate()
+    }
+
     public func start() {
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { _ in
-            self.notifyDelegateOfChanges()
+        stop()
+        // Weak, so the run loop's strong hold on the timer doesn't keep this watcher alive forever.
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [weak self] _ in
+            self?.notifyDelegateOfChanges()
         })
     }
 
     public func stop() {
         timer?.invalidate()
+        timer = nil
     }
 
     private func notifyDelegateOfChanges() {
