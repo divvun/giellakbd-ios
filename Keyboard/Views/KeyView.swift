@@ -263,7 +263,9 @@ final class KeyView: UIView {
 
         layer.shadowColor = theme.keyShadowColor.cgColor
         layer.shadowOffset = CGSize(width: 0, height: 1)
-        layer.shadowOpacity = 1.0
+        // iOS 26 themes have no key shadow (a clear colour). Turn it off rather than draw it invisibly:
+        // a shadow without a shadowPath makes Core Animation render each key offscreen to find its shape.
+        layer.shadowOpacity = theme.keyShadowColor.cgColor.alpha > 0 ? 1.0 : 0.0
         layer.shadowRadius = 0.0
 
         contentView.fill(superview: self, margins: UIEdgeInsets(
