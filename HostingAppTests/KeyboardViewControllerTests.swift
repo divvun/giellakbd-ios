@@ -427,3 +427,104 @@ final class CurrentDeviceContextTests: XCTestCase {
         XCTAssertEqual(context.isPad, DeviceContext.current.isPad)
     }
 }
+
+/// Switching keyboard modes (normal, split, one-handed) replaces the keyboard view. The old views must be freed and
+/// the banner kept, not duplicated, or every switch leaks a keyboard's worth of views.
+final class KeyboardModeSwitchingTests: XCTestCase {
+    private var window: UIWindow!
+    private var sut: KeyboardViewController!
+
+    override func setUp() {
+        super.setUp()
+        // In its own pool, so objects autoreleased while the first keyboard is built don't outlive it in the tests.
+        autoreleasepool {
+            window = UIWindow(frame: CGRect(x: 0, y: 0, width: 390, height: 844))
+            sut = KeyboardViewController()
+            window.rootViewController = sut
+            window.isHidden = false
+            layout()
+        }
+    }
+
+    override func tearDown() {
+        window.isHidden = true
+        window.rootViewController = nil
+        sut = nil
+        window = nil
+        super.tearDown()
+    }
+
+    func test_switchingModes_keepsOneBanner() {
+        XCTAssertEqual(count(SpellBannerView.self), 1)
+        for mode in modeKeys + modeKeys {
+            sut.didTriggerKey(KeyDefinition(type: mode))
+            layout()
+            XCTAssertEqual(count(SpellBannerView.self), 1, "after \(mode)")
+        }
+    }
+
+    func test_switchingModes_freesTheOldKeyboardViews() {
+        var replaced: [Weak] = []
+        for mode in modeKeys + modeKeys {
+            autoreleasepool {
+                replaced += keyboardViews().map(Weak.init)
+                sut.didTriggerKey(KeyDefinition(type: mode))
+                layout()
+            }
+        }
+        RunLoop.current.run(until: Date().addingTimeInterval(0.2))
+        XCTAssertEqual(replaced.count, 10) // 2 split halves + 3 single keyboards, twice
+        XCTAssertEqual(replaced.filter { $0.view != nil }.count, 0, "keyboard views still alive after being replaced")
+    }
+
+    func test_switchingModes_showsOnlyTheCurrentKeyboard() {
+        for (mode, expected) in zip(modeKeys, [2, 1, 1, 1]) {
+            sut.didTriggerKey(KeyDefinition(type: mode))
+            layout()
+            XCTAssertEqual(keyboardViews().count, expected, "after \(mode)")
+        }
+    }
+
+    func test_switchingModes_doesNotAddViews() {
+        sut.didTriggerKey(KeyDefinition(type: .normalKeyboard))
+        layout()
+        let before = viewCount(sut.view)
+        for mode in modeKeys + modeKeys {
+            sut.didTriggerKey(KeyDefinition(type: mode))
+            layout()
+        }
+        XCTAssertEqual(viewCount(sut.view), before)
+    }
+
+    // MARK: - Helpers
+
+    /// Split, left, right, then back to normal.
+    private let modeKeys: [KeyType] = [.splitKeyboard, .sideKeyboardLeft, .sideKeyboardRight, .normalKeyboard]
+
+    private func layout() {
+        window.layoutIfNeeded()
+        sut.view.layoutIfNeeded()
+        RunLoop.current.run(until: Date().addingTimeInterval(0.01))
+    }
+
+    private func keyboardViews() -> [KeyboardView] {
+        all(in: sut.view).compactMap { $0 as? KeyboardView }
+    }
+
+    private func count<T: UIView>(_ type: T.Type) -> Int {
+        all(in: sut.view).filter { $0 is T }.count
+    }
+
+    private func viewCount(_ view: UIView) -> Int {
+        all(in: view).count
+    }
+
+    private func all(in view: UIView) -> [UIView] {
+        [view] + view.subviews.flatMap { all(in: $0) }
+    }
+}
+
+private final class Weak {
+    weak var view: UIView?
+    init(_ view: UIView) { self.view = view }
+}
