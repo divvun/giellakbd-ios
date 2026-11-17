@@ -64,6 +64,12 @@ struct KeyboardHeightProvider {
                                                      screenSize: deviceContext.screenSize))
         case .iPhoneXSMax, .iPhone11ProMax:
             return (portrait: 272, landscape: 196)
+        case .iPhoneDuo:
+            // DeviceKit describes only the 5.4" outer display, which the diagonal table already handles.
+            // The unfolded inner display is much larger: match the system keyboard's key area there
+            // (253 pt portrait, 219 pt landscape) plus our 48 pt banner.
+            let isInnerDisplay = min(deviceContext.screenSize.width, deviceContext.screenSize.height) >= 600
+            return isInnerDisplay ? (portrait: 301, landscape: 267) : nil
         default:
             return nil
         }
