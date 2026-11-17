@@ -74,10 +74,12 @@ struct DeviceContext {
     /// display, such as iPhone Duo, `UIScreen.main` stays on one display while the keyboard can be on another.
     /// The scene's screen bounds follow the current interface orientation.
     /// Falls back to `UIScreen.main` until the view is in a window.
+    private static let currentDevice = Device.current
+
     static func current(in view: UIView?) -> DeviceContext {
         let screenSize = view?.window?.windowScene?.screen.bounds.size ?? UIScreen.main.bounds.size
         return DeviceContext(
-            device: Device.current,
+            device: currentDevice,
             isLandscape: screenSize.width > screenSize.height,
             screenSize: screenSize
         )

@@ -389,3 +389,41 @@ final class UnrecognizedScreenSizeReportingTests: XCTestCase {
                                              traitCollection: phone)
     }
 }
+
+final class CurrentDeviceContextTests: XCTestCase {
+    func test_device_isTheSameOnEveryCall() {
+        let first = DeviceContext.current
+        for _ in 0..<5 {
+            let context = DeviceContext.current
+            XCTAssertEqual(context.screenInches, first.screenInches)
+            XCTAssertEqual(context.isPad, first.isPad)
+            XCTAssertEqual(context.isPhone, first.isPhone)
+        }
+    }
+
+    func test_device_isThisDevice() {
+        // The test host runs on the same hardware (or simulator) as the device it reports.
+        XCTAssertEqual(DeviceContext.current.isPad, UIDevice.current.userInterfaceIdiom == .pad)
+        XCTAssertEqual(DeviceContext.current.isPhone, UIDevice.current.userInterfaceIdiom == .phone)
+    }
+
+    func test_withoutAView_screenIsTheMainScreen() {
+        let context = DeviceContext.current(in: nil)
+        XCTAssertEqual(context.screenSize, UIScreen.main.bounds.size)
+        XCTAssertEqual(context.isLandscape, UIScreen.main.bounds.width > UIScreen.main.bounds.height)
+    }
+
+    func test_viewInAWindow_screenIsItsWindowsScreen() throws {
+        let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
+        let window = UIWindow(windowScene: scene)
+        window.isHidden = false
+        let view = UIView()
+        window.addSubview(view)
+        defer { window.isHidden = true }
+
+        let context = DeviceContext.current(in: view)
+        XCTAssertEqual(context.screenSize, scene.screen.bounds.size)
+        XCTAssertEqual(context.screenInches, DeviceContext.current.screenInches)
+        XCTAssertEqual(context.isPad, DeviceContext.current.isPad)
+    }
+}
