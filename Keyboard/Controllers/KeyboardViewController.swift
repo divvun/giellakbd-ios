@@ -167,25 +167,20 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     private func loadKeyboardDefinition() -> KeyboardDefinition {
-        let keyboardDefinitions: [KeyboardDefinition]
         let path = Bundle.top.url(forResource: "KeyboardDefinitions", withExtension: "json")!
         do {
             let data = try String(contentsOf: path).data(using: .utf8)!
-            let raws = try JSONDecoder().decode([RawKeyboardDefinition].self, from: data)
+            // The file holds every layout in the app; decode and build only this keyboard's.
+            let raw = try RawKeyboardDefinition.decodeOne(from: data) { locales in
+                print("keyboard definition locales: \(locales)")
+                return isBeingRunFromTests() ? 0 : keyboardDefinitionIndex(locales: locales)
+            }
             let needsSwitchKey = needsInputModeSwitchKey
             layoutIncludesInputModeSwitchKey = needsSwitchKey
-            keyboardDefinitions = try raws.map {
-                try KeyboardDefinition(fromRaw: $0, traits: self.traitCollection, needsInputModeSwitchKey: needsSwitchKey)
-            }
-            print("keyboard definition locales: \(keyboardDefinitions.map { $0.locale })")
+            return try KeyboardDefinition(fromRaw: raw, traits: self.traitCollection, needsInputModeSwitchKey: needsSwitchKey)
         } catch {
             fatalError("Error getting keyboard definitions from json file: \(error)")
         }
-
-        if isBeingRunFromTests() {
-            return keyboardDefinitions[0]
-        }
-        return keyboardDefinitions[keyboardDefinitionIndex(locales: keyboardDefinitions.map { $0.locale })]
     }
 
     /// The position of this extension's layout in `KeyboardDefinitions.json`.

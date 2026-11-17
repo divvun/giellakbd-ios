@@ -77,6 +77,7 @@
 		C0FFEE0000000000000000I2 /* ReplaceCurrentWordTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FFEE0000000000000000I1 /* ReplaceCurrentWordTests.swift */; };
 		C0FFEE0000000000000000J2 /* KeyViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FFEE0000000000000000J1 /* KeyViewTests.swift */; };
 		C0FFEE0000000000000000K2 /* ScrollEdgeEffectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FFEE0000000000000000K1 /* ScrollEdgeEffectTests.swift */; };
+		C0FFEE0000000000000000L2 /* KeyboardDefinitionLoadingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FFEE0000000000000000L1 /* KeyboardDefinitionLoadingTests.swift */; };
 		C61829B8254225B100620D6F /* KeyboardLocale+AllLocales.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997021042416DF8C00A81A27 /* KeyboardLocale+AllLocales.swift */; };
 		C63EE0FF2361D86800A1E15A /* MenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63EE0FE2361D86800A1E15A /* MenuButton.swift */; };
 		C63EE1012362F7E500A1E15A /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C63EE1002362F7E500A1E15A /* Settings.bundle */; };
@@ -260,6 +261,7 @@
 		C0FFEE0000000000000000I1 /* ReplaceCurrentWordTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplaceCurrentWordTests.swift; sourceTree = "<group>"; };
 		C0FFEE0000000000000000J1 /* KeyViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyViewTests.swift; sourceTree = "<group>"; };
 		C0FFEE0000000000000000K1 /* ScrollEdgeEffectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollEdgeEffectTests.swift; sourceTree = "<group>"; };
+		C0FFEE0000000000000000L1 /* KeyboardDefinitionLoadingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardDefinitionLoadingTests.swift; sourceTree = "<group>"; };
 		C2E22B38A38E2FF1A8DD92DD /* Pods-HostingApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HostingApp.release.xcconfig"; path = "Target Support Files/Pods-HostingApp/Pods-HostingApp.release.xcconfig"; sourceTree = "<group>"; };
 		C610DA4720D3E40E00C84945 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = HostingApp/fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C61CC29120C8A5C000B213B8 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = HostingApp/sv.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -530,6 +532,7 @@
 				C0FFEE0000000000000000I1 /* ReplaceCurrentWordTests.swift */,
 				C0FFEE0000000000000000J1 /* KeyViewTests.swift */,
 				C0FFEE0000000000000000K1 /* ScrollEdgeEffectTests.swift */,
+				C0FFEE0000000000000000L1 /* KeyboardDefinitionLoadingTests.swift */,
 				990440A623FC14A30063064E /* Info.plist */,
 				B216A74E30A3371E00FA2050 /* SystemKeysTests.swift */,
 			);
@@ -1113,6 +1116,7 @@
 				C0FFEE0000000000000000I2 /* ReplaceCurrentWordTests.swift in Sources */,
 				C0FFEE0000000000000000J2 /* KeyViewTests.swift in Sources */,
 				C0FFEE0000000000000000K2 /* ScrollEdgeEffectTests.swift in Sources */,
+				C0FFEE0000000000000000L2 /* KeyboardDefinitionLoadingTests.swift in Sources */,
 				99DA1846240D09B5003E7353 /* UserDictionaryServiceTests.swift in Sources */,
 				99DA18412408294A003E7353 /* WordContextTests.swift in Sources */,
 			);
