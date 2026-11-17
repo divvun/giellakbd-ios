@@ -2,7 +2,13 @@ import Foundation
 import Sentry
 import DivvunSpell
 
-typealias SuggestionCompletion = ([String]) -> Void
+struct SuggestionResult {
+    let suggestions: [String]
+    let isWordCorrect: Bool
+}
+
+/// Called on the main thread, with `nil` when no speller is loaded.
+typealias SuggestionCompletion = (SuggestionResult?) -> Void
 
 protocol SpellBannerDelegate: AnyObject {
     var hasFullAccess: Bool { get }
@@ -76,8 +82,12 @@ public final class SpellBanner: Banner {
             return
         }
 
-        getSuggestionsFor(currentWord) { (suggestions) in
-            let suggestionItems = self.makeSuggestionBannerItems(currentWord: currentWord, suggestions: suggestions)
+        getSuggestionsFor(currentWord) { result in
+            let suggestionItems = result.map {
+                Self.makeSuggestionBannerItems(
+                    currentWord: currentWord, suggestions: $0.suggestions, isWordCorrect: $0.isWordCorrect
+                )
+            } ?? []
             self.bannerView.isHidden = false
             self.bannerView.setBannerItems(suggestionItems)
         }
@@ -91,15 +101,10 @@ public final class SpellBanner: Banner {
         opQueue.addOperation(suggestionOp)
     }
 
-    private func makeSuggestionBannerItems(currentWord: String, suggestions: [String]) -> [SpellBannerItem] {
-        guard let speller = speller else {
-            return []
-        }
-        
+    static func makeSuggestionBannerItems(currentWord: String, suggestions: [String], isWordCorrect: Bool) -> [SpellBannerItem] {
         var suggestions = suggestions
         suggestions.removeAll { $0 == currentWord } // don't show current word twice
-        
-        let isWordCorrect = (try? speller.isCorrect(word: currentWord)) ?? false
+
         let currentWordItem = SpellBannerItem(title: .humanInput(currentWord, isCorrect: isWordCorrect), value: currentWord)
        
         let suggestionItems = suggestions.enumerated().map { (i, s) -> SpellBannerItemTitle in
@@ -181,15 +186,26 @@ final class SuggestionOperation: Operation, @unchecked Sendable {
             return
         }
 
-        let suggestions = getSuggestions(for: word)
-        if !isCancelled {
+        // Hold the speller for the whole operation, so it can't go away between the two lookups.
+        guard let speller = speller else {
             DispatchQueue.main.async {
-                self.completion(suggestions)
+                self.completion(nil)
+            }
+            return
+        }
+
+        let suggestions = getSuggestions(for: word, speller: speller)
+        // Checked here rather than when building the banner items, which happens on the main thread.
+        let isWordCorrect = (try? speller.isCorrect(word: word)) ?? false
+        if !isCancelled {
+            let result = SuggestionResult(suggestions: suggestions, isWordCorrect: isWordCorrect)
+            DispatchQueue.main.async {
+                self.completion(result)
             }
         }
     }
 
-    private func getSuggestions(for word: String) -> [String] {
+    private func getSuggestions(for word: String, speller: Speller) -> [String] {
         var suggestions: [String] = []
 
         if let dictionary = userDictionary {
@@ -202,12 +218,10 @@ final class SuggestionOperation: Operation, @unchecked Sendable {
             }
         }
         
-        if let speller = speller {
-            let spellerSuggestions = (try? speller
-                .suggest(word: word)
-                .prefix(3)) ?? []
-            suggestions.append(contentsOf: spellerSuggestions)
-        }
+        let spellerSuggestions = (try? speller
+            .suggest(word: word)
+            .prefix(3)) ?? []
+        suggestions.append(contentsOf: spellerSuggestions)
     
         return suggestions
     }
