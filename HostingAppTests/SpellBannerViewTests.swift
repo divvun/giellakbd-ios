@@ -119,12 +119,32 @@ final class SpellBannerViewTests: XCTestCase {
     func test_longSuggestionsGetWiderCells() {
         sut.setBannerItems([human("extraordinarily", false), correction("extraordinarily long words"), normal("x")])
         layout()
-        let frames = frames()
-        XCTAssertEqual(frames[0], CGRect(x: 0, y: 0, width: 130, height: 48))
-        XCTAssertEqual(frames[1].minX, 131)
-        XCTAssertEqual(frames[1].width, 168.67, accuracy: 0.01)
-        XCTAssertEqual(frames[2].minX, frames[1].maxX + 1, accuracy: 0.01)
-        XCTAssertEqual(frames[2].width, 130)
+        // Wider than the banner in total, so the last one is scrolled out of view.
+        XCTAssertEqual(itemFrames(), [
+            CGRect(x: 0, y: 0, width: 156, height: 48),
+            CGRect(x: 157, y: 0, width: 239, height: 48),
+            CGRect(x: 397, y: 0, width: 130, height: 48)
+        ])
+    }
+
+    func test_longSuggestions_fitTheirTextWithAMarginEachSide() {
+        let long = "extraordinarily long words"
+        let margin = Theme.current(for: lightTraits).bannerHorizontalMargin
+        for items in [
+            [human(long, false), normal("x")],
+            [human(long, true), normal("x")],
+            [human("x", false), correction(long)],
+            [human("x", false), normal("y"), normal(long)]
+        ] {
+            sut.setBannerItems(items)
+            layout()
+            for cell in cells() {
+                let label = try! XCTUnwrap(label(in: cell))
+                let text = label.attributedText?.string ?? ""
+                XCTAssertGreaterThanOrEqual(cell.frame.width, ceil(label.intrinsicContentSize.width) + margin * 2,
+                                            "\(text) doesn't fit")
+            }
+        }
     }
 
     func test_sizesFollowItemsAcrossUpdates() {
@@ -193,6 +213,13 @@ final class SpellBannerViewTests: XCTestCase {
 
     private func frames() -> [CGRect] {
         cells().map(\.frame)
+    }
+
+    /// Frames of all three items, including any scrolled out of view.
+    private func itemFrames() -> [CGRect] {
+        (0..<3).compactMap {
+            collectionView.collectionViewLayout.layoutAttributesForItem(at: IndexPath(item: $0, section: 0))?.frame
+        }
     }
 
     private func constraintCounts() -> [Int] {

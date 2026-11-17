@@ -45,21 +45,25 @@ final class SpellBannerCell: UICollectionViewCell {
     }
 
     func set(item: SpellBannerItem?) {
+        titleLabel.attributedText = Self.title(for: item)
+    }
+
+    /// The text shown for an item. Parts without a font of their own use the banner font.
+    static func title(for item: SpellBannerItem?) -> NSAttributedString {
         guard let item = item else {
-            titleLabel.attributedText = NSAttributedString(string: "")
-            return
+            return NSAttributedString(string: "")
         }
         switch item.title {
         case .humanInput(let x, let isCorrect):
             if isCorrect {
-                titleLabel.attributedText = "\"\(x)\"".bolden(substring: x)
+                return "\"\(x)\"".bolden(substring: x)
             } else {
-                titleLabel.attributedText = NSAttributedString(string: "\"\(x)\"")
+                return NSAttributedString(string: "\"\(x)\"")
             }
         case .normal(let x):
-            titleLabel.attributedText = NSAttributedString(string: x)
+            return NSAttributedString(string: x)
         case .correction(let x):
-            titleLabel.attributedText = x.bolden(substring: x)
+            return x.bolden(substring: x)
         }
     }
 

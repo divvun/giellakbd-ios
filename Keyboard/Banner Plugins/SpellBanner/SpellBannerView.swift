@@ -138,17 +138,21 @@ extension SpellBannerView: UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView,
                                layout _: UICollectionViewLayout,
                                sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let title = (items[indexPath.item]?.title ?? .normal("")).value
+        // Measure exactly what the cell shows (quotes and bold included), in the banner font like its label.
+        let title = NSMutableAttributedString(attributedString: SpellBannerCell.title(for: items[indexPath.item]))
+        let fullRange = NSRange(location: 0, length: title.length)
+        title.enumerateAttribute(.font, in: fullRange) { font, range, _ in
+            if font == nil {
+                title.addAttribute(.font, value: theme.bannerFont, range: range)
+            }
+        }
 
         // It is constrained by infinity so it isn't constrained.
         let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: collectionView.frame.height)
-        let boundingBox = title.boundingRect(with: constraintRect,
-                                             options: .usesLineFragmentOrigin,
-//                                             attributes: [NSAttributedString.Key.font: theme.bannerFont],
-                                             context: nil)
+        let boundingBox = title.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, context: nil)
 
         return CGSize(width: max(frame.width / 3.0,
-                                 boundingBox.width + theme.bannerHorizontalMargin * 2),
+                                 ceil(boundingBox.width) + theme.bannerHorizontalMargin * 2),
                       height: collectionView.frame.height)
     }
 }
