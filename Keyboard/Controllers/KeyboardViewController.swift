@@ -592,8 +592,10 @@ open class KeyboardViewController: UIInputViewController {
         }
     }
 
+    /// Light/dark changes arrive as trait changes, including a text field asking for a dark or light keyboard:
+    /// iOS changes our trait collection when the user moves into or out of such a field.
     private func updateThemeIfAppearanceChanged() {
-        // Runs on every keystroke, and building a theme recomputes every metric and colour, so check cheaply first.
+        // Most trait changes aren't light/dark, and applying a theme rebuilds every key, so check cheaply first.
         guard Theme.appearance(for: traitCollection) != theme.appearance else {
             return
         }
@@ -612,7 +614,6 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     private func updateInputState() {
-        updateThemeIfAppearanceChanged()
         propagateTextInputUpdateToBanner()
         updateCapitalization()
     }
