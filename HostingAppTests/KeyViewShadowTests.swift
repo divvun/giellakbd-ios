@@ -23,35 +23,35 @@ final class KeyViewShadowTests: XCTestCase {
     }
 
     func test_lightTheme_keysHaveNoShadow() throws {
-        let theme = Theme.current(for: traits(.light))
+        let theme = Theme.current(for: traits(.light), device: .current)
         XCTAssertEqual(theme.keyShadowColor.cgColor.alpha, 0, "test assumes the iOS 26 light theme has no shadow")
         try makeKeyboard(theme: theme)
         assertNoKeyShadows()
     }
 
     func test_darkTheme_keysHaveNoShadow() throws {
-        let theme = Theme.current(for: traits(.dark))
+        let theme = Theme.current(for: traits(.dark), device: .current)
         XCTAssertEqual(theme.keyShadowColor.cgColor.alpha, 0, "test assumes the iOS 26 dark theme has no shadow")
         try makeKeyboard(theme: theme)
         assertNoKeyShadows()
     }
 
     func test_afterThemeChange_keysHaveNoShadow() throws {
-        try makeKeyboard(theme: Theme.current(for: traits(.light)))
-        sut.updateTheme(theme: Theme.current(for: traits(.dark)))
+        try makeKeyboard(theme: Theme.current(for: traits(.light), device: .current))
+        sut.updateTheme(theme: Theme.current(for: traits(.dark), device: .current))
         layout()
         assertNoKeyShadows()
     }
 
     func test_afterPageChange_keysHaveNoShadow() throws {
-        try makeKeyboard(theme: Theme.current(for: traits(.light)))
+        try makeKeyboard(theme: Theme.current(for: traits(.light), device: .current))
         sut.page = .shifted
         layout()
         assertNoKeyShadows()
     }
 
     func test_afterResize_keysHaveNoShadow() throws {
-        try makeKeyboard(theme: Theme.current(for: traits(.light)))
+        try makeKeyboard(theme: Theme.current(for: traits(.light), device: .current))
         widthConstraint.constant = 600
         layout()
         assertNoKeyShadows()
@@ -118,6 +118,6 @@ final class KeyViewShadowTests: XCTestCase {
         }
         """
         let raw = try JSONDecoder().decode(RawKeyboardDefinition.self, from: Data(json.utf8))
-        return try KeyboardDefinition(fromRaw: raw, traits: UITraitCollection(userInterfaceIdiom: .phone))
+        return try KeyboardDefinition(fromRaw: raw, traits: UITraitCollection(userInterfaceIdiom: .phone), needsInputModeSwitchKey: false)
     }
 }

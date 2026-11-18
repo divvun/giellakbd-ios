@@ -14,7 +14,7 @@ final class SpellBannerViewTests: XCTestCase {
         super.setUp()
         window = UIWindow(frame: CGRect(x: 0, y: 0, width: 390, height: 844))
         window.isHidden = false
-        sut = SpellBannerView(theme: Theme.current(for: lightTraits))
+        sut = SpellBannerView(theme: Theme.current(for: lightTraits, device: .current))
         window.addSubview(sut)
         sut.topAnchor.constraint(equalTo: window.topAnchor).isActive = true
         sut.leftAnchor.constraint(equalTo: window.leftAnchor).isActive = true
@@ -67,7 +67,7 @@ final class SpellBannerViewTests: XCTestCase {
     }
 
     func test_labelsUseThemeFontAndColor() {
-        let theme = Theme.current(for: lightTraits)
+        let theme = Theme.current(for: lightTraits, device: .current)
         sut.setBannerItems([human("hi", false), normal("ho")])
         layout()
         for cell in cells() {
@@ -80,7 +80,7 @@ final class SpellBannerViewTests: XCTestCase {
         let dark = Theme.current(for: UITraitCollection(traitsFrom: [
             UITraitCollection(userInterfaceIdiom: .phone),
             UITraitCollection(userInterfaceStyle: .dark)
-        ]))
+        ]), device: .current)
         sut.updateTheme(dark)
         sut.setBannerItems([human("hi", false), normal("ho")])
         layout()
@@ -129,7 +129,7 @@ final class SpellBannerViewTests: XCTestCase {
 
     func test_longSuggestions_fitTheirTextWithAMarginEachSide() {
         let long = "extraordinarily long words"
-        let margin = Theme.current(for: lightTraits).bannerHorizontalMargin
+        let margin = Theme.current(for: lightTraits, device: .current).bannerHorizontalMargin
         for items in [
             [human(long, false), normal("x")],
             [human(long, true), normal("x")],

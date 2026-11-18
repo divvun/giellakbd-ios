@@ -108,6 +108,7 @@ class LongPressOverlayController: NSObject,
         collectionView?.delegate = self
         collectionView?.dataSource = self
         collectionView?.backgroundColor = .clear
+        collectionView?.hideEdgeEffects()
 
         if let delegate = self.delegate {
             delegate.longpress(didCreateOverlayContentView: collectionView!)

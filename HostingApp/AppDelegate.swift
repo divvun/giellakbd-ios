@@ -25,7 +25,6 @@ final class AppNavControllerDelegate: NSObject, UINavigationControllerDelegate {
 final class AppDelegate: UIResponder, UIApplicationDelegate {
     weak static var instance: AppDelegate!
 
-    var window: UIWindow?
     var wantsKeyboardList = false
 
     let navController = UINavigationController(rootViewController: HomeController())
@@ -52,36 +51,17 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         // Migrate the databases
         UserDictionary.migrate()
 
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window!.rootViewController = navController
-        window!.makeKeyAndVisible()
-
         let oneDay: Double = 60 * 60 * 24
         UIApplication.shared.setMinimumBackgroundFetchInterval(oneDay)
-
-        if !isKeyboardEnabled, KeyboardSettings.firstLoad {
-            KeyboardSettings.firstLoad = false
-            navController.pushViewController(InstructionsController(), animated: false)
-        }
-
-        if let url = launchOptions?[UIApplication.LaunchOptionsKey.url] {
-            if let url = url as? URL {
-                parseUrl(url)
-            }
-        }
 
         return true
     }
 
-//    func application(_ application: UIApplication,
-//                     performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-//        // TODO: check for actual updates and install those instead
-//        completionHandler(.newData)
-//    }
-
-    func applicationWillEnterForeground(_: UIApplication) {
-        // I'd gladly use .NSExtensionHostWillEnterForeground but it doesn't work
-        NotificationCenter.default.post(Notification(name: .HostingAppWillEnterForeground))
+    func showInstructionsOnFirstLaunchIfNeeded() {
+        if !isKeyboardEnabled, KeyboardSettings.firstLoad {
+            KeyboardSettings.firstLoad = false
+            navController.pushViewController(InstructionsController(), animated: false)
+        }
     }
 
     func parseUrl(_: URL) {
@@ -89,15 +69,4 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             return
         }
     }
-
-    func application(_: UIApplication, open url: URL, options _: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        parseUrl(url)
-        return true
-    }
-
-//    func application(_ application: UIApplication,
-//                     handleEventsForBackgroundURLSession identifier: String,
-//                     completionHandler: @escaping () -> Void) {
-//        pahkat?.setBackgroundURLSessionCompletion(completionHandler)
-//    }
 }

@@ -35,6 +35,8 @@ open class KeyboardViewController: UIInputViewController {
     private var deadKeyHandler: DeadKeyHandler!
     public private(set) var keyboardDefinition: KeyboardDefinition!
     private var keyboardMode: KeyboardMode = .normal
+    /// The `needsInputModeSwitchKey` value the current layout was built with.
+    private var layoutIncludesInputModeSwitchKey: Bool?
 
     private var bannerManager: BannerManager?
 
@@ -58,12 +60,24 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     private(set) lazy var theme: Theme = {
-        Theme.current(for: self.traitCollection)
+        // First built in viewDidLoad, before the view is in a window, so this may be UIScreen.main rather than
+        // the screen the keyboard ends up on. Recording it lets viewDidLayoutSubviews correct the theme.
+        let context = self.deviceContext
+        self.lastScreenSize = context.screenSize
+        return Theme.current(for: self.traitCollection, device: context)
     }()
+
+    /// Device and screen geometry for the screen this keyboard is currently on.
+    private var deviceContext: DeviceContext {
+        DeviceContext.current(in: viewIfLoaded)
+    }
+
+    /// The screen size the current theme and height were computed for.
+    private var lastScreenSize: CGSize?
 
     private var preferredHeight: CGFloat {
         var height = KeyboardHeightProvider.height(
-            for: DeviceContext.current,
+            for: deviceContext,
             traitCollection: traitCollection,
             rowCount: keyboardDefinition.currentDeviceLayout?.normal.count
         )
@@ -75,24 +89,29 @@ open class KeyboardViewController: UIInputViewController {
         return height
     }
 
+    /// True during a size transition such as a rotation, whose completion applies the new screen geometry.
+    private var isTransitioningSize = false
+
     open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        isTransitioningSize = true
         coordinator.animate { _ in
             // moving the height updating here causes jank
             // where there's a black box under the keyboard before it corrects
         } completion: { [weak self] _ in
-            guard let self = self else { return }
-            // Regenerate theme with new device context (portrait/landscape)
-            self.theme = Theme.current(for: self.traitCollection)
-
-            // Update all views with the new theme
-            self.updateAfterThemeChange()
-            self.bannerManager?.updateTheme(self.theme)
-            if self.keyboardView != nil {
-                self.keyboardView.updateTheme(theme: self.theme)
-            }
-            self.updateHeightConstraint()
-            self.view.layoutIfNeeded()
+            self?.isTransitioningSize = false
+            self?.applyScreenGeometryChange()
         }
+    }
+
+    /// Regenerates the theme and height for the screen the keyboard is now on.
+    /// Runs after rotation and whenever the screen size changes, e.g. when iPhone Duo folds or unfolds.
+    private func applyScreenGeometryChange() {
+        let context = deviceContext
+        lastScreenSize = context.screenSize
+        apply(Theme.current(for: traitCollection, device: context))
+        updateHeightConstraint()
+        view.layoutIfNeeded()
     }
 
     private func initHeightConstraint() {
@@ -143,21 +162,20 @@ open class KeyboardViewController: UIInputViewController {
     }
 
     private func loadKeyboardDefinition() -> KeyboardDefinition {
-        let keyboardDefinitions: [KeyboardDefinition]
         let path = Bundle.top.url(forResource: "KeyboardDefinitions", withExtension: "json")!
         do {
             let data = try String(contentsOf: path).data(using: .utf8)!
-            let raws = try JSONDecoder().decode([RawKeyboardDefinition].self, from: data)
-            keyboardDefinitions = try raws.map { try KeyboardDefinition(fromRaw: $0, traits: self.traitCollection) }
-            print("keyboard definition locales: \(keyboardDefinitions.map { $0.locale })")
+            // The file holds every layout in the app; decode and build only this keyboard's.
+            let raw = try RawKeyboardDefinition.decodeOne(from: data) { locales in
+                print("keyboard definition locales: \(locales)")
+                return isBeingRunFromTests() ? 0 : keyboardDefinitionIndex(locales: locales)
+            }
+            let needsSwitchKey = needsInputModeSwitchKey
+            layoutIncludesInputModeSwitchKey = needsSwitchKey
+            return try KeyboardDefinition(fromRaw: raw, traits: self.traitCollection, needsInputModeSwitchKey: needsSwitchKey)
         } catch {
             fatalError("Error getting keyboard definitions from json file: \(error)")
         }
-
-        if isBeingRunFromTests() {
-            return keyboardDefinitions[0]
-        }
-        return keyboardDefinitions[keyboardDefinitionIndex(locales: keyboardDefinitions.map { $0.locale })]
     }
 
     /// The position of this extension's layout in `KeyboardDefinitions.json`.
@@ -269,9 +287,14 @@ open class KeyboardViewController: UIInputViewController {
         }
 
         if withBanner {
-            bannerContainerView = makeBannerContainerView()
+            // Reuse the banner container on a rebuild: the banner manager draws into it, so a new one would stay empty.
+            // Removing the previous keyboard view also removed its constraint to the banner, so anchor the new one.
+            let bannerContainer = bannerContainerView ?? makeBannerContainerView()
+            bannerContainerView = bannerContainer
+            bannerContainer.bottomAnchor.constraint(equalTo: keyboardView.topAnchor).enable()
+
             if bannerManager == nil {
-                bannerManager = BannerManager(view: bannerContainerView!, theme: theme, delegate: self)
+                bannerManager = BannerManager(view: bannerContainer, theme: theme, delegate: self)
             }
         } else {
             self.keyboardView.topAnchor.constraint(equalTo: keyboardContainer.topAnchor).enable()
@@ -369,8 +392,6 @@ open class KeyboardViewController: UIInputViewController {
         bannerContainer.heightAnchor.constraint(equalToConstant: theme.bannerHeight).enable()
         bannerContainer.leftAnchor.constraint(equalTo: keyboardContainer.leftAnchor).enable()
         bannerContainer.rightAnchor.constraint(equalTo: keyboardContainer.rightAnchor).enable()
-
-        bannerContainer.bottomAnchor.constraint(equalTo: keyboardView.topAnchor).enable()
         bannerContainer.topAnchor.constraint(equalTo: keyboardContainer.topAnchor).enable()
 
         bannerContainer.isHidden = false
@@ -385,6 +406,18 @@ open class KeyboardViewController: UIInputViewController {
             initHeightConstraint()
         }
 
+        if !isTransitioningSize, lastScreenSize != deviceContext.screenSize {
+            // The theme was built for a different screen size: either before the view was in a window, or the
+            // keyboard moved screens without a rotation transition, e.g. iPhone Duo folding or unfolding.
+            // Skipped mid-transition: updating the height during the animation leaves a black box under the
+            // keyboard, and the transition's completion applies the change anyway.
+            // Deferred so we don't trigger a layout pass from inside this one.
+            lastScreenSize = deviceContext.screenSize
+            DispatchQueue.main.async { [weak self] in
+                self?.applyScreenGeometryChange()
+            }
+        }
+
         super.viewDidLayoutSubviews()
     }
 
@@ -392,7 +425,14 @@ open class KeyboardViewController: UIInputViewController {
         super.viewWillAppear(animated)
 
         self.disablesDelayingGestureRecognizers = true
-        checkDarkMode()
+        updateThemeIfAppearanceChanged()
+
+        // needsInputModeSwitchKey isn't guaranteed to be accurate in viewDidLoad, where the layout is first built.
+        // Rebuild if it has changed so the globe key appears exactly when the system expects us to provide one.
+        if let layoutHasSwitchKey = layoutIncludesInputModeSwitchKey, layoutHasSwitchKey != needsInputModeSwitchKey {
+            setupKeyboard()
+            updateHeightConstraint()
+        }
     }
 
     private var application: UIApplication? {
@@ -538,13 +578,13 @@ open class KeyboardViewController: UIInputViewController {
                                       with coordinator: UIViewControllerTransitionCoordinator) {
         super.willTransition(to: newCollection, with: coordinator)
         coordinator.animate(alongsideTransition: { _ in
-            self.checkDarkMode()
+            self.updateThemeIfAppearanceChanged()
         }, completion: nil)
     }
 
     override open func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        checkDarkMode()
+        updateThemeIfAppearanceChanged()
         if traitCollection.userInterfaceIdiom == .pad,
             previousTraitCollection?.horizontalSizeClass != traitCollection.horizontalSizeClass {
             setupKeyboard()
@@ -552,39 +592,28 @@ open class KeyboardViewController: UIInputViewController {
         }
     }
 
-    private func checkDarkMode(traits: UITraitCollection) {
-        let newTheme = Theme.current(for: traits)
-
-        if theme.appearance != newTheme.appearance {
-            theme = newTheme
-
-            updateAfterThemeChange()
-            bannerManager?.updateTheme(theme)
-            if keyboardView != nil {
-                keyboardView.updateTheme(theme: theme)
-            }
-            if keyboardDefinition.supportsCurrentDevice == false {
-                // resetup the keyboard not supported view to update its theme
-                setupKeyboardNotSupportedOnThisDeviceView()
-            }
-        }
-    }
-
-    private func checkDarkMode() {
-        // This runs on every keystroke. Building a theme recomputes every metric and colour,
-        // so only build one when the appearance has actually changed.
+    /// Light/dark changes arrive as trait changes, including a text field asking for a dark or light keyboard:
+    /// iOS changes our trait collection when the user moves into or out of such a field.
+    private func updateThemeIfAppearanceChanged() {
+        // Most trait changes aren't light/dark, and applying a theme rebuilds every key, so check cheaply first.
         guard Theme.appearance(for: traitCollection) != theme.appearance else {
             return
         }
-        self.checkDarkMode(traits: self.traitCollection)
+        apply(Theme.current(for: traitCollection, device: deviceContext))
     }
 
-    private func updateAfterThemeChange() {
-        self.view.backgroundColor = theme.backgroundColor
+    private func apply(_ newTheme: Theme) {
+        theme = newTheme
+        view.backgroundColor = theme.backgroundColor
+        bannerManager?.updateTheme(theme)
+        keyboardView?.updateTheme(theme: theme)
+        if keyboardDefinition.supportsCurrentDevice == false {
+            // Rebuilt so its globe button picks up the new text colour
+            setupKeyboardNotSupportedOnThisDeviceView()
+        }
     }
 
     private func updateInputState() {
-        checkDarkMode()
         propagateTextInputUpdateToBanner()
         updateCapitalization()
     }

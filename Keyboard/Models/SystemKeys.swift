@@ -2,16 +2,21 @@ import Foundation
 import UIKit
 
 final class SystemKeys {
+    /// Builds the bottom row of system keys.
+    /// - Parameter needsInputModeSwitchKey: The input view controller's `needsInputModeSwitchKey`.
+    ///   When `true` the system draws no globe for us (Touch ID iPhones, iPhone Duo, iPads), so the row must
+    ///   include one. Face ID iPhones and single-keyboard setups report `false`.
     static func systemKeyRowsForCurrentDevice(spaceName: String,
                                               returnName: String,
-                                              traits: UITraitCollection) -> [KeyDefinition] {
+                                              traits: UITraitCollection,
+                                              needsInputModeSwitchKey: Bool,
+                                              device: DeviceContext = .current) -> [KeyDefinition] {
         var keys = [KeyDefinition]()
 
-        let device = DeviceContext.current
         let shouldUseIPadLayout = device.shouldUseIPadLayout(traitCollection: traits)
 
         // Left side of space bar
-        if !device.hasSensorHousing {
+        if needsInputModeSwitchKey {
             if shouldUseIPadLayout && device.isLargeIPad {
                 keys.append(KeyDefinition(type: .keyboard, size: CGSize(width: 1.25, height: 1.0)))
                 keys.append(KeyDefinition(type: .symbols, size: CGSize(width: 1.25, height: 1.0)))
@@ -39,8 +44,15 @@ final class SystemKeys {
 }
 
 extension Array where Element == [KeyDefinition] {
-    mutating func platformize(page: KeyboardPage, spaceName: String, returnName: String, traits: UITraitCollection) {
-        append(SystemKeys.systemKeyRowsForCurrentDevice(spaceName: spaceName, returnName: returnName, traits: traits))
+    mutating func platformize(page: KeyboardPage,
+                              spaceName: String,
+                              returnName: String,
+                              traits: UITraitCollection,
+                              needsInputModeSwitchKey: Bool) {
+        append(SystemKeys.systemKeyRowsForCurrentDevice(spaceName: spaceName,
+                                                        returnName: returnName,
+                                                        traits: traits,
+                                                        needsInputModeSwitchKey: needsInputModeSwitchKey))
     }
 
     func splitAndBalanceSpacebar() -> [[KeyDefinition]] {

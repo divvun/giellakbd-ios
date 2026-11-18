@@ -220,7 +220,7 @@ public struct KeyboardDefinition: Codable {
         return Set()
     }
 
-    init(fromRaw raw: RawKeyboardDefinition, traits: UITraitCollection) throws {
+    init(fromRaw raw: RawKeyboardDefinition, traits: UITraitCollection, needsInputModeSwitchKey: Bool) throws {
         let deviceVariant = DeviceVariant.from(traits: traits)
 
         self.name = raw.name
@@ -279,10 +279,34 @@ public struct KeyboardDefinition: Codable {
             self.currentDeviceLayout = Layout(normal: normal, shifted: shifted, symbols1: symbols1Converted, symbols2: symbols2Converted)
         }
 
-        currentDeviceLayout!.normal.platformize(page: .normal, spaceName: spaceName, returnName: returnName, traits: traits)
-        currentDeviceLayout!.shifted.platformize(page: .shifted, spaceName: spaceName, returnName: returnName, traits: traits)
-        currentDeviceLayout!.symbols1.platformize(page: .symbols1, spaceName: spaceName, returnName: returnName, traits: traits)
-        currentDeviceLayout!.symbols2.platformize(page: .symbols2, spaceName: spaceName, returnName: returnName, traits: traits)
+        currentDeviceLayout!.normal.platformize(
+            page: .normal,
+            spaceName: spaceName,
+            returnName: returnName,
+            traits: traits,
+            needsInputModeSwitchKey: needsInputModeSwitchKey
+        )
+        currentDeviceLayout!.shifted.platformize(
+            page: .shifted,
+            spaceName: spaceName,
+            returnName: returnName,
+            traits: traits,
+            needsInputModeSwitchKey: needsInputModeSwitchKey
+        )
+        currentDeviceLayout!.symbols1.platformize(
+            page: .symbols1,
+            spaceName: spaceName,
+            returnName: returnName,
+            traits: traits,
+            needsInputModeSwitchKey: needsInputModeSwitchKey
+        )
+        currentDeviceLayout!.symbols2.platformize(
+            page: .symbols2,
+            spaceName: spaceName,
+            returnName: returnName,
+            traits: traits,
+            needsInputModeSwitchKey: needsInputModeSwitchKey
+        )
     }
 
     private func keyDefinitionsFromRaw(_ rawKeyDefinitions: [[RawKeyDefinition]]) -> [[KeyDefinition]] {
@@ -347,5 +371,46 @@ public enum KeyboardPage {
         default:
             return .symbols2
         }
+    }
+}
+
+extension RawKeyboardDefinition {
+    /// Decodes just one layout from a JSON array of layouts, as chosen by `choose` from every layout's locale.
+    ///
+    /// An app's `KeyboardDefinitions.json` holds every layout in the app, and decoding them all is slow (about 32 ms
+    /// for 25 layouts on a simulator), but each keyboard uses only one. So read just the locales, then decode only
+    /// the chosen layout, skipping over the others.
+    static func decodeOne(from data: Data, choosingIndex choose: ([String]) throws -> Int) throws -> RawKeyboardDefinition {
+        let locales = try JSONDecoder().decode([LocaleOnly].self, from: data).map(\.locale)
+        let index = try choose(locales)
+        guard locales.indices.contains(index) else {
+            throw DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "No layout at index \(index)"))
+        }
+        let decoder = JSONDecoder()
+        decoder.userInfo[ChosenLayout.indexKey] = index
+        return try decoder.decode(ChosenLayout.self, from: data).raw
+    }
+
+    private struct LocaleOnly: Decodable {
+        let locale: String
+    }
+
+    /// Decodes the layout at `userInfo[indexKey]` from the array, without decoding the ones before it.
+    private struct ChosenLayout: Decodable {
+        static let indexKey = CodingUserInfoKey(rawValue: "RawKeyboardDefinition.index")!
+        let raw: RawKeyboardDefinition
+
+        init(from decoder: Decoder) throws {
+            guard let index = decoder.userInfo[Self.indexKey] as? Int else {
+                throw DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "No layout index given"))
+            }
+            var layouts = try decoder.unkeyedContainer()
+            for _ in 0..<index {
+                _ = try layouts.decode(Skipped.self)
+            }
+            raw = try layouts.decode(RawKeyboardDefinition.self)
+        }
+
+        private struct Skipped: Decodable {}
     }
 }

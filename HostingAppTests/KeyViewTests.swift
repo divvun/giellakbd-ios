@@ -5,7 +5,7 @@ final class KeyViewTests: XCTestCase {
     private let theme = Theme.current(for: UITraitCollection(traitsFrom: [
         UITraitCollection(userInterfaceIdiom: .phone),
         UITraitCollection(userInterfaceStyle: .light)
-    ]))
+    ]), device: .current)
     private var window: UIWindow!
     private var heightConstraint: NSLayoutConstraint!
 
