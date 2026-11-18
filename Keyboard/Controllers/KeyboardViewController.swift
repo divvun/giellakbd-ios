@@ -109,12 +109,7 @@ open class KeyboardViewController: UIInputViewController {
     private func applyScreenGeometryChange() {
         let context = deviceContext
         lastScreenSize = context.screenSize
-        theme = Theme.current(for: traitCollection, device: context)
-
-        // Update all views with the new theme
-        updateAfterThemeChange()
-        bannerManager?.updateTheme(theme)
-        keyboardView?.updateTheme(theme: theme)
+        apply(Theme.current(for: traitCollection, device: context))
         updateHeightConstraint()
         view.layoutIfNeeded()
     }
@@ -430,7 +425,7 @@ open class KeyboardViewController: UIInputViewController {
         super.viewWillAppear(animated)
 
         self.disablesDelayingGestureRecognizers = true
-        checkDarkMode()
+        updateThemeIfAppearanceChanged()
 
         // needsInputModeSwitchKey isn't guaranteed to be accurate in viewDidLoad, where the layout is first built.
         // Rebuild if it has changed so the globe key appears exactly when the system expects us to provide one.
@@ -583,13 +578,13 @@ open class KeyboardViewController: UIInputViewController {
                                       with coordinator: UIViewControllerTransitionCoordinator) {
         super.willTransition(to: newCollection, with: coordinator)
         coordinator.animate(alongsideTransition: { _ in
-            self.checkDarkMode()
+            self.updateThemeIfAppearanceChanged()
         }, completion: nil)
     }
 
     override open func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        checkDarkMode()
+        updateThemeIfAppearanceChanged()
         if traitCollection.userInterfaceIdiom == .pad,
             previousTraitCollection?.horizontalSizeClass != traitCollection.horizontalSizeClass {
             setupKeyboard()
@@ -597,39 +592,27 @@ open class KeyboardViewController: UIInputViewController {
         }
     }
 
-    private func checkDarkMode(traits: UITraitCollection) {
-        let newTheme = Theme.current(for: traits, device: deviceContext)
-
-        if theme.appearance != newTheme.appearance {
-            theme = newTheme
-
-            updateAfterThemeChange()
-            bannerManager?.updateTheme(theme)
-            if keyboardView != nil {
-                keyboardView.updateTheme(theme: theme)
-            }
-            if keyboardDefinition.supportsCurrentDevice == false {
-                // resetup the keyboard not supported view to update its theme
-                setupKeyboardNotSupportedOnThisDeviceView()
-            }
-        }
-    }
-
-    private func checkDarkMode() {
-        // This runs on every keystroke. Building a theme recomputes every metric and colour,
-        // so only build one when the appearance has actually changed.
+    private func updateThemeIfAppearanceChanged() {
+        // Runs on every keystroke, and building a theme recomputes every metric and colour, so check cheaply first.
         guard Theme.appearance(for: traitCollection) != theme.appearance else {
             return
         }
-        self.checkDarkMode(traits: self.traitCollection)
+        apply(Theme.current(for: traitCollection, device: deviceContext))
     }
 
-    private func updateAfterThemeChange() {
-        self.view.backgroundColor = theme.backgroundColor
+    private func apply(_ newTheme: Theme) {
+        theme = newTheme
+        view.backgroundColor = theme.backgroundColor
+        bannerManager?.updateTheme(theme)
+        keyboardView?.updateTheme(theme: theme)
+        if keyboardDefinition.supportsCurrentDevice == false {
+            // Rebuilt so its globe button picks up the new text colour
+            setupKeyboardNotSupportedOnThisDeviceView()
+        }
     }
 
     private func updateInputState() {
-        checkDarkMode()
+        updateThemeIfAppearanceChanged()
         propagateTextInputUpdateToBanner()
         updateCapitalization()
     }

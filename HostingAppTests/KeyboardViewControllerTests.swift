@@ -528,3 +528,108 @@ private final class Weak {
     weak var view: UIView?
     init(_ view: UIView) { self.view = view }
 }
+
+/// Switching between light and dark mode while the keyboard is open.
+final class KeyboardAppearanceTests: XCTestCase {
+    private var window: UIWindow!
+    private var sut: KeyboardViewController!
+
+    override func setUp() {
+        super.setUp()
+        window = UIWindow(frame: CGRect(x: 0, y: 0, width: 390, height: 844))
+        sut = KeyboardViewController()
+        sut.overrideUserInterfaceStyle = .light
+        window.rootViewController = sut
+        window.isHidden = false
+        layout()
+    }
+
+    override func tearDown() {
+        window.isHidden = true
+        window.rootViewController = nil
+        sut = nil
+        window = nil
+        super.tearDown()
+    }
+
+    func test_startsWithTheLightTheme() {
+        XCTAssertEqual(sut.theme.appearance, .light)
+        assertViewsUseTheCurrentTheme()
+    }
+
+    func test_switchingToDark_appliesTheDarkThemeEverywhere() {
+        let lightKeys = keyViewIDs()
+        setStyle(.dark)
+        XCTAssertEqual(sut.theme.appearance, .dark)
+        XCTAssertTrue(Set(lightKeys).isDisjoint(with: keyViewIDs()), "keys should be rebuilt in the new theme")
+        // Only set on a theme change: every theme's background is transparent, so the first load leaves it unset.
+        XCTAssertEqual(sut.view.backgroundColor, sut.theme.backgroundColor)
+        assertViewsUseTheCurrentTheme()
+    }
+
+    func test_switchingBackToLight_appliesTheLightThemeAgain() {
+        setStyle(.dark)
+        setStyle(.light)
+        XCTAssertEqual(sut.theme.appearance, .light)
+        XCTAssertEqual(sut.view.backgroundColor, sut.theme.backgroundColor)
+        assertViewsUseTheCurrentTheme()
+    }
+
+    func test_traitChangeWithTheSameStyle_keepsTheThemeAndKeys() {
+        let keys = keyViewIDs()
+        let background = sut.theme.backgroundColor
+        sut.traitCollectionDidChange(sut.traitCollection)
+        layout()
+        XCTAssertEqual(keyViewIDs(), keys)
+        XCTAssertEqual(sut.theme.backgroundColor, background)
+    }
+
+    func test_typing_keepsTheThemeAndKeys() {
+        // The appearance is checked on every keystroke, so this must not rebuild anything.
+        let keys = keyViewIDs()
+        for _ in 0..<3 {
+            sut.textDidChange(nil)
+            layout()
+        }
+        XCTAssertEqual(keyViewIDs(), keys)
+    }
+
+    // MARK: - Helpers
+
+    private func setStyle(_ style: UIUserInterfaceStyle) {
+        sut.overrideUserInterfaceStyle = style
+        layout()
+    }
+
+    private func layout() {
+        window.layoutIfNeeded()
+        sut.view.layoutIfNeeded()
+        RunLoop.current.run(until: Date().addingTimeInterval(0.01))
+        sut.view.layoutIfNeeded()
+    }
+
+    private func assertViewsUseTheCurrentTheme(file: StaticString = #filePath, line: UInt = #line) {
+        let theme = sut.theme
+        let banner = all(in: sut.view).compactMap { $0 as? SpellBannerView }.first
+        let bannerList = banner.flatMap { all(in: $0).compactMap { $0 as? UICollectionView }.first }
+        XCTAssertNotNil(bannerList, "spell banner", file: file, line: line)
+        XCTAssertEqual(bannerList?.backgroundColor, theme.bannerBackgroundColor, "banner background", file: file, line: line)
+
+        let letterLabels = all(in: sut.view).compactMap { $0 as? KeyView }
+            .flatMap { all(in: $0).compactMap { $0 as? UILabel } }
+            .filter { $0.text?.count == 1 && $0.text?.first?.isLetter == true }
+        XCTAssertFalse(letterLabels.isEmpty, "letter keys", file: file, line: line)
+        for label in letterLabels where label.textColor != theme.textColor {
+            XCTFail("key \(label.text ?? "") has the other theme's text colour", file: file, line: line)
+            break
+        }
+    }
+
+    private func keyViewIDs() -> [ObjectIdentifier] {
+        all(in: sut.view).compactMap { $0 as? KeyView }.map(ObjectIdentifier.init)
+    }
+
+    private func all(in view: UIView) -> [UIView] {
+        [view] + view.subviews.flatMap { all(in: $0) }
+    }
+}
