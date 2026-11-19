@@ -769,8 +769,17 @@ final internal class KeyboardView: UIView,
         }
         let key = currentPage[indexPath.section][indexPath.row]
 
-        cell.configure(page: page, key: key, theme: theme, traits: self.traitCollection,
-                       verticalMargins: rowLayout.keyMargins(forRow: indexPath.section))
+        let rowLayout = self.rowLayout
+        let vertical = rowLayout.keyMargins(forRow: indexPath.section)
+        let isFirst = indexPath.item == 0
+        let isLast = indexPath.item == currentPage[indexPath.section].count - 1
+        let margins = UIEdgeInsets(top: vertical.top,
+                                   left: theme.keyHorizontalMargin + (isFirst ? theme.keyArea.sideInset : 0),
+                                   bottom: vertical.bottom,
+                                   right: theme.keyHorizontalMargin + (isLast ? theme.keyArea.sideInset : 0))
+        let isNumberRow = indexPath.section == 0 && theme.keyArea.hasNumberRow(rowCount: currentPage.count)
+        cell.configure(page: page, key: key, theme: theme, traits: self.traitCollection, margins: margins,
+                       isNumberRow: isNumberRow)
 
         if let swipeKeyView = cell.keyView, swipeKeyView.isSwipeKey {
             // FIXME: this is a code smell side effect bad idea.
@@ -783,15 +792,25 @@ final internal class KeyboardView: UIView,
     func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let key = currentPage[indexPath.section][indexPath.row]
 
-        // Using self.bounds here, because self.collectionView.frame isnt correctly sized in iOS 10
-        let width = key.size.width * ((bounds.size.width - 1) / rowNumberOfUnits[indexPath.section])
+        // Using self.bounds here, because self.collectionView.frame isnt correctly sized in iOS 10.
+        // The outermost keys' cells also take the side insets, so touches near the edges still land on a key.
+        // A row is kept a hair narrower than the view so rounding never makes it too wide and wraps its last key.
+        let sideInset = theme.keyArea.sideInset
+        let unitWidth = (bounds.size.width - 0.01 - 2 * sideInset) / rowNumberOfUnits[indexPath.section]
+        var width = key.size.width * unitWidth
+        if indexPath.item == 0 {
+            width += sideInset
+        }
+        if indexPath.item == currentPage[indexPath.section].count - 1 {
+            width += sideInset
+        }
         let height = rowLayout.height(ofRow: indexPath.section)
         return CGSize(width: width, height: height)
     }
 
     private var rowLayout: KeyRowLayout {
-        KeyRowLayout(rowCount: currentPage.count, height: bounds.size.height, keyMargin: theme.keyVerticalMargin,
-                     topInset: theme.keyAreaTopInset, bottomInset: theme.keyAreaBottomInset)
+        KeyRowLayout(metrics: theme.keyArea, rowCount: currentPage.count, height: bounds.size.height,
+                     scale: traitCollection.displayScale)
     }
 
     func collectionView(_: UICollectionView, layout _: UICollectionViewLayout,
@@ -815,7 +834,7 @@ final internal class KeyboardView: UIView,
         }
 
         func configure(page: KeyboardPage, key: KeyDefinition, theme: Theme, traits: UITraitCollection,
-                       verticalMargins: (top: CGFloat, bottom: CGFloat)) {
+                       margins: UIEdgeInsets, isNumberRow: Bool) {
             contentView.subviews.forEach { view in
                 view.removeFromSuperview()
             }
@@ -828,7 +847,8 @@ final internal class KeyboardView: UIView,
                 contentView.addSubview(emptyview)
                 emptyview.fill(superview: contentView)
             } else {
-                let keyView = KeyView(page: page, key: key, theme: theme, traits: traits, verticalMargins: verticalMargins)
+                let keyView = KeyView(page: page, key: key, theme: theme, traits: traits, margins: margins,
+                                      isNumberRow: isNumberRow)
                 if let accessibilityLabel = key.accessibilityLabel(for: page) {
                     keyView.isAccessibilityElement = true
                     keyView.accessibilityLabel = accessibilityLabel
@@ -875,35 +895,54 @@ final class GhostKeyView: UIView {
     }
 }
 
-/// How the key rows share the key area's height.
+/// How the key rows fill the key area.
 ///
-/// Every key is the same height, and keys in neighbouring rows are `2 * keyMargin` apart. The top row's keys sit
-/// `topInset` below the top of the area and the bottom row's keys `bottomInset` above its bottom. Each row's cell
-/// takes the whole strip around its keys, including that row's share of the gaps, so every touch lands in a row.
+/// Rows get the key heights, gaps and insets of `KeyAreaMetrics`, rounded down to whole pixels so key edges are
+/// crisp. If the area is too short for them, as for layouts with more rows than usual, the keys shrink to fit. Any
+/// space left over goes above the top row, so the bottom row stays where the metrics put it. Each row's cell takes
+/// the whole strip around its keys, including its share of the gaps, so every touch lands in a row.
 struct KeyRowLayout {
-    let rowCount: Int
-    let height: CGFloat
-    let keyMargin: CGFloat
+    /// Height of the keys in each row.
+    let keyHeights: [CGFloat]
     let topInset: CGFloat
     let bottomInset: CGFloat
+    /// The gap between rows, split into the space below one row's keys and above the next row's.
+    private let gapAbove: CGFloat
+    private let gapBelow: CGFloat
 
-    /// Distance from the top of one row's keys to the top of the next row's.
-    var pitch: CGFloat {
-        (height - topInset - bottomInset + 2 * keyMargin) / CGFloat(max(rowCount, 1))
-    }
+    /// - Parameter scale: Pixels per point of the screen the keys are drawn on.
+    init(metrics: KeyAreaMetrics, rowCount: Int, height: CGFloat, scale: CGFloat) {
+        let scale = max(scale, 1)
+        func pixelFloor(_ value: CGFloat) -> CGFloat {
+            (max(value, 0) * scale).rounded(.down) / scale
+        }
 
-    var keyHeight: CGFloat {
-        pitch - 2 * keyMargin
+        let naturalKeyHeights = metrics.keyHeights(rowCount: rowCount)
+        let naturalKeys = naturalKeyHeights.reduce(0, +)
+        let spaceForKeys = height - (metrics.height(rowCount: rowCount) - naturalKeys)
+        let shrink = naturalKeys > spaceForKeys && naturalKeys > 0 ? max(spaceForKeys, 0) / naturalKeys : 1
+        keyHeights = naturalKeyHeights.map { pixelFloor($0 * shrink) }
+
+        gapBelow = pixelFloor(metrics.rowGap / 2)
+        gapAbove = pixelFloor(metrics.rowGap - gapBelow)
+        bottomInset = pixelFloor(metrics.bottomInset)
+
+        let topInset = pixelFloor(metrics.topInset)
+        let used = topInset + keyHeights.reduce(0, +) + CGFloat(max(rowCount - 1, 0)) * (gapAbove + gapBelow) + bottomInset
+        self.topInset = topInset + pixelFloor(height - used)
     }
 
     func height(ofRow row: Int) -> CGFloat {
+        guard keyHeights.indices.contains(row) else {
+            return 0
+        }
         let margins = keyMargins(forRow: row)
-        return keyHeight + margins.top + margins.bottom
+        return margins.top + keyHeights[row] + margins.bottom
     }
 
     /// Space above and below the keys within the row's cell.
     func keyMargins(forRow row: Int) -> (top: CGFloat, bottom: CGFloat) {
-        (top: row == 0 ? topInset : keyMargin,
-         bottom: row == rowCount - 1 ? bottomInset : keyMargin)
+        (top: row == 0 ? topInset : gapAbove,
+         bottom: row == keyHeights.count - 1 ? bottomInset : gapBelow)
     }
 }

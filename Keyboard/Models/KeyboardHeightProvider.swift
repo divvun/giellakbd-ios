@@ -3,35 +3,184 @@ import Sentry
 
 typealias KeyboardHeight = (portrait: CGFloat, landscape: CGFloat)
 
+/// Sizes of the key area, in points.
+///
+/// Keys in neighbouring rows are `rowGap` apart. The top row's keys sit `topInset` below the top of the key area and
+/// the bottom row's keys `bottomInset` above its bottom.
+struct KeyAreaMetrics: Equatable {
+    var keyHeight: CGFloat
+    /// Height of the number row's keys, on devices where the system keyboard draws its number row shorter than the
+    /// other rows, such as 13-inch iPads. `nil` where every row is `keyHeight` tall.
+    var numberRowKeyHeight: CGFloat?
+    var rowGap: CGFloat
+    var topInset: CGFloat
+    var bottomInset: CGFloat
+    /// Extra space between each side of the key area and the outermost keys, on top of the keys' own horizontal
+    /// margin.
+    var sideInset: CGFloat = 0
+
+    /// Layouts with a number row have at least this many rows: the number row and the four letter rows below it.
+    static let minimumRowCountWithNumberRow = 5
+
+    /// Whether the first of `rowCount` rows is a number row, drawn shorter than the others.
+    func hasNumberRow(rowCount: Int) -> Bool {
+        numberRowKeyHeight != nil && rowCount >= Self.minimumRowCountWithNumberRow
+    }
+
+    /// Height of the keys in each row.
+    func keyHeights(rowCount: Int) -> [CGFloat] {
+        let hasNumberRow = hasNumberRow(rowCount: rowCount)
+        return (0..<max(rowCount, 0)).map { row in
+            row == 0 && hasNumberRow ? numberRowKeyHeight ?? keyHeight : keyHeight
+        }
+    }
+
+    /// Height of a key area with `rowCount` rows.
+    func height(rowCount: Int) -> CGFloat {
+        let keys = keyHeights(rowCount: rowCount).reduce(0, +)
+        return topInset + keys + CGFloat(max(rowCount - 1, 0)) * rowGap + bottomInset
+    }
+}
+
 struct KeyboardHeightProvider {
 
-    /// Returns keyboard height for a given device and orientation, optionally adjusted for custom row counts
+    /// Height of the keyboard, banner included, for a layout with `rowCount` rows.
+    ///
+    /// The banner and the key area are sized separately, so either can change without resizing the other. Layouts
+    /// with more rows than usual keep their key height until the keyboard would grow taller than earlier versions
+    /// made it, and their keys shrink to fit from there.
+    /// - Parameters:
+    ///   - rowCount: Rows in the layout. Defaults to the usual number for the device.
+    ///   - legacy: Whether to size for the keyboard before iOS 26. Defaults to the running system.
     static func height(
         for deviceContext: DeviceContext,
         traitCollection: UITraitCollection,
-        rowCount: Int? = nil
+        rowCount: Int? = nil,
+        legacy: Bool = !iOSVersion.isIOS26OrNewer
     ) -> CGFloat {
-        let heights = heights(for: deviceContext, traitCollection: traitCollection)
+        let normalRowCount = self.normalRowCount(for: deviceContext)
+        let rowCount = rowCount ?? normalRowCount
+        let keyArea = keyArea(for: deviceContext, traitCollection: traitCollection, legacy: legacy)
+        let height = bannerHeight(for: deviceContext, traitCollection: traitCollection) + keyArea.height(rowCount: rowCount)
+
+        guard rowCount > normalRowCount else {
+            return height
+        }
+        return min(height, maximumHeight(for: deviceContext, traitCollection: traitCollection, rowCount: rowCount))
+    }
+
+    /// Height of the banner above the keys.
+    static func bannerHeight(for deviceContext: DeviceContext, traitCollection: UITraitCollection) -> CGFloat {
+        deviceContext.shouldUseIPadLayout(traitCollection: traitCollection) ? 55 : 48
+    }
+
+    /// Sizes of the key area for the device's usual number of rows.
+    ///
+    /// On iOS 26 and later, uses the system keyboard's sizes where they have been measured. Elsewhere, fits the rows
+    /// into the key area of the height table, with the key margin above and below each row as before.
+    static func keyArea(for deviceContext: DeviceContext, traitCollection: UITraitCollection,
+                        legacy: Bool = !iOSVersion.isIOS26OrNewer) -> KeyAreaMetrics {
+        if !legacy, let measured = measuredKeyArea(for: deviceContext, traitCollection: traitCollection) {
+            return measured
+        }
+        return fittedKeyArea(for: deviceContext, traitCollection: traitCollection, legacy: legacy)
+    }
+
+    /// Rows in a layout for the device: 4, or 5 on large iPads, whose layouts start with a number row.
+    private static func normalRowCount(for deviceContext: DeviceContext) -> Int {
+        deviceContext.isLargeIPad ? 5 : 4
+    }
+
+    /// The system keyboard's key area on iOS 26 and later, measured from simulator screenshots, or `nil` where it
+    /// hasn't been measured.
+    ///
+    /// Side insets put the outermost keys as far from the screen edges as the system keyboard's. Insets put the bottom
+    /// row where the system keyboard's ends. The extension's view ends higher than the system
+    /// keyboard's own key area: 75 pt above the bottom of the screen on iPhones in portrait, where the system shows its
+    /// globe and dictation bar, and 20 pt above in landscape and on iPad. On iPhones up to 6.3 inches the system's
+    /// bottom row ends lower than the view does, so the bottom row sits on the view's bottom edge instead.
+    private static func measuredKeyArea(for deviceContext: DeviceContext,
+                                        traitCollection: UITraitCollection) -> KeyAreaMetrics? {
         let isLandscape = deviceContext.isLandscape
-        let baseHeight = isLandscape ? heights.landscape : heights.portrait
 
-        guard let rowCount = rowCount else {
-            return baseHeight
+        if deviceContext.shouldUseIPadLayout(traitCollection: traitCollection) {
+            if deviceContext.isLargeIPad {
+                return isLandscape
+                    ? KeyAreaMetrics(keyHeight: 79, numberRowKeyHeight: 59, rowGap: 9, topInset: 6, bottomInset: 4,
+                                     sideInset: 1)
+                    : KeyAreaMetrics(keyHeight: 61, numberRowKeyHeight: 45.5, rowGap: 7, topInset: 8, bottomInset: 4,
+                                     sideInset: 0.5)
+            } else if deviceContext.isMiniIPad {
+                return isLandscape
+                    ? KeyAreaMetrics(keyHeight: 75, rowGap: 11, topInset: 11, bottomInset: 10)
+                    : KeyAreaMetrics(keyHeight: 55.5, rowGap: 9, topInset: 8, bottomInset: 8, sideInset: 1)
+            } else {
+                return isLandscape
+                    ? KeyAreaMetrics(keyHeight: 72, rowGap: 12, topInset: 11, bottomInset: 11)
+                    : KeyAreaMetrics(keyHeight: 55, rowGap: 9, topInset: 8, bottomInset: 8, sideInset: 4)
+            }
         }
 
-        // Adjust for custom row count
-        // Ordinarily a keyboard has 4 rows, iPad 12 inch+ has 5. Some have more. We calculate for that.
-        let normalRowCount: CGFloat = deviceContext.isLargeIPad ? 5.0 : 4.0
-        let rowHeight = baseHeight / normalRowCount
-        var adjustedHeight = rowHeight * CGFloat(rowCount)
-
-        // Some keyboards are more than 4 rows, and on small iPads they take up
-        // almost the whole screen in landscape unless we shave off some pixels
-        if !deviceContext.isLargeIPad, rowCount > 4, isLandscape {
-            adjustedHeight -= 40
+        // Only iPhone Duo's inner display has been measured. Its outer display keeps the fitted sizes, which give
+        // the same key height as the system keyboard's there.
+        if deviceContext.device.realDevice == .iPhoneDuo {
+            guard isDuoInnerDisplay(deviceContext) else {
+                return nil
+            }
+            return isLandscape
+                ? KeyAreaMetrics(keyHeight: 39, rowGap: 13, topInset: 6, bottomInset: 4)
+                : KeyAreaMetrics(keyHeight: 46, rowGap: 14, topInset: 8, bottomInset: 3, sideInset: 8)
         }
 
-        return adjustedHeight
+        guard deviceContext.hasSystemBarBelowKeyboard else {
+            return nil
+        }
+        if isLandscape {
+            return KeyAreaMetrics(keyHeight: 32, rowGap: 8, topInset: 6, bottomInset: 2, sideInset: 1)
+        }
+        return deviceContext.screenInches >= 6.5
+            ? KeyAreaMetrics(keyHeight: 45, rowGap: 11, topInset: 8, bottomInset: 7, sideInset: 3.5)
+            : KeyAreaMetrics(keyHeight: 43, rowGap: 11, topInset: 8, bottomInset: 0, sideInset: 3.5)
+    }
+
+    /// The key area of the height table, shared equally between the rows, with the key margin on either side of
+    /// every row. Key heights may be fractional here; the row layout rounds them to whole pixels.
+    private static func fittedKeyArea(for deviceContext: DeviceContext, traitCollection: UITraitCollection,
+                                      legacy: Bool) -> KeyAreaMetrics {
+        let heights = heights(for: deviceContext, traitCollection: traitCollection)
+        let tableHeight = deviceContext.isLandscape ? heights.landscape : heights.portrait
+        let height = tableHeight - bannerHeight(for: deviceContext, traitCollection: traitCollection)
+        let margin = keyMargin(for: deviceContext, traitCollection: traitCollection, legacy: legacy)
+        let rows = CGFloat(normalRowCount(for: deviceContext))
+        return KeyAreaMetrics(keyHeight: (height - 2 * margin * rows) / rows,
+                              rowGap: 2 * margin, topInset: margin, bottomInset: margin)
+    }
+
+    /// Space above and below each row's keys in the fitted key area.
+    private static func keyMargin(for deviceContext: DeviceContext, traitCollection: UITraitCollection,
+                                  legacy: Bool) -> CGFloat {
+        if deviceContext.shouldUseIPadLayout(traitCollection: traitCollection) {
+            if deviceContext.isLargeLandscape { return 4.0 }
+            if deviceContext.isSmallOrMediumLandscape { return 6.0 }
+            if deviceContext.isLargeIPad { return 3.5 }
+            return 5.0
+        }
+        if deviceContext.isLandscape { return 3.5 }
+        return legacy ? 6.0 : 5.5
+    }
+
+    /// Tallest the keyboard gets for layouts with more rows than usual: the height of the table, banner included,
+    /// scaled by the number of rows. On small and medium iPads in landscape it is 40 pt less, as these layouts would
+    /// otherwise cover most of the screen.
+    private static func maximumHeight(for deviceContext: DeviceContext, traitCollection: UITraitCollection,
+                                      rowCount: Int) -> CGFloat {
+        let heights = heights(for: deviceContext, traitCollection: traitCollection)
+        let tableHeight = deviceContext.isLandscape ? heights.landscape : heights.portrait
+        var height = tableHeight / CGFloat(normalRowCount(for: deviceContext)) * CGFloat(rowCount)
+        if !deviceContext.isLargeIPad, rowCount > 4, deviceContext.isLandscape {
+            height -= 40
+        }
+        return height
     }
 
     private static func heights(for deviceContext: DeviceContext, traitCollection: UITraitCollection) -> KeyboardHeight {
@@ -59,6 +208,12 @@ struct KeyboardHeightProvider {
     /// The outer display's short side is 466 pt and the inner display's is 669 pt.
     private static let duoInnerDisplayMinShortSide: CGFloat = 600
 
+    /// Whether an iPhone Duo keyboard is on the unfolded inner display.
+    private static func isDuoInnerDisplay(_ deviceContext: DeviceContext) -> Bool {
+        let shortSide = min(deviceContext.screenSize.width, deviceContext.screenSize.height)
+        return shortSide >= duoInnerDisplayMinShortSide
+    }
+
     /// Device-specific overrides for devices that need different heights than their diagonal peers
     private static func deviceOverride(for deviceContext: DeviceContext) -> KeyboardHeight? {
         switch deviceContext.device {
@@ -72,9 +227,7 @@ struct KeyboardHeightProvider {
             // DeviceKit describes only the 5.4" outer display, which the diagonal table already handles.
             // The unfolded inner display is much larger: match the system keyboard's key area there
             // (253 pt portrait, 219 pt landscape) plus our 48 pt banner.
-            let shortSide = min(deviceContext.screenSize.width, deviceContext.screenSize.height)
-            let isInnerDisplay = shortSide >= duoInnerDisplayMinShortSide
-            return isInnerDisplay ? (portrait: 301, landscape: 267) : nil
+            return isDuoInnerDisplay(deviceContext) ? (portrait: 301, landscape: 267) : nil
         default:
             return nil
         }

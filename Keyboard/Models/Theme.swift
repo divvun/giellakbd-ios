@@ -26,12 +26,9 @@ struct Theme {
     // Metrics
     let keyCornerRadius: CGFloat
     let popupCornerRadius: CGFloat
-    let keyVerticalMargin: CGFloat
     let keyHorizontalMargin: CGFloat
-    /// Space between the top of the key area and the top row's keys.
-    let keyAreaTopInset: CGFloat
-    /// Space between the bottom row's keys and the bottom of the key area.
-    let keyAreaBottomInset: CGFloat
+    /// Key heights, the gap between rows and the space above and below them.
+    let keyArea: KeyAreaMetrics
 
     // Fonts
     let lowerKeyFont: UIFont
@@ -39,6 +36,8 @@ struct Theme {
     let modifierKeyFontSize: CGFloat
     let altKeyFontSize: CGFloat
     let altKeyFont: UIFont
+    /// Font for both labels of the keys in a number row drawn shorter than the other rows, as on 13-inch iPads.
+    let numberRowKeyFont: UIFont
     let popupLowerKeyFont: UIFont
     let popupCapitalKeyFont: UIFont
     let popupLongpressLowerKeyFont: UIFont
@@ -139,10 +138,8 @@ private struct ThemeFactory {
             // Metrics
             keyCornerRadius: metrics.keyCornerRadius,
             popupCornerRadius: 12.0,
-            keyVerticalMargin: metrics.keyVerticalMargin,
             keyHorizontalMargin: metrics.keyHorizontalMargin,
-            keyAreaTopInset: metrics.keyAreaTopInset,
-            keyAreaBottomInset: metrics.keyAreaBottomInset,
+            keyArea: KeyboardHeightProvider.keyArea(for: device, traitCollection: traits, legacy: style.isLegacy),
 
             // Fonts
             lowerKeyFont: fonts.lowerKey,
@@ -150,6 +147,7 @@ private struct ThemeFactory {
             modifierKeyFontSize: fonts.modifierKeySize,
             altKeyFontSize: fonts.altKeySize,
             altKeyFont: fonts.altKey,
+            numberRowKeyFont: fonts.numberRowKey,
             popupLowerKeyFont: fonts.lowerKey.withSize(fonts.lowerKey.pointSize + (style.isDark ? 10.0 : 16.0)),
             popupCapitalKeyFont: fonts.capitalKey.withSize(fonts.capitalKey.pointSize + (style.isDark ? 10.0 : 16.0)),
             popupLongpressLowerKeyFont: fonts.lowerKey,
@@ -165,7 +163,7 @@ private struct ThemeFactory {
             bannerTextColor: colors.bannerText,
             bannerHorizontalMargin: 16.0,
             bannerVerticalMargin: 8.0,
-            bannerHeight: metrics.bannerHeight,
+            bannerHeight: KeyboardHeightProvider.bannerHeight(for: device, traitCollection: traits),
 
             // Layout
             altLabelTopAnchorConstant: metrics.altLabelTop,
@@ -179,10 +177,6 @@ private struct ThemeFactory {
     private struct Metrics {
         let keyCornerRadius: CGFloat
         let keyHorizontalMargin: CGFloat
-        let keyVerticalMargin: CGFloat
-        let keyAreaTopInset: CGFloat
-        let keyAreaBottomInset: CGFloat
-        let bannerHeight: CGFloat
         let altLabelTop: CGFloat
         let altLabelBottom: CGFloat
         let popupLongpressKeysPerRow: Int
@@ -201,27 +195,6 @@ private struct ThemeFactory {
         // iOS 26 has significantly larger corner radius for rounder keys
         let keyCornerRadius: CGFloat = legacy ? 5.0 : 10.0
 
-        let keyVerticalMargin: CGFloat = {
-            if legacy {
-                // Legacy iOS uses larger vertical margins
-                return device.isLandscape ? 3.5 : 6.0
-            } else {
-                // iOS 26 uses smaller vertical margins for taller keys with less spacing
-                return device.isLandscape ? 3.5 : 5.5
-            }
-        }()
-
-        // Where the system shows its globe and dictation bar below the keyboard, the extension's view ends higher than
-        // the system keyboard's own key area does: 17 pt higher on iPhone 18 Pro, where the system keyboard leaves
-        // 13 pt below its bottom row. With no margin below our bottom row, it ends as close to the system keyboard's as
-        // the view allows. The margin moves to above the top row, so keys keep their size and spacing and only move
-        // down.
-        let bottomRowSitsOnSystemBar = !legacy && !device.isLandscape && device.hasSystemBarBelowKeyboard
-        let keyAreaTopInset: CGFloat = bottomRowSitsOnSystemBar ? 2 * keyVerticalMargin : keyVerticalMargin
-        let keyAreaBottomInset: CGFloat = bottomRowSitsOnSystemBar ? 0 : keyVerticalMargin
-
-        let bannerHeight: CGFloat = 48.0 // Simplified - could check for smaller devices
-
         let sfSymbolConfiguration = UIImage.SymbolConfiguration(
             pointSize: device.isLandscape ? 19 : 20,
             weight: .regular
@@ -230,10 +203,6 @@ private struct ThemeFactory {
         return Metrics(
             keyCornerRadius: keyCornerRadius,
             keyHorizontalMargin: 3.0,
-            keyVerticalMargin: keyVerticalMargin,
-            keyAreaTopInset: keyAreaTopInset,
-            keyAreaBottomInset: keyAreaBottomInset,
-            bannerHeight: bannerHeight,
             altLabelTop: 0.0,
             altLabelBottom: 0.0,
             popupLongpressKeysPerRow: 10,
@@ -262,13 +231,6 @@ private struct ThemeFactory {
             else { return 5.0 } // Small/medium iPad in portrait
         }()
 
-        let keyVerticalMargin: CGFloat = {
-            if device.isLargeLandscape { return 4.0 }
-            else if device.isSmallOrMediumLandscape { return 6.0 }
-            else if device.isLargeIPad { return 3.5 } // Large iPad in portrait
-            else { return 5.0 } // Small/medium iPad in portrait
-        }()
-
         let altLabelTop: CGFloat = {
             if device.isLargeIPad { return 3.0 } // More spacing from top edge
             else if device.isSmallOrMediumLandscape { return 4.0 }
@@ -289,10 +251,6 @@ private struct ThemeFactory {
         return Metrics(
             keyCornerRadius: keyCornerRadius,
             keyHorizontalMargin: keyHorizontalMargin,
-            keyVerticalMargin: keyVerticalMargin,
-            keyAreaTopInset: keyVerticalMargin,
-            keyAreaBottomInset: keyVerticalMargin,
-            bannerHeight: 55.0,
             altLabelTop: altLabelTop,
             altLabelBottom: altLabelBottom,
             popupLongpressKeysPerRow: 4,
@@ -308,6 +266,7 @@ private struct ThemeFactory {
         let modifierKeySize: CGFloat
         let altKeySize: CGFloat
         let altKey: UIFont
+        let numberRowKey: UIFont
         let banner: UIFont
     }
 
@@ -331,6 +290,8 @@ private struct ThemeFactory {
                 modifierKeySize: 17.0,
                 altKeySize: altKeySize,
                 altKey: UIFont.systemFont(ofSize: altKeySize),
+                // The system keyboard's number row on 13-inch iPads, measured from its digits' cap height
+                numberRowKey: UIFont.systemFont(ofSize: device.isLandscape ? 19.0 : 14.0),
                 banner: UIFont.systemFont(ofSize: 17.0)
             )
         } else {
@@ -345,6 +306,7 @@ private struct ThemeFactory {
                 modifierKeySize: 16.0,
                 altKeySize: altKeySize,
                 altKey: UIFont.systemFont(ofSize: altKeySize),
+                numberRowKey: UIFont.systemFont(ofSize: altKeySize),
                 banner: UIFont.systemFont(ofSize: 17.0)
             )
         }

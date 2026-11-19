@@ -28,81 +28,117 @@ final class ThemeTests: XCTestCase {
         XCTAssertEqual(Theme.appearance(for: UITraitCollection(userInterfaceStyle: .unspecified)), .light)
     }
 
-    // MARK: - Key area insets
+    // MARK: - Key area
 
     // The tests link DeviceKit's enum cases but not its type metadata, so they build DeviceContexts directly rather
     // than keeping arrays of devices.
     private let phoneTraits = UITraitCollection(userInterfaceIdiom: .phone)
     private let padTraits = UITraitCollection(userInterfaceIdiom: .pad)
 
-    private func theme(_ context: DeviceContext, traits: UITraitCollection? = nil) -> Theme {
-        Theme.current(for: traits ?? (context.isPad ? padTraits : phoneTraits), device: context)
+    private func traits(for context: DeviceContext) -> UITraitCollection {
+        context.isPad ? padTraits : phoneTraits
     }
 
-    /// Home button and Face ID iPhones of each size, iPhone Duo, iPads of each size and an unrecognised device.
-    private func everyKindOfDevice(landscape: Bool) -> [(String, DeviceContext)] {
-        [
-            ("iPhone 8", DeviceContext(device: .iPhone8, isLandscape: landscape)),
-            ("iPhone 8 Plus", DeviceContext(device: .iPhone8Plus, isLandscape: landscape)),
-            ("iPhone SE 3", DeviceContext(device: .iPhoneSE3, isLandscape: landscape)),
-            ("iPhone X", DeviceContext(device: .iPhoneX, isLandscape: landscape)),
-            ("iPhone 11 Pro Max", DeviceContext(device: .iPhone11ProMax, isLandscape: landscape)),
-            ("iPhone 12 mini", DeviceContext(device: .iPhone12Mini, isLandscape: landscape)),
-            ("iPhone 14 Pro", DeviceContext(device: .iPhone14Pro, isLandscape: landscape)),
-            ("iPhone 15 Plus", DeviceContext(device: .iPhone15Plus, isLandscape: landscape)),
-            ("iPhone 16e", DeviceContext(device: .iPhone16e, isLandscape: landscape)),
-            ("iPhone 17 Pro Max", DeviceContext(device: .iPhone17ProMax, isLandscape: landscape)),
-            ("iPhone Air", DeviceContext(device: .iPhoneAir, isLandscape: landscape)),
-            ("iPhone Duo", DeviceContext(device: .iPhoneDuo, isLandscape: landscape)),
-            ("iPad 10", DeviceContext(device: .iPad10, isLandscape: landscape)),
-            ("iPad mini 6", DeviceContext(device: .iPadMini6, isLandscape: landscape)),
-            ("iPad Pro 11 M4", DeviceContext(device: .iPadPro11M4, isLandscape: landscape)),
-            ("iPad Pro 13 M4", DeviceContext(device: .iPadPro13M4, isLandscape: landscape)),
-            ("unrecognised device", DeviceContext(device: .unknown("iPhone99,1"), isLandscape: landscape))
-        ]
+    private func keyArea(_ context: DeviceContext, traits: UITraitCollection? = nil,
+                         legacy: Bool = false) -> KeyAreaMetrics {
+        KeyboardHeightProvider.keyArea(for: context, traitCollection: traits ?? self.traits(for: context), legacy: legacy)
     }
 
-    func test_keyAreaInsets_keepKeySizesOnEveryDevice() {
-        // The insets only move margin from one end of the key area to the other, so every row keeps the height it had
-        // when both ends had one margin.
-        for landscape in [false, true] {
-            for (name, context) in everyKindOfDevice(landscape: landscape) {
-                let sut = theme(context)
-                XCTAssertEqual(sut.keyAreaTopInset + sut.keyAreaBottomInset, 2 * sut.keyVerticalMargin, accuracy: 0.001,
-                               "\(name), landscape \(landscape)")
+    private func height(_ context: DeviceContext, traits: UITraitCollection? = nil, rowCount: Int? = nil,
+                        legacy: Bool = false) -> CGFloat {
+        KeyboardHeightProvider.height(for: context, traitCollection: traits ?? self.traits(for: context),
+                                      rowCount: rowCount, legacy: legacy)
+    }
+
+    private static let duoInner = CGSize(width: 669, height: 951)
+    private static let duoOuter = CGSize(width: 466, height: 678)
+
+    /// Devices whose system keyboard has been measured, in both orientations, with their screen's pixels per point.
+    private var measuredDevices: [(String, DeviceContext, CGFloat)] {
+        [false, true].flatMap { landscape -> [(String, DeviceContext, CGFloat)] in
+            let duoInner = landscape ? CGSize(width: Self.duoInner.height, height: Self.duoInner.width) : Self.duoInner
+            return [
+                ("iPhone 17 Pro", DeviceContext(device: .iPhone17Pro, isLandscape: landscape), 3),
+                ("iPhone 17 Pro Max", DeviceContext(device: .iPhone17ProMax, isLandscape: landscape), 3),
+                ("iPhone Air", DeviceContext(device: .iPhoneAir, isLandscape: landscape), 3),
+                ("iPhone Duo inner display", DeviceContext(device: .iPhoneDuo, isLandscape: landscape,
+                                                           screenSize: duoInner), 3),
+                ("iPad mini 6", DeviceContext(device: .iPadMini6, isLandscape: landscape), 2),
+                ("iPad Pro 11 M4", DeviceContext(device: .iPadPro11M4, isLandscape: landscape), 2),
+                ("iPad Pro 13 M4", DeviceContext(device: .iPadPro13M4, isLandscape: landscape), 2)
+            ].map { ($0.0 + (landscape ? ", landscape" : ""), $0.1, $0.2) }
+        }
+    }
+
+    func test_keyArea_matchesTheSystemKeyboard() {
+        let iPhone = DeviceContext(device: .iPhone17Pro, isLandscape: false)
+        XCTAssertEqual(keyArea(iPhone), KeyAreaMetrics(keyHeight: 43, rowGap: 11, topInset: 8, bottomInset: 0,
+                                                     sideInset: 3.5))
+        let largeIPhone = DeviceContext(device: .iPhone17ProMax, isLandscape: false)
+        XCTAssertEqual(keyArea(largeIPhone), KeyAreaMetrics(keyHeight: 45, rowGap: 11, topInset: 8,
+                                                          bottomInset: 7, sideInset: 3.5))
+        let landscape = DeviceContext(device: .iPhone17Pro, isLandscape: true)
+        XCTAssertEqual(keyArea(landscape), KeyAreaMetrics(keyHeight: 32, rowGap: 8, topInset: 6, bottomInset: 2,
+                                                        sideInset: 1))
+        let largeIPad = DeviceContext(device: .iPadPro13M4, isLandscape: false)
+        XCTAssertEqual(keyArea(largeIPad).numberRowKeyHeight, 45.5)
+    }
+
+    func test_measuredKeyAreas_areWholePixels() {
+        for (name, context, scale) in measuredDevices {
+            let sut = keyArea(context)
+            // Only the vertical sizes: key widths are shared out across each row, so they are fractional anyway.
+            for value in [sut.keyHeight, sut.numberRowKeyHeight ?? 0, sut.rowGap, sut.topInset, sut.bottomInset] {
+                XCTAssertEqual((value * scale).rounded(), value * scale, "\(name): \(value)")
             }
         }
     }
 
-    func test_keyAreaInsets_dropTheMarginAboveTheSystemBar_onIPhonesWithoutAHomeButton() throws {
-        try XCTSkipUnless(iOSVersion.isIOS26OrNewer, "Only iOS 26 and later move the bottom row")
-        let cases: [(String, DeviceContext)] = [
-            ("iPhone 14 Pro", DeviceContext(device: .iPhone14Pro, isLandscape: false)),
-            ("iPhone 17 Pro Max", DeviceContext(device: .iPhone17ProMax, isLandscape: false)),
-            ("iPhone 13 mini", DeviceContext(device: .iPhone13Mini, isLandscape: false)),
-            ("iPhone Duo", DeviceContext(device: .iPhoneDuo, isLandscape: false)),
-        ]
-        for (name, context) in cases {
-            let sut = theme(context)
-            XCTAssertEqual(sut.keyAreaBottomInset, 0, name)
-            XCTAssertEqual(sut.keyAreaTopInset, 2 * sut.keyVerticalMargin, name)
+    func test_height_isTheBannerPlusTheKeyArea() {
+        for (name, context, _) in measuredDevices {
+            let banner = KeyboardHeightProvider.bannerHeight(for: context, traitCollection: traits(for: context))
+            let rows = context.isLargeIPad ? 5 : 4
+            XCTAssertEqual(height(context), banner + keyArea(context).height(rowCount: rows), name)
         }
     }
 
-    func test_keyAreaInsets_areUnchanged_whereTheKeyboardReachesTheBottomOfTheScreen() {
+    func test_height_isUnchanged_onDevicesThatHaveNotBeenMeasured() {
         let iPad = DeviceContext(device: .iPadPro11M4, isLandscape: false)
-        let cases: [(String, Theme)] = [
-            ("iPhone SE 3", theme(DeviceContext(device: .iPhoneSE3, isLandscape: false))),
-            ("iPhone 8", theme(DeviceContext(device: .iPhone8, isLandscape: false))),
-            ("iPhone 14 Pro, landscape", theme(DeviceContext(device: .iPhone14Pro, isLandscape: true))),
-            ("iPad", theme(iPad)),
-            ("iPad, landscape", theme(DeviceContext(device: .iPadPro11M4, isLandscape: true))),
-            ("iPhone app on iPad", theme(iPad, traits: phoneTraits)),
-            ("unrecognised device", theme(DeviceContext(device: .unknown("iPhone99,1"), isLandscape: false)))
+        let cases: [(String, DeviceContext, UITraitCollection?)] = [
+            ("iPhone 8", DeviceContext(device: .iPhone8, isLandscape: false), nil),
+            ("iPhone 8 Plus, landscape", DeviceContext(device: .iPhone8Plus, isLandscape: true), nil),
+            ("iPhone SE 3", DeviceContext(device: .iPhoneSE3, isLandscape: false), nil),
+            ("iPhone Duo outer display", DeviceContext(device: .iPhoneDuo, isLandscape: false,
+                                                       screenSize: Self.duoOuter), nil),
+            ("iPhone app on iPad", iPad, phoneTraits),
+            ("unrecognised device", DeviceContext(device: .unknown("iPhone99,1"), isLandscape: false), nil)
         ]
-        for (name, sut) in cases {
-            XCTAssertEqual(sut.keyAreaTopInset, sut.keyVerticalMargin, name)
-            XCTAssertEqual(sut.keyAreaBottomInset, sut.keyVerticalMargin, name)
+        for (name, context, traits) in cases {
+            XCTAssertEqual(height(context, traits: traits), height(context, traits: traits, legacy: true), name)
         }
+    }
+
+    func test_keyArea_beforeIOS26_hasTheKeyMarginAboveAndBelowTheRows() {
+        let sut = keyArea(DeviceContext(device: .iPhone17Pro, isLandscape: false), legacy: true)
+        XCTAssertEqual(sut.topInset, 6)
+        XCTAssertEqual(sut.bottomInset, 6)
+        XCTAssertEqual(sut.rowGap, 12)
+        XCTAssertEqual(48 + sut.height(rowCount: 4), 262, accuracy: 0.001)
+    }
+
+    func test_extraRows_addOneRowEach() {
+        let iPhone = DeviceContext(device: .iPhone17Pro, isLandscape: false)
+        XCTAssertEqual(height(iPhone, rowCount: 5) - height(iPhone, rowCount: 4), 43 + 11)
+        XCTAssertEqual(height(iPhone, rowCount: 4) - height(iPhone, rowCount: 3), 43 + 11)
+        let largeIPad = DeviceContext(device: .iPadPro13M4, isLandscape: false)
+        XCTAssertEqual(height(largeIPad, rowCount: 6) - height(largeIPad, rowCount: 5), 61 + 7)
+    }
+
+    func test_extraRows_stopGrowingTheKeyboard_onSmallIPadsInLandscape() {
+        // Five full-height rows would cover most of the screen, so the keyboard is capped and the keys shrink to fit.
+        let iPad = DeviceContext(device: .iPadMini6, isLandscape: true)
+        let banner = KeyboardHeightProvider.bannerHeight(for: iPad, traitCollection: padTraits)
+        XCTAssertLessThan(height(iPad, rowCount: 5), banner + keyArea(iPad).height(rowCount: 5))
+        XCTAssertGreaterThan(height(iPad, rowCount: 5), height(iPad, rowCount: 4))
     }
 }

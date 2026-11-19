@@ -150,46 +150,115 @@ final class KeyboardViewTests: XCTestCase {
 
     // MARK: - Row layout
 
-    func test_rowLayout_rowsFillTheKeyArea() {
-        let sut = KeyRowLayout(rowCount: 4, height: 214, keyMargin: 5, topInset: 9, bottomInset: 0)
-        let total = (0..<4).map { sut.height(ofRow: $0) }.reduce(0, +)
-        XCTAssertEqual(total, 214, accuracy: 0.001)
-    }
+    private let phoneKeys = KeyAreaMetrics(keyHeight: 43, rowGap: 11, topInset: 8, bottomInset: 0)
+    private let numberRowKeys = KeyAreaMetrics(keyHeight: 61, numberRowKeyHeight: 45.5, rowGap: 7, topInset: 8,
+                                               bottomInset: 4)
 
-    func test_rowLayout_marginEqualInsets_giveEqualRows() {
-        // The layout before key area insets existed: every row the same height, with the margin on both sides.
-        let sut = KeyRowLayout(rowCount: 4, height: 214, keyMargin: 5.5, topInset: 5.5, bottomInset: 5.5)
-        for row in 0..<4 {
-            XCTAssertEqual(sut.height(ofRow: row), 214 / 4, accuracy: 0.001, "row \(row)")
-            XCTAssertEqual(sut.keyMargins(forRow: row).top, 5.5)
-            XCTAssertEqual(sut.keyMargins(forRow: row).bottom, 5.5)
+    func test_rowLayout_rowsFillTheKeyArea_forEveryRowCount() {
+        for rowCount in [3, 4, 5, 6] {
+            let height = phoneKeys.height(rowCount: rowCount)
+            let sut = KeyRowLayout(metrics: phoneKeys, rowCount: rowCount, height: height, scale: 3)
+            XCTAssertEqual(totalHeight(sut, rowCount: rowCount), height, accuracy: 0.001, "\(rowCount) rows")
+            XCTAssertEqual(sut.keyHeights, Array(repeating: 43, count: rowCount), "\(rowCount) rows")
         }
     }
 
-    func test_rowLayout_insetsApplyOnlyToTheOuterRows() {
-        let sut = KeyRowLayout(rowCount: 4, height: 214, keyMargin: 5, topInset: 9, bottomInset: 0)
-        XCTAssertEqual(sut.keyMargins(forRow: 0).top, 9)
-        XCTAssertEqual(sut.keyMargins(forRow: 0).bottom, 5)
-        XCTAssertEqual(sut.keyMargins(forRow: 1).top, 5)
-        XCTAssertEqual(sut.keyMargins(forRow: 3).top, 5)
-        XCTAssertEqual(sut.keyMargins(forRow: 3).bottom, 0)
+    func test_rowLayout_keyEdgesAreOnWholePixels() {
+        // Fitted key areas share a height between the rows, which gives fractional key heights.
+        let fitted = KeyAreaMetrics(keyHeight: 42.25, rowGap: 11, topInset: 5.5, bottomInset: 5.5)
+        for scale: CGFloat in [2, 3] {
+            let sut = KeyRowLayout(metrics: fitted, rowCount: 4, height: 214, scale: scale)
+            for edge in keyEdges(sut, rowCount: 4) {
+                XCTAssertEqual((edge * scale).rounded(), edge * scale, accuracy: 0.0001, "edge \(edge) at \(scale)x")
+            }
+            XCTAssertLessThanOrEqual(totalHeight(sut, rowCount: 4), 214 + 0.001)
+        }
+    }
+
+    func test_rowLayout_putsSpareHeightAboveTheTopRow() {
+        let sut = KeyRowLayout(metrics: phoneKeys, rowCount: 4, height: 220, scale: 3)
+        XCTAssertEqual(sut.keyHeights, [43, 43, 43, 43])
+        XCTAssertEqual(sut.topInset, 15)
+        XCTAssertEqual(sut.bottomInset, 0)
+    }
+
+    func test_rowLayout_shrinksKeysToFit_whenTheAreaIsTooShort() {
+        let sut = KeyRowLayout(metrics: phoneKeys, rowCount: 5, height: 200, scale: 3)
+        XCTAssertEqual(Set(sut.keyHeights).count, 1, "rows keep equal heights")
+        XCTAssertLessThan(sut.keyHeights[0], 43)
+        XCTAssertLessThanOrEqual(totalHeight(sut, rowCount: 5), 200 + 0.001)
+        XCTAssertEqual(sut.bottomInset, 0)
+    }
+
+    func test_rowLayout_numberRowIsShorter_onLayoutsWithANumberRow() {
+        let sut = KeyRowLayout(metrics: numberRowKeys, rowCount: 5, height: numberRowKeys.height(rowCount: 5), scale: 2)
+        XCTAssertEqual(sut.keyHeights, [45.5, 61, 61, 61, 61])
+        XCTAssertEqual(sut.topInset, 8)
+    }
+
+    func test_rowLayout_numberRowStaysShorter_whenKeysShrink() {
+        let sut = KeyRowLayout(metrics: numberRowKeys, rowCount: 6, height: 380, scale: 2)
+        XCTAssertLessThan(sut.keyHeights[0], sut.keyHeights[1])
+        XCTAssertEqual(Set(sut.keyHeights.dropFirst()).count, 1)
+        XCTAssertLessThanOrEqual(totalHeight(sut, rowCount: 6), 380 + 0.001)
+    }
+
+    func test_rowLayout_everyRowIsFullHeight_withoutANumberRow() {
+        let sut = KeyRowLayout(metrics: numberRowKeys, rowCount: 4, height: numberRowKeys.height(rowCount: 4), scale: 2)
+        XCTAssertEqual(sut.keyHeights, [61, 61, 61, 61])
     }
 
     func test_bottomRowKeys_endAtTheKeyAreaInset() {
         let theme = Theme.current(for: traits, device: .current)
         let lastRow = collectionView.numberOfSections - 1
-        let cell = collectionView.cellForItem(at: IndexPath(item: 1, section: lastRow)) as? KeyboardView.KeyCell
-        let key = cell?.keyView?.contentView
-        let frame = key.map { $0.convert($0.bounds, to: sut) } ?? .null
-        XCTAssertEqual(frame.maxY, sut.bounds.maxY - theme.keyAreaBottomInset, accuracy: 0.5)
+        let frame = keyFrame(at: IndexPath(item: 1, section: lastRow))
+        XCTAssertEqual(frame.maxY, sut.bounds.maxY - theme.keyArea.bottomInset, accuracy: 0.5)
     }
 
-    func test_topRowKeys_startAtTheKeyAreaInset() {
+    func test_keys_areOnWholePixels() {
+        let scale = sut.traitCollection.displayScale
+        for section in 0..<collectionView.numberOfSections {
+            let frame = keyFrame(at: IndexPath(item: 0, section: section))
+            for edge in [frame.minY, frame.maxY] {
+                XCTAssertEqual((edge * scale).rounded(), edge * scale, accuracy: 0.01, "row \(section) edge \(edge)")
+            }
+        }
+    }
+
+    func test_outerKeys_areInsetFromTheEdges_butTheirCellsReachThem() throws {
         let theme = Theme.current(for: traits, device: .current)
-        let cell = collectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as? KeyboardView.KeyCell
+        let row = collectionView.numberOfItems(inSection: 0)
+        let first = try XCTUnwrap(collectionView.cellForItem(at: IndexPath(item: 0, section: 0)))
+        let last = try XCTUnwrap(collectionView.cellForItem(at: IndexPath(item: row - 1, section: 0)))
+
+        XCTAssertEqual(first.frame.minX, 0, accuracy: 0.5)
+        XCTAssertEqual(keyFrame(at: IndexPath(item: 0, section: 0)).minX,
+                       theme.keyHorizontalMargin + theme.keyArea.sideInset, accuracy: 0.5)
+        XCTAssertEqual(last.frame.maxX, sut.bounds.maxX, accuracy: 1)
+        XCTAssertEqual(keyFrame(at: IndexPath(item: row - 1, section: 0)).maxX,
+                       last.frame.maxX - theme.keyHorizontalMargin - theme.keyArea.sideInset, accuracy: 0.5)
+    }
+
+    private func keyFrame(at indexPath: IndexPath) -> CGRect {
+        let cell = collectionView.cellForItem(at: indexPath) as? KeyboardView.KeyCell
         let key = cell?.keyView?.contentView
-        let frame = key.map { $0.convert($0.bounds, to: sut) } ?? .null
-        XCTAssertEqual(frame.minY, theme.keyAreaTopInset, accuracy: 0.5)
+        return key.map { $0.convert($0.bounds, to: sut) } ?? .null
+    }
+
+    private func totalHeight(_ layout: KeyRowLayout, rowCount: Int) -> CGFloat {
+        (0..<rowCount).map { layout.height(ofRow: $0) }.reduce(0, +)
+    }
+
+    /// The top and bottom edge of every row's keys, measured from the top of the key area.
+    private func keyEdges(_ layout: KeyRowLayout, rowCount: Int) -> [CGFloat] {
+        var rowTop: CGFloat = 0
+        var edges: [CGFloat] = []
+        for row in 0..<rowCount {
+            let keyTop = rowTop + layout.keyMargins(forRow: row).top
+            edges += [keyTop, keyTop + layout.keyHeights[row]]
+            rowTop += layout.height(ofRow: row)
+        }
+        return edges
     }
 
     // MARK: - Helpers
