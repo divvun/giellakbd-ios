@@ -255,7 +255,10 @@ final class KeyView: UIView {
         sfSymbol(named: symbolName, traits: traits, tintColor: theme.textColor)
     }
 
-    init(page: KeyboardPage, key: KeyDefinition, theme: Theme, traits: UITraitCollection) {
+    /// - Parameter verticalMargins: Space above and below the key inside this view. Defaults to the theme's
+    ///   `keyVerticalMargin` on both sides; the top and bottom rows use the key area's insets instead.
+    init(page: KeyboardPage, key: KeyDefinition, theme: Theme, traits: UITraitCollection,
+         verticalMargins: (top: CGFloat, bottom: CGFloat)? = nil) {
         self.key = key
         self.theme = theme
 
@@ -274,9 +277,9 @@ final class KeyView: UIView {
         layer.shadowRadius = 0.0
 
         contentView.fill(superview: self, margins: UIEdgeInsets(
-            top: theme.keyVerticalMargin,
+            top: verticalMargins?.top ?? theme.keyVerticalMargin,
             left: theme.keyHorizontalMargin,
-            bottom: theme.keyVerticalMargin,
+            bottom: verticalMargins?.bottom ?? theme.keyVerticalMargin,
             right: theme.keyHorizontalMargin))
 
         contentView.backgroundColor = backgroundColor(for: key, page: page)

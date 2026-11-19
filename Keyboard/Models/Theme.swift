@@ -28,6 +28,10 @@ struct Theme {
     let popupCornerRadius: CGFloat
     let keyVerticalMargin: CGFloat
     let keyHorizontalMargin: CGFloat
+    /// Space between the top of the key area and the top row's keys.
+    let keyAreaTopInset: CGFloat
+    /// Space between the bottom row's keys and the bottom of the key area.
+    let keyAreaBottomInset: CGFloat
 
     // Fonts
     let lowerKeyFont: UIFont
@@ -137,6 +141,8 @@ private struct ThemeFactory {
             popupCornerRadius: 12.0,
             keyVerticalMargin: metrics.keyVerticalMargin,
             keyHorizontalMargin: metrics.keyHorizontalMargin,
+            keyAreaTopInset: metrics.keyAreaTopInset,
+            keyAreaBottomInset: metrics.keyAreaBottomInset,
 
             // Fonts
             lowerKeyFont: fonts.lowerKey,
@@ -174,6 +180,8 @@ private struct ThemeFactory {
         let keyCornerRadius: CGFloat
         let keyHorizontalMargin: CGFloat
         let keyVerticalMargin: CGFloat
+        let keyAreaTopInset: CGFloat
+        let keyAreaBottomInset: CGFloat
         let bannerHeight: CGFloat
         let altLabelTop: CGFloat
         let altLabelBottom: CGFloat
@@ -203,6 +211,15 @@ private struct ThemeFactory {
             }
         }()
 
+        // Where the system shows its globe and dictation bar below the keyboard, the extension's view ends higher than
+        // the system keyboard's own key area does: 17 pt higher on iPhone 18 Pro, where the system keyboard leaves
+        // 13 pt below its bottom row. With no margin below our bottom row, it ends as close to the system keyboard's as
+        // the view allows. The margin moves to above the top row, so keys keep their size and spacing and only move
+        // down.
+        let bottomRowSitsOnSystemBar = !legacy && !device.isLandscape && device.hasSystemBarBelowKeyboard
+        let keyAreaTopInset: CGFloat = bottomRowSitsOnSystemBar ? 2 * keyVerticalMargin : keyVerticalMargin
+        let keyAreaBottomInset: CGFloat = bottomRowSitsOnSystemBar ? 0 : keyVerticalMargin
+
         let bannerHeight: CGFloat = 48.0 // Simplified - could check for smaller devices
 
         let sfSymbolConfiguration = UIImage.SymbolConfiguration(
@@ -214,6 +231,8 @@ private struct ThemeFactory {
             keyCornerRadius: keyCornerRadius,
             keyHorizontalMargin: 3.0,
             keyVerticalMargin: keyVerticalMargin,
+            keyAreaTopInset: keyAreaTopInset,
+            keyAreaBottomInset: keyAreaBottomInset,
             bannerHeight: bannerHeight,
             altLabelTop: 0.0,
             altLabelBottom: 0.0,
@@ -271,6 +290,8 @@ private struct ThemeFactory {
             keyCornerRadius: keyCornerRadius,
             keyHorizontalMargin: keyHorizontalMargin,
             keyVerticalMargin: keyVerticalMargin,
+            keyAreaTopInset: keyVerticalMargin,
+            keyAreaBottomInset: keyVerticalMargin,
             bannerHeight: 55.0,
             altLabelTop: altLabelTop,
             altLabelBottom: altLabelBottom,

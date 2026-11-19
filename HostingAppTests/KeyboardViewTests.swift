@@ -148,6 +148,50 @@ final class KeyboardViewTests: XCTestCase {
         XCTAssertEqual(keyViewIDs(), before)
     }
 
+    // MARK: - Row layout
+
+    func test_rowLayout_rowsFillTheKeyArea() {
+        let sut = KeyRowLayout(rowCount: 4, height: 214, keyMargin: 5, topInset: 9, bottomInset: 0)
+        let total = (0..<4).map { sut.height(ofRow: $0) }.reduce(0, +)
+        XCTAssertEqual(total, 214, accuracy: 0.001)
+    }
+
+    func test_rowLayout_marginEqualInsets_giveEqualRows() {
+        // The layout before key area insets existed: every row the same height, with the margin on both sides.
+        let sut = KeyRowLayout(rowCount: 4, height: 214, keyMargin: 5.5, topInset: 5.5, bottomInset: 5.5)
+        for row in 0..<4 {
+            XCTAssertEqual(sut.height(ofRow: row), 214 / 4, accuracy: 0.001, "row \(row)")
+            XCTAssertEqual(sut.keyMargins(forRow: row).top, 5.5)
+            XCTAssertEqual(sut.keyMargins(forRow: row).bottom, 5.5)
+        }
+    }
+
+    func test_rowLayout_insetsApplyOnlyToTheOuterRows() {
+        let sut = KeyRowLayout(rowCount: 4, height: 214, keyMargin: 5, topInset: 9, bottomInset: 0)
+        XCTAssertEqual(sut.keyMargins(forRow: 0).top, 9)
+        XCTAssertEqual(sut.keyMargins(forRow: 0).bottom, 5)
+        XCTAssertEqual(sut.keyMargins(forRow: 1).top, 5)
+        XCTAssertEqual(sut.keyMargins(forRow: 3).top, 5)
+        XCTAssertEqual(sut.keyMargins(forRow: 3).bottom, 0)
+    }
+
+    func test_bottomRowKeys_endAtTheKeyAreaInset() {
+        let theme = Theme.current(for: traits, device: .current)
+        let lastRow = collectionView.numberOfSections - 1
+        let cell = collectionView.cellForItem(at: IndexPath(item: 1, section: lastRow)) as? KeyboardView.KeyCell
+        let key = cell?.keyView?.contentView
+        let frame = key.map { $0.convert($0.bounds, to: sut) } ?? .null
+        XCTAssertEqual(frame.maxY, sut.bounds.maxY - theme.keyAreaBottomInset, accuracy: 0.5)
+    }
+
+    func test_topRowKeys_startAtTheKeyAreaInset() {
+        let theme = Theme.current(for: traits, device: .current)
+        let cell = collectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as? KeyboardView.KeyCell
+        let key = cell?.keyView?.contentView
+        let frame = key.map { $0.convert($0.bounds, to: sut) } ?? .null
+        XCTAssertEqual(frame.minY, theme.keyAreaTopInset, accuracy: 0.5)
+    }
+
     // MARK: - Helpers
 
     private var collectionView: UICollectionView {
