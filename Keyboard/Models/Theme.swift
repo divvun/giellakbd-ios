@@ -50,6 +50,9 @@ struct Theme {
     // Banner
     let bannerBackgroundColor: UIColor
     let bannerSeparatorColor: UIColor
+    /// Space between the banner's separators and its bottom edge, where they line up with the system keyboard's.
+    /// `nil` centres them in the banner.
+    let bannerSeparatorBottomInset: CGFloat?
     let bannerTextColor: UIColor
     let bannerHorizontalMargin: CGFloat
     let bannerHeight: CGFloat
@@ -159,6 +162,9 @@ private struct ThemeFactory {
             // Banner
             bannerBackgroundColor: colors.background,
             bannerSeparatorColor: colors.bannerSeparator,
+            // On iPhone the system keyboard's separators end 15 pt above the top row, which is the top row's 8 pt
+            // inset plus this.
+            bannerSeparatorBottomInset: style.isLegacy || device.shouldUseIPadLayout(traitCollection: traits) ? nil : 7,
             bannerTextColor: colors.bannerText,
             bannerHorizontalMargin: 16.0,
             bannerHeight: KeyboardHeightProvider.bannerHeight(for: device, traitCollection: traits,
@@ -422,7 +428,8 @@ private struct ThemeFactory {
                 activeText: .white,
                 longPressActive: longPressActive,
                 altKeyText: device.isLargeIPad ? UIColor.black : UIColor(white: 0.0, alpha: 0.3),
-                bannerSeparator: UIColor(r: 188, g: 191, b: 195),
+                // The system keyboard's separators: black at 6.6%, (211, 212, 217) over the keyboard's background
+                bannerSeparator: style.isLegacy ? UIColor(r: 188, g: 191, b: 195) : UIColor(white: 0, alpha: 0.066),
                 bannerText: UIColor(r: 21, g: 21, b: 21)
             )
         }

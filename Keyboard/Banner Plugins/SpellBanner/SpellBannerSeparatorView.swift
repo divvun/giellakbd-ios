@@ -24,9 +24,14 @@ final class SpellBannerSeparatorView: UICollectionReusableView {
         // As tall as the system keyboard's separators where the banner has room, otherwise as tall as the banner.
         separatorLine.leadingAnchor.constraint(equalTo: leadingAnchor).enable()
         separatorLine.trailingAnchor.constraint(equalTo: trailingAnchor).enable()
-        separatorLine.centerYAnchor.constraint(equalTo: centerYAnchor).enable()
+        if let bottomInset = theme.bannerSeparatorBottomInset {
+            separatorLine.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -bottomInset).enable(priority: .defaultHigh)
+            separatorLine.topAnchor.constraint(greaterThanOrEqualTo: topAnchor).enable()
+        } else {
+            separatorLine.centerYAnchor.constraint(equalTo: centerYAnchor).enable()
+        }
         separatorLine.heightAnchor.constraint(lessThanOrEqualTo: heightAnchor).enable()
-        separatorLine.heightAnchor.constraint(equalToConstant: 24).enable(priority: .defaultHigh)
+        separatorLine.heightAnchor.constraint(equalToConstant: SpellBannerCell.separatorHeight).enable(priority: .defaultHigh)
         separatorLine.backgroundColor = theme.bannerSeparatorColor
     }
 

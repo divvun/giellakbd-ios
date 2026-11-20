@@ -106,14 +106,23 @@ final class SpellBannerViewTests: XCTestCase {
 
     // MARK: - Sizes
 
-    func test_cellsAreAtLeastAThirdOfTheWidth() {
+    /// Three cells and the two 1 pt separators between them fill the banner, as in the system keyboard.
+    private func thirdOfTheWidth(_ width: CGFloat = 390) -> CGFloat {
+        (width - 2) / 3
+    }
+
+    func test_threeCellsAndTheirSeparatorsFillTheWidth() {
         sut.setBannerItems([human("hi", false), normal("ho")])
         layout()
-        XCTAssertEqual(frames(), [
-            CGRect(x: 0, y: 0, width: 130, height: 48),
-            CGRect(x: 131, y: 0, width: 130, height: 48),
-            CGRect(x: 262, y: 0, width: 130, height: 48)
-        ])
+        let third = thirdOfTheWidth()
+        let frames = frames()
+        XCTAssertEqual(frames.count, 3)
+        for (index, frame) in frames.enumerated() {
+            XCTAssertEqual(frame.minX, CGFloat(index) * (third + 1), accuracy: 0.001, "cell \(index)")
+            XCTAssertEqual(frame.width, third, accuracy: 0.001, "cell \(index)")
+            XCTAssertEqual(frame.height, 48, "cell \(index)")
+        }
+        XCTAssertEqual(frames.last?.maxX ?? 0, 390, accuracy: 0.001)
     }
 
     func test_longSuggestionsGetWiderCells() {
@@ -123,7 +132,7 @@ final class SpellBannerViewTests: XCTestCase {
         XCTAssertEqual(itemFrames(), [
             CGRect(x: 0, y: 0, width: 156, height: 48),
             CGRect(x: 157, y: 0, width: 239, height: 48),
-            CGRect(x: 397, y: 0, width: 130, height: 48)
+            CGRect(x: 397, y: 0, width: thirdOfTheWidth(), height: 48)
         ])
     }
 
@@ -152,7 +161,7 @@ final class SpellBannerViewTests: XCTestCase {
         layout()
         sut.setBannerItems([human("hi", false), normal("ho")])
         layout()
-        XCTAssertEqual(frames().map(\.width), [130, 130, 130])
+        XCTAssertEqual(frames().map(\.width), Array(repeating: thirdOfTheWidth(), count: 3))
     }
 
     func test_resizing_relaysOutCells() {
@@ -160,7 +169,7 @@ final class SpellBannerViewTests: XCTestCase {
         layout()
         widthConstraint.constant = 600
         layout()
-        XCTAssertEqual(frames().map(\.width), [200, 200, 200])
+        XCTAssertEqual(frames().map(\.width), Array(repeating: thirdOfTheWidth(600), count: 3))
     }
 
     // MARK: - Repeated updates

@@ -4,6 +4,12 @@ final class SpellBannerCell: UICollectionViewCell {
     private let titleLabel = UILabel()
 
     private var heightConstraint: NSLayoutConstraint!
+    /// Centres the title in the banner, or on the separators where they sit lower than the banner's centre.
+    private var centerConstraint: NSLayoutConstraint!
+    private var separatorCenterConstraint: NSLayoutConstraint!
+
+    /// Height of the banner's separators, which the title is centred on.
+    static let separatorHeight: CGFloat = 24
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -17,7 +23,8 @@ final class SpellBannerCell: UICollectionViewCell {
         contentView.addSubview(titleLabel)
 
         // Centred rather than inset from the top and bottom, so the text keeps its size in a short banner.
-        titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).enable()
+        centerConstraint = titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).enable()
+        separatorCenterConstraint = titleLabel.centerYAnchor.constraint(equalTo: contentView.bottomAnchor)
         titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).enable()
         titleLabel.textAlignment = .center
 
@@ -26,6 +33,14 @@ final class SpellBannerCell: UICollectionViewCell {
 
     func configure(theme: Theme) {
         isHidden = false
+        if let bottomInset = theme.bannerSeparatorBottomInset {
+            centerConstraint.isActive = false
+            separatorCenterConstraint.constant = -(bottomInset + Self.separatorHeight / 2)
+            separatorCenterConstraint.isActive = true
+        } else {
+            separatorCenterConstraint.isActive = false
+            centerConstraint.isActive = true
+        }
         titleLabel.font = theme.bannerFont
         titleLabel.textColor = theme.bannerTextColor
     }

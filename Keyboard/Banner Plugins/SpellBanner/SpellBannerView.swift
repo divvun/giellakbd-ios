@@ -152,7 +152,9 @@ extension SpellBannerView: UICollectionViewDelegateFlowLayout {
         let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: collectionView.frame.height)
         let boundingBox = title.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, context: nil)
 
-        return CGSize(width: max(frame.width / 3.0,
+        // Three suggestions and the two separators between them fill the banner, as in the system keyboard.
+        let separatorWidth = (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.minimumLineSpacing ?? 0
+        return CGSize(width: max((frame.width - 2 * separatorWidth) / 3.0,
                                  ceil(boundingBox.width) + theme.bannerHorizontalMargin * 2),
                       height: collectionView.frame.height)
     }
