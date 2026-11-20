@@ -98,7 +98,8 @@ final class ThemeTests: XCTestCase {
         for (name, context, _) in measuredDevices {
             let banner = KeyboardHeightProvider.bannerHeight(for: context, traitCollection: traits(for: context))
             let rows = context.isLargeIPad ? 5 : 4
-            XCTAssertEqual(height(context), banner + keyArea(context).height(rowCount: rows), name)
+            let keys = keyArea(context).height(rowCount: rows, startsWithNumberRow: context.isLargeIPad)
+            XCTAssertEqual(height(context), banner + keys, name)
         }
     }
 
@@ -132,6 +133,15 @@ final class ThemeTests: XCTestCase {
         XCTAssertEqual(height(iPhone, rowCount: 4) - height(iPhone, rowCount: 3), 43 + 11)
         let largeIPad = DeviceContext(device: .iPadPro13M4, isLandscape: false)
         XCTAssertEqual(height(largeIPad, rowCount: 6) - height(largeIPad, rowCount: 5), 61 + 7)
+    }
+
+    func test_largeIPadLayoutsWithoutANumberRow_haveFullHeightRows() {
+        let largeIPad = DeviceContext(device: .iPadPro13M4, isLandscape: false)
+        let withNumberRow = KeyboardHeightProvider.height(for: largeIPad, traitCollection: padTraits, rowCount: 5,
+                                                          startsWithNumberRow: true, legacy: false)
+        let withoutNumberRow = KeyboardHeightProvider.height(for: largeIPad, traitCollection: padTraits, rowCount: 5,
+                                                             startsWithNumberRow: false, legacy: false)
+        XCTAssertEqual(withoutNumberRow - withNumberRow, 61 - 45.5)
     }
 
     func test_extraRows_stopGrowingTheKeyboard_onSmallIPadsInLandscape() {

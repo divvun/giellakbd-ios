@@ -777,7 +777,7 @@ final internal class KeyboardView: UIView,
                                    left: theme.keyHorizontalMargin + (isFirst ? theme.keyArea.sideInset : 0),
                                    bottom: vertical.bottom,
                                    right: theme.keyHorizontalMargin + (isLast ? theme.keyArea.sideInset : 0))
-        let isNumberRow = indexPath.section == 0 && theme.keyArea.hasNumberRow(rowCount: currentPage.count)
+        let isNumberRow = indexPath.section == 0 && rowLayout.hasShortNumberRow
         cell.configure(page: page, key: key, theme: theme, traits: self.traitCollection, margins: margins,
                        isNumberRow: isNumberRow)
 
@@ -809,8 +809,17 @@ final internal class KeyboardView: UIView,
     }
 
     private var rowLayout: KeyRowLayout {
-        KeyRowLayout(metrics: theme.keyArea, rowCount: currentPage.count, height: bounds.size.height,
-                     scale: traitCollection.displayScale)
+        KeyRowLayout(metrics: theme.keyArea, rowCount: currentPage.count, startsWithNumberRow: startsWithNumberRow,
+                     height: bounds.size.height, scale: traitCollection.displayScale)
+    }
+
+    /// Whether the current page's first row is a number row. Decided from the normal page, whose first row has the
+    /// digits themselves, so the rows keep their heights on every page with as many rows.
+    private var startsWithNumberRow: Bool {
+        guard let normal = definition.currentDeviceLayout?.normal, normal.count == currentPage.count else {
+            return false
+        }
+        return normal.startsWithNumberRow
     }
 
     func collectionView(_: UICollectionView, layout _: UICollectionViewLayout,
@@ -910,16 +919,23 @@ struct KeyRowLayout {
     private let gapAbove: CGFloat
     private let gapBelow: CGFloat
 
-    /// - Parameter scale: Pixels per point of the screen the keys are drawn on.
-    init(metrics: KeyAreaMetrics, rowCount: Int, height: CGFloat, scale: CGFloat) {
+    /// Whether the first row is a number row drawn shorter than the others.
+    let hasShortNumberRow: Bool
+
+    /// - Parameters:
+    ///   - startsWithNumberRow: Whether the first row is a number row.
+    ///   - scale: Pixels per point of the screen the keys are drawn on.
+    init(metrics: KeyAreaMetrics, rowCount: Int, startsWithNumberRow: Bool = false, height: CGFloat, scale: CGFloat) {
         let scale = max(scale, 1)
         func pixelFloor(_ value: CGFloat) -> CGFloat {
             (max(value, 0) * scale).rounded(.down) / scale
         }
 
-        let naturalKeyHeights = metrics.keyHeights(rowCount: rowCount)
+        hasShortNumberRow = rowCount > 1 && metrics.hasShortNumberRow(startsWithNumberRow: startsWithNumberRow)
+        let naturalKeyHeights = metrics.keyHeights(rowCount: rowCount, startsWithNumberRow: startsWithNumberRow)
         let naturalKeys = naturalKeyHeights.reduce(0, +)
-        let spaceForKeys = height - (metrics.height(rowCount: rowCount) - naturalKeys)
+        let spaceForKeys = height - (metrics.height(rowCount: rowCount, startsWithNumberRow: startsWithNumberRow)
+            - naturalKeys)
         let shrink = naturalKeys > spaceForKeys && naturalKeys > 0 ? max(spaceForKeys, 0) / naturalKeys : 1
         keyHeights = naturalKeyHeights.map { pixelFloor($0 * shrink) }
 

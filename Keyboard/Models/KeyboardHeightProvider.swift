@@ -10,7 +10,8 @@ typealias KeyboardHeight = (portrait: CGFloat, landscape: CGFloat)
 struct KeyAreaMetrics: Equatable {
     var keyHeight: CGFloat
     /// Height of the number row's keys, on devices where the system keyboard draws its number row shorter than the
-    /// other rows, such as 13-inch iPads. `nil` where every row is `keyHeight` tall.
+    /// other rows, such as 13-inch iPads. Only layouts whose first row is a number row use it. `nil` where every row is
+    /// `keyHeight` tall.
     var numberRowKeyHeight: CGFloat?
     var rowGap: CGFloat
     var topInset: CGFloat
@@ -19,26 +20,39 @@ struct KeyAreaMetrics: Equatable {
     /// margin.
     var sideInset: CGFloat = 0
 
-    /// Layouts with a number row have at least this many rows: the number row and the four letter rows below it.
-    static let minimumRowCountWithNumberRow = 5
-
-    /// Whether the first of `rowCount` rows is a number row, drawn shorter than the others.
-    func hasNumberRow(rowCount: Int) -> Bool {
-        numberRowKeyHeight != nil && rowCount >= Self.minimumRowCountWithNumberRow
+    /// Whether a layout's first row is drawn as a shorter number row.
+    /// - Parameter startsWithNumberRow: Whether the layout's first row is a number row.
+    func hasShortNumberRow(startsWithNumberRow: Bool) -> Bool {
+        numberRowKeyHeight != nil && startsWithNumberRow
     }
 
     /// Height of the keys in each row.
-    func keyHeights(rowCount: Int) -> [CGFloat] {
-        let hasNumberRow = hasNumberRow(rowCount: rowCount)
+    func keyHeights(rowCount: Int, startsWithNumberRow: Bool = false) -> [CGFloat] {
+        let shortFirstRow = hasShortNumberRow(startsWithNumberRow: startsWithNumberRow)
         return (0..<max(rowCount, 0)).map { row in
-            row == 0 && hasNumberRow ? numberRowKeyHeight ?? keyHeight : keyHeight
+            row == 0 && shortFirstRow ? numberRowKeyHeight ?? keyHeight : keyHeight
         }
     }
 
     /// Height of a key area with `rowCount` rows.
-    func height(rowCount: Int) -> CGFloat {
-        let keys = keyHeights(rowCount: rowCount).reduce(0, +)
+    func height(rowCount: Int, startsWithNumberRow: Bool = false) -> CGFloat {
+        let keys = keyHeights(rowCount: rowCount, startsWithNumberRow: startsWithNumberRow).reduce(0, +)
         return topInset + keys + CGFloat(max(rowCount - 1, 0)) * rowGap + bottomInset
+    }
+}
+
+extension Array where Element == [KeyDefinition] {
+    /// Whether the first row is a number row: at least half of its input keys are digits.
+    var startsWithNumberRow: Bool {
+        guard let firstRow = first else {
+            return false
+        }
+        let inputs = firstRow.compactMap { key -> String? in
+            if case let .input(input, _) = key.type { return input }
+            return nil
+        }
+        let digits = inputs.filter { $0.count == 1 && $0.first?.isASCII == true && $0.first?.isNumber == true }
+        return !inputs.isEmpty && digits.count * 2 >= inputs.count
     }
 }
 
@@ -51,17 +65,22 @@ struct KeyboardHeightProvider {
     /// made it, and their keys shrink to fit from there.
     /// - Parameters:
     ///   - rowCount: Rows in the layout. Defaults to the usual number for the device.
+    ///   - startsWithNumberRow: Whether the layout's first row is a number row. Defaults to whether the device's
+    ///     layouts usually have one: those for large iPads do.
     ///   - legacy: Whether to size for the keyboard before iOS 26. Defaults to the running system.
     static func height(
         for deviceContext: DeviceContext,
         traitCollection: UITraitCollection,
         rowCount: Int? = nil,
+        startsWithNumberRow: Bool? = nil,
         legacy: Bool = !iOSVersion.isIOS26OrNewer
     ) -> CGFloat {
         let normalRowCount = self.normalRowCount(for: deviceContext)
         let rowCount = rowCount ?? normalRowCount
+        let startsWithNumberRow = startsWithNumberRow ?? deviceContext.isLargeIPad
         let keyArea = keyArea(for: deviceContext, traitCollection: traitCollection, legacy: legacy)
-        let height = bannerHeight(for: deviceContext, traitCollection: traitCollection) + keyArea.height(rowCount: rowCount)
+        let height = bannerHeight(for: deviceContext, traitCollection: traitCollection)
+            + keyArea.height(rowCount: rowCount, startsWithNumberRow: startsWithNumberRow)
 
         guard rowCount > normalRowCount else {
             return height

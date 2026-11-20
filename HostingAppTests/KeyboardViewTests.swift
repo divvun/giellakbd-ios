@@ -191,21 +191,35 @@ final class KeyboardViewTests: XCTestCase {
     }
 
     func test_rowLayout_numberRowIsShorter_onLayoutsWithANumberRow() {
-        let sut = KeyRowLayout(metrics: numberRowKeys, rowCount: 5, height: numberRowKeys.height(rowCount: 5), scale: 2)
+        let height = numberRowKeys.height(rowCount: 5, startsWithNumberRow: true)
+        let sut = KeyRowLayout(metrics: numberRowKeys, rowCount: 5, startsWithNumberRow: true, height: height, scale: 2)
         XCTAssertEqual(sut.keyHeights, [45.5, 61, 61, 61, 61])
         XCTAssertEqual(sut.topInset, 8)
+        XCTAssertTrue(sut.hasShortNumberRow)
     }
 
     func test_rowLayout_numberRowStaysShorter_whenKeysShrink() {
-        let sut = KeyRowLayout(metrics: numberRowKeys, rowCount: 6, height: 380, scale: 2)
+        let sut = KeyRowLayout(metrics: numberRowKeys, rowCount: 6, startsWithNumberRow: true, height: 380, scale: 2)
         XCTAssertLessThan(sut.keyHeights[0], sut.keyHeights[1])
         XCTAssertEqual(Set(sut.keyHeights.dropFirst()).count, 1)
         XCTAssertLessThanOrEqual(totalHeight(sut, rowCount: 6), 380 + 0.001)
     }
 
     func test_rowLayout_everyRowIsFullHeight_withoutANumberRow() {
-        let sut = KeyRowLayout(metrics: numberRowKeys, rowCount: 4, height: numberRowKeys.height(rowCount: 4), scale: 2)
-        XCTAssertEqual(sut.keyHeights, [61, 61, 61, 61])
+        // Some 13-inch iPad layouts, such as Kildin Sami's, put letters where the number row usually is.
+        let sut = KeyRowLayout(metrics: numberRowKeys, rowCount: 5, height: numberRowKeys.height(rowCount: 5), scale: 2)
+        XCTAssertEqual(sut.keyHeights, [61, 61, 61, 61, 61])
+        XCTAssertFalse(sut.hasShortNumberRow)
+    }
+
+    func test_startsWithNumberRow_whenMostOfTheFirstRowIsDigits() {
+        func rows(_ first: [String]) -> [[KeyDefinition]] {
+            [first.map { KeyDefinition(type: .input(key: $0, alternate: nil)) } + [KeyDefinition(type: .backspace)],
+             [KeyDefinition(type: .input(key: "q", alternate: nil))]]
+        }
+        XCTAssertTrue(rows(["'", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "+", "´"]).startsWithNumberRow)
+        XCTAssertFalse(rows(["а̄", "я̄", "ӯ", "ю̄", "е̄", "о̄", "ӣ", "э̄", "ӭ", "ӓ", "ҍ", "ъ"]).startsWithNumberRow)
+        XCTAssertFalse(rows(["q", "w", "e", "1"]).startsWithNumberRow)
     }
 
     func test_bottomRowKeys_endAtTheKeyAreaInset() {

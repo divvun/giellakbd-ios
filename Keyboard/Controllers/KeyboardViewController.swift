@@ -79,7 +79,8 @@ open class KeyboardViewController: UIInputViewController {
         var height = KeyboardHeightProvider.height(
             for: deviceContext,
             traitCollection: traitCollection,
-            rowCount: keyboardDefinition.currentDeviceLayout?.normal.count
+            rowCount: keyboardDefinition.currentDeviceLayout?.normal.count,
+            startsWithNumberRow: keyboardDefinition.currentDeviceLayout?.normal.startsWithNumberRow
         )
 
         if !bannerVisible {
