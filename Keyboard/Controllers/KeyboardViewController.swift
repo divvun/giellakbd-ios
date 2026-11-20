@@ -132,20 +132,6 @@ open class KeyboardViewController: UIInputViewController {
         }
     }
 
-    /// Makes the system take the keyboard's height again. When the keyboard comes back after another keyboard, the
-    /// system keeps showing it at that keyboard's height until the height constraint changes, and setting the same
-    /// constant again doesn't count as a change.
-    private func reassertHeightConstraint() {
-        DispatchQueue.main.async {
-            guard let heightConstraint = self.heightConstraint else {
-                return
-            }
-            heightConstraint.constant = self.preferredHeight
-            heightConstraint.isActive = false
-            heightConstraint.isActive = true
-        }
-    }
-
     open override func viewDidLoad() {
         super.viewDidLoad()
         setupKeyboard()
@@ -448,8 +434,8 @@ open class KeyboardViewController: UIInputViewController {
         // Rebuild if it has changed so the globe key appears exactly when the system expects us to provide one.
         if let layoutHasSwitchKey = layoutIncludesInputModeSwitchKey, layoutHasSwitchKey != needsInputModeSwitchKey {
             setupKeyboard()
+            updateHeightConstraint()
         }
-        reassertHeightConstraint()
     }
 
     private var application: UIApplication? {
