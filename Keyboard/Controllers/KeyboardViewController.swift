@@ -30,6 +30,8 @@ open class KeyboardViewController: UIInputViewController {
     private var keyboardContainer: UIView!
     private var keyboardView: KeyboardViewProvider!
     private var bannerContainerView: UIView?
+    /// The banner's height, which changes with the theme, e.g. on rotation.
+    private var bannerHeightConstraint: NSLayoutConstraint?
     private var heightConstraint: NSLayoutConstraint!
     private var extraSpacingView: UIView!
     private var deadKeyHandler: DeadKeyHandler!
@@ -127,6 +129,20 @@ open class KeyboardViewController: UIInputViewController {
     private func updateHeightConstraint() {
         DispatchQueue.main.async {
             self.heightConstraint?.constant = self.preferredHeight
+        }
+    }
+
+    /// Makes the system take the keyboard's height again. When the keyboard comes back after another keyboard, the
+    /// system keeps showing it at that keyboard's height until the height constraint changes, and setting the same
+    /// constant again doesn't count as a change.
+    private func reassertHeightConstraint() {
+        DispatchQueue.main.async {
+            guard let heightConstraint = self.heightConstraint else {
+                return
+            }
+            heightConstraint.constant = self.preferredHeight
+            heightConstraint.isActive = false
+            heightConstraint.isActive = true
         }
     }
 
@@ -390,7 +406,7 @@ open class KeyboardViewController: UIInputViewController {
 
         keyboardContainer.insertSubview(bannerContainer, at: 0)
 
-        bannerContainer.heightAnchor.constraint(equalToConstant: theme.bannerHeight).enable()
+        bannerHeightConstraint = bannerContainer.heightAnchor.constraint(equalToConstant: theme.bannerHeight).enable()
         bannerContainer.leftAnchor.constraint(equalTo: keyboardContainer.leftAnchor).enable()
         bannerContainer.rightAnchor.constraint(equalTo: keyboardContainer.rightAnchor).enable()
         bannerContainer.topAnchor.constraint(equalTo: keyboardContainer.topAnchor).enable()
@@ -432,8 +448,8 @@ open class KeyboardViewController: UIInputViewController {
         // Rebuild if it has changed so the globe key appears exactly when the system expects us to provide one.
         if let layoutHasSwitchKey = layoutIncludesInputModeSwitchKey, layoutHasSwitchKey != needsInputModeSwitchKey {
             setupKeyboard()
-            updateHeightConstraint()
         }
+        reassertHeightConstraint()
     }
 
     private var application: UIApplication? {
@@ -606,6 +622,7 @@ open class KeyboardViewController: UIInputViewController {
     private func apply(_ newTheme: Theme) {
         theme = newTheme
         view.backgroundColor = theme.backgroundColor
+        bannerHeightConstraint?.constant = theme.bannerHeight
         bannerManager?.updateTheme(theme)
         keyboardView?.updateTheme(theme: theme)
         if keyboardDefinition.supportsCurrentDevice == false {
