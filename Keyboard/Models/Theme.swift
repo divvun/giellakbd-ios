@@ -26,8 +26,9 @@ struct Theme {
     // Metrics
     let keyCornerRadius: CGFloat
     let popupCornerRadius: CGFloat
-    let keyVerticalMargin: CGFloat
     let keyHorizontalMargin: CGFloat
+    /// Key heights, the gap between rows and the space above and below them.
+    let keyArea: KeyAreaMetrics
 
     // Fonts
     let lowerKeyFont: UIFont
@@ -35,6 +36,8 @@ struct Theme {
     let modifierKeyFontSize: CGFloat
     let altKeyFontSize: CGFloat
     let altKeyFont: UIFont
+    /// Font for both labels of the keys in a number row drawn shorter than the other rows, as on 13-inch iPads.
+    let numberRowKeyFont: UIFont
     let popupLowerKeyFont: UIFont
     let popupCapitalKeyFont: UIFont
     let popupLongpressLowerKeyFont: UIFont
@@ -47,9 +50,11 @@ struct Theme {
     // Banner
     let bannerBackgroundColor: UIColor
     let bannerSeparatorColor: UIColor
+    /// Space between the banner's separators and its bottom edge, where they line up with the system keyboard's.
+    /// `nil` centres them in the banner.
+    let bannerSeparatorBottomInset: CGFloat?
     let bannerTextColor: UIColor
     let bannerHorizontalMargin: CGFloat
-    let bannerVerticalMargin: CGFloat
     let bannerHeight: CGFloat
 
     // Layout
@@ -135,8 +140,8 @@ private struct ThemeFactory {
             // Metrics
             keyCornerRadius: metrics.keyCornerRadius,
             popupCornerRadius: 12.0,
-            keyVerticalMargin: metrics.keyVerticalMargin,
             keyHorizontalMargin: metrics.keyHorizontalMargin,
+            keyArea: KeyboardHeightProvider.keyArea(for: device, traitCollection: traits, legacy: style.isLegacy),
 
             // Fonts
             lowerKeyFont: fonts.lowerKey,
@@ -144,6 +149,7 @@ private struct ThemeFactory {
             modifierKeyFontSize: fonts.modifierKeySize,
             altKeyFontSize: fonts.altKeySize,
             altKeyFont: fonts.altKey,
+            numberRowKeyFont: fonts.numberRowKey,
             popupLowerKeyFont: fonts.lowerKey.withSize(fonts.lowerKey.pointSize + (style.isDark ? 10.0 : 16.0)),
             popupCapitalKeyFont: fonts.capitalKey.withSize(fonts.capitalKey.pointSize + (style.isDark ? 10.0 : 16.0)),
             popupLongpressLowerKeyFont: fonts.lowerKey,
@@ -156,10 +162,13 @@ private struct ThemeFactory {
             // Banner
             bannerBackgroundColor: colors.background,
             bannerSeparatorColor: colors.bannerSeparator,
+            // On iPhone the system keyboard's separators end 15 pt above the top row, which is the top row's 8 pt
+            // inset plus this.
+            bannerSeparatorBottomInset: style.isLegacy || device.shouldUseIPadLayout(traitCollection: traits) ? nil : 7,
             bannerTextColor: colors.bannerText,
             bannerHorizontalMargin: 16.0,
-            bannerVerticalMargin: 8.0,
-            bannerHeight: metrics.bannerHeight,
+            bannerHeight: KeyboardHeightProvider.bannerHeight(for: device, traitCollection: traits,
+                                                              legacy: style.isLegacy),
 
             // Layout
             altLabelTopAnchorConstant: metrics.altLabelTop,
@@ -173,8 +182,6 @@ private struct ThemeFactory {
     private struct Metrics {
         let keyCornerRadius: CGFloat
         let keyHorizontalMargin: CGFloat
-        let keyVerticalMargin: CGFloat
-        let bannerHeight: CGFloat
         let altLabelTop: CGFloat
         let altLabelBottom: CGFloat
         let popupLongpressKeysPerRow: Int
@@ -193,18 +200,6 @@ private struct ThemeFactory {
         // iOS 26 has significantly larger corner radius for rounder keys
         let keyCornerRadius: CGFloat = legacy ? 5.0 : 10.0
 
-        let keyVerticalMargin: CGFloat = {
-            if legacy {
-                // Legacy iOS uses larger vertical margins
-                return device.isLandscape ? 3.5 : 6.0
-            } else {
-                // iOS 26 uses smaller vertical margins for taller keys with less spacing
-                return device.isLandscape ? 3.5 : 5.5
-            }
-        }()
-
-        let bannerHeight: CGFloat = 48.0 // Simplified - could check for smaller devices
-
         let sfSymbolConfiguration = UIImage.SymbolConfiguration(
             pointSize: device.isLandscape ? 19 : 20,
             weight: .regular
@@ -213,8 +208,6 @@ private struct ThemeFactory {
         return Metrics(
             keyCornerRadius: keyCornerRadius,
             keyHorizontalMargin: 3.0,
-            keyVerticalMargin: keyVerticalMargin,
-            bannerHeight: bannerHeight,
             altLabelTop: 0.0,
             altLabelBottom: 0.0,
             popupLongpressKeysPerRow: 10,
@@ -243,13 +236,6 @@ private struct ThemeFactory {
             else { return 5.0 } // Small/medium iPad in portrait
         }()
 
-        let keyVerticalMargin: CGFloat = {
-            if device.isLargeLandscape { return 4.0 }
-            else if device.isSmallOrMediumLandscape { return 6.0 }
-            else if device.isLargeIPad { return 3.5 } // Large iPad in portrait
-            else { return 5.0 } // Small/medium iPad in portrait
-        }()
-
         let altLabelTop: CGFloat = {
             if device.isLargeIPad { return 3.0 } // More spacing from top edge
             else if device.isSmallOrMediumLandscape { return 4.0 }
@@ -270,8 +256,6 @@ private struct ThemeFactory {
         return Metrics(
             keyCornerRadius: keyCornerRadius,
             keyHorizontalMargin: keyHorizontalMargin,
-            keyVerticalMargin: keyVerticalMargin,
-            bannerHeight: 55.0,
             altLabelTop: altLabelTop,
             altLabelBottom: altLabelBottom,
             popupLongpressKeysPerRow: 4,
@@ -287,6 +271,7 @@ private struct ThemeFactory {
         let modifierKeySize: CGFloat
         let altKeySize: CGFloat
         let altKey: UIFont
+        let numberRowKey: UIFont
         let banner: UIFont
     }
 
@@ -310,6 +295,8 @@ private struct ThemeFactory {
                 modifierKeySize: 17.0,
                 altKeySize: altKeySize,
                 altKey: UIFont.systemFont(ofSize: altKeySize),
+                // The system keyboard's number row on 13-inch iPads, measured from its digits' cap height
+                numberRowKey: UIFont.systemFont(ofSize: device.isLandscape ? 19.0 : 14.0),
                 banner: UIFont.systemFont(ofSize: 17.0)
             )
         } else {
@@ -324,6 +311,7 @@ private struct ThemeFactory {
                 modifierKeySize: 16.0,
                 altKeySize: altKeySize,
                 altKey: UIFont.systemFont(ofSize: altKeySize),
+                numberRowKey: UIFont.systemFont(ofSize: altKeySize),
                 banner: UIFont.systemFont(ofSize: 17.0)
             )
         }
@@ -440,7 +428,8 @@ private struct ThemeFactory {
                 activeText: .white,
                 longPressActive: longPressActive,
                 altKeyText: device.isLargeIPad ? UIColor.black : UIColor(white: 0.0, alpha: 0.3),
-                bannerSeparator: UIColor(r: 188, g: 191, b: 195),
+                // The system keyboard's separators: black at 6.6%, (211, 212, 217) over the keyboard's background
+                bannerSeparator: style.isLegacy ? UIColor(r: 188, g: 191, b: 195) : UIColor(white: 0, alpha: 0.066),
                 bannerText: UIColor(r: 21, g: 21, b: 21)
             )
         }

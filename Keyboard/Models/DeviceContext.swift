@@ -30,6 +30,16 @@ struct DeviceContext {
             : maxSupportedInches
     }
 
+    /// Whether the system shows its own bar below the keyboard, holding the globe and dictation keys.
+    ///
+    /// iPhones without a Home button have this bar, and the keyboard extension's view ends above it. On iPhones with a
+    /// Home button, and for iPhone apps on iPad, the view reaches the bottom of the screen. DeviceKit lists the iPhones
+    /// without a Home button as those with rounded display corners. iPhone Duo is the exception: on both its displays
+    /// the globe and dictation keys are in the keyboard's bottom row. Unrecognised devices report `false`.
+    var hasSystemBarBelowKeyboard: Bool {
+        isPhone && device.hasRoundedDisplayCorners && device.realDevice != .iPhoneDuo
+    }
+
     // MARK: - iPad Size Categories
 
     var isMiniIPad: Bool {

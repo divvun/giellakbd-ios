@@ -3,14 +3,16 @@ import UIKit
 final class SpellBannerCell: UICollectionViewCell {
     private let titleLabel = UILabel()
 
-    private var topConstraint: NSLayoutConstraint!
-    private var bottomConstraint: NSLayoutConstraint!
     private var heightConstraint: NSLayoutConstraint!
+    /// Centres the title in the banner, or on the separators where they sit lower than the banner's centre.
+    private var centerConstraint: NSLayoutConstraint!
+    private var separatorCenterConstraint: NSLayoutConstraint!
+
+    /// Height of the banner's separators, which the title is centred on.
+    static let separatorHeight: CGFloat = 24
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        topConstraint = titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor)
-        bottomConstraint = titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         heightConstraint = contentView.heightAnchor.constraint(equalToConstant: 0)
 
         // Build the view hierarchy and constraints once. `configure(theme:)` runs on every reload,
@@ -20,8 +22,9 @@ final class SpellBannerCell: UICollectionViewCell {
         contentView.fill(superview: self)
         contentView.addSubview(titleLabel)
 
-        topConstraint.isActive = true
-        bottomConstraint.isActive = true
+        // Centred rather than inset from the top and bottom, so the text keeps its size in a short banner.
+        centerConstraint = titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).enable()
+        separatorCenterConstraint = titleLabel.centerYAnchor.constraint(equalTo: contentView.bottomAnchor)
         titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).enable()
         titleLabel.textAlignment = .center
 
@@ -30,8 +33,14 @@ final class SpellBannerCell: UICollectionViewCell {
 
     func configure(theme: Theme) {
         isHidden = false
-        topConstraint.constant = theme.bannerVerticalMargin
-        bottomConstraint.constant = -theme.bannerVerticalMargin
+        if let bottomInset = theme.bannerSeparatorBottomInset {
+            centerConstraint.isActive = false
+            separatorCenterConstraint.constant = -(bottomInset + Self.separatorHeight / 2)
+            separatorCenterConstraint.isActive = true
+        } else {
+            separatorCenterConstraint.isActive = false
+            centerConstraint.isActive = true
+        }
         titleLabel.font = theme.bannerFont
         titleLabel.textColor = theme.bannerTextColor
     }

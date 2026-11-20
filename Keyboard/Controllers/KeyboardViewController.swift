@@ -30,6 +30,8 @@ open class KeyboardViewController: UIInputViewController {
     private var keyboardContainer: UIView!
     private var keyboardView: KeyboardViewProvider!
     private var bannerContainerView: UIView?
+    /// The banner's height, which changes with the theme, e.g. on rotation.
+    private var bannerHeightConstraint: NSLayoutConstraint?
     private var heightConstraint: NSLayoutConstraint!
     private var extraSpacingView: UIView!
     private var deadKeyHandler: DeadKeyHandler!
@@ -79,7 +81,8 @@ open class KeyboardViewController: UIInputViewController {
         var height = KeyboardHeightProvider.height(
             for: deviceContext,
             traitCollection: traitCollection,
-            rowCount: keyboardDefinition.currentDeviceLayout?.normal.count
+            rowCount: keyboardDefinition.currentDeviceLayout?.normal.count,
+            startsWithNumberRow: keyboardDefinition.currentDeviceLayout?.normal.startsWithNumberRow
         )
 
         if !bannerVisible {
@@ -389,7 +392,7 @@ open class KeyboardViewController: UIInputViewController {
 
         keyboardContainer.insertSubview(bannerContainer, at: 0)
 
-        bannerContainer.heightAnchor.constraint(equalToConstant: theme.bannerHeight).enable()
+        bannerHeightConstraint = bannerContainer.heightAnchor.constraint(equalToConstant: theme.bannerHeight).enable()
         bannerContainer.leftAnchor.constraint(equalTo: keyboardContainer.leftAnchor).enable()
         bannerContainer.rightAnchor.constraint(equalTo: keyboardContainer.rightAnchor).enable()
         bannerContainer.topAnchor.constraint(equalTo: keyboardContainer.topAnchor).enable()
@@ -605,6 +608,7 @@ open class KeyboardViewController: UIInputViewController {
     private func apply(_ newTheme: Theme) {
         theme = newTheme
         view.backgroundColor = theme.backgroundColor
+        bannerHeightConstraint?.constant = theme.bannerHeight
         bannerManager?.updateTheme(theme)
         keyboardView?.updateTheme(theme: theme)
         if keyboardDefinition.supportsCurrentDevice == false {
