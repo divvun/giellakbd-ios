@@ -61,6 +61,9 @@ final class ThemeTests: XCTestCase {
                 ("iPhone 17 Pro", DeviceContext(device: .iPhone17Pro, isLandscape: landscape), 3),
                 ("iPhone 17 Pro Max", DeviceContext(device: .iPhone17ProMax, isLandscape: landscape), 3),
                 ("iPhone Air", DeviceContext(device: .iPhoneAir, isLandscape: landscape), 3),
+                ("iPhone 11", DeviceContext(device: .iPhone11, isLandscape: landscape,
+                                            screenSize: landscape ? CGSize(width: 896, height: 414)
+                                                                  : CGSize(width: 414, height: 896)), 2),
                 ("iPhone Duo inner display", DeviceContext(device: .iPhoneDuo, isLandscape: landscape,
                                                            screenSize: duoInner), 3),
                 ("iPad mini 6", DeviceContext(device: .iPadMini6, isLandscape: landscape), 2),
@@ -82,6 +85,19 @@ final class ThemeTests: XCTestCase {
                                                         sideInset: 1))
         let largeIPad = DeviceContext(device: .iPadPro13M4, isLandscape: false)
         XCTAssertEqual(keyArea(largeIPad).numberRowKeyHeight, 45.5)
+        let homeButtonIPhone = DeviceContext(device: .iPhoneSE3, isLandscape: false)
+        XCTAssertEqual(keyArea(homeButtonIPhone), KeyAreaMetrics(keyHeight: 42, rowGap: 12, topInset: 8,
+                                                                 bottomInset: 4, sideInset: 3.5))
+        let duoOuter = DeviceContext(device: .iPhoneDuo, isLandscape: false, screenSize: Self.duoOuter)
+        XCTAssertEqual(keyArea(duoOuter).keyHeight, 45)
+    }
+
+    func test_keyHeight_followsTheScreenWidth_onIPhones() {
+        // iPhone 11 is a 6.1-inch iPhone like iPhone 17, but 414 pt wide, and its system keyboard has the taller keys.
+        let iPhone11 = DeviceContext(device: .iPhone11, isLandscape: false, screenSize: CGSize(width: 414, height: 896))
+        let iPhone17 = DeviceContext(device: .iPhone17, isLandscape: false, screenSize: CGSize(width: 402, height: 874))
+        XCTAssertEqual(keyArea(iPhone11).keyHeight, 45)
+        XCTAssertEqual(keyArea(iPhone17).keyHeight, 43)
     }
 
     func test_measuredKeyAreas_areWholePixels() {
@@ -105,12 +121,13 @@ final class ThemeTests: XCTestCase {
 
     func test_height_isUnchanged_onDevicesThatHaveNotBeenMeasured() {
         let iPad = DeviceContext(device: .iPadPro11M4, isLandscape: false)
+        let duoOuterLandscape = CGSize(width: Self.duoOuter.height, height: Self.duoOuter.width)
         let cases: [(String, DeviceContext, UITraitCollection?)] = [
-            ("iPhone 8", DeviceContext(device: .iPhone8, isLandscape: false), nil),
+            ("iPhone 8 Plus", DeviceContext(device: .iPhone8Plus, isLandscape: false), nil),
             ("iPhone 8 Plus, landscape", DeviceContext(device: .iPhone8Plus, isLandscape: true), nil),
-            ("iPhone SE 3", DeviceContext(device: .iPhoneSE3, isLandscape: false), nil),
-            ("iPhone Duo outer display", DeviceContext(device: .iPhoneDuo, isLandscape: false,
-                                                       screenSize: Self.duoOuter), nil),
+            ("iPhone SE 3, landscape", DeviceContext(device: .iPhoneSE3, isLandscape: true), nil),
+            ("iPhone Duo outer display, landscape", DeviceContext(device: .iPhoneDuo, isLandscape: true,
+                                                                  screenSize: duoOuterLandscape), nil),
             ("iPhone app on iPad", iPad, phoneTraits),
             ("unrecognised device", DeviceContext(device: .unknown("iPhone99,1"), isLandscape: false), nil)
         ]

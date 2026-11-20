@@ -87,9 +87,10 @@ final class KeyboardViewTests: XCTestCase {
     func test_resizing_relaysOutKeysToNewWidth() {
         widthConstraint.constant = 600
         layout()
-        // The first row has three keys of width 1.
+        // The first row has three keys of width 1. The first key's cell also takes the side inset.
+        let sideInset = Theme.current(for: traits, device: .current).keyArea.sideInset
         let firstKey = collectionView.cellForItem(at: IndexPath(item: 0, section: 0))
-        XCTAssertEqual(firstKey?.frame.width ?? 0, (600 - 1) / 3, accuracy: 0.5)
+        XCTAssertEqual(firstKey?.frame.width ?? 0, (600 - 2 * sideInset) / 3 + sideInset, accuracy: 0.5)
     }
 
     func test_resizing_rebuildsKeys() {

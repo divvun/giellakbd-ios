@@ -19,10 +19,16 @@ struct DuoKeyboardHeightTests {
         return KeyboardHeightProvider.height(for: context, traitCollection: phoneTraits, legacy: legacy)
     }
 
-    @Test("Folded outer display uses the 5.4 inch phone heights")
+    @Test("Folded outer display uses the system keyboard's key sizes in portrait, the 5.4 inch phone height in landscape")
     func foldedOuterDisplay() {
-        #expect(height(screenSize: Self.outerPortrait) == 272)
+        #expect(abs(height(screenSize: Self.outerPortrait) - (48 + 8 + 4 * 45 + 3 * 11 + 20.0 / 3)) < 0.001)
         #expect(height(screenSize: Self.outerLandscape) == 198)
+    }
+
+    @Test("Before iOS 26, the folded outer display uses the 5.4 inch phone heights")
+    func foldedOuterDisplayBeforeIOS26() {
+        #expect(height(screenSize: Self.outerPortrait, legacy: true) == 272)
+        #expect(height(screenSize: Self.outerLandscape, legacy: true) == 198)
     }
 
     @Test("Unfolded inner display uses the system keyboard's key sizes plus the banner")
