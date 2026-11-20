@@ -123,7 +123,8 @@ struct KeyboardHeightProvider {
             return nil
         }
         if deviceContext.device.realDevice == .iPhoneDuo {
-            return isDuoInnerDisplay(deviceContext) ? 43.33 : 44
+            // iPhone Duo was measured without the background the system can draw above the keyboard.
+            return isDuoInnerDisplay(deviceContext) ? 31 : 39
         }
         let isHomeButtonPhone = !deviceContext.device.hasRoundedDisplayCorners && deviceContext.screenInches < 5
         guard deviceContext.hasSystemBarBelowKeyboard || isHomeButtonPhone else {

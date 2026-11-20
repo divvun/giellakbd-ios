@@ -104,8 +104,8 @@ final class ThemeTests: XCTestCase {
         XCTAssertEqual(banner(DeviceContext(device: .iPhone17ProMax, isLandscape: false)), 44.33)
         XCTAssertEqual(banner(DeviceContext(device: .iPhoneSE3, isLandscape: false)), 44.5)
         XCTAssertEqual(banner(DeviceContext(device: .iPhone17Pro, isLandscape: true)), 44)
-        XCTAssertEqual(banner(DeviceContext(device: .iPhoneDuo, isLandscape: false, screenSize: Self.duoInner)), 43.33)
-        XCTAssertEqual(banner(DeviceContext(device: .iPhoneDuo, isLandscape: false, screenSize: Self.duoOuter)), 44)
+        XCTAssertEqual(banner(DeviceContext(device: .iPhoneDuo, isLandscape: false, screenSize: Self.duoInner)), 31)
+        XCTAssertEqual(banner(DeviceContext(device: .iPhoneDuo, isLandscape: false, screenSize: Self.duoOuter)), 39)
 
         // Unchanged on iPad, where the system shows its own suggestion bar above the keyboard, before iOS 26 and on
         // devices that haven't been measured.
