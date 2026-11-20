@@ -144,25 +144,29 @@ struct KeyboardHeightProvider {
         if deviceContext.device.realDevice == .iPhoneDuo {
             if isDuoInnerDisplay(deviceContext) {
                 return isLandscape
-                    ? KeyAreaMetrics(keyHeight: 39, rowGap: 13, topInset: 6, bottomInset: 4)
+                    ? KeyAreaMetrics(keyHeight: 39, rowGap: 13, topInset: 6, bottomInset: 4, sideInset: 7)
                     : KeyAreaMetrics(keyHeight: 46, rowGap: 14, topInset: 8, bottomInset: 3, sideInset: 8)
             }
-            // The outer display's view ends 32.33 pt above the bottom of the screen and the system keyboard's
-            // bottom row 39 pt above, 20 pixels higher. Its landscape keyboard hasn't been measured.
-            return isLandscape ? nil : KeyAreaMetrics(keyHeight: 45, rowGap: 11, topInset: 8, bottomInset: 20.0 / 3)
+            // The outer display's view ends 32.33 pt above the bottom of the screen in portrait and the system
+            // keyboard's bottom row 39 pt above, 20 pixels higher. Its landscape keys are 100 pixels tall.
+            return isLandscape
+                ? KeyAreaMetrics(keyHeight: 100.0 / 3, rowGap: 9, topInset: 6, bottomInset: 4, sideInset: 2)
+                : KeyAreaMetrics(keyHeight: 45, rowGap: 11, topInset: 8, bottomInset: 20.0 / 3)
         }
 
         guard deviceContext.isPhone else {
             return nil
         }
         guard deviceContext.hasSystemBarBelowKeyboard else {
-            // iPhones with a Home button that run iOS 26: iPhone SE (2nd and 3rd generation). Landscape hasn't been
-            // measured.
+            // iPhones with a Home button that run iOS 26: iPhone SE (2nd and 3rd generation). In landscape the
+            // system keyboard leaves 72 pt at each side.
             let isHomeButtonPhone = !deviceContext.device.hasRoundedDisplayCorners && deviceContext.screenInches < 5
-            guard isHomeButtonPhone, !isLandscape else {
+            guard isHomeButtonPhone else {
                 return nil
             }
-            return KeyAreaMetrics(keyHeight: 42, rowGap: 12, topInset: 8, bottomInset: 4, sideInset: 3.5)
+            return isLandscape
+                ? KeyAreaMetrics(keyHeight: 32, rowGap: 8, topInset: 6, bottomInset: 4, sideInset: 69)
+                : KeyAreaMetrics(keyHeight: 42, rowGap: 12, topInset: 8, bottomInset: 4, sideInset: 3.5)
         }
         if isLandscape {
             return KeyAreaMetrics(keyHeight: 32, rowGap: 8, topInset: 6, bottomInset: 2, sideInset: 1)

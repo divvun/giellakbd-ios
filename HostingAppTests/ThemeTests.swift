@@ -88,6 +88,8 @@ final class ThemeTests: XCTestCase {
         let homeButtonIPhone = DeviceContext(device: .iPhoneSE3, isLandscape: false)
         XCTAssertEqual(keyArea(homeButtonIPhone), KeyAreaMetrics(keyHeight: 42, rowGap: 12, topInset: 8,
                                                                  bottomInset: 4, sideInset: 3.5))
+        let homeButtonIPhoneLandscape = DeviceContext(device: .iPhoneSE3, isLandscape: true)
+        XCTAssertEqual(keyArea(homeButtonIPhoneLandscape).sideInset, 69)
         let duoOuter = DeviceContext(device: .iPhoneDuo, isLandscape: false, screenSize: Self.duoOuter)
         XCTAssertEqual(keyArea(duoOuter).keyHeight, 45)
     }
@@ -121,13 +123,9 @@ final class ThemeTests: XCTestCase {
 
     func test_height_isUnchanged_onDevicesThatHaveNotBeenMeasured() {
         let iPad = DeviceContext(device: .iPadPro11M4, isLandscape: false)
-        let duoOuterLandscape = CGSize(width: Self.duoOuter.height, height: Self.duoOuter.width)
         let cases: [(String, DeviceContext, UITraitCollection?)] = [
             ("iPhone 8 Plus", DeviceContext(device: .iPhone8Plus, isLandscape: false), nil),
             ("iPhone 8 Plus, landscape", DeviceContext(device: .iPhone8Plus, isLandscape: true), nil),
-            ("iPhone SE 3, landscape", DeviceContext(device: .iPhoneSE3, isLandscape: true), nil),
-            ("iPhone Duo outer display, landscape", DeviceContext(device: .iPhoneDuo, isLandscape: true,
-                                                                  screenSize: duoOuterLandscape), nil),
             ("iPhone app on iPad", iPad, phoneTraits),
             ("unrecognised device", DeviceContext(device: .unknown("iPhone99,1"), isLandscape: false), nil)
         ]
