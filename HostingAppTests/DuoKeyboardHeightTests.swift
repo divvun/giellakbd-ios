@@ -21,8 +21,8 @@ struct DuoKeyboardHeightTests {
 
     @Test("Folded outer display uses the system keyboard's key sizes plus the banner")
     func foldedOuterDisplay() {
-        #expect(abs(height(screenSize: Self.outerPortrait) - (39 + 8 + 4 * 45 + 3 * 11 + 20.0 / 3)) < 0.001)
-        #expect(abs(height(screenSize: Self.outerLandscape) - (39 + 6 + 4 * 100.0 / 3 + 3 * 9 + 4)) < 0.001)
+        #expect(abs(height(screenSize: Self.outerPortrait) - (44 + 8 + 4 * 45 + 3 * 11 + 20.0 / 3)) < 0.001)
+        #expect(abs(height(screenSize: Self.outerLandscape) - (44 + 6 + 4 * 100.0 / 3 + 3 * 9 + 4)) < 0.001)
     }
 
     @Test("Before iOS 26, the folded outer display uses the 5.4 inch phone heights")
@@ -33,10 +33,10 @@ struct DuoKeyboardHeightTests {
 
     @Test("Unfolded inner display uses the system keyboard's key sizes plus the banner")
     func unfoldedInnerDisplay() {
-        let portrait: CGFloat = 31 + 8 + 4 * 46 + 3 * 14 + 3
-        let landscape: CGFloat = 31 + 6 + 4 * 39 + 3 * 13 + 4
-        #expect(height(screenSize: Self.innerPortrait, legacy: false) == portrait)
-        #expect(height(screenSize: Self.innerLandscape, legacy: false) == landscape)
+        let portrait: CGFloat = 43.33 + 8 + 4 * 46 + 3 * 14 + 3
+        let landscape: CGFloat = 43.33 + 6 + 4 * 39 + 3 * 13 + 4
+        #expect(abs(height(screenSize: Self.innerPortrait, legacy: false) - portrait) < 0.001)
+        #expect(abs(height(screenSize: Self.innerLandscape, legacy: false) - landscape) < 0.001)
     }
 
     @Test("Before iOS 26, the unfolded inner display uses its own height")

@@ -95,7 +95,9 @@ struct KeyboardHeightProvider {
     static func bannerHeight(for deviceContext: DeviceContext, traitCollection: UITraitCollection,
                              legacy: Bool = !iOSVersion.isIOS26OrNewer) -> CGFloat {
         if !legacy, let measured = measuredBannerHeight(for: deviceContext, traitCollection: traitCollection) {
-            return measured
+            // Whole pixels, so the keys below the banner start on a pixel boundary.
+            let scale = traitCollection.displayScale
+            return scale > 0 ? (measured * scale).rounded() / scale : measured
         }
         return tableBannerHeight(for: deviceContext, traitCollection: traitCollection)
     }
@@ -109,17 +111,19 @@ struct KeyboardHeightProvider {
     /// The banner that puts the top of the keyboard where the system keyboard's is, on iOS 26 and later, or `nil` where
     /// that hasn't been measured.
     ///
-    /// The system draws 17.33 pt of the keyboard's background above the extension's view in portrait, so the banner is
-    /// shorter than the system keyboard's suggestion bar looks. On iPad the system shows its own suggestion bar above the
-    /// extension, so the banner keeps its height there. On iPhones narrower than 414 pt the bottom row ends 4 pt above
-    /// the system keyboard's, so the banner is that much shorter to keep the top of the keyboard in place.
+    /// Measured where the keyboard first appears, and after the emoji keyboard. Right after switching from one of the
+    /// system's own keyboards, such as English, the system also draws 17.33 pt of the keyboard's background above the
+    /// extension's view in portrait, and the keyboard looks that much taller than the system keyboard until it next
+    /// appears. On iPad the system shows its own suggestion bar above the extension, so the banner keeps its height
+    /// there. On iPhones narrower than 414 pt the bottom row ends 4 pt above the system keyboard's, so the banner is
+    /// that much shorter to keep the top of the keyboard in place.
     private static func measuredBannerHeight(for deviceContext: DeviceContext,
                                              traitCollection: UITraitCollection) -> CGFloat? {
         guard deviceContext.isPhone, !deviceContext.shouldUseIPadLayout(traitCollection: traitCollection) else {
             return nil
         }
         if deviceContext.device.realDevice == .iPhoneDuo {
-            return isDuoInnerDisplay(deviceContext) ? 31 : 39
+            return isDuoInnerDisplay(deviceContext) ? 43.33 : 44
         }
         let isHomeButtonPhone = !deviceContext.device.hasRoundedDisplayCorners && deviceContext.screenInches < 5
         guard deviceContext.hasSystemBarBelowKeyboard || isHomeButtonPhone else {
@@ -128,7 +132,10 @@ struct KeyboardHeightProvider {
         if deviceContext.isLandscape {
             return 44
         }
-        return isHomeButtonPhone || isWidePhone(deviceContext) ? 27 : 22
+        if isHomeButtonPhone {
+            return 44.5
+        }
+        return isWidePhone(deviceContext) ? 44.33 : 39.33
     }
 
     /// Sizes of the key area for the device's usual number of rows.

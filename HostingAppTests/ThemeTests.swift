@@ -100,12 +100,12 @@ final class ThemeTests: XCTestCase {
                                                 legacy: legacy)
         }
         let iPhone = DeviceContext(device: .iPhone17Pro, isLandscape: false)
-        XCTAssertEqual(banner(iPhone), 22)
-        XCTAssertEqual(banner(DeviceContext(device: .iPhone17ProMax, isLandscape: false)), 27)
-        XCTAssertEqual(banner(DeviceContext(device: .iPhoneSE3, isLandscape: false)), 27)
+        XCTAssertEqual(banner(iPhone), 39.33)
+        XCTAssertEqual(banner(DeviceContext(device: .iPhone17ProMax, isLandscape: false)), 44.33)
+        XCTAssertEqual(banner(DeviceContext(device: .iPhoneSE3, isLandscape: false)), 44.5)
         XCTAssertEqual(banner(DeviceContext(device: .iPhone17Pro, isLandscape: true)), 44)
-        XCTAssertEqual(banner(DeviceContext(device: .iPhoneDuo, isLandscape: false, screenSize: Self.duoInner)), 31)
-        XCTAssertEqual(banner(DeviceContext(device: .iPhoneDuo, isLandscape: false, screenSize: Self.duoOuter)), 39)
+        XCTAssertEqual(banner(DeviceContext(device: .iPhoneDuo, isLandscape: false, screenSize: Self.duoInner)), 43.33)
+        XCTAssertEqual(banner(DeviceContext(device: .iPhoneDuo, isLandscape: false, screenSize: Self.duoOuter)), 44)
 
         // Unchanged on iPad, where the system shows its own suggestion bar above the keyboard, before iOS 26 and on
         // devices that haven't been measured.
@@ -114,6 +114,16 @@ final class ThemeTests: XCTestCase {
         XCTAssertEqual(banner(iPad, traits: phoneTraits), 48)
         XCTAssertEqual(banner(iPhone, legacy: true), 48)
         XCTAssertEqual(banner(DeviceContext(device: .iPhone8Plus, isLandscape: false)), 48)
+    }
+
+    func test_bannerHeight_isWholePixels() {
+        let iPhone = DeviceContext(device: .iPhone11, isLandscape: false, screenSize: CGSize(width: 414, height: 896))
+        for scale: CGFloat in [2, 3] {
+            let traits = UITraitCollection(traitsFrom: [phoneTraits, UITraitCollection(displayScale: scale)])
+            let sut = KeyboardHeightProvider.bannerHeight(for: iPhone, traitCollection: traits, legacy: false)
+            XCTAssertEqual((sut * scale).rounded(), sut * scale, accuracy: 0.0001, "\(scale)x")
+            XCTAssertEqual(sut, 44.33, accuracy: 0.5, "\(scale)x")
+        }
     }
 
     func test_keyHeight_followsTheScreenWidth_onIPhones() {
