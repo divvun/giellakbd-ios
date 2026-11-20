@@ -33,8 +33,8 @@ struct DuoKeyboardHeightTests {
 
     @Test("Unfolded inner display uses the system keyboard's key sizes plus the banner")
     func unfoldedInnerDisplay() {
-        let portrait: CGFloat = 43.33 + 8 + 4 * 46 + 3 * 14 + 3
-        let landscape: CGFloat = 43.33 + 6 + 4 * 39 + 3 * 13 + 4
+        let portrait: CGFloat = 38 + 8 + 4 * 46 + 3 * 14 + 3
+        let landscape: CGFloat = 38 + 6 + 4 * 39 + 3 * 13 + 4
         #expect(abs(height(screenSize: Self.innerPortrait, legacy: false) - portrait) < 0.001)
         #expect(abs(height(screenSize: Self.innerLandscape, legacy: false) - landscape) < 0.001)
     }
