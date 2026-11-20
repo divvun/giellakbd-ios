@@ -3,14 +3,10 @@ import UIKit
 final class SpellBannerCell: UICollectionViewCell {
     private let titleLabel = UILabel()
 
-    private var topConstraint: NSLayoutConstraint!
-    private var bottomConstraint: NSLayoutConstraint!
     private var heightConstraint: NSLayoutConstraint!
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        topConstraint = titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor)
-        bottomConstraint = titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         heightConstraint = contentView.heightAnchor.constraint(equalToConstant: 0)
 
         // Build the view hierarchy and constraints once. `configure(theme:)` runs on every reload,
@@ -20,8 +16,8 @@ final class SpellBannerCell: UICollectionViewCell {
         contentView.fill(superview: self)
         contentView.addSubview(titleLabel)
 
-        topConstraint.isActive = true
-        bottomConstraint.isActive = true
+        // Centred rather than inset from the top and bottom, so the text keeps its size in a short banner.
+        titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).enable()
         titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).enable()
         titleLabel.textAlignment = .center
 
@@ -30,8 +26,6 @@ final class SpellBannerCell: UICollectionViewCell {
 
     func configure(theme: Theme) {
         isHidden = false
-        topConstraint.constant = theme.bannerVerticalMargin
-        bottomConstraint.constant = -theme.bannerVerticalMargin
         titleLabel.font = theme.bannerFont
         titleLabel.textColor = theme.bannerTextColor
     }

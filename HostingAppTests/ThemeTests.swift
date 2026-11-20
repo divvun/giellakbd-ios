@@ -94,6 +94,28 @@ final class ThemeTests: XCTestCase {
         XCTAssertEqual(keyArea(duoOuter).keyHeight, 45)
     }
 
+    func test_bannerHeight_putsTheTopOfTheKeyboardWhereTheSystemKeyboardsIs() {
+        func banner(_ context: DeviceContext, traits: UITraitCollection? = nil, legacy: Bool = false) -> CGFloat {
+            KeyboardHeightProvider.bannerHeight(for: context, traitCollection: traits ?? self.traits(for: context),
+                                                legacy: legacy)
+        }
+        let iPhone = DeviceContext(device: .iPhone17Pro, isLandscape: false)
+        XCTAssertEqual(banner(iPhone), 22)
+        XCTAssertEqual(banner(DeviceContext(device: .iPhone17ProMax, isLandscape: false)), 27)
+        XCTAssertEqual(banner(DeviceContext(device: .iPhoneSE3, isLandscape: false)), 27)
+        XCTAssertEqual(banner(DeviceContext(device: .iPhone17Pro, isLandscape: true)), 44)
+        XCTAssertEqual(banner(DeviceContext(device: .iPhoneDuo, isLandscape: false, screenSize: Self.duoInner)), 31)
+        XCTAssertEqual(banner(DeviceContext(device: .iPhoneDuo, isLandscape: false, screenSize: Self.duoOuter)), 39)
+
+        // Unchanged on iPad, where the system shows its own suggestion bar above the keyboard, before iOS 26 and on
+        // devices that haven't been measured.
+        let iPad = DeviceContext(device: .iPadPro11M4, isLandscape: false)
+        XCTAssertEqual(banner(iPad), 55)
+        XCTAssertEqual(banner(iPad, traits: phoneTraits), 48)
+        XCTAssertEqual(banner(iPhone, legacy: true), 48)
+        XCTAssertEqual(banner(DeviceContext(device: .iPhone8Plus, isLandscape: false)), 48)
+    }
+
     func test_keyHeight_followsTheScreenWidth_onIPhones() {
         // iPhone 11 is a 6.1-inch iPhone like iPhone 17, but 414 pt wide, and its system keyboard has the taller keys.
         let iPhone11 = DeviceContext(device: .iPhone11, isLandscape: false, screenSize: CGSize(width: 414, height: 896))

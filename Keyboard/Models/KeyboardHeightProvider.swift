@@ -79,7 +79,7 @@ struct KeyboardHeightProvider {
         let rowCount = rowCount ?? normalRowCount
         let startsWithNumberRow = startsWithNumberRow ?? deviceContext.isLargeIPad
         let keyArea = keyArea(for: deviceContext, traitCollection: traitCollection, legacy: legacy)
-        let height = bannerHeight(for: deviceContext, traitCollection: traitCollection)
+        let height = bannerHeight(for: deviceContext, traitCollection: traitCollection, legacy: legacy)
             + keyArea.height(rowCount: rowCount, startsWithNumberRow: startsWithNumberRow)
 
         guard rowCount > normalRowCount else {
@@ -89,8 +89,46 @@ struct KeyboardHeightProvider {
     }
 
     /// Height of the banner above the keys.
-    static func bannerHeight(for deviceContext: DeviceContext, traitCollection: UITraitCollection) -> CGFloat {
+    ///
+    /// On iOS 26 and later, where the system keyboard has been measured, the banner puts the top of the keyboard where
+    /// the system keyboard's is. Elsewhere it is the banner the height table was made for.
+    static func bannerHeight(for deviceContext: DeviceContext, traitCollection: UITraitCollection,
+                             legacy: Bool = !iOSVersion.isIOS26OrNewer) -> CGFloat {
+        if !legacy, let measured = measuredBannerHeight(for: deviceContext, traitCollection: traitCollection) {
+            return measured
+        }
+        return tableBannerHeight(for: deviceContext, traitCollection: traitCollection)
+    }
+
+    /// The banner included in the height table's heights.
+    private static func tableBannerHeight(for deviceContext: DeviceContext,
+                                          traitCollection: UITraitCollection) -> CGFloat {
         deviceContext.shouldUseIPadLayout(traitCollection: traitCollection) ? 55 : 48
+    }
+
+    /// The banner that puts the top of the keyboard where the system keyboard's is, on iOS 26 and later, or `nil` where
+    /// that hasn't been measured.
+    ///
+    /// The system draws 17.33 pt of the keyboard's background above the extension's view in portrait, so the banner is
+    /// shorter than the system keyboard's suggestion bar looks. On iPad the system shows its own suggestion bar above the
+    /// extension, so the banner keeps its height there. On iPhones narrower than 414 pt the bottom row ends 4 pt above
+    /// the system keyboard's, so the banner is that much shorter to keep the top of the keyboard in place.
+    private static func measuredBannerHeight(for deviceContext: DeviceContext,
+                                             traitCollection: UITraitCollection) -> CGFloat? {
+        guard deviceContext.isPhone, !deviceContext.shouldUseIPadLayout(traitCollection: traitCollection) else {
+            return nil
+        }
+        if deviceContext.device.realDevice == .iPhoneDuo {
+            return isDuoInnerDisplay(deviceContext) ? 31 : 39
+        }
+        let isHomeButtonPhone = !deviceContext.device.hasRoundedDisplayCorners && deviceContext.screenInches < 5
+        guard deviceContext.hasSystemBarBelowKeyboard || isHomeButtonPhone else {
+            return nil
+        }
+        if deviceContext.isLandscape {
+            return 44
+        }
+        return isHomeButtonPhone || isWidePhone(deviceContext) ? 27 : 22
     }
 
     /// Sizes of the key area for the device's usual number of rows.
@@ -190,7 +228,7 @@ struct KeyboardHeightProvider {
                                       legacy: Bool) -> KeyAreaMetrics {
         let heights = heights(for: deviceContext, traitCollection: traitCollection)
         let tableHeight = deviceContext.isLandscape ? heights.landscape : heights.portrait
-        let height = tableHeight - bannerHeight(for: deviceContext, traitCollection: traitCollection)
+        let height = tableHeight - tableBannerHeight(for: deviceContext, traitCollection: traitCollection)
         let margin = keyMargin(for: deviceContext, traitCollection: traitCollection, legacy: legacy)
         let rows = CGFloat(normalRowCount(for: deviceContext))
         return KeyAreaMetrics(keyHeight: (height - 2 * margin * rows) / rows,

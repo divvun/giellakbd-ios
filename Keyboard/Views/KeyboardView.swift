@@ -796,7 +796,7 @@ final internal class KeyboardView: UIView,
         // The outermost keys' cells also take the side insets, so touches near the edges still land on a key.
         // A row is kept a hair narrower than the view so rounding never makes it too wide and wraps its last key.
         let sideInset = theme.keyArea.sideInset
-        let unitWidth = (bounds.size.width - 0.01 - 2 * sideInset) / rowNumberOfUnits[indexPath.section]
+        let unitWidth = max(bounds.size.width - 0.01 - 2 * sideInset, 0) / rowNumberOfUnits[indexPath.section]
         var width = key.size.width * unitWidth
         if indexPath.item == 0 {
             width += sideInset

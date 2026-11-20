@@ -21,8 +21,12 @@ final class SpellBannerSeparatorView: UICollectionReusableView {
     private func setupSeparatorLine() {
         separatorLine.translatesAutoresizingMaskIntoConstraints = false
         addSubview(separatorLine)
-        let paddingY: CGFloat = 12
-        separatorLine.fill(superview: self, margins: UIEdgeInsets(top: paddingY, left: 0, bottom: paddingY, right: 0))
+        // As tall as the system keyboard's separators where the banner has room, otherwise as tall as the banner.
+        separatorLine.leadingAnchor.constraint(equalTo: leadingAnchor).enable()
+        separatorLine.trailingAnchor.constraint(equalTo: trailingAnchor).enable()
+        separatorLine.centerYAnchor.constraint(equalTo: centerYAnchor).enable()
+        separatorLine.heightAnchor.constraint(lessThanOrEqualTo: heightAnchor).enable()
+        separatorLine.heightAnchor.constraint(equalToConstant: 24).enable(priority: .defaultHigh)
         separatorLine.backgroundColor = theme.bannerSeparatorColor
     }
 

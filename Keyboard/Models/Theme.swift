@@ -52,7 +52,6 @@ struct Theme {
     let bannerSeparatorColor: UIColor
     let bannerTextColor: UIColor
     let bannerHorizontalMargin: CGFloat
-    let bannerVerticalMargin: CGFloat
     let bannerHeight: CGFloat
 
     // Layout
@@ -162,8 +161,8 @@ private struct ThemeFactory {
             bannerSeparatorColor: colors.bannerSeparator,
             bannerTextColor: colors.bannerText,
             bannerHorizontalMargin: 16.0,
-            bannerVerticalMargin: 8.0,
-            bannerHeight: KeyboardHeightProvider.bannerHeight(for: device, traitCollection: traits),
+            bannerHeight: KeyboardHeightProvider.bannerHeight(for: device, traitCollection: traits,
+                                                              legacy: style.isLegacy),
 
             // Layout
             altLabelTopAnchorConstant: metrics.altLabelTop,
