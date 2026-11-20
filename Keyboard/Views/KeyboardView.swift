@@ -163,6 +163,14 @@ final internal class KeyboardView: UIView,
         }
     }
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        // Rows are rounded to whole pixels, so they change with the scale, e.g. when the view first joins a window.
+        if previousTraitCollection?.displayScale != traitCollection.displayScale {
+            update()
+        }
+    }
+
     private func ensureValidKeyView(at indexPath: IndexPath) -> Bool {
         guard collectionView.cellForItem(at: indexPath)?.subviews.first?.subviews.first?.subviews.first != nil else {
             return false
@@ -719,8 +727,13 @@ final internal class KeyboardView: UIView,
     // MARK: - CollectionView
 
     private var rowNumberOfUnits: [CGFloat]!
+    /// The rows' heights and margins, rebuilt with the rows rather than for every cell. It depends on the theme, the
+    /// page, the height and the display scale, and each of those changes runs `update()`.
+    private var rowLayout: KeyRowLayout!
 
     private func calculateRows() {
+        rowLayout = makeRowLayout()
+
         var mutableWidths = [CGFloat]()
 
         for row in currentPage {
@@ -769,7 +782,6 @@ final internal class KeyboardView: UIView,
         }
         let key = currentPage[indexPath.section][indexPath.row]
 
-        let rowLayout = self.rowLayout
         let vertical = rowLayout.keyMargins(forRow: indexPath.section)
         let isFirst = indexPath.item == 0
         let isLast = indexPath.item == currentPage[indexPath.section].count - 1
@@ -808,7 +820,7 @@ final internal class KeyboardView: UIView,
         return CGSize(width: width, height: height)
     }
 
-    private var rowLayout: KeyRowLayout {
+    private func makeRowLayout() -> KeyRowLayout {
         KeyRowLayout(metrics: theme.keyArea, rowCount: currentPage.count, startsWithNumberRow: startsWithNumberRow,
                      height: bounds.size.height, scale: traitCollection.displayScale)
     }
