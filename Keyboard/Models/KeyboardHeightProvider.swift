@@ -107,13 +107,26 @@ struct KeyboardHeightProvider {
     /// apps on iPad, the banner is the height table's and the separators are centred in it.
     static func bannerSeparatorBottomInset(for deviceContext: DeviceContext, traitCollection: UITraitCollection,
                                            legacy: Bool = !iOSVersion.isIOS26OrNewer) -> CGFloat? {
-        guard !legacy, measuredBannerHeight(for: deviceContext, traitCollection: traitCollection) != nil else {
+        if legacy {
+            // Before iOS 26 the system keyboard's separators also end 15 pt above the top row, measured on a 390 pt
+            // wide iPhone in portrait. The banner is the height table's, so the inset makes up the rest of the 15 pt
+            // below the top row's inset, to the nearest point.
+            guard deviceContext.isPhone, !deviceContext.shouldUseIPadLayout(traitCollection: traitCollection) else {
+                return nil
+            }
+            let keyArea = fittedKeyArea(for: deviceContext, traitCollection: traitCollection, legacy: true)
+            return (legacySeparatorGapAboveTopRow - keyArea.topInset).rounded()
+        }
+        guard measuredBannerHeight(for: deviceContext, traitCollection: traitCollection) != nil else {
             return nil
         }
         // The system keyboard's separators end 15 pt above the top row, which in portrait is the top row's 8 pt inset
         // plus this.
         return 7
     }
+
+    /// Space between the bottom of the system keyboard's banner separators and its top row's keys, before iOS 26.
+    private static let legacySeparatorGapAboveTopRow: CGFloat = 15
 
     /// The banner included in the height table's heights.
     private static func tableBannerHeight(for deviceContext: DeviceContext,

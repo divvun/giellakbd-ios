@@ -167,16 +167,21 @@ final class ThemeTests: XCTestCase {
         }
     }
 
-    func test_bannerSeparators_lineUpWithTheSystemKeyboards_onlyWhereTheBannerDoes() {
+    func test_bannerSeparators_lineUpWithTheSystemKeyboards_onIPhones() {
         let iPhone = DeviceContext(device: .iPhone17Pro, isLandscape: false)
         let duoInner = DeviceContext(device: .iPhoneDuo, isLandscape: false, screenSize: Self.duoInner)
         let iPad = DeviceContext(device: .iPadPro11M4, isLandscape: false)
         let cases: [(String, DeviceContext, UITraitCollection, Bool, CGFloat?)] = [
             ("iPhone 17 Pro", iPhone, phoneTraits, false, 7),
             ("iPhone Duo inner display", duoInner, phoneTraits, false, 7),
-            ("iPhone 17 Pro before iOS 26", iPhone, phoneTraits, true, nil),
+            // Before iOS 26, 15 pt above the top row, less its 6 pt inset in portrait and 3.5 pt in landscape.
+            ("iPhone 17 Pro before iOS 26", iPhone, phoneTraits, true, 9),
+            ("iPhone 17 Pro before iOS 26, landscape", DeviceContext(device: .iPhone17Pro, isLandscape: true),
+             phoneTraits, true, 12),
             ("iPad", iPad, padTraits, false, nil),
+            ("iPad before iOS 26", iPad, padTraits, true, nil),
             ("iPhone app on iPad", iPad, phoneTraits, false, nil),
+            ("iPhone app on iPad before iOS 26", iPad, phoneTraits, true, nil),
             ("unrecognised device", DeviceContext(device: .unknown("iPhone99,1"), isLandscape: false), phoneTraits,
              false, nil)
         ]
