@@ -162,9 +162,8 @@ private struct ThemeFactory {
             // Banner
             bannerBackgroundColor: colors.background,
             bannerSeparatorColor: colors.bannerSeparator,
-            // On iPhone the system keyboard's separators end 15 pt above the top row, which is the top row's 8 pt
-            // inset plus this.
-            bannerSeparatorBottomInset: style.isLegacy || device.shouldUseIPadLayout(traitCollection: traits) ? nil : 7,
+            bannerSeparatorBottomInset: KeyboardHeightProvider.bannerSeparatorBottomInset(
+                for: device, traitCollection: traits, legacy: style.isLegacy),
             bannerTextColor: colors.bannerText,
             bannerHorizontalMargin: 16.0,
             bannerHeight: KeyboardHeightProvider.bannerHeight(for: device, traitCollection: traits,

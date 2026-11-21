@@ -166,6 +166,25 @@ final class ThemeTests: XCTestCase {
         }
     }
 
+    func test_bannerSeparators_lineUpWithTheSystemKeyboards_onlyWhereTheBannerDoes() {
+        let iPhone = DeviceContext(device: .iPhone17Pro, isLandscape: false)
+        let duoInner = DeviceContext(device: .iPhoneDuo, isLandscape: false, screenSize: Self.duoInner)
+        let iPad = DeviceContext(device: .iPadPro11M4, isLandscape: false)
+        let cases: [(String, DeviceContext, UITraitCollection, Bool, CGFloat?)] = [
+            ("iPhone 17 Pro", iPhone, phoneTraits, false, 7),
+            ("iPhone Duo inner display", duoInner, phoneTraits, false, 7),
+            ("iPhone 17 Pro before iOS 26", iPhone, phoneTraits, true, nil),
+            ("iPad", iPad, padTraits, false, nil),
+            ("iPhone app on iPad", iPad, phoneTraits, false, nil),
+            ("unrecognised device", DeviceContext(device: .unknown("iPhone99,1"), isLandscape: false), phoneTraits,
+             false, nil)
+        ]
+        for (name, context, traits, legacy, expected) in cases {
+            XCTAssertEqual(KeyboardHeightProvider.bannerSeparatorBottomInset(for: context, traitCollection: traits,
+                                                                             legacy: legacy), expected, name)
+        }
+    }
+
     func test_keyArea_beforeIOS26_hasTheKeyMarginAboveAndBelowTheRows() {
         let sut = keyArea(DeviceContext(device: .iPhone17Pro, isLandscape: false), legacy: true)
         XCTAssertEqual(sut.topInset, 6)

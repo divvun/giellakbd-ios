@@ -102,6 +102,19 @@ struct KeyboardHeightProvider {
         return tableBannerHeight(for: deviceContext, traitCollection: traitCollection)
     }
 
+    /// Space between the banner's separators and its bottom edge, where they line up with the system keyboard's, or
+    /// `nil` to centre them. Only where the banner itself matches the system keyboard's: elsewhere, such as for iPhone
+    /// apps on iPad, the banner is the height table's and the separators are centred in it.
+    static func bannerSeparatorBottomInset(for deviceContext: DeviceContext, traitCollection: UITraitCollection,
+                                           legacy: Bool = !iOSVersion.isIOS26OrNewer) -> CGFloat? {
+        guard !legacy, measuredBannerHeight(for: deviceContext, traitCollection: traitCollection) != nil else {
+            return nil
+        }
+        // The system keyboard's separators end 15 pt above the top row, which in portrait is the top row's 8 pt inset
+        // plus this.
+        return 7
+    }
+
     /// The banner included in the height table's heights.
     private static func tableBannerHeight(for deviceContext: DeviceContext,
                                           traitCollection: UITraitCollection) -> CGFloat {
