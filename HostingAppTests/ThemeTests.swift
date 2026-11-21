@@ -146,7 +146,8 @@ final class ThemeTests: XCTestCase {
 
     func test_height_isTheBannerPlusTheKeyArea() {
         for (name, context, _) in measuredDevices {
-            let banner = KeyboardHeightProvider.bannerHeight(for: context, traitCollection: traits(for: context))
+            let banner = KeyboardHeightProvider.bannerHeight(for: context, traitCollection: traits(for: context),
+                                                             legacy: false)
             let rows = context.isLargeIPad ? 5 : 4
             let keys = keyArea(context).height(rowCount: rows, startsWithNumberRow: context.isLargeIPad)
             XCTAssertEqual(height(context), banner + keys, name)
