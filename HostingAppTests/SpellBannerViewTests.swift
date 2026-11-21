@@ -90,6 +90,35 @@ final class SpellBannerViewTests: XCTestCase {
         }
     }
 
+    func test_separators_useTheBannersTheme() {
+        let dark = Theme.current(for: UITraitCollection(traitsFrom: [
+            UITraitCollection(userInterfaceIdiom: .phone),
+            UITraitCollection(userInterfaceStyle: .dark)
+        ]), device: .current)
+        sut.updateTheme(dark)
+        sut.setBannerItems([human("hi", false), normal("ho")])
+        layout()
+        let separators = separatorViews()
+        XCTAssertFalse(separators.isEmpty)
+        for separator in separators {
+            XCTAssertEqual(separator.backgroundColor, dark.bannerBackgroundColor)
+            XCTAssertEqual(separator.subviews.first?.backgroundColor, dark.bannerSeparatorColor)
+        }
+    }
+
+    func test_separators_lineUpWhereTheThemeSays() throws {
+        sut.setBannerItems([human("hi", false), normal("ho")])
+        layout()
+        let theme = Theme.current(for: lightTraits, device: .current)
+        let line = try XCTUnwrap(separatorViews().first?.subviews.first)
+        XCTAssertEqual(line.frame.height, SpellBannerCell.separatorHeight)
+        if let bottomInset = theme.bannerSeparatorBottomInset {
+            XCTAssertEqual(line.frame.maxY, 48 - bottomInset)
+        } else {
+            XCTAssertEqual(line.frame.midY, 24)
+        }
+    }
+
     func test_selectingItem_notifiesDelegate() {
         let delegate = DelegateSpy()
         sut.delegate = delegate
@@ -214,6 +243,10 @@ final class SpellBannerViewTests: XCTestCase {
 
     private func cells() -> [UICollectionViewCell] {
         collectionView.indexPathsForVisibleItems.sorted().compactMap { collectionView.cellForItem(at: $0) }
+    }
+
+    private func separatorViews() -> [SpellBannerSeparatorView] {
+        collectionView.subviews.compactMap { $0 as? SpellBannerSeparatorView }
     }
 
     private func texts() -> [String] {

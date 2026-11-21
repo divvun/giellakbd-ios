@@ -63,7 +63,7 @@ public final class SpellBannerView: UIView, BannerView {
     }
 
     private func makeCollectionViewLayout() -> UICollectionViewFlowLayout {
-        let flowLayout = SpellBannerFlowLayout()
+        let flowLayout = SpellBannerFlowLayout(theme: theme)
         flowLayout.estimatedItemSize = CGSize(width: 1, height: 1)
         flowLayout.scrollDirection = .horizontal
         flowLayout.minimumInteritemSpacing = 1
