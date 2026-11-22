@@ -39,7 +39,7 @@ final class KeyView: UIView {
                     : theme.regularKeyColor
 
                 let activeColor: UIColor
-                if theme.isLegacy {
+                if theme.design == .iOS18 {
                     activeColor = key.type.isSpecialKeyStyle
                         ? theme.regularKeyColor
                         : theme.specialKeyColor
@@ -341,7 +341,7 @@ final class KeyView: UIView {
 
     private func setupReturnKey(_ page: KeyboardPage, _ traits: UITraitCollection, _ string: String) {
         // Before iOS 26 the large iPad keyboard labels its return key with text.
-        if theme.isLegacy && device.isLargeIPad {
+        if theme.design == .iOS18 && device.isLargeIPad {
             text(string, page: page)
         } else {
             sfSymbol(named: "return", traits: traits)

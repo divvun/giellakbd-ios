@@ -84,7 +84,7 @@ open class KeyboardViewController: UIInputViewController {
             traitCollection: traitCollection,
             rowCount: keyboardDefinition.currentDeviceLayout?.normal.count,
             startsWithNumberRow: keyboardDefinition.currentDeviceLayout?.normal.startsWithNumberRow,
-            legacy: theme.isLegacy
+            design: theme.design
         )
 
         if !bannerVisible {

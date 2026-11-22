@@ -67,20 +67,20 @@ struct KeyboardHeightProvider {
     ///   - rowCount: Rows in the layout. Defaults to the usual number for the device.
     ///   - startsWithNumberRow: Whether the layout's first row is a number row. Defaults to whether the device's
     ///     layouts usually have one: those for large iPads do.
-    ///   - legacy: Whether to size for the keyboard before iOS 26. The provider never checks the running system
-    ///     itself: the app passes `Theme.isLegacy`, so the height is for the same keyboard as the theme.
+    ///   - design: The system keyboard to size for. The provider never checks the running system itself: the app
+    ///     passes `Theme.design`, so the height is for the same keyboard as the theme.
     static func height(
         for deviceContext: DeviceContext,
         traitCollection: UITraitCollection,
         rowCount: Int? = nil,
         startsWithNumberRow: Bool? = nil,
-        legacy: Bool
+        design: KeyboardDesign
     ) -> CGFloat {
         let normalRowCount = self.normalRowCount(for: deviceContext)
         let rowCount = rowCount ?? normalRowCount
         let startsWithNumberRow = startsWithNumberRow ?? deviceContext.isLargeIPad
-        let keyArea = keyArea(for: deviceContext, traitCollection: traitCollection, legacy: legacy)
-        let height = bannerHeight(for: deviceContext, traitCollection: traitCollection, legacy: legacy)
+        let keyArea = keyArea(for: deviceContext, traitCollection: traitCollection, design: design)
+        let height = bannerHeight(for: deviceContext, traitCollection: traitCollection, design: design)
             + keyArea.height(rowCount: rowCount, startsWithNumberRow: startsWithNumberRow)
 
         guard rowCount > normalRowCount else {
@@ -94,8 +94,8 @@ struct KeyboardHeightProvider {
     /// On iOS 26 and later, where the system keyboard has been measured, the banner puts the top of the keyboard where
     /// the system keyboard's is. Elsewhere it is the banner the height table was made for.
     static func bannerHeight(for deviceContext: DeviceContext, traitCollection: UITraitCollection,
-                             legacy: Bool) -> CGFloat {
-        if !legacy, let measured = measuredBannerHeight(for: deviceContext, traitCollection: traitCollection) {
+                             design: KeyboardDesign) -> CGFloat {
+        if design == .iOS26, let measured = measuredBannerHeight(for: deviceContext, traitCollection: traitCollection) {
             // Whole pixels, so the keys below the banner start on a pixel boundary.
             let scale = traitCollection.displayScale
             return scale > 0 ? (measured * scale).rounded() / scale : measured
@@ -107,16 +107,16 @@ struct KeyboardHeightProvider {
     /// `nil` to centre them. Only where the banner itself matches the system keyboard's: elsewhere, such as for iPhone
     /// apps on iPad, the banner is the height table's and the separators are centred in it.
     static func bannerSeparatorBottomInset(for deviceContext: DeviceContext, traitCollection: UITraitCollection,
-                                           legacy: Bool) -> CGFloat? {
-        if legacy {
+                                           design: KeyboardDesign) -> CGFloat? {
+        if design == .iOS18 {
             // Before iOS 26 the system keyboard's separators also end 15 pt above the top row, measured on a 390 pt
             // wide iPhone in portrait. The banner is the height table's, so the inset makes up the rest of the 15 pt
             // below the top row's inset, to the nearest point.
             guard deviceContext.isPhone, !deviceContext.shouldUseIPadLayout(traitCollection: traitCollection) else {
                 return nil
             }
-            let keyArea = fittedKeyArea(for: deviceContext, traitCollection: traitCollection, legacy: true)
-            return (legacySeparatorGapAboveTopRow - keyArea.topInset).rounded()
+            let keyArea = fittedKeyArea(for: deviceContext, traitCollection: traitCollection, design: .iOS18)
+            return (iOS18SeparatorGapAboveTopRow - keyArea.topInset).rounded()
         }
         guard measuredBannerHeight(for: deviceContext, traitCollection: traitCollection) != nil else {
             return nil
@@ -127,7 +127,7 @@ struct KeyboardHeightProvider {
     }
 
     /// Space between the bottom of the system keyboard's banner separators and its top row's keys, before iOS 26.
-    private static let legacySeparatorGapAboveTopRow: CGFloat = 15
+    private static let iOS18SeparatorGapAboveTopRow: CGFloat = 15
 
     /// The banner included in the height table's heights.
     private static func tableBannerHeight(for deviceContext: DeviceContext,
@@ -169,11 +169,11 @@ struct KeyboardHeightProvider {
     /// On iOS 26 and later, uses the system keyboard's sizes where they have been measured. Elsewhere, fits the rows
     /// into the key area of the height table, with the key margin above and below each row as before.
     static func keyArea(for deviceContext: DeviceContext, traitCollection: UITraitCollection,
-                        legacy: Bool) -> KeyAreaMetrics {
-        if !legacy, let measured = measuredKeyArea(for: deviceContext, traitCollection: traitCollection) {
+                        design: KeyboardDesign) -> KeyAreaMetrics {
+        if design == .iOS26, let measured = measuredKeyArea(for: deviceContext, traitCollection: traitCollection) {
             return measured
         }
-        return fittedKeyArea(for: deviceContext, traitCollection: traitCollection, legacy: legacy)
+        return fittedKeyArea(for: deviceContext, traitCollection: traitCollection, design: design)
     }
 
     /// Rows in a layout for the device: 4, or 5 on large iPads, whose layouts start with a number row.
@@ -257,11 +257,11 @@ struct KeyboardHeightProvider {
     /// The key area of the height table, shared equally between the rows, with the key margin on either side of
     /// every row. Key heights may be fractional here; the row layout rounds them to whole pixels.
     private static func fittedKeyArea(for deviceContext: DeviceContext, traitCollection: UITraitCollection,
-                                      legacy: Bool) -> KeyAreaMetrics {
+                                      design: KeyboardDesign) -> KeyAreaMetrics {
         let heights = heights(for: deviceContext, traitCollection: traitCollection)
         let tableHeight = deviceContext.isLandscape ? heights.landscape : heights.portrait
         let height = tableHeight - tableBannerHeight(for: deviceContext, traitCollection: traitCollection)
-        let margin = keyMargin(for: deviceContext, traitCollection: traitCollection, legacy: legacy)
+        let margin = keyMargin(for: deviceContext, traitCollection: traitCollection, design: design)
         let rows = CGFloat(normalRowCount(for: deviceContext))
         return KeyAreaMetrics(keyHeight: (height - 2 * margin * rows) / rows,
                               rowGap: 2 * margin, topInset: margin, bottomInset: margin)
@@ -269,7 +269,7 @@ struct KeyboardHeightProvider {
 
     /// Space above and below each row's keys in the fitted key area.
     private static func keyMargin(for deviceContext: DeviceContext, traitCollection: UITraitCollection,
-                                  legacy: Bool) -> CGFloat {
+                                  design: KeyboardDesign) -> CGFloat {
         if deviceContext.shouldUseIPadLayout(traitCollection: traitCollection) {
             if deviceContext.isLargeLandscape { return 4.0 }
             if deviceContext.isSmallOrMediumLandscape { return 6.0 }
@@ -277,7 +277,7 @@ struct KeyboardHeightProvider {
             return 5.0
         }
         if deviceContext.isLandscape { return 3.5 }
-        return legacy ? 6.0 : 5.5
+        return design == .iOS18 ? 6.0 : 5.5
     }
 
     /// Tallest the keyboard gets for layouts with more rows than usual: the height of the table, banner included,

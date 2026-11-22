@@ -40,14 +40,15 @@ final class ThemeTests: XCTestCase {
     }
 
     private func keyArea(_ context: DeviceContext, traits: UITraitCollection? = nil,
-                         legacy: Bool = false) -> KeyAreaMetrics {
-        KeyboardHeightProvider.keyArea(for: context, traitCollection: traits ?? self.traits(for: context), legacy: legacy)
+                         design: KeyboardDesign = .iOS26) -> KeyAreaMetrics {
+        KeyboardHeightProvider.keyArea(for: context, traitCollection: traits ?? self.traits(for: context),
+                                       design: design)
     }
 
     private func height(_ context: DeviceContext, traits: UITraitCollection? = nil, rowCount: Int? = nil,
-                        legacy: Bool = false) -> CGFloat {
+                        design: KeyboardDesign = .iOS26) -> CGFloat {
         KeyboardHeightProvider.height(for: context, traitCollection: traits ?? self.traits(for: context),
-                                      rowCount: rowCount, legacy: legacy)
+                                      rowCount: rowCount, design: design)
     }
 
     private static let duoInner = CGSize(width: 669, height: 951)
@@ -104,9 +105,10 @@ final class ThemeTests: XCTestCase {
     }
 
     func test_bannerHeight_putsTheTopOfTheKeyboardWhereTheSystemKeyboardsIs() {
-        func banner(_ context: DeviceContext, traits: UITraitCollection? = nil, legacy: Bool = false) -> CGFloat {
+        func banner(_ context: DeviceContext, traits: UITraitCollection? = nil,
+                    design: KeyboardDesign = .iOS26) -> CGFloat {
             KeyboardHeightProvider.bannerHeight(for: context, traitCollection: traits ?? self.traits(for: context),
-                                                legacy: legacy)
+                                                design: design)
         }
         let iPhone = DeviceContext(device: .iPhone17Pro, isLandscape: false)
         XCTAssertEqual(banner(iPhone), 39.33)
@@ -121,7 +123,7 @@ final class ThemeTests: XCTestCase {
         let iPad = DeviceContext(device: .iPadPro11M4, isLandscape: false)
         XCTAssertEqual(banner(iPad), 55)
         XCTAssertEqual(banner(iPad, traits: phoneTraits), 48)
-        XCTAssertEqual(banner(iPhone, legacy: true), 48)
+        XCTAssertEqual(banner(iPhone, design: .iOS18), 48)
         XCTAssertEqual(banner(DeviceContext(device: .iPhone8Plus, isLandscape: false)), 48)
     }
 
@@ -129,7 +131,7 @@ final class ThemeTests: XCTestCase {
         let iPhone = DeviceContext(device: .iPhone11, isLandscape: false, screenSize: CGSize(width: 414, height: 896))
         for scale: CGFloat in [2, 3] {
             let traits = UITraitCollection(traitsFrom: [phoneTraits, UITraitCollection(displayScale: scale)])
-            let sut = KeyboardHeightProvider.bannerHeight(for: iPhone, traitCollection: traits, legacy: false)
+            let sut = KeyboardHeightProvider.bannerHeight(for: iPhone, traitCollection: traits, design: .iOS26)
             XCTAssertEqual((sut * scale).rounded(), sut * scale, accuracy: 0.0001, "\(scale)x")
             XCTAssertEqual(sut, 44.33, accuracy: 0.5, "\(scale)x")
         }
@@ -156,7 +158,7 @@ final class ThemeTests: XCTestCase {
     func test_height_isTheBannerPlusTheKeyArea() {
         for (name, context, _) in measuredDevices {
             let banner = KeyboardHeightProvider.bannerHeight(for: context, traitCollection: traits(for: context),
-                                                             legacy: false)
+                                                             design: .iOS26)
             let rows = context.isLargeIPad ? 5 : 4
             let keys = keyArea(context).height(rowCount: rows, startsWithNumberRow: context.isLargeIPad)
             XCTAssertEqual(height(context), banner + keys, name)
@@ -172,7 +174,7 @@ final class ThemeTests: XCTestCase {
             ("unrecognised device", DeviceContext(device: .unknown("iPhone99,1"), isLandscape: false), nil)
         ]
         for (name, context, traits) in cases {
-            XCTAssertEqual(height(context, traits: traits), height(context, traits: traits, legacy: true), name)
+            XCTAssertEqual(height(context, traits: traits), height(context, traits: traits, design: .iOS18), name)
         }
     }
 
@@ -180,28 +182,28 @@ final class ThemeTests: XCTestCase {
         let iPhone = DeviceContext(device: .iPhone17Pro, isLandscape: false)
         let duoInner = DeviceContext(device: .iPhoneDuo, isLandscape: false, screenSize: Self.duoInner)
         let iPad = DeviceContext(device: .iPadPro11M4, isLandscape: false)
-        let cases: [(String, DeviceContext, UITraitCollection, Bool, CGFloat?)] = [
-            ("iPhone 17 Pro", iPhone, phoneTraits, false, 7),
-            ("iPhone Duo inner display", duoInner, phoneTraits, false, 7),
+        let cases: [(String, DeviceContext, UITraitCollection, KeyboardDesign, CGFloat?)] = [
+            ("iPhone 17 Pro", iPhone, phoneTraits, .iOS26, 7),
+            ("iPhone Duo inner display", duoInner, phoneTraits, .iOS26, 7),
             // Before iOS 26, 15 pt above the top row, less its 6 pt inset in portrait and 3.5 pt in landscape.
-            ("iPhone 17 Pro before iOS 26", iPhone, phoneTraits, true, 9),
+            ("iPhone 17 Pro before iOS 26", iPhone, phoneTraits, .iOS18, 9),
             ("iPhone 17 Pro before iOS 26, landscape", DeviceContext(device: .iPhone17Pro, isLandscape: true),
-             phoneTraits, true, 12),
-            ("iPad", iPad, padTraits, false, nil),
-            ("iPad before iOS 26", iPad, padTraits, true, nil),
-            ("iPhone app on iPad", iPad, phoneTraits, false, nil),
-            ("iPhone app on iPad before iOS 26", iPad, phoneTraits, true, nil),
+             phoneTraits, .iOS18, 12),
+            ("iPad", iPad, padTraits, .iOS26, nil),
+            ("iPad before iOS 26", iPad, padTraits, .iOS18, nil),
+            ("iPhone app on iPad", iPad, phoneTraits, .iOS26, nil),
+            ("iPhone app on iPad before iOS 26", iPad, phoneTraits, .iOS18, nil),
             ("unrecognised device", DeviceContext(device: .unknown("iPhone99,1"), isLandscape: false), phoneTraits,
-             false, nil)
+             .iOS26, nil)
         ]
-        for (name, context, traits, legacy, expected) in cases {
+        for (name, context, traits, design, expected) in cases {
             XCTAssertEqual(KeyboardHeightProvider.bannerSeparatorBottomInset(for: context, traitCollection: traits,
-                                                                             legacy: legacy), expected, name)
+                                                                             design: design), expected, name)
         }
     }
 
     func test_keyArea_beforeIOS26_hasTheKeyMarginAboveAndBelowTheRows() {
-        let sut = keyArea(DeviceContext(device: .iPhone17Pro, isLandscape: false), legacy: true)
+        let sut = keyArea(DeviceContext(device: .iPhone17Pro, isLandscape: false), design: .iOS18)
         XCTAssertEqual(sut.topInset, 6)
         XCTAssertEqual(sut.bottomInset, 6)
         XCTAssertEqual(sut.rowGap, 12)
@@ -219,16 +221,16 @@ final class ThemeTests: XCTestCase {
     func test_largeIPadLayoutsWithoutANumberRow_haveFullHeightRows() {
         let largeIPad = DeviceContext(device: .iPadPro13M4, isLandscape: false)
         let withNumberRow = KeyboardHeightProvider.height(for: largeIPad, traitCollection: padTraits, rowCount: 5,
-                                                          startsWithNumberRow: true, legacy: false)
+                                                          startsWithNumberRow: true, design: .iOS26)
         let withoutNumberRow = KeyboardHeightProvider.height(for: largeIPad, traitCollection: padTraits, rowCount: 5,
-                                                             startsWithNumberRow: false, legacy: false)
+                                                             startsWithNumberRow: false, design: .iOS26)
         XCTAssertEqual(withoutNumberRow - withNumberRow, 61 - 45.5)
     }
 
     func test_extraRows_stopGrowingTheKeyboard_onSmallIPadsInLandscape() {
         // Five full-height rows would cover most of the screen, so the keyboard is capped and the keys shrink to fit.
         let iPad = DeviceContext(device: .iPadMini6, isLandscape: true)
-        let banner = KeyboardHeightProvider.bannerHeight(for: iPad, traitCollection: padTraits, legacy: false)
+        let banner = KeyboardHeightProvider.bannerHeight(for: iPad, traitCollection: padTraits, design: .iOS26)
         XCTAssertLessThan(height(iPad, rowCount: 5), banner + keyArea(iPad).height(rowCount: 5))
         XCTAssertGreaterThan(height(iPad, rowCount: 5), height(iPad, rowCount: 4))
     }
