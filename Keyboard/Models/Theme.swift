@@ -4,6 +4,10 @@ import UIKit
 // MARK: - Theme
 
 struct Theme {
+    /// Whether this theme draws the keyboard from before iOS 26. `Theme.current` decides it from the running system,
+    /// and everything else sized or drawn for one iOS version, such as the keyboard's height, takes it from here.
+    let isLegacy: Bool
+
     // Colors
     let appearance: UIKeyboardAppearance
     let regularKeyColor: UIColor
@@ -118,6 +122,8 @@ private struct ThemeFactory {
         let colors = makeColors(for: style, device: device)
 
         return Theme(
+            isLegacy: style.isLegacy,
+
             // Colors
             appearance: style.isDark ? .dark : .light,
             regularKeyColor: colors.regularKey,

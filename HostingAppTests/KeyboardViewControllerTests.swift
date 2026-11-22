@@ -412,10 +412,11 @@ final class UnrecognizedScreenSizeReportingTests: XCTestCase {
         XCTAssertEqual(reported, [])
     }
 
+    /// Sized for the keyboard before iOS 26, which always looks the device up in the height table.
     private func height(_ device: Device, isLandscape: Bool = false) -> CGFloat {
         let screen = isLandscape ? CGSize(width: 874, height: 402) : CGSize(width: 402, height: 874)
         return KeyboardHeightProvider.height(for: DeviceContext(device: device, isLandscape: isLandscape, screenSize: screen),
-                                             traitCollection: phone)
+                                             traitCollection: phone, legacy: true)
     }
 }
 

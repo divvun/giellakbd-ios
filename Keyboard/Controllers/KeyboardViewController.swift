@@ -77,12 +77,14 @@ open class KeyboardViewController: UIInputViewController {
     /// The screen size the current theme and height were computed for.
     private var lastScreenSize: CGSize?
 
+    /// For the theme's iOS version, so the height is for the same keyboard as the keys.
     private var preferredHeight: CGFloat {
         var height = KeyboardHeightProvider.height(
             for: deviceContext,
             traitCollection: traitCollection,
             rowCount: keyboardDefinition.currentDeviceLayout?.normal.count,
-            startsWithNumberRow: keyboardDefinition.currentDeviceLayout?.normal.startsWithNumberRow
+            startsWithNumberRow: keyboardDefinition.currentDeviceLayout?.normal.startsWithNumberRow,
+            legacy: theme.isLegacy
         )
 
         if !bannerVisible {

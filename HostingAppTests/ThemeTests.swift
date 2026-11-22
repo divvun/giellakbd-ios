@@ -228,7 +228,7 @@ final class ThemeTests: XCTestCase {
     func test_extraRows_stopGrowingTheKeyboard_onSmallIPadsInLandscape() {
         // Five full-height rows would cover most of the screen, so the keyboard is capped and the keys shrink to fit.
         let iPad = DeviceContext(device: .iPadMini6, isLandscape: true)
-        let banner = KeyboardHeightProvider.bannerHeight(for: iPad, traitCollection: padTraits)
+        let banner = KeyboardHeightProvider.bannerHeight(for: iPad, traitCollection: padTraits, legacy: false)
         XCTAssertLessThan(height(iPad, rowCount: 5), banner + keyArea(iPad).height(rowCount: 5))
         XCTAssertGreaterThan(height(iPad, rowCount: 5), height(iPad, rowCount: 4))
     }

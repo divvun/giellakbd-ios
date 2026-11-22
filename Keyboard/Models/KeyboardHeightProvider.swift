@@ -67,13 +67,14 @@ struct KeyboardHeightProvider {
     ///   - rowCount: Rows in the layout. Defaults to the usual number for the device.
     ///   - startsWithNumberRow: Whether the layout's first row is a number row. Defaults to whether the device's
     ///     layouts usually have one: those for large iPads do.
-    ///   - legacy: Whether to size for the keyboard before iOS 26. Defaults to the running system.
+    ///   - legacy: Whether to size for the keyboard before iOS 26. The provider never checks the running system
+    ///     itself: the app passes `Theme.isLegacy`, so the height is for the same keyboard as the theme.
     static func height(
         for deviceContext: DeviceContext,
         traitCollection: UITraitCollection,
         rowCount: Int? = nil,
         startsWithNumberRow: Bool? = nil,
-        legacy: Bool = !iOSVersion.isIOS26OrNewer
+        legacy: Bool
     ) -> CGFloat {
         let normalRowCount = self.normalRowCount(for: deviceContext)
         let rowCount = rowCount ?? normalRowCount
@@ -93,7 +94,7 @@ struct KeyboardHeightProvider {
     /// On iOS 26 and later, where the system keyboard has been measured, the banner puts the top of the keyboard where
     /// the system keyboard's is. Elsewhere it is the banner the height table was made for.
     static func bannerHeight(for deviceContext: DeviceContext, traitCollection: UITraitCollection,
-                             legacy: Bool = !iOSVersion.isIOS26OrNewer) -> CGFloat {
+                             legacy: Bool) -> CGFloat {
         if !legacy, let measured = measuredBannerHeight(for: deviceContext, traitCollection: traitCollection) {
             // Whole pixels, so the keys below the banner start on a pixel boundary.
             let scale = traitCollection.displayScale
@@ -106,7 +107,7 @@ struct KeyboardHeightProvider {
     /// `nil` to centre them. Only where the banner itself matches the system keyboard's: elsewhere, such as for iPhone
     /// apps on iPad, the banner is the height table's and the separators are centred in it.
     static func bannerSeparatorBottomInset(for deviceContext: DeviceContext, traitCollection: UITraitCollection,
-                                           legacy: Bool = !iOSVersion.isIOS26OrNewer) -> CGFloat? {
+                                           legacy: Bool) -> CGFloat? {
         if legacy {
             // Before iOS 26 the system keyboard's separators also end 15 pt above the top row, measured on a 390 pt
             // wide iPhone in portrait. The banner is the height table's, so the inset makes up the rest of the 15 pt
@@ -168,7 +169,7 @@ struct KeyboardHeightProvider {
     /// On iOS 26 and later, uses the system keyboard's sizes where they have been measured. Elsewhere, fits the rows
     /// into the key area of the height table, with the key margin above and below each row as before.
     static func keyArea(for deviceContext: DeviceContext, traitCollection: UITraitCollection,
-                        legacy: Bool = !iOSVersion.isIOS26OrNewer) -> KeyAreaMetrics {
+                        legacy: Bool) -> KeyAreaMetrics {
         if !legacy, let measured = measuredKeyArea(for: deviceContext, traitCollection: traitCollection) {
             return measured
         }
