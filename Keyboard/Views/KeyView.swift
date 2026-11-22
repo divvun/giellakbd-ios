@@ -39,12 +39,12 @@ final class KeyView: UIView {
                     : theme.regularKeyColor
 
                 let activeColor: UIColor
-                if iOSVersion.isIOS26OrNewer {
-                    activeColor = theme.activeColor
-                } else {
+                if theme.isLegacy {
                     activeColor = key.type.isSpecialKeyStyle
                         ? theme.regularKeyColor
                         : theme.specialKeyColor
+                } else {
+                    activeColor = theme.activeColor
                 }
 
                 contentView.backgroundColor = active
@@ -340,16 +340,12 @@ final class KeyView: UIView {
     }
 
     private func setupReturnKey(_ page: KeyboardPage, _ traits: UITraitCollection, _ string: String) {
-        if iOSVersion.isIOS26OrNewer {
-            sfSymbol(named: "return", traits: traits)
+        // Before iOS 26 the large iPad keyboard labels its return key with text.
+        if theme.isLegacy && device.isLargeIPad {
+            text(string, page: page)
         } else {
-            if device.isLargeIPad {
-                text(string, page: page)
-            } else {
-                sfSymbol(named: "return", traits: traits)
-            }
+            sfSymbol(named: "return", traits: traits)
         }
-
     }
     private func setupSymbols(_ page: KeyboardPage, _ traits: UITraitCollection) {
         if case .symbols1 = page {
