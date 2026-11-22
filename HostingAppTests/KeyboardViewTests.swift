@@ -206,6 +206,14 @@ final class KeyboardViewTests: XCTestCase {
         XCTAssertLessThanOrEqual(totalHeight(sut, rowCount: 6), 380 + 0.001)
     }
 
+    func test_rowLayout_aNumberRowOnItsOwn_isFullHeight() {
+        // Neither the short keys nor, through hasShortNumberRow, the number row's font.
+        let height = numberRowKeys.height(rowCount: 1, startsWithNumberRow: true)
+        let sut = KeyRowLayout(metrics: numberRowKeys, rowCount: 1, startsWithNumberRow: true, height: height, scale: 2)
+        XCTAssertEqual(sut.keyHeights, [61])
+        XCTAssertFalse(sut.hasShortNumberRow)
+    }
+
     func test_rowLayout_everyRowIsFullHeight_withoutANumberRow() {
         // Some 13-inch iPad layouts, such as Kildin Sami's, put letters where the number row usually is.
         let sut = KeyRowLayout(metrics: numberRowKeys, rowCount: 5, height: numberRowKeys.height(rowCount: 5), scale: 2)

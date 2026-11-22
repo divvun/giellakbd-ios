@@ -20,18 +20,23 @@ struct KeyAreaMetrics: Equatable {
     /// margin.
     var sideInset: CGFloat = 0
 
-    /// Whether a layout's first row is drawn as a shorter number row.
+    /// Height of the first row's keys where a layout's first row is drawn as a shorter number row, or `nil` where it
+    /// isn't: the device has no short number row, the first row isn't a number row, or it is the only row.
     /// - Parameter startsWithNumberRow: Whether the layout's first row is a number row.
-    func hasShortNumberRow(startsWithNumberRow: Bool) -> Bool {
-        numberRowKeyHeight != nil && startsWithNumberRow
+    func shortNumberRowKeyHeight(rowCount: Int, startsWithNumberRow: Bool) -> CGFloat? {
+        guard startsWithNumberRow, rowCount > 1 else {
+            return nil
+        }
+        return numberRowKeyHeight
     }
 
     /// Height of the keys in each row.
     func keyHeights(rowCount: Int, startsWithNumberRow: Bool = false) -> [CGFloat] {
-        let shortFirstRow = hasShortNumberRow(startsWithNumberRow: startsWithNumberRow)
-        return (0..<max(rowCount, 0)).map { row in
-            row == 0 && shortFirstRow ? numberRowKeyHeight ?? keyHeight : keyHeight
+        var heights = Array(repeating: keyHeight, count: max(rowCount, 0))
+        if let numberRow = shortNumberRowKeyHeight(rowCount: rowCount, startsWithNumberRow: startsWithNumberRow) {
+            heights[0] = numberRow
         }
+        return heights
     }
 
     /// Height of a key area with `rowCount` rows.

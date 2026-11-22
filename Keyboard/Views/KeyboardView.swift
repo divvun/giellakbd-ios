@@ -943,7 +943,8 @@ struct KeyRowLayout {
             (max(value, 0) * scale).rounded(.down) / scale
         }
 
-        hasShortNumberRow = rowCount > 1 && metrics.hasShortNumberRow(startsWithNumberRow: startsWithNumberRow)
+        hasShortNumberRow = metrics.shortNumberRowKeyHeight(rowCount: rowCount,
+                                                            startsWithNumberRow: startsWithNumberRow) != nil
         let naturalKeyHeights = metrics.keyHeights(rowCount: rowCount, startsWithNumberRow: startsWithNumberRow)
         let naturalKeys = naturalKeyHeights.reduce(0, +)
         let spaceForKeys = height - (metrics.height(rowCount: rowCount, startsWithNumberRow: startsWithNumberRow)
