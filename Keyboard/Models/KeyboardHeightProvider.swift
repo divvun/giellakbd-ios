@@ -151,14 +151,13 @@ struct KeyboardHeightProvider {
         if deviceContext.device.realDevice == .iPhoneDuo {
             return isDuoInnerDisplay(deviceContext) ? 38 : 44
         }
-        let isHomeButtonPhone = !deviceContext.device.hasRoundedDisplayCorners && deviceContext.screenInches < 5
-        guard deviceContext.hasSystemBarBelowKeyboard || isHomeButtonPhone else {
+        guard deviceContext.hasSystemBarBelowKeyboard || deviceContext.isSmallHomeButtonPhone else {
             return nil
         }
         if deviceContext.isLandscape {
             return 44
         }
-        if isHomeButtonPhone {
+        if deviceContext.isSmallHomeButtonPhone {
             return 44.5
         }
         return isWidePhone(deviceContext) ? 44.33 : 39.33
@@ -231,8 +230,7 @@ struct KeyboardHeightProvider {
         guard deviceContext.hasSystemBarBelowKeyboard else {
             // iPhones with a Home button that run iOS 26: iPhone SE (2nd and 3rd generation). In landscape the
             // system keyboard leaves 72 pt at each side.
-            let isHomeButtonPhone = !deviceContext.device.hasRoundedDisplayCorners && deviceContext.screenInches < 5
-            guard isHomeButtonPhone else {
+            guard deviceContext.isSmallHomeButtonPhone else {
                 return nil
             }
             return isLandscape

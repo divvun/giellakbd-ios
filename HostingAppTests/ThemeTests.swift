@@ -94,6 +94,15 @@ final class ThemeTests: XCTestCase {
         XCTAssertEqual(keyArea(duoOuter).keyHeight, 45)
     }
 
+    func test_smallHomeButtonPhones_areThoseUnder5InchesWithAHomeButton() {
+        XCTAssertTrue(DeviceContext(device: .iPhoneSE3, isLandscape: false).isSmallHomeButtonPhone)
+        XCTAssertTrue(DeviceContext(device: .iPhone8, isLandscape: true).isSmallHomeButtonPhone)
+        XCTAssertFalse(DeviceContext(device: .iPhone8Plus, isLandscape: false).isSmallHomeButtonPhone, "Plus model")
+        XCTAssertFalse(DeviceContext(device: .iPhone17Pro, isLandscape: false).isSmallHomeButtonPhone, "no Home button")
+        XCTAssertFalse(DeviceContext(device: .unknown("iPhone99,1"), isLandscape: false).isSmallHomeButtonPhone,
+                       "unrecognised device")
+    }
+
     func test_bannerHeight_putsTheTopOfTheKeyboardWhereTheSystemKeyboardsIs() {
         func banner(_ context: DeviceContext, traits: UITraitCollection? = nil, legacy: Bool = false) -> CGFloat {
             KeyboardHeightProvider.bannerHeight(for: context, traitCollection: traits ?? self.traits(for: context),
