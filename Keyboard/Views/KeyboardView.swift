@@ -783,12 +783,11 @@ final internal class KeyboardView: UIView,
         let key = currentPage[indexPath.section][indexPath.row]
 
         let vertical = rowLayout.keyMargins(forRow: indexPath.section)
-        let isFirst = indexPath.item == 0
-        let isLast = indexPath.item == currentPage[indexPath.section].count - 1
+        let sides = sideInsets(forItemAt: indexPath)
         let margins = UIEdgeInsets(top: vertical.top,
-                                   left: theme.keyHorizontalMargin + (isFirst ? theme.keyArea.sideInset : 0),
+                                   left: theme.keyHorizontalMargin + sides.left,
                                    bottom: vertical.bottom,
-                                   right: theme.keyHorizontalMargin + (isLast ? theme.keyArea.sideInset : 0))
+                                   right: theme.keyHorizontalMargin + sides.right)
         let isNumberRow = indexPath.section == 0 && rowLayout.hasShortNumberRow
         cell.configure(page: page, key: key, theme: theme, traits: self.traitCollection, margins: margins,
                        isNumberRow: isNumberRow)
@@ -805,19 +804,21 @@ final internal class KeyboardView: UIView,
         let key = currentPage[indexPath.section][indexPath.row]
 
         // Using self.bounds here, because self.collectionView.frame isnt correctly sized in iOS 10.
-        // The outermost keys' cells also take the side insets, so touches near the edges still land on a key.
         // A row is kept a hair narrower than the view so rounding never makes it too wide and wraps its last key.
         let sideInset = theme.keyArea.sideInset
         let unitWidth = max(bounds.size.width - 0.01 - 2 * sideInset, 0) / rowNumberOfUnits[indexPath.section]
-        var width = key.size.width * unitWidth
-        if indexPath.item == 0 {
-            width += sideInset
-        }
-        if indexPath.item == currentPage[indexPath.section].count - 1 {
-            width += sideInset
-        }
+        let sides = sideInsets(forItemAt: indexPath)
+        let width = key.size.width * unitWidth + sides.left + sides.right
         let height = rowLayout.height(ofRow: indexPath.section)
         return CGSize(width: width, height: height)
+    }
+
+    /// The key area's side inset on the outer side of a row's first and last keys, and 0 elsewhere. Those keys' cells
+    /// take the inset, so touches near the edges still land on a key.
+    private func sideInsets(forItemAt indexPath: IndexPath) -> (left: CGFloat, right: CGFloat) {
+        let sideInset = theme.keyArea.sideInset
+        return (left: indexPath.item == 0 ? sideInset : 0,
+                right: indexPath.item == currentPage[indexPath.section].count - 1 ? sideInset : 0)
     }
 
     private func makeRowLayout() -> KeyRowLayout {
