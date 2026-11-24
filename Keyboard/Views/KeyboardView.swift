@@ -965,20 +965,23 @@ struct KeyRowLayout {
 
         hasShortNumberRow = metrics.shortNumberRowKeyHeight(rowCount: rowCount,
                                                             startsWithNumberRow: startsWithNumberRow) != nil
-        let naturalKeyHeights = metrics.keyHeights(rowCount: rowCount, startsWithNumberRow: startsWithNumberRow)
-        let naturalKeys = naturalKeyHeights.reduce(0, +)
-        let spaceForKeys = height - (metrics.height(rowCount: rowCount, startsWithNumberRow: startsWithNumberRow)
-            - naturalKeys)
-        let shrink = naturalKeys > spaceForKeys && naturalKeys > 0 ? max(spaceForKeys, 0) / naturalKeys : 1
-        keyHeights = naturalKeyHeights.map { pixelFloor($0 * shrink) }
 
+        // The insets and gaps, in whole pixels.
         gapBelow = pixelFloor(metrics.rowGap / 2)
         gapAbove = pixelFloor(metrics.rowGap - gapBelow)
         bottomInset = pixelFloor(metrics.bottomInset)
-
         let topInset = pixelFloor(metrics.topInset)
-        let used = topInset + keyHeights.reduce(0, +) + CGFloat(max(rowCount - 1, 0)) * (gapAbove + gapBelow) + bottomInset
-        self.topInset = topInset + pixelFloor(height - used)
+        let spacing = topInset + CGFloat(max(rowCount - 1, 0)) * (gapAbove + gapBelow) + bottomInset
+
+        // The keys get the rest, shrunk in proportion if they don't fit.
+        let naturalKeyHeights = metrics.keyHeights(rowCount: rowCount, startsWithNumberRow: startsWithNumberRow)
+        let naturalKeys = naturalKeyHeights.reduce(0, +)
+        let spaceForKeys = max(height - spacing, 0)
+        let shrink = naturalKeys > spaceForKeys ? spaceForKeys / naturalKeys : 1
+        keyHeights = naturalKeyHeights.map { pixelFloor($0 * shrink) }
+
+        // Whatever is left over goes above the top row.
+        self.topInset = topInset + pixelFloor(height - spacing - keyHeights.reduce(0, +))
     }
 
     func height(ofRow row: Int) -> CGFloat {

@@ -41,8 +41,13 @@ struct KeyAreaMetrics: Equatable {
 
     /// Height of a key area with `rowCount` rows.
     func height(rowCount: Int, startsWithNumberRow: Bool = false) -> CGFloat {
-        let keys = keyHeights(rowCount: rowCount, startsWithNumberRow: startsWithNumberRow).reduce(0, +)
-        return topInset + keys + CGFloat(max(rowCount - 1, 0)) * rowGap + bottomInset
+        keyHeights(rowCount: rowCount, startsWithNumberRow: startsWithNumberRow).reduce(0, +)
+            + spacing(rowCount: rowCount)
+    }
+
+    /// Height of everything in a key area with `rowCount` rows but the keys: the insets and the gaps between rows.
+    func spacing(rowCount: Int) -> CGFloat {
+        topInset + CGFloat(max(rowCount - 1, 0)) * rowGap + bottomInset
     }
 }
 
