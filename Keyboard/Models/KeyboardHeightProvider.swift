@@ -131,8 +131,9 @@ struct KeyboardHeightProvider {
         guard measuredBannerHeight(for: deviceContext, traitCollection: traitCollection) != nil else {
             return nil
         }
-        // The system keyboard's separators end 15 pt above the top row, which in portrait is the top row's 8 pt inset
-        // plus this.
+        // The system keyboard's separators end this far above the banner's bottom edge in both orientations, so 15 pt
+        // above the top row in portrait (8 pt inset) and 13 pt in landscape (6 pt inset). Landscape measured on 402 pt
+        // and 440 pt wide iPhones.
         return 7
     }
 
