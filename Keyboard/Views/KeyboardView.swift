@@ -726,24 +726,20 @@ final internal class KeyboardView: UIView,
 
     // MARK: - CollectionView
 
-    private var rowNumberOfUnits: [CGFloat]!
+    /// Each row's cell widths, left to right, rebuilt with the rows. They depend on the page, the width, the theme's
+    /// side inset and the display scale, and each of those changes runs `update()`.
+    private var rowCellWidths: [[CGFloat]]!
     /// The rows' heights and margins, rebuilt with the rows rather than for every cell. It depends on the theme, the
     /// page, the height and the display scale, and each of those changes runs `update()`.
     private var rowLayout: KeyRowLayout!
 
     private func calculateRows() {
         rowLayout = makeRowLayout()
-
-        var mutableWidths = [CGFloat]()
-
-        for row in currentPage {
-            let numberOfUnits = row.reduce(0.0) { (sum, key) -> CGFloat in
-                sum + key.size.width
-            }
-            mutableWidths.append(numberOfUnits)
+        // Using self.bounds here, because self.collectionView.frame isnt correctly sized in iOS 10.
+        rowCellWidths = currentPage.map { row in
+            Self.cellWidths(forUnits: row.map(\.size.width), width: bounds.size.width,
+                            sideInset: theme.keyArea.sideInset, scale: traitCollection.displayScale)
         }
-
-        rowNumberOfUnits = mutableWidths
 
         collectionView.reloadData()
     }
@@ -801,17 +797,40 @@ final internal class KeyboardView: UIView,
     }
 
     func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let key = currentPage[indexPath.section][indexPath.row]
-
-        // Using self.bounds here, because self.collectionView.frame isnt correctly sized in iOS 10.
-        // A row is kept a hair narrower than the view so rounding never makes it too wide and wraps its last key.
-        let sideInset = theme.keyArea.sideInset
-        let unitWidth = max(bounds.size.width - 0.01 - 2 * sideInset, 0) / rowNumberOfUnits[indexPath.section]
-        let sides = sideInsets(forItemAt: indexPath)
-        let width = key.size.width * unitWidth + sides.left + sides.right
-        let height = rowLayout.height(ofRow: indexPath.section)
-        return CGSize(width: width, height: height)
+        CGSize(width: rowCellWidths[indexPath.section][indexPath.item],
+               height: rowLayout.height(ofRow: indexPath.section))
     }
+
+    /// Widths of a row's cells. Each key gets a share of the key area by its units, and the first and last cells also
+    /// take the side inset.
+    ///
+    /// Rather than rounding each width, this works out where each cell ends and rounds that to a whole pixel. Keys are
+    /// then drawn sharply, neighbours meet exactly, and no key drifts more than half a pixel from where it belongs.
+    static func cellWidths(forUnits units: [CGFloat], width: CGFloat, sideInset: CGFloat,
+                           scale: CGFloat) -> [CGFloat] {
+        let totalUnits = units.reduce(0, +)
+        guard totalUnits > 0, width > 0 else { return units.map { _ in 0 } }
+        let unitWidth = max(width - 2 * sideInset, 0) / totalUnits
+        let scale = max(scale, 1)
+        func roundedToPixel(_ x: CGFloat) -> CGFloat { (x * scale).rounded() / scale }
+
+        // Where each cell ends, from the left of the view. The last one ends at the view's right edge.
+        var unitsSoFar: CGFloat = 0
+        var cellEnds = units.map { unit -> CGFloat in
+            unitsSoFar += unit
+            return roundedToPixel(sideInset + unitsSoFar * unitWidth)
+        }
+        cellEnds[cellEnds.count - 1] = width - lineFitTolerance
+
+        // Each cell runs from where the one before it ends.
+        let cellStarts = [0] + cellEnds.dropLast()
+        return zip(cellStarts, cellEnds).map { start, end in end - start }
+    }
+
+    /// How far short of the view's edge a row stops. The flow layout moves a cell to a new line if the row is wider
+    /// than the view by any amount, and at 3x its sums of thirds of a point come out a hair over even when the widths
+    /// add up exactly. A ten-thousandth of a point is far too little to see.
+    private static let lineFitTolerance: CGFloat = 0.0001
 
     /// The key area's side inset on the outer side of a row's first and last keys, and 0 elsewhere. Those keys' cells
     /// take the inset, so touches near the edges still land on a key.

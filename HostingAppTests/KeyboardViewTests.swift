@@ -343,3 +343,117 @@ final class KeyboardViewTests: XCTestCase {
         return try KeyboardDefinition(fromRaw: raw, traits: traits, needsInputModeSwitchKey: false)
     }
 }
+
+/// How the flow layout places a row's keys across the width: every key on one line, with edges on whole pixels.
+@available(iOS 17.0, *)
+final class KeyRowWidthTests: XCTestCase {
+    private var window: UIWindow!
+    private var sut: KeyboardView!
+    private var widthConstraint: NSLayoutConstraint!
+    private let traits = UITraitCollection(userInterfaceIdiom: .phone)
+
+    /// Widths of iPhones and iPads in portrait and landscape that don't divide evenly by the rows' key counts.
+    private let widths: [CGFloat] = [375, 393, 402, 440, 874, 1194, 1366]
+
+    override func setUpWithError() throws {
+        try super.setUpWithError()
+        window = UIWindow(frame: CGRect(x: 0, y: 0, width: 1400, height: 1000))
+        window.isHidden = false
+        sut = KeyboardView(definition: try makeDefinition(), theme: Theme.current(for: traits, device: .current))
+        sut.translatesAutoresizingMaskIntoConstraints = false
+        window.addSubview(sut)
+        sut.topAnchor.constraint(equalTo: window.topAnchor).isActive = true
+        sut.leftAnchor.constraint(equalTo: window.leftAnchor).isActive = true
+        sut.heightAnchor.constraint(equalToConstant: 216).isActive = true
+        widthConstraint = sut.widthAnchor.constraint(equalToConstant: 402)
+        widthConstraint.isActive = true
+    }
+
+    override func tearDown() {
+        sut.removeFromSuperview()
+        sut = nil
+        window = nil
+        super.tearDown()
+    }
+
+    func test_everyRowStaysOnOneLine() {
+        forEachWidthAndScale { width, scale in
+            for (section, frames) in cellFrames().enumerated() {
+                XCTAssertEqual(Set(frames.map(\.minY)).count, 1,
+                               "row \(section) wrapped at \(width) pt, \(scale)x: \(frames.map(\.minY))")
+            }
+        }
+    }
+
+    func test_everyRowFillsTheWidth() {
+        forEachWidthAndScale { width, scale in
+            for (section, frames) in cellFrames().enumerated() {
+                XCTAssertEqual(frames.first?.minX ?? -1, 0, accuracy: 0.001, "row \(section) at \(width) pt, \(scale)x")
+                XCTAssertEqual(frames.last?.maxX ?? -1, width, accuracy: 0.001, "row \(section) at \(width) pt, \(scale)x")
+            }
+        }
+    }
+
+    func test_keyEdges_areOnWholePixels() {
+        forEachWidthAndScale { width, scale in
+            for (section, frames) in cellFrames().enumerated() {
+                let edges = frames.flatMap { [$0.minX, $0.maxX] }
+                let offPixel = edges.filter { abs(($0 * scale).rounded() - $0 * scale) > 0.01 }
+                XCTAssertTrue(offPixel.isEmpty, "row \(section) at \(width) pt, \(scale)x: edges off a pixel \(offPixel)")
+            }
+        }
+    }
+
+    private func forEachWidthAndScale(_ check: (CGFloat, CGFloat) -> Void) {
+        for scale: CGFloat in [2, 3] {
+            sut.traitOverrides.displayScale = scale
+            for width in widths {
+                widthConstraint.constant = width
+                window.layoutIfNeeded()
+                sut.layoutIfNeeded()
+                collectionView.layoutIfNeeded()
+                XCTAssertEqual(sut.traitCollection.displayScale, scale)
+                check(width, scale)
+            }
+        }
+    }
+
+    /// Each row's cell frames, left to right.
+    private func cellFrames() -> [[CGRect]] {
+        (0..<collectionView.numberOfSections).map { section in
+            (0..<collectionView.numberOfItems(inSection: section)).compactMap {
+                collectionView.layoutAttributesForItem(at: IndexPath(item: $0, section: section))?.frame
+            }.sorted { $0.minX < $1.minX }
+        }
+    }
+
+    private var collectionView: UICollectionView {
+        sut.subviews.compactMap { $0 as? UICollectionView }.first!
+    }
+
+    /// Rows of 10 and 11 keys, and one with wider special keys, as on real layouts.
+    private func makeDefinition() throws -> KeyboardDefinition {
+        let json = """
+        {
+            "name": "Test",
+            "locale": "tt",
+            "space": "space",
+            "return": "return",
+            "iphone": {
+                "normal": [["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
+                           ["a", "s", "d", "f", "g", "h", "j", "k", "l", "ö", "ä"],
+                           ["_shift", "z", "x", "c", "v", "b", "n", "m", "_backspace"],
+                           ["_keyboard", "_spacebar", "_return"]],
+                "shifted": [["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
+                            ["A", "S", "D", "F", "G", "H", "J", "K", "L", "Ö", "Ä"],
+                            ["_shift", "Z", "X", "C", "V", "B", "N", "M", "_backspace"],
+                            ["_keyboard", "_spacebar", "_return"]],
+                "symbols-1": [["1", "2", "3"]],
+                "symbols-2": [["[", "]", "{"]]
+            }
+        }
+        """
+        let raw = try JSONDecoder().decode(RawKeyboardDefinition.self, from: Data(json.utf8))
+        return try KeyboardDefinition(fromRaw: raw, traits: traits, needsInputModeSwitchKey: false)
+    }
+}
