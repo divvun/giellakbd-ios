@@ -151,22 +151,22 @@ struct KeyboardHeightProvider {
     /// that much shorter to keep the top of the keyboard in place.
     private static func measuredBannerHeight(for deviceContext: DeviceContext,
                                              traitCollection: UITraitCollection) -> CGFloat? {
-        guard deviceContext.isPhone, !deviceContext.shouldUseIPadLayout(traitCollection: traitCollection) else {
+        let isLandscape = deviceContext.isLandscape
+        switch MeasuredKeyboard(deviceContext, traitCollection: traitCollection) {
+        case nil, .largeIPad, .miniIPad, .iPad:
             return nil
-        }
-        if deviceContext.device.realDevice == .iPhoneDuo {
-            return isDuoInnerDisplay(deviceContext) ? 38 : 44
-        }
-        guard deviceContext.hasSystemBarBelowKeyboard || deviceContext.isSmallHomeButtonPhone else {
-            return nil
-        }
-        if deviceContext.isLandscape {
+        case .duoInnerDisplay:
+            return 38
+        case .duoOuterDisplay:
             return 44
+        case .smallHomeButtonPhone:
+            return isLandscape ? 44 : 44.5
+        case .phone(let isWide):
+            if isLandscape {
+                return 44
+            }
+            return isWide ? 44.33 : 39.33
         }
-        if deviceContext.isSmallHomeButtonPhone {
-            return 44.5
-        }
-        return isWidePhone(deviceContext) ? 44.33 : 39.33
     }
 
     /// Sizes of the key area for the device's usual number of rows.
@@ -198,57 +198,86 @@ struct KeyboardHeightProvider {
     private static func measuredKeyArea(for deviceContext: DeviceContext,
                                         traitCollection: UITraitCollection) -> KeyAreaMetrics? {
         let isLandscape = deviceContext.isLandscape
-
-        if deviceContext.shouldUseIPadLayout(traitCollection: traitCollection) {
-            if deviceContext.isLargeIPad {
-                return isLandscape
-                    ? KeyAreaMetrics(keyHeight: 79, numberRowKeyHeight: 59, rowGap: 9, topInset: 6, bottomInset: 4,
-                                     sideInset: 1)
-                    : KeyAreaMetrics(keyHeight: 61, numberRowKeyHeight: 45.5, rowGap: 7, topInset: 8, bottomInset: 4,
-                                     sideInset: 0.5)
-            } else if deviceContext.isMiniIPad {
-                return isLandscape
-                    ? KeyAreaMetrics(keyHeight: 75, rowGap: 11, topInset: 11, bottomInset: 10)
-                    : KeyAreaMetrics(keyHeight: 55.5, rowGap: 9, topInset: 8, bottomInset: 8, sideInset: 1)
-            } else {
-                return isLandscape
-                    ? KeyAreaMetrics(keyHeight: 72, rowGap: 12, topInset: 11, bottomInset: 11, sideInset: 8)
-                    : KeyAreaMetrics(keyHeight: 55, rowGap: 9, topInset: 8, bottomInset: 8, sideInset: 4)
-            }
-        }
-
-        if deviceContext.device.realDevice == .iPhoneDuo {
-            if isDuoInnerDisplay(deviceContext) {
-                return isLandscape
-                    ? KeyAreaMetrics(keyHeight: 39, rowGap: 13, topInset: 6, bottomInset: 4, sideInset: 7)
-                    : KeyAreaMetrics(keyHeight: 46, rowGap: 14, topInset: 8, bottomInset: 3, sideInset: 8)
-            }
+        switch MeasuredKeyboard(deviceContext, traitCollection: traitCollection) {
+        case nil:
+            return nil
+        case .largeIPad:
+            return isLandscape
+                ? KeyAreaMetrics(keyHeight: 79, numberRowKeyHeight: 59, rowGap: 9, topInset: 6, bottomInset: 4,
+                                 sideInset: 1)
+                : KeyAreaMetrics(keyHeight: 61, numberRowKeyHeight: 45.5, rowGap: 7, topInset: 8, bottomInset: 4,
+                                 sideInset: 0.5)
+        case .miniIPad:
+            return isLandscape
+                ? KeyAreaMetrics(keyHeight: 75, rowGap: 11, topInset: 11, bottomInset: 10)
+                : KeyAreaMetrics(keyHeight: 55.5, rowGap: 9, topInset: 8, bottomInset: 8, sideInset: 1)
+        case .iPad:
+            return isLandscape
+                ? KeyAreaMetrics(keyHeight: 72, rowGap: 12, topInset: 11, bottomInset: 11, sideInset: 8)
+                : KeyAreaMetrics(keyHeight: 55, rowGap: 9, topInset: 8, bottomInset: 8, sideInset: 4)
+        case .duoInnerDisplay:
+            return isLandscape
+                ? KeyAreaMetrics(keyHeight: 39, rowGap: 13, topInset: 6, bottomInset: 4, sideInset: 7)
+                : KeyAreaMetrics(keyHeight: 46, rowGap: 14, topInset: 8, bottomInset: 3, sideInset: 8)
+        case .duoOuterDisplay:
             // The outer display's view ends 32.33 pt above the bottom of the screen in portrait and the system
             // keyboard's bottom row 39 pt above, 20 pixels higher. Its landscape keys are 100 pixels tall.
             return isLandscape
                 ? KeyAreaMetrics(keyHeight: 100.0 / 3, rowGap: 9, topInset: 6, bottomInset: 4, sideInset: 2)
                 : KeyAreaMetrics(keyHeight: 45, rowGap: 11, topInset: 8, bottomInset: 20.0 / 3)
-        }
-
-        guard deviceContext.isPhone else {
-            return nil
-        }
-        guard deviceContext.hasSystemBarBelowKeyboard else {
-            // iPhones with a Home button that run iOS 26: iPhone SE (2nd and 3rd generation). In landscape the
-            // system keyboard leaves 72 pt at each side.
-            guard deviceContext.isSmallHomeButtonPhone else {
-                return nil
-            }
+        case .smallHomeButtonPhone:
+            // In landscape the system keyboard leaves 72 pt at each side.
             return isLandscape
                 ? KeyAreaMetrics(keyHeight: 32, rowGap: 8, topInset: 6, bottomInset: 4, sideInset: 69)
                 : KeyAreaMetrics(keyHeight: 42, rowGap: 12, topInset: 8, bottomInset: 4, sideInset: 3.5)
+        case .phone(let isWide):
+            if isLandscape {
+                return KeyAreaMetrics(keyHeight: 32, rowGap: 8, topInset: 6, bottomInset: 2, sideInset: 1)
+            }
+            return isWide
+                ? KeyAreaMetrics(keyHeight: 45, rowGap: 11, topInset: 8, bottomInset: 7, sideInset: 3.5)
+                : KeyAreaMetrics(keyHeight: 43, rowGap: 11, topInset: 8, bottomInset: 0, sideInset: 3.5)
         }
-        if isLandscape {
-            return KeyAreaMetrics(keyHeight: 32, rowGap: 8, topInset: 6, bottomInset: 2, sideInset: 1)
+    }
+
+    /// The kinds of keyboard whose iOS 26 system keyboard has been measured. Each one's banner and key area are
+    /// looked up by this, so they always agree on which device they are for.
+    private enum MeasuredKeyboard {
+        case largeIPad
+        case miniIPad
+        /// iPads that are neither mini nor large.
+        case iPad
+        case duoInnerDisplay
+        case duoOuterDisplay
+        /// iPhone SE (2nd and 3rd generation) and iPhone 8: a Home button and no system bar below the keyboard.
+        case smallHomeButtonPhone
+        /// iPhones with the system's globe and dictation bar below the keyboard.
+        /// - Parameter isWide: Whether the screen is at least 414 pt wide in portrait, where the keys are taller.
+        case phone(isWide: Bool)
+
+        /// `nil` where the system keyboard hasn't been measured: iPhone apps on iPad, and iPhones such as the
+        /// 5.5-inch Plus models, which have a Home button but lay out their keyboard differently.
+        init?(_ deviceContext: DeviceContext, traitCollection: UITraitCollection) {
+            if deviceContext.shouldUseIPadLayout(traitCollection: traitCollection) {
+                if deviceContext.isLargeIPad {
+                    self = .largeIPad
+                } else if deviceContext.isMiniIPad {
+                    self = .miniIPad
+                } else {
+                    self = .iPad
+                }
+            } else if !deviceContext.isPhone {
+                return nil
+            } else if deviceContext.device.realDevice == .iPhoneDuo {
+                self = KeyboardHeightProvider.isDuoInnerDisplay(deviceContext) ? .duoInnerDisplay : .duoOuterDisplay
+            } else if deviceContext.hasSystemBarBelowKeyboard {
+                self = .phone(isWide: KeyboardHeightProvider.isWidePhone(deviceContext))
+            } else if deviceContext.isSmallHomeButtonPhone {
+                self = .smallHomeButtonPhone
+            } else {
+                return nil
+            }
         }
-        return isWidePhone(deviceContext)
-            ? KeyAreaMetrics(keyHeight: 45, rowGap: 11, topInset: 8, bottomInset: 7, sideInset: 3.5)
-            : KeyAreaMetrics(keyHeight: 43, rowGap: 11, topInset: 8, bottomInset: 0, sideInset: 3.5)
     }
 
     /// Whether an iPhone's screen is at least 414 pt wide in portrait, where the system keyboard has taller keys.
