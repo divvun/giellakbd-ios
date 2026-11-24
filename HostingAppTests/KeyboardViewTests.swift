@@ -262,6 +262,51 @@ final class KeyboardViewTests: XCTestCase {
                        last.frame.maxX - theme.keyHorizontalMargin - theme.keyArea.sideInset, accuracy: 0.5)
     }
 
+    func test_numberRowKeys_useTheNumberRowFont_whenTheNumberRowIsShort() throws {
+        // The short number row is only on 13-inch iPads.
+        let theme = ThemeFactory.make(isDark: false, design: .iOS26,
+                                      device: DeviceContext(device: .iPadPro13M4, isLandscape: false),
+                                      traits: UITraitCollection(userInterfaceIdiom: .pad))
+        XCTAssertNotNil(theme.keyArea.shortNumberRowKeyHeight(rowCount: 3, startsWithNumberRow: true),
+                        "test assumes a short number row")
+        try showNumberRowLayout(theme: theme)
+        XCTAssertEqual(Set(labelFonts(inRow: 0)), [theme.numberRowKeyFont])
+        XCTAssertFalse(labelFonts(inRow: 1).contains(theme.numberRowKeyFont))
+    }
+
+    func test_numberRowKeys_useTheUsualFont_whenTheNumberRowIsFullHeight() throws {
+        let theme = Theme.current(for: traits, device: .current)
+        XCTAssertNil(theme.keyArea.shortNumberRowKeyHeight(rowCount: 3, startsWithNumberRow: true),
+                     "test assumes iPhones have no short number row")
+        try showNumberRowLayout(theme: theme)
+        XCTAssertFalse(labelFonts(inRow: 0).contains(theme.numberRowKeyFont))
+    }
+
+    private func showNumberRowLayout(theme: Theme) throws {
+        sut.removeFromSuperview()
+        sut = KeyboardView(definition: try makeDefinition(normal: [["1", "2", "3"], ["q", "w", "e"], ["a", "s"]]),
+                           theme: theme)
+        sut.translatesAutoresizingMaskIntoConstraints = false
+        window.addSubview(sut)
+        NSLayoutConstraint.activate([
+            sut.topAnchor.constraint(equalTo: window.topAnchor),
+            sut.leftAnchor.constraint(equalTo: window.leftAnchor),
+            sut.heightAnchor.constraint(equalToConstant: 216),
+            sut.widthAnchor.constraint(equalToConstant: 390)
+        ])
+        layout()
+    }
+
+    /// Fonts of the labels on the input keys in a row.
+    private func labelFonts(inRow row: Int) -> [UIFont] {
+        func labels(in view: UIView) -> [UILabel] {
+            view.subviews.flatMap { ($0 as? UILabel).map { [$0] } ?? labels(in: $0) }
+        }
+        return collectionView.indexPathsForVisibleItems.filter { $0.section == row }
+            .compactMap { (collectionView.cellForItem(at: $0) as? KeyboardView.KeyCell)?.keyView }
+            .flatMap(labels(in:)).map(\.font)
+    }
+
     private func keyFrame(at indexPath: IndexPath) -> CGRect {
         let cell = collectionView.cellForItem(at: indexPath) as? KeyboardView.KeyCell
         let key = cell?.keyView?.contentView
@@ -324,7 +369,9 @@ final class KeyboardViewTests: XCTestCase {
         collectionView.cellForItem(at: IndexPath(item: 0, section: 2))
     }
 
-    private func makeDefinition() throws -> KeyboardDefinition {
+    private func makeDefinition(normal: [[String]] = [["q", "w", "e"], ["_shift", "a", "_backspace"],
+                                                      ["_keyboard", "z"]]) throws -> KeyboardDefinition {
+        let normalJSON = String(decoding: try JSONEncoder().encode(normal), as: UTF8.self)
         let json = """
         {
             "name": "Test",
@@ -332,7 +379,7 @@ final class KeyboardViewTests: XCTestCase {
             "space": "space",
             "return": "return",
             "iphone": {
-                "normal": [["q", "w", "e"], ["_shift", "a", "_backspace"], ["_keyboard", "z"]],
+                "normal": \(normalJSON),
                 "shifted": [["Q", "W", "E"], ["_shift", "A", "_backspace"], ["_keyboard", "Z"]],
                 "symbols-1": [["1", "2", "3"]],
                 "symbols-2": [["[", "]", "{"]]

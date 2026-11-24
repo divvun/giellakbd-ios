@@ -458,6 +458,74 @@ final class CurrentDeviceContextTests: XCTestCase {
     }
 }
 
+/// Moving the keyboard to a screen of another size, as when iPhone Duo folds or unfolds, resizes the banner.
+final class KeyboardScreenChangeTests: XCTestCase {
+    private var window: UIWindow!
+    private var sut: KeyboardViewController!
+    private var device = KeyboardScreenChangeTests.duoOuter
+
+    private static let duoOuter = DeviceContext(device: .iPhoneDuo, isLandscape: false,
+                                                screenSize: CGSize(width: 466, height: 678))
+    private static let duoInner = DeviceContext(device: .iPhoneDuo, isLandscape: false,
+                                                screenSize: CGSize(width: 669, height: 951))
+
+    override func setUp() {
+        super.setUp()
+        window = UIWindow(frame: CGRect(x: 0, y: 0, width: 390, height: 844))
+        sut = KeyboardViewController()
+        sut.makeDeviceContext = { [unowned self] _ in device }
+        window.rootViewController = sut
+        window.isHidden = false
+        layout()
+    }
+
+    override func tearDown() {
+        window.isHidden = true
+        window.rootViewController = nil
+        sut = nil
+        window = nil
+        super.tearDown()
+    }
+
+    func test_bannerStartsAtTheScreensHeight() throws {
+        XCTAssertEqual(try bannerHeight(), expectedBannerHeight(for: Self.duoOuter))
+    }
+
+    func test_movingToAnotherScreen_resizesTheBanner() throws {
+        let inner = expectedBannerHeight(for: Self.duoInner)
+        try XCTSkipIf(inner == expectedBannerHeight(for: Self.duoOuter),
+                      "both displays have the same banner on this iOS version")
+        device = Self.duoInner
+        sut.view.setNeedsLayout()
+        layout()
+        XCTAssertEqual(sut.theme.bannerHeight, inner)
+        XCTAssertEqual(try bannerHeight(), inner)
+    }
+
+    // MARK: - Helpers
+
+    private func expectedBannerHeight(for device: DeviceContext) -> CGFloat {
+        KeyboardHeightProvider.bannerHeight(for: device, traitCollection: sut.traitCollection, design: .current)
+    }
+
+    /// Height of the view holding the banner.
+    private func bannerHeight() throws -> CGFloat {
+        func banners(in view: UIView) -> [SpellBannerView] {
+            view.subviews.flatMap { ($0 as? SpellBannerView).map { [$0] } ?? banners(in: $0) }
+        }
+        let banner = try XCTUnwrap(banners(in: sut.view).first)
+        return try XCTUnwrap(banner.superview).frame.height
+    }
+
+    private func layout() {
+        window.layoutIfNeeded()
+        sut.view.layoutIfNeeded()
+        // The screen change is applied on the next turn of the run loop.
+        RunLoop.current.run(until: Date().addingTimeInterval(0.05))
+        window.layoutIfNeeded()
+    }
+}
+
 /// Switching keyboard modes (normal, split, one-handed) replaces the keyboard view. The old views must be freed and
 /// the banner kept, not duplicated, or every switch leaks a keyboard's worth of views.
 final class KeyboardModeSwitchingTests: XCTestCase {

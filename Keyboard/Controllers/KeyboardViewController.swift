@@ -71,8 +71,12 @@ open class KeyboardViewController: UIInputViewController {
 
     /// Device and screen geometry for the screen this keyboard is currently on.
     private var deviceContext: DeviceContext {
-        DeviceContext.current(in: viewIfLoaded)
+        makeDeviceContext(viewIfLoaded)
     }
+
+    /// Works out the device and screen for the keyboard's view. Tests replace it to move the keyboard to another
+    /// screen, which a simulator can't do.
+    var makeDeviceContext: (UIView?) -> DeviceContext = DeviceContext.current(in:)
 
     /// The screen size the current theme and height were computed for.
     private var lastScreenSize: CGSize?

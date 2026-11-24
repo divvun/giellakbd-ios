@@ -95,7 +95,7 @@ enum KeyboardDesign {
 
 // MARK: - Theme Factory
 
-private struct ThemeFactory {
+struct ThemeFactory {
     static func make(isDark: Bool, design: KeyboardDesign, device: DeviceContext, traits: UITraitCollection) -> Theme {
         let metrics = makeMetrics(for: device, traits: traits, design: design)
         let fonts = makeFonts(for: device, traits: traits, design: design)
