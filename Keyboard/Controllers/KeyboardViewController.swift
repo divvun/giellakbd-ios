@@ -30,6 +30,7 @@ open class KeyboardViewController: UIInputViewController {
     private var keyboardContainer: UIView!
     private var keyboardView: KeyboardViewProvider!
     private var bannerContainerView: UIView?
+    private var bannerHeightConstraint: NSLayoutConstraint?
     private var heightConstraint: NSLayoutConstraint!
     private var extraSpacingView: UIView!
     private var deadKeyHandler: DeadKeyHandler!
@@ -69,17 +70,24 @@ open class KeyboardViewController: UIInputViewController {
 
     /// Device and screen geometry for the screen this keyboard is currently on.
     private var deviceContext: DeviceContext {
-        DeviceContext.current(in: viewIfLoaded)
+        makeDeviceContext(viewIfLoaded)
     }
+
+    /// Works out the device and screen for the keyboard's view. Tests replace it to move the keyboard to another
+    /// screen, which a simulator can't do.
+    var makeDeviceContext: (UIView?) -> DeviceContext = DeviceContext.current(in:)
 
     /// The screen size the current theme and height were computed for.
     private var lastScreenSize: CGSize?
 
+    /// For the theme's iOS version, so the height is for the same keyboard as the keys.
     private var preferredHeight: CGFloat {
         var height = KeyboardHeightProvider.height(
             for: deviceContext,
             traitCollection: traitCollection,
-            rowCount: keyboardDefinition.currentDeviceLayout?.normal.count
+            rowCount: keyboardDefinition.currentDeviceLayout?.normal.count,
+            startsWithNumberRow: keyboardDefinition.currentDeviceLayout?.normal.startsWithNumberRow,
+            design: theme.design
         )
 
         if !bannerVisible {
@@ -389,7 +397,7 @@ open class KeyboardViewController: UIInputViewController {
 
         keyboardContainer.insertSubview(bannerContainer, at: 0)
 
-        bannerContainer.heightAnchor.constraint(equalToConstant: theme.bannerHeight).enable()
+        bannerHeightConstraint = bannerContainer.heightAnchor.constraint(equalToConstant: theme.bannerHeight).enable()
         bannerContainer.leftAnchor.constraint(equalTo: keyboardContainer.leftAnchor).enable()
         bannerContainer.rightAnchor.constraint(equalTo: keyboardContainer.rightAnchor).enable()
         bannerContainer.topAnchor.constraint(equalTo: keyboardContainer.topAnchor).enable()
@@ -605,6 +613,7 @@ open class KeyboardViewController: UIInputViewController {
     private func apply(_ newTheme: Theme) {
         theme = newTheme
         view.backgroundColor = theme.backgroundColor
+        bannerHeightConstraint?.constant = theme.bannerHeight
         bannerManager?.updateTheme(theme)
         keyboardView?.updateTheme(theme: theme)
         if keyboardDefinition.supportsCurrentDevice == false {

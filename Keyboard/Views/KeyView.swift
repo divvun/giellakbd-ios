@@ -24,6 +24,8 @@ final class KeyView: UIView {
     private var fontSize: CGFloat = 0.0
     private var altFontSize: CGFloat = 0.0
     private let device = DeviceContext.current
+    /// Whether the key is in a number row drawn shorter than the other rows, as on 13-inch iPads.
+    private let isNumberRow: Bool
 
     var swipeLayoutConstraint: NSLayoutConstraint?
 
@@ -37,12 +39,12 @@ final class KeyView: UIView {
                     : theme.regularKeyColor
 
                 let activeColor: UIColor
-                if iOSVersion.isIOS26OrNewer {
-                    activeColor = theme.activeColor
-                } else {
+                if theme.design == .iOS18 {
                     activeColor = key.type.isSpecialKeyStyle
                         ? theme.regularKeyColor
                         : theme.specialKeyColor
+                } else {
+                    activeColor = theme.activeColor
                 }
 
                 contentView.backgroundColor = active
@@ -97,7 +99,9 @@ final class KeyView: UIView {
         label.adjustsFontSizeToFitWidth = false
         label.text = text
 
-        if case .input = key.type {
+        if case .input = key.type, isNumberRow {
+            label.font = theme.numberRowKeyFont
+        } else if case .input = key.type {
             switch page {
             case .shifted, .capslock, .symbols1, .symbols2:
                 label.font = theme.capitalKeyFont
@@ -131,7 +135,9 @@ final class KeyView: UIView {
         alternateLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         alternateLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
 
-        if shouldUseiPadLayout && device.isLargeIPad {
+        if isNumberRow {
+            alternateLabel.font = theme.numberRowKeyFont
+        } else if shouldUseiPadLayout && device.isLargeIPad {
             switch page {
             case .shifted, .capslock, .symbols1, .symbols2:
                 alternateLabel.font = theme.capitalKeyFont
@@ -255,9 +261,15 @@ final class KeyView: UIView {
         sfSymbol(named: symbolName, traits: traits, tintColor: theme.textColor)
     }
 
-    init(page: KeyboardPage, key: KeyDefinition, theme: Theme, traits: UITraitCollection) {
+    /// - Parameters:
+    ///   - margins: Space around the key inside this view. Defaults to half the gap between rows above and below, and
+    ///     the theme's horizontal margin at the sides; the keyboard passes the margins of the key's place in its row.
+    ///   - isNumberRow: Whether the key is in a number row drawn shorter than the other rows, whose labels are smaller.
+    init(page: KeyboardPage, key: KeyDefinition, theme: Theme, traits: UITraitCollection,
+         margins: UIEdgeInsets? = nil, isNumberRow: Bool = false) {
         self.key = key
         self.theme = theme
+        self.isNumberRow = isNumberRow
 
         super.init(frame: .zero)
 
@@ -273,10 +285,10 @@ final class KeyView: UIView {
         layer.shadowOpacity = theme.keyShadowColor.cgColor.alpha > 0 ? 1.0 : 0.0
         layer.shadowRadius = 0.0
 
-        contentView.fill(superview: self, margins: UIEdgeInsets(
-            top: theme.keyVerticalMargin,
+        contentView.fill(superview: self, margins: margins ?? UIEdgeInsets(
+            top: theme.keyArea.rowGap / 2,
             left: theme.keyHorizontalMargin,
-            bottom: theme.keyVerticalMargin,
+            bottom: theme.keyArea.rowGap / 2,
             right: theme.keyHorizontalMargin))
 
         contentView.backgroundColor = backgroundColor(for: key, page: page)
@@ -328,16 +340,12 @@ final class KeyView: UIView {
     }
 
     private func setupReturnKey(_ page: KeyboardPage, _ traits: UITraitCollection, _ string: String) {
-        if iOSVersion.isIOS26OrNewer {
-            sfSymbol(named: "return", traits: traits)
+        // Before iOS 26 the large iPad keyboard labels its return key with text.
+        if theme.design == .iOS18 && device.isLargeIPad {
+            text(string, page: page)
         } else {
-            if device.isLargeIPad {
-                text(string, page: page)
-            } else {
-                sfSymbol(named: "return", traits: traits)
-            }
+            sfSymbol(named: "return", traits: traits)
         }
-
     }
     private func setupSymbols(_ page: KeyboardPage, _ traits: UITraitCollection) {
         if case .symbols1 = page {

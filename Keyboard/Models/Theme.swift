@@ -4,6 +4,10 @@ import UIKit
 // MARK: - Theme
 
 struct Theme {
+    /// The system keyboard this theme copies. `Theme.current` picks it for the running system, and everything else
+    /// sized or drawn for one system keyboard, such as the keyboard's height, takes it from here.
+    let design: KeyboardDesign
+
     // Colors
     let appearance: UIKeyboardAppearance
     let regularKeyColor: UIColor
@@ -26,8 +30,9 @@ struct Theme {
     // Metrics
     let keyCornerRadius: CGFloat
     let popupCornerRadius: CGFloat
-    let keyVerticalMargin: CGFloat
     let keyHorizontalMargin: CGFloat
+    /// Key heights, the gap between rows and the space above and below them.
+    let keyArea: KeyAreaMetrics
 
     // Fonts
     let lowerKeyFont: UIFont
@@ -35,6 +40,8 @@ struct Theme {
     let modifierKeyFontSize: CGFloat
     let altKeyFontSize: CGFloat
     let altKeyFont: UIFont
+    /// Font for both labels of the keys in a number row drawn shorter than the other rows, as on 13-inch iPads.
+    let numberRowKeyFont: UIFont
     let popupLowerKeyFont: UIFont
     let popupCapitalKeyFont: UIFont
     let popupLongpressLowerKeyFont: UIFont
@@ -47,9 +54,11 @@ struct Theme {
     // Banner
     let bannerBackgroundColor: UIColor
     let bannerSeparatorColor: UIColor
+    /// Space between the banner's separators and its bottom edge, where they line up with the system keyboard's.
+    /// `nil` centres them in the banner.
+    let bannerSeparatorBottomInset: CGFloat?
     let bannerTextColor: UIColor
     let bannerHorizontalMargin: CGFloat
-    let bannerVerticalMargin: CGFloat
     let bannerHeight: CGFloat
 
     // Layout
@@ -64,57 +73,39 @@ struct Theme {
     /// - Parameter device: The context for the screen the keyboard is on. Orientation-dependent sizes
     ///   come from it, so pass `DeviceContext.current(in:)` with the view the theme is for.
     static func current(for traits: UITraitCollection, device: DeviceContext) -> Theme {
-        let isDark = traits.userInterfaceStyle == .dark
-        let isLegacy = !iOSVersion.isIOS26OrNewer
-
-        let style: ThemeStyle = {
-            switch (isDark, isLegacy) {
-            case (true, true): return .legacyDark
-            case (true, false): return .dark
-            case (false, true): return .legacyLight
-            case (false, false): return .light
-            }
-        }()
-
-        return ThemeFactory.make(style, device: device, traits: traits)
+        ThemeFactory.make(isDark: traits.userInterfaceStyle == .dark, design: .current, device: device, traits: traits)
     }
 }
 
-// MARK: - Theme Variants
+// MARK: - Keyboard Design
 
-enum ThemeStyle {
-    case light
-    case dark
-    case legacyLight
-    case legacyDark
+/// The system keyboard whose sizes, colours and keys the keyboard copies.
+enum KeyboardDesign {
+    /// The keyboard from iOS 18 and earlier: every version the app supports before iOS 26.
+    case iOS18
+    /// The keyboard from iOS 26. Later versions use it until their keyboard is measured.
+    case iOS26
 
-    var isLegacy: Bool {
-        switch self {
-        case .legacyLight, .legacyDark: return true
-        case .light, .dark: return false
-        }
-    }
-
-    var isDark: Bool {
-        switch self {
-        case .dark, .legacyDark: return true
-        case .light, .legacyLight: return false
-        }
+    /// The design for the running system. The only place the keyboard checks the iOS version.
+    static var current: KeyboardDesign {
+        iOSVersion.isIOS26OrNewer ? .iOS26 : .iOS18
     }
 }
 
 
 // MARK: - Theme Factory
 
-private struct ThemeFactory {
-    static func make(_ style: ThemeStyle, device: DeviceContext, traits: UITraitCollection) -> Theme {
-        let metrics = makeMetrics(for: device, traits: traits, legacy: style.isLegacy)
-        let fonts = makeFonts(for: device, traits: traits, legacy: style.isLegacy)
-        let colors = makeColors(for: style, device: device)
+struct ThemeFactory {
+    static func make(isDark: Bool, design: KeyboardDesign, device: DeviceContext, traits: UITraitCollection) -> Theme {
+        let metrics = makeMetrics(for: device, traits: traits, design: design)
+        let fonts = makeFonts(for: device, traits: traits, design: design)
+        let colors = makeColors(isDark: isDark, design: design, device: device)
 
         return Theme(
+            design: design,
+
             // Colors
-            appearance: style.isDark ? .dark : .light,
+            appearance: isDark ? .dark : .light,
             regularKeyColor: colors.regularKey,
             specialKeyColor: colors.specialKey,
             popupColor: colors.popup,
@@ -135,8 +126,8 @@ private struct ThemeFactory {
             // Metrics
             keyCornerRadius: metrics.keyCornerRadius,
             popupCornerRadius: 12.0,
-            keyVerticalMargin: metrics.keyVerticalMargin,
             keyHorizontalMargin: metrics.keyHorizontalMargin,
+            keyArea: KeyboardHeightProvider.keyArea(for: device, traitCollection: traits, design: design),
 
             // Fonts
             lowerKeyFont: fonts.lowerKey,
@@ -144,8 +135,9 @@ private struct ThemeFactory {
             modifierKeyFontSize: fonts.modifierKeySize,
             altKeyFontSize: fonts.altKeySize,
             altKeyFont: fonts.altKey,
-            popupLowerKeyFont: fonts.lowerKey.withSize(fonts.lowerKey.pointSize + (style.isDark ? 10.0 : 16.0)),
-            popupCapitalKeyFont: fonts.capitalKey.withSize(fonts.capitalKey.pointSize + (style.isDark ? 10.0 : 16.0)),
+            numberRowKeyFont: fonts.numberRowKey,
+            popupLowerKeyFont: fonts.lowerKey.withSize(fonts.lowerKey.pointSize + (isDark ? 10.0 : 16.0)),
+            popupCapitalKeyFont: fonts.capitalKey.withSize(fonts.capitalKey.pointSize + (isDark ? 10.0 : 16.0)),
             popupLongpressLowerKeyFont: fonts.lowerKey,
             popupLongpressCapitalKeyFont: fonts.capitalKey,
             bannerFont: fonts.banner,
@@ -156,10 +148,12 @@ private struct ThemeFactory {
             // Banner
             bannerBackgroundColor: colors.background,
             bannerSeparatorColor: colors.bannerSeparator,
+            bannerSeparatorBottomInset: KeyboardHeightProvider.bannerSeparatorBottomInset(
+                for: device, traitCollection: traits, design: design),
             bannerTextColor: colors.bannerText,
             bannerHorizontalMargin: 16.0,
-            bannerVerticalMargin: 8.0,
-            bannerHeight: metrics.bannerHeight,
+            bannerHeight: KeyboardHeightProvider.bannerHeight(for: device, traitCollection: traits,
+                                                              design: design),
 
             // Layout
             altLabelTopAnchorConstant: metrics.altLabelTop,
@@ -173,37 +167,24 @@ private struct ThemeFactory {
     private struct Metrics {
         let keyCornerRadius: CGFloat
         let keyHorizontalMargin: CGFloat
-        let keyVerticalMargin: CGFloat
-        let bannerHeight: CGFloat
         let altLabelTop: CGFloat
         let altLabelBottom: CGFloat
         let popupLongpressKeysPerRow: Int
         let sfSymbolConfiguration: UIImage.SymbolConfiguration
     }
 
-    private static func makeMetrics(for device: DeviceContext, traits: UITraitCollection, legacy: Bool) -> Metrics {
+    private static func makeMetrics(for device: DeviceContext, traits: UITraitCollection,
+                                    design: KeyboardDesign) -> Metrics {
         if device.shouldUseIPadLayout(traitCollection: traits) {
-            return makeiPadMetrics(for: device, legacy: legacy)
+            return makeiPadMetrics(for: device, design: design)
         } else {
-            return makeiPhoneMetrics(for: device, legacy: legacy)
+            return makeiPhoneMetrics(for: device, design: design)
         }
     }
 
-    private static func makeiPhoneMetrics(for device: DeviceContext, legacy: Bool) -> Metrics {
+    private static func makeiPhoneMetrics(for device: DeviceContext, design: KeyboardDesign) -> Metrics {
         // iOS 26 has significantly larger corner radius for rounder keys
-        let keyCornerRadius: CGFloat = legacy ? 5.0 : 10.0
-
-        let keyVerticalMargin: CGFloat = {
-            if legacy {
-                // Legacy iOS uses larger vertical margins
-                return device.isLandscape ? 3.5 : 6.0
-            } else {
-                // iOS 26 uses smaller vertical margins for taller keys with less spacing
-                return device.isLandscape ? 3.5 : 5.5
-            }
-        }()
-
-        let bannerHeight: CGFloat = 48.0 // Simplified - could check for smaller devices
+        let keyCornerRadius: CGFloat = design == .iOS18 ? 5.0 : 10.0
 
         let sfSymbolConfiguration = UIImage.SymbolConfiguration(
             pointSize: device.isLandscape ? 19 : 20,
@@ -213,8 +194,6 @@ private struct ThemeFactory {
         return Metrics(
             keyCornerRadius: keyCornerRadius,
             keyHorizontalMargin: 3.0,
-            keyVerticalMargin: keyVerticalMargin,
-            bannerHeight: bannerHeight,
             altLabelTop: 0.0,
             altLabelBottom: 0.0,
             popupLongpressKeysPerRow: 10,
@@ -222,9 +201,9 @@ private struct ThemeFactory {
         )
     }
 
-    private static func makeiPadMetrics(for device: DeviceContext, legacy: Bool) -> Metrics {
+    private static func makeiPadMetrics(for device: DeviceContext, design: KeyboardDesign) -> Metrics {
         let keyCornerRadius: CGFloat = {
-            if legacy {
+            if design == .iOS18 {
                 if device.isLargeLandscape { return 7.0 }
                 else if device.isSmallOrMediumLandscape { return 6.0 }
                 else { return 5.0 }
@@ -240,13 +219,6 @@ private struct ThemeFactory {
             if device.isLargeLandscape { return 4.0 }
             else if device.isSmallOrMediumLandscape { return 7.0 }
             else if device.isLargeIPad { return 3.0 } // Large iPad in portrait
-            else { return 5.0 } // Small/medium iPad in portrait
-        }()
-
-        let keyVerticalMargin: CGFloat = {
-            if device.isLargeLandscape { return 4.0 }
-            else if device.isSmallOrMediumLandscape { return 6.0 }
-            else if device.isLargeIPad { return 3.5 } // Large iPad in portrait
             else { return 5.0 } // Small/medium iPad in portrait
         }()
 
@@ -270,8 +242,6 @@ private struct ThemeFactory {
         return Metrics(
             keyCornerRadius: keyCornerRadius,
             keyHorizontalMargin: keyHorizontalMargin,
-            keyVerticalMargin: keyVerticalMargin,
-            bannerHeight: 55.0,
             altLabelTop: altLabelTop,
             altLabelBottom: altLabelBottom,
             popupLongpressKeysPerRow: 4,
@@ -287,10 +257,12 @@ private struct ThemeFactory {
         let modifierKeySize: CGFloat
         let altKeySize: CGFloat
         let altKey: UIFont
+        let numberRowKey: UIFont
         let banner: UIFont
     }
 
-    private static func makeFonts(for device: DeviceContext, traits: UITraitCollection, legacy: Bool) -> Fonts {
+    private static func makeFonts(for device: DeviceContext, traits: UITraitCollection,
+                                  design: KeyboardDesign) -> Fonts {
         if device.shouldUseIPadLayout(traitCollection: traits) {
             let altKeySize: CGFloat = device.isSmallOrMediumLandscape ? 16.0 : 13.0
             let lowerKey: UIFont = {
@@ -310,11 +282,13 @@ private struct ThemeFactory {
                 modifierKeySize: 17.0,
                 altKeySize: altKeySize,
                 altKey: UIFont.systemFont(ofSize: altKeySize),
+                // The system keyboard's number row on 13-inch iPads, measured from its digits' cap height
+                numberRowKey: UIFont.systemFont(ofSize: device.isLandscape ? 19.0 : 14.0),
                 banner: UIFont.systemFont(ofSize: 17.0)
             )
         } else {
             let altKeySize: CGFloat = 13.0
-            let lowerKey = legacy
+            let lowerKey = design == .iOS18
                 ? UIFont.systemFont(ofSize: 25.0, weight: .light)
                 : UIFont.systemFont(ofSize: 25.0)
             
@@ -324,6 +298,7 @@ private struct ThemeFactory {
                 modifierKeySize: 16.0,
                 altKeySize: altKeySize,
                 altKey: UIFont.systemFont(ofSize: altKeySize),
+                numberRowKey: UIFont.systemFont(ofSize: altKeySize),
                 banner: UIFont.systemFont(ofSize: 17.0)
             )
         }
@@ -352,32 +327,32 @@ private struct ThemeFactory {
         let bannerText: UIColor
     }
 
-    private static func makeColors(for style: ThemeStyle, device: DeviceContext) -> Colors {
+    private static func makeColors(isDark: Bool, design: KeyboardDesign, device: DeviceContext) -> Colors {
         let blueLegacy = UIColor(r: 31, g: 126, b: 249)
         
-        if style.isDark {
-            let keyShadow = style.isLegacy
+        if isDark {
+            let keyShadow = design == .iOS18
                 ? UIColor(r: 103, g: 106, b: 110, a: 0.5)
                 : .clear
 
-            let regularKey = style.isLegacy
+            let regularKey = design == .iOS18
                 ? UIColor.lightGray.withAlphaComponent(0.4)
                 : UIColor(r: 61, g: 61, b: 61)
 
             // iOS 26: Special keys use same color as regular keys
-            let specialKey = style.isLegacy
+            let specialKey = design == .iOS18
                 ? UIColor.gray.withAlphaComponent(0.3)
                 : regularKey
             
-            let popup = style.isLegacy
+            let popup = design == .iOS18
                 ? UIColor(r: 109, g: 109, b: 109)
                 : UIColor(r: 83, g: 83, b: 83)
 
-            let activeKeyColor = style.isLegacy
+            let activeKeyColor = design == .iOS18
                 ? blueLegacy
                 : UIColor(r: 38, g: 38, b: 38)
             
-            let longPressActive = style.isLegacy
+            let longPressActive = design == .iOS18
                 ? blueLegacy
                 : UIColor(r: 0, g: 145, b: 255)
 
@@ -402,24 +377,24 @@ private struct ThemeFactory {
                 bannerText: UIColor(r: 233, g: 233, b: 233)
             )
         } else {
-            let keyShadow = style.isLegacy
+            let keyShadow = design == .iOS18
                 ? UIColor(r: 136, g: 138, b: 141)
                 : .clear
 
             // iOS 26: Special keys look the same as regular keys
-            let specialKeyColor = style.isLegacy
+            let specialKeyColor = design == .iOS18
                 ? UIColor(r: 171, g: 177, b: 186)
                 : .white
             
-            let popupBorder = style.isLegacy
+            let popupBorder = design == .iOS18
                 ? UIColor(hue: 0.595, saturation: 0.04, brightness: 0.65, alpha: 1.0)
                 : .clear
 
-            let activeKeyColor = style.isLegacy
+            let activeKeyColor = design == .iOS18
                 ? blueLegacy
                 : UIColor(r: 231, g: 232, b: 236)
             
-            let longPressActive = style.isLegacy
+            let longPressActive = design == .iOS18
                 ? blueLegacy
                 : UIColor(r: 0, g: 136, b: 255)
 
@@ -440,7 +415,8 @@ private struct ThemeFactory {
                 activeText: .white,
                 longPressActive: longPressActive,
                 altKeyText: device.isLargeIPad ? UIColor.black : UIColor(white: 0.0, alpha: 0.3),
-                bannerSeparator: UIColor(r: 188, g: 191, b: 195),
+                // The system keyboard's separators: black at 6.6%, (211, 212, 217) over the keyboard's background
+                bannerSeparator: design == .iOS18 ? UIColor(r: 188, g: 191, b: 195) : UIColor(white: 0, alpha: 0.066),
                 bannerText: UIColor(r: 21, g: 21, b: 21)
             )
         }

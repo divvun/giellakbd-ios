@@ -3,6 +3,8 @@ import DeviceKit
 import XCTest
 
 final class KeyboardViewControllerTests: XCTestCase {
+    // These tests cover the height table, which sets the keyboard's height before iOS 26 and on devices whose
+    // system keyboard hasn't been measured.
     // MARK: - Landscape Height Tests
 
     func testLandscapeHeight_iPadMini_7_9Inch() {
@@ -13,7 +15,8 @@ final class KeyboardViewControllerTests: XCTestCase {
 
         let height = KeyboardHeightProvider.height(
             for: DeviceContext(device: .iPadMini5, isLandscape: true),
-            traitCollection: traitCollection
+            traitCollection: traitCollection,
+            design: .iOS18
         )
         XCTAssertEqual(height, 404, "iPad Mini 7.9\" should return 404 in landscape")
     }
@@ -26,7 +29,8 @@ final class KeyboardViewControllerTests: XCTestCase {
 
         let height = KeyboardHeightProvider.height(
             for: DeviceContext(device: .iPadPro9Inch, isLandscape: true),
-            traitCollection: traitCollection
+            traitCollection: traitCollection,
+            design: .iOS18
         )
         XCTAssertEqual(height, 404, "iPad 9.7\" should return 404 in landscape")
     }
@@ -39,7 +43,8 @@ final class KeyboardViewControllerTests: XCTestCase {
 
         let height = KeyboardHeightProvider.height(
             for: DeviceContext(device: .iPadPro10Inch, isLandscape: true),
-            traitCollection: traitCollection
+            traitCollection: traitCollection,
+            design: .iOS18
         )
         XCTAssertEqual(height, 404, "iPad 10.5\" should return 404 in landscape")
     }
@@ -52,7 +57,8 @@ final class KeyboardViewControllerTests: XCTestCase {
 
         let height = KeyboardHeightProvider.height(
             for: DeviceContext(device: .iPadPro11Inch, isLandscape: true),
-            traitCollection: traitCollection
+            traitCollection: traitCollection,
+            design: .iOS18
         )
         XCTAssertEqual(height, 404, "iPad 11\" should return 404 in landscape")
     }
@@ -65,7 +71,8 @@ final class KeyboardViewControllerTests: XCTestCase {
 
         let height = KeyboardHeightProvider.height(
             for: DeviceContext(device: .iPadPro12Inch, isLandscape: true),
-            traitCollection: traitCollection
+            traitCollection: traitCollection,
+            design: .iOS18
         )
         XCTAssertEqual(height, 476, "iPad 12.9\" should return 476 in landscape")
     }
@@ -75,7 +82,8 @@ final class KeyboardViewControllerTests: XCTestCase {
 
         let height = KeyboardHeightProvider.height(
             for: DeviceContext(device: .iPhone8, isLandscape: true),
-            traitCollection: traitCollection
+            traitCollection: traitCollection,
+            design: .iOS18
         )
         XCTAssertEqual(height, 208, "iPhone 4.7\" should return 208 in landscape")
     }
@@ -85,7 +93,8 @@ final class KeyboardViewControllerTests: XCTestCase {
 
         let height = KeyboardHeightProvider.height(
             for: DeviceContext(device: .iPhone8Plus, isLandscape: true),
-            traitCollection: traitCollection
+            traitCollection: traitCollection,
+            design: .iOS18
         )
         XCTAssertEqual(height, 208, "iPhone 5.5\" should return 208 in landscape")
     }
@@ -95,7 +104,8 @@ final class KeyboardViewControllerTests: XCTestCase {
 
         let height = KeyboardHeightProvider.height(
             for: DeviceContext(device: .iPhoneX, isLandscape: true),
-            traitCollection: traitCollection
+            traitCollection: traitCollection,
+            design: .iOS18
         )
         XCTAssertEqual(height, 196, "iPhone 5.8\" should return 196 in landscape")
     }
@@ -105,7 +115,8 @@ final class KeyboardViewControllerTests: XCTestCase {
 
         let height = KeyboardHeightProvider.height(
             for: DeviceContext(device: .iPhone11, isLandscape: true),
-            traitCollection: traitCollection
+            traitCollection: traitCollection,
+            design: .iOS18
         )
         XCTAssertEqual(height, 206, "iPhone 6.1\" should return 206 in landscape")
     }
@@ -115,7 +126,8 @@ final class KeyboardViewControllerTests: XCTestCase {
 
         let height = KeyboardHeightProvider.height(
             for: DeviceContext(device: .iPhoneXSMax, isLandscape: true),
-            traitCollection: traitCollection
+            traitCollection: traitCollection,
+            design: .iOS18
         )
         XCTAssertEqual(height, 196, "iPhone XS Max should return 196 in landscape (device override)")
     }
@@ -125,7 +137,8 @@ final class KeyboardViewControllerTests: XCTestCase {
 
         let height = KeyboardHeightProvider.height(
             for: DeviceContext(device: .iPhone11ProMax, isLandscape: true),
-            traitCollection: traitCollection
+            traitCollection: traitCollection,
+            design: .iOS18
         )
         XCTAssertEqual(height, 196, "iPhone 11 Pro Max should return 196 in landscape (device override)")
     }
@@ -137,7 +150,8 @@ final class KeyboardViewControllerTests: XCTestCase {
 
         let height = KeyboardHeightProvider.height(
             for: DeviceContext(device: .iPhone8, isLandscape: false),
-            traitCollection: traitCollection
+            traitCollection: traitCollection,
+            design: .iOS18
         )
         XCTAssertEqual(height, 262, "iPhone 4.7\" should return 262 in portrait")
     }
@@ -147,7 +161,8 @@ final class KeyboardViewControllerTests: XCTestCase {
 
         let height = KeyboardHeightProvider.height(
             for: DeviceContext(device: .iPhone8Plus, isLandscape: false),
-            traitCollection: traitCollection
+            traitCollection: traitCollection,
+            design: .iOS18
         )
         XCTAssertEqual(height, 272, "iPhone 5.5\" should return 272 in portrait")
     }
@@ -157,7 +172,8 @@ final class KeyboardViewControllerTests: XCTestCase {
 
         let height = KeyboardHeightProvider.height(
             for: DeviceContext(device: .iPhoneX, isLandscape: false),
-            traitCollection: traitCollection
+            traitCollection: traitCollection,
+            design: .iOS18
         )
         XCTAssertEqual(height, 262, "iPhone 5.8\" should return 262 in portrait")
     }
@@ -167,7 +183,8 @@ final class KeyboardViewControllerTests: XCTestCase {
 
         let height = KeyboardHeightProvider.height(
             for: DeviceContext(device: .iPhone11, isLandscape: false),
-            traitCollection: traitCollection
+            traitCollection: traitCollection,
+            design: .iOS18
         )
         XCTAssertEqual(height, 262, "iPhone 6.1\" should return 262 in portrait")
     }
@@ -177,7 +194,8 @@ final class KeyboardViewControllerTests: XCTestCase {
 
         let height = KeyboardHeightProvider.height(
             for: DeviceContext(device: .iPhoneXSMax, isLandscape: false),
-            traitCollection: traitCollection
+            traitCollection: traitCollection,
+            design: .iOS18
         )
         XCTAssertEqual(height, 272, "iPhone XS Max should return 272 in portrait (device override)")
     }
@@ -187,7 +205,8 @@ final class KeyboardViewControllerTests: XCTestCase {
 
         let height = KeyboardHeightProvider.height(
             for: DeviceContext(device: .iPhone11ProMax, isLandscape: false),
-            traitCollection: traitCollection
+            traitCollection: traitCollection,
+            design: .iOS18
         )
         XCTAssertEqual(height, 272, "iPhone 11 Pro Max should return 272 in portrait (device override)")
     }
@@ -200,7 +219,8 @@ final class KeyboardViewControllerTests: XCTestCase {
 
         let height = KeyboardHeightProvider.height(
             for: DeviceContext(device: .iPadMini5, isLandscape: false),
-            traitCollection: traitCollection
+            traitCollection: traitCollection,
+            design: .iOS18
         )
         XCTAssertEqual(height, 318, "iPad 7.9\" should return 318 in portrait")
     }
@@ -213,7 +233,8 @@ final class KeyboardViewControllerTests: XCTestCase {
 
         let height = KeyboardHeightProvider.height(
             for: DeviceContext(device: .iPadPro9Inch, isLandscape: false),
-            traitCollection: traitCollection
+            traitCollection: traitCollection,
+            design: .iOS18
         )
         XCTAssertEqual(height, 318, "iPad 9.7\" should return 318 in portrait")
     }
@@ -226,7 +247,8 @@ final class KeyboardViewControllerTests: XCTestCase {
 
         let height = KeyboardHeightProvider.height(
             for: DeviceContext(device: .iPadPro11Inch, isLandscape: false),
-            traitCollection: traitCollection
+            traitCollection: traitCollection,
+            design: .iOS18
         )
         XCTAssertEqual(height, 318, "iPad 11\" should return 318 in portrait")
     }
@@ -239,7 +261,8 @@ final class KeyboardViewControllerTests: XCTestCase {
 
         let height = KeyboardHeightProvider.height(
             for: DeviceContext(device: .iPadPro12Inch, isLandscape: false),
-            traitCollection: traitCollection
+            traitCollection: traitCollection,
+            design: .iOS18
         )
         XCTAssertEqual(height, 384, "iPad 12.9\" should return 384 in portrait")
     }
@@ -279,7 +302,8 @@ final class KeyboardViewControllerTests: XCTestCase {
         let height = KeyboardHeightProvider.height(
             for: DeviceContext(device: .iPhone8, isLandscape: false),
             traitCollection: traitCollection,
-            rowCount: 4
+            rowCount: 4,
+            design: .iOS18
         )
         XCTAssertEqual(height, 262, "Standard 4-row keyboard should return base height")
     }
@@ -291,13 +315,15 @@ final class KeyboardViewControllerTests: XCTestCase {
         let height4Row = KeyboardHeightProvider.height(
             for: DeviceContext(device: .iPhone8, isLandscape: false),
             traitCollection: traitCollection,
-            rowCount: 4
+            rowCount: 4,
+            design: .iOS18
         )
 
         let height5Row = KeyboardHeightProvider.height(
             for: DeviceContext(device: .iPhone8, isLandscape: false),
             traitCollection: traitCollection,
-            rowCount: 5
+            rowCount: 5,
+            design: .iOS18
         )
 
         XCTAssertGreaterThan(height5Row, height4Row, "5-row keyboard should be taller than 4-row")
@@ -313,7 +339,8 @@ final class KeyboardViewControllerTests: XCTestCase {
         let height = KeyboardHeightProvider.height(
             for: DeviceContext(device: .iPadPro12Inch, isLandscape: false),
             traitCollection: traitCollection,
-            rowCount: 5
+            rowCount: 5,
+            design: .iOS18
         )
         XCTAssertEqual(height, 384, "iPad 12\" with 5 rows should return base height")
     }
@@ -328,13 +355,15 @@ final class KeyboardViewControllerTests: XCTestCase {
         let height4Row = KeyboardHeightProvider.height(
             for: DeviceContext(device: .iPadMini5, isLandscape: true),
             traitCollection: traitCollection,
-            rowCount: 4
+            rowCount: 4,
+            design: .iOS18
         )
 
         let height5Row = KeyboardHeightProvider.height(
             for: DeviceContext(device: .iPadMini5, isLandscape: true),
             traitCollection: traitCollection,
-            rowCount: 5
+            rowCount: 5,
+            design: .iOS18
         )
 
         // The 5-row should be adjusted down by 40 pixels to prevent taking up too much screen
@@ -383,10 +412,11 @@ final class UnrecognizedScreenSizeReportingTests: XCTestCase {
         XCTAssertEqual(reported, [])
     }
 
+    /// Sized for the keyboard before iOS 26, which always looks the device up in the height table.
     private func height(_ device: Device, isLandscape: Bool = false) -> CGFloat {
         let screen = isLandscape ? CGSize(width: 874, height: 402) : CGSize(width: 402, height: 874)
         return KeyboardHeightProvider.height(for: DeviceContext(device: device, isLandscape: isLandscape, screenSize: screen),
-                                             traitCollection: phone)
+                                             traitCollection: phone, design: .iOS18)
     }
 }
 
@@ -425,6 +455,74 @@ final class CurrentDeviceContextTests: XCTestCase {
         XCTAssertEqual(context.screenSize, scene.screen.bounds.size)
         XCTAssertEqual(context.screenInches, DeviceContext.current.screenInches)
         XCTAssertEqual(context.isPad, DeviceContext.current.isPad)
+    }
+}
+
+/// Moving the keyboard to a screen of another size, as when iPhone Duo folds or unfolds, resizes the banner.
+final class KeyboardScreenChangeTests: XCTestCase {
+    private var window: UIWindow!
+    private var sut: KeyboardViewController!
+    private var device = KeyboardScreenChangeTests.duoOuter
+
+    private static let duoOuter = DeviceContext(device: .iPhoneDuo, isLandscape: false,
+                                                screenSize: CGSize(width: 466, height: 678))
+    private static let duoInner = DeviceContext(device: .iPhoneDuo, isLandscape: false,
+                                                screenSize: CGSize(width: 669, height: 951))
+
+    override func setUp() {
+        super.setUp()
+        window = UIWindow(frame: CGRect(x: 0, y: 0, width: 390, height: 844))
+        sut = KeyboardViewController()
+        sut.makeDeviceContext = { [unowned self] _ in device }
+        window.rootViewController = sut
+        window.isHidden = false
+        layout()
+    }
+
+    override func tearDown() {
+        window.isHidden = true
+        window.rootViewController = nil
+        sut = nil
+        window = nil
+        super.tearDown()
+    }
+
+    func test_bannerStartsAtTheScreensHeight() throws {
+        XCTAssertEqual(try bannerHeight(), expectedBannerHeight(for: Self.duoOuter))
+    }
+
+    func test_movingToAnotherScreen_resizesTheBanner() throws {
+        let inner = expectedBannerHeight(for: Self.duoInner)
+        try XCTSkipIf(inner == expectedBannerHeight(for: Self.duoOuter),
+                      "both displays have the same banner on this iOS version")
+        device = Self.duoInner
+        sut.view.setNeedsLayout()
+        layout()
+        XCTAssertEqual(sut.theme.bannerHeight, inner)
+        XCTAssertEqual(try bannerHeight(), inner)
+    }
+
+    // MARK: - Helpers
+
+    private func expectedBannerHeight(for device: DeviceContext) -> CGFloat {
+        KeyboardHeightProvider.bannerHeight(for: device, traitCollection: sut.traitCollection, design: .current)
+    }
+
+    /// Height of the view holding the banner.
+    private func bannerHeight() throws -> CGFloat {
+        func banners(in view: UIView) -> [SpellBannerView] {
+            view.subviews.flatMap { ($0 as? SpellBannerView).map { [$0] } ?? banners(in: $0) }
+        }
+        let banner = try XCTUnwrap(banners(in: sut.view).first)
+        return try XCTUnwrap(banner.superview).frame.height
+    }
+
+    private func layout() {
+        window.layoutIfNeeded()
+        sut.view.layoutIfNeeded()
+        // The screen change is applied on the next turn of the run loop.
+        RunLoop.current.run(until: Date().addingTimeInterval(0.05))
+        window.layoutIfNeeded()
     }
 }
 

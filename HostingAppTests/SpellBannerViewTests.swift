@@ -5,6 +5,7 @@ final class SpellBannerViewTests: XCTestCase {
     private var window: UIWindow!
     private var sut: SpellBannerView!
     private var widthConstraint: NSLayoutConstraint!
+    private var heightConstraint: NSLayoutConstraint!
     private let lightTraits = UITraitCollection(traitsFrom: [
         UITraitCollection(userInterfaceIdiom: .phone),
         UITraitCollection(userInterfaceStyle: .light)
@@ -20,7 +21,8 @@ final class SpellBannerViewTests: XCTestCase {
         sut.leftAnchor.constraint(equalTo: window.leftAnchor).isActive = true
         widthConstraint = sut.widthAnchor.constraint(equalToConstant: 390)
         widthConstraint.isActive = true
-        sut.heightAnchor.constraint(equalToConstant: 48).isActive = true
+        heightConstraint = sut.heightAnchor.constraint(equalToConstant: 48)
+        heightConstraint.isActive = true
         layout()
     }
 
@@ -90,6 +92,73 @@ final class SpellBannerViewTests: XCTestCase {
         }
     }
 
+    func test_separators_useTheBannersTheme() {
+        let dark = Theme.current(for: UITraitCollection(traitsFrom: [
+            UITraitCollection(userInterfaceIdiom: .phone),
+            UITraitCollection(userInterfaceStyle: .dark)
+        ]), device: .current)
+        sut.updateTheme(dark)
+        sut.setBannerItems([human("hi", false), normal("ho")])
+        layout()
+        let separators = separatorViews()
+        XCTAssertFalse(separators.isEmpty)
+        for separator in separators {
+            XCTAssertEqual(separator.backgroundColor, dark.bannerBackgroundColor)
+            XCTAssertEqual(separator.subviews.first?.backgroundColor, dark.bannerSeparatorColor)
+        }
+    }
+
+    func test_separators_lineUpWhereTheThemeSays() throws {
+        sut.setBannerItems([human("hi", false), normal("ho")])
+        layout()
+        let theme = Theme.current(for: lightTraits, device: .current)
+        let line = try XCTUnwrap(separatorViews().first?.subviews.first)
+        XCTAssertEqual(line.frame.height, SpellBannerCell.separatorHeight)
+        if let bottomInset = theme.bannerSeparatorBottomInset {
+            XCTAssertEqual(line.frame.maxY, 48 - bottomInset)
+        } else {
+            XCTAssertEqual(line.frame.midY, 24)
+        }
+    }
+
+    func test_text_isCentredOnTheSeparators_onEveryBanner() throws {
+        let iPhone = DeviceContext(device: .iPhone17Pro, isLandscape: false)
+        let duoInner = DeviceContext(device: .iPhoneDuo, isLandscape: false, screenSize: CGSize(width: 669, height: 951))
+        let iPad = DeviceContext(device: .iPadPro11M4, isLandscape: false)
+        // With the screen's scale, as real traits have, so the banner is rounded to whole pixels.
+        let scale = window.screen.scale
+        let phone = UITraitCollection(traitsFrom: [UITraitCollection(userInterfaceIdiom: .phone),
+                                                   UITraitCollection(displayScale: scale)])
+        let cases: [(String, DeviceContext, UITraitCollection, KeyboardDesign)] = [
+            ("iPhone 17 Pro", iPhone, phone, .iOS26),
+            ("iPhone 17 Pro before iOS 26", iPhone, phone, .iOS18),
+            ("iPhone Duo inner display", duoInner, phone, .iOS26),
+            ("iPhone app on iPad", iPad, phone, .iOS26),
+            ("iPhone app on iPad before iOS 26", iPad, phone, .iOS18)
+        ]
+        sut.setBannerItems([human("hi", false), normal("ho")])
+        for (name, device, traits, design) in cases {
+            let theme = ThemeFactory.make(isDark: false, design: design, device: device, traits: traits)
+            sut.updateTheme(theme)
+            heightConstraint.constant = theme.bannerHeight
+            layout()
+
+            let line = try XCTUnwrap(separatorViews().first?.subviews.first, name)
+            let lineFrame = line.convert(line.bounds, to: sut)
+            if let bottomInset = theme.bannerSeparatorBottomInset {
+                XCTAssertEqual(lineFrame.maxY, theme.bannerHeight - bottomInset, accuracy: 0.001, name)
+            } else {
+                XCTAssertEqual(lineFrame.midY, theme.bannerHeight / 2, accuracy: 0.001, name)
+            }
+            for cell in cells() {
+                let text = try XCTUnwrap(label(in: cell), name)
+                // Labels sit on whole pixels, so an odd number of pixels tall centres half a pixel off.
+                XCTAssertEqual(text.convert(text.bounds, to: sut).midY, lineFrame.midY,
+                               accuracy: 0.5 / scale + 0.001, name)
+            }
+        }
+    }
+
     func test_selectingItem_notifiesDelegate() {
         let delegate = DelegateSpy()
         sut.delegate = delegate
@@ -106,14 +175,23 @@ final class SpellBannerViewTests: XCTestCase {
 
     // MARK: - Sizes
 
-    func test_cellsAreAtLeastAThirdOfTheWidth() {
+    /// Three cells and the two 1 pt separators between them fill the banner, as in the system keyboard.
+    private func thirdOfTheWidth(_ width: CGFloat = 390) -> CGFloat {
+        (width - 2) / 3
+    }
+
+    func test_threeCellsAndTheirSeparatorsFillTheWidth() {
         sut.setBannerItems([human("hi", false), normal("ho")])
         layout()
-        XCTAssertEqual(frames(), [
-            CGRect(x: 0, y: 0, width: 130, height: 48),
-            CGRect(x: 131, y: 0, width: 130, height: 48),
-            CGRect(x: 262, y: 0, width: 130, height: 48)
-        ])
+        let third = thirdOfTheWidth()
+        let frames = frames()
+        XCTAssertEqual(frames.count, 3)
+        for (index, frame) in frames.enumerated() {
+            XCTAssertEqual(frame.minX, CGFloat(index) * (third + 1), accuracy: 0.001, "cell \(index)")
+            XCTAssertEqual(frame.width, third, accuracy: 0.001, "cell \(index)")
+            XCTAssertEqual(frame.height, 48, "cell \(index)")
+        }
+        XCTAssertEqual(frames.last?.maxX ?? 0, 390, accuracy: 0.001)
     }
 
     func test_longSuggestionsGetWiderCells() {
@@ -123,7 +201,7 @@ final class SpellBannerViewTests: XCTestCase {
         XCTAssertEqual(itemFrames(), [
             CGRect(x: 0, y: 0, width: 156, height: 48),
             CGRect(x: 157, y: 0, width: 239, height: 48),
-            CGRect(x: 397, y: 0, width: 130, height: 48)
+            CGRect(x: 397, y: 0, width: thirdOfTheWidth(), height: 48)
         ])
     }
 
@@ -152,7 +230,7 @@ final class SpellBannerViewTests: XCTestCase {
         layout()
         sut.setBannerItems([human("hi", false), normal("ho")])
         layout()
-        XCTAssertEqual(frames().map(\.width), [130, 130, 130])
+        XCTAssertEqual(frames().map(\.width), Array(repeating: thirdOfTheWidth(), count: 3))
     }
 
     func test_resizing_relaysOutCells() {
@@ -160,7 +238,7 @@ final class SpellBannerViewTests: XCTestCase {
         layout()
         widthConstraint.constant = 600
         layout()
-        XCTAssertEqual(frames().map(\.width), [200, 200, 200])
+        XCTAssertEqual(frames().map(\.width), Array(repeating: thirdOfTheWidth(600), count: 3))
     }
 
     // MARK: - Repeated updates
@@ -205,6 +283,10 @@ final class SpellBannerViewTests: XCTestCase {
 
     private func cells() -> [UICollectionViewCell] {
         collectionView.indexPathsForVisibleItems.sorted().compactMap { collectionView.cellForItem(at: $0) }
+    }
+
+    private func separatorViews() -> [SpellBannerSeparatorView] {
+        collectionView.subviews.compactMap { $0 as? SpellBannerSeparatorView }
     }
 
     private func texts() -> [String] {

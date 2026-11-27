@@ -30,6 +30,28 @@ struct DeviceContext {
             : maxSupportedInches
     }
 
+    /// Whether the system shows its own bar below the keyboard, holding the globe and dictation keys.
+    ///
+    /// iPhones without a Home button have this bar, and the keyboard extension's view ends above it. On iPhones with a
+    /// Home button, and for iPhone apps on iPad, the view reaches the bottom of the screen. DeviceKit lists the iPhones
+    /// without a Home button as those with rounded display corners. iPhone Duo is the exception: on both its displays
+    /// the globe and dictation keys are in the keyboard's bottom row. Unrecognised devices report `false`.
+    var hasSystemBarBelowKeyboard: Bool {
+        isPhone && device.hasRoundedDisplayCorners && device.realDevice != .iPhoneDuo
+    }
+
+    /// Whether this iPhone has a Home button and a screen under 5 inches, such as iPhone SE (2nd and 3rd generation)
+    /// and iPhone 8. Their system keyboard has no bar below it. Says nothing about the iOS version: callers that need
+    /// iOS 26 check it themselves.
+    ///
+    /// Larger Home-button phones are kept apart because the system keyboard's sizes come from the 4.7-inch screen.
+    /// The 5.5-inch Plus models are wider and lay out their keyboard differently, so those sizes wouldn't match them.
+    /// The size check also leaves out iPhones the device list doesn't know: they report no rounded corners, which
+    /// would otherwise look like a Home button, but their diagonal falls back to 13 inches.
+    var isSmallHomeButtonPhone: Bool {
+        isPhone && !device.hasRoundedDisplayCorners && screenInches < 5
+    }
+
     // MARK: - iPad Size Categories
 
     var isMiniIPad: Bool {

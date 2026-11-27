@@ -93,11 +93,27 @@ final class KeyViewTests: XCTestCase {
                           "test assumes swiping changes the labels")
     }
 
+    // MARK: - Number row
+
+    func test_numberRowKey_usesTheNumberRowFont_forBothLabels() {
+        let sut = makeKey(.input(key: "1", alternate: "!"), isNumberRow: true)
+        let fonts = labels(in: sut).map(\.font)
+        XCTAssertEqual(fonts.count, 2)
+        XCTAssertEqual(fonts, [theme.numberRowKeyFont, theme.numberRowKeyFont])
+    }
+
+    func test_keyOutsideTheNumberRow_usesTheUsualFont() throws {
+        XCTAssertNotEqual(theme.numberRowKeyFont, theme.lowerKeyFont, "test assumes the fonts differ")
+        let sut = makeKey(.input(key: "1", alternate: "!"), isNumberRow: false)
+        let label = try XCTUnwrap(labels(in: sut).first { $0.text == "1" })
+        XCTAssertEqual(label.font, theme.lowerKeyFont)
+    }
+
     // MARK: - Helpers
 
-    private func makeKey(_ type: KeyType) -> KeyView {
+    private func makeKey(_ type: KeyType, isNumberRow: Bool = false) -> KeyView {
         let sut = KeyView(page: .normal, key: KeyDefinition(type: type), theme: theme,
-                          traits: UITraitCollection(userInterfaceIdiom: .phone))
+                          traits: UITraitCollection(userInterfaceIdiom: .phone), isNumberRow: isNumberRow)
         sut.translatesAutoresizingMaskIntoConstraints = false
         window.addSubview(sut)
         heightConstraint = sut.heightAnchor.constraint(equalToConstant: 54)

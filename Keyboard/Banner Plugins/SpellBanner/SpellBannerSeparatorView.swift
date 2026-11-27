@@ -1,29 +1,46 @@
 import UIKit
 
 final class SpellBannerSeparatorView: UICollectionReusableView {
-    // This is dirty. Ideally we'd get this from the theme already created and being passed around,
-    // but since this view is initialized by the system, there seemed no elegant way to do that.
-    private(set) lazy var theme: Theme = {
-        Theme.current(for: self.traitCollection, device: DeviceContext.current(in: self))
-    }()
-
     private let separatorLine = UIView()
+    private var bottomConstraint: NSLayoutConstraint!
+    private var centerConstraint: NSLayoutConstraint!
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = theme.bannerBackgroundColor
-
         setupSeparatorLine()
     }
 
     private func setupSeparatorLine() {
         separatorLine.translatesAutoresizingMaskIntoConstraints = false
         addSubview(separatorLine)
-        let paddingY: CGFloat = 12
-        separatorLine.fill(superview: self, margins: UIEdgeInsets(top: paddingY, left: 0, bottom: paddingY, right: 0))
-        separatorLine.backgroundColor = theme.bannerSeparatorColor
+        // As tall as the system keyboard's separators where the banner has room, otherwise as tall as the banner.
+        separatorLine.leadingAnchor.constraint(equalTo: leadingAnchor).enable()
+        separatorLine.trailingAnchor.constraint(equalTo: trailingAnchor).enable()
+        separatorLine.topAnchor.constraint(greaterThanOrEqualTo: topAnchor).enable()
+        separatorLine.heightAnchor.constraint(lessThanOrEqualTo: heightAnchor).enable()
+        separatorLine.heightAnchor.constraint(equalToConstant: SpellBannerCell.separatorHeight).enable(priority: .defaultHigh)
+        bottomConstraint = separatorLine.bottomAnchor.constraint(equalTo: bottomAnchor)
+        bottomConstraint.priority = .defaultHigh
+        centerConstraint = separatorLine.centerYAnchor.constraint(equalTo: centerYAnchor).enable()
+    }
+
+    override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+        super.apply(layoutAttributes)
+        guard let attributes = layoutAttributes as? SpellBannerSeparatorAttributes else {
+            return
+        }
+        backgroundColor = attributes.backgroundColor
+        separatorLine.backgroundColor = attributes.lineColor
+        if let bottomInset = attributes.bottomInset {
+            centerConstraint.isActive = false
+            bottomConstraint.constant = -bottomInset
+            bottomConstraint.isActive = true
+        } else {
+            bottomConstraint.isActive = false
+            centerConstraint.isActive = true
+        }
     }
 
     required init?(coder: NSCoder) {
