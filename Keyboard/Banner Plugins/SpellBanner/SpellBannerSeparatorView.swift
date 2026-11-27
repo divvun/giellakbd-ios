@@ -1,9 +1,7 @@
 import UIKit
 
-/// A line between two banner suggestions. Drawn with the theme its `SpellBannerSeparatorAttributes` carry.
 final class SpellBannerSeparatorView: UICollectionReusableView {
     private let separatorLine = UIView()
-    /// Puts the line where it lines up with the system keyboard's separators, or centres it in the banner.
     private var bottomConstraint: NSLayoutConstraint!
     private var centerConstraint: NSLayoutConstraint!
 

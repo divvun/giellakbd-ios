@@ -4,8 +4,6 @@ final class SpellBannerFlowLayout: UICollectionViewFlowLayout {
     private let separatorKind = "bannerSeparator"
     private let theme: Theme
 
-    /// - Parameter theme: The banner's theme, which the separators are drawn with. The collection view creates the
-    ///   separators itself, so they get it from their layout attributes.
     init(theme: Theme) {
         self.theme = theme
         super.init()
@@ -46,7 +44,6 @@ final class SpellBannerFlowLayout: UICollectionViewFlowLayout {
     }
 }
 
-/// Layout attributes of a banner separator, carrying the theme's values for it.
 final class SpellBannerSeparatorAttributes: UICollectionViewLayoutAttributes {
     var lineColor: UIColor = .clear
     var backgroundColor: UIColor = .clear

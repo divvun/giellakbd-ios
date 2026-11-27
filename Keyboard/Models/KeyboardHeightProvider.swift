@@ -9,15 +9,11 @@ typealias KeyboardHeight = (portrait: CGFloat, landscape: CGFloat)
 /// the bottom row's keys `bottomInset` above its bottom.
 struct KeyAreaMetrics: Equatable {
     var keyHeight: CGFloat
-    /// Height of the number row's keys, on devices where the system keyboard draws its number row shorter than the
-    /// other rows, such as 13-inch iPads. Only layouts whose first row is a number row use it. `nil` where every row is
-    /// `keyHeight` tall.
+    /// The number row height differs from normal keys on some devices such as 13-inch iPads.
     var numberRowKeyHeight: CGFloat?
     var rowGap: CGFloat
     var topInset: CGFloat
     var bottomInset: CGFloat
-    /// Extra space between each side of the key area and the outermost keys, on top of the keys' own horizontal
-    /// margin.
     var sideInset: CGFloat = 0
 
     /// Height of the first row's keys where a layout's first row is drawn as a shorter number row, or `nil` where it

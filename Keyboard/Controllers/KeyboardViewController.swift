@@ -30,7 +30,6 @@ open class KeyboardViewController: UIInputViewController {
     private var keyboardContainer: UIView!
     private var keyboardView: KeyboardViewProvider!
     private var bannerContainerView: UIView?
-    /// The banner's height, which changes with the theme, e.g. on rotation.
     private var bannerHeightConstraint: NSLayoutConstraint?
     private var heightConstraint: NSLayoutConstraint!
     private var extraSpacingView: UIView!
